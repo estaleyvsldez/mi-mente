@@ -1,0 +1,145 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;width:1080px;height:1350px;overflow:hidden;background:#000}</style></head>
+<body>
+<svg id="s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350"></svg>
+<script>
+const F="'DejaVu Sans','Noto Color Emoji',sans-serif";
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x);}
+
+function defs(){return `<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd6e7"/><stop offset=".55" stop-color="#e9d6ff"/><stop offset="1" stop-color="#cfe6ff"/></linearGradient>
+<radialGradient id="skin" cx=".42" cy=".38" r=".7"><stop offset="0" stop-color="#fff1e6"/><stop offset=".7" stop-color="#ffd9c2"/><stop offset="1" stop-color="#f3b89c"/></radialGradient>
+<radialGradient id="cheek" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff8fa6" stop-opacity=".75"/><stop offset="1" stop-color="#ff8fa6" stop-opacity="0"/></radialGradient>
+<radialGradient id="shadow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#6a4a8a" stop-opacity=".35"/><stop offset="1" stop-color="#6a4a8a" stop-opacity="0"/></radialGradient>
+<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#5a3a7a" flood-opacity=".25"/></filter>
+<filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+${hairGrad('hy','#8a5236','#4a2616')}${hairGrad('hm','#3a3a52','#0f0f1a')}${hairGrad('hh','#d0707c','#8a3a48')}
+${irisGrad('iy','#c07a4a','#4a2010')}${irisGrad('im','#6a6a8a','#1a1a2a')}${irisGrad('ih','#e0708a','#6a1a3a')}
+${clothGrad('cy','#fff8f0','#f0d8c8')}${clothGrad('ay','#ffc2d4','#f08aa8')}${clothGrad('cm','#4a5a8a','#2a3458')}${clothGrad('ch','#fbf0f6','#e2c8d8')}${clothGrad('sh','#ffa8c6','#ff6f9f')}
+</defs>`;}
+function hairGrad(id,a,b){return `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;}
+function irisGrad(id,a,b){return `<radialGradient id="${id}" cx=".5" cy=".7" r=".7"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></radialGradient>`;}
+function clothGrad(id,a,b){return `<linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;}
+
+function eye(cx,cy,iris,wink){
+  if(wink) return `<path d="M${cx-24},${cy+4} Q${cx},${cy-18} ${cx+24},${cy+4}" stroke="#3a1a10" stroke-width="7" fill="none" stroke-linecap="round"/>`;
+  return `<g>
+  <ellipse cx="${cx}" cy="${cy}" rx="27" ry="34" fill="#fff"/>
+  <ellipse cx="${cx}" cy="${cy+3}" rx="24" ry="31" fill="url(#${iris})"/>
+  <ellipse cx="${cx}" cy="${cy+6}" rx="12" ry="15" fill="#140808"/>
+  <path d="M${cx-27},${cy-12} Q${cx},${cy-44} ${cx+27},${cy-12}" stroke="#2a1008" stroke-width="7" fill="none" stroke-linecap="round"/>
+  <path d="M${cx+22},${cy-20} l10,-8 M${cx+26},${cy-10} l12,-4" stroke="#2a1008" stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="${cx-9}" cy="${cy-10}" rx="10" ry="12" fill="#fff"/>
+  <circle cx="${cx+10}" cy="${cy+14}" r="5" fill="#fff" opacity=".9"/>
+  <path d="M${cx-14},${cy+22} Q${cx},${cy+30} ${cx+14},${cy+22}" stroke="#fff" stroke-width="3" opacity=".45" fill="none"/>
+  </g>`;
+}
+
+function face(o){
+  let g='';
+  g+=eye(-44,-6,o.iris,false)+eye(44,-6,o.iris,o.wink);
+  g+=`<ellipse cx="-74" cy="32" rx="26" ry="16" fill="url(#cheek)"/><ellipse cx="74" cy="32" rx="26" ry="16" fill="url(#cheek)"/>`;
+  g+=`<path d="M-4,22 Q0,26 4,22" stroke="#d08a70" stroke-width="3" fill="none"/>`;
+  g+=o.mouth;
+  if(o.brows) g+=o.brows;
+  return g;
+}
+
+function character(x,y,o){
+  let g=`<g transform="translate(${x},${y})" filter="url(#soft)">`;
+  g+=`<ellipse cx="0" cy="330" rx="130" ry="24" fill="url(#shadow)"/>`;
+  g+=o.backHair||'';
+  // cuerpo
+  g+=`<path d="M-92,320 Q-108,150 0,140 Q108,150 92,320 Z" fill="url(#${o.cloth})"/>`;
+  g+=o.outfit||'';
+  // piernas/pies
+  g+=`<ellipse cx="-40" cy="322" rx="36" ry="17" fill="${o.shoe}"/><ellipse cx="40" cy="322" rx="36" ry="17" fill="${o.shoe}"/>`;
+  g+=`<ellipse cx="-48" cy="314" rx="12" ry="5" fill="#fff" opacity=".5"/><ellipse cx="32" cy="314" rx="12" ry="5" fill="#fff" opacity=".5"/>`;
+  g+=o.arms||'';
+  // cuello + cabeza
+  g+=`<ellipse cx="-138" cy="-10" rx="22" ry="30" fill="url(#skin)"/><ellipse cx="138" cy="-10" rx="22" ry="30" fill="url(#skin)"/>`;
+  g+=`<ellipse cx="0" cy="-10" rx="150" ry="140" fill="url(#skin)"/>`;
+  g+=`<ellipse cx="-50" cy="-80" rx="60" ry="30" fill="#fff" opacity=".18"/>`;
+  g+=face(o);
+  g+=o.frontHair;
+  g+=o.acc||'';
+  g+=`</g>`;
+  return g;
+}
+
+const hand=(x,y)=>`<circle cx="${x}" cy="${y}" r="20" fill="url(#skin)"/><circle cx="${x-6}" cy="${y-6}" r="6" fill="#fff" opacity=".3"/>`;
+
+// ---------- YUNA ----------
+const yuna={iris:'iy',cloth:'cy',shoe:'#e0567f',
+ backHair:`<path d="M-158,-30 Q-190,170 -110,230 L110,230 Q190,170 158,-30 Z" fill="url(#hy)"/>
+   <circle cx="0" cy="-165" r="58" fill="url(#hy)"/><path d="M-30,-200 Q0,-215 30,-200" stroke="#b07a5a" stroke-width="6" fill="none" opacity=".6"/>`,
+ frontHair:`<path d="M-156,-10 Q-170,-170 0,-172 Q170,-170 156,-10 Q140,-90 84,-84 Q64,-124 20,-92 Q-14,-130 -54,-86 Q-120,-104 -156,-10 Z" fill="url(#hy)"/>
+   <path d="M-110,-120 Q-60,-150 -10,-140" stroke="#c08a64" stroke-width="8" fill="none" stroke-linecap="round" opacity=".7"/>
+   <path d="M-156,-10 Q-168,80 -140,140" stroke="url(#hy)" stroke-width="30" fill="none" stroke-linecap="round"/>
+   <path d="M156,-10 Q168,80 140,140" stroke="url(#hy)" stroke-width="30" fill="none" stroke-linecap="round"/>`,
+ outfit:`<path d="M-60,316 Q-66,200 0,192 Q66,200 60,316 Z" fill="url(#ay)"/><path d="M-60,200 Q0,180 60,200" stroke="#f08aa8" stroke-width="10" fill="none"/>
+   <path d="M-20,260 q20,16 40,0" stroke="#fff" stroke-width="5" fill="none"/><text x="0" y="250" text-anchor="middle" font-size="34" font-family="${F}">🍓</text>`,
+ arms:hand(-100,250)+hand(100,250),
+ mouth:`<path d="M-26,48 Q0,82 26,48 Q0,58 -26,48 Z" fill="#c2405a"/><path d="M-12,64 Q0,72 12,64" fill="#ff8fa0"/>`,
+ acc:`<g transform="translate(70,-180) rotate(20) scale(1.6)"><path d="M0,24 Q-24,4 -20,-8 Q-12,-20 0,-12 Q12,-20 20,-8 Q24,4 0,24 Z" fill="#ff3b5c"/><path d="M-12,-14 L0,-22 L12,-14 L4,-12 L0,-18 L-4,-12 Z" fill="#3fae5a"/><circle cx="-7" cy="-2" r="1.8" fill="#ffe08a"/><circle cx="6" cy="0" r="1.8" fill="#ffe08a"/><circle cx="-1" cy="9" r="1.8" fill="#ffe08a"/><ellipse cx="-8" cy="-6" rx="4" ry="6" fill="#fff" opacity=".5"/></g>`};
+
+// ---------- MIN-JAE ----------
+const minjae={iris:'im',cloth:'cm',shoe:'#1a1a24',wink:true,
+ backHair:`<path d="M-154,-40 Q-160,40 -140,60 L140,60 Q160,40 154,-40 Z" fill="url(#hm)"/>`,
+ frontHair:`<path d="M-158,-20 Q-176,-180 0,-178 Q176,-180 158,-20 Q150,-70 120,-80 L100,-40 Q90,-100 50,-96 L40,-60 Q20,-110 -30,-100 L-50,-60 Q-70,-110 -120,-80 Q-150,-70 -158,-20 Z" fill="url(#hm)"/>
+   <path d="M-90,-140 Q-40,-160 20,-150" stroke="#6a6a8a" stroke-width="8" fill="none" stroke-linecap="round" opacity=".7"/>`,
+ outfit:`<path d="M-40,150 L0,200 L40,150" stroke="#fff" stroke-width="10" fill="none"/><path d="M-6,200 L-12,300 L0,312 L12,300 L6,200 Z" fill="#c0103a"/>`,
+ arms:hand(-104,250)+`<path d="M80,200 Q140,130 130,60" stroke="url(#cm)" stroke-width="40" stroke-linecap="round" fill="none"/>`+hand(128,52),
+ mouth:`<path d="M-28,52 Q0,64 30,44" stroke="#8a3030" stroke-width="7" fill="none" stroke-linecap="round"/>`,
+ brows:`<path d="M-74,-56 Q-44,-70 -16,-58 M16,-62 Q44,-74 74,-60" stroke="#1a1a24" stroke-width="8" fill="none" stroke-linecap="round"/>`,
+ acc:`<g fill="none" stroke="#2a2a2a" stroke-width="7"><circle cx="-44" cy="-6" r="44"/><circle cx="44" cy="-6" r="44"/><path d="M-6,-12 Q0,-20 6,-12"/></g>
+   <path d="M-70,-30 L-50,-40" stroke="#fff" stroke-width="5" opacity=".7"/><path d="M20,-34 L40,-44" stroke="#fff" stroke-width="5" opacity=".7"/>
+   <g transform="translate(150,-120)"><path d="M0,-18 L5,-5 L18,0 L5,5 L0,18 L-5,5 L-18,0 L-5,-5 Z" fill="#fff"/></g>`};
+
+// ---------- HANA ----------
+const hana={iris:'ih',cloth:'ch',shoe:'#ff8fb3',
+ backHair:`<path d="M-160,-30 Q-182,110 -124,130 L124,130 Q182,110 160,-30 Z" fill="url(#hh)"/>`,
+ frontHair:`<path d="M-158,-10 Q-172,-176 0,-176 Q172,-176 158,-10 Q150,-60 120,-70 Q100,-110 50,-86 Q10,-118 -30,-86 Q-80,-112 -120,-70 Q-150,-60 -158,-10 Z" fill="url(#hh)"/>
+   <path d="M-100,-130 Q-50,-156 10,-146" stroke="#f0a0aa" stroke-width="8" fill="none" stroke-linecap="round" opacity=".7"/>
+   <path d="M-158,-10 Q-170,70 -150,120" stroke="url(#hh)" stroke-width="34" fill="none" stroke-linecap="round"/>
+   <path d="M158,-10 Q170,70 150,120" stroke="url(#hh)" stroke-width="34" fill="none" stroke-linecap="round"/>`,
+ outfit:`<path d="M-88,150 Q0,190 88,150 L92,180 Q0,224 -92,180 Z" fill="url(#sh)"/><path d="M30,184 L56,290 L20,284 Z" fill="url(#sh)"/>
+   <path d="M-60,168 L-40,176 M-20,178 L0,182 M20,180 L40,176" stroke="#fff" stroke-width="4" opacity=".6"/>`,
+ arms:`<path d="M-80,200 Q-130,150 -90,90" stroke="url(#ch)" stroke-width="40" stroke-linecap="round" fill="none"/>`+hand(-88,88)+hand(104,250),
+ mouth:`<path d="M-22,52 Q-8,40 0,52 Q8,40 22,52" stroke="#8a3030" stroke-width="6" fill="none" stroke-linecap="round"/>`,
+ brows:`<path d="M-72,-58 Q-44,-50 -18,-62 M18,-62 Q44,-50 72,-58" stroke="#8a3a48" stroke-width="6" fill="none" stroke-linecap="round"/>`,
+ acc:`<g transform="translate(-100,-150)"><path d="M0,0 Q-40,-36 -46,0 Q-40,36 0,0 Q40,-36 46,0 Q40,36 0,0 Z" fill="#ff6f9f"/><circle r="10" fill="#ff3b7a"/></g>
+   <path d="M120,30 q-14,24 0,34 q14,-10 0,-34 Z" fill="#9adcff" stroke="#fff" stroke-width="3"/>`};
+
+function card(x,y,w,h,col){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="34" fill="#fff" opacity=".72"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="34" fill="none" stroke="${col}" stroke-width="5"/>`;}
+function label(x,y,name,age,col,l1,l2,l3){
+  return `<rect x="${x-140}" y="${y}" width="280" height="64" rx="32" fill="${col}"/>
+  <text x="${x}" y="${y+44}" text-anchor="middle" font-family="${F}" font-size="34" font-weight="bold" fill="#fff">${name}</text>
+  <text x="${x}" y="${y+102}" text-anchor="middle" font-family="${F}" font-size="22" font-weight="bold" fill="#5a3a6a">${age}</text>
+  <text x="${x}" y="${y+140}" text-anchor="middle" font-family="${F}" font-size="21" font-style="italic" fill="#3a2a4a">${l1}</text>
+  <text x="${x}" y="${y+170}" text-anchor="middle" font-family="${F}" font-size="21" font-style="italic" fill="#3a2a4a">${l2}</text>
+  <text x="${x}" y="${y+200}" text-anchor="middle" font-family="${F}" font-size="21" font-style="italic" fill="#3a2a4a">${l3}</text>`;
+}
+
+let g=defs();
+g+=`<rect width="1080" height="1350" fill="url(#bg)"/>`;
+for(let i=0;i<26;i++){g+=`<circle cx="${rnd(i)*1080}" cy="${rnd(i+50)*1350}" r="${20+rnd(i+9)*60}" fill="#fff" opacity="${.12+rnd(i+3)*.2}" filter="url(#blur8)"/>`;}
+for(let i=0;i<30;i++){const x=rnd(i+100)*1080,y=rnd(i+200)*1350,r=6+rnd(i+300)*8;g+=`<path d="M${x},${y-r} L${x+r*.3},${y-r*.3} L${x+r},${y} L${x+r*.3},${y+r*.3} L${x},${y+r} L${x-r*.3},${y+r*.3} L${x-r},${y} L${x-r*.3},${y-r*.3} Z" fill="#fff" opacity=".7"/>`;}
+// título
+g+=`<text x="540" y="110" text-anchor="middle" font-family="${F}" font-size="86" font-weight="bold" fill="#ff5c8a" stroke="#fff" stroke-width="12" paint-order="stroke">DULCE TRAICIÓN 💔</text>`;
+g+=`<text x="540" y="168" text-anchor="middle" font-family="${F}" font-size="32" font-weight="bold" fill="#7a4aa0">Los personajes · Versión dominicana 🇩🇴</text>`;
+// tarjetas
+g+=card(28,210,330,1100,'#ff8fb3')+card(375,210,330,1100,'#7fa2ff')+card(722,210,330,1100,'#ff6f9f');
+g+=`<g transform="translate(193,560) scale(.9)">${character(0,0,yuna)}</g>`;
+g+=`<g transform="translate(540,560) scale(.9)">${character(0,0,minjae)}</g>`;
+g+=`<g transform="translate(887,560) scale(.9)">${character(0,0,hana)}</g>`;
+g+=label(193,900,'YUNA 🍓','26 años · Repostera','#ff6f9f','"La más buena del barrio...','hasta que le sacan','lo de Villa Mella."');
+g+=label(540,900,'MIN-JAE 🖤','29 años · Arquitecto','#5a7ae0','"Se hace el serio,','pero es más tíguere','que un motoconcho."');
+g+=label(887,900,'HANA 🎀','26 años · La mejor amiga','#e0567f','"Dice que es tu pana','del alma... pero tiene','los ojos en tu jevo."');
+// frases
+g+=`<text x="193" y="1170" text-anchor="middle" font-family="${F}" font-size="24" font-weight="bold" fill="#e0567f">"¡Diache, quedó jevi!"</text>`;
+g+=`<text x="540" y="1170" text-anchor="middle" font-family="${F}" font-size="24" font-weight="bold" fill="#4a6ad0">"Tranquila, mi reina."</text>`;
+g+=`<text x="887" y="1170" text-anchor="middle" font-family="${F}" font-size="24" font-weight="bold" fill="#e0567f">"¿Tú va' pa' allá?"</text>`;
+document.getElementById('s').innerHTML=g;
+</script></body></html>
