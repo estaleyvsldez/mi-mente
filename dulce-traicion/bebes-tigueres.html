@@ -1,0 +1,224 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;width:1080px;height:1350px;overflow:hidden;background:#000}</style></head>
+<body>
+<svg id="s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350"></svg>
+<script>
+const F="'DejaVu Sans','Noto Color Emoji',sans-serif";
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x);}
+const G=(id,a,b,v)=>`<linearGradient id="${id}" x1="0" y1="0" x2="${v?0:1}" y2="${v?1:0}"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
+const RG=(id,a,b,c)=>`<radialGradient id="${id}" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="${a}"/><stop offset=".7" stop-color="${b}"/><stop offset="1" stop-color="${c}"/></radialGradient>`;
+
+const defs=`<defs>
+${G('sky','#5ec8ff','#ffe3b0',1)}
+${RG('sk1','#e3a57a','#c4875c','#a06a44')}${RG('sk2','#ffe0c4','#f0b98e','#d89870')}${RG('sk3','#b97a50','#9a5e38','#7a4426')}
+<radialGradient id="cheek" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff7f96" stop-opacity=".6"/><stop offset="1" stop-color="#ff7f96" stop-opacity="0"/></radialGradient>
+<radialGradient id="shd" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+${G('jean','#5a86c8','#2f5490',1)}${G('gold','#fff0a0','#d9a21a',1)}${G('cap','#ff4a4a','#b81c2c',1)}
+${G('velour','#ffa8d0','#f06aa8',1)}${G('jacket','#a98aff','#6a4ad8',1)}${G('moto','#ff4040','#a01020',1)}${G('chrome','#ffffff','#9aa4b4',1)}
+${G('iris1','#8a5a3a','#2a1408',1)}${G('iris2','#c08850','#4a2410',1)}${G('iris3','#5a3a24','#140804',1)}
+<filter id="ds" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#2a1a3a" flood-opacity=".3"/></filter>
+<filter id="b6"><feGaussianBlur stdDeviation="6"/></filter>
+</defs>`;
+
+// ---------- fondo: barrio dominicano ----------
+function barrio(){
+  let g=`<rect width="1080" height="1350" fill="url(#sky)"/>`;
+  g+=`<circle cx="900" cy="170" r="80" fill="#fff6c0" opacity=".9"/><circle cx="900" cy="170" r="130" fill="#fff6c0" opacity=".3" filter="url(#b6)"/>`;
+  // casas de colores
+  const cols=['#ff8fb8','#4fd1c5','#ffd24f','#8fa8ff','#ff9f5a','#6fd08a'];
+  let x=-20;
+  for(let i=0;i<7;i++){
+    const w=150+rnd(i)*70,h=230+rnd(i+7)*120,y=820-h,c=cols[i%cols.length];
+    g+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${c}"/>`;
+    g+=`<path d="M${x-10},${y} L${x+w+10},${y} L${x+w},${y-26} L${x},${y-26} Z" fill="#b8c0c8"/>`;
+    for(let k=0;k<6;k++) g+=`<path d="M${x+k*w/6},${y-26} L${x+k*w/6},${y}" stroke="#9aa2aa" stroke-width="3"/>`;
+    g+=`<rect x="${x+w*.18}" y="${y+50}" width="${w*.26}" height="${w*.3}" fill="#fff" opacity=".85"/><path d="M${x+w*.18},${y+50+w*.1} l${w*.26},0 M${x+w*.18},${y+50+w*.2} l${w*.26},0" stroke="${c}" stroke-width="4"/>`;
+    g+=`<rect x="${x+w*.56}" y="${y+h-120}" width="${w*.28}" height="120" fill="#6a3a24"/>`;
+    x+=w;
+  }
+  // colmado
+  g+=`<rect x="330" y="430" width="420" height="80" rx="10" fill="#fff" stroke="#e02a3a" stroke-width="7"/>`;
+  g+=`<text x="540" y="468" text-anchor="middle" font-family="${F}" font-size="30" font-weight="bold" fill="#0a3a9a">COLMADO</text>`;
+  g+=`<text x="540" y="500" text-anchor="middle" font-family="${F}" font-size="26" font-weight="bold" fill="#e02a3a">LA BENDICIÓN 🙏</text>`;
+  // palmera
+  g+=`<path d="M990,820 Q1010,600 970,420" stroke="#8a5a30" stroke-width="22" fill="none"/>`;
+  for(let i=0;i<6;i++){const a=-160+i*35;g+=`<path d="M970,420 q${Math.cos(a*Math.PI/180)*90},${Math.sin(a*Math.PI/180)*60-30} ${Math.cos(a*Math.PI/180)*170},${Math.sin(a*Math.PI/180)*120+30}" stroke="#2fa84f" stroke-width="20" fill="none" stroke-linecap="round"/>`;}
+  // cables de luz enredados
+  g+=`<path d="M-10,300 Q300,380 600,310 T1090,330" stroke="#222" stroke-width="4" fill="none"/>`;
+  g+=`<path d="M-10,330 Q350,420 620,340 T1090,300" stroke="#222" stroke-width="3" fill="none"/>`;
+  g+=`<path d="M420,355 q20,30 0,50 q-20,-20 10,-40 q30,10 10,40" stroke="#222" stroke-width="3" fill="none"/>`;
+  g+=`<rect x="150" y="270" width="16" height="560" fill="#7a6a5a"/>`;
+  // bandera
+  g+=`<g transform="translate(60,380)"><path d="M0,0 L0,180" stroke="#555" stroke-width="6"/>
+     <rect x="3" y="0" width="54" height="36" fill="#0a3a9a"/><rect x="69" y="0" width="54" height="36" fill="#e02a3a"/>
+     <rect x="3" y="48" width="54" height="36" fill="#e02a3a"/><rect x="69" y="48" width="54" height="36" fill="#0a3a9a"/>
+     <rect x="3" y="36" width="120" height="12" fill="#fff"/><rect x="57" y="0" width="12" height="84" fill="#fff"/></g>`;
+  // calle
+  g+=`<rect x="0" y="820" width="1080" height="530" fill="#8a8a92"/><rect x="0" y="820" width="1080" height="16" fill="#b0b0b8"/>`;
+  for(let i=0;i<6;i++) g+=`<rect x="${i*200+30}" y="1030" width="110" height="14" rx="6" fill="#f5f5f5" opacity=".7"/>`;
+  return g;
+}
+
+// ---------- piezas ----------
+function eye(cx,cy,iris,lashes){
+  let g=`<ellipse cx="${cx}" cy="${cy}" rx="30" ry="36" fill="#fff"/>
+  <ellipse cx="${cx}" cy="${cy+4}" rx="26" ry="32" fill="url(#${iris})"/>
+  <ellipse cx="${cx}" cy="${cy+7}" rx="13" ry="16" fill="#0a0402"/>
+  <ellipse cx="${cx-10}" cy="${cy-10}" rx="11" ry="13" fill="#fff"/><circle cx="${cx+11}" cy="${cy+15}" r="5.5" fill="#fff"/>
+  <path d="M${cx-30},${cy-12} Q${cx},${cy-46} ${cx+30},${cy-12}" stroke="#1a0a04" stroke-width="6" fill="none" stroke-linecap="round"/>`;
+  if(lashes) g+=`<path d="M${cx+24},${cy-24} l14,-12 M${cx+29},${cy-14} l16,-6 M${cx+16},${cy-32} l8,-14" stroke="#1a0a04" stroke-width="5" stroke-linecap="round"/>`;
+  return g;
+}
+const hand=(x,y,sk)=>`<circle cx="${x}" cy="${y}" r="24" fill="url(#${sk})"/><circle cx="${x-7}" cy="${y-8}" r="7" fill="#fff" opacity=".25"/>`;
+const hoop=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="none" stroke="url(#gold)" stroke-width="7"/><circle cx="${x-r*.5}" cy="${y+r*.6}" r="3" fill="#fff"/>`;
+
+function head(sk,iris,o){
+  let g='';
+  g+=`<ellipse cx="-150" cy="0" rx="26" ry="34" fill="url(#${sk})"/><ellipse cx="150" cy="0" rx="26" ry="34" fill="url(#${sk})"/>`;
+  g+=`<ellipse cx="0" cy="-10" rx="155" ry="145" fill="url(#${sk})"/>`;
+  g+=`<ellipse cx="-55" cy="-85" rx="60" ry="28" fill="#fff" opacity=".16"/>`;
+  g+=eye(-50,0,iris,o.lashes)+eye(50,0,iris,o.lashes);
+  g+=`<ellipse cx="-88" cy="48" rx="30" ry="18" fill="url(#cheek)"/><ellipse cx="88" cy="48" rx="30" ry="18" fill="url(#cheek)"/>`;
+  g+=`<ellipse cx="0" cy="38" rx="10" ry="7" fill="#000" opacity=".12"/>`;
+  g+=o.mouth;
+  return g;
+}
+
+// ---------- BRAYAN, el tíguere en el motor ----------
+function brayan(x,y){
+  const sk='sk1';
+  let g=`<g transform="translate(${x},${y})" filter="url(#ds)">`;
+  g+=`<ellipse cx="0" cy="250" rx="260" ry="30" fill="url(#shd)"/>`;
+  // cuerpo (camiseta blanca de tirantes)
+  g+=`<path d="M-100,190 Q-110,40 0,32 Q110,40 100,190 Z" fill="#fafafa"/>`;
+  g+=`<path d="M-50,40 Q0,90 50,40" stroke="url(#${sk})" stroke-width="30" fill="none"/>`;
+  // cadena de oro
+  g+=`<path d="M-56,46 Q0,130 56,46" stroke="url(#gold)" stroke-width="10" fill="none" stroke-dasharray="10 4"/>`;
+  g+=`<circle cx="0" cy="118" r="26" fill="url(#gold)" stroke="#b07a10" stroke-width="3"/><text x="0" y="129" text-anchor="middle" font-family="${F}" font-size="30" font-weight="bold" fill="#7a4a00">B</text>`;
+  // brazos con tatuajes, manos en el manubrio
+  g+=`<path d="M-95,70 Q-160,110 -190,150" stroke="url(#${sk})" stroke-width="46" stroke-linecap="round" fill="none"/>`;
+  g+=`<path d="M95,70 Q160,110 190,150" stroke="url(#${sk})" stroke-width="46" stroke-linecap="round" fill="none"/>`;
+  g+=`<g transform="translate(-145,112) rotate(30)"><text x="0" y="0" text-anchor="middle" font-family="${F}" font-size="17" font-weight="bold" fill="#1a2a5a" opacity=".85">MAMÁ</text><path d="M-8,8 q8,-8 8,2 q0,-10 8,-2 q0,8 -8,14 q-8,-6 -8,-14" fill="#c0102a" opacity=".85"/></g>`;
+  g+=`<g transform="translate(150,112) rotate(-30)" stroke="#1a2a5a" stroke-width="3" fill="none" opacity=".8"><path d="M-20,0 q10,-14 20,0 q10,14 20,0"/><circle cx="0" cy="-12" r="5"/></g>`;
+  // motor
+  g+=moto();
+  // cabeza
+  g+=`<g transform="translate(0,-130)">`;
+  g+=`<path d="M-152,-40 Q-150,-150 0,-156 Q150,-150 152,-40 Q130,-60 0,-66 Q-130,-60 -152,-40 Z" fill="#1a1008"/>`;
+  g+=head(sk,'iris1',{mouth:`<path d="M-34,62 Q0,84 38,52" stroke="#5a1a10" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M14,70 l6,10 l6,-12" fill="#fff"/>`});
+  // gorra al revés
+  g+=`<path d="M-150,-56 Q-140,-176 0,-178 Q140,-176 150,-56 Q0,-90 -150,-56 Z" fill="url(#cap)"/>`;
+  g+=`<path d="M-120,-66 Q-180,-56 -200,-30 Q-160,-20 -120,-40 Z" fill="#9a1020"/>`;
+  g+=`<rect x="-30" y="-92" width="60" height="18" rx="9" fill="#fff" opacity=".85"/>`;
+  g+=`<path d="M-80,-140 Q-20,-168 50,-150" stroke="#fff" stroke-width="7" opacity=".3" fill="none" stroke-linecap="round"/>`;
+  // gafas en la gorra
+  g+=`<g transform="translate(0,-130)"><ellipse cx="-36" cy="0" rx="32" ry="20" fill="#1a1a2a"/><ellipse cx="36" cy="0" rx="32" ry="20" fill="#1a1a2a"/><path d="M-4,0 L4,0" stroke="#d0a020" stroke-width="5"/><path d="M-50,-8 l18,-4" stroke="#fff" stroke-width="4" opacity=".6"/></g>`;
+  // arete de diamante
+  g+=`<g transform="translate(-152,26)"><path d="M0,-12 L9,0 L0,12 L-9,0 Z" fill="#dff6ff" stroke="#8acfff" stroke-width="2"/><path d="M0,-22 L0,-16 M12,-12 L8,-8 M-12,-12 L-8,-8" stroke="#fff" stroke-width="3"/></g>`;
+  g+=`<g transform="translate(152,26)"><path d="M0,-12 L9,0 L0,12 L-9,0 Z" fill="#dff6ff" stroke="#8acfff" stroke-width="2"/></g>`;
+  // ceja con rayita
+  g+=`<path d="M-84,-44 Q-56,-58 -24,-48 M24,-48 Q56,-58 84,-44" stroke="#1a1008" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M58,-60 L52,-40" stroke="url(#${sk})" stroke-width="6"/>`;
+  g+=`</g></g>`;
+  return g;
+}
+function moto(){
+  let g='';
+  const wheel=(cx)=>`<circle cx="${cx}" cy="200" r="62" fill="#1a1a1a"/><circle cx="${cx}" cy="200" r="36" fill="url(#chrome)"/><circle cx="${cx}" cy="200" r="12" fill="#444"/>`;
+  g+=wheel(-210)+wheel(210);
+  g+=`<path d="M-230,150 Q-150,90 -60,120 L120,120 Q200,90 250,140 L230,180 Q0,210 -240,180 Z" fill="url(#moto)"/>`;
+  g+=`<path d="M-90,118 Q0,96 90,118 L80,140 Q0,126 -80,140 Z" fill="#1a1a1a"/>`;
+  g+=`<path d="M200,120 L230,40 M210,40 L260,30" stroke="url(#chrome)" stroke-width="12" stroke-linecap="round"/>`;
+  g+=`<path d="M-200,120 L-230,40 M-250,30 L-210,40" stroke="url(#chrome)" stroke-width="12" stroke-linecap="round"/>`;
+  g+=`<circle cx="250" cy="110" r="20" fill="#fff6a0" stroke="#c0c0c0" stroke-width="5"/>`;
+  g+=`<path d="M-140,182 L-250,196" stroke="url(#chrome)" stroke-width="14" stroke-linecap="round"/>`;
+  g+=`<text x="40" y="172" text-anchor="middle" font-family="${F}" font-size="24" font-weight="bold" fill="#fff" font-style="italic">EL TÍGUERE</text>`;
+  g+=`<path d="M-120,140 Q-30,130 40,140" stroke="#fff" stroke-width="6" opacity=".35" fill="none"/>`;
+  return g;
+}
+
+// ---------- YOKASTA, la jeva con rolos ----------
+function yokasta(x,y){
+  const sk='sk2';
+  let g=`<g transform="translate(${x},${y})" filter="url(#ds)">`;
+  g+=`<ellipse cx="0" cy="250" rx="140" ry="24" fill="url(#shd)"/>`;
+  // conjunto de terciopelo
+  g+=`<path d="M-92,236 Q-108,50 0,40 Q108,50 92,236 Z" fill="url(#velour)"/>`;
+  g+=`<path d="M0,50 L0,236" stroke="#fff" stroke-width="5" opacity=".5"/><text x="0" y="150" text-anchor="middle" font-family="${F}" font-size="22" font-weight="bold" fill="#fff" font-style="italic">Baby</text>`;
+  g+=`<ellipse cx="-42" cy="242" rx="38" ry="17" fill="#fff"/><ellipse cx="42" cy="242" rx="38" ry="17" fill="#fff"/><path d="M-60,240 l30,-6 M24,236 l30,6" stroke="#ff6aa8" stroke-width="5"/>`;
+  // brazos: una mano en la cintura, otra enseñando las uñas
+  g+=`<path d="M-86,90 Q-140,140 -96,176" stroke="url(#velour)" stroke-width="42" stroke-linecap="round" fill="none"/>`+hand(-94,176,sk);
+  g+=`<path d="M86,90 Q150,60 150,0" stroke="url(#velour)" stroke-width="42" stroke-linecap="round" fill="none"/>`+hand(150,-6,sk);
+  for(let i=0;i<4;i++) g+=`<ellipse cx="${134+i*10}" cy="${-32+Math.abs(i-1.5)*3}" rx="5" ry="11" fill="#ff2a7a" stroke="#fff" stroke-width="1.5"/>`;
+  g+=`<g transform="translate(150,30)"><path d="M-8,0 q8,-8 8,2 q0,-10 8,-2 q0,8 -8,14 q-8,-6 -8,-14" fill="#c0102a" opacity=".8"/></g>`;
+  // cabeza
+  g+=`<g transform="translate(0,-130)">`;
+  g+=`<path d="M-156,10 Q-170,-150 0,-160 Q170,-150 156,10 Q150,-70 0,-80 Q-150,-70 -156,10 Z" fill="#3a1a0a"/>`;
+  g+=head(sk,'iris2',{lashes:true,mouth:`<path d="M-22,58 Q0,40 22,58 Q0,74 -22,58 Z" fill="#e0406a"/><ellipse cx="-6" cy="56" rx="6" ry="3" fill="#fff" opacity=".6"/>`});
+  // pañuelo y rolos
+  g+=`<path d="M-150,-60 Q-140,-170 0,-176 Q140,-170 150,-60 Q0,-110 -150,-60 Z" fill="#7a3aff"/>`;
+  g+=`<path d="M-150,-60 Q0,-110 150,-60" stroke="#ffd24f" stroke-width="6" fill="none" stroke-dasharray="14 10"/>`;
+  const rc=['#ff6aa8','#4fd1ff','#ffd24f','#6fe08a','#ff6aa8'];
+  for(let i=0;i<5;i++){const rx=-110+i*55,ry=-176-Math.sin(i/4*Math.PI)*40;g+=`<rect x="${rx-24}" y="${ry-26}" width="48" height="52" rx="18" fill="${rc[i]}" stroke="#fff" stroke-width="3"/><path d="M${rx-16},${ry-10} l32,0 M${rx-16},${ry+4} l32,0" stroke="#fff" stroke-width="3" opacity=".7"/>`;}
+  g+=`<path d="M120,-120 q40,-10 50,20 q-30,0 -50,-20 Z" fill="#7a3aff"/>`;
+  // argollas grandes
+  g+=hoop(-156,60,40)+hoop(156,60,40);
+  g+=`<path d="M-84,-42 Q-56,-56 -24,-44 M24,-44 Q56,-56 84,-42" stroke="#3a1a0a" stroke-width="6" fill="none" stroke-linecap="round"/>`;
+  g+=`</g></g>`;
+  return g;
+}
+
+// ---------- KIARA, la pana chismosa ----------
+function kiara(x,y){
+  const sk='sk3';
+  let g=`<g transform="translate(${x},${y})" filter="url(#ds)">`;
+  g+=`<ellipse cx="0" cy="250" rx="140" ry="24" fill="url(#shd)"/>`;
+  // trenzas largas detrás
+  for(let s of [-1,1]) for(let i=0;i<3;i++) g+=`<path d="M${s*(118+i*14)},-120 Q${s*(150+i*14)},40 ${s*(120+i*12)},200" stroke="${i%2?'#2a140a':'#1a0a04'}" stroke-width="20" fill="none" stroke-linecap="round" stroke-dasharray="18 4"/>`;
+  // chaqueta + jeans caídos
+  g+=`<path d="M-92,150 Q-108,48 0,40 Q108,48 92,150 Z" fill="url(#jacket)"/>`;
+  g+=`<rect x="-86" y="140" width="172" height="20" fill="#fff"/><path d="M-86,150 L86,150" stroke="#ff6aa8" stroke-width="5" stroke-dasharray="12 8"/>`;
+  g+=`<path d="M-88,158 L88,158 L92,232 L4,232 L0,200 L-4,232 L-92,232 Z" fill="url(#jean)"/>`;
+  g+=`<path d="M-60,180 q8,10 0,22 M60,180 q-8,10 0,22" stroke="#9ac0ff" stroke-width="3" fill="none"/>`;
+  g+=`<ellipse cx="-44" cy="244" rx="40" ry="17" fill="#fff"/><ellipse cx="44" cy="244" rx="40" ry="17" fill="#fff"/><path d="M-64,242 l30,-6 M26,236 l30,6" stroke="#7a4aff" stroke-width="5"/>`;
+  // brazo con el celular (grabando el chisme)
+  g+=`<path d="M-86,90 Q-150,60 -150,0" stroke="url(#jacket)" stroke-width="42" stroke-linecap="round" fill="none"/>`;
+  g+=`<rect x="-182" y="-70" width="62" height="100" rx="12" fill="#1a1a2a" stroke="#aaa" stroke-width="3"/><circle cx="-166" cy="-56" r="5" fill="#4a4a6a"/><circle cx="-131" cy="-56" r="5" fill="#ff3355"/>`;
+  g+=hand(-150,6,sk);
+  g+=`<path d="M86,90 Q130,140 96,176" stroke="url(#jacket)" stroke-width="42" stroke-linecap="round" fill="none"/>`+hand(96,176,sk);
+  g+=`<g transform="translate(128,128)">${'<path d="M0,-12 L3.5,-3.5 L12,0 L3.5,3.5 L0,12 L-3.5,3.5 L-12,0 L-3.5,-3.5 Z" fill="#1a2a5a" opacity=".8"/>'}</g>`;
+  // cabeza
+  g+=`<g transform="translate(0,-130)">`;
+  g+=head(sk,'iris3',{lashes:true,mouth:`<ellipse cx="0" cy="60" rx="16" ry="20" fill="#5a1020"/><ellipse cx="0" cy="70" rx="9" ry="6" fill="#ff7f8f"/>`});
+  g+=`<path d="M-156,0 Q-168,-160 0,-164 Q168,-160 156,0 Q150,-50 110,-70 Q60,-90 0,-86 Q-60,-90 -110,-70 Q-150,-50 -156,0 Z" fill="#1a0a04"/>`;
+  for(let i=0;i<7;i++){const a=-150+i*20;g+=`<path d="M${Math.cos(a*Math.PI/180)*150},${-60+Math.sin(a*Math.PI/180)*100} L0,-150" stroke="#3a2010" stroke-width="3" opacity=".6"/>`;}
+  // gafas de sol arriba
+  g+=`<g transform="translate(0,-112)"><ellipse cx="-40" cy="0" rx="36" ry="24" fill="#ff4fa3" opacity=".9"/><ellipse cx="40" cy="0" rx="36" ry="24" fill="#ff4fa3" opacity=".9"/><path d="M-6,0 L6,0" stroke="url(#gold)" stroke-width="6"/><path d="M-60,-10 l20,-6" stroke="#fff" stroke-width="5" opacity=".7"/></g>`;
+  g+=hoop(-156,58,34)+hoop(156,58,34);
+  // cejas levantadas (chisme)
+  g+=`<path d="M-86,-50 Q-56,-72 -24,-56 M24,-56 Q56,-72 86,-50" stroke="#1a0a04" stroke-width="7" fill="none" stroke-linecap="round"/>`;
+  g+=`<text x="120" y="-150" font-family="${F}" font-size="60">👀</text>`;
+  g+=`</g></g>`;
+  return g;
+}
+
+function tag(x,y,name,role,col,l1,l2){
+  return `<rect x="${x-160}" y="${y}" width="320" height="236" rx="30" fill="#fff" opacity=".94" stroke="${col}" stroke-width="6"/>
+  <rect x="${x-130}" y="${y-30}" width="260" height="62" rx="31" fill="${col}"/>
+  <text x="${x}" y="${y+12}" text-anchor="middle" font-family="${F}" font-size="34" font-weight="bold" fill="#fff">${name}</text>
+  <text x="${x}" y="${y+76}" text-anchor="middle" font-family="${F}" font-size="25" font-weight="bold" fill="${col}">${role}</text>
+  <text x="${x}" y="${y+130}" text-anchor="middle" font-family="${F}" font-size="22" font-style="italic" fill="#2a1a3a">${l1}</text>
+  <text x="${x}" y="${y+164}" text-anchor="middle" font-family="${F}" font-size="22" font-style="italic" fill="#2a1a3a">${l2}</text>`;
+}
+
+let g=defs+barrio();
+g+=`<text x="540" y="110" text-anchor="middle" font-family="${F}" font-size="84" font-weight="bold" fill="#ffd24f" stroke="#1a2a6a" stroke-width="14" paint-order="stroke">BEBÉS TÍGUERES</text>`;
+g+=`<text x="540" y="180" text-anchor="middle" font-family="${F}" font-size="38" font-weight="bold" fill="#fff" stroke="#e02a3a" stroke-width="9" paint-order="stroke">Dulce Traición · versión barrio 🇩🇴</text>`;
+g+=`<g transform="translate(190,770) scale(.78)">${yokasta(0,0)}</g>`;
+g+=`<g transform="translate(890,770) scale(.78)">${kiara(0,0)}</g>`;
+g+=`<g transform="translate(540,840) scale(.82)">${brayan(0,0)}</g>`;
+g+=tag(190,1090,'YOKASTA 💅','La Jeva','#f0569a','"Con los rolos puestos','desde el 2019."');
+g+=tag(540,1090,'BRAYAN 🏍️','El Tíguere','#e02a3a','"Tres jevas','y un motor fiao."');
+g+=tag(890,1090,'KIARA 👀','La Pana','#6a4ad8','"Tu mejor amiga...','y el chisme en persona."');
+document.getElementById('s').innerHTML=g;
+</script></body></html>
