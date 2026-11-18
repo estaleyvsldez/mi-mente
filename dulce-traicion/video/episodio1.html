@@ -1,0 +1,557 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+html,body{margin:0;background:#000;width:540px;height:960px;overflow:hidden}
+svg{display:block}
+</style></head>
+<body>
+<svg id="s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 960" width="540" height="960"></svg>
+<script>
+// =========================================================
+//  DULCE TRAICIÓN · Episodio 1 · animación chibi (120 s)
+//  window.setTime(t) dibuja el cuadro del segundo t.
+// =========================================================
+const S = document.getElementById('s');
+const F = "'DejaVu Sans', 'Noto Color Emoji', sans-serif";
+const SKIN = '#ffe0cc', SKIN_PALE = '#f3ece6';
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const ease = x => { x = clamp(x); return x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; };
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function rnd(i) { const x = Math.sin(i * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); }
+
+// ---------------- personajes ----------------
+const CH = {
+  yuna: {
+    hair: '#6b3f2a', outfit: '#fff3e6', apron: '#ffb3c7', shoe: '#c0506a',
+    back: c => `<path d="M-102,-215 Q-125,-95 -72,-92 L72,-92 Q125,-95 102,-215 Z" fill="${c}"/>
+                <circle cx="0" cy="-300" r="34" fill="${c}"/>`,
+    acc: () => strawberry(58, -292, 1)
+  },
+  minjae: {
+    hair: '#1f1f2b', outfit: '#2d3a5c', shoe: '#222',
+    back: c => `<path d="M-98,-215 Q-100,-170 -90,-160 L90,-160 Q100,-170 98,-215 Z" fill="${c}"/>`,
+    acc: () => `<g fill="none" stroke="#333" stroke-width="5"><circle cx="-38" cy="-185" r="30"/><circle cx="38" cy="-185" r="30"/><path d="M-8,-188 Q0,-196 8,-188"/></g>`
+  },
+  hana: {
+    hair: '#a8565f', outfit: '#f4e9f0', shoe: '#ff8fb3',
+    back: c => `<path d="M-104,-215 Q-118,-130 -84,-128 L84,-128 Q118,-130 104,-215 Z" fill="${c}"/>`,
+    acc: () => `<circle cx="-70" cy="-268" r="12" fill="#ff8fb3"/><circle cx="-56" cy="-276" r="12" fill="#ff8fb3"/><circle cx="-63" cy="-271" r="6" fill="#ff5c92"/>`
+  }
+};
+
+function strawberry(x, y, s) {
+  return `<g transform="translate(${x},${y}) scale(${s})">
+    <path d="M0,24 Q-24,4 -20,-8 Q-12,-20 0,-12 Q12,-20 20,-8 Q24,4 0,24 Z" fill="#ff3b5c"/>
+    <path d="M-12,-14 L0,-22 L12,-14 L4,-12 L0,-18 L-4,-12 Z" fill="#3fae5a"/>
+    <circle cx="-7" cy="-2" r="1.8" fill="#ffe08a"/><circle cx="6" cy="0" r="1.8" fill="#ffe08a"/><circle cx="-1" cy="9" r="1.8" fill="#ffe08a"/>
+  </g>`;
+}
+
+function star(cx, cy, r, fill) {
+  let p = [];
+  for (let i = 0; i < 10; i++) {
+    const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .45 : r;
+    p.push((cx + Math.cos(a) * rr).toFixed(1) + ',' + (cy + Math.sin(a) * rr).toFixed(1));
+  }
+  return `<polygon points="${p.join(' ')}" fill="${fill}"/>`;
+}
+
+function eye(cx, type, t, blinkSeed, starsOn) {
+  const cy = -185;
+  const blink = type !== 'closed' && type !== 'wide' && ((t + blinkSeed) % 3.4) < 0.12;
+  if (blink || type === 'closed')
+    return `<path d="M${cx - 18},${cy} Q${cx},${cy - 14} ${cx + 18},${cy}" stroke="#3a2318" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  if (type === 'wide')
+    return `<ellipse cx="${cx}" cy="${cy}" rx="19" ry="25" fill="#fff" stroke="#3a2318" stroke-width="3"/><circle cx="${cx}" cy="${cy}" r="6" fill="#3a2318"/>`;
+  if (type === 'dark')
+    return `<ellipse cx="${cx}" cy="${cy}" rx="17" ry="23" fill="#1c1c22"/>`;
+  let g = `<ellipse cx="${cx}" cy="${cy}" rx="17" ry="24" fill="#3a2318"/>
+           <ellipse cx="${cx}" cy="${cy + 9}" rx="12" ry="9" fill="#7a4a35"/>`;
+  if (type === 'stars' || starsOn) {
+    g += star(cx, cy, 13, '#ffe15c');
+    g += `<circle cx="${cx - 7}" cy="${cy - 10}" r="4" fill="#fff"/>`;
+  } else {
+    g += `<circle cx="${cx - 6}" cy="${cy - 9}" r="6.5" fill="#fff"/><circle cx="${cx + 6}" cy="${cy + 8}" r="3" fill="#fff"/>`;
+  }
+  if (type === 'teary')
+    g += `<path d="M${cx - 16},${cy + 14} Q${cx},${cy + 24} ${cx + 16},${cy + 14}" stroke="#8fd3ff" stroke-width="5" fill="none"/>`;
+  return g;
+}
+
+function mouth(type, t) {
+  const y = -140;
+  switch (type) {
+    case 'smile': return `<path d="M-14,${y} Q0,${y + 14} 14,${y}" stroke="#7a2e2e" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+    case 'open': return `<path d="M-15,${y - 3} Q0,${y - 3} 15,${y - 3} Q12,${y + 18} 0,${y + 18} Q-12,${y + 18} -15,${y - 3} Z" fill="#a63b46"/><ellipse cx="0" cy="${y + 12}" rx="7" ry="4" fill="#ff8f9c"/>`;
+    case 'tongue': return `<path d="M-12,${y} Q0,${y + 10} 12,${y}" stroke="#7a2e2e" stroke-width="4" fill="none"/><ellipse cx="9" cy="${y + 7}" rx="6" ry="5" fill="#ff7f93"/>`;
+    case 'o': return `<ellipse cx="0" cy="${y + 4}" rx="9" ry="12" fill="#7a2e2e"/>`;
+    case 'flat': return `<path d="M-12,${y + 2} L12,${y + 2}" stroke="#7a2e2e" stroke-width="4.5" stroke-linecap="round"/>`;
+    case 'frown': return `<path d="M-13,${y + 8} Q0,${y - 4} 13,${y + 8}" stroke="#7a2e2e" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+    case 'wobble': {
+      const w = Math.sin(t * 20) * 2;
+      return `<path d="M-16,${y + 4} q4,${-6 + w} 8,0 q4,${6 - w} 8,0 q4,${-6 + w} 8,0 q4,${6 - w} 8,0" stroke="#7a2e2e" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+    }
+    case 'grit': return `<rect x="-16" y="${y - 4}" width="32" height="14" rx="4" fill="#fff" stroke="#7a2e2e" stroke-width="3.5"/><path d="M-16,${y + 3} L16,${y + 3}" stroke="#7a2e2e" stroke-width="2"/>`;
+  }
+  return '';
+}
+
+// o: {kind,x,y,s,eyes,mouth,blush,tears,bigTear,sweat,steam,anger,question,puff,pale,flip,arms,hold,t,bob,brows}
+function chibi(o) {
+  const k = CH[o.kind], t = o.t || 0;
+  const bob = (o.bob === undefined ? 1 : o.bob) * Math.sin(t * 3 + (o.x || 0)) * 3;
+  const skin = o.pale ? SKIN_PALE : SKIN;
+  let g = `<g transform="translate(${o.x},${o.y}) scale(${(o.flip ? -1 : 1) * o.s},${o.s})">`;
+  g += `<ellipse cx="0" cy="0" rx="75" ry="13" fill="rgba(0,0,0,.2)"/>`;
+  g += `<g transform="translate(0,${bob})">`;
+  // cuerpo
+  g += `<ellipse cx="-26" cy="-6" rx="22" ry="11" fill="${k.shoe}"/><ellipse cx="26" cy="-6" rx="22" ry="11" fill="${k.shoe}"/>`;
+  g += `<path d="M-56,-8 Q-64,-112 0,-118 Q64,-112 56,-8 Z" fill="${k.outfit}"/>`;
+  if (k.apron) g += `<path d="M-36,-10 Q-40,-80 0,-84 Q40,-80 36,-10 Z" fill="${k.apron}"/><path d="M-12,-50 Q0,-40 12,-50" stroke="#fff" stroke-width="3" fill="none"/>`;
+  // brazos
+  const arms = o.arms || 'down';
+  if (arms === 'down') g += `<ellipse cx="-60" cy="-60" rx="16" ry="26" fill="${k.outfit}" stroke="rgba(0,0,0,.08)"/><ellipse cx="60" cy="-60" rx="16" ry="26" fill="${k.outfit}" stroke="rgba(0,0,0,.08)"/><circle cx="-62" cy="-36" r="12" fill="${skin}"/><circle cx="62" cy="-36" r="12" fill="${skin}"/>`;
+  if (arms === 'front') g += `<circle cx="-34" cy="-66" r="13" fill="${skin}"/><circle cx="34" cy="-66" r="13" fill="${skin}"/>`;
+  if (arms === 'phone') g += `<ellipse cx="-60" cy="-60" rx="16" ry="26" fill="${k.outfit}"/><circle cx="-62" cy="-36" r="12" fill="${skin}"/><path d="M50,-90 Q80,-130 78,-160" stroke="${k.outfit}" stroke-width="28" stroke-linecap="round" fill="none"/><rect x="62" y="-205" width="26" height="44" rx="6" fill="#333"/><circle cx="78" cy="-165" r="12" fill="${skin}"/>`;
+  if (arms === 'wipe') g += `<ellipse cx="60" cy="-60" rx="16" ry="26" fill="${k.outfit}"/><circle cx="62" cy="-36" r="12" fill="${skin}"/><path d="M-50,-90 Q-70,-140 -40,-172" stroke="${k.outfit}" stroke-width="28" stroke-linecap="round" fill="none"/><circle cx="-38" cy="-172" r="13" fill="${skin}"/>`;
+  if (k.kind === 'hana' || o.kind === 'hana') g += `<path d="M-50,-108 Q0,-88 50,-108 L52,-96 Q0,-74 -52,-96 Z" fill="#ff8fb3"/><path d="M20,-96 L34,-50 L14,-52 Z" fill="#ff8fb3"/>`;
+  // pelo de atrás + cabeza
+  g += k.back(k.hair);
+  g += `<circle cx="0" cy="-200" r="95" fill="${skin}"/>`;
+  if (o.puff) g += `<ellipse cx="-74" cy="-158" rx="34" ry="30" fill="${skin}"/><ellipse cx="74" cy="-158" rx="34" ry="30" fill="${skin}"/>`;
+  // flequillo
+  g += `<path d="M-99,-196 Q-104,-302 0,-304 Q104,-302 99,-196 Q90,-246 52,-244 Q34,-266 8,-246 Q-18,-270 -40,-242 Q-80,-252 -99,-196 Z" fill="${k.hair}"/>`;
+  // cara
+  if (o.brows === 'sad') g += `<path d="M-56,-226 L-24,-236 M56,-226 L24,-236" stroke="#5a3424" stroke-width="5" stroke-linecap="round"/>`;
+  if (o.brows === 'angry') g += `<path d="M-56,-238 L-22,-224 M56,-238 L22,-224" stroke="#5a3424" stroke-width="6" stroke-linecap="round"/>`;
+  g += eye(-38, o.eyes || 'normal', t, o.x * 0.01, o.starsL) + eye(38, o.eyes || 'normal', t, o.x * 0.01, o.starsR);
+  if (o.blush !== false && !o.pale) g += `<ellipse cx="-62" cy="-152" rx="15" ry="8" fill="#ff9fb0" opacity=".7"/><ellipse cx="62" cy="-152" rx="15" ry="8" fill="#ff9fb0" opacity=".7"/>`;
+  if (o.pale) g += `<g stroke="#9aa6c9" stroke-width="3" opacity=".7"><path d="M-60,-270 L-60,-240 M-45,-275 L-45,-245 M-30,-278 L-30,-250"/></g>`;
+  g += mouth(o.mouth || 'smile', t);
+  g += k.acc ? k.acc() : '';
+  // efectos
+  if (o.tears) {
+    for (let i = 0; i < 3; i++) {
+      const p = ((t * 1.3 + i / 3) % 1);
+      g += `<path d="M${-48 - p * 14},${-162 + p * 80} q-8,14 0,20 q8,-6 0,-20 Z" fill="#7cc8ff" opacity="${1 - p}"/>`;
+      g += `<path d="M${48 + p * 14},${-162 + p * 80} q-8,14 0,20 q8,-6 0,-20 Z" fill="#7cc8ff" opacity="${1 - p}"/>`;
+    }
+  }
+  if (o.bigTear !== undefined) {
+    const p = o.bigTear;
+    g += `<path d="M-44,${-158 + p * 40} q-12,20 0,28 q12,-8 0,-28 Z" fill="#7cc8ff" stroke="#fff" stroke-width="2"/>`;
+  }
+  if (o.sweat) g += `<path d="M86,-262 q-16,28 0,38 q16,-10 0,-38 Z" fill="#8fd3ff" stroke="#fff" stroke-width="3"/>`;
+  if (o.steam) {
+    for (let i = 0; i < 4; i++) {
+      const p = ((t * .8 + i / 4) % 1);
+      g += `<circle cx="${(i - 1.5) * 26 + Math.sin(p * 6 + i) * 8}" cy="${-320 - p * 90}" r="${14 + p * 16}" fill="#fff" opacity="${.85 * (1 - p)}"/>`;
+    }
+  }
+  if (o.anger) g += `<g transform="translate(70,-280)" stroke="#ff3355" stroke-width="7" stroke-linecap="round" fill="none"><path d="M-14,-4 Q-4,-4 -4,-14 M4,-14 Q4,-4 14,-4 M14,4 Q4,4 4,14 M-4,14 Q-4,4 -14,4"/></g>`;
+  if (o.question) g += `<text x="80" y="-300" font-family="${F}" font-size="70" font-weight="bold" fill="#ffd34d" stroke="#5a3a00" stroke-width="3">?</text>`;
+  g += `</g>`;
+  if (o.hold === 'box') g += box(0, -52, 1, o.boxShake || 0, t);
+  if (o.hold === 'boxOpen') g += cake(0, -60, .62, {});
+  g += `</g>`;
+  return g;
+}
+
+function box(x, y, s, shake, t) {
+  const dx = shake ? Math.sin(t * 60) * shake : 0;
+  return `<g transform="translate(${x + dx},${y}) scale(${s})">
+    <rect x="-52" y="-40" width="104" height="72" rx="8" fill="#ffd1df" stroke="#e58aa6" stroke-width="3"/>
+    <rect x="-8" y="-40" width="16" height="72" fill="#ff5c8a"/>
+    <path d="M0,-40 q-26,-26 -30,-6 q4,10 30,6 q26,4 30,-6 q-4,-20 -30,6" fill="#ff5c8a"/>
+  </g>`;
+}
+
+function cake(x, y, s, o) {
+  let g = `<g transform="translate(${x},${y}) scale(${s})">`;
+  g += `<ellipse cx="0" cy="62" rx="150" ry="26" fill="#f0f0f5"/><ellipse cx="0" cy="58" rx="132" ry="20" fill="#fff"/>`;
+  g += `<rect x="-120" y="-50" width="240" height="108" rx="20" fill="#fff4f0"/>`;
+  g += `<rect x="-120" y="-2" width="240" height="14" fill="#ff9fb8"/>`;
+  g += `<path d="M-120,-40 Q-120,-62 -98,-62 L98,-62 Q120,-62 120,-40 L120,-30 Q100,-14 80,-30 Q60,-14 40,-30 Q20,-14 0,-30 Q-20,-14 -40,-30 Q-60,-14 -80,-30 Q-100,-14 -120,-30 Z" fill="#ffc9d6"/>`;
+  const n = o.fruits === undefined ? 5 : o.fruits;
+  for (let i = 0; i < n; i++) g += strawberry(-88 + i * 44, -70, 1.15);
+  g += `<text x="0" y="44" text-anchor="middle" font-family="${F}" font-size="30" font-style="italic" font-weight="bold" fill="#6b3a2a">Para siempre ♥</text>`;
+  if (o.tear !== undefined) {
+    const p = o.tear;
+    if (p < 1) g += `<path d="M70,${-260 + p * 280} q-12,20 0,28 q12,-8 0,-28 Z" fill="#7cc8ff" stroke="#fff" stroke-width="2"/>`;
+    else g += `<ellipse cx="70" cy="34" rx="${10 + (p - 1) * 18}" ry="${4 + (p - 1) * 4}" fill="#7cc8ff" opacity=".7"/>`;
+  }
+  g += `</g>`;
+  return g;
+}
+
+function umbrella(x, y, s, rot) {
+  return `<g transform="translate(${x},${y}) rotate(${rot || 0}) scale(${s})">
+    <path d="M0,0 L0,150 q0,18 -18,18" stroke="#6b4a1a" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M-160,10 Q-150,-110 0,-115 Q150,-110 160,10 Q130,-12 106,10 Q80,-14 53,10 Q26,-14 0,10 Q-26,-14 -53,10 Q-80,-14 -106,10 Q-130,-12 -160,10 Z" fill="#ffd23f" stroke="#e0a800" stroke-width="4"/>
+    <path d="M0,-115 Q-40,-60 -53,10 M0,-115 Q40,-60 53,10" stroke="#e0a800" stroke-width="3" fill="none"/>
+  </g>`;
+}
+
+// ---------------- fondos ----------------
+function bgBakery(t) {
+  let g = `<defs><linearGradient id="bk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9d6"/><stop offset="1" stop-color="#ffd3dd"/></linearGradient>
+  <radialGradient id="lamp" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff6c8" stop-opacity=".9"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></radialGradient></defs>`;
+  g += `<rect width="540" height="960" fill="url(#bk)"/>`;
+  // ventana
+  g += `<rect x="300" y="110" width="190" height="230" rx="16" fill="#bfe6ff" stroke="#c98a5a" stroke-width="10"/><path d="M395,110 L395,340 M300,225 L490,225" stroke="#c98a5a" stroke-width="7"/>`;
+  g += `<circle cx="350" cy="160" r="18" fill="#fff" opacity=".8"/><circle cx="372" cy="152" r="14" fill="#fff" opacity=".8"/>`;
+  // estantes con panes
+  for (let r = 0; r < 2; r++) {
+    const y = 200 + r * 140;
+    g += `<rect x="30" y="${y}" width="230" height="12" rx="4" fill="#b87a4b"/>`;
+    for (let i = 0; i < 4; i++) {
+      const cx = 62 + i * 56;
+      g += `<ellipse cx="${cx}" cy="${y - 18}" rx="24" ry="18" fill="${['#e9a65f', '#d98b4a', '#f2c27c', '#e9a65f'][i]}"/><path d="M${cx - 12},${y - 24} q12,-8 24,0" stroke="#fff3d6" stroke-width="3" fill="none"/>`;
+    }
+  }
+  // lámpara
+  g += `<path d="M150,0 L150,70" stroke="#7a5a3a" stroke-width="4"/><path d="M118,96 Q150,52 182,96 Z" fill="#ff9fb8"/><circle cx="150" cy="140" r="${120 + Math.sin(t * 2) * 4}" fill="url(#lamp)"/>`;
+  // letrero
+  g += `<rect x="40" y="40" width="170" height="44" rx="22" fill="#fff" stroke="#ff8fb3" stroke-width="4"/><text x="125" y="70" text-anchor="middle" font-family="${F}" font-size="19" font-weight="bold" fill="#e0567f">🍓 Pastelería Yuna</text>`;
+  // mostrador
+  g += `<rect x="0" y="690" width="540" height="270" fill="#c98a5a"/><rect x="0" y="680" width="540" height="22" fill="#e0a674"/>`;
+  // partículas brillo
+  for (let i = 0; i < 12; i++) {
+    const p = (t * .05 + rnd(i)) % 1;
+    g += `<circle cx="${rnd(i + 9) * 540}" cy="${680 - p * 640}" r="${2 + rnd(i + 3) * 3}" fill="#fff" opacity="${.6 * Math.sin(p * Math.PI)}"/>`;
+  }
+  return g;
+}
+
+function rain(t, n, op, angle) {
+  let g = `<g stroke="#bcd3ff" stroke-width="2" opacity="${op}" stroke-linecap="round">`;
+  for (let i = 0; i < n; i++) {
+    const x = rnd(i) * 600 - 30, sp = 900 + rnd(i + 5) * 500;
+    const y = ((rnd(i + 2) * 1100 + t * sp) % 1100) - 80;
+    g += `<path d="M${x},${y} l${-(angle || 6)},26"/>`;
+  }
+  return g + `</g>`;
+}
+
+function bgStreet(t, wet) {
+  let g = `<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#140f33"/><stop offset="1" stop-color="#3b2a6e"/></linearGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter></defs>`;
+  g += `<rect width="540" height="960" fill="url(#sk)"/>`;
+  // edificios
+  const b = [[0, 260, 110], [100, 200, 120], [215, 300, 90], [300, 170, 130], [425, 250, 115]];
+  b.forEach((e, i) => {
+    g += `<rect x="${e[0]}" y="${e[1]}" width="${e[2]}" height="${760 - e[1]}" fill="#241a4d"/>`;
+    for (let wy = e[1] + 24; wy < 640; wy += 46) for (let wx = e[0] + 16; wx < e[0] + e[2] - 20; wx += 32)
+      if (rnd(wx * 3 + wy) > .45) g += `<rect x="${wx}" y="${wy}" width="16" height="22" rx="3" fill="#ffd98a" opacity="${.35 + rnd(wx + wy) * .4}"/>`;
+  });
+  // neones
+  const flick = (Math.sin(t * 13) > -.9) ? 1 : .3;
+  g += `<g opacity="${flick}"><rect x="118" y="300" width="96" height="40" rx="10" fill="none" stroke="#ff4fa3" stroke-width="5" filter="url(#glow)"/><rect x="118" y="300" width="96" height="40" rx="10" fill="none" stroke="#ffc2e0" stroke-width="2"/>
+       <text x="166" y="328" text-anchor="middle" font-family="${F}" font-size="20" font-weight="bold" fill="#ffd1ea">CAFÉ</text></g>`;
+  g += `<g><rect x="330" y="220" width="70" height="70" rx="35" fill="none" stroke="#44e5ff" stroke-width="5" filter="url(#glow)"/><text x="365" y="268" text-anchor="middle" font-family="${F}" font-size="34" fill="#c9f7ff">♥</text></g>`;
+  g += `<text x="470" y="330" text-anchor="middle" font-family="${F}" font-size="22" font-weight="bold" fill="#9dff9d" filter="url(#glow)">24H</text><text x="470" y="330" text-anchor="middle" font-family="${F}" font-size="22" font-weight="bold" fill="#dfffdf">24H</text>`;
+  // piso mojado
+  g += `<rect x="0" y="760" width="540" height="200" fill="#2a2250"/>`;
+  g += `<rect x="150" y="770" width="60" height="180" fill="#ff4fa3" opacity=".12"/><rect x="335" y="770" width="60" height="180" fill="#44e5ff" opacity=".12"/>`;
+  g += `<path d="M0,760 L540,760" stroke="#5a4a9a" stroke-width="3"/>`;
+  g += rain(t, wet ? 120 : 70, wet ? .55 : .4);
+  return g;
+}
+
+function bgHall(t) {
+  let g = `<defs><linearGradient id="hw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6e5d55"/><stop offset="1" stop-color="#4a3d38"/></linearGradient>
+  <radialGradient id="hl" cx=".5" cy="0" r=".8"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".55"/><stop offset="1" stop-color="#ffe9b0" stop-opacity="0"/></radialGradient></defs>`;
+  g += `<rect width="540" height="960" fill="url(#hw)"/>`;
+  g += `<rect x="0" y="0" width="540" height="960" fill="url(#hl)" opacity="${Math.sin(t * 7) > .95 ? .4 : 1}"/>`;
+  // puerta
+  g += `<rect x="250" y="170" width="230" height="560" rx="8" fill="#5a3522" stroke="#3a2214" stroke-width="8"/>`;
+  g += `<rect x="280" y="210" width="170" height="210" rx="6" fill="none" stroke="#3a2214" stroke-width="4"/><rect x="280" y="450" width="170" height="240" rx="6" fill="none" stroke="#3a2214" stroke-width="4"/>`;
+  g += `<circle cx="300" cy="470" r="12" fill="#e5c26a"/><rect x="320" y="130" width="90" height="32" rx="6" fill="#e5c26a"/><text x="365" y="154" text-anchor="middle" font-family="${F}" font-size="22" font-weight="bold" fill="#3a2214">302</text>`;
+  // luz por debajo de la puerta
+  g += `<rect x="256" y="722" width="218" height="8" fill="#ffe08a" opacity=".8"/>`;
+  // piso
+  g += `<rect x="0" y="730" width="540" height="230" fill="#3a2c28"/><path d="M0,730 L540,730" stroke="#2a1f1c" stroke-width="5"/>`;
+  // zapatos rosados
+  g += shoes(330, 742, .55);
+  // planta
+  g += `<rect x="40" y="640" width="60" height="90" rx="8" fill="#b0603a"/><ellipse cx="70" cy="610" rx="40" ry="50" fill="#3f8a55"/><ellipse cx="50" cy="590" rx="22" ry="34" fill="#4fa565"/>`;
+  return g;
+}
+
+function shoes(x, y, s) {
+  return `<g transform="translate(${x},${y}) scale(${s})">
+    <path d="M-90,0 Q-95,-30 -60,-34 L-20,-34 Q0,-34 0,-12 L0,0 Z" fill="#ff8fb3" stroke="#d9577f" stroke-width="4"/>
+    <path d="M10,0 Q5,-30 40,-34 L80,-34 Q100,-34 100,-12 L100,0 Z" fill="#ff8fb3" stroke="#d9577f" stroke-width="4"/>
+    <circle cx="-40" cy="-30" r="9" fill="#fff"/><circle cx="60" cy="-30" r="9" fill="#fff"/>
+  </g>`;
+}
+
+function bgApt(t, doorOpen) {
+  let g = `<defs><radialGradient id="al" cx=".25" cy=".3" r=".7"><stop offset="0" stop-color="#ffd59a" stop-opacity=".5"/><stop offset="1" stop-color="#ffd59a" stop-opacity="0"/></radialGradient></defs>`;
+  g += `<rect width="540" height="960" fill="#463a5c"/>`;
+  g += `<rect width="540" height="960" fill="url(#al)"/>`;
+  // ventana con lluvia
+  g += `<rect x="290" y="120" width="200" height="250" rx="10" fill="#1c1840" stroke="#2c2452" stroke-width="10"/>`;
+  g += `<g clip-path="inset(0)">${''}</g>`;
+  for (let i = 0; i < 26; i++) {
+    const x = 300 + rnd(i + 40) * 180, y = 130 + ((rnd(i + 70) * 230 + t * 300) % 230);
+    g += `<path d="M${x},${y} l-3,14" stroke="#9fb6ff" stroke-width="2" opacity=".6"/>`;
+  }
+  // lámpara de pie
+  g += `<path d="M70,720 L70,300" stroke="#c9a46a" stroke-width="6"/><path d="M30,300 L110,300 L90,240 L50,240 Z" fill="#ffe0a3"/>`;
+  // sofá
+  g += `<rect x="90" y="520" width="380" height="170" rx="40" fill="#8a5a7a"/><rect x="70" y="580" width="60" height="140" rx="26" fill="#7a4a6a"/><rect x="430" y="580" width="60" height="140" rx="26" fill="#7a4a6a"/>`;
+  g += `<rect x="0" y="720" width="540" height="240" fill="#2f2640"/><ellipse cx="270" cy="800" rx="210" ry="40" fill="#5a4670"/>`;
+  return g;
+}
+
+// ---------------- subtítulos ----------------
+function wrap(text, max) {
+  const words = text.split(' '); let lines = [], cur = '';
+  for (const w of words) { if ((cur + ' ' + w).trim().length > max) { lines.push(cur.trim()); cur = w; } else cur += ' ' + w; }
+  if (cur.trim()) lines.push(cur.trim());
+  return lines;
+}
+const WHO = {
+  NARRADOR: { c: '#b79cff', tag: 'NARRADOR', it: true },
+  YUNA: { c: '#ff6f9f', tag: 'YUNA 🍓' },
+  HANA: { c: '#ff8fb3', tag: 'HANA 🎀' },
+  MINJAE: { c: '#7fa2ff', tag: 'MIN-JAE 🖤' },
+};
+function caption(t, c) {
+  const w = WHO[c.who], local = t - c.a;
+  const fade = Math.min(prog(t, c.a, c.a + .25), 1 - prog(t, c.b - .25, c.b));
+  const shown = Math.floor(local * 32);
+  const full = c.text, txt = full.slice(0, Math.max(0, shown));
+  const lines = wrap(full, 27);
+  const h = 44 + lines.length * 38;
+  const y0 = 880 - h;
+  let g = `<g opacity="${fade}">`;
+  g += `<rect x="24" y="${y0}" width="492" height="${h}" rx="22" fill="rgba(255,255,255,.94)" stroke="${w.c}" stroke-width="4"/>`;
+  g += `<rect x="40" y="${y0 - 22}" width="${w.tag.length * 15 + 30}" height="40" rx="20" fill="${w.c}"/>`;
+  g += `<text x="56" y="${y0 + 6}" font-family="${F}" font-size="21" font-weight="bold" fill="#fff">${esc(w.tag)}${c.extra ? ' <tspan font-size="15" font-weight="normal">' + esc(c.extra) + '</tspan>' : ''}</text>`;
+  let used = 0;
+  lines.forEach((ln, i) => {
+    const part = txt.slice(used, used + ln.length); used += ln.length + 1;
+    g += `<text x="48" y="${y0 + 56 + i * 38}" font-family="${F}" font-size="27" ${w.it ? 'font-style="italic"' : ''} fill="#2a1d33" font-weight="${w.it ? 'normal' : 'bold'}">${esc(part)}</text>`;
+  });
+  return g + `</g>`;
+}
+
+const LINES = [
+  { a: 3.3, b: 9, who: 'NARRADOR', text: 'Yuna creía en tres cosas: en el azúcar, en su mejor amiga...' },
+  { a: 9, b: 12.5, who: 'NARRADOR', text: '...y en el amor.' },
+  { a: 15, b: 19.2, who: 'YUNA', text: '¡Listo! Feliz aniversario de tres años, Min-jae.' },
+  { a: 19.4, b: 25, who: 'YUNA', text: 'Él cree que hoy trabajo hasta tarde. ¡Sorpresaaa! 🎶' },
+  { a: 30, b: 34, who: 'YUNA', text: '¡Hana! Voy a sorprender a Min-jae. ¿Me deseas suerte?' },
+  { a: 34, b: 37.5, who: 'HANA', text: '¿A-ahora? ¿Vas para allá... ahora mismo?', extra: '(nerviosa)' },
+  { a: 37.5, b: 40.5, who: 'YUNA', text: '¡Sí! ¿Por qué hablas bajito? ¿Dónde estás?' },
+  { a: 40.5, b: 43.7, who: 'HANA', text: 'En... en mi casa. Me duele la cabeza. ¡Bye!' },
+  { a: 43.7, b: 45, who: 'YUNA', text: 'Qué rara...' },
+  { a: 51.5, b: 56, who: 'YUNA', text: 'Esos zapatos... yo se los ayudé a escoger a Hana.', extra: '(susurro)' },
+  { a: 57, b: 62, who: 'HANA', text: 'Jajaja, ¡Min-jae, para! ¿Y si viene Yuna?', extra: '(detrás de la puerta)' },
+  { a: 62, b: 67, who: 'MINJAE', text: 'Tranquila. Yuna trabaja hasta tarde. Siempre trabaja hasta tarde.', extra: '(detrás de la puerta)' },
+  { a: 72, b: 80, who: 'NARRADOR', text: 'A veces, las personas que más quieres... son las que tienen la llave de tu corazón. Y también la de tu casa.' },
+  { a: 86, b: 90, who: 'MINJAE', text: '¿Y-Yuna...? No es lo que parece.' },
+  { a: 90, b: 93.3, who: 'HANA', text: '¡Yuna, te lo puedo explicar!' },
+  { a: 102.5, b: 107, who: 'YUNA', text: 'Feliz aniversario, Min-jae.', extra: '(demasiado tranquila)' },
+  { a: 112, b: 115.2, who: 'YUNA', text: 'Ustedes dos... me van a pagar esto.' },
+];
+
+function bigText(txt, x, y, size, color, op, stroke) {
+  return `<text x="${x}" y="${y}" text-anchor="middle" font-family="${F}" font-size="${size}" font-weight="bold" fill="${color}" opacity="${op}" stroke="${stroke || 'none'}" stroke-width="${stroke ? 6 : 0}" paint-order="stroke">${esc(txt)}</text>`;
+}
+
+function sfx(txt, x, y, t, a, b, color, size) {
+  if (t < a || t > b) return '';
+  const k = prog(t, a, a + .25), f = 1 - prog(t, b - .3, b);
+  const sc = .6 + ease(k) * .4;
+  return `<g transform="translate(${x},${y}) scale(${sc}) rotate(-8)" opacity="${Math.min(k * 2, f)}">${bigText(txt, 0, 0, size || 46, color, 1, '#fff')}</g>`;
+}
+
+// ---------------- escenas ----------------
+function scene(t) {
+  let g = '';
+  // ===== GANCHO 0–3.3 =====
+  if (t < 3.3) {
+    g += bgBakery(t);
+    g += `<rect width="540" height="960" fill="#2a1430" opacity=".55"/>`;
+    const z = 1.25 + t * .05;
+    g += `<g transform="translate(270,480) scale(${z})">${cake(0, 0, 1, {})}</g>`;
+    const a = prog(t, .2, .8);
+    g += bigText('DULCE', 270, 170, 74, '#ff6f9f', a, '#fff');
+    g += bigText('TRAICIÓN 💔', 270, 250, 64, '#ff6f9f', a, '#fff');
+    g += `<rect x="30" y="700" width="480" height="110" rx="20" fill="rgba(0,0,0,.55)" opacity="${prog(t, .8, 1.3)}"/>`;
+    g += bigText('Ella no sabía lo que', 270, 748, 32, '#fff', prog(t, .8, 1.3));
+    g += bigText('iba a encontrar...', 270, 790, 32, '#fff', prog(t, .8, 1.3));
+    return g;
+  }
+  // ===== ESCENA 1: Pastelería 3.3–25 =====
+  if (t < 25) {
+    g += bgBakery(t);
+    const starOn = t > 12.2;
+    const done = t > 15;
+    g += chibi({ kind: 'yuna', x: 270, y: 700, s: 1.05, t, eyes: starOn ? 'stars' : 'normal', mouth: t > 15 ? (t > 21 && t < 25 ? 'open' : 'smile') : 'tongue', arms: 'front' });
+    g += cake(270, 690, .9, { fruits: t < 10.5 ? 3 : t < 12 ? 4 : 5 });
+    // fresa cayendo
+    if (t > 10.5 && t < 12.2) {
+      const p = ease(prog(t, 10.5, 12.2));
+      g += strawberry(270 + .9 * 88, lerp(520, 627, p), 1.1);
+    }
+    if (t > 12.2 && t < 14.5) {
+      for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4 + t; const r = 40 + prog(t, 12.2, 14.5) * 120; g += star(270 + Math.cos(a) * r, 380 + Math.sin(a) * r, 14, '#ffe15c'); }
+    }
+    g += sfx('✨ ¡ding! ✨', 270, 120, t, 12.2, 14.5, '#ffb800', 44);
+    g += sfx('¡Sorpresaaa! 🎶', 270, 170, t, 21.5, 24.8, '#ff6f9f', 46);
+  }
+  // ===== ESCENA 2: Calle + llamada 25–45 =====
+  else if (t < 45) {
+    if (t < 33.5) {
+      g += bgStreet(t, false);
+      const walkX = lerp(120, 330, prog(t, 25, 33.5));
+      const step = Math.abs(Math.sin(t * 6)) * 8;
+      g += chibi({ kind: 'yuna', x: walkX, y: 820 - step, s: .95, t, eyes: 'normal', mouth: t > 30 ? 'open' : 'smile', arms: t > 28 ? 'phone' : 'down', hold: t > 28 ? null : 'box', bob: 0 });
+      g += umbrella(walkX - 10, 470 - step, .9, -6);
+      if (t > 26.5 && t < 30) {
+        const dots = '.'.repeat(1 + Math.floor(t * 3) % 3);
+        g += `<rect x="120" y="80" width="300" height="70" rx="35" fill="rgba(255,255,255,.92)"/>`;
+        g += bigText('📞 Llamando a Hana' + dots, 270, 125, 26, '#e0567f', 1);
+      }
+    } else {
+      // pantalla dividida
+      g += `<svg x="0" y="0" width="540" height="478" viewBox="0 0 540 478">${bgStreet(t, false)}${chibi({ kind: 'yuna', x: 270, y: 440, s: .78, t, eyes: 'normal', mouth: (t > 37.5 && t < 40.5) ? 'open' : t > 43.7 ? 'flat' : 'smile', arms: 'phone', question: t > 43.7 })}</svg>`;
+      g += `<svg x="0" y="482" width="540" height="478" viewBox="0 0 540 478">
+        <rect width="540" height="478" fill="#1d1326"/>
+        <rect x="0" y="0" width="540" height="478" fill="#3a2350" opacity=".6"/>
+        <rect x="330" y="200" width="170" height="16" rx="4" fill="#4a3460"/>
+        <g transform="translate(415,190)"><g fill="none" stroke="#c9c9d9" stroke-width="4"><circle cx="-18" cy="0" r="14"/><circle cx="18" cy="0" r="14"/><path d="M-4,-2 Q0,-6 4,-2"/></g></g>
+        ${chibi({ kind: 'hana', x: 200, y: 290, s: .7, t, eyes: 'normal', mouth: (t > 34 && t < 37.5) ? 'wobble' : (t > 40.5 && t < 43.7) ? 'wobble' : 'flat', arms: 'phone', sweat: true, flip: Math.sin(t * 1.5) > .4 })}
+      </svg>`;
+      g += `<rect x="0" y="476" width="540" height="8" fill="#fff"/>`;
+      if (t > 43.7) g += `<rect x="150" y="440" width="240" height="44" rx="22" fill="#333"/>` + bigText('Llamada finalizada', 270, 470, 20, '#fff', 1);
+      g += sfx('?', 300, 60, t, 34, 35.5, '#ffd34d', 40);
+    }
+  }
+  // ===== ESCENA 3: Pasillo 45–80 =====
+  else if (t < 80) {
+    if (t >= 49 && t < 56) {
+      // primer plano de los zapatos
+      const z = 1 + prog(t, 49, 56) * .15;
+      g += `<rect width="540" height="960" fill="#3a2c28"/><rect y="0" width="540" height="420" fill="#5a3522"/><rect y="400" width="540" height="30" fill="#ffe08a" opacity=".55"/>`;
+      g += `<g transform="translate(270,640) scale(${2.3 * z})">${shoes(-5, 0, 1)}</g>`;
+      g += sfx('DUN', 270, 260, t, 49.2, 51.4, '#ff3355', 90);
+    } else if (t >= 67 && t < 72) {
+      // primer plano: las estrellas se apagan
+      g += bgHall(t);
+      g += `<rect width="540" height="960" fill="#000" opacity=".35"/>`;
+      const k = prog(t, 67.4, 70.5);
+      g += `<g transform="translate(270,1020) scale(2.3)">${chibi({ kind: 'yuna', x: 0, y: 0, s: 1, t, bob: 0, eyes: k > .85 ? 'dark' : 'normal', starsL: k < .35, starsR: k < .6, mouth: 'flat', blush: false, brows: 'sad' })}</g>`;
+      g += sfx('...', 270, 160, t, 69.5, 72, '#fff', 60);
+    } else {
+      g += bgHall(t);
+      const listening = t > 56;
+      const shake = t > 62 ? 3 : 0;
+      g += chibi({ kind: 'yuna', x: 150, y: 860, s: 1, t, eyes: t > 72 ? 'dark' : listening ? 'wide' : 'stars', mouth: t > 72 ? 'flat' : listening ? 'o' : 'smile', hold: 'box', boxShake: shake, arms: 'front', brows: t > 62 ? 'sad' : null, blush: !listening });
+      if (t < 49) {
+        // llave
+        g += `<g transform="translate(230,${730 + Math.sin(t * 4) * 6}) rotate(-20)"><circle cx="0" cy="0" r="14" fill="none" stroke="#ffd34d" stroke-width="6"/><path d="M14,0 L50,0 M40,0 L40,12 M48,0 L48,10" stroke="#ffd34d" stroke-width="6"/></g>`;
+        g += sfx('🎁 ¡Sorpresa!', 380, 110, t, 45.3, 48.8, '#ff6f9f', 36);
+      }
+      if (t > 56 && t < 66) {
+        for (let i = 0; i < 3; i++) {
+          const p = ((t * .6 + i / 3) % 1);
+          g += `<text x="${330 + i * 40 + Math.sin(p * 8) * 10}" y="${560 - p * 260}" font-family="${F}" font-size="30" font-weight="bold" fill="#ffd1ea" opacity="${1 - p}">jaja</text>`;
+        }
+      }
+      if (t > 72) g += `<rect width="540" height="960" fill="#0a0820" opacity="${.35 * prog(t, 72, 74)}"/>`;
+    }
+  }
+  // ===== ESCENA 4: Apartamento 80–110 =====
+  else if (t < 110) {
+    if (t < 97) {
+      g += bgApt(t);
+      // pareja en el sofá con manta
+      const caught = t > 83.3;
+      g += chibi({ kind: 'minjae', x: 210, y: 690, s: .78, t, bob: .3, eyes: caught ? 'wide' : 'closed', mouth: caught ? (t > 86 && t < 90 ? 'wobble' : 'o') : 'smile', pale: caught, sweat: caught, blush: !caught, flip: caught });
+      g += chibi({ kind: 'hana', x: 340, y: 690, s: .78, t, bob: .3, eyes: caught ? 'wide' : 'closed', mouth: caught ? (t > 90 && t < 93.3 ? 'open' : 'o') : 'open', pale: caught, sweat: caught, blush: !caught, arms: t > 90 ? 'front' : 'down' });
+      g += `<path d="M120,640 Q275,600 430,640 L440,700 Q275,720 110,700 Z" fill="#b8e0d2" stroke="#8cc4b0" stroke-width="3"/>`;
+      // puerta que se abre: luz desde la izquierda
+      if (t < 85) {
+        const o = ease(prog(t, 80.4, 82.5));
+        g += `<path d="M0,180 L${o * 180},240 L${o * 180},760 L0,800 Z" fill="#ffe7a8" opacity="${o * .55}"/>`;
+        g += sfx('clic', 120, 200, t, 80.3, 81.8, '#ffd34d', 44);
+      }
+      if (t > 82.5) {
+        g += `<path d="M0,180 L180,240 L180,760 L0,800 Z" fill="#ffe7a8" opacity=".3"/>`;
+        g += `<g opacity=".9">${chibi({ kind: 'yuna', x: 70, y: 930, s: .9, t, bob: 0, eyes: 'dark', mouth: 'flat', hold: t > 94 ? 'boxOpen' : 'box', blush: false, brows: 'sad' })}</g>`;
+      }
+      g += sfx('¡!', 290, 300, t, 83.3, 85.3, '#ff3355', 80);
+      if (t > 93.3) g += sfx('🌧️ ...', 290, 160, t, 93.4, 96.8, '#c9d6ff', 40);
+    } else if (t < 107) {
+      // primer plano del pastel y la lágrima
+      g += `<rect width="540" height="960" fill="#2a2340"/>`;
+      g += `<rect width="540" height="960" fill="url(#none)"/>`;
+      const z = 1.5 + prog(t, 97, 107) * .15;
+      g += `<g transform="translate(270,560) scale(${z})">${cake(0, 0, 1, { tear: prog(t, 98.3, 100.5) * 1 + (t > 100.5 ? prog(t, 100.5, 102) : 0) })}</g>`;
+      g += rain(t, 30, .15);
+    } else {
+      g += bgApt(t);
+      g += chibi({ kind: 'minjae', x: 210, y: 690, s: .78, t, bob: .3, eyes: 'wide', mouth: 'o', pale: true, sweat: true, flip: true });
+      g += chibi({ kind: 'hana', x: 340, y: 690, s: .78, t, bob: .3, eyes: 'wide', mouth: 'o', pale: true, sweat: true });
+      g += `<path d="M120,640 Q275,600 430,640 L440,700 Q275,720 110,700 Z" fill="#b8e0d2" stroke="#8cc4b0" stroke-width="3"/>`;
+      g += cake(270, 860, .5, {});
+      const away = lerp(150, -120, ease(prog(t, 107.6, 110)));
+      g += chibi({ kind: 'yuna', x: away, y: 930, s: .9, t, bob: 0, eyes: 'dark', mouth: 'flat', blush: false, flip: true, brows: 'sad' });
+    }
+  }
+  // ===== ESCENA 5: Final 110–120 =====
+  else {
+    if (t < 118) {
+      g += bgStreet(t, true);
+      const phase = t < 111.6 ? 'cry' : t < 115.3 ? 'angry' : 'shock';
+      g += chibi({ kind: 'yuna', x: 270, y: 830, s: 1.15, t, bob: 0,
+        eyes: phase === 'cry' ? 'teary' : phase === 'angry' ? 'normal' : 'wide',
+        mouth: phase === 'cry' ? 'wobble' : phase === 'angry' ? 'grit' : 'o',
+        tears: phase === 'cry', arms: phase === 'cry' ? 'wipe' : 'phone', puff: phase === 'angry', steam: phase === 'angry', anger: phase === 'angry', brows: phase === 'angry' ? 'angry' : phase === 'cry' ? 'sad' : null });
+      if (phase === 'shock') {
+        const k = ease(prog(t, 115.3, 115.9));
+        g += `<g transform="translate(270,${lerp(-200, 230, k)})">
+          <rect x="-230" y="-120" width="460" height="230" rx="28" fill="#fff" stroke="#ff3355" stroke-width="5"/>
+          <text x="-200" y="-78" font-family="${F}" font-size="20" font-weight="bold" fill="#ff3355">📩 Número desconocido</text>
+          <text x="-200" y="-34" font-family="${F}" font-size="25" font-weight="bold" fill="#222">Sé lo que te hicieron.</text>
+          <text x="-200" y="4" font-family="${F}" font-size="25" font-weight="bold" fill="#222">Y no es la primera vez.</text>
+          <text x="-200" y="54" font-family="${F}" font-size="25" font-weight="bold" fill="#c0103a">¿Quieres saber la verdad?</text>
+        </g>`;
+        g += `<rect width="540" height="960" fill="#fff" opacity="${.5 * (1 - prog(t, 115.3, 115.8))}"/>`;
+      }
+    } else {
+      g += `<rect width="540" height="960" fill="#000"/>`;
+      const a = prog(t, 118.1, 118.7);
+      g += bigText('💔 Continuará...', 270, 400, 52, '#ff6f9f', a);
+      g += bigText('Episodio 2:', 270, 490, 30, '#fff', a);
+      g += bigText('"El número desconocido"', 270, 535, 30, '#fff', a);
+      g += bigText('👀 ¿Quién mandó el mensaje?', 270, 660, 26, '#ffd34d', prog(t, 118.5, 119));
+      g += bigText('Sígueme para la parte 2', 270, 710, 26, '#b79cff', prog(t, 118.5, 119));
+    }
+  }
+  // subtítulos
+  for (const c of LINES) if (t >= c.a && t <= c.b) g += caption(t, c);
+  // fundido en negro entre escenas
+  const cuts = [3.3, 25, 45, 80, 110, 118];
+  let fade = 0;
+  for (const c of cuts) fade = Math.max(fade, 1 - Math.abs(t - c) / .3);
+  if (t < .3) fade = Math.max(fade, 1 - t / .3);
+  if (fade > 0) g += `<rect width="540" height="960" fill="#000" opacity="${clamp(fade)}"/>`;
+  // marca
+  g += `<text x="516" y="40" text-anchor="end" font-family="${F}" font-size="16" font-weight="bold" fill="#fff" opacity=".6" stroke="#000" stroke-width="3" paint-order="stroke">Dulce Traición · Ep. 1</text>`;
+  return g;
+}
+
+window.setTime = t => { S.innerHTML = scene(t); return true; };
+const q = new URLSearchParams(location.search);
+if (q.has('t')) window.setTime(parseFloat(q.get('t')));
+else { const t0 = performance.now(); (function loop() { window.setTime(((performance.now() - t0) / 1000) % 120); requestAnimationFrame(loop); })(); }
+</script>
+</body></html>
