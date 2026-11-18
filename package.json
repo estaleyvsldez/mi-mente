@@ -1,0 +1,8 @@
+{
+  "name": "mi-mente-chat",
+  "version": "1.0.0",
+  "description": "Mensajería estilo Telegram que funciona sin internet en una red local",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "license": "MIT"
+}
