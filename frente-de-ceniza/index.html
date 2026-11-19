@@ -375,8 +375,8 @@ addEventListener('resize', ()=>{
 });
 
 function loadHDRI(){
-  const urls=['assets/quarry_01_1k.hdr','https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/industrial_sunset_puresky_1k.hdr'];
-  const go=i=>new RGBELoader().load(urls[i], tex=>{
+  const urls=['assets/quarry_01_1k.hdr',()=>b64url('assets/quarry_01_1k.hdr.b64.txt'),'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/industrial_sunset_puresky_1k.hdr'];
+  const go=async i=>{ let u=urls[i]; if(typeof u==='function'){ try{ u=await u(); }catch(e){ if(i+1<urls.length) go(i+1); return; } } new RGBELoader().load(u, tex=>{
     tex.mapping = THREE.EquirectangularReflectionMapping; renderer.initTexture(tex);
     try{
       const {width:W,height:H,data} = tex.image; const half = data instanceof Uint16Array;
@@ -395,9 +395,10 @@ function loadHDRI(){
     }catch(e){ console.warn(e); }
     scene.background = tex; scene.backgroundIntensity = 0.9; scene.environment = pmrem.fromEquirectangular(tex).texture; wScene.environment = scene.environment;
     scene.remove(sky);
-  }, undefined, ()=>{ if(i+1<urls.length) go(i+1); });
+  }, undefined, ()=>{ if(i+1<urls.length) go(i+1); }); };
   go(0);
 }
+async function b64url(path){ const r=await fetch(path); if(!r.ok) throw new Error('no '+path); const t=(await r.text()).trim(); const bin=atob(t), u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return URL.createObjectURL(new Blob([u])); }
 
 // ======================= TEXTURAS =======================
 function makeNoise(seed){
@@ -1099,17 +1100,18 @@ const TEAMTINT={E:0x8a8574, A:0x7a8aa0, B:0xa27a66};
 const matCache=new Map();
 function tintMat(m,team){ const k=m.uuid+team; if(!matCache.has(k)){ const c=m.clone(); c.color.setHex(TEAMTINT[team]||0x8a8574); c.envMapIntensity=0.6; matCache.set(k,c);} return matCache.get(k); }
 async function loadSoldier(){
-  const urls=['assets/Soldier.glb','https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/models/gltf/Soldier.glb','https://threejs.org/examples/models/gltf/Soldier.glb'];
+  const urls=['assets/Soldier.glb',()=>b64url('assets/Soldier.glb.b64.txt'),'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/models/gltf/Soldier.glb','https://threejs.org/examples/models/gltf/Soldier.glb'];
   const loader=new GLTFLoader();
-  for(const u of urls){
+  for(const u0 of urls){
     try{
+      const u=typeof u0==='function'?await u0():u0;
       const gltf=await Promise.race([loader.loadAsync(u), new Promise((_,rej)=>setTimeout(()=>rej('timeout'),25000))]);
       const clips={}; for(const c of gltf.animations) clips[c.name]=c;
       gltf.scene.updateMatrixWorld(true);
       const box=new THREE.Box3().setFromObject(gltf.scene); const h=box.max.y-box.min.y;
       soldierTpl={scene:gltf.scene, clips, scale:(h>0.5&&h<4)?1.8/h:1};
       return true;
-    }catch(e){ console.warn('modelo', u, e); }
+    }catch(e){ console.warn('modelo', u0, e); }
   }
   return false;
 }
