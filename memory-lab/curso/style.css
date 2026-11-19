@@ -65,3 +65,20 @@ details summary{cursor:pointer;font-weight:600;padding:6px 0}
 .stat b{display:block;font-size:1.4rem}
 .save{font-size:.8rem;color:var(--muted);text-align:right}
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+
+/* frases con pronunciación y conversación A/B */
+.say{padding:10px 0;border-bottom:1px solid var(--line)} .say:last-child{border-bottom:0}
+.say .pr{font-size:1rem;color:var(--accent);font-weight:600;margin-top:2px}
+.say .es{margin-top:2px}
+.say.big .sent{font-size:1.4rem} .say.big .pr{font-size:1.15rem}
+.lb{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.lb .btn.speak{margin-left:0}
+.mic{margin-top:10px}
+.mic-btn{width:100%;min-height:52px;font-weight:700;border:2px solid var(--accent);color:var(--accent)}
+.conv{display:flex;flex-direction:column;gap:10px}
+.bubble{border-radius:14px;padding:6px 12px 10px;max-width:92%}
+.bubble.a{background:var(--bg);border:1px solid var(--line);align-self:flex-start}
+.bubble.b{background:color-mix(in srgb,var(--accent) 9%,var(--card));border:1px solid var(--accent);align-self:flex-end;width:92%}
+.bubble .say{border-bottom:0}
+.who{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.big-es{font-size:1.15rem;font-weight:600;color:var(--ink);margin:6px 0}
