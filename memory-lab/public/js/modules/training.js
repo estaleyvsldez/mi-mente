@@ -151,9 +151,9 @@
     review: null, english: null
   };
   TR.practiceTechnique = function (t) {
-    if (t.drill === 'english') { location.hash = '#/english'; return; }
-    if (t.drill === 'review') { location.hash = '#/'; toast('Esta técnica está integrada en los repasos diarios.'); return; }
-    if (t.drill === 'palace' && !Athlete.palaces().length) { toast('Crea primero un palacio.'); location.hash = '#/athlete/palaces'; return; }
+    if (t.drill === 'english') { App.go('#/english'); return; }
+    if (t.drill === 'review') { App.go('#/'); toast('Esta técnica está integrada en los repasos diarios.'); return; }
+    if (t.drill === 'palace' && !Athlete.palaces().length) { toast('Crea primero un palacio.'); App.go('#/athlete/palaces'); return; }
     const make = DRILL[t.drill]; const it = make && make();
     if (!it) return toast('Sin ejercicio disponible', 'bad');
     it.technique = it.type === 'mem' ? t.id + (it.technique && it.technique !== t.id ? '' : '') : it.technique;

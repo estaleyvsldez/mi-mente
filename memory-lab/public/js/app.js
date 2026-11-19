@@ -20,7 +20,7 @@
   function drawNav() {
     const side = $('#side'); side.innerHTML = '';
     if (!Store.loggedIn) return;
-    const cur = location.hash || '#/';
+    const cur = App.path;
     const link = n => h('a', { href: n[0], class: cur === n[0] ? 'on' : '', onclick: () => side.classList.remove('open') }, h('span', { class: 'ic' }, n[1]), n[2]);
     NAV_MAIN.forEach(n => side.append(link(n)));
     const more = h('details', { class: 'more', open: NAV_MORE.some(n => cur.startsWith(n[0])) || null }, h('summary', null, 'Más herramientas'), NAV_MORE.map(link));
@@ -42,7 +42,26 @@
 
   /* ---------- sesiones ---------- */
   let pendingSession = null;
-  App.start = function (session) { pendingSession = session; if (location.hash === '#/run') App.route(); else location.hash = '#/run'; };
+  App.start = function (session) { pendingSession = session; App.go('#/run', true); };
+  /* Navegación interna: no depende de la barra de direcciones (el visor de claude.ai no admite rutas «#/…»).
+     En la versión local también se refleja en la dirección para poder usar atrás/adelante. */
+  App.path = (Store.mode !== 'artifact' && location.hash.startsWith('#/')) ? location.hash : '#/';
+  let ownHash = null;
+  App.go = function (path, force) {
+    path = path || '#/';
+    const same = path === App.path;
+    App.path = path;
+    if (Store.mode !== 'artifact' && location.hash !== path) { ownHash = path; try { location.hash = path; } catch (_) { /* sin dirección */ } }
+    void same; void force;
+    App.route();
+    window.scrollTo(0, 0);
+  };
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href^="#/"]');
+    if (!a || e.ctrlKey || e.metaKey || e.button !== 0) return;
+    e.preventDefault();
+    App.go(a.getAttribute('href'));
+  });
 
   /* ---------- router ---------- */
   App.route = function () {
@@ -50,7 +69,7 @@
     drawNav(); drawSync();
     view.innerHTML = '';
     if (!Store.loggedIn) return viewAuth(view);
-    const hash = location.hash || '#/';
+    const hash = App.path || '#/';
     const parts = hash.slice(2).split('/');
     const r = parts[0];
     try {
@@ -59,7 +78,7 @@
       if (r === 'run') {
         if (pendingSession) { const s = pendingSession; pendingSession = null; if (s.kind === 'learn' || s.kind === 'review' || s.kind === 'exam' || s.module === 'english') { const od = s.onDone; s.onDone = (ss, acc) => { const a = EN.onDone(ss); const b = od ? od(ss, acc) : null; return h('div', null, a, b); }; } return Ex.run(view, s); }
         const ip = Store.get('inprogress', 'current'); if (ip) return resume(ip);
-        location.hash = '#/'; return;
+        App.go('#/'); return;
       }
       if (r === 'english') {
         if (!parts[1]) return EN.viewHome(view);
@@ -96,7 +115,11 @@
     const s = Object.assign({}, ip, { onDone: ip.module === 'english' ? (ss) => EN.onDone(ss) : null });
     Ex.run(view, s);
   }
-  window.addEventListener('hashchange', App.route);
+  window.addEventListener('hashchange', () => {
+    if (Store.mode === 'artifact') return;
+    if (ownHash === location.hash) { ownHash = null; return; }
+    if (location.hash.startsWith('#/') && location.hash !== App.path) { App.path = location.hash; App.route(); }
+  });
 
   /* ---------- autenticación ---------- */
   function viewAuth(root) {
@@ -113,7 +136,7 @@
     const toggle = h('button', { class: 'btn ghost small', type: 'button', onclick: () => { register = !register; title.textContent = register ? 'Crear cuenta' : 'Iniciar sesión'; btn.textContent = register ? 'Crear cuenta' : 'Entrar'; toggle.textContent = register ? 'Ya tengo cuenta' : 'Crear una cuenta nueva'; pass.autocomplete = register ? 'new-password' : 'current-password'; } }, 'Crear una cuenta nueva');
     const form = h('form', { class: 'card auth', onsubmit: async e => {
       e.preventDefault(); btn.disabled = true; msg.innerHTML = '';
-      try { await Store.login(user.value.trim(), pass.value, register); Ex.loadAccepted(); EN.loadExtra(); refreshAI(); location.hash = '#/'; App.route(); }
+      try { await Store.login(user.value.trim(), pass.value, register); Ex.loadAccepted(); EN.loadExtra(); refreshAI(); App.go('#/'); App.route(); }
       catch (err) { msg.append(h('div', { class: 'notice bad' }, err.status ? err.message : 'No se pudo conectar con el servidor. ¿Está en marcha («npm start»)?')); }
       btn.disabled = false;
     } }, h('h1', null, '◆ Memory Lab'), h('p', { class: 'muted' }, 'Entrenamiento de memoria, técnicas de memorización e inglés estructural. Tu progreso se guarda en la base de datos del servidor y se sincroniza entre dispositivos.'), title, user, h('div', { style: { height: '8px' } }), pass, h('div', { class: 'row', style: { marginTop: '12px' } }, btn, toggle), msg);
@@ -146,7 +169,7 @@
     const dl = Store.list('delayed').filter(d => !d.done && d.due <= Date.now());
     if (dl.length) items.push(['⏳', dl.length + ' evaluaciones diferidas', 'Comprueba si lo que memorizaste sigue ahí', () => App.start({ title: 'Recuperación diferida', module: 'delayed', items: dl.slice(0, 5).map(d => Object.assign({}, d.item, { label: 'Recuperación diferida', skipStudy: true })), back: '#/' })]);
     const L = SEM.LESSONS[Training.unlockedIndex()];
-    if (L) items.push(['📈', 'Entrenamiento progresivo: ' + L.n, L.goal, () => { location.hash = '#/training/' + L.id; }]);
+    if (L) items.push(['📈', 'Entrenamiento progresivo: ' + L.n, L.goal, () => { App.go('#/training/' + L.id); }]);
     const weakMod = MEM.MODULES.map(m => ({ m, last: Store.attempts(a => a.module === m.id).pop() })).sort((a, b) => (a.last ? a.last.ts : 0) - (b.last ? b.last.ts : 0))[0];
     if (weakMod) items.push(['🧩', 'Módulo: ' + weakMod.m.n, weakMod.last ? 'El que llevas más tiempo sin practicar' : 'Aún no lo has probado', () => App.start({ title: weakMod.m.n, module: weakMod.m.id, items: [MEM.make(weakMod.m.id), MEM.make(weakMod.m.id)], back: '#/' })]);
     plan.append(h('ul', { class: 'list' }, items.map(([ic, t, d, fn]) => h('li', { class: 'row between' }, h('div', null, h('b', null, ic + ' ' + t), h('div', { class: 'muted small' }, d)), h('button', { class: 'btn small primary', type: 'button', onclick: fn }, 'Empezar')))));
@@ -183,7 +206,7 @@
       ['Recordar palabras oralmente', 'Escucha una lista y después dila (o escríbela).', () => App.start({ title: 'Voice Recall · palabras', module: 'auditory', items: [Object.assign(MEM.fill({ type: 'mem', module: 'auditory', kind: 'auditory', count: 6, mode: 'normal', technique: 'chunking+multisensory', fixed: true }), { data: MEM.words(6).map(w => w.es) })], back: '#/voice' })],
       ['Repetir secuencias', 'Escucha dígitos y repítelos.', () => App.start({ title: 'Voice Recall · secuencias', module: 'auditory', items: [Object.assign(MEM.fill({ type: 'mem', module: 'auditory', kind: 'auditory', count: 6, mode: 'normal', technique: 'chunking', fixed: true }), { data: MEM.digits(7) })], back: '#/voice' })],
       ['Describir una imagen en inglés', 'Describe la escena en voz alta; se comprueban las palabras clave.', () => App.start({ title: 'Describir imagen', module: 'english', items: [{ type: 'describe', objs: MEM.items(4).map((x, i) => Object.assign({}, x, { color: SEM.COLORS[i] })) }], back: '#/voice' })],
-      ['Conversaciones por voz', 'Situaciones completas respondiendo hablando.', () => { location.hash = '#/english/talk'; }]
+      ['Conversaciones por voz', 'Situaciones completas respondiendo hablando.', () => { App.go('#/english/talk'); }]
     ];
     root.append(h('div', { class: 'grid g2' }, opts.map(([t, d, fn]) => h('div', { class: 'card' }, h('h3', null, t), h('p', { class: 'muted small' }, d), h('button', { class: 'btn primary', type: 'button', onclick: fn }, 'Empezar')))));
   }

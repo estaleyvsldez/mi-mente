@@ -133,7 +133,7 @@
       const item = session.items[session.idx];
       const type = Ex.types[item.type];
       const head = h('div', { class: 'ex-head' },
-        h('button', { class: 'btn ghost small', type: 'button', onclick: () => { saveProgress(); location.hash = session.back || '#/'; } }, '✕ Salir'),
+        h('button', { class: 'btn ghost small', type: 'button', onclick: () => { saveProgress(); App.go(session.back || '#/'); } }, '✕ Salir'),
         h('div', { class: 'bar', title: (session.idx + 1) + ' de ' + session.items.length }, h('i', { style: { width: (session.idx / session.items.length * 100) + '%' } })),
         h('span', { class: 'small muted' }, (session.idx + 1) + '/' + session.items.length));
       const body = h('div', { class: 'card' });

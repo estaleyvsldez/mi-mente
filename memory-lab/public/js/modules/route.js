@@ -118,7 +118,7 @@
   /* Ejecuta los pasos uno tras otro con un solo botón. */
   R.run = function (steps, i) {
     i = i || 0;
-    if (i >= steps.length) { location.hash = '#/'; return; }
+    if (i >= steps.length) { App.go('#/'); return; }
     const s = steps[i].build();
     if (!s) return R.run(steps, i + 1);
     if (s.resume) { delete s.resume; }

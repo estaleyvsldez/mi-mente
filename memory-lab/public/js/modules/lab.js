@@ -35,7 +35,7 @@
     const method = LAB.nextMethod(exp);
     const meta = METHODS[method];
     const pal = Athlete.palaces()[0];
-    if (meta.needsPalace && !pal) { toast('Este método necesita un palacio. Créalo primero.'); location.hash = '#/athlete/palaces'; return; }
+    if (meta.needsPalace && !pal) { toast('Este método necesita un palacio. Créalo primero.'); App.go('#/athlete/palaces'); return; }
     let it;
     if (meta.needsPalace) it = Athlete.palaceItem(pal._id, meta.digits ? exp.n * 2 : exp.n, meta.digits ? 'digits' : 'words', { technique: method, schedule: false });
     else it = MEM.fill({ type: 'mem', module: 'lab', kind: meta.digits ? 'digits' : method === 'story' ? 'story' : method === 'vocab-cat' ? 'groups' : 'words', count: meta.digits ? exp.n * 2 : exp.n, groups: 3, mode: 'normal', technique: method, ordered: exp.ordered, schedule: false, fixed: true });
