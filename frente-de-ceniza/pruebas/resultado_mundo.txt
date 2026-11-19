@@ -1,0 +1,6 @@
+PASA  sin escalar, la pendiente empinada frena al jugador  subió 0.20 m caminando contra la pared
+PASA  manteniendo Espacio se escala gastando fuerza  subió 1.51 m, fuerza 91
+PASA  la navegación marca laderas como no transitables  {"blocked":1786,"total":4096}
+PASA  avisos de dirección tipo reloj  a las doce, 40 metros | a las tres, 30 metros | a las seis, 30 metros | a las once, 30 metros
+PASA  el clima reduce la visibilidad de los NPC  visibilidad con ventisca 0.29
+PASA  pedir una misión desde la nieve carga la zona y empieza la misión  zona · misión 1

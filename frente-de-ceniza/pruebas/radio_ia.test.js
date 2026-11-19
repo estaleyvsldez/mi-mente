@@ -5,7 +5,7 @@ const res=[]; const ok=(id,c,i)=>{ const l=`${c?'PASA':'FALLA'}  ${id}  ${i||''}
  await p.route('https://cdn.jsdelivr.net/**', async r=>{ const u=new URL(r.request().url()); const m=u.pathname.match(/^\/npm\/(three|peerjs)@[^/]+\/(.*)$/); const f=m&&path.join(process.env.NODE_MODULES_DIR||path.join(__dirname,'node_modules'),m[1],m[2]); if(f&&fs.existsSync(f)) return r.fulfill({path:f,contentType:'text/javascript'}); return r.abort(); });
  await p.route(/polyhaven|threejs\.org/, r=>r.abort());
  await p.goto('http://localhost:8080/?q=baja&test'); await p.waitForFunction(()=>!document.getElementById('bSolo').disabled,null,{timeout:300000});
- await p.click('#bSolo'); await p.waitForFunction(()=>window.__g.state()==='playing'&&window.__g.MIS.on,null,{timeout:120000});
+ await p.click('#bCampPlay'); await p.waitForFunction(()=>window.__g.state()==='playing'&&window.__g.MIS.on,null,{timeout:120000});
  const ev=(f,a)=>p.evaluate(f,a);
  // apartar enemigos para probar órdenes con calma
  await ev(()=>{ const g=window.__g; for(const n of g.npcs.values()) if(n.team==='E'){ n.vis.dispose(); g.npcs.delete(n.id); } });

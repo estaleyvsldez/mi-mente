@@ -8,3 +8,8 @@
 - Al cargar un punto de control los enemigos de la zona se generan de nuevo (no se guarda la posición exacta de cada enemigo).
 - Con dos pestañas abiertas en la misma partida, la atrasada deja de guardar (a propósito, para no pisar progreso).
 - Las personalidades todavía no cambian la distancia de seguimiento ni la agresividad del movimiento (solo puntería, curación y diálogos).
+- 600–980 llamadas de dibujo por cuadro: correcto para PC, alto para teléfonos de gama media; siguiente optimización: sectores de vegetación más grandes, fusionar instancias y LOD de árboles lejanos (impostores).
+- La voz natural de Claude solo existe dentro del enlace de Claude y no admite filtro de radio; fuera se usa la voz del navegador.
+- Los cambios de perfil gráfico recargan la página (el progreso está guardado).
+- Al cargar un mapa distinto también se recarga la página.
+- No hay medición de FPS en hardware real todavía.

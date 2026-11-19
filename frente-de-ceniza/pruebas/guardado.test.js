@@ -12,7 +12,7 @@ const ev=(p,f,a)=>p.evaluate(f,a);
   // ---------- A y B: completar misión 1, cerrar, abrir
   let {ctx,p}=await open();
   console.log('aviso inicial:', await p.textContent('#slotInfo'));
-  await p.click('#bSolo'); await p.waitForFunction(()=>window.__g.state()==='playing'&&window.__g.MIS.on,null,{timeout:120000});
+  await p.click('#bCampPlay'); await p.waitForFunction(()=>window.__g.state()==='playing'&&window.__g.MIS.on,null,{timeout:120000});
   ok('arranque', await ev(p,()=>window.__g.MIS.i===0&&!!window.__g.SAVE.data.checkpoint), 'misión 1 empezó y guardó el punto de control de inicio');
   await ev(p,()=>window.__g.completeMission());
   const afterA=await ev(p,()=>{ const d=window.__g.SAVE.data; return {c:d.campaign.completed, u:d.campaign.unlocked, rpg:d.weapons.unlocked.includes('rpg'), seq:d.seq}; });
@@ -60,7 +60,7 @@ const ev=(p,f,a)=>p.evaluate(f,a);
   // ---------- H: varias partidas independientes
   await p.click('[data-slot="3"]'); await p.waitForTimeout(500);
   const s3empty=await ev(p,()=>window.__g.SAVE.data===null);
-  await p.click('#bSolo'); await p.waitForFunction(()=>window.__g.state()==='playing'&&window.__g.MIS.on,null,{timeout:120000});
+  await p.click('#bCampPlay'); await p.waitForFunction(()=>window.__g.state()==='playing'&&window.__g.MIS.on,null,{timeout:120000});
   await ev(p,()=>{ window.__g.SAVE.data.stats.kills=33; window.__g.SAVE.commit('h'); });
   await ctx.close(); ({ctx,p}=await open());
   const H=await ev(p,async()=>{ const g=window.__g; const out={}; for(const n of [1,3]){ await g.selectSlot(n); const d=g.SAVE.data; out[n]={done:d.campaign.completed.filter(Boolean).length, kills:d.stats.kills, cp:d.checkpoint&&d.checkpoint.mi}; } return out; });

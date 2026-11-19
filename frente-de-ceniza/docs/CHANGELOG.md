@@ -8,3 +8,13 @@
 - Nombre: Operación Zero — Proyecto Némesis.
 - RPG, blindado enemigo, munición de todos los calibres, sol menos molesto.
 - Misiones, jeeps, heridos (curar y cargar), trepar, escaleras, francotirador, controles de teléfono.
+
+## 2026-11-19 (transformación visual)
+- Tres mapas: selva tropical, montañas nevadas y zona militar con colinas nuevas.
+- Vegetación 3D con viento, agua, cascada, pantano, lago helado, puente, cueva, campamentos y bases.
+- Escalada de pendientes con fuerza y deslizamiento; los NPC respetan las laderas.
+- Cielo físico con ciclo de día y noche, luna y estrellas, nubes, clima dinámico gradual, relámpagos y truenos, superficies mojadas y charcos, bancos de niebla, linterna.
+- Sonido ambiental por mapa (insectos, pájaros, ranas, agua, viento helado, metal, alarmas) y acústica interior.
+- Menú nuevo con pestañas, selección de mapa/hora/clima, equipamiento, configuración y estadísticas.
+- Perfiles PC/MÓVIL automáticos, cinco calidades y ahorro de batería.
+- Voces más naturales y avisos con dirección y distancia.

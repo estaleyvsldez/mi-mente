@@ -15,10 +15,15 @@
 | Órdenes por radio (teclado, toque, voz) verificadas al cumplirse | Funciona | `pruebas/radio_ia.test.js` |
 | Rutas A* para compañeros (rodean paredes) | Funciona | `pruebas/radio_ia.test.js` |
 | Relaciones y memoria de compañeros (persisten) | Funciona | Prueba I |
-| Multijugador por sala (PeerJS): cooperativo, misiones, bandos | Programado, **no probado con varias personas** | — |
+| Tres mapas: zona, selva tropical, montañas nevadas | Funciona | `pruebas/mundo.test.js` + capturas |
+| Escalada de pendientes con fuerza, deslizamiento, rutas de subida | Funciona | `pruebas/mundo.test.js` |
+| Cielo físico, ciclo de día y noche, clima dinámico (lluvia, tormenta, niebla, nieve, ventisca, viento) | Funciona | capturas por mapa y clima |
+| Menú con pestañas, perfiles PC/MÓVIL y 5 calidades, ajustes de controles | Funciona | capturas PC y teléfono |
+| Voces naturales (enlace de Claude), mejor voz del navegador, grabaciones propias preparadas | Funciona / grabaciones pendientes | — |
+| Multijugador por sala (PeerJS): cooperativo, misiones, bandos; el mapa se sincroniza | Programado, **no probado con varias personas** | — |
 
 ## Qué falta (ver DEVELOPMENT_ROADMAP.md)
-Campaña de 100 misiones, agacharse/arrastrarse/asomarse, más mapas (puerto, montaña, complejo científico), clima y día/noche, destrucción, helicópteros, servidor autoritativo, rangos online, animaciones de captura de movimiento.
+Campaña de 100 misiones, agacharse/arrastrarse/asomarse, mapas de puerto y complejo científico, destrucción, helicópteros, servidor autoritativo, rangos online, animaciones de captura de movimiento, modelos 3D y voces grabadas profesionales, WebGPU.
 
 ## Dónde quedó el trabajo
 Fase 1 de la hoja de ruta terminada (guardado, radio, escuadra). Siguiente: fase 2 (movimiento táctico y combate).
