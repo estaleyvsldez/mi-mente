@@ -257,6 +257,7 @@
     $foot.hidden = false;
     $foot.append(h('div', { class: 'inner' }, h('button', { class: 'btn main', type: 'button', id: 'mainbtn', onclick: action }, label)));
   }
+  const appendAll = (el, ...kids) => kids.forEach(k => { if (k != null && k !== false) el.append(k); });
   function screen(...kids) { $app.innerHTML = ''; kids.forEach(k => k && $app.append(k)); window.scrollTo(0, 0); }
   function topbar(i, n, label) {
     return h('div', { class: 'top' }, h('button', { class: 'btn', type: 'button', onclick: home, 'aria-label': 'Salir al inicio' }, '✕'), h('div', { class: 'bar' }, h('i', { style: 'width:' + (i / n * 100) + '%' })), h('span', { class: 'small muted' }, label));
@@ -533,6 +534,14 @@
     return SAMPLE.json(prompt, { modelTier: 'quick', cache: false });
   }
 
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  function micHelp() {
+    return h('details', { class: 'note' }, h('summary', null, '🎙️ ¿Cómo hablo si no aparece el micrófono?'),
+      h('p', { class: 'small' }, 'claude.ai solo deja usar el micrófono dentro de la página si la abres en Google Chrome (celular Android o computadora). En la app de Claude o en iPhone usa el micrófono del teclado: toca el cuadro y pulsa 🎤; hablas y se escribe solo.'),
+      isIOS ? h('p', { class: 'small' }, 'iPhone: para que te entienda en inglés, añade el teclado «Inglés (EE. UU.)» en Ajustes › General › Teclado › Teclados, y cámbialo con 🌐 antes de pulsar 🎤.') : h('p', { class: 'small' }, 'Android: en el teclado (Gboard) pulsa 🎤. Si te escribe en español, cambia el idioma del teclado a English (US) con la tecla 🌐 o en Ajustes de Gboard › Idiomas.'));
+  }
+
+  /* Una pantalla por turno: A habla → tú respondes (voz) → ves cómo te fue → «Siguiente» → próximo turno. */
   function stepTalk(ctx) {
     return (next) => {
       const score = ctx.score;
@@ -541,131 +550,136 @@
       const level = helpLevel(lessonN);
       ctx.maxTurns = ctx.mode === 'free' ? 8 : 5;
       const history = [];
-      const log = h('div', { class: 'conv' });
-      const status = h('div', { class: 'status small muted' });
-      const sugBox = h('div');
-      const typed = h('input', { type: 'text', id: 'typed', placeholder: 'O escribe aquí (en iPhone usa el 🎤 del teclado)', autocomplete: 'off' });
-      const card = h('div', { class: 'card' },
-        h('div', { class: 'step-name' }, ctx.mode === 'free' ? 'Conversación libre por voz' : '2 · Conversación por voz'),
-        h('p', { class: 'muted small' }, 'Tú eres B. Pulsa el botón grande, responde en inglés con tu voz y la conversación sigue según lo que digas. Ayuda: ' + level + '.'),
-        log, sugBox, status,
-        h('details', { class: 'typebox' }, h('summary', null, '⌨️ Prefiero escribir'), typed, h('button', { class: 'btn', type: 'button', onclick: () => { if (typed.value.trim()) { const v = typed.value.trim(); typed.value = ''; handle(v); } } }, 'Enviar')));
-      typed.addEventListener('keydown', e => { if (e.key === 'Enter' && typed.value.trim()) { const v = typed.value.trim(); typed.value = ''; handle(v); } });
-      const scripted = !SAMPLE || sampleOff;
-      let scriptIdx = 0; // posición en el guion de respaldo
-      let busy = false, finished = false;
-
-      function addA(en, es) {
-        history.push({ who: 'A', en });
-        log.append(h('div', { class: 'bubble a' }, h('div', { class: 'who' }, 'A'), line(en, es, { colors: false })));
-        speak(en);
-        scrollEnd();
-      }
-      function addB(text, fb, better) {
-        history.push({ who: 'B', en: text });
-        const b = h('div', { class: 'bubble b' }, h('div', { class: 'who' }, 'Tú'), h('div', { class: 'en sent' }, text));
-        if (fb) b.append(h('div', { class: 'fb' }, '💬 ' + fb));
-        if (better) b.append(h('div', { class: 'better' }, h('div', { class: 'small muted' }, 'Más natural:'), line(better, null)));
-        log.append(b); scrollEnd();
-      }
-      function showSuggestions(list) {
-        sugBox.innerHTML = '';
-        if (!list || !list.length || finished) return;
-        const box = h('div', { class: 'sugs' }, list.slice(0, 2).map(sg => h('div', { class: 'sug' }, line(sg.en, sg.es, { colors: false }))));
-        const open = level === 'siempre' || (level === 'al principio' && score.turns < 2);
-        if (open) sugBox.append(h('div', { class: 'small muted' }, '💡 Puedes responder algo así:'), box);
-        else sugBox.append(h('details', null, h('summary', null, '💡 Ideas para responder'), box));
-      }
-      const scrollEnd = () => setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 60);
-
-      /* guion de respaldo: las líneas A de la conversación de la lección */
       const script = ctx.conv || [];
+      let scriptIdx = 0;
+      let scripted = !SAMPLE || sampleOff;
+      const card = h('div', { class: 'card talk' });
+      const past = h('div', { class: 'conv' });
+      let pendingA = null; // lo próximo que dice A
+
       function scriptedNextA() {
         while (scriptIdx < script.length && script[scriptIdx].who === 'B') scriptIdx++;
         const A = script[scriptIdx]; scriptIdx++;
         const B = script.slice(scriptIdx).find(l => l.who === 'B');
         return { A, B };
       }
+      const archive = (who, en, extra) => past.append(h('div', { class: 'bubble ' + (who === 'A' ? 'a' : 'b') }, h('div', { class: 'who' }, who === 'A' ? 'A' : 'Tú'), h('div', { class: 'en sent' }, en), extra || null));
 
-      async function handle(said) {
-        if (busy || finished) return;
-        said = said.trim(); if (!said) return;
-        busy = true; score.turns++;
-        sugBox.innerHTML = '';
-        ctx.turn = score.turns;
+      /* Pantalla de un turno */
+      function turn(A, suggestions) {
+        if (!A) return end();
+        history.push({ who: 'A', en: A.en });
+        card.innerHTML = '';
+        const answerBox = h('div', { class: 'answer' });
+        const status = h('div', { class: 'status small muted' });
+        const sugs = (suggestions || []).slice(0, 2);
+        const sugEl = sugs.length ? h('div', { class: 'sugs' }, sugs.map(sg => h('div', { class: 'sug' }, line(sg.en, sg.es, { colors: false })))) : null;
+        const open = level === 'siempre' || (level === 'al principio' && score.turns < 2);
+        appendAll(card,
+          h('div', { class: 'step-name' }, (ctx.mode === 'free' ? 'Conversación libre' : '2 · Conversación') + ' · turno ' + (score.turns + 1) + ' de ' + ctx.maxTurns),
+          h('div', { class: 'bubble a now' }, h('div', { class: 'who' }, 'A te dice:'), line(A.en, A.es, { colors: false, big: true })),
+          h('div', { class: 'small', style: 'font-weight:700;margin-top:12px' }, 'Tu respuesta (en inglés, en voz alta):'),
+          answerBox, status,
+          sugEl ? (open ? h('div', null, h('div', { class: 'small muted' }, '💡 Puedes responder algo así:'), sugEl) : h('details', null, h('summary', null, '💡 Ideas para responder'), sugEl)) : null,
+          past.childNodes.length ? h('details', { class: 'history' }, h('summary', null, 'Ver la conversación hasta ahora'), past) : null);
+        speak(A.en);
+        window.scrollTo(0, 0);
+        if (DICT) voiceAnswer(answerBox, status); else keyboardAnswer(answerBox, status);
+      }
+
+      /* Responder con el micrófono de la página */
+      function voiceAnswer(box, status) {
+        const live = h('div', { class: 'live-text' }, 'Pulsa el botón de abajo y habla.');
+        box.append(live, h('button', { class: 'btn small-link', type: 'button', onclick: () => { box.innerHTML = ''; keyboardAnswer(box, status); } }, '⌨️ Mejor uso el micrófono del teclado'));
+        const startMic = () => {
+          const mic = { heard: '', partial: t => { live.textContent = t || '…'; live.classList.add('on'); }, end: () => {
+            live.classList.remove('on');
+            if (mic.heard.trim()) send(mic.heard, status);
+            else { live.textContent = 'No te escuché. Pulsa otra vez y habla cerca del micrófono.'; foot('🎙️ Pulsa y responde', startMic); }
+          } };
+          activeMic = mic;
+          live.textContent = '🎙️ Te escucho… habla ahora'; live.classList.add('on');
+          foot('⏹️ Ya terminé de hablar', () => { try { DICT.stop(); } catch (_) { /* ya parado */ } });
+          let pr; try { pr = DICT.start({ language: 'en-US' }); } catch (e) { pr = Promise.reject(e); }
+          Promise.resolve(pr).catch(err => {
+            activeMic = null; live.classList.remove('on');
+            if (err && (err.code === 'unavailable' || err.code === 'not_granted')) { DICT = null; box.innerHTML = ''; status.textContent = err.code === 'not_granted' ? 'No se dio permiso al micrófono de la página.' : 'El micrófono de la página no está disponible aquí.'; keyboardAnswer(box, status); }
+            else { live.textContent = 'No se pudo empezar a escuchar. Pulsa otra vez.'; foot('🎙️ Pulsa y responde', startMic); }
+          });
+        };
+        foot('🎙️ Pulsa y responde', startMic);
+      }
+      /* Responder con el micrófono del teclado (iPhone, app de Claude) */
+      function keyboardAnswer(box, status) {
+        const ta = h('textarea', { id: 'resp', class: 'resp', rows: '3', placeholder: 'Toca aquí y pulsa 🎤 en tu teclado para hablar', autocomplete: 'off', autocapitalize: 'sentences', spellcheck: 'false', lang: 'en-US' });
+        box.append(h('div', { class: 'kbmic' }, '🎙️ Toca el cuadro y pulsa el ', h('b', null, '🎤 de tu teclado'), ': habla en inglés y se escribe solo.'), ta, micHelp());
+        const update = () => {
+          if (ta.value.trim()) foot('Enviar respuesta ➜', () => send(ta.value, status));
+          else foot('🎙️ Responder hablando', () => { ta.focus(); ta.scrollIntoView({ block: 'center' }); status.textContent = 'Ahora pulsa el 🎤 de tu teclado y habla en inglés.'; });
+        };
+        let had = false;
+        ta.addEventListener('input', () => { const has = !!ta.value.trim(); if (has !== had) { had = has; update(); } });
+        update();
+      }
+
+      async function send(said, status) {
+        said = said.trim();
+        score.turns++; ctx.turn = score.turns;
+        history.push({ who: 'B', en: said });
+        foot(null);
+        const ans = card.querySelector('.answer');
+        ans.innerHTML = '';
+        const mine = h('div', { class: 'bubble b' }, h('div', { class: 'who' }, 'Tú dijiste:'), h('div', { class: 'en sent' }, said));
+        ans.append(mine);
+        let fb = '', better = '', nextA = null, nextSug = [];
         if (!scripted) {
-          addB(said);
           status.textContent = 'A está pensando…';
           try {
             const r = await partner(ctx, history.slice(0, -1), said);
-            const lastB = log.lastChild;
-            if (r.feedback_es) lastB.append(h('div', { class: 'fb' }, '💬 ' + r.feedback_es));
-            if (r.better && SEM.norm(r.better) !== SEM.norm(said)) { lastB.append(h('div', { class: 'better' }, h('div', { class: 'small muted' }, 'Más natural:'), line(r.better, null))); if (!score.fixes.some(f => SEM.norm(f.en) === SEM.norm(r.better))) score.fixes.push({ en: r.better }); }
+            fb = r.feedback_es || '';
+            if (r.better && SEM.norm(r.better) !== SEM.norm(said)) better = r.better;
             if (r.used_target) score.target++;
-            status.textContent = '';
-            addA(r.reply, r.reply_es);
-            if (score.turns >= ctx.maxTurns) return end();
-            showSuggestions(r.suggestions);
-          } catch (e) {
-            status.textContent = e && e.code === 'not_granted' ? 'Sin permiso para usar Claude: sigo con una conversación preparada.' : 'Claude no respondió; sigo con una conversación preparada.';
-            sampleOff = true; return fallbackTurn(said, true);
-          } finally { busy = false; }
-          return;
+            nextA = r.reply ? { en: r.reply, es: r.reply_es || '' } : null;
+            nextSug = r.suggestions || [];
+          } catch (e) { scripted = true; sampleOff = true; }
         }
-        fallbackTurn(said, false);
-        busy = false;
-      }
-      function fallbackTurn(said, alreadyShown) {
-        const expectedB = (script.slice(0, scriptIdx).filter(l => l.who === 'B').pop());
-        let fb = '¡Bien dicho!', better = '';
-        if (expectedB) {
-          const r = SEM.check(said, [expectedB.en].concat(expectedB.alt || []));
-          if (r.grade === 'ok') fb = '✓ ¡Perfecto!';
-          else { fb = 'Te entendí. Un nativo diría:'; better = expectedB.en; score.fixes.push({ en: better }); }
-          if (r.grade !== 'no') score.target++;
+        if (scripted) {
+          const expected = script.slice(0, scriptIdx).filter(l => l.who === 'B').pop();
+          if (expected) {
+            const r = SEM.check(said, [expected.en].concat(expected.alt || []));
+            if (r.grade === 'ok') fb = '✓ ¡Perfecto!'; else { fb = 'Te entendí. Así lo diría un nativo:'; better = expected.en; }
+            if (r.grade !== 'no') score.target++;
+          } else fb = '¡Bien dicho!';
+          const nx = scriptedNextA();
+          nextA = nx.A ? { en: nx.A.en, es: nx.A.es } : null;
+          nextSug = nx.B ? [{ en: nx.B.en, es: nx.B.es }] : [];
+          if (!nx.B) score.lastScripted = true;
         }
-        if (!alreadyShown) addB(said, fb, better);
-        else { const lb = log.lastChild; lb.append(h('div', { class: 'fb' }, '💬 ' + fb)); if (better) lb.append(h('div', { class: 'better' }, line(better, null))); }
-        busy = false;
-        const { A, B } = scriptedNextA();
-        if (A) addA(A.en, A.es);
-        if (!B || score.turns >= ctx.maxTurns) return end();
-        showSuggestions([{ en: B.en, es: B.es }]);
+        status.textContent = '';
+        if (fb) mine.append(h('div', { class: 'fb' }, '💬 ' + fb));
+        if (better) { mine.append(h('div', { class: 'better' }, h('div', { class: 'small muted' }, 'Más natural:'), line(better, null))); if (!score.fixes.some(f => SEM.norm(f.en) === SEM.norm(better))) score.fixes.push({ en: better }); }
+        archive('A', history[history.length - 2].en);
+        archive('B', said, better ? h('div', { class: 'small muted' }, 'Mejor: ' + better) : null);
+        const last = score.turns >= ctx.maxTurns || !nextA || (scripted && score.lastScripted && !nextSug.length);
+        if (last) {
+          if (nextA) mine.after(h('div', { class: 'bubble a' }, h('div', { class: 'who' }, 'A'), line(nextA.en, nextA.es, { colors: false })));
+          if (nextA) speak(nextA.en);
+          foot('Terminar la conversación ✓', end);
+        } else {
+          foot('Siguiente →', () => turn(nextA, nextSug));
+        }
       }
+
       function end() {
-        finished = true; sugBox.innerHTML = '';
-        log.append(h('div', { class: 'res good' }, h('b', null, '✓ ¡Conversación terminada!'), h('div', null, 'Respondiste ' + score.turns + ' veces en inglés.')));
-        foot('Terminar →', next);
-        scrollEnd();
+        card.innerHTML = '';
+        appendAll(card, h('div', { class: 'res good' }, h('b', null, '✓ ¡Conversación terminada!'), h('div', null, 'Respondiste ' + score.turns + ' veces en inglés.')),
+          h('details', { class: 'history', open: true }, h('summary', null, 'Tu conversación'), past));
+        foot('Continuar →', next);
       }
 
-      /* botón principal = micrófono */
-      function micFoot() {
-        if (finished) return;
-        if (!DICT) { foot('⌨️ Responder escribiendo', () => { card.querySelector('.typebox').open = true; typed.focus(); }); return; }
-        foot('🎙️ Pulsa y responde', startMic);
-      }
-      function startMic() {
-        if (busy || finished) return;
-        const live = h('div', { class: 'bubble b live' }, h('div', { class: 'who' }, 'Tú (hablando…)'), h('div', { class: 'en sent' }, '…'));
-        const mic = { heard: '', partial: t => { live.lastChild.textContent = t || '…'; }, end: () => { live.remove(); micFoot(); if (mic.heard.trim()) handle(mic.heard); else status.textContent = 'No te escuché. Pulsa otra vez y habla cerca del micrófono.'; } };
-        activeMic = mic; log.append(live); scrollEnd();
-        foot('⏹️ Ya terminé de hablar', () => { try { DICT.stop(); } catch (_) { /* ya parado */ } });
-        let pr; try { pr = DICT.start({ language: 'en-US' }); } catch (e) { pr = Promise.reject(e); }
-        Promise.resolve(pr).catch(err => {
-          activeMic = null; live.remove();
-          if (err && err.code === 'unavailable') { DICT = null; status.textContent = 'El micrófono no está disponible aquí. Escribe tu respuesta (en el celular puedes usar el 🎤 del teclado).'; card.querySelector('.typebox').open = true; }
-          else if (err && err.code === 'not_granted') { DICT = null; status.textContent = 'No diste permiso al micrófono. Puedes escribir tu respuesta.'; card.querySelector('.typebox').open = true; }
-          micFoot();
-        });
-      }
-
-      // primera línea de A: la apertura del guion (inmediata)
+      // Primer turno: la apertura del guion (inmediata)
       const first = scriptedNextA();
-      if (first.A) addA(first.A.en, first.A.es);
-      showSuggestions(first.B ? [{ en: first.B.en, es: first.B.es }].concat(ctx.mat ? ctx.mat.ex.slice(1, 2).map(e => ({ en: plain(e.m), es: e.es })) : []) : []);
-      if (scripted) status.textContent = '';
-      micFoot();
+      setTimeout(() => turn(first.A ? { en: first.A.en, es: first.A.es } : null, first.B ? [{ en: first.B.en, es: first.B.es }].concat(ctx.mat ? ctx.mat.ex.slice(1, 2).map(e => ({ en: plain(e.m), es: e.es })) : []) : []), 0);
       return card;
     };
   }
