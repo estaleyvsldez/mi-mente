@@ -33,7 +33,7 @@
   /* ---------- pronunciación escrita «a la española» ---------- */
   const LINKS = (window.PRON_LINKS || []).map(([en, es]) => [en.split(' '), es]).sort((a, b) => b[0].length - a[0].length);
   function pron(text) {
-    const words = plain(text).toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9' -]/g, ' ').split(/\s+/).filter(Boolean);
+    const words = plain(text).toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z0-9áéíóúñü' -]/g, ' ').split(/\s+/).filter(Boolean);
     const out = [];
     for (let i = 0; i < words.length;) {
       const L = LINKS.find(([seq]) => seq.every((w, k) => words[i + k] === w));
@@ -46,7 +46,12 @@
   }
 
   /* ---------- voz ---------- */
+  let TTS = null;
   function speak(text, slow) {
+    if (TTS && !slow) { try { TTS.speak(plain(text).slice(0, 1900), { language: 'en', rate: 0.95 }).catch(() => fallbackSpeak(text, slow)); return; } catch (_) { /* usa la del navegador */ } }
+    fallbackSpeak(text, slow);
+  }
+  function fallbackSpeak(text, slow) {
     try {
       if (!('speechSynthesis' in window)) return;
       speechSynthesis.cancel();
@@ -67,13 +72,18 @@
     try { if (window.claude && window.claude.use) DICT = await window.claude.use('dictation'); } catch (_) { DICT = null; }
     if (!DICT) return;
     try {
-      DICT.onFinal(({ text }) => { if (activeMic) activeMic.heard = (activeMic.heard + ' ' + text).trim(); });
+      DICT.onFinal(({ text }) => { if (activeMic) { activeMic.heard = (activeMic.heard + ' ' + text).trim(); activeMic.partial && activeMic.partial(activeMic.heard); } });
+      DICT.onPartial && DICT.onPartial(({ text }) => { if (activeMic && activeMic.partial) activeMic.partial((activeMic.heard + ' ' + text).trim()); });
       DICT.onState(({ state }) => { if (state === 'idle' && activeMic) { const m = activeMic; activeMic = null; m.end(); } });
     } catch (_) { DICT = null; }
   }
 
   function blocks(markup) {
-    return h('span', { class: 'sent' }, SEM.colorSegments(markup).map(s => (s.c === 'F' && !s.t.trim()) ? ' ' : (s.t === '___' ? h('span', { class: 'b ' + s.c }, '…') : h('span', { class: 'b ' + s.c }, s.t.trim()))));
+    return h('span', { class: 'sent' }, SEM.colorSegments(markup).map(s => {
+      if (!s.t.trim()) return ' ';
+      const sp = h('span', { class: 'b ' + s.c }, s.t === '___' ? '…' : s.t.trim());
+      return [/^\s/.test(s.t) ? ' ' : null, sp, /\s$/.test(s.t) ? ' ' : null];
+    }));
   }
   /* Una frase con sus tres líneas: inglés · cómo se pronuncia · qué significa. */
   function line(markup, es, opts) {
@@ -174,6 +184,23 @@
       { who: 'A', en: op[2][0], es: op[2][1] }
     ];
   }
+  /* Guion de respaldo con varias respuestas tuyas: la conversación base + preguntas de seguimiento del tema. */
+  function longScript(p, mat, minB) {
+    const base = conversation(p, mat);
+    const used = new Set(base.filter(l => l.who === 'B').map(l => SEM.norm(l.en)));
+    const op = OPENERS[p.cat] || OPENERS.informal;
+    const pool = shuffle(mat.gen.concat(mat.ex)).filter(x => !used.has(SEM.norm(x.m)) && !/\?\s*$/.test(plain(x.m)));
+    const out = base.slice();
+    const closing = out[out.length - 1] && out[out.length - 1].who === 'A' ? out.pop() : { who: 'A', en: op[2][0], es: op[2][1] };
+    const follow = [['Oh, really? Tell me more.', '¿Ah, sí? Cuéntame más.'], [op[1][0], op[1][1]], ['Cool. What else?', 'Genial. ¿Qué más?'], ['Interesting!', '¡Interesante!']];
+    let k = 0;
+    while (out.filter(l => l.who === 'B').length < minB && pool.length) {
+      const f = follow[k++ % follow.length]; const x = pool.shift();
+      out.push({ who: 'A', en: f[0], es: f[1] }, { who: 'B', en: plain(x.m), es: x.es, alt: x.alt });
+    }
+    out.push(closing);
+    return out;
+  }
   function meaningOptions(p, s) {
     const others = shuffle(SEM.patterns.filter(q => q.id !== p.id)).map(q => q.ex.find(clean)).filter(Boolean).filter(e => e[1] !== s.es).slice(0, 2).map(e => e[1]);
     return shuffle([{ t: s.es, ok: true }].concat(others.map(t => ({ t, ok: false }))));
@@ -255,7 +282,7 @@
         if (activeMic === mic) { try { DICT.stop(); } catch (_) { /* ya parado */ } return; }
         mic.heard = ''; activeMic = mic;
         btn.textContent = '🎙️ Te escucho… (toca para terminar)';
-        let p; try { p = DICT.start(); } catch (e) { p = Promise.reject(e); }
+        let p; try { p = DICT.start({ language: 'en-US' }); } catch (e) { p = Promise.reject(e); }
         Promise.resolve(p).catch(() => { activeMic = null; btn.remove(); fb.innerHTML = ''; fb.append(h('p', { class: 'small muted' }, 'No se pudo usar el micrófono. Dila en voz alta y sigue con el botón de abajo.')); });
       });
       box.append(btn);
@@ -289,6 +316,8 @@
         h('div', { class: 'stat' }, h('b', null, streak() + ' 🔥'), h('span', { class: 'small muted' }, 'días seguidos')),
         h('div', { class: 'stat' }, h('b', null, due.length), h('span', { class: 'small muted' }, 'repasos pendientes'))),
       h('details', { class: 'card' }, h('summary', null, 'Cómo leer la pronunciación'), h('p', { class: 'small' }, '🗣️ es cómo suena, escrito con letras del español. La tilde marca la parte fuerte. «j» suena como una h suave. «z» se dice con la lengua entre los dientes (como la «th» inglesa). La «r» suave entre vocales es la «t» americana (water = uárer). Las palabras se juntan como al hablar rápido: «want to» suena «uána»; «going to», «góna».')),
+      Object.keys(S.done).length ? h('div', { class: 'card' }, h('b', null, '💬 Conversación libre por voz'), h('p', { class: 'small muted' }, 'Habla de tu vida usando todo lo que ya aprendiste. Cuanto más avanzas, menos ayuda verás.'),
+        h('button', { class: 'btn', type: 'button', onclick: freeTalk }, 'Hablar ahora')) : null,
       syllabus(),
       h('p', { class: 'save', id: 'savelbl' }, Save.label));
     foot(due.length ? 'Empezar (repaso + lección ' + (n + 1) + ')' : p ? 'Empezar lección ' + (n + 1) : null, () => { if (due.length) review(due.slice(0, 5)); else if (p) lesson(p); });
@@ -313,30 +342,21 @@
     const mat = material(p);
     const conv = conversation(p, mat);
     const score = { ok: 0, total: 0 };
-    const rep = mat.ex.slice(0, 3);
-    const solo = shuffle(mat.gen.length ? mat.gen : mat.ex).slice(0, 2);
-    const steps = [
-      stepLook(p, n, mat),
-      ...rep.map((s, k) => stepRepeat(s, k + 1, rep.length, score)),
-      stepConversation(conv, true, score),
-      stepConversation(conv, false, score),
-      ...solo.map((s, k) => stepSolo(s, k + 1, solo.length, score)),
-      stepOrder(mat.ex[1 % mat.ex.length], score),
-      stepListen(p, mat.ex[mat.ex.length - 1], score)
-    ];
+    const steps = [stepLook(p, n, mat), stepTalk({ p, n, mat, conv: longScript(p, mat, 4), score, mode: 'lesson' })];
     let i = 0;
     const next = () => { i++; if (i >= steps.length) finish(); else run(); };
     const run = () => { const card = steps[i](next); screen(topbar(i, steps.length, 'Paso ' + (i + 1) + ' de ' + steps.length), card); };
     function finish() {
       const prev = S.done[p.id];
-      const ratio = score.total ? score.ok / score.total : 1;
+      const ratio = score.turns ? Math.min(1, (score.target + 1) / score.turns + 0.3) : 1;
       const box = ratio >= 0.7 ? 1 : 0;
       S.done[p.id] = { score: ratio, box, ts: Date.now(), due: Date.now() + BOX_DAYS[box] * DAY - 3 * 3600000 };
       if (!prev && n === S.next) S.next = n + 1;
       markDay(); S.perDay[today()] = (S.perDay[today()] || 0) + 1;
       Save.save();
       screen(h('div', { class: 'card' }, h('h1', null, '✓ Lección completada'),
-        h('p', null, 'Hoy dijiste en voz alta ' + (rep.length + conv.filter(l => l.who === 'B').length * 2 + solo.length) + ' frases en inglés.'),
+        h('p', null, 'Respondiste ' + (score.turns || 0) + ' veces en inglés' + (score.target ? ' y usaste la estructura nueva ' + score.target + ' veces.' : '.')),
+        score.fixes && score.fixes.length ? h('div', { class: 'note' }, h('b', null, 'Para la próxima, dilo así:'), score.fixes.slice(-4).map(f => line(f.en, null))) : null,
         h('p', { class: 'muted' }, ratio >= 0.7 ? 'Muy bien. Volverá en un repaso hablado dentro de ' + BOX_DAYS[box] + ' día(s).' : 'Volverá mañana en el repaso para reforzarla. Es normal: así se aprende.'),
         h('button', { class: 'btn', type: 'button', onclick: home }, 'Volver al inicio')),
         h('p', { class: 'save', id: 'savelbl' }, Save.label));
@@ -489,6 +509,176 @@
     };
   }
 
+
+  /* ================= CONVERSACIÓN POR VOZ =================
+     Claude hace de A: contesta a lo que dices, te corrige con amabilidad y te sugiere respuestas.
+     Si Claude no está disponible, sigue un guion con la misma mecánica. La ayuda se va retirando
+     a medida que avanzas en el curso. */
+  let SAMPLE = null, sampleOff = false;
+  async function initAI() {
+    try { if (window.claude && window.claude.use) { SAMPLE = await window.claude.use('sample'); TTS = await window.claude.use('tts'); } } catch (_) { SAMPLE = null; }
+  }
+  const helpLevel = n => (n < 12 ? 'siempre' : n < 50 ? 'al principio' : 'si la pides');
+  function learnedTitles() { return COURSE.filter(q => S.done[q.id]).slice(-10).map(q => plain(q.f).replace('___', '…')); }
+  async function partner(ctx, history, said) {
+    const lvl = CEFR[(ctx.p ? ctx.p.st : Math.max(1, ...COURSE.filter(q => S.done[q.id]).map(q => q.st), 1)) - 1];
+    const prompt = 'Eres A, un hablante nativo de inglés americano, amable y paciente, conversando por voz con un estudiante hispanohablante (B) de nivel ' + lvl + '. ' +
+      'Objetivo: que el estudiante HABLE mucho. ' +
+      (ctx.p ? 'Estructura de esta lección (haz preguntas que la provoquen): "' + plain(ctx.p.f).replace('___', '…') + '" (' + ctx.p.m + '). Tema: ' + SEM.catById[ctx.p.cat].name + '. ' : 'Conversación libre sobre su vida diaria. ') +
+      'Estructuras que ya conoce: ' + (learnedTitles().join('; ') || 'muy pocas') + '. ' +
+      'Reglas: frases cortas y naturales (máx. 15 palabras' + (lvl === 'A1' || lvl === 'A2' ? ', vocabulario muy simple' : '') + '), termina casi siempre con una pregunta, no expliques gramática. ' +
+      'Turno del estudiante número ' + ctx.turn + ' de ' + ctx.maxTurns + (ctx.turn >= ctx.maxTurns ? '. Este es el último: cierra la conversación con una despedida amable y sin pregunta.' : '.') + '\n' +
+      'Conversación hasta ahora:\n' + history.map(t => (t.who === 'A' ? 'A: ' : 'B: ') + t.en).join('\n') + '\nB acaba de decir (transcripción de voz, puede tener errores de reconocimiento): "' + said + '"\n' +
+      'Responde SOLO con JSON: {"reply":"lo que dice A ahora en inglés","reply_es":"traducción natural al español","feedback_es":"una frase corta en español: ánimo y, si hace falta, una corrección (no menciones errores de reconocimiento obvios)","better":"cómo lo diría un nativo, si lo que dijo B no era natural o tenía error; si estaba bien, cadena vacía","used_target":true/false,"suggestions":[{"en":"una respuesta corta que B podría decir a lo que A dice ahora","es":"traducción"},{"en":"otra","es":"traducción"}]}';
+    return SAMPLE.json(prompt, { modelTier: 'quick', cache: false });
+  }
+
+  function stepTalk(ctx) {
+    return (next) => {
+      const score = ctx.score;
+      score.turns = 0; score.target = 0; score.fixes = [];
+      const lessonN = ctx.n == null ? S.next : ctx.n;
+      const level = helpLevel(lessonN);
+      ctx.maxTurns = ctx.mode === 'free' ? 8 : 5;
+      const history = [];
+      const log = h('div', { class: 'conv' });
+      const status = h('div', { class: 'status small muted' });
+      const sugBox = h('div');
+      const typed = h('input', { type: 'text', id: 'typed', placeholder: 'O escribe aquí (en iPhone usa el 🎤 del teclado)', autocomplete: 'off' });
+      const card = h('div', { class: 'card' },
+        h('div', { class: 'step-name' }, ctx.mode === 'free' ? 'Conversación libre por voz' : '2 · Conversación por voz'),
+        h('p', { class: 'muted small' }, 'Tú eres B. Pulsa el botón grande, responde en inglés con tu voz y la conversación sigue según lo que digas. Ayuda: ' + level + '.'),
+        log, sugBox, status,
+        h('details', { class: 'typebox' }, h('summary', null, '⌨️ Prefiero escribir'), typed, h('button', { class: 'btn', type: 'button', onclick: () => { if (typed.value.trim()) { const v = typed.value.trim(); typed.value = ''; handle(v); } } }, 'Enviar')));
+      typed.addEventListener('keydown', e => { if (e.key === 'Enter' && typed.value.trim()) { const v = typed.value.trim(); typed.value = ''; handle(v); } });
+      const scripted = !SAMPLE || sampleOff;
+      let scriptIdx = 0; // posición en el guion de respaldo
+      let busy = false, finished = false;
+
+      function addA(en, es) {
+        history.push({ who: 'A', en });
+        log.append(h('div', { class: 'bubble a' }, h('div', { class: 'who' }, 'A'), line(en, es, { colors: false })));
+        speak(en);
+        scrollEnd();
+      }
+      function addB(text, fb, better) {
+        history.push({ who: 'B', en: text });
+        const b = h('div', { class: 'bubble b' }, h('div', { class: 'who' }, 'Tú'), h('div', { class: 'en sent' }, text));
+        if (fb) b.append(h('div', { class: 'fb' }, '💬 ' + fb));
+        if (better) b.append(h('div', { class: 'better' }, h('div', { class: 'small muted' }, 'Más natural:'), line(better, null)));
+        log.append(b); scrollEnd();
+      }
+      function showSuggestions(list) {
+        sugBox.innerHTML = '';
+        if (!list || !list.length || finished) return;
+        const box = h('div', { class: 'sugs' }, list.slice(0, 2).map(sg => h('div', { class: 'sug' }, line(sg.en, sg.es, { colors: false }))));
+        const open = level === 'siempre' || (level === 'al principio' && score.turns < 2);
+        if (open) sugBox.append(h('div', { class: 'small muted' }, '💡 Puedes responder algo así:'), box);
+        else sugBox.append(h('details', null, h('summary', null, '💡 Ideas para responder'), box));
+      }
+      const scrollEnd = () => setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 60);
+
+      /* guion de respaldo: las líneas A de la conversación de la lección */
+      const script = ctx.conv || [];
+      function scriptedNextA() {
+        while (scriptIdx < script.length && script[scriptIdx].who === 'B') scriptIdx++;
+        const A = script[scriptIdx]; scriptIdx++;
+        const B = script.slice(scriptIdx).find(l => l.who === 'B');
+        return { A, B };
+      }
+
+      async function handle(said) {
+        if (busy || finished) return;
+        said = said.trim(); if (!said) return;
+        busy = true; score.turns++;
+        sugBox.innerHTML = '';
+        ctx.turn = score.turns;
+        if (!scripted) {
+          addB(said);
+          status.textContent = 'A está pensando…';
+          try {
+            const r = await partner(ctx, history.slice(0, -1), said);
+            const lastB = log.lastChild;
+            if (r.feedback_es) lastB.append(h('div', { class: 'fb' }, '💬 ' + r.feedback_es));
+            if (r.better && SEM.norm(r.better) !== SEM.norm(said)) { lastB.append(h('div', { class: 'better' }, h('div', { class: 'small muted' }, 'Más natural:'), line(r.better, null))); if (!score.fixes.some(f => SEM.norm(f.en) === SEM.norm(r.better))) score.fixes.push({ en: r.better }); }
+            if (r.used_target) score.target++;
+            status.textContent = '';
+            addA(r.reply, r.reply_es);
+            if (score.turns >= ctx.maxTurns) return end();
+            showSuggestions(r.suggestions);
+          } catch (e) {
+            status.textContent = e && e.code === 'not_granted' ? 'Sin permiso para usar Claude: sigo con una conversación preparada.' : 'Claude no respondió; sigo con una conversación preparada.';
+            sampleOff = true; return fallbackTurn(said, true);
+          } finally { busy = false; }
+          return;
+        }
+        fallbackTurn(said, false);
+        busy = false;
+      }
+      function fallbackTurn(said, alreadyShown) {
+        const expectedB = (script.slice(0, scriptIdx).filter(l => l.who === 'B').pop());
+        let fb = '¡Bien dicho!', better = '';
+        if (expectedB) {
+          const r = SEM.check(said, [expectedB.en].concat(expectedB.alt || []));
+          if (r.grade === 'ok') fb = '✓ ¡Perfecto!';
+          else { fb = 'Te entendí. Un nativo diría:'; better = expectedB.en; score.fixes.push({ en: better }); }
+          if (r.grade !== 'no') score.target++;
+        }
+        if (!alreadyShown) addB(said, fb, better);
+        else { const lb = log.lastChild; lb.append(h('div', { class: 'fb' }, '💬 ' + fb)); if (better) lb.append(h('div', { class: 'better' }, line(better, null))); }
+        busy = false;
+        const { A, B } = scriptedNextA();
+        if (A) addA(A.en, A.es);
+        if (!B || score.turns >= ctx.maxTurns) return end();
+        showSuggestions([{ en: B.en, es: B.es }]);
+      }
+      function end() {
+        finished = true; sugBox.innerHTML = '';
+        log.append(h('div', { class: 'res good' }, h('b', null, '✓ ¡Conversación terminada!'), h('div', null, 'Respondiste ' + score.turns + ' veces en inglés.')));
+        foot('Terminar →', next);
+        scrollEnd();
+      }
+
+      /* botón principal = micrófono */
+      function micFoot() {
+        if (finished) return;
+        if (!DICT) { foot('⌨️ Responder escribiendo', () => { card.querySelector('.typebox').open = true; typed.focus(); }); return; }
+        foot('🎙️ Pulsa y responde', startMic);
+      }
+      function startMic() {
+        if (busy || finished) return;
+        const live = h('div', { class: 'bubble b live' }, h('div', { class: 'who' }, 'Tú (hablando…)'), h('div', { class: 'en sent' }, '…'));
+        const mic = { heard: '', partial: t => { live.lastChild.textContent = t || '…'; }, end: () => { live.remove(); micFoot(); if (mic.heard.trim()) handle(mic.heard); else status.textContent = 'No te escuché. Pulsa otra vez y habla cerca del micrófono.'; } };
+        activeMic = mic; log.append(live); scrollEnd();
+        foot('⏹️ Ya terminé de hablar', () => { try { DICT.stop(); } catch (_) { /* ya parado */ } });
+        let pr; try { pr = DICT.start({ language: 'en-US' }); } catch (e) { pr = Promise.reject(e); }
+        Promise.resolve(pr).catch(err => {
+          activeMic = null; live.remove();
+          if (err && err.code === 'unavailable') { DICT = null; status.textContent = 'El micrófono no está disponible aquí. Escribe tu respuesta (en el celular puedes usar el 🎤 del teclado).'; card.querySelector('.typebox').open = true; }
+          else if (err && err.code === 'not_granted') { DICT = null; status.textContent = 'No diste permiso al micrófono. Puedes escribir tu respuesta.'; card.querySelector('.typebox').open = true; }
+          micFoot();
+        });
+      }
+
+      // primera línea de A: la apertura del guion (inmediata)
+      const first = scriptedNextA();
+      if (first.A) addA(first.A.en, first.A.es);
+      showSuggestions(first.B ? [{ en: first.B.en, es: first.B.es }].concat(ctx.mat ? ctx.mat.ex.slice(1, 2).map(e => ({ en: plain(e.m), es: e.es })) : []) : []);
+      if (scripted) status.textContent = '';
+      micFoot();
+      return card;
+    };
+  }
+
+  function freeTalk() {
+    const learned = COURSE.filter(q => S.done[q.id]);
+    const p = learned.length ? pick(learned.slice(-8)) : COURSE[0];
+    const mat = material(p);
+    const score = { ok: 0, total: 0 };
+    const card = stepTalk({ p: null, n: S.next, mat, conv: longScript(p, mat, 6), score, mode: 'free' })(() => { markDay(); Save.save(); home(); });
+    screen(h('div', { class: 'top' }, h('button', { class: 'btn', type: 'button', onclick: home, 'aria-label': 'Salir al inicio' }, '✕'), h('b', null, 'Conversación libre')), card);
+  }
+
   /* ---------- repaso hablado ---------- */
   function review(ids) {
     let i = 0;
@@ -521,6 +711,6 @@
   /* ---------- arranque ---------- */
   screen(h('div', { class: 'card' }, h('h1', null, 'Inglés para hablar'), h('p', { class: 'muted' }, 'Cargando tu progreso…')));
   $foot.hidden = true;
-  Promise.all([Save.init(), initDictation()]).then(home, home);
+  Promise.all([Save.init(), initDictation(), initAI()]).then(home, home);
   window.__curso = { COURSE, TRICKS, pron, get state() { return S; }, home };
 })();
