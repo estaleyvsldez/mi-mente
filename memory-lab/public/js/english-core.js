@@ -27,12 +27,38 @@
   };
 
   SEM.STAGES = [
-    { n: 1, name: 'Inicial', desc: 'Palabras, bloques y oraciones básicas.' },
-    { n: 2, name: 'Elemental', desc: 'Necesidades, deseos, preguntas y respuestas.' },
-    { n: 3, name: 'Intermedia', desc: 'Combinar estructuras y mantener conversaciones.' },
-    { n: 4, name: 'Intermedia avanzada', desc: 'Explicar, describir, narrar y argumentar.' },
-    { n: 5, name: 'Avanzada', desc: 'Expresiones naturales, matices, fluidez y espontaneidad.' }
+    { n: 1, name: 'Etapa 1 · Inicial', desc: 'Palabras, bloques y oraciones sencillas.' },
+    { n: 2, name: 'Etapa 2 · Elemental', desc: 'Necesidades, deseos, acciones, preguntas y respuestas.' },
+    { n: 3, name: 'Etapa 3 · Intermedia', desc: 'Combinación de estructuras y conversaciones básicas.' },
+    { n: 4, name: 'Etapa 4 · Intermedia avanzada', desc: 'Descripciones, experiencias, explicaciones y conversaciones completas.' },
+    { n: 5, name: 'Etapa 5 · Avanzada', desc: 'Opiniones, argumentos, matices y expresiones naturales.' },
+    { n: 6, name: 'Etapa 6 · Espontánea', desc: 'Conversaciones espontáneas y comunicación avanzada.' }
   ];
+  /* Colores estructurales: azul sujeto · verde acción · amarillo bloque estructural ·
+     morado complemento · rojo negación · naranja preguntas y conectores. */
+  SEM.COLOR_OF = { S: 'S', V: 'V', F: 'F', N: 'O', A: 'O', P: 'O', T: 'O', X: 'O', Q: 'Q', C: 'Q' };
+  SEM.COLOR_NAMES = { S: 'Sujeto', V: 'Acción', F: 'Bloque estructural', O: 'Complemento', NEG: 'Negación', Q: 'Pregunta / conector' };
+  const NEG_RE = /\b(not|never|no|don't|doesn't|didn't|can't|won't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|shouldn't|wouldn't|couldn't|mustn't|nobody|nothing|nowhere)\b/i;
+  const Q_RE = /^(what|where|when|why|who|whose|which|how(?: much| many| long| often| old| far)?)\b/i;
+  /* Segmentos con su color final: separa negaciones y palabras interrogativas dentro de la estructura fija. */
+  SEM.colorSegments = function (m) {
+    const out = [];
+    SEM.parse(m).forEach(s => {
+      if (s.r !== 'F') { out.push({ c: SEM.COLOR_OF[s.r] || 'O', t: s.t, r: s.r }); return; }
+      // dividir la estructura fija en partes: interrogativa inicial, negaciones, resto
+      const parts = s.t.split(/(\s+)/);
+      let buf = '';
+      const flush = () => { if (buf) { out.push({ c: 'F', t: buf, r: 'F' }); buf = ''; } };
+      parts.forEach((w, i) => {
+        const bare = w.replace(/[^A-Za-z']/g, '');
+        if (bare && NEG_RE.test(bare) && bare.replace(NEG_RE, '') === '') { flush(); out.push({ c: 'NEG', t: w, r: 'F' }); }
+        else if (bare && Q_RE.test(bare) && bare.replace(Q_RE, '') === '' && !out.length && !buf.trim()) { flush(); out.push({ c: 'Q', t: w, r: 'F' }); }
+        else buf += w;
+      });
+      flush();
+    });
+    return out;
+  };
 
   SEM.REGISTERS = {
     informal: { name: 'Informal', desc: 'Con amigos, familia, mensajes. Natural y relajado.' },
