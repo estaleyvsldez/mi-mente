@@ -19,7 +19,7 @@ La primera vez necesita internet para cargar el motor 3D, las texturas y los sol
 | Clic izquierdo | Disparar |
 | Clic derecho | Apuntar con la mira |
 | P o R | Recargar |
-| 1 2 3 4 / Rueda | Fusil, pistola, escopeta, cuchillo |
+| 1 2 3 4 5 / Rueda | Fusil, francotirador, pistola, escopeta, cuchillo |
 | G | Granada |
 | F | Trompada |
 | Espacio | Saltar |
