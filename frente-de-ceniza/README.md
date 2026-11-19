@@ -1,4 +1,6 @@
-# Frente de Ceniza
+# Operación Zero — Proyecto Némesis
+
+(Antes: Frente de Ceniza.) Documentación del estado y pruebas en `docs/` y `pruebas/`.
 
 Juego de disparos en primera persona en el navegador, ambientado en una zona de guerra con ruinas, casas y una base militar. Funciona en PC y en celular (iPhone y Android) y se puede jugar solo o con amigos.
 
