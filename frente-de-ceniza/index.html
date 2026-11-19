@@ -170,7 +170,7 @@ body.touch #dmgdir{width:180px;height:180px;margin:-90px}
     <b>W A S D / Flechas</b><span>Moverse (mantén adelante y corres)</span>
     <b>Ratón</b><span>Mirar</span>
     <b>Clic izquierdo</b><span>Disparar</span>
-    <b>Clic derecho</b><span>Apuntar con la mira</span>
+    <b>Clic derecho / E</b><span>Apuntar con la mira</span>
     <b>P o R</b><span>Recargar</span>
     <b>1 2 3 4 5 / Rueda</b><span>Fusil · Francotirador · Pistola · Escopeta · Cuchillo</span>
     <b>G</b><span>Granada</span>
@@ -1584,7 +1584,7 @@ const player={pos:V3(0,0,8), vel:V3(), yaw:Math.PI, pitch:0, vy:0, onGround:true
   } };
 const WEAPONS={
   rifle:  {name:'FUSIL DE ASALTO 5.56', short:'FUSIL',    mag:30, reserve:180, rate:0.095, auto:true,  dmg:[34,150,24], spread:0.0035, pellets:1,  reload:2.1, camKick:0.011, kick:1,   flash:0.17, snd:'shot',    adsFov:52},
-  sniper: {name:'FRANCOTIRADOR .338',    short:'FRANCO',   mag:5,  reserve:30,  rate:1.0,   auto:false, dmg:[110,300,80], spread:0.0004, hip:0.045, adsMul:0.98, range:450, pellets:1, reload:2.6, bolt:true, camKick:0.05, kick:2.4, flash:0.24, snd:'sniper', adsFov:14},
+  sniper: {name:'FRANCOTIRADOR .338',    short:'FRANCO',   mag:5,  reserve:30,  rate:0.85,   auto:false, dmg:[110,300,80], spread:0.0004, hip:0.045, adsMul:0.98, range:450, pellets:1, reload:2.6, bolt:true, camKick:0.05, kick:2.4, flash:0.24, snd:'sniper', adsFov:14},
   pistol: {name:'PISTOLA 9MM',          short:'PISTOLA',  mag:15, reserve:75,  rate:0.12,  auto:false, dmg:[40,130,28], spread:0.005,  pellets:1,  reload:1.5, camKick:0.02,  kick:1.3, flash:0.11, snd:'pistol',  adsFov:62},
   shotgun:{name:'ESCOPETA CALIBRE 12',  short:'ESCOPETA', mag:7,  reserve:35,  rate:0.85,  auto:false, dmg:[18,30,12],  spread:0.055,  pellets:10, perShell:true, camKick:0.055, kick:2.2, flash:0.27, snd:'shotgun', adsFov:64},
   knife:  {name:'CUCHILLO DE COMBATE',  short:'CUCHILLO', melee:true, spread:0, adsFov:75},
@@ -1600,12 +1600,12 @@ const stats={score:0,kills:0,best:0,deaths:0};
 try{ stats.best=+localStorage.getItem('fdc_best')||0; }catch(e){}
 
 addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; keys[e.code]=true; if(e.code==='Escape'&&noLock&&state==='playing'){ showPause(); return; } if(state!=='playing'||!player.alive) return;
-  if(e.code==='KeyF') punch(); if(e.code==='KeyR'||e.code==='KeyP') reload(); if(e.code==='KeyG') throwNade(); if(e.code==='KeyQ') equip(wpn.prev);
+  if(e.code==='KeyE') wpn.adsHeld=!wpn.adsHeld; if(e.code==='KeyF') punch(); if(e.code==='KeyR'||e.code==='KeyP') reload(); if(e.code==='KeyG') throwNade(); if(e.code==='KeyQ') equip(wpn.prev);
   if(/^Digit[1-5]$/.test(e.code)) equip(ORDER[+e.code.slice(5)-1]);
   if(e.code==='Space'&&player.onGround){ player.vy=4.6; player.onGround=false; }
   if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)) e.preventDefault(); });
 addEventListener('keyup',e=>{ keys[e.code]=false; });
-addEventListener('mousedown',e=>{ if(state!=='playing'||isTouch) return; if(e.button===0) wpn.firing=true; if(e.button===2) wpn.adsHeld=true; if(e.button===1){ e.preventDefault(); punch(); } });
+addEventListener('mousedown',e=>{ if(state!=='playing'||isTouch) return; if(e.button===0){ wpn.firing=true; wpn.queuedT=time; } if(e.button===2) wpn.adsHeld=true; if(e.button===1){ e.preventDefault(); punch(); } });
 addEventListener('mouseup',e=>{ if(e.button===0){ wpn.firing=false; wpn.trigHeld=false; } if(e.button===2) wpn.adsHeld=false; });
 let lastWheel=0;
 addEventListener('wheel',e=>{ if(state!=='playing'||performance.now()-lastWheel<180) return; lastWheel=performance.now(); cycleWeapon(e.deltaY>0?1:-1); },{passive:true});
@@ -1619,7 +1619,7 @@ function touchBtn(b,down){
   if(b==='fire'){
     const W0=WEAPONS[wpn.cur];
     if(down){ TOUCH.fireT=time; TOUCH.fireHeld=true; if(W0.bolt) wpn.adsHeld=true; else wpn.firing=true; }
-    else { TOUCH.fireHeld=false; if(W0.bolt&&state==='playing'&&player.alive){ wpn.trigHeld=false; fire(); } wpn.firing=false; wpn.trigHeld=false; wpn.adsHeld=false; }
+    else { TOUCH.fireHeld=false; if(W0.bolt&&state==='playing'&&player.alive){ if(wpn.ads<0.8) wpn.adsHeld=false; wpn.trigHeld=false; const ls=wpn.lastShot; fire(); if(wpn.lastShot===ls){ wpn.adsHeld=false; wpn.queuedT=time; } } wpn.firing=false; wpn.trigHeld=false; wpn.adsHeld=false; }
     return;
   }
   if(!down) return;
@@ -1706,6 +1706,7 @@ function fire(){
   if(wpn.reloading){ if(W0.perShell&&wpn.ammo>0) wpn.reloading=false; else return; }
   if(wpn.pumpT>=0) return;
   if(time-wpn.lastShot<W0.rate) return;
+  if(W0.bolt && wpn.adsHeld && wpn.ads<0.8) return;
   if(!W0.auto){ if(wpn.trigHeld) return; wpn.trigHeld=true; }
   if(wpn.ammo<=0){ if(time-wpn.lastShot>0.3){ SFX.click(); wpn.lastShot=time; if(wpn.reserve>0) reload(); else hint('SIN MUNICIÓN · CAMBIA DE ARMA'); } return; }
   wpn.ammo--; wpn.lastShot=time; wpn.shots++; player.sprintLock=0.45; player.fwdT=0;
@@ -1804,7 +1805,9 @@ function throwGrenade(){
 }
 function updateWeapon(dt){
   if(TOUCH.fireHeld && time-TOUCH.fireT>0.22 && !WEAPONS[wpn.cur].melee) wpn.adsHeld=true;
-  if(wpn.firing) fire(); else wpn.shots=Math.max(0,wpn.shots-dt*20);
+  if(wpn.firing) fire(); else { wpn.shots=Math.max(0,wpn.shots-dt*20);
+    if(WEAPONS[wpn.cur].bolt && wpn.pumpT>=0 && time-(wpn.queuedT??-9)<0.45) wpn.queuedT=time;
+    if(WEAPONS[wpn.cur].bolt && time-(wpn.queuedT??-9)<0.45){ const ls=wpn.lastShot; wpn.trigHeld=false; fire(); wpn.trigHeld=false; if(wpn.lastShot!==ls) wpn.queuedT=-9; } }
   wpn.flashT-=dt; if(wpn.flashT<=0){ view.flash.visible=false; wFlashLight.intensity=0; }
   let low=0;
   if(wpn.switchT>0){ wpn.switchT-=dt; if(wpn.switchT<=0.22&&wpn.cur!==wpn.next) swapNow(); low=clamp(1-Math.abs(wpn.switchT-0.22)/0.22,0,1); if(wpn.switchT<=0) wpn.switchT=0; }
