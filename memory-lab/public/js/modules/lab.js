@@ -97,7 +97,7 @@
           res.map(r => h('tr', null, h('td', null, METHODS[r.m].n), h('td', null, r.n), h('td', null, r.enc == null ? '—' : Math.round(r.enc) + ' s'), h('td', null, fmt(r.imm)), h('td', null, fmt(r.ord)), h('td', null, fmt(r.d1)), h('td', null, fmt(r.d7)), h('td', null, fmt(r.d30)), h('td', null, r.eff == null ? '—' : r.eff.toFixed(1) + '/5'))))),
         h('div', { class: 'notice small' }, verdict),
         h('div', { class: 'row' }, h('button', { class: 'btn primary', type: 'button', onclick: () => LAB.runTrial(exp) }, 'Siguiente ensayo: ' + METHODS[next].n),
-          h('button', { class: 'btn ghost small', type: 'button', onclick: () => { if (confirm('¿Borrar el experimento? Los intentos ya registrados se conservan en el historial.')) { Store.del('labexp', exp._id); App.route(); } } }, 'Borrar'))));
+          UI.confirmBtn('Borrar', '¿Seguro? Pulsa otra vez', () => { Store.del('labexp', exp._id); App.route(); }))));
     });
   };
 })();

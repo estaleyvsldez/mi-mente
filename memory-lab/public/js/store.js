@@ -50,6 +50,7 @@
 
   async function api(path, opts) {
     opts = opts || {};
+    if (Store.mode === 'artifact') return artifactApi(path, opts);
     const res = await fetch(path, {
       method: opts.method || (opts.body ? 'POST' : 'GET'),
       headers: Object.assign({ 'Content-Type': 'application/json' }, S.token ? { Authorization: 'Bearer ' + S.token } : {}),
@@ -91,6 +92,7 @@
   /* ---------- sincronización ---------- */
   let flushing = false, retryTimer = null, backoff = 2000;
   async function flush() {
+    if (Store.mode === 'artifact') return flushArtifact();
     if (!S.token || flushing) return;
     flushing = true;
     try {
@@ -133,14 +135,18 @@
 
   /* ---------- API pública ---------- */
   const Store = {
+    mode: 'server',
     S, session, api,
     on(fn) { listeners.add(fn); return () => listeners.delete(fn); },
     get loggedIn() { return !!S.token; },
     get pending() { return S.queue.length; },
 
     async init() {
-      S.token = localStorage.getItem('ml.token');
-      try { S.user = JSON.parse(localStorage.getItem('ml.user') || 'null'); } catch (_) { S.user = null; }
+      if (window.claude && typeof window.claude.use === 'function' && location.protocol !== 'file:') {
+        const ok = await initArtifact();
+        if (ok !== null) return ok;
+      }
+      try { S.token = localStorage.getItem('ml.token'); S.user = JSON.parse(localStorage.getItem('ml.user') || 'null'); } catch (_) { S.token = null; S.user = null; }
       if (!S.token || !S.user) { S.token = null; return false; }
       await loadCache();
       try { await api('/api/me'); } catch (e) { if (e.status === 401) return false; }
@@ -150,15 +156,14 @@
     async login(username, password, register) {
       const r = await api(register ? '/api/register' : '/api/login', { body: { username, password, device: navigator.userAgent.slice(0, 100) }, auth: true });
       S.token = r.token; S.user = r.user;
-      localStorage.setItem('ml.token', r.token);
-      localStorage.setItem('ml.user', JSON.stringify(r.user));
+      try { localStorage.setItem('ml.token', r.token); localStorage.setItem('ml.user', JSON.stringify(r.user)); } catch (_) { /* sesión solo en memoria */ }
       await loadCache();
       await flush();
       return r.user;
     },
     async logout() {
       if (S.queue.length) await flush();
-      if (S.queue.length && !confirm('Hay ' + S.queue.length + ' cambios sin enviar al servidor. Si cierras sesión ahora se conservarán en este dispositivo hasta que vuelvas a entrar. ¿Cerrar sesión?')) return false;
+      if (S.queue.length && !window.__forceLogout) { UI.toast('Hay ' + S.queue.length + ' cambios sin enviar. Se conservarán en este dispositivo; pulsa otra vez para cerrar sesión igualmente.', 'bad'); window.__forceLogout = true; return false; }
       try { await api('/api/logout', { body: {} }); } catch (_) { /* sin conexión */ }
       logoutLocal();
       return true;
@@ -214,7 +219,7 @@
   }
   function logoutLocal() {
     S.token = null; S.user = null; S.docs = {}; S.attempts = []; S.attemptIds = new Set(); S.seq = 0; S.queue = [];
-    localStorage.removeItem('ml.token'); localStorage.removeItem('ml.user');
+    try { localStorage.removeItem('ml.token'); localStorage.removeItem('ml.user'); } catch (_) { /* almacenamiento bloqueado */ }
     emit();
     if (window.App) window.App.route();
   }
@@ -223,6 +228,98 @@
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') flush(); else if (S.queue.length) flush(); });
   setInterval(() => { if (S.token) flush(); }, 60000);
   window.addEventListener('beforeunload', e => { if (S.queue.length && S.status !== 'saved') { e.preventDefault(); e.returnValue = ''; } });
+
+  /* ================= MODO ARTIFACT (claude.ai) =================
+     Sin servidor propio: la base de datos es el almacén `db` del artifact, en el subárbol privado
+     de cada persona (data/users/<id>/). Los intentos se agrupan en documentos por día y por pestaña
+     (nadie sobrescribe los de otro dispositivo); los demás datos son un documento cada uno. */
+  let CL = null; const art = { db: null, uid: null, col: null, chunks: {}, dl: null };
+  const enc = x => String(x).replace(/[^A-Za-z0-9_-]/g, c => '_' + c.charCodeAt(0).toString(16) + '_');
+  async function initArtifact() {
+    CL = window.claude;
+    const [db, user] = await Promise.all([CL.use('db'), CL.use('user')]);
+    if (!db || !user) { Store.mode = 'artifact'; Store.signedOut = true; return false; }
+    const uid = await user.id();
+    if (!uid) { Store.mode = 'artifact'; Store.signedOut = true; return false; }
+    Store.mode = 'artifact';
+    art.db = db; art.uid = uid; art.col = db.collection('data/users/' + uid);
+    let name = 'Tú';
+    try { const me = await user.me(); if (me && me.name) name = me.name.split(' ')[0]; } catch (_) { /* sin nombre */ }
+    S.user = { id: 'a-' + uid.slice(0, 12), username: name };
+    S.token = 'artifact';
+    await loadCache();
+    setStatus('saving');
+    const timer = setTimeout(() => { if (S.status === 'saving') setStatus('offline', 'El almacén tarda en responder; tus cambios quedan en cola.'); }, 10000);
+    try {
+      const snap = await art.col.get();
+      clearTimeout(timer);
+      S.docs = {}; S.attempts = []; S.attemptIds = new Set();
+      snap.docs.forEach(d => {
+        const b = d.data(); if (!b) return;
+        if (b.k === 'doc') applyDoc(b.coll, b.id, b.data, b.updated, false);
+        else if (b.k === 'att') { (b.list || []).forEach(addAttemptLocal); art.chunks[d.id] = (b.list || []).slice(); }
+      });
+      S.queue.forEach(op => { if (op.op === 'attempt') addAttemptLocal(op.data); else if (op.op === 'put') applyDoc(op.coll, op.id, op.data, op.updated, false); else if (op.op === 'del') applyDoc(op.coll, op.id, null, op.updated, true); });
+      persistCache();
+      setStatus(S.queue.length ? 'saving' : 'saved');
+      flushArtifact();
+    } catch (e) { clearTimeout(timer); setStatus('offline', e.message || String(e)); }
+    return true;
+  }
+  let artBusy = false;
+  async function flushArtifact() {
+    if (artBusy || !art.col || !S.queue.length) { if (art.col && !S.queue.length && S.status !== 'error') setStatus('saved'); return; }
+    artBusy = true; setStatus('saving');
+    try {
+      while (S.queue.length) {
+        const batch = S.queue.slice(0, 50);
+        const touched = new Set();
+        for (const op of batch) {
+          if (op.op === 'attempt') {
+            const a = op.data;
+            let key = Object.keys(art.chunks).filter(k => k.startsWith('a_' + a.day + '_' + session)).sort().pop();
+            if (!key || art.chunks[key].length >= 300) key = 'a_' + a.day + '_' + session + '_' + Object.keys(art.chunks).filter(k => k.startsWith('a_' + a.day + '_' + session)).length;
+            const list = art.chunks[key] || (art.chunks[key] = []);
+            if (!list.some(x => x.id === a.id)) list.push(a);
+            touched.add(key);
+          } else {
+            const key = 'd_' + enc(op.coll) + '__' + enc(op.id);
+            if (op.op === 'del') await art.col.doc(key).delete();
+            else await art.col.doc(key).set({ k: 'doc', coll: op.coll, id: op.id, data: op.data == null ? {} : op.data, updated: op.updated });
+          }
+        }
+        for (const key of touched) await art.col.doc(key).set({ k: 'att', list: art.chunks[key] });
+        const done = new Set(batch.map(o => o.opid));
+        S.queue = S.queue.filter(o => !done.has(o.opid));
+        await persistQueue();
+      }
+      persistCache();
+      setStatus('saved');
+    } catch (e) {
+      setStatus('offline', (e && (e.message || e.code)) || String(e));
+      clearTimeout(retryTimer); retryTimer = setTimeout(flushArtifact, 5000);
+    } finally { artBusy = false; }
+  }
+  async function artifactApi(path, opts) {
+    if (path === '/api/ai/status') return { enabled: false, reason: 'En la versión web (claude.ai) la IA del servidor no está disponible. Usa la versión local con ANTHROPIC_API_KEY.' };
+    if (path === '/api/backup') return { format: 'memory-lab-backup', v: 1, exported: Date.now(), user: S.user, attempts: S.attempts, docs: Object.keys(S.docs).flatMap(c => Object.keys(S.docs[c]).map(id => ({ coll: c, id, data: S.docs[c][id].data, updated: S.docs[c][id].updated, deleted: false }))) };
+    if (path === '/api/restore') {
+      const b = opts.body; let n = 0;
+      (b.attempts || []).forEach(a => { if (!S.attemptIds.has(a.id)) { addAttemptLocal(a); S.queue.push({ opid: uuid(), op: 'attempt', data: a }); n++; } });
+      (b.docs || []).forEach(d => { if (!d.deleted) { applyDoc(d.coll, d.id, d.data, d.updated, false); S.queue.push({ opid: uuid(), op: 'put', coll: d.coll, id: d.id, data: d.data, updated: d.updated }); n++; } });
+      await persistQueue(); flushArtifact(); return { acked: n, rejected: 0 };
+    }
+    throw Object.assign(new Error('Función no disponible en la versión web.'), { status: 501 });
+  }
+  /* Descarga de archivos en el artifact (el marco bloquea los enlaces de descarga). */
+  Store.download = async function (filename, text) {
+    if (Store.mode === 'artifact') {
+      const d = await CL.use('downloads');
+      if (!d) throw new Error('Las descargas no están disponibles en esta vista.');
+      return d.save({ filename, data: text });
+    }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' })); a.download = filename; document.body.append(a); a.click(); a.remove();
+  };
   window.Store = Store;
   window._kvDel = kvDel;
 })();

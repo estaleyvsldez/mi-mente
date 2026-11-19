@@ -154,6 +154,15 @@
     }
   };
 
-  window.UI = { h, $, $$, toast, pct, mins, dateStr, timeStr, barChart, heatmap, ring, countdown };
+  /* Botón que pide una segunda pulsación para acciones destructivas (el visor no muestra confirm()). */
+  function confirmBtn(label, question, action, cls) {
+    let armed = false, t = null;
+    const b = h('button', { class: cls || 'btn ghost small', type: 'button', onclick: () => {
+      if (!armed) { armed = true; b.textContent = question; t = setTimeout(() => { armed = false; b.textContent = label; }, 4000); return; }
+      clearTimeout(t); action();
+    } }, label);
+    return b;
+  }
+  window.UI = { confirmBtn, h, $, $$, toast, pct, mins, dateStr, timeStr, barChart, heatmap, ring, countdown };
   window.Voice = Voice;
 })();

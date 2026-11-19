@@ -100,6 +100,10 @@
 
   /* ---------- autenticación ---------- */
   function viewAuth(root) {
+    if (Store.mode === 'artifact') {
+      root.append(h('div', { class: 'card auth' }, h('h1', null, '◆ Memory Lab'), h('p', null, 'Inicia sesión en claude.ai para usar Memory Lab: tu progreso se guarda en tu espacio privado de esta página.'), h('p', { class: 'muted small' }, 'Si ya iniciaste sesión, recarga la página.')));
+      return;
+    }
     let register = false;
     const user = h('input', { type: 'text', autocomplete: 'username', 'aria-label': 'Usuario', placeholder: 'Usuario' });
     const pass = h('input', { type: 'password', autocomplete: 'current-password', 'aria-label': 'Contraseña', placeholder: 'Contraseña (mínimo 8 caracteres)' });
@@ -224,10 +228,10 @@
       try { const obj = JSON.parse(await restoreInput.files[0].text()); const r = await Store.restore(obj); toast('Restaurado: ' + r.acked + ' registros (' + r.rejected + ' rechazados)'); App.route(); }
       catch (e) { toast('No se pudo restaurar: ' + e.message, 'bad'); }
     });
-    root.append(h('div', { class: 'card' }, h('h2', null, 'Datos y copias de seguridad'), h('p', { class: 'small muted' }, 'Tus datos viven en la base de datos del servidor (y el servidor guarda copias diarias automáticas). Aquí puedes descargar tu propia copia o restaurarla (no duplica registros).'),
-      h('div', { class: 'row' }, h('button', { class: 'btn', type: 'button', onclick: async () => { try { const d = await Store.backup(); const a = h('a', { href: URL.createObjectURL(new Blob([JSON.stringify(d)], { type: 'application/json' })), download: 'memory-lab-' + Stats.localDay(Date.now()) + '.json' }); document.body.append(a); a.click(); a.remove(); } catch (e) { toast(e.message, 'bad'); } } }, 'Descargar copia'),
+    root.append(h('div', { class: 'card' }, h('h2', null, 'Datos y copias de seguridad'), h('p', { class: 'small muted' }, (Store.mode === 'artifact' ? 'En la versión web tus datos viven en el almacén privado de esta página en claude.ai.' : 'Tus datos viven en la base de datos del servidor (y el servidor guarda copias diarias automáticas).') + ' Aquí puedes descargar tu propia copia o restaurarla (no duplica registros).'),
+      h('div', { class: 'row' }, h('button', { class: 'btn', type: 'button', onclick: async () => { try { const d = await Store.backup(); await Store.download('memory-lab-' + Stats.localDay(Date.now()) + '.json', JSON.stringify(d)); } catch (e) { toast(e.message || 'Descarga cancelada', 'bad'); } } }, 'Descargar copia'),
         h('label', { class: 'btn' }, 'Restaurar copia', h('span', { style: { display: 'none' } }, restoreInput)),
-        h('button', { class: 'btn ghost', type: 'button', onclick: async () => { if (await Store.logout()) App.route(); } }, 'Cerrar sesión'))));
+        Store.mode === 'artifact' ? null : h('button', { class: 'btn ghost', type: 'button', onclick: async () => { if (await Store.logout()) App.route(); } }, 'Cerrar sesión'))));
     root.querySelector('label.btn').addEventListener('click', () => restoreInput.click());
   }
 

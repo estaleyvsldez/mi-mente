@@ -138,7 +138,7 @@
           h('label', { class: 'small' }, 'Elementos por lugar: '), (() => { const s = h('select', { 'aria-label': 'Elementos por lugar' }, [1, 2, 3].map(n => h('option', { value: n, selected: (p.perLocus || 1) === n }, n))); s.addEventListener('change', () => Store.put('palaces', p._id, Object.assign({}, p, { perLocus: Number(s.value) }))); return s; })(),
           h('button', { class: 'btn primary small', type: 'button', onclick: () => App.start({ title: 'Palacio: ' + p.name, module: 'words', items: [A.palaceItem(p._id, Math.min(p.loci.length * (p.perLocus || 1), 10 * (p.perLocus || 1)))], back: '#/athlete/palaces' }) }, 'Usar con palabras'),
           h('button', { class: 'btn small', type: 'button', onclick: () => App.start({ title: 'Palacio + Major', module: 'numbers', items: [A.palaceItem(p._id, Math.min(p.loci.length, 10) * 2 * (p.perLocus || 1), 'digits')], back: '#/athlete/palaces' }) }, 'Usar con dígitos'),
-          h('button', { class: 'btn ghost small', type: 'button', onclick: () => { if (confirm('¿Borrar el palacio «' + p.name + '»? Su historial de intentos se conserva.')) { Store.del('palaces', p._id); App.route(); } } }, 'Borrar'))));
+          UI.confirmBtn('Borrar', '¿Seguro? Pulsa otra vez', () => { Store.del('palaces', p._id); App.route(); }))));
     });
   };
   A.palaceItem = function (pid, count, what, extra) {
