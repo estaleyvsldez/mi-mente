@@ -1,0 +1,12 @@
+PASA  arranque  misión 1 empezó y guardó el punto de control de inicio
+PASA  A  misión completada tras cerrar  {"antes":true,"despues":true}
+PASA  B  misión desbloqueada tras cerrar  desbloqueada hasta índice 1, RPG desbloqueado: true
+PASA  C  checkpoint recuperado tras cerrar en plena misión  {"mi":1,"planted":2,"caches":[1,1,0],"x":66.5,"z":-51.5,"aliados":3}
+PASA  D  progreso tras apagado brusco (proceso matado)  botón CONTINUAR visible: true · "Misión 2: SABOTAJE · punto de control "EXPLOSIVO 2/3 COLOCADO" · hace un momento"
+PASA  G  CONTINUAR carga la partida correcta  misión 2, posición (66.5,-51.5) vs guardada (66.5,-51.5)
+PASA  J  la partida vieja no sobrescribe la nueva  pestaña nueva guardó: true · pestaña vieja guardó: false · guardado vigente: {"kills":777,"seq":10} (solo una puede ganar y la que estaba atrasada fue rechazada)
+PASA  I  relaciones con compañeros se conservan  {"trust":62,"savedByYou":1,"savedYou":0,"kills":0,"missions":1,"abandoned":0,"memory":["Lo curaste en SABOTAJE"]}
+PASA  H  partidas independientes  {"1":{"done":1,"kills":777,"cp":1},"3":{"done":0,"kills":33,"cp":0}}
+PASA  F  recuperación tras guardado interrumpido  {"seq":10,"r1":{"seq":10,"aviso":"Se recuperó el progreso desde una copia de seguridad (idb:main)."},"r2":{"seq":10,"aviso":"Se recuperó el progreso desde una copia de seguridad (idb:main)."},"rechazado":true}
+PASA  E  datos de versión anterior migrados  {"v":2,"done":[true,true,false,false],"unlocked":2,"kills":120,"rpg":true,"squad":["TORRES","VEGA","MORALES"]}
+PASA  E2 guardado de versión más nueva protegido  Esta partida es de una versión más nueva del juego: se protege y no se modifica.

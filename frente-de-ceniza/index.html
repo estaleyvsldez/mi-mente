@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Frente de Ceniza</title>
+<title>Operación Zero</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:'Segoe UI',Roboto,Arial,sans-serif;color:#e8e2d6;user-select:none;-webkit-user-select:none;touch-action:none}
@@ -16,6 +16,38 @@ canvas{display:block}
 #scope .h{left:0;right:0;top:50%;height:2px;margin-top:-1px}
 #scope .v{top:0;bottom:0;left:50%;width:2px;margin-left:-1px}
 #scope .d{left:50%;top:50%;width:6px;height:6px;margin:-3px;border-radius:50%;background:#e02010}
+#radio{position:absolute;left:28px;bottom:92px;width:330px;font-size:12px;text-shadow:0 1px 3px #000;background:linear-gradient(90deg,rgba(10,16,10,.55),rgba(10,16,10,0));border-left:3px solid #7fbf6a;padding:6px 10px}
+#rch{letter-spacing:1px;color:#bfe3b0}#rch b{letter-spacing:3px;color:#e6ffd8}
+#rch .sig{color:#8fd07a;letter-spacing:0;margin-left:6px}#rch .sil{color:#ffb070;font-weight:800}
+#rstat{display:flex;gap:6px;margin:3px 0;font-size:10px;font-weight:800;letter-spacing:2px}
+#rstat span{padding:1px 6px;border:1px solid rgba(255,255,255,.25);opacity:.45}#rstat span.on{opacity:1}
+#rtx.on{background:#a8361f;border-color:#ff8a70}#rrx.on{background:#2e7a2a;border-color:#8fd07a}
+#rstat .rk{border:none;opacity:.55;letter-spacing:1px;font-weight:600}
+#rlog div{line-height:1.35;margin-top:2px}#rlog b{color:#e6ffd8;letter-spacing:1px}#rlog i{font-style:normal;font-size:9px;opacity:.6;letter-spacing:1px;margin-right:3px}
+#rlog .urg b{color:#ff8a70}#rlog .lost{opacity:.4}
+#squadHud{position:absolute;right:30px;top:120px;font-size:11px;font-weight:700;letter-spacing:1px;text-shadow:0 1px 3px #000;text-align:right}
+#squadHud div{margin-bottom:5px;display:flex;align-items:center;gap:6px;justify-content:flex-end}
+#squadHud .hb{display:inline-block;width:50px;height:4px;background:rgba(255,255,255,.2)}#squadHud .hb span{display:block;height:100%;background:#8fd07a}
+#squadHud i{font-style:normal;font-size:9px;opacity:.75;min-width:70px;text-align:left}#squadHud i.dn{color:#ff7a60;opacity:1}#squadHud i.cb{color:#ffcf5a}
+#cpNote{position:absolute;left:50%;top:70px;transform:translateX(-50%);font-size:13px;font-weight:800;letter-spacing:2px;color:#bfe3b0;text-shadow:0 2px 4px #000;opacity:0}
+#cpNote.show{animation:cpn 3.2s forwards}@keyframes cpn{0%{opacity:0}10%,80%{opacity:1}100%{opacity:0}}
+#orders{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,94vw);max-height:88vh;overflow:auto;background:rgba(12,18,12,.92);border:1px solid #5f8f50;box-shadow:0 10px 40px rgba(0,0,0,.6);padding:12px 14px;display:none;z-index:40;font-size:12px}
+#orders .oh{font-weight:800;letter-spacing:3px;color:#bfe3b0;display:flex;justify-content:space-between;align-items:center}
+#orders .ol{font-size:10px;letter-spacing:2px;opacity:.65;margin:9px 0 4px}
+#ordRecip,#ordList,#ordCh{display:flex;flex-wrap:wrap;gap:5px}
+.ob{background:rgba(255,255,255,.06);border:1px solid rgba(191,227,176,.35);color:#e6ffd8;padding:7px 9px;font-size:11px;font-weight:700;letter-spacing:1px;cursor:pointer;border-radius:3px}
+.ob.on{background:rgba(127,191,106,.35);border-color:#bfe3b0}.ob b{color:#ffcf5a;margin-right:3px}.ob small{opacity:.6}
+.ob.voice{margin-top:10px;width:100%;background:rgba(168,54,31,.4)}
+#tRadio{left:calc(10px + env(safe-area-inset-left,0px));top:auto;bottom:150px;width:52px;height:34px;border-radius:9px;font-size:9px}
+body.touch #radio{left:auto;right:calc(110px + env(safe-area-inset-right,0px));top:8px;bottom:auto;width:230px;font-size:9px;padding:4px 7px;background:rgba(10,16,10,.45)}
+body.touch #rstat .rk{display:none}
+body.touch #squadHud{top:auto;bottom:250px;right:calc(14px + env(safe-area-inset-right,0px));font-size:9px}
+#slots div.lock{opacity:.25;text-decoration:line-through}
+.slot small,.mis small{display:block;font-size:9px;opacity:.65;margin-top:2px;letter-spacing:1px}
+.mis{text-align:left}.mis b{color:#f0c674;margin-right:6px}.mis.done{border-color:rgba(127,191,106,.6)}.mis:disabled{opacity:.35;cursor:default}
+#misList{display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%}
+#confirmBox{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:60}
+#confirmBox>div{background:#1a1612;border:1px solid #a8361f;padding:18px;max-width:420px;text-align:center;line-height:1.5}
 #cross{position:absolute;left:50%;top:50%;width:0;height:0;transition:opacity .1s}
 #cross i{position:absolute;background:rgba(255,255,255,.85);box-shadow:0 0 2px #000}
 #cross .t,#cross .b{width:2px;height:9px;left:-1px}
@@ -58,7 +90,7 @@ canvas{display:block}
 #room{position:absolute;left:20px;top:14px;font-size:12px;letter-spacing:2px;text-shadow:0 2px 4px #000;display:none;line-height:1.5}
 #room b{font-size:22px;color:#f0c674;letter-spacing:5px}
 #respawn{position:absolute;top:44%;width:100%;text-align:center;font-size:24px;font-weight:800;text-shadow:0 2px 8px #000;display:none}
-.overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,rgba(20,16,10,.45),rgba(0,0,0,.92));text-align:center;padding:16px;overflow:auto}
+.overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;background:radial-gradient(ellipse at center,rgba(20,16,10,.45),rgba(0,0,0,.92));text-align:center;padding:16px;overflow:auto}
 h1{font-size:clamp(30px,7vw,76px);letter-spacing:.16em;font-weight:900;color:#e9dfc8;text-shadow:0 4px 24px rgba(0,0,0,.9)}
 .sub{opacity:.7;letter-spacing:.3em;margin:6px 0 22px;font-size:12px}
 .btn{background:#a8361f;border:none;color:#fff;font-size:18px;font-weight:800;letter-spacing:.18em;padding:14px 30px;cursor:pointer;border-radius:3px;box-shadow:0 6px 24px rgba(0,0,0,.6)}
@@ -140,6 +172,7 @@ body.touch #act{display:none!important}
 body.touch #speedo{right:auto;left:50%;transform:translateX(-50%);bottom:14px;font-size:18px}
 body.touch .mk{font-size:9px}
 .minfo{font-size:12px;opacity:.75;letter-spacing:.04em;line-height:1.45;min-height:36px;text-align:center}
+.overlay>:first-child{margin-top:auto}.overlay>:last-child{margin-bottom:auto}
 #rotate{position:fixed;inset:0;background:#000;display:none;align-items:center;justify-content:center;font-size:18px;text-align:center;z-index:99;padding:30px}
 @media (orientation:portrait){ body.touch #rotate{display:flex} }
 </style>
@@ -164,6 +197,9 @@ body.touch .mk{font-size:9px}
   <div id="marks"></div>
   <div id="act"><div id="actL"></div><div id="actBar"><div id="actFill"></div></div></div>
   <div id="speedo"></div>
+  <div id="radio"><div id="rch"></div><div id="rstat"><span id="rtx">TX</span><span id="rrx">RX</span><span class="rk">T ÓRDENES · B VOZ</span></div><div id="rlog"></div></div>
+  <div id="squadHud"></div>
+  <div id="cpNote"></div>
   <div id="subt"></div>
   <div id="hint"></div>
   <div id="hpbox"><div id="hpnum">100</div><div id="hpbar"><div id="hpfill"></div></div></div>
@@ -171,6 +207,11 @@ body.touch .mk{font-size:9px}
   <div id="slots"></div>
   <div id="nades">GRANADAS ×3</div>
 </div>
+<div id="orders"><div class="oh">RADIO TÁCTICA · ÓRDENES <button id="ordClose" class="ob">✕</button></div>
+  <div class="ol">DESTINATARIO <small>(Tab)</small></div><div id="ordRecip"></div>
+  <div class="ol">ORDEN <small>(teclas 1-0, − silencio)</small></div><div id="ordList"></div>
+  <div class="ol">CANAL DE TRANSMISIÓN <small>(Y)</small></div><div id="ordCh"></div>
+  <button id="ordVoice" class="ob voice">🎙 DAR ORDEN POR VOZ (B)</button></div>
 <div id="touch">
   <div id="stick"><div id="knob"></div></div>
   <div class="tb" id="tFire" data-b="fire"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 2v5M12 17v5M2 12h5M17 12h5"/></svg></div>
@@ -181,14 +222,22 @@ body.touch .mk{font-size:9px}
   <div class="tb pill" id="tCarry" data-b="carry">CARGAR</div>
   <div class="tb" id="tSwap" data-b="swap"><b id="tWName">FUSIL ⟳</b><span id="tAmmo">30<i> / 180</i></span></div>
   <div class="tb" id="tPause" data-b="pause">II</div>
+  <div class="tb" id="tRadio" data-b="radio">RADIO</div>
 </div>
 <div id="menu" class="overlay">
-  <h1>FRENTE DE CENIZA</h1>
-  <div class="sub">ZONA DE GUERRA · MISIONES · SOLO O CON AMIGOS</div>
+  <h1>OPERACIÓN ZERO</h1>
+  <div class="sub">PROYECTO NÉMESIS · FUERZA ZERO</div>
   <div class="panel" id="pMain">
+    <button id="bContinue" class="btn" style="display:none">CONTINUAR</button>
+    <div id="contInfo" class="minfo" style="min-height:0"></div>
+    <div class="row" id="rowSlots"><button class="btn2 slot" data-slot="1">PARTIDA 1</button><button class="btn2 slot" data-slot="2">PARTIDA 2</button><button class="btn2 slot" data-slot="3">PARTIDA 3</button></div>
+    <div id="slotInfo" class="minfo" style="min-height:0"></div>
+    <div id="squadInfo" class="minfo" style="min-height:0;font-size:10px"></div>
     <input id="pname" placeholder="TU NOMBRE" maxlength="14">
     <div class="row"><span class="lbl">MODO</span><button class="btn2 on" data-mode="missions">MISIONES</button><button class="btn2" data-mode="coop">OLEADAS</button><button class="btn2" data-mode="teams">BANDOS</button></div>
     <div id="modeInfo" class="minfo"></div>
+    <div class="row" id="rowMis"><div id="misList"></div></div>
+    <button id="bNew" class="btn2">NUEVA CAMPAÑA EN ESTA PARTIDA</button>
     <button id="bSolo" class="btn" disabled>CARGANDO…</button>
     <div class="row"><button id="bHost" class="btn2" disabled>CREAR SALA CON AMIGOS</button></div>
     <div class="row"><input id="jcode" placeholder="CÓDIGO" maxlength="5" style="flex:1.2"><button id="bJoin" class="btn2" disabled>UNIRSE A SALA</button></div>
@@ -197,7 +246,7 @@ body.touch .mk{font-size:9px}
     <div class="row"><span class="lbl">GRÁFICOS</span><button class="btn2" data-q="alta">ALTA</button><button class="btn2" data-q="media">MEDIA</button><button class="btn2" data-q="baja">BAJA</button></div>
   </div>
   <div class="panel" id="pResume" style="display:none">
-    <button id="bResume" class="btn">CONTINUAR</button>
+    <button id="bResume" class="btn">VOLVER AL JUEGO</button>
     <div id="roomInfo" style="font-size:14px;letter-spacing:2px;line-height:1.6"></div>
     <button id="bCopy" class="btn2" style="display:none">COPIAR ENLACE PARA AMIGOS</button>
     <button id="bLeave" class="btn2">SALIR AL MENÚ PRINCIPAL</button>
@@ -209,6 +258,8 @@ body.touch .mk{font-size:9px}
     <b>Clic derecho / X</b><span>Apuntar con la mira</span>
     <b>E</b><span>Usar: curar, recoger, abrir, subir al jeep</span>
     <b>C</b><span>Cargar a un compañero herido</span>
+    <b>T</b><span>Radio: dar órdenes a la escuadra (1-0, Tab, Y)</span>
+    <b>B</b><span>Orden por voz (micrófono)</span>
     <b>P o R</b><span>Recargar</span>
     <b>1 2 3 4 5 6 / Rueda</b><span>Fusil · Francotirador · Pistola · Escopeta · RPG · Cuchillo</span>
     <b>G</b><span>Granada</span>
@@ -217,10 +268,11 @@ body.touch .mk{font-size:9px}
   </div>
   <div id="status">Preparando el campo de batalla…</div>
 </div>
+<div id="confirmBox"><div><div id="confirmTxt"></div><div class="row" style="margin-top:14px"><button id="cYes" class="btn2" style="border-color:#c0392b;color:#ff9a80">SÍ, EMPEZAR DE NUEVO</button><button id="cNo" class="btn2">CANCELAR</button></div></div></div>
 <div id="over" class="overlay" style="display:none">
   <h1 style="color:#c0392b">CAÍSTE EN COMBATE</h1>
   <div id="stats" class="sub"></div>
-  <div class="panel"><button id="retry" class="btn">VOLVER A JUGAR</button><button id="overMenu" class="btn2">MENÚ PRINCIPAL</button></div>
+  <div class="panel"><button id="retryCP" class="btn" style="display:none">CONTINUAR DESDE EL PUNTO DE CONTROL</button><button id="retry" class="btn">VOLVER A JUGAR</button><button id="overMenu" class="btn2">MENÚ PRINCIPAL</button></div>
 </div>
 <div id="rotate">Gira tu teléfono en horizontal para jugar 📱↻</div>
 
@@ -1306,6 +1358,7 @@ function hostOnData(c,d){
     case 'det': detonate(); break;
     case 'board': { const v=vehicles[d.id]; if(v) boardAllies(v); break; }
     case 'veh': applyVeh(d); broadcast(d,pid); break;
+    case 'order': { const L=humanById(pid); if(L) applyOrder(d.type,squadMembers(d.recip),V3(...d.ap),L); break; }
   }
 }
 function clientOnData(d){
@@ -1313,6 +1366,8 @@ function clientOnData(d){
     case 'welcome': NET.myId=d.id; myTeam=d.team; NET.mode=d.mode; for(const [id,x,z,yaw,dr] of d.veh||[]) applyVeh({id,p:[x,z,yaw,0,0],d:dr}); break;
     case 'revived': player.revive(); break;
     case 'veh': applyVeh(d); break;
+    case 'radio': radioSay(d.m.ch,d.m.text,{...d.m,local:true}); break;
+    case 'misDone': if(!SAVE.data) ensureSave(); recordMissionComplete(d.i); break;
     case 'tp': NET.spawn=null; resetPlayer(); break;
     case 'xpl': explode(V3(...d.p),null); break;
     case 'snap': applySnap(d); break;
@@ -1346,6 +1401,7 @@ function nameOf(id){ if(!id) return '?'; if(id===NET.myId) return myName; if(id.
 function teamOf(id){ if(id===NET.myId) return myTeam; if(id?.startsWith('n')) return npcs.get(id)?.team; return remotes.get(id)?.team || scores.get(id)?.team; }
 function registerKill(killer,victim,part,dir){
   if(!isAuth()) return;
+  { const kn=killer&&killer.startsWith&&killer.startsWith('n')&&npcs.get(killer); if(kn&&kn.ally&&kn.name){ const r=rel(kn.name); if(r) r.kills++; } }
   const kt=teamOf(killer), vt=teamOf(victim);
   const m={t:'kill',killer,victim,part,kn:nameOf(killer),vn:nameOf(victim),kt,vt,dir:dir?arr(dir):null};
   const ks=scores.get(killer); if(ks && killer!==victim) ks.k++;
@@ -1439,7 +1495,7 @@ class NPC{
     this.netPos=V3().copy(this.pos); this.netYaw=this.yaw; this.deadT=0;
     npcs.set(id,this);
   }
-  say(k){ if(!isAuth()) return; const i=Math.floor(Math.random()*LINES[k].length); npcSayLocal(this,k,i); broadcast({t:'say',id:this.id,k,i}); }
+  say(k){ if(!isAuth()) return; if(this.ally){ if(RL[k]) allySay(this,k,{prio:k==='contact'?5:6}); return; } const i=Math.floor(Math.random()*LINES[k].length); npcSayLocal(this,k,i); broadcast({t:'say',id:this.id,k,i}); }
   hit(dmg,dir,part,by){
     if(this.dead) return;
     if(this.downed){ this.hp-=dmg; if(this.hp<-90) this.die(dir,part,by); return; }
@@ -1455,9 +1511,10 @@ class NPC{
     scream(this.pos.distanceTo(player.pos)<30?0.25:0.08);
     registerKill(by,this.id,part,dir);
     const r=Math.random(); if(r<0.45) hostPickup(this.pos,'ammo'); else if(r<0.62) hostPickup(this.pos,'med'); else if(r<0.78) hostPickup(this.pos,'nade');
-    for(const o of npcs.values()) if(!o.dead&&o!==this&&o.team===this.team&&o.pos.distanceTo(this.pos)<25){ o.say('ally'); if(o.state!=='combat'){ o.state='alert'; o.inv=V3().copy(this.pos); o.searchT=6; o.aware=0.6; } break; }
+    if(this.ally&&this.name&&isAuth()){ const near=player.alive&&!player.downed&&player.pos.distanceTo(this.pos)<45; relEvent(this.name,this.bledOut&&near?'abandoned':'died'); const o2=[...npcs.values()].find(o=>o.ally&&!o.dead&&o!==this); if(o2) allySay(o2,'lost',{prio:3,vars:{n:this.name},cd:3}); }
+    if(!this.ally) for(const o of npcs.values()) if(!o.dead&&o!==this&&o.team===this.team&&o.pos.distanceTo(this.pos)<25){ o.say('ally'); if(o.state!=='combat'){ o.state='alert'; o.inv=V3().copy(this.pos); o.searchT=6; o.aware=0.6; } break; }
   }
-  enterCombat(c){ const was=this.state; this.state='combat'; this.target=c; this.aware=1; this.lastSeen.copy(c.pos); this.lostT=0; this.aimT=Math.min(this.aimT,0.2); if(was!=='combat') this.say('contact'); }
+  enterCombat(c){ const was=this.state; if(this.team==='E'&&was!=='combat') ambushLog.push(time); this.state='combat'; this.target=c; this.aware=1; this.lastSeen.copy(c.pos); this.lostT=0; this.aimT=Math.min(this.aimT,0.2); if(was!=='combat') this.say('contact'); }
   update(dt){
     if(this.dead){ this.deadT+=dt; this.vis.animate(dt,0); if(this.deadT>30&&isAuth()){ this.vis.dispose(); npcs.delete(this.id); } return; }
     if(this.proxy){
@@ -1521,12 +1578,13 @@ class NPC{
       const tg=V3(this.inv.x-pos.x,0,this.inv.z-pos.z), td=tg.length();
       if(td>2&&this.detourT<3){ move.copy(tg.normalize()); speed=3.6; face=move; }
       else { this.searchT-=dt; this.lookT-=dt; if(this.lookT<=0){ this.lookYaw=this.yaw+R(-2,2); this.lookT=R(1,2); } if(this.searchT<=0){ this.state='patrol'; this.post={x:pos.x,z:pos.z}; this.wp=null; } }
-    } else if(this.ally){ const r=this.allyThink(dt); if(r){ move.copy(r.move); speed=r.speed; face=r.face||(r.speed>0?move:null); } } else {
+    } else if(this.ally){ const r=this.medicTask(dt)||this.orderMove(dt,false)||this.allyThink(dt); if(r){ move.copy(r.move); speed=r.speed; face=r.face||(r.speed>0?move:null); } } else {
       if(this.huntT!==undefined){ this.huntT-=dt; if(this.huntT<=0){ this.huntT=R(8,14); const ps=combatants().filter(c=>c.alive&&c.team!==this.team); if(ps.length){ const c=ps.reduce((a,b)=>a.pos.distanceTo(pos)<b.pos.distanceTo(pos)?a:b); this.state='alert'; this.inv=V3(c.pos.x+R(-8,8),0,c.pos.z+R(-8,8)); this.searchT=4; } } }
       if(!this.wp){ this.waitT-=dt; this.lookT-=dt; if(this.lookT<=0){ this.lookYaw=this.yaw+R(-1.6,1.6); this.lookT=R(1.5,3.5); }
         if(this.waitT<=0){ for(let i=0;i<8;i++){ const x=this.post.x+R(-11,11), z=this.post.z+R(-11,11); if(Math.abs(x)<94&&Math.abs(z)<94&&!insideCollider(x,z,0.6)){ this.wp=V3(x,0,z); this.wpT=0; break; } } this.waitT=R(2,6); } }
       else { this.wpT+=dt; const tg=V3(this.wp.x-pos.x,0,this.wp.z-pos.z), td=tg.length(); if(td<0.8||this.wpT>15) this.wp=null; else { move.copy(tg.normalize()); speed=1.5; face=move; } }
     }
+    if(this.ally&&this.state==='combat'){ const o=this.allyCombat(dt,this.target); if(o){ move.copy(o.move); speed=o.speed; if(o.face) face=o.face; } }
     if(this.detourT>0){ this.detourT-=dt; const s=this.detour; move.set(move.x*0.3-move.z*s,0,move.z*0.3+move.x*s).normalize(); if(!this.los) face=move; }
     this.speed=lerp(this.speed,speed,Math.min(1,dt*5));
     if(this.speed>0.1&&move.lengthSq()>0){
@@ -1541,8 +1599,9 @@ class NPC{
     this.yaw=angLerp(this.yaw,ty,Math.min(1,dt*(face?7:2.5))); this.vis.root.rotation.y=this.yaw;
   }
   shoot(tc,dist){
+    if(this.ally){ if(this.ammo<=0) return; this.ammo--; }
     const mz=this.vis.muzzle(V3()), target=eyeOf(tc); target.y-=0.25;
-    let chance=CFG.enemyAccuracy*(1+W.n*0.04)*(1-Math.min(dist/70,0.7));
+    let chance=CFG.enemyAccuracy*(1+W.n*0.04)*(1-Math.min(dist/70,0.7))*(this.accMul||1)*(this.ally?1.15:1);
     if(tc.moving) chance*=0.7; if(tc.sprinting) chance*=0.65;
     const hitP=Math.random()<chance; this.lastShotT=time;
     const dir=V3().subVectors(target,mz).normalize();
@@ -1730,6 +1789,9 @@ const stats={score:0,kills:0,best:0,deaths:0};
 try{ stats.best=+localStorage.getItem('fdc_best')||0; }catch(e){}
 
 addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; keys[e.code]=true; if(e.code==='Escape'&&noLock&&state==='playing'){ showPause(); return; } if(state!=='playing'||!player.alive) return;
+  if(e.code==='KeyT'&&!e.repeat){ openOrders(!RADIO.panel); return; }
+  if(e.code==='KeyB'&&!e.repeat){ startVoice(); return; }
+  if(RADIO.panel){ if(e.code==='Tab'){ e.preventDefault(); cycleRecip(); return; } const dm=e.code.match(/^Digit(\d)$/); if(dm){ const oi=(+dm[1]+9)%10; if(ORDERS[oi]){ issueOrder(ORDERS[oi][0]); openOrders(false); } return; } if(e.code==='Minus'){ issueOrder('silence'); openOrders(false); return; } if(e.code==='KeyY'){ const ci=CHANNELS.findIndex(c=>c.id===RADIO.tx); RADIO.tx=CHANNELS[(ci+1)%CHANNELS.length].id; renderOrders(); return; } }
   if(e.code==='KeyX') wpn.adsHeld=!wpn.adsHeld; if(e.code==='KeyE'&&!e.repeat) startHold(); if(e.code==='KeyC'&&!e.repeat) performAct(ACT.carry); if(player.vehicle||player.downed||player.carry&&/^(KeyF|KeyG|KeyR|KeyP|Digit)/.test(e.code)){ if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)) e.preventDefault(); return; }
   if(e.code==='KeyF') punch(); if(e.code==='KeyR'||e.code==='KeyP') reload(); if(e.code==='KeyG') throwNade(); if(e.code==='KeyQ') equip(wpn.prev);
   if(/^Digit[1-6]$/.test(e.code)) equip(ORDER[+e.code.slice(5)-1]);
@@ -1743,7 +1805,7 @@ addEventListener('wheel',e=>{ if(state!=='playing'||performance.now()-lastWheel<
 addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('mousemove',e=>{ if(state!=='playing'||isTouch||(!document.pointerLockElement&&!TEST&&!noLock)) return; const mx=clamp(e.movementX,-200,200), my=clamp(e.movementY,-200,200);
   const s=CFG.sens*(camera.fov/75); player.yaw-=mx*s; player.pitch=clamp(player.pitch-my*s,-1.45,1.45); mdx+=mx; mdy+=my; });
-function cycleWeapon(dir){ const i=ORDER.indexOf(wpn.switchT>0?wpn.next:wpn.cur); equip(ORDER[(i+dir+ORDER.length)%ORDER.length]); }
+function cycleWeapon(dir){ let i=ORDER.indexOf(wpn.switchT>0?wpn.next:wpn.cur); for(let k=0;k<ORDER.length;k++){ i=(i+dir+ORDER.length)%ORDER.length; if(weaponUnlocked(ORDER[i])) break; } equip(ORDER[i]); }
 
 const TOUCH={stick:null, sx:0, sy:0, mx:0, my:0, look:null, lx:0, ly:0, btn:new Map()};
 function touchBtn(b,down){
@@ -1754,6 +1816,7 @@ function touchBtn(b,down){
     return;
   }
   if(b==='act'){ if(down) startHold(); else ACT.holding=false; return; }
+  if(b==='radio'){ if(down) openOrders(!RADIO.panel); return; }
   if(!down) return;
   if(b==='carry'){ performAct(ACT.carry); return; }
   if(b==='reload') reload(); else if(b==='jump') jumpOrClimb();
@@ -1934,6 +1997,7 @@ function doPunchHit(){ const hit=meleeHit(2.3,0.7,()=>CFG.punchDmg,false); SFX.p
 function knifeHit(){ const hit=meleeHit(2.4,0.65,b=>b?250:80,true); if(hit){ SFX.stab(); hitMarker(false); } }
 function equip(k){
   if(state!=='playing'||!WEAPONS[k]||!player.alive) return;
+  if(!weaponUnlocked(k)){ hint(`${WEAPONS[k].short}: SE DESBLOQUEA AL COMPLETAR LA MISIÓN 1`); return; }
   if((wpn.switchT>0&&k===wpn.next)||(wpn.switchT<=0&&k===wpn.cur)) return;
   if(wpn.punchT>=0||wpn.throwT>=0||wpn.stabT>=0) return;
   wpn.reloading=false; wpn.pumpT=-1; wpn.next=k; if(wpn.switchT<=0) wpn.switchT=0.44;
@@ -2043,7 +2107,7 @@ function updateWeapon(dt){
 const KX={streak:0, multi:0, multiT:-9};
 function pop(text,cls=''){ const d=document.createElement('div'); d.textContent=text; if(cls) d.className=cls; const k=$('killpop'); k.appendChild(d); setTimeout(()=>d.remove(),1700); while(k.children.length>3) k.firstChild.remove(); }
 function onMyKill(part){
-  stats.kills++; KX.streak++;
+  stats.kills++; KX.streak++; onLocalKill(part);
   KX.multi = time-KX.multiT<4 ? KX.multi+1 : 1; KX.multiT=time;
   const pts = part==='head'?150 : part==='melee'?200 : part==='boom'?175 : 100; stats.score+=pts;
   const txt = part==='head'?'¡TIRO A LA CABEZA!' : part==='melee'?'¡CUERPO A CUERPO!' : part==='boom'?'¡VOLADO EN PEDAZOS!' : pick(['¡ELIMINADO!','¡ENEMIGO ABATIDO!','¡UNO MENOS!','¡NEUTRALIZADO!']);
@@ -2240,9 +2304,9 @@ function wreckArmor(a){
 }
 function armorHit(a,dmg,by){
   if(a.dead||!isAuth()) return; a.hp-=dmg;
-  if(a.hp<=0){ const p=V3(a.pos.x,a.pos.y+1.5,a.pos.z); wreckArmor(a); explode(p,by,{r:9,dmg:200,pdmg:80}); broadcast({t:'arDead',id:a.id,by,p:arr(p)}); onArmorDead(by); }
+  if(a.hp<=0){ if(MIS.on) MIS.v.armDead=1; const p=V3(a.pos.x,a.pos.y+1.5,a.pos.z); wreckArmor(a); explode(p,by,{r:9,dmg:200,pdmg:80}); broadcast({t:'arDead',id:a.id,by,p:arr(p)}); onArmorDead(by); }
 }
-function onArmorDead(by){ const t=`${nameOf(by)} DESTRUYÓ EL BLINDADO`; feed(t,by===NET.myId); if(by===NET.myId){ stats.score+=500; pop('¡BLINDADO DESTRUIDO!  +500','big'); SFX.killSting(true); say('Blindado destruido',{pitch:0.6,force:true}); } }
+function onArmorDead(by){ const t=`${nameOf(by)} DESTRUYÓ EL BLINDADO`; feed(t,by===NET.myId); if(by===NET.myId){ stats.score+=500; if(SAVE.data){ SAVE.data.stats.armors++; addXP(200); } pop('¡BLINDADO DESTRUIDO!  +500','big'); SFX.killSting(true); say('Blindado destruido',{pitch:0.6,force:true}); } }
 function armorTargets(a){ return combatants().filter(c=>c.alive&&c.team!=='E'); }
 function updateArmors(dt){
   for(const a of armors){
@@ -2284,6 +2348,485 @@ function applyArmorSnap(list){
   for(const a of [...armors]) if(!seen.has(a.id)){ scene.remove(a.mesh); const i=rayTargets.indexOf(a.mesh.userData.proxy); if(i>=0) rayTargets.splice(i,1); const j=colliders.indexOf(a.col); if(j>=0) colliders.splice(j,1); if(a.fire){ scene.remove(a.fire.light); const k=fires.indexOf(a.fire); if(k>=0) fires.splice(k,1); } armors.splice(armors.indexOf(a),1); }
 }
 
+// ======================= GUARDADO PERSISTENTE =======================
+// Capas: (1) localStorage con dos ranuras alternas A/B + temporal + copia de hito, cada una con
+// suma de verificación CRC32; (2) IndexedDB con la misma copia; (3) en el enlace de Claude, una copia
+// en la nube privada del usuario (capacidad db). Al cargar se valida cada copia y gana la de mayor
+// número de secuencia. Nunca se escribe un guardado que no pase la validación, y nunca se pisa una
+// copia más nueva (de otra pestaña, otro dispositivo o una versión más nueva del juego).
+const SAVE_VERSION=2, SAVE_APP='operacion-zero', SLOTS=[1,2,3];
+const CRC_T=(()=>{ const t=new Uint32Array(256); for(let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c=c&1?0xEDB88320^(c>>>1):c>>>1; t[n]=c>>>0; } return t; })();
+function crc32(str){ let c=0xFFFFFFFF; for(let i=0;i<str.length;i++){ const ch=str.charCodeAt(i); c=CRC_T[(c^ch)&0xFF]^(c>>>8); c=CRC_T[(c^(ch>>>8))&0xFF]^(c>>>8); } return (c^0xFFFFFFFF)>>>0; }
+const RANKS=[[0,'RECLUTA'],[500,'SOLDADO'],[1500,'CABO'],[3000,'SARGENTO'],[5000,'SUBTENIENTE'],[8000,'TENIENTE'],[12000,'CAPITÁN'],[17000,'MAYOR'],[25000,'CORONEL']];
+const rankOf=xp=>{ let r=RANKS[0][1]; for(const [t,n] of RANKS) if(xp>=t) r=n; return r; };
+const BASE_SQUAD=['TORRES','VEGA','MORALES'];
+const DEFAULT_WEAPONS=['rifle','sniper','pistol','shotgun','knife'];
+function newRel(){ return {trust:50,savedByYou:0,savedYou:0,kills:0,missions:0,abandoned:0,memory:[]}; }
+function defaultSave(){
+  return {app:SAVE_APP, v:SAVE_VERSION, seq:0, savedAt:0, created:Date.now(), reason:'',
+    campaign:{unlocked:0, current:0, level:0, completed:MISSIONS.map(()=>false), objectives:{}, rewards:[], recruits:[], decisions:{}},
+    checkpoint:null,
+    inventory:null,
+    weapons:{unlocked:DEFAULT_WEAPONS.slice()},
+    settings:{},
+    stats:{kills:0,headshots:0,deaths:0,revives:0,missions:0,best:0,playTime:0,armors:0},
+    xp:0,
+    squad:Object.fromEntries(BASE_SQUAD.map(n=>[n,newRel()]))};
+}
+// --- migraciones: cada función recibe un guardado de la versión n y devuelve uno de la versión n+1
+const MIGRATIONS={
+  1:d=>{ // v1: guardado sencillo previo (progreso y estadísticas) sin ranuras de escuadra ni inventario
+    const s=defaultSave(); const c=d.campaign||{};
+    s.campaign.completed=MISSIONS.map((_,i)=>!!(c.completed&&c.completed[i]));
+    s.campaign.unlocked=clamp(c.unlocked|0,0,MISSIONS.length-1); s.campaign.current=clamp(c.current??s.campaign.unlocked,0,MISSIONS.length-1);
+    Object.assign(s.stats,d.stats||{}); s.settings=d.settings||{}; s.seq=d.seq|0; s.savedAt=d.savedAt|0; s.created=d.created||Date.now();
+    s.xp=(s.stats.kills|0)*10+s.campaign.completed.filter(Boolean).length*500;
+    if(s.campaign.completed[0]&&!s.weapons.unlocked.includes('rpg')) s.weapons.unlocked.push('rpg');
+    s.v=2; return s; },
+};
+function migrate(d){ let v=d.v|0; if(v<1) throw new Error('versión desconocida'); while(v<SAVE_VERSION){ const f=MIGRATIONS[v]; if(!f) throw new Error('sin migración desde v'+v); d=f(d); v=d.v; } return d; }
+function normalize(d){ // completa campos que falten sin perder datos
+  const D=defaultSave();
+  for(const k of Object.keys(D)) if(d[k]===undefined) d[k]=D[k];
+  for(const k of Object.keys(D.campaign)) if(d.campaign[k]===undefined) d.campaign[k]=D.campaign[k];
+  for(const k of Object.keys(D.stats)) if(typeof d.stats[k]!=='number') d.stats[k]=0;
+  while(d.campaign.completed.length<MISSIONS.length) d.campaign.completed.push(false);
+  for(const n of BASE_SQUAD.concat(d.campaign.recruits||[])) if(!d.squad[n]) d.squad[n]=newRel();
+  if(!Array.isArray(d.weapons.unlocked)) d.weapons.unlocked=DEFAULT_WEAPONS.slice();
+  return d;
+}
+function validateSave(d){
+  if(!d||typeof d!=='object'||d.app!==SAVE_APP) return 'no es un guardado del juego';
+  if(d.v!==SAVE_VERSION) return 'versión '+d.v;
+  const c=d.campaign; if(!c||!Array.isArray(c.completed)||c.completed.length<MISSIONS.length) return 'campaña dañada';
+  if(!(c.unlocked>=0&&c.unlocked<MISSIONS.length)||!(c.current>=0&&c.current<MISSIONS.length)) return 'índices de misión fuera de rango';
+  if(typeof d.seq!=='number'||d.seq<0) return 'secuencia inválida';
+  if(!d.stats||typeof d.stats.kills!=='number') return 'estadísticas dañadas';
+  if(!d.squad||typeof d.squad!=='object') return 'escuadra dañada';
+  for(const r of Object.values(d.squad)) if(typeof r.trust!=='number'||r.trust<0||r.trust>100) return 'confianza fuera de rango';
+  const cp=d.checkpoint;
+  if(cp){ if(!(cp.mi>=0&&cp.mi<MISSIONS.length)||!cp.player||!Number.isFinite(cp.player.x)||!Number.isFinite(cp.player.z)||!Array.isArray(cp.objs)||typeof cp.v!=='object') return 'punto de control dañado'; }
+  return null;
+}
+function wrapSave(d){ const body=JSON.stringify(d); return JSON.stringify({f:'OZSAVE',v:d.v,seq:d.seq,at:d.savedAt,sum:crc32(body),body}); }
+function unwrapSave(raw){ // devuelve {data} o {err} o {future}
+  if(typeof raw!=='string'||!raw) return {err:'vacío'};
+  let w; try{ w=JSON.parse(raw); }catch(e){ return {err:'JSON roto'}; }
+  if(!w||w.f!=='OZSAVE'||typeof w.body!=='string') return {err:'formato desconocido'};
+  if(crc32(w.body)!==w.sum) return {err:'suma de verificación no coincide'};
+  let d; try{ d=JSON.parse(w.body); }catch(e){ return {err:'contenido roto'}; }
+  if((d.v|0)>SAVE_VERSION) return {future:true,seq:d.seq|0,data:d};
+  try{ if(d.v!==SAVE_VERSION) d=migrate(d); }catch(e){ return {err:'migración: '+e.message}; }
+  d=normalize(d); const bad=validateSave(d); if(bad) return {err:bad};
+  return {data:d};
+}
+const LS={ get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }, set(k,v){ localStorage.setItem(k,v); }, del(k){ try{ localStorage.removeItem(k); }catch(e){} } };
+const key=(slot,part)=>`oz_s${slot}_${part}`;
+// --- IndexedDB
+const IDB={db:null, open(){ return new Promise(res=>{ try{ const r=indexedDB.open('operacion-zero',1); r.onupgradeneeded=()=>r.result.createObjectStore('saves'); r.onsuccess=()=>{ IDB.db=r.result; res(true); }; r.onerror=()=>res(false); setTimeout(()=>res(false),3000); }catch(e){ res(false); } }); },
+  get(k){ return new Promise(res=>{ if(!IDB.db) return res(null); try{ const q=IDB.db.transaction('saves','readonly').objectStore('saves').get(k); q.onsuccess=()=>res(q.result??null); q.onerror=()=>res(null); }catch(e){ res(null); } }); },
+  put(k,v){ return new Promise(res=>{ if(!IDB.db) return res(false); try{ const tx=IDB.db.transaction('saves','readwrite'); tx.objectStore('saves').put(v,k); tx.oncomplete=()=>res(true); tx.onerror=tx.onabort=()=>res(false); }catch(e){ res(false); } }); } };
+// --- Nube (solo dentro del enlace de Claude): documento privado por persona
+const CLOUD={db:null,uid:null,ready:false,busy:false,pending:null,
+  async init(){ try{ if(!window.claude||!window.claude.use) return; const [db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]); if(!db||!user) return; const id=await user.id(); if(!id) return; CLOUD.db=db; CLOUD.uid=id; CLOUD.ready=true; }catch(e){ console.warn('nube',e); } },
+  ref(slot){ return CLOUD.db.doc(`data/users/${CLOUD.uid}/slot${slot}`); },
+  async get(slot){ if(!CLOUD.ready) return null; try{ const s=await CLOUD.ref(slot).get(); return s.exists?String(s.data().raw||''):null; }catch(e){ return null; } },
+  async put(slot,raw,seq){ if(!CLOUD.ready) return; if(CLOUD.busy){ CLOUD.pending=[slot,raw,seq]; return; } CLOUD.busy=true;
+    try{ const cur=await CLOUD.get(slot); const u=cur&&unwrapSave(cur); const cseq=u&&(u.data?u.data.seq:u.seq);
+      if(cseq!=null&&cseq>=seq&&cur!==raw){ SAVE.onNewer(slot,u,'nube'); } else await CLOUD.ref(slot).set({raw,seq,at:Date.now(),v:SAVE_VERSION}); }catch(e){ console.warn('nube',e); }
+    CLOUD.busy=false; if(CLOUD.pending){ const p=CLOUD.pending; CLOUD.pending=null; CLOUD.put(...p); } } };
+const SAVE={slot:1,data:null,baseSeq:0,locked:false,notice:'',summ:{},lastAuto:0,lastRaw:null,stale:false,tabId:Math.random().toString(36).slice(2),bc:null,
+  readLocal(slot){ // todas las copias locales válidas, ordenadas de más nueva a más vieja
+    const out=[]; let future=null, corrupt=0;
+    for(const part of ['A','B','tmp','bak']){ const raw=LS.get(key(slot,part)); if(!raw) continue; const u=unwrapSave(raw); if(u.future){ future=u; continue; } if(u.err){ corrupt++; continue; } out.push({src:'ls:'+part,raw,data:u.data}); }
+    return {list:out.sort((a,b)=>b.data.seq-a.data.seq||b.data.savedAt-a.data.savedAt),future,corrupt};
+  },
+  async readAll(slot){
+    const r=SAVE.readLocal(slot);
+    for(const part of ['main','bak']){ const raw=await IDB.get(`s${slot}_${part}`); if(!raw) continue; const u=unwrapSave(raw); if(u.future){ r.future=r.future||u; continue; } if(u.err){ r.corrupt++; continue; } r.list.push({src:'idb:'+part,raw,data:u.data}); }
+    const craw=await CLOUD.get(slot); if(craw){ const u=unwrapSave(craw); if(u.future) r.future=r.future||u; else if(u.err) r.corrupt++; else r.list.push({src:'nube',raw:craw,data:u.data}); }
+    r.list.sort((a,b)=>b.data.seq-a.data.seq||b.data.savedAt-a.data.savedAt); return r;
+  },
+  async load(slot){
+    SAVE.slot=slot; SAVE.locked=false; SAVE.notice='';
+    const r=await SAVE.readAll(slot);
+    if(r.future&&(!r.list[0]||r.future.seq>=r.list[0].data.seq)){ SAVE.locked=true; SAVE.data=r.future.data; SAVE.notice='Esta partida es de una versión más nueva del juego: se protege y no se modifica.'; return SAVE.data; }
+    SAVE.stale=false;
+    if(r.list.length){ const best=r.list[0]; SAVE.data=best.data; SAVE.baseSeq=best.data.seq; SAVE.lastRaw=SAVE.readLocal(slot).list[0]?.raw===best.raw?best.raw:null;
+      const lsBest=SAVE.readLocal(slot).list[0];
+      if(!lsBest||lsBest.data.seq<best.data.seq){ SAVE.writeLocal(slot,best.raw,best.data.seq); SAVE.notice='Se recuperó el progreso desde una copia de seguridad ('+best.src+').'; }
+      else if(r.corrupt) SAVE.notice='Se detectó una copia dañada y se usó la última copia válida.';
+      return SAVE.data; }
+    SAVE.data=null; SAVE.baseSeq=0; if(r.corrupt) SAVE.notice='No se pudo leer ninguna copia de esta partida.'; return null;
+  },
+  writeLocal(slot,raw,seq){ // escritura "atómica": temporal verificada → ranura alterna verificada → borrar temporal
+    LS.set(key(slot,'tmp'),raw); if(LS.get(key(slot,'tmp'))!==raw) throw new Error('verificación temporal');
+    const target=key(slot,seq%2?'A':'B'); LS.set(target,raw); if(LS.get(target)!==raw) throw new Error('verificación ranura');
+    LS.del(key(slot,'tmp'));
+  },
+  commit(reason){
+    if(!SAVE.data||SAVE.locked) return false;
+    const d=SAVE.data;
+    const cur=SAVE.readLocal(SAVE.slot).list[0];
+    if(SAVE.stale||(cur&&(cur.data.seq>SAVE.baseSeq||(cur.data.seq===SAVE.baseSeq&&SAVE.lastRaw&&cur.raw!==SAVE.lastRaw)))){ SAVE.onNewer(SAVE.slot,{data:(cur||{}).data},'otra pestaña'); return false; }
+    const prev={seq:d.seq,savedAt:d.savedAt,reason:d.reason};
+    d.seq=Math.max(SAVE.baseSeq,d.seq|0)+1; d.savedAt=Date.now(); d.reason=reason; d.v=SAVE_VERSION;
+    const bad=validateSave(d); let raw;
+    if(!bad){ raw=wrapSave(d); const chk=unwrapSave(raw); if(chk.err) { Object.assign(d,prev); console.warn('guardado rechazado:',chk.err); return false; } }
+    else { Object.assign(d,prev); console.warn('guardado rechazado:',bad); return false; }
+    try{ SAVE.writeLocal(SAVE.slot,raw,d.seq); }catch(e){ console.warn('localStorage:',e); }
+    SAVE.baseSeq=d.seq; SAVE.lastRaw=raw; SAVE.lastAuto=performance.now(); try{ SAVE.bc&&SAVE.bc.postMessage({slot:SAVE.slot,seq:d.seq,id:SAVE.tabId}); }catch(e){}
+    if(reason==='mision'||reason==='nueva'){ LS.set(key(SAVE.slot,'bak'),raw); IDB.put(`s${SAVE.slot}_bak`,raw); }
+    IDB.put(`s${SAVE.slot}_main`,raw); CLOUD.put(SAVE.slot,raw,d.seq);
+    try{ LS.set('oz_meta',JSON.stringify({last:SAVE.slot})); }catch(e){}
+    SAVE.summ[SAVE.slot]=summary(d);
+    return true;
+  },
+  onNewer(slot,u,where){ // nunca pisar un guardado más nuevo: se adopta y se avisa
+    if(slot!==SAVE.slot) return; if(!u||!u.data){ const c=SAVE.readLocal(slot).list[0]; if(!c) return; u={data:c.data}; }
+    if(MIS.on&&state!=='menu'){ SAVE.locked=true; hint('Hay un guardado más nuevo ('+where+'). Esta sesión deja de guardar para no pisarlo.'); return; }
+    SAVE.data=u.data; SAVE.baseSeq=u.data.seq; SAVE.stale=false; SAVE.lastRaw=(SAVE.readLocal(slot).list[0]||{}).raw||null; SAVE.notice='Se cargó un guardado más nuevo ('+where+').'; refreshSaveUI();
+  },
+  fresh(slot){ SAVE.slot=slot; SAVE.locked=false; SAVE.stale=false; SAVE.lastRaw=null; const d=defaultSave(); const old=SAVE.readLocal(slot).list[0]; d.seq=old?old.data.seq:0; SAVE.baseSeq=d.seq; d.settings=collectSettings(); SAVE.data=d; return d; },
+};
+function summary(d){ if(!d) return null; const done=d.campaign.completed.filter(Boolean).length; return {done,cur:d.campaign.current,cp:d.checkpoint?d.checkpoint.label:null,cpMi:d.checkpoint?d.checkpoint.mi:null,rank:rankOf(d.xp),at:d.savedAt,level:d.campaign.level}; }
+function collectSettings(){ return {quality:QUAL,mode:wantMode,team:wantTeam,name:($('pname').value.trim()||'').toUpperCase().slice(0,14)}; }
+function saveSettings(){ if(!SAVE.data) return; SAVE.data.settings=collectSettings(); SAVE.commit('ajustes'); }
+function legacyImport(d){ // primer arranque con el sistema nuevo: trae lo que había en claves sueltas
+  try{ const best=+LS.get('fdc_best')||0; if(best) d.stats.best=Math.max(d.stats.best,best); const n=LS.get('fdc_name'); if(n) d.settings.name=n; const m=LS.get('fdc_mode'); if(m) d.settings.mode=m; }catch(e){}
+}
+// --- inventario, recompensas, estadísticas, relaciones
+function captureInventory(){ const w={}; wpn.store[wpn.cur]={ammo:wpn.ammo,reserve:wpn.reserve}; for(const k of ORDER) if(wpn.store[k]) w[k]={ammo:wpn.store[k].ammo,reserve:wpn.store[k].reserve}; return {w,nades:wpn.nades}; }
+function applyInventory(inv){ if(!inv||!inv.w) return; for(const k of ORDER){ const s=inv.w[k]; if(s&&wpn.store[k]){ wpn.store[k].ammo=clamp(s.ammo|0,0,WEAPONS[k].mag||0); wpn.store[k].reserve=Math.max(0,s.reserve|0); } } wpn.nades=clamp(inv.nades|0,0,6); wpn.ammo=wpn.store[wpn.cur].ammo; wpn.reserve=wpn.store[wpn.cur].reserve; }
+function applySavedInventory(){ // al empezar una misión: lo guardado, nunca menos que el equipo básico
+  const d=SAVE.data; if(!d||NET.mode!=='missions') return; const inv=d.inventory;
+  if(inv&&inv.w) for(const k of ORDER){ const s=inv.w[k]; if(s&&wpn.store[k]) wpn.store[k].reserve=Math.max(wpn.store[k].reserve,s.reserve|0); }
+  wpn.nades=Math.max(wpn.nades,3+(d.campaign.rewards.includes('nades1')?1:0)); wpn.reserve=wpn.store[wpn.cur].reserve;
+}
+function weaponUnlocked(k){ return NET.mode!=='missions'||!SAVE.data||SAVE.data.weapons.unlocked.includes(k); }
+function addXP(n){ if(!SAVE.data) return; const before=rankOf(SAVE.data.xp); SAVE.data.xp+=n; const after=rankOf(SAVE.data.xp); if(after!==before){ pop('ASCENSO: '+after,'big'); SAVE.commit('rango'); } }
+function rel(name){ if(!SAVE.data||!name) return null; const s=SAVE.data.squad; if(!s[name]) s[name]=newRel(); return s[name]; }
+function relEvent(name,kind){
+  const r=rel(name); if(!r) return; const M=MIS.on?MISSIONS[MIS.i].title:'combate';
+  const mem=t=>{ r.memory.unshift(t); r.memory.length=Math.min(r.memory.length,8); };
+  if(kind==='savedByYou'){ r.savedByYou++; r.trust=clamp(r.trust+8,0,100); mem(`Lo curaste en ${M}`); addXP(50); SAVE.data.stats.revives++; }
+  if(kind==='savedYou'){ r.savedYou++; r.trust=clamp(r.trust+3,0,100); mem(`Te salvó en ${M}`); }
+  if(kind==='kill'){ r.kills++; }
+  if(kind==='abandoned'){ r.abandoned++; r.trust=clamp(r.trust-12,0,100); mem(`Lo dejaste morir en ${M}`); }
+  if(kind==='died'){ mem(`Cayó en ${M}`); r.trust=clamp(r.trust-3,0,100); }
+  SAVE.commit('relaciones');
+}
+function objectiveDone(id){ if(!SAVE.data) return; const o=SAVE.data.campaign.objectives; const k='m'+MIS.i; o[k]=o[k]||[]; if(!o[k].includes(id)) o[k].push(id); }
+function recordMissionComplete(i){
+  const d=SAVE.data; if(!d||SAVE.locked) return;
+  const M=MISSIONS[i], c=d.campaign;
+  c.completed[i]=true; c.unlocked=Math.max(c.unlocked,Math.min(i+1,MISSIONS.length-1)); c.current=i+1<MISSIONS.length?i+1:0;
+  const rw=M.reward; const id='m'+i;
+  if(rw&&!c.rewards.includes(id)){ c.rewards.push(id); if(rw.weapon&&!d.weapons.unlocked.includes(rw.weapon)) d.weapons.unlocked.push(rw.weapon); if(rw.nades&&!c.rewards.includes('nades1')) c.rewards.push('nades1'); if(rw.recruit&&!c.recruits.includes(rw.recruit)){ c.recruits.push(rw.recruit); rel(rw.recruit); } setTimeout(()=>pop('RECOMPENSA: '+rw.text,'big'),1800); }
+  d.stats.missions++; d.stats.best=Math.max(d.stats.best,stats.score); d.xp+=500;
+  for(const n of npcs.values()) if(n.ally&&!n.dead&&n.name){ const r=rel(n.name); r.missions++; r.trust=clamp(r.trust+4,0,100); }
+  d.checkpoint=null; d.inventory=captureInventory();
+  SAVE.commit('mision');
+  if(NET.role==='client') return;
+}
+function onLocalKill(part){ if(!SAVE.data) return; SAVE.data.stats.kills++; if(part==='head') SAVE.data.stats.headshots++; addXP(part==='head'?15:10); }
+function squadGreeting(){
+  if(!SAVE.data) return; const lines=[];
+  for(const n of npcs.values()){ if(!n.ally||!n.name) continue; const r=rel(n.name); if(!r) continue;
+    if(r.abandoned>=2&&r.trust<35) lines.push([n.name,'Esta vez no me dejes tirado, ¿entendido?']);
+    else if(r.savedByYou>=1&&r.trust>=60) lines.push([n.name,'Te debo la vida, jefe. Hoy te cubro yo.']);
+    else if(r.savedYou>=1) lines.push([n.name,'Otra vez juntos. Intenta que no te tenga que levantar.']); }
+  if(lines.length){ const [who,t]=lines[Math.floor(Math.random()*lines.length)]; setTimeout(()=>radioSay('escuadra',t,{from:who,prio:6}),4500); }
+}
+function allyMaxHp(n){ const r=rel(n.name); return 120+Math.round((r?r.trust:50)*0.6); }
+// --- interfaz del menú
+let confirmCb=null;
+function askConfirm(text,cb){ $('confirmTxt').textContent=text; $('confirmBox').style.display='flex'; confirmCb=cb; }
+function fmtAgo(t){ if(!t) return ''; const s=(Date.now()-t)/1000; if(s<90) return 'hace un momento'; if(s<3600) return `hace ${Math.round(s/60)} min`; if(s<86400) return `hace ${Math.round(s/3600)} h`; return `hace ${Math.round(s/86400)} días`; }
+function refreshSaveUI(){
+  const d=SAVE.data, s=summary(d);
+  document.querySelectorAll('[data-slot]').forEach(b=>{ const n=+b.dataset.slot, sm=SAVE.summ[n]; b.classList.toggle('on',n===SAVE.slot); b.innerHTML=`PARTIDA ${n}<small>${sm?`${sm.done}/${MISSIONS.length} MISIONES · ${sm.rank}`:'VACÍA'}</small>`; });
+  const cb=$('bContinue');
+  if(d&&!SAVE.locked&&(s.done>0||d.checkpoint||d.campaign.current>0)){ cb.style.display='block';
+    const M=MISSIONS[d.checkpoint?d.checkpoint.mi:d.campaign.current];
+    $('contInfo').textContent=d.checkpoint?`Misión ${d.checkpoint.mi+1}: ${M.title} · punto de control "${d.checkpoint.label}" · ${fmtAgo(d.savedAt)}`:`Siguiente: misión ${d.campaign.current+1}: ${M.title} · ${fmtAgo(d.savedAt)}`; }
+  else { cb.style.display='none'; $('contInfo').textContent=''; }
+  $('slotInfo').textContent=SAVE.notice||(d?`${rankOf(d.xp)} · ${d.xp} XP · ${d.stats.kills} bajas · ${d.stats.missions} misiones cumplidas`:'Partida vacía: empieza una campaña nueva.');
+  const box=$('misList'); box.innerHTML='';
+  MISSIONS.forEach((M,i)=>{ const b=document.createElement('button'); b.className='btn2 mis'; const done=d&&d.campaign.completed[i], open=!d?i===0:i<=d.campaign.unlocked;
+    b.innerHTML=`<b>${String(i+1).padStart(2,'0')}</b> ${M.title}<small>${done?'✔ COMPLETADA':open?'DISPONIBLE':'🔒 BLOQUEADA'}</small>`; b.disabled=!open; b.classList.toggle('done',!!done);
+    b.onclick=()=>{ if(!open) return; playMission(i); }; box.appendChild(b); });
+  $('rowMis').style.display=wantMode==='missions'?'flex':'none';
+  if(d){ const sq=Object.entries(d.squad).map(([n,r])=>`${n} ${r.trust}`).join(' · '); $('squadInfo').textContent='CONFIANZA DE LA ESCUADRA: '+sq; } else $('squadInfo').textContent='';
+}
+async function selectSlot(n){ await SAVE.load(n); try{ LS.set('oz_meta',JSON.stringify({last:n})); }catch(e){} SAVE.summ[n]=summary(SAVE.data); refreshSaveUI(); }
+function ensureSave(){ if(!SAVE.data&&!SAVE.locked){ const d=SAVE.fresh(SAVE.slot); legacyImport(d); SAVE.commit('nueva'); } return SAVE.data; }
+function playMission(i){ readName(); if(SAVE.locked){ status(SAVE.notice); return; } ensureSave(); Object.assign(NET,{role:'solo',mode:'missions',myId:'h',bots:true}); myTeam='A'; SAVE.data.campaign.current=i; SAVE.data.checkpoint=null; SAVE.commit('elegir'); MIS.i=i; beginGame(true); }
+function continueGame(){
+  readName(); if(SAVE.locked||!SAVE.data) return; const d=SAVE.data;
+  Object.assign(NET,{role:'solo',mode:'missions',myId:'h',bots:true}); myTeam='A'; setMode('missions');
+  resetWorldState(); resetPlayer(); stats.score=0; stats.kills=0; stats.deaths=0; scores.clear(); scores.set(NET.myId,{name:myName,team:myTeam,k:0,d:0}); started=true; time=0;
+  if(d.checkpoint) restoreCheckpoint(d.checkpoint); else startMission(d.campaign.current);
+  enterPlay();
+}
+async function initSaves(){
+  await IDB.open();
+  try{ SAVE.bc=new BroadcastChannel('operacion-zero-saves'); SAVE.bc.onmessage=e=>{ const m=e.data; if(m&&m.id!==SAVE.tabId&&m.slot===SAVE.slot&&m.seq>SAVE.baseSeq){ SAVE.stale=true; SAVE.onNewer(m.slot,null,'otra pestaña'); } }; }catch(e){}
+  let last=1; try{ last=JSON.parse(LS.get('oz_meta')||'{}').last||1; }catch(e){}
+  for(const n of SLOTS){ const r=await SAVE.readAll(n); SAVE.summ[n]=r.list[0]?summary(r.list[0].data):null; }
+  await selectSlot(SLOTS.includes(last)?last:1);
+  if(SAVE.data&&SAVE.data.settings){ const st=SAVE.data.settings; if(st.name&&!$('pname').value) $('pname').value=st.name; if(st.mode) setMode(st.mode); }
+  // nube: llega más tarde (solo en el enlace de Claude); si trae algo más nuevo, se adopta
+  CLOUD.init().then(async()=>{ if(!CLOUD.ready) return; for(const n of SLOTS){ const r=await SAVE.readAll(n); SAVE.summ[n]=r.list[0]?summary(r.list[0].data):null; }
+    if(state==='menu') await selectSlot(SAVE.slot); else refreshSaveUI();
+    if(SAVE.data&&!SAVE.locked){ const raw=wrapSave(SAVE.data); CLOUD.put(SAVE.slot,raw,SAVE.data.seq); } });
+}
+addEventListener('pagehide',()=>{ if(SAVE.data&&!SAVE.locked&&started) SAVE.commit('cierre'); });
+document.addEventListener('visibilitychange',()=>{ if(document.hidden&&SAVE.data&&!SAVE.locked&&started) SAVE.commit('segundo-plano'); });
+
+// ======================= RADIO MILITAR =======================
+const CHANNELS=[
+  {id:'escuadra',name:'ESCUADRA',freq:'41.250'},{id:'mando',name:'MANDO',freq:'38.900'},{id:'medico',name:'MÉDICO',freq:'44.100'},
+  {id:'recon',name:'RECONOCIMIENTO',freq:'46.775'},{id:'ops',name:'OPERACIONES',freq:'39.500'},{id:'emerg',name:'EMERGENCIA',freq:'121.500'}];
+const chName=id=>(CHANNELS.find(c=>c.id===id)||CHANNELS[0]).name;
+const PERSONAS={
+  TORRES:{role:'asalto',call:'ALFA',pitch:0.75,rate:1.18,acc:1.0,followBack:2.2,aggro:1.4,desc:'Asalto agresivo'},
+  VEGA:{role:'medico',call:'MÉDICO',pitch:1.15,rate:1.08,acc:0.9,followBack:3.5,aggro:0.8,kits:4,desc:'Médica protectora'},
+  MORALES:{role:'tirador',call:'BRAVO',pitch:0.65,rate:0.98,acc:1.45,followBack:5.5,aggro:0.7,desc:'Tirador paciente'},
+  RAMÍREZ:{role:'explorador',call:'CHARLIE',pitch:0.85,rate:1.12,acc:1.1,followBack:4,aggro:1.0,desc:'Explorador observador'},
+};
+// catálogo de frases por personalidad y situación (con variantes)
+const RL={
+  contact:{asalto:['¡Contacto! ¡Vamos a por ellos!','¡Los tengo, abro fuego!','¡Enemigos al frente, a reventarlos!','¡Ahí están esos cabrones!'],medico:['¡Contacto! ¡Cuidado, cúbranse!','¡Enemigos a la vista, ojo!'],tirador:['Contacto. Lo tengo en la mira.','Objetivo visto. Disparando.','Blanco localizado.'],explorador:['¡Contacto! Varios, en movimiento.','¡Movimiento hostil, ahí delante!']},
+  hit:{asalto:['¡Me dieron, joder!','¡Ah, maldita sea!','¡Estoy bien, sigo!'],medico:['¡Me hirieron!','¡Au! Sigo operativa.'],tirador:['Herido. Nada grave.','Me alcanzaron.'],explorador:['¡Me dieron!','¡Tocado!']},
+  down:{asalto:['¡Estoy en el suelo! ¡Que alguien me saque de aquí!','¡Me dieron feo, necesito ayuda!'],medico:['¡La médica está caída! ¡Ayuda!','¡No puedo moverme!'],tirador:['Estoy herido de gravedad. Necesito asistencia.','No puedo levantarme.'],explorador:['¡Me hirieron, no puedo caminar!','¡Ayuda, estoy abajo!']},
+  thanks:{asalto:['¡Gracias, jefe! Ahora sí, a darles.','Te debo una, no lo olvido.'],medico:['Gracias. Sigo atendiendo heridos.','Me salvaste, gracias.'],tirador:['Gracias. Vuelvo a mi posición.','Te debo una.'],explorador:['¡Gracias! Sigo en marcha.','De vuelta en pie.']},
+  reload:{asalto:['¡Recarga, yo te cubro!','¡Recarga tranquilo, los mantengo ocupados!'],medico:['Recarga, te cubro.'],tirador:['Cubriendo mientras recargas.'],explorador:['¡Recarga, tengo el ángulo!']},
+  flank:{asalto:['¡Jefe, a tu espalda!','¡Te flanquean por detrás!'],medico:['¡Cuidado, detrás de ti!'],tirador:['Movimiento a tu retaguardia.'],explorador:['¡Te están rodeando, mira atrás!']},
+  ammo:{asalto:['¡Jefe, me quedo sin balas!','¡Necesito munición, ya!'],medico:['Me queda poca munición.'],tirador:['Munición baja. Necesito cargadores.'],explorador:['¡Sin munición!']},
+  wounded:{asalto:['Estoy herido, pero sigo.','Sangro un poco, nada que me pare.'],medico:['Estoy herida, me curo en cuanto pueda.'],tirador:['Herido. Sigo operativo.'],explorador:['Me han dado, sigo moviéndome.']},
+  lost:{asalto:['¡Perdimos a {n}! ¡Hijos de puta!','¡{n} cayó! ¡Lo van a pagar!'],medico:['¡No... perdimos a {n}!','¡{n} se nos fue!'],tirador:['{n} está muerto. Mantengan la calma.'],explorador:['¡{n} ha caído!']},
+  playerDown:{asalto:['¡El jefe está herido! ¡Vega, ve por él, yo cubro!','¡Zero está abajo! ¡Cúbranlo!'],medico:['¡Voy por ti, jefe, aguanta!','¡Zero herido! Voy en camino, cúbranme.'],tirador:['Jefe caído. Cubro la zona.'],explorador:['¡Zero está abajo! Vigilo los flancos.']},
+  healing:{medico:['Quieto, jefe. Esto va a doler un poco.','Te estoy curando, aguanta.','Vendaje puesto. Listo.']},
+  healDone:{medico:['Listo. Ya estás mejor.','Curación completa. Vuelve al combate.']},
+  ambush:{asalto:['¡Emboscada! ¡Fuego a discreción!'],medico:['¡Es una emboscada, a cubierto!'],tirador:['Emboscada. Busquen cobertura.'],explorador:['¡Emboscada, nos estaban esperando!']},
+  clear:{asalto:['Zona limpia. ¿Quién sigue?','Despejado. Qué aburrido.'],medico:['Despejado. ¿Algún herido?'],tirador:['Zona despejada.'],explorador:['No veo más movimiento.']},
+  idle:{asalto:['Morales, ¿todavía no le has dado a nada?','Esto está demasiado tranquilo.'],medico:['Recuerden: si los hieren, griten.','Torres, no te alejes tanto.'],tirador:['Paciencia. Siempre aparecen.','Torres, deja de hablar.'],explorador:['Huele a emboscada.','Ruta libre por ahora.']},
+  reply:{asalto:['Sí, sí, lo que tú digas.','Ya veremos.'],medico:['Entendido.','Por supuesto.'],tirador:['Cuando aparezca, cae.','Afirmativo.'],explorador:['Recibido.','Lo tengo en cuenta.']},
+};
+const ORD_TEXT={follow:'sígueme',hold:'mantén posición',cover:'cúbreme',attack:'ataca ese punto',regroup:'reagrupamiento',advance:'avanza',retreat:'retirada',heal:'atiéndeme, médico',rescue:'rescaten al herido',scout:'explora esa zona',silence:'silencio de radio'};
+const ORDERS=[['follow','SÍGUEME'],['hold','MANTÉN POSICIÓN'],['cover','CÚBREME'],['attack','ATACA AHÍ'],['regroup','REAGRUPARSE'],['advance','AVANZA'],['retreat','RETIRADA'],['heal','MÉDICO, CÚRAME'],['rescue','RESCATA AL HERIDO'],['scout','EXPLORA AHÍ'],['silence','SILENCIO DE RADIO']];
+const RADIO={queue:[],cur:null,curEnd:0,log:[],recent:new Map(),silence:false,tx:'escuadra',txT:0,rxT:0,signal:1,vol:0.9,cool:new Map(),panel:false,recip:'all'};
+function persona(n){ return PERSONAS[n&&n.name]||PERSONAS.TORRES; }
+function rline(cat,role,vars={}){
+  const set=(RL[cat]&&(RL[cat][role]||RL[cat].asalto))||['…']; const k=cat+role; const rec=RADIO.recent.get(k)||[];
+  let opts=set.filter((_,i)=>!rec.includes(i)); if(!opts.length) opts=set; const t=opts[Math.floor(Math.random()*opts.length)]; const i=set.indexOf(t);
+  rec.push(i); while(rec.length>Math.max(1,set.length-1)) rec.shift(); RADIO.recent.set(k,rec);
+  return t.replace('{n}',vars.n||'');
+}
+function signalTo(){ // calidad de la señal según distancia al compañero más cercano
+  let best=1e9; for(const n of npcs.values()) if(n.ally&&!n.dead) best=Math.min(best,n.pos.distanceTo(player.pos));
+  return best>1e8?1:clamp(1-(best-60)/70,0,1);
+}
+function degrade(t,q){ if(q>0.6) return t; return t.split(' ').map(w=>Math.random()>q+0.25?'…':w).join(' '); }
+function squelch(on){ if(!AU.ctx) return; nb({dur:on?0.09:0.14,vol:0.22*RADIO.vol,type:'bandpass',f0:2400,f1:1800,q:2,verb:0}); tone({dur:.05,vol:.08*RADIO.vol,f0:on?1400:900,f1:on?1400:900,type:'square',verb:0}); }
+function staticBed(sec,q){ if(!AU.ctx) return; nb({dur:Math.min(6,sec),vol:(0.03+(1-q)*0.09)*RADIO.vol,type:'bandpass',f0:3000,f1:2500,q:0.6,verb:0,att:0.05}); }
+// prioridad: 1 emergencia, 2 amenaza, 3 heridos/mando, 4 órdenes, 5 táctica, 6 reportes, 7 charla, 8 humor
+function radioSay(ch,text,o={}){
+  const prio=o.prio??5, from=o.from||(ch==='mando'?'MANDO':'RADIO');
+  if(RADIO.silence&&prio>=5&&from!=='ZERO') return;
+  const key=o.key; if(key){ const c=RADIO.cool.get(key)||0; if(time<c) return; RADIO.cool.set(key,time+(o.cd??8)); }
+  const msg={ch,text,from,prio,pitch:o.pitch,rate:o.rate,at:time};
+  if(isAuth()&&!o.local) broadcast({t:'radio',m:{ch,text,from,prio,pitch:o.pitch,rate:o.rate}});
+  if(RADIO.cur&&prio<RADIO.cur.prio&&prio<=3){ RADIO.queue.unshift(msg); RADIO.curEnd=0; try{ speechSynthesis.cancel(); }catch(e){} }
+  else { RADIO.queue.push(msg); RADIO.queue.sort((a,b)=>a.prio-b.prio||a.at-b.at); if(RADIO.queue.length>6) RADIO.queue.length=6; }
+}
+function updateRadio(dt){
+  RADIO.signal=lerp(RADIO.signal,signalTo(),Math.min(1,dt*2));
+  RADIO.txT=Math.max(0,RADIO.txT-dt); RADIO.rxT=Math.max(0,RADIO.rxT-dt);
+  if(RADIO.cur&&time<RADIO.curEnd) return;
+  if(RADIO.cur){ squelch(false); RADIO.cur=null; }
+  const m=RADIO.queue.shift(); if(!m) return;
+  if(time-m.at>12&&m.prio>3) return; // mensajes viejos de poca importancia se descartan
+  const q=m.from==='ZERO'||m.ch==='mando'?Math.max(0.7,RADIO.signal):RADIO.signal;
+  if(q<0.08&&m.prio>1){ RADIO.log.unshift({...m,text:'(SIN SEÑAL)',lost:true}); return; }
+  const txt=degrade(m.text,q); RADIO.cur=m; const dur=1.1+txt.length*0.062; RADIO.curEnd=time+dur; RADIO.rxT=dur;
+  RADIO.log.unshift({...m,text:txt,t:time}); if(RADIO.log.length>40) RADIO.log.length=40;
+  squelch(true); staticBed(dur,q);
+  if(m.from!=='ZERO'){ const P=PERSONAS[m.from]; say(txt,{who:`[${chName(m.ch)}] ${m.from}`,pitch:m.pitch??P?.pitch??0.8,rate:m.rate??P?.rate??1.1,vol:RADIO.vol,force:true}); }
+  else { const s=$('subt'); s.textContent=`[${chName(m.ch)}] ZERO: ${txt}`; s.style.opacity=1; clearTimeout(subTO); subTO=setTimeout(()=>s.style.opacity=0,1800); }
+  renderRadioLog();
+}
+function renderRadioLog(){
+  const el=$('rlog'); if(!el) return;
+  el.innerHTML=RADIO.log.slice(0,4).map((m,i)=>`<div class="${m.prio<=2?'urg':''}${m.lost?' lost':''}" style="opacity:${1-i*0.2}"><b>${m.from}</b> <i>${chName(m.ch)}</i> ${escapeHtml(m.text)}</div>`).join('');
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function allySay(n,cat,o={}){ const P=persona(n); const t=rline(cat,P.role,o.vars||{}); radioSay(o.ch||'escuadra',t,{from:n.name,prio:o.prio??5,key:(o.key||cat)+n.name,cd:o.cd??10,pitch:P.pitch,rate:P.rate}); }
+
+// ======================= ÓRDENES TÁCTICAS =======================
+function aimPoint(maxD=80){ camera.updateMatrixWorld(); const o=V3().setFromMatrixPosition(camera.matrixWorld), d=camera.getWorldDirection(V3()); const h=traceBullet(o,d,maxD,false); const p=h?h.point.clone():o.addScaledVector(d,maxD); p.y=heightAt(p.x,p.z); return p; }
+function squadMembers(recip){ const all=[...npcs.values()].filter(n=>n.ally&&!n.dead&&!n.proxy); if(recip==='all') return all; if(recip==='medic') return all.filter(n=>persona(n).role==='medico'); return all.filter(n=>n.name===recip); }
+function recipLabel(r){ return r==='all'?'EQUIPO':r==='medic'?'MÉDICO':r; }
+function issueOrder(type,recip=RADIO.recip,src='teclado'){
+  if(!started||!player.alive) return;
+  if(type==='silence'){ RADIO.silence=!RADIO.silence; RADIO.txT=1.2; radioSay(RADIO.tx,RADIO.silence?'Silencio de radio.':'Fin del silencio de radio.',{from:'ZERO',prio:4,local:true}); return; }
+  if(type==='heal') recip='medic';
+  const who=squadMembers(recip);
+  RADIO.txT=1.4; radioSay(RADIO.tx,`${recipLabel(recip)==='EQUIPO'?'Equipo':recipLabel(recip)}, ${ORD_TEXT[type]}.`,{from:'ZERO',prio:4,local:true});
+  if(RADIO.tx!=='escuadra'&&RADIO.tx!=='emerg'&&!(RADIO.tx==='medico'&&type==='heal')){ setTimeout(()=>radioSay(RADIO.tx,'(Nadie del escuadrón escucha en este canal. Cambia a ESCUADRA.)',{from:'RADIO',prio:4,local:true}),900); return; }
+  if(!who.length){ setTimeout(()=>radioSay('escuadra',recip==='medic'?'No hay médico disponible.':'No hay nadie que pueda recibir esa orden.',{from:'RADIO',prio:4,local:true}),800); return; }
+  if(NET.role==='client'){ send({t:'order',type,recip,ap:arr(aimPoint())}); return; }
+  applyOrder(type,who,aimPoint(),player);
+}
+function applyOrder(type,who,ap,leader){
+  const look=V3(-Math.sin(leader.yaw),0,-Math.cos(leader.yaw)), right=V3(Math.cos(leader.yaw),0,-Math.sin(leader.yaw)), L=leader.pos;
+  who.forEach((n,i)=>{
+    if(n.downed){ setTimeout(()=>radioSay('escuadra','Estoy herido, no puedo cumplir.',{from:n.name,prio:4,pitch:persona(n).pitch}),600+i*700); return; }
+    let pos=null; const side=(i-(who.length-1)/2)*2.4;
+    switch(type){
+      case 'hold': pos=V3().copy(n.pos); break;
+      case 'cover': pos=V3(L.x+right.x*(i%2?2.4:-2.4)+look.x*1.2,0,L.z+right.z*(i%2?2.4:-2.4)+look.z*1.2); break;
+      case 'attack': case 'scout': pos=V3(ap.x+right.x*side,0,ap.z+right.z*side); break;
+      case 'advance': pos=V3(L.x+look.x*15+right.x*side,0,L.z+look.z*15+right.z*side); break;
+      case 'retreat': pos=V3(L.x-look.x*15+right.x*side,0,L.z-look.z*15+right.z*side); break;
+      case 'regroup': case 'follow': pos=null; break;
+      case 'heal': pos=null; break;
+      case 'rescue': pos=null; break;
+    }
+    if(pos){ pos.x=clamp(pos.x,-92,92); pos.z=clamp(pos.z,-92,92); for(let k=0;k<8&&insideCollider(pos.x,pos.z,0.5);k++){ pos.x+=R(-2,2); pos.z+=R(-2,2); } }
+    n.order={type,pos,t:0,best:1e9,stall:0,leader:leader.id||NET.myId,face:look.clone(),done:false};
+    if(type==='rescue'){ n.revTgt=null; }
+    if(type==='heal'){ n.healTask={target:'me',t:0,phase:'go'}; }
+    const P=persona(n); const ack={hold:'Entendido, mantengo posición.',cover:'Recibido, te cubro.',attack:'Recibido, avanzando al objetivo.',advance:'Avanzando.',retreat:'¡Retrocediendo!',regroup:'Voy hacia ti.',follow:'Te sigo, jefe.',heal:'Voy para allá, aguanta.',rescue:'Voy por el herido.',scout:'Voy a echar un vistazo.'}[type];
+    setTimeout(()=>radioSay('escuadra',`${P.call}: ${ack}`,{from:n.name,prio:4,pitch:P.pitch,rate:P.rate}),700+i*900);
+  });
+}
+function orderDone(n,text){ if(!n.order||n.order.done) return; n.order.done=true; const P=persona(n); radioSay('escuadra',text,{from:n.name,prio:5,pitch:P.pitch,rate:P.rate,key:'od'+n.name,cd:2}); if(['follow','regroup','rescue','heal','scout','attack'].includes(n.order.type)) n.order=null; }
+function orderFail(n,text){ if(!n.order) return; const P=persona(n); radioSay('escuadra',text,{from:n.name,prio:4,pitch:P.pitch,rate:P.rate}); n.order=null; }
+// movimiento según la orden activa (devuelve null si la orden no pide moverse)
+NPC.prototype.orderMove=function(dt,inCombat){
+  const o=this.order; if(!o) return null; o.t+=dt; const pos=this.pos;
+  const leader=humanById(o.leader)||humans()[0];
+  if(o.type==='follow'||o.type==='regroup'){ const d=leader.pos.distanceTo(pos); if(d<5.5){ orderDone(this,o.type==='regroup'?'Reagrupado.':'Contigo.'); return null; } const to=V3(leader.pos.x-pos.x,0,leader.pos.z-pos.z).normalize(); this.trackOrder(d,dt); return {move:to,speed:4.6,face:inCombat?null:to}; }
+  if(o.type==='heal'||o.type==='rescue') return null;
+  if(!o.pos) return null;
+  const to=V3(o.pos.x-pos.x,0,o.pos.z-pos.z), d=to.length();
+  if(d<1.6){
+    if(!o.done){ const msg={hold:'Posición mantenida.',cover:'En posición, cubriendo.',attack:'En el objetivo.',advance:'En posición.',retreat:'Posición de retirada alcanzada.',scout:null}[o.type];
+      if(o.type==='scout'){ const seen=[...npcs.values()].filter(e=>e.team==='E'&&!e.dead&&e.pos.distanceTo(pos)<35&&hasLOS(V3(pos.x,pos.y+1.6,pos.z),V3(e.pos.x,e.pos.y+1.5,e.pos.z))).length; orderDone(this,seen?`Zona con ${seen} enemigo${seen>1?'s':''} a la vista.`:'Zona despejada, sin contactos.'); }
+      else orderDone(this,msg); }
+    return {move:V3(),speed:0,face:o.type==='cover'||o.type==='hold'?o.face:null};
+  }
+  if(o.type==='hold') return {move:V3(),speed:0,face:null};
+  this.trackOrder(d,dt);
+  return {move:to.normalize(),speed:o.type==='retreat'||o.type==='attack'?4.6:d>8?4.2:2.6,face:inCombat?null:to};
+};
+NPC.prototype.trackOrder=function(d,dt){ const o=this.order; if(d<o.best-0.5){ o.best=d; o.stall=0; } else o.stall+=dt; if(o.stall>7) orderFail(this,'No puedo llegar, la ruta está bloqueada.'); };
+
+// ======================= COMPAÑEROS: PERSONALIDAD Y CUIDADOS =======================
+function setupPersona(n){ const P=persona(n); n.role=P.role; n.kits=P.kits||1; n.ammo=210; n.accMul=P.acc; n.healT=0; if(SAVE.data) n.hp=allyMaxHp(n); }
+NPC.prototype.medicTask=function(dt){ // la médica cura al jugador (o a un aliado) cuando hace falta y es seguro
+  if(this.role!=='medico') return null; const pos=this.pos;
+  if(!this.healTask&&this.kits>0&&time>this.healT&&player.alive&&!player.downed&&player.hp<45){ this.healTask={target:'me',t:0,phase:'go'}; allySay(this,'playerDown',{prio:3,key:'medgo',cd:20}); }
+  if(!this.healTask&&this.kits>0&&time>this.healT){ const hurt=[...npcs.values()].find(o=>o.ally&&o!==this&&!o.dead&&!o.downed&&o.hp<allyMaxHp(o)*0.4&&o.pos.distanceTo(pos)<30); if(hurt) this.healTask={target:hurt.id,t:0,phase:'go'}; }
+  const T=this.healTask; if(!T) return null;
+  const tgt = T.target==='me' ? {pos:player.pos, ok:player.alive&&!player.downed} : (()=>{ const o=npcs.get(T.target); return {pos:o&&o.pos, ok:o&&!o.dead&&!o.downed}; })();
+  if(!tgt.ok||this.kits<=0){ this.healTask=null; return null; }
+  const danger=[...npcs.values()].some(e=>e.team==='E'&&!e.dead&&e.state==='combat'&&e.pos.distanceTo(tgt.pos)<22);
+  const to=V3(tgt.pos.x-pos.x,0,tgt.pos.z-pos.z), d=to.length(); to.normalize();
+  if(d>1.6){ T.t+=dt; if(T.t>25){ radioSay('medico','No consigo llegar hasta ti, busca cobertura.',{from:this.name,prio:3}); this.healTask=null; this.healT=time+8; return null; } return {move:to,speed:danger?4.6:3.4,face:to}; }
+  if(T.phase==='go'){ T.phase='heal'; T.h=0; allySay(this,'healing',{ch:'medico',prio:5,key:'healing',cd:3}); this.vis.flinch=0.6; }
+  T.h+=dt; this.vis.body.position.y=-0.35*Math.min(1,T.h*3);
+  if(T.h>2.4){ this.kits--; this.vis.body.position.y=0;
+    if(T.target==='me'){ player.hp=Math.min(100,player.hp+50); player.lastHurt=time-CFG.regenDelay; hint(`${this.name} TE CURÓ (+50) · BOTIQUINES: ${this.kits}`); relEvent(this.name,'savedYou'); }
+    else { const o=npcs.get(T.target); if(o) o.hp=allyMaxHp(o); }
+    allySay(this,'healDone',{ch:'medico',prio:5,key:'healdone',cd:2}); this.healTask=null; this.healT=time+12; }
+  return {move:V3(),speed:0,face:to};
+};
+// decisiones de combate de los aliados: cobertura, proteger al jefe caído, órdenes
+NPC.prototype.allyCombat=function(dt,tc){
+  if(this.downed) return null;
+  const med=this.medicTask(dt); if(med) return med;
+  const dn=downedAll().find(d=>d.team===this.team&&!d.hostage&&d.id!==this.id);
+  if(dn){ const medic=[...npcs.values()].find(o=>o.ally&&!o.dead&&!o.downed&&o.role==='medico');
+    const iAmRescuer = this.role==='medico'||!medic||this.revTgt===dn.key||(this.order&&this.order.type==='rescue');
+    if(iAmRescuer){ const r=this.allyThink(dt); if(r) return r; }
+    else if(dn.kind==='me'){ const d=this.pos.distanceTo(dn.pos); if(d>7){ const to=V3(dn.pos.x-this.pos.x,0,dn.pos.z-this.pos.z).normalize(); return {move:to,speed:4.2,face:null}; } return {move:V3(),speed:0,face:null}; } }
+  const om=this.orderMove(dt,true); if(om) return om;
+  // cobertura: buscar un punto cercano protegido a la altura del cuerpo pero con línea de tiro de pie
+  this.coverT=(this.coverT||0)-dt;
+  if(this.coverT<=0&&tc){ this.coverT=R(3,5); const te=eyeOf(tc); let best=null,bd=1e9;
+    for(let k=0;k<10;k++){ const a=R(0,6.28), r=R(1.5,7), x=this.pos.x+Math.cos(a)*r, z=this.pos.z+Math.sin(a)*r; if(insideCollider(x,z,0.45)) continue; const y=heightAt(x,z);
+      if(!hasLOS(V3(x,y+0.8,z),te)&&hasLOS(V3(x,y+1.65,z),te)){ const dd=Math.hypot(x-this.pos.x,z-this.pos.z); if(dd<bd){ bd=dd; best=V3(x,0,z); } } }
+    this.coverPos=best; if(best&&Math.random()<0.3) radioSay('escuadra',this.role==='asalto'?'¡Cambio de posición, cúbranme!':'Me cubro.',{from:this.name,prio:6,key:'cov'+this.name,cd:15,pitch:persona(this).pitch}); }
+  if(this.coverPos){ const to=V3(this.coverPos.x-this.pos.x,0,this.coverPos.z-this.pos.z), d=to.length(); if(d>0.8) return {move:to.normalize(),speed:3.8,face:null}; return {move:V3(),speed:0,face:null}; }
+  return null;
+};
+// vigilancia y comunicaciones autónomas (corre en el anfitrión)
+let squadT=0, idleT=40, ambushLog=[];
+function updateSquadComms(dt){
+  if(!isAuth()) return; squadT-=dt; if(squadT>0) return; squadT=0.5;
+  const allies=[...npcs.values()].filter(n=>n.ally&&!n.dead&&!n.downed&&!n.riding);
+  if(!allies.length) return;
+  const fighting=[...npcs.values()].filter(e=>e.team==='E'&&!e.dead&&e.state==='combat');
+  // el jugador recarga con enemigos encima
+  if(wpn.reloading&&fighting.some(e=>e.target&&e.target.id===NET.myId)){ const a=allies.find(n=>n.state==='combat')||allies[0]; allySay(a,'reload',{prio:5,key:'reload',cd:14}); for(const n of allies) n.aimT=Math.max(n.aimT,0.8); }
+  // flanqueo: enemigo atacando al jugador desde atrás
+  const fwd=V3(-Math.sin(player.yaw),0,-Math.cos(player.yaw));
+  for(const e of fighting){ const to=V3(e.pos.x-player.pos.x,0,e.pos.z-player.pos.z); const d=to.length(); if(d<30&&to.normalize().dot(fwd)<-0.45){ const a=allies.reduce((x,y)=>x.pos.distanceTo(e.pos)<y.pos.distanceTo(e.pos)?x:y); allySay(a,'flank',{prio:2,key:'flank',cd:18}); break; } }
+  // emboscada: tres o más enemigos entran en combate en poco tiempo
+  ambushLog=ambushLog.filter(t=>time-t<6); if(ambushLog.length>=3){ allySay(allies[0],'ambush',{prio:2,key:'ambush',cd:40}); ambushLog=[]; }
+  // munición y heridas
+  for(const n of allies){ if(n.ammo<40) allySay(n,'ammo',{prio:5,key:'ammo',cd:40}); if(n.hp<allyMaxHp(n)*0.4) allySay(n,'wounded',{prio:4,key:'wounded',cd:45}); if(n.state!=='combat'&&n.ammo<210) n.ammo=Math.min(210,n.ammo+dt*4); }
+  // charla entre compañeros cuando todo está tranquilo
+  idleT-=0.5; if(idleT<=0&&!fighting.length&&allies.length>=2){ idleT=R(70,120); const a=allies[Math.floor(Math.random()*allies.length)], b=allies.find(x=>x!==a); allySay(a,'idle',{prio:8,key:'idle',cd:60}); setTimeout(()=>{ if(!b.dead) allySay(b,'reply',{prio:8,key:'reply',cd:30}); },3500); }
+}
+// ======================= INTERFAZ DE RADIO Y ÓRDENES =======================
+function openOrders(v){ RADIO.panel=v; $('orders').style.display=v?'block':'none'; if(v) renderOrders(); }
+function renderOrders(){
+  const recips=['all','medic',...[...npcs.values()].filter(n=>n.ally&&!n.dead).map(n=>n.name)];
+  if(!recips.includes(RADIO.recip)) RADIO.recip='all';
+  $('ordRecip').innerHTML=recips.map(r=>`<button class="ob ${r===RADIO.recip?'on':''}" data-r="${r}">${recipLabel(r)}</button>`).join('');
+  $('ordList').innerHTML=ORDERS.map(([k,l],i)=>`<button class="ob" data-o="${k}"><b>${(i+1)%10}${i>=10?'*':''}</b> ${l}</button>`).join('');
+  $('ordCh').innerHTML=CHANNELS.map(c=>`<button class="ob ${c.id===RADIO.tx?'on':''}" data-c="${c.id}">${c.name} <small>${c.freq}</small></button>`).join('');
+  $('ordVoice').style.display=voiceAvailable()?'inline-block':'none';
+}
+function cycleRecip(){ const recips=['all','medic',...[...npcs.values()].filter(n=>n.ally&&!n.dead).map(n=>n.name)]; RADIO.recip=recips[(recips.indexOf(RADIO.recip)+1)%recips.length]; renderOrders(); }
+function orderPanelClick(e){ const b=e.target.closest('button'); if(!b) return; e.stopPropagation();
+  if(b.dataset.r){ RADIO.recip=b.dataset.r; renderOrders(); return; }
+  if(b.dataset.c){ RADIO.tx=b.dataset.c; renderOrders(); return; }
+  if(b.dataset.o){ issueOrder(b.dataset.o,RADIO.recip,'toque'); openOrders(false); return; }
+  if(b.id==='ordVoice'){ startVoice(); } if(b.id==='ordClose') openOrders(false); }
+// ======================= ÓRDENES POR VOZ =======================
+let voiceRec=null, voiceBusy=false;
+function voiceAvailable(){ return !!(window.SpeechRecognition||window.webkitSpeechRecognition); }
+function parseVoice(t){
+  t=t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  let recip='all'; for(const n of ['torres','vega','morales','ramirez']) if(t.includes(n)) recip=n==='ramirez'?'RAMÍREZ':n.toUpperCase();
+  if(/medic|alfa|alpha|bravo|charlie/.test(t)){ if(/medic/.test(t)) recip='medic'; if(/alfa|alpha/.test(t)) recip='TORRES'; if(/bravo/.test(t)) recip='MORALES'; if(/charlie/.test(t)) recip='RAMÍREZ'; }
+  const rules=[['silence',/silencio/],['heal',/curame|atiendeme|cura(me)?\b|necesito (un )?medico|medico,? ven/],['rescue',/rescat|herido|levant/],['retreat',/retir|atras|repleg/],['regroup',/reagrup|reunan|a mi posicion/],['hold',/manten|quiet|aguant|posicion/],['cover',/cubre|cobertura|cubran|vigila/],['advance',/avanc|adelante/],['attack',/ataqu|ataca|fuego|ese punto/],['scout',/explor|reconoc/],['follow',/sigu|vengan|conmigo/]];
+  for(const [k,re] of rules) if(re.test(t)) return {type:k,recip};
+  return null;
+}
+async function startVoice(){
+  if(voiceBusy) return; const SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR){ hint('Tu navegador no permite órdenes por voz: usa el panel (T) o los botones'); return; }
+  try{ voiceRec=new SR(); voiceRec.lang='es-ES'; voiceRec.interimResults=false; voiceRec.maxAlternatives=3; voiceBusy=true; RADIO.txT=6; hint('ESCUCHANDO… di una orden, por ejemplo: "Torres, cúbreme"');
+    voiceRec.onresult=e=>{ const alts=[...e.results[0]].map(a=>a.transcript); let p=null; for(const a of alts){ p=parseVoice(a); if(p) break; }
+      if(p){ issueOrder(p.type,p.recip,'voz'); } else { radioSay(RADIO.tx,alts[0]||'…',{from:'ZERO',prio:6,local:true}); setTimeout(()=>radioSay('escuadra','Repite, no te entendí.',{from:'RADIO',prio:5,local:true}),900); } };
+    voiceRec.onend=()=>{ voiceBusy=false; RADIO.txT=0; }; voiceRec.onerror=()=>{ voiceBusy=false; RADIO.txT=0; hint('No se pudo usar el micrófono. Usa el panel de órdenes.'); };
+    voiceRec.start(); }catch(e){ voiceBusy=false; hint('No se pudo usar el micrófono. Usa el panel de órdenes.'); }
+}
+function updateRadioHUD(){
+  const ch=CHANNELS.find(c=>c.id===RADIO.tx);
+  const bars=Math.round(RADIO.signal*4);
+  $('rch').innerHTML=`<b>${ch.name}</b> ${ch.freq} MHz <span class="sig">${'▮'.repeat(bars)}${'▯'.repeat(4-bars)}</span>${RADIO.silence?' <span class="sil">SILENCIO</span>':''}`;
+  $('rtx').className=RADIO.txT>0?'on':''; $('rrx').className=RADIO.rxT>0?'on':'';
+  const box=$('squadHud'); const allies=[...npcs.values()].filter(n=>n.ally&&!n.dead);
+  box.innerHTML=allies.map(n=>{ const st=n.downed?'<i class="dn">HERIDO</i>':n.riding?'<i>EN VEHÍCULO</i>':n.order&&!n.order.done?`<i>${ORD_TEXT[n.order.type].toUpperCase()}</i>`:n.healTask?'<i>CURANDO</i>':n.state==='combat'?'<i class="cb">COMBATE</i>':'<i>SIGUIENDO</i>';
+    const hp=n.downed?0:clamp(n.hp/allyMaxHp(n),0,1); return `<div><b>${n.name}</b><span class="hb"><span style="width:${hp*100}%"></span></span>${st}</div>`; }).join('');
+}
+
 // ======================= ESCUADRA, HERIDOS Y RESCATE =======================
 const ALLY_NAMES=['TORRES','VEGA','MORALES','ROJAS'];
 LINES.down=['¡Estoy herido, necesito ayuda!','¡Médico! ¡Me dieron!','¡No puedo moverme, ayúdenme!'];
@@ -2295,9 +2838,10 @@ function humans(){
 }
 function humanById(id){ return humans().find(h=>h.id===id); }
 function makeAlly(n,name,slot){ n.ally=true; n.name=name; n.slot=slot; n.hp=150; if(!n.tagged){ n.tagged=true; n.tag=nameTag(name,'A'); n.vis.root.add(n.tag); } }
-function spawnSquad(count){
-  const sp=spawnPoint('A');
-  for(let i=0;i<count;i++){ let x=sp.x+R(-3,3), z=sp.z+R(-3,3); if(insideCollider(x,z,0.5)){ x=sp.x; z=sp.z; } const n=new NPC('n'+(npcSeq++),'A',x,z,null); makeAlly(n,ALLY_NAMES[i%ALLY_NAMES.length],i); }
+function squadNames(){ const r=NET.mode==='missions'&&SAVE.data?SAVE.data.campaign.recruits||[]:[]; return BASE_SQUAD.concat(r,ALLY_NAMES.filter(n=>!BASE_SQUAD.includes(n)&&!r.includes(n))); }
+function spawnSquad(count,near){
+  const sp=near?{x:near.x,z:near.z}:spawnPoint('A'), names=squadNames();
+  for(let i=0;i<count;i++){ let x=sp.x+R(-3,3), z=sp.z+R(-3,3); for(let k=0;k<8&&insideCollider(x,z,0.5);k++){ x=sp.x+R(-4,4); z=sp.z+R(-4,4); } const n=new NPC('n'+(npcSeq++),'A',x,z,null); makeAlly(n,names[i%names.length],i); setupPersona(n); }
 }
 function addBeret(vis){
   if(vis.beret) return; const m=new THREE.Mesh(new THREE.CylinderGeometry(0.13,0.12,0.07,14), new THREE.MeshStandardMaterial({color:0xb01818,roughness:0.8})); m.castShadow=true; vis.beret=m;
@@ -2307,11 +2851,11 @@ function addBeret(vis){
 }
 NPC.prototype.goDown=function(by){
   this.downed=true; this.downs=(this.downs||0)+1; this.hp=0; this.bleed=this.hostage?900:50; this.state='down'; this.speed=0; this.burst=0; this.lastHitBy=by; this.vis.down();
-  if(!this.hostage){ this.say('down'); const m={t:'feed',text:`${this.name} ESTÁ HERIDO · VE A CURARLO`}; broadcast(m); feed(m.text); }
+  if(!this.hostage){ allySay(this,'down',{prio:1,cd:6}); const m={t:'feed',text:`${this.name} ESTÁ HERIDO · VE A CURARLO`}; broadcast(m); feed(m.text); }
 };
 NPC.prototype.revive=function(){
   if(!this.downed||this.dead||this.hostage) return;
-  this.downed=false; this.carrier=null; this.hp=80; this.state='patrol'; this.wp=null; this.vis.standUp(); this.vis.root.visible=true; this.say('thanks');
+  this.downed=false; this.carrier=null; this.hp=80; this.state='patrol'; this.wp=null; this.vis.standUp(); this.vis.root.visible=true; allySay(this,'thanks',{prio:5});
 };
 NPC.prototype.dismount=function(){
   const v=this.riding; this.riding=null; this.vis.root.visible=true;
@@ -2327,7 +2871,7 @@ NPC.prototype.specialUpdate=function(dt){
     if(this.carrier&&(!c||!c.alive||c.downed)){ this.carrier=null; c=null; }
     if(c){ this.pos.set(c.pos.x+Math.sin(c.yaw)*0.35, c.pos.y, c.pos.z+Math.cos(c.yaw)*0.35); this.vis.root.rotation.y=c.yaw; this.vis.root.visible=false; }
     else { this.vis.root.visible=true; this.pos.y=supportY(this.pos.x,this.pos.z,this.pos.y+0.3); }
-    this.bleed-=dt*(c?0.3:1); if(this.bleed<=0) this.die(V3(0,0,1),'torso',this.lastHitBy||this.id);
+    this.bleed-=dt*(c?0.3:1); if(this.bleed<=0&&(this.bledOut=true)) this.die(V3(0,0,1),'torso',this.lastHitBy||this.id);
     return true;
   }
   return false;
@@ -2345,9 +2889,10 @@ function findDowned(n){
   for(const d of downedAll()){ if(d.team!==n.team||d.hostage||d.id===n.id) continue; let taken=false; for(const o of npcs.values()) if(o!==n&&o.revTgt===d.key) taken=true; if(taken) continue; const dd=d.pos.distanceTo(n.pos); if(dd<bd){ bd=dd; best=d.key; } }
   return best;
 }
-function reviveTarget(key){
+function reviveTarget(key,by){
   const d=downedAll().find(x=>x.key===key); if(!d) return;
-  if(d.kind==='me') player.revive(); else if(d.kind==='remote') sendTo(d.id,{t:'revived'}); else npcs.get(d.id)?.revive();
+  if(by&&by.name) radioSay('escuadra',d.kind==='me'?'¡Arriba, jefe! Ya estás de pie.':`${d.name} está de pie otra vez.`,{from:by.name,prio:4,pitch:persona(by).pitch});
+  if(d.kind==='me'){ player.revive(); if(by&&by.name) relEvent(by.name,'savedYou'); } else if(d.kind==='remote') sendTo(d.id,{t:'revived'}); else npcs.get(d.id)?.revive();
 }
 NPC.prototype.allyThink=function(dt){
   const pos=this.pos;
@@ -2355,7 +2900,7 @@ NPC.prototype.allyThink=function(dt){
   if(!this.revTgt){ this.revTgt=findDowned(this); this.revT=0; }
   if(this.revTgt){ const t=downedAll().find(x=>x.key===this.revTgt); const to=V3(t.pos.x-pos.x,0,t.pos.z-pos.z), d=to.length(); to.normalize();
     if(d>1.4) return {move:to,speed:d>5?4.6:2.2,face:to};
-    this.revT+=dt; if(this.revT>3.2){ reviveTarget(this.revTgt); this.revTgt=null; } return {move:V3(),speed:0,face:to}; }
+    this.revT+=dt; if(this.revT>(this.role==='medico'?2.2:3.2)){ reviveTarget(this.revTgt,this); this.revTgt=null; } return {move:V3(),speed:0,face:to}; }
   const L=leaderOf(this); if(!L) return null;
   const bx=Math.sin(L.yaw), bz=Math.cos(L.yaw), rx=Math.cos(L.yaw), rz=-Math.sin(L.yaw), side=((this.slot||0)-1)*2.2;
   const tx=L.pos.x+bx*3.2+rx*side, tz=L.pos.z+bz*3.2+rz*side;
@@ -2592,16 +3137,23 @@ function farExtract(x,z){ return EXTRACT.reduce((a,b)=>Math.hypot(b.x-x,b.z-z)>M
 function setExtract(e){ MIS.v.ex=e.x; MIS.v.ez=e.z; addObj('extract',e.x,e.z); }
 function nearExtract(p,r=8){ return Math.hypot(p.x-MIS.v.ex,p.z-MIS.v.ez)<r; }
 function extractMark(){ return {x:MIS.v.ex,z:MIS.v.ez,label:'EXTRACCIÓN'}; }
+// Cada misión: setup() decide parámetros y objetos (solo al empezar desde cero),
+// world() crea enemigos/NPC según MIS.v y MIS.s (al empezar y al cargar un checkpoint),
+// update(dt) avanza la lógica y marca checkpoints en momentos estables.
 const MISSIONS=[
   { title:'DOCUMENTOS PERDIDOS',
     brief:'Un informante escondió documentos secretos en una casa. Búsquenlos.',
+    reward:{weapon:'rpg',text:'LANZACOHETES RPG DESBLOQUEADO'},
     setup(){
       const i=Math.floor(Math.random()*HOUSES.length), H=HOUSES[i]; MIS.v.target=i;
       MIS.v.clue=`Está en una casa de ${H.mk==='brick'?'LADRILLO':'PAREDES CLARAS'}${H.noRoofN?', con el techo medio caído,':''} al ${quad(H.x,H.z)} del mapa`;
       addObj('docs',H.tx+R(-0.4,0.4),H.tz,{y:H.base+0.79});
-      guards(H.x,H.z,3,9);
-      for(const o of HOUSES) if(o!==H&&quad(o.x,o.z)===quad(H.x,H.z)) guards(o.x,o.z,1,8);
       setExtract(farExtract(H.x,H.z));
+    },
+    world(){
+      const H=HOUSES[MIS.v.target];
+      if(MIS.s===0){ guards(H.x,H.z,3,9); for(const o of HOUSES) if(o!==H&&quad(o.x,o.z)===quad(H.x,H.z)) guards(o.x,o.z,1,8); }
+      else guards((H.x+MIS.v.ex)/2,(H.z+MIS.v.ez)/2,4,14);
     },
     update(dt){
       const H=HOUSES[MIS.v.target], docs=objsOf('docs')[0];
@@ -2609,7 +3161,7 @@ const MISSIONS=[
         const narrow=MIS.t>100; if(narrow&&!MIS.v.told){ MIS.v.told=1; misEvent('NUEVO INFORME: LA ZONA DE BÚSQUEDA SE REDUJO'); MIS.v.ox=R(-9,9); MIS.v.oz=R(-9,9); }
         MIS.tx=`Encuentra los documentos secretos. ${MIS.v.clue}. Revisa las casas por dentro.`;
         MIS.mk = narrow ? {x:H.x+MIS.v.ox,z:H.z+MIS.v.oz,r:22,label:'BUSCA AQUÍ'} : {x:Math.sign(H.x)*55,z:Math.sign(H.z)*50,r:48,label:'ZONA DE BÚSQUEDA'};
-        if(docs.state===1){ MIS.s=1; const e=farExtract(H.x,H.z); guards((H.x+e.x)/2,(H.z+e.z)/2,4,14); }
+        if(docs.state===1){ MIS.s=1; objectiveDone('docs'); guards((H.x+MIS.v.ex)/2,(H.z+MIS.v.ez)/2,4,14); checkpoint('DOCUMENTOS RECUPERADOS'); }
       } else if(MIS.s===1){
         const h=humanById(MIS.v.docsBy);
         if(!h||!h.alive||h.downed){ docs.state=0; const p=h?h.pos:docs.pos; docs.pos.set(p.x,heightAt(p.x,p.z)+0.02,p.z); docs.mesh.position.copy(docs.pos); applyObjState(docs); MIS.v.docsBy=0; MIS.s=2; misEvent('¡SE CAYERON LOS DOCUMENTOS!'); return; }
@@ -2622,20 +3174,25 @@ const MISSIONS=[
     } },
   { title:'SABOTAJE',
     brief:'Destruyan los depósitos de munición de la base enemiga.',
+    reward:{nades:1,text:'+1 GRANADA EN EL EQUIPO INICIAL'},
     setup(){
       const B={x:52,z:-62}; MIS.v.bx=B.x; MIS.v.bz=B.z; MIS.v.planted=0;
       const spots=[[B.x-7,B.z-1],[B.x+12,B.z+10.5],[B.x-15,B.z-9],[B.x+4,B.z-11],[B.x-2,B.z+6]].sort(()=>Math.random()-0.5);
       let n=0; for(const [x,z] of spots){ if(n>=3) break; let xx=x, zz=z; for(let k=0;k<12&&insideCollider(xx,zz,1.8);k++){ xx=x+R(-3,3); zz=z+R(-3,3); } if(insideCollider(xx,zz,1.8)) continue; addObj('cache',xx,zz,{yaw:R(0,3)}); n++; }
-      guards(B.x,B.z,8,18);
-      spawnArmor(B.x+R(-4,4),B.z+R(-1,4),R(0,6),{mode:'guard'}); misPickup('rocket',2,11.5); misPickup('rocket',-2,11.5);
       setExtract({x:0,z:8});
+    },
+    world(){
+      guards(MIS.v.bx,MIS.v.bz,Math.max(4,8-(MIS.v.planted||0)),18);
+      if(!MIS.v.armDead) spawnArmor(MIS.v.bx+R(-4,4),MIS.v.bz+R(-1,4),R(0,6),{mode:'guard'});
+      const P=player.pos; misPickup('rocket',P.x+2,P.z+2); misPickup('rocket',P.x-2,P.z+2);
     },
     update(dt){
       const caches=objsOf('cache');
       if(MIS.s===0){
         MIS.tx=`Destruye los 3 depósitos de munición (cajas con franja roja) de la base enemiga al SUROESTE. Explosivos: ${MIS.v.planted||0}/3.`+(armors.some(a=>!a.dead)?' Un BLINDADO vigila la base: las balas no le hacen nada, usa el RPG (tecla 5).':'');
         MIS.mk={x:MIS.v.bx,z:MIS.v.bz,r:24,label:'BASE ENEMIGA'};
-        if((MIS.v.planted||0)>=caches.length&&caches.length){ MIS.s=1; MIS.v.det=1; misEvent('EXPLOSIVOS LISTOS · ALÉJATE Y DETONA'); }
+        if((MIS.v.cpPlanted||0)<(MIS.v.planted||0)){ MIS.v.cpPlanted=MIS.v.planted; objectiveDone('carga'+MIS.v.planted); if(MIS.v.planted<caches.length) checkpoint(`EXPLOSIVO ${MIS.v.planted}/3 COLOCADO`); }
+        if((MIS.v.planted||0)>=caches.length&&caches.length){ MIS.s=1; MIS.v.det=1; misEvent('EXPLOSIVOS LISTOS · ALÉJATE Y DETONA'); checkpoint('EXPLOSIVOS LISTOS'); }
       } else if(MIS.s===1){
         MIS.tx='Aléjate a más de 40 m de los depósitos y DETONA los explosivos.'; MIS.mk=null;
         if(MIS.v.boom){ MIS.s=2; MIS.v.bt=3; }
@@ -2643,21 +3200,27 @@ const MISSIONS=[
     } },
   { title:'RESCATE',
     brief:'Capturaron al sargento Ramírez. Hay que sacarlo de ahí.',
+    reward:{recruit:'RAMÍREZ',text:'EL SARGENTO RAMÍREZ SE UNE A TU ESCUADRA'},
     setup(){
       const H=HOUSES.reduce((a,b)=>(b.z-b.x)>(a.z-a.x)?b:a); MIS.v.h=HOUSES.indexOf(H);
       addObj('door',H.x0+H.w*0.3,H.z0,{y:H.base,yaw:0}); addObj('door',H.x0+H.w,H.z0+H.d*0.7,{y:H.base,yaw:Math.PI/2});
-      const hx=H.bx-1.0, hz=H.bz; const n=new NPC('n'+(npcSeq++),'A',hx,hz,null); n.pos.y=H.base; n.hostage=true; n.name='SGTO. RAMÍREZ'; n.tagged=true; n.tag=nameTag('RAMÍREZ','A'); n.vis.root.add(n.tag); n.goDown(null); MIS.v.hid=n.id;
-      guards(H.x,H.z,4,11);
-      const o=enemyAt(H.x+R(14,22)*(Math.random()<0.5?-1:1),H.z-R(10,18),{hp:150}); if(o){ o.officer=true; addBeret(o.vis); o.post={x:o.pos.x,z:o.pos.z}; guards(o.pos.x,o.pos.z,1,6); }
+      MIS.v.hx=H.bx-1.0; MIS.v.hz=H.bz; MIS.v.hy=H.base;
       setExtract(farExtract(H.x,H.z));
+    },
+    world(){
+      const H=HOUSES[MIS.v.h];
+      const n=new NPC('n'+(npcSeq++),'A',MIS.v.hx,MIS.v.hz,null); n.pos.y=MIS.v.hy??H.base; n.hostage=true; n.name='SGTO. RAMÍREZ'; n.tagged=true; n.tag=nameTag('RAMÍREZ','A'); n.vis.root.add(n.tag); n.goDown(null); MIS.v.hid=n.id;
+      if(MIS.s===0) guards(H.x,H.z,4,11); else guards(H.x,H.z,2,14);
+      if(!MIS.v.keyDropped&&!MIS.v.key){ const o=enemyAt(H.x+R(14,22)*(Math.random()<0.5?-1:1),H.z-R(10,18),{hp:150}); if(o){ o.officer=true; addBeret(o.vis); o.post={x:o.pos.x,z:o.pos.z}; guards(o.pos.x,o.pos.z,1,6); } }
     },
     update(dt){
       const H=HOUSES[MIS.v.h], n=npcs.get(MIS.v.hid);
       if(!n||n.dead){ failMission('Ramírez no sobrevivió'); return; }
+      if(MIS.v.key&&!MIS.v.cpKey){ MIS.v.cpKey=1; objectiveDone('llave'); if(MIS.s===0) checkpoint('LLAVE RECUPERADA'); }
       if(MIS.s===0){
         MIS.tx=`Rescata al sargento Ramírez: está encerrado en una casa al ${quad(H.x,H.z)}. Las puertas tienen llave y la lleva un oficial de BOINA ROJA… o busca otra forma de entrar.`;
         MIS.mk={x:H.x+6,z:H.z-4,r:30,label:'ZONA DEL RESCATE'};
-        if(humans().some(h=>h.alive&&!h.downed&&h.pos.distanceTo(n.pos)<2.6)){ MIS.s=1; misEvent('¡ENCONTRASTE A RAMÍREZ!'); }
+        if(humans().some(h=>h.alive&&!h.downed&&h.pos.distanceTo(n.pos)<2.6)){ MIS.s=1; objectiveDone('ramirez'); misEvent('¡ENCONTRASTE A RAMÍREZ!'); MIS.v.hx=n.pos.x; MIS.v.hz=n.pos.z; MIS.v.hy=n.pos.y; checkpoint('RAMÍREZ ENCONTRADO'); }
       } else {
         MIS.tx=`Ramírez está muy herido y no puede caminar: CÁRGALO (${isTouch?'botón CARGAR':'tecla C'}) y llévalo a la extracción. Un vehículo te ayudaría.`;
         MIS.mk=extractMark();
@@ -2666,49 +3229,95 @@ const MISSIONS=[
     } },
   { title:'ÚLTIMA DEFENSA',
     brief:'Protejan la radio hasta que lleguen los refuerzos.',
+    reward:{text:'MEDALLA AL VALOR'},
     setup(){
-      const r=addObj('radio',-5,8.9); misPickup('rocket',-3,11.5); misPickup('rocket',-7,11.5); misPickup('rocket',-5,12.8); MIS.v.rhp=100; MIS.tm=150; MIS.v.sp=4; MIS.v.rx=r.pos.x; MIS.v.rz=r.pos.z;
+      const r=addObj('radio',-5,8.9); MIS.v.rhp=100; MIS.tm=150; MIS.v.sp=4; MIS.v.rx=r.pos.x; MIS.v.rz=r.pos.z;
+    },
+    world(){
+      const rx=MIS.v.rx, rz=MIS.v.rz; misPickup('rocket',rx+2,rz+2.6); misPickup('rocket',rx-2,rz+2.6); misPickup('rocket',rx,rz+3.9);
       guards(-40,-40,1,10); guards(40,40,1,10);
+      if(MIS.v.arm&&!MIS.v.armDead){ const an=R(0,6.28), ax=clamp(rx+Math.cos(an)*60,-88,88), az=clamp(rz+Math.sin(an)*60,-88,88); spawnArmor(ax,az,Math.atan2(rx-ax,rz-az),{mode:'assault',target:V3(rx,0,rz)}); }
     },
     update(dt){
       const rp=V3(MIS.v.rx,heightAt(MIS.v.rx,MIS.v.rz),MIS.v.rz);
       MIS.tm-=dt; MIS.v.sp-=dt;
-      if(!MIS.v.arm&&MIS.tm<105){ MIS.v.arm=1; const an=R(0,6.28), ax=clamp(rp.x+Math.cos(an)*75,-88,88), az=clamp(rp.z+Math.sin(an)*75,-88,88); spawnArmor(ax,az,Math.atan2(rp.x-ax,rp.z-az),{mode:'assault',target:rp}); misEvent('¡SE ACERCA UN BLINDADO! DESTRÚYELO CON EL RPG'); say('¡Blindado enemigo! Usen el RPG',{who:'Radio',pitch:0.8,force:true}); }
+      if(!MIS.v.arm&&MIS.tm<105){ MIS.v.arm=1; const an=R(0,6.28), ax=clamp(rp.x+Math.cos(an)*75,-88,88), az=clamp(rp.z+Math.sin(an)*75,-88,88); spawnArmor(ax,az,Math.atan2(rp.x-ax,rp.z-az),{mode:'assault',target:rp}); misEvent('¡SE ACERCA UN BLINDADO! DESTRÚYELO CON EL RPG'); radioSay('mando','¡Blindado enemigo acercándose! Usen el RPG.',{prio:1}); }
       for(const a of armors) if(!a.dead&&a.pos.distanceTo(rp)<24) MIS.v.rhp-=dt*2.2;
       const enemies=[...npcs.values()].filter(n=>!n.dead&&n.team==='E');
       const cap=Math.round(6+remotes.size*2+MIS.level);
       if(MIS.v.sp<=0&&enemies.length<cap){ MIS.v.sp=R(4,8)-Math.min(2,(150-MIS.tm)/60); const a=R(0,6.28); const e=enemyAt(rp.x+Math.cos(a)*R(55,75),rp.z+Math.sin(a)*R(55,75)); if(e){ e.state='alert'; e.inv=V3().copy(rp); e.searchT=40; } }
       for(const e of enemies){ if(e.state!=='combat'&&e.pos.distanceTo(rp)>6){ e.state='alert'; e.inv=V3(rp.x+R(-3,3),0,rp.z+R(-3,3)); e.searchT=40; }
         if(e.pos.distanceTo(rp)<7) MIS.v.rhp-=dt*3.5; }
+      if(MIS.tm<100&&!MIS.v.cp100){ MIS.v.cp100=1; checkpoint('LA RADIO RESISTE · 1:40'); }
+      if(MIS.tm<50&&!MIS.v.cp50){ MIS.v.cp50=1; checkpoint('ÚLTIMO TRAMO · 0:50'); }
       MIS.tx=`Defiende la radio hasta que lleguen los refuerzos. Radio: ${Math.max(0,Math.ceil(MIS.v.rhp))}%`+(armors.some(a=>!a.dead)?' · ¡BLINDADO! Usa el RPG (tecla 5); hay cohetes junto a la radio.':'');
       MIS.mk={x:rp.x,z:rp.z,label:'RADIO'};
       if(MIS.v.rhp<=0){ failMission('Los enemigos destruyeron la radio'); return; }
       if(MIS.tm<=0){ MIS.tm=null; for(const e of enemies) e.hit(999,V3(0,0,1),'torso',NET.myId); completeMission(); }
     } },
 ];
-function respawnTeam(){ NET.spawn=null; resetPlayer(); broadcast({t:'tp'}); }
+function respawnTeam(){ NET.spawn=null; resetPlayer(); applySavedInventory(); broadcast({t:'tp'}); }
+function squadSize(){ return remotes.size?2:3+((SAVE.data&&SAVE.data.campaign.recruits||[]).includes('RAMÍREZ')?1:0); }
 function startMission(i){
-  resetWorldState(); MIS.on=true; MIS.i=i; MIS.s=0; MIS.t=0; MIS.v={}; MIS.tm=null; MIS.mk=null; MIS.endT=0; MIS.result='';
+  resetWorldState(); MIS.on=true; MIS.i=i; MIS.s=0; MIS.t=0; MIS.v={}; MIS.tm=null; MIS.mk=null; MIS.endT=0; MIS.result=''; MIS.pendingCP=null;
+  MIS.level=SAVE.data?SAVE.data.campaign.level||0:0;
   const M=MISSIONS[i]; MIS.title=M.title; respawnTeam();
-  spawnSquad(remotes.size?2:3); spawnWorldAmmo(); M.setup();
+  spawnSquad(squadSize()); spawnWorldAmmo(); M.setup(); M.world();
   for(const v of vehicles) sendVeh(v);
-  const m=`MISIÓN ${i+1}: ${M.title}`; showMsg(m); broadcast({t:'msg',text:m}); say(M.brief,{who:'Radio',pitch:0.8,rate:1.05,force:true});
+  const m=`MISIÓN ${i+1}: ${M.title}`; showMsg(m); broadcast({t:'msg',text:m}); radioSay('mando',M.brief,{prio:3});
+  if(SAVE.data){ SAVE.data.campaign.current=i; }
+  checkpoint('INICIO DE MISIÓN');
+  squadGreeting();
+}
+function makeCheckpoint(label){
+  if(!MIS.on||MIS.endT>0||!player.alive||player.downed||player.climb) return null;
+  const host=MIS.v.hid&&npcs.get(MIS.v.hid);
+  return {mi:MIS.i, s:MIS.s, t:MIS.t, tm:MIS.tm, level:MIS.level, label, at:Date.now(),
+    v:JSON.parse(JSON.stringify(MIS.v)),
+    objs:[...MIS.objs.values()].filter(o=>o.type!=='extract').map(o=>({type:o.type,x:+o.pos.x.toFixed(2),y:+o.pos.y.toFixed(2),z:+o.pos.z.toFixed(2),state:o.state,yaw:+o.yaw.toFixed(3)})),
+    host: host&&!host.dead ? [+host.pos.x.toFixed(2),+host.pos.y.toFixed(2),+host.pos.z.toFixed(2)] : null,
+    player:{x:+player.pos.x.toFixed(2),y:+player.pos.y.toFixed(2),z:+player.pos.z.toFixed(2),yaw:+player.yaw.toFixed(3),hp:Math.max(60,Math.round(player.hp))},
+    inv:captureInventory(), squadAlive:[...npcs.values()].filter(n=>n.ally&&!n.dead).map(n=>n.name)};
+}
+function checkpoint(label){
+  if(NET.role==='client'||!SAVE.data) return;
+  const cp=makeCheckpoint(label); if(!cp){ MIS.pendingCP=label; return; }
+  MIS.pendingCP=null; SAVE.data.checkpoint=cp; SAVE.data.campaign.current=MIS.i; SAVE.commit('checkpoint');
+  const el=$('cpNote'); el.textContent='✔ PUNTO DE CONTROL · '+label; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
+}
+function restoreCheckpoint(cp){
+  resetWorldState(); MIS.on=true;
+  Object.assign(MIS,{i:cp.mi,s:cp.s,t:cp.t,tm:cp.tm,level:cp.level||0,endT:0,result:'',mk:null,pendingCP:null});
+  MIS.v=JSON.parse(JSON.stringify(cp.v)); if(MIS.v.docsBy) MIS.v.docsBy=NET.myId;
+  if(cp.host){ MIS.v.hx=cp.host[0]; MIS.v.hy=cp.host[1]; MIS.v.hz=cp.host[2]; }
+  const M=MISSIONS[cp.mi]; MIS.title=M.title;
+  NET.spawn={x:cp.player.x,z:cp.player.z}; resetPlayer(); applyInventory(cp.inv);
+  player.pos.set(cp.player.x,supportY(cp.player.x,cp.player.z,cp.player.y+0.3),cp.player.z); player.camY=player.pos.y; player.yaw=cp.player.yaw; player.hp=cp.player.hp;
+  broadcast({t:'tp'});
+  for(const o of cp.objs) addObj(o.type,o.x,o.z,{y:o.y,state:o.state,yaw:o.yaw});
+  if(MIS.v.ex!==undefined) addObj('extract',MIS.v.ex,MIS.v.ez);
+  spawnSquad(squadSize(),player.pos); spawnWorldAmmo(); M.world();
+  for(const v of vehicles) sendVeh(v);
+  showMsg('CARGADO: '+cp.label); radioSay('mando',`Continuamos desde el punto de control: ${cp.label.toLowerCase()}.`,{prio:3});
 }
 function updateMission(dt){
   if(!MIS.on) return;
-  if(MIS.endT>0){ MIS.endT-=dt; if(MIS.endT<=0){ if(MIS.result==='ok'){ if(MIS.i+1<MISSIONS.length) startMission(MIS.i+1); else { MIS.level++; startMission(0); } } else startMission(MIS.i); } return; }
+  if(MIS.endT>0){ MIS.endT-=dt; if(MIS.endT<=0){ if(MIS.result==='ok'){ if(MIS.i+1<MISSIONS.length) startMission(MIS.i+1); else { MIS.level++; if(SAVE.data){ SAVE.data.campaign.level=MIS.level; SAVE.commit('nivel'); } startMission(0); } } else { const cp=SAVE.data&&SAVE.data.checkpoint; if(cp&&cp.mi===MIS.i) restoreCheckpoint(cp); else startMission(MIS.i); } } return; }
   MIS.t+=dt; MISSIONS[MIS.i].update(dt);
+  if(MIS.pendingCP&&MIS.endT<=0) checkpoint(MIS.pendingCP);
   if(MIS.endT<=0&&NET.role!=='solo'&&!humans().some(h=>h.alive&&!h.downed)) failMission('Todo el equipo cayó');
 }
 function completeMission(){
   if(MIS.endT>0) return; MIS.result='ok'; MIS.endT=7; MIS.mk=null; stats.score+=1000;
-  const last=MIS.i+1>=MISSIONS.length; const m=last?'¡TODAS LAS MISIONES COMPLETADAS!':`MISIÓN CUMPLIDA: ${MIS.title}`; showMsg(m); broadcast({t:'msg',text:m});
-  MIS.tx=last?'¡Lo lograron! Las misiones vuelven a empezar, más difíciles.':'¡Misión cumplida! Preparando la siguiente…'; say('Misión cumplida, buen trabajo',{who:'Radio',pitch:0.8,force:true});
+  const M=MISSIONS[MIS.i], last=MIS.i+1>=MISSIONS.length; const m=last?'¡TODAS LAS MISIONES COMPLETADAS!':`MISIÓN CUMPLIDA: ${MIS.title}`; showMsg(m); broadcast({t:'msg',text:m}); broadcast({t:'misDone',i:MIS.i});
+  MIS.tx=last?'¡Lo lograron! Las misiones vuelven a empezar, más difíciles.':'¡Misión cumplida! Preparando la siguiente…'; radioSay('mando','Misión cumplida. Buen trabajo, Zero.',{prio:3});
+  recordMissionComplete(MIS.i);
 }
-function failMission(why){ if(MIS.endT>0) return; MIS.result='fail'; MIS.endT=5; MIS.mk=null; showMsg('MISIÓN FALLIDA'); broadcast({t:'msg',text:'MISIÓN FALLIDA'}); MIS.tx=why+'. Reintentando…'; }
+function failMission(why){ if(MIS.endT>0) return; MIS.result='fail'; MIS.endT=5; MIS.mk=null; showMsg('MISIÓN FALLIDA'); broadcast({t:'msg',text:'MISIÓN FALLIDA'}); const cp=SAVE.data&&SAVE.data.checkpoint; MIS.tx=why+(cp&&cp.mi===MIS.i?'. Volviendo al último punto de control…':'. Reintentando…'); }
+
 function missionOnDeath(n){
   if(!MIS.on) return;
-  if(n.officer){ addObj('key',n.pos.x,n.pos.z); misEvent('EL OFICIAL SOLTÓ UNA LLAVE'); }
+  if(n.officer){ MIS.v.keyDropped=1; addObj('key',n.pos.x,n.pos.z); misEvent('EL OFICIAL SOLTÓ UNA LLAVE'); }
 }
 function missionSnap(){
   return {i:MIS.i,s:MIS.s,ti:MIS.title,tx:MIS.tx,mk:MIS.mk?{x:+MIS.mk.x.toFixed(1),z:+MIS.mk.z.toFixed(1),r:MIS.mk.r||0,label:MIS.mk.label}:null,tm:MIS.tm!=null?Math.ceil(MIS.tm):null,
@@ -2753,7 +3362,7 @@ function scanActions(){
 function performAct(a){
   if(!a||a.disabled) return;
   switch(a.kind){
-    case 'revN': if(isAuth()) npcs.get(a.id)?.revive(); else send({t:'revN',id:a.id}); stats.score+=100; pop('¡COMPAÑERO CURADO!  +100','hs'); break;
+    case 'revN': { const nn=npcs.get(a.id); if(nn&&nn.name) relEvent(nn.name,'savedByYou'); } if(isAuth()) npcs.get(a.id)?.revive(); else send({t:'revN',id:a.id}); stats.score+=100; pop('¡COMPAÑERO CURADO!  +100','hs'); break;
     case 'revP': if(isAuth()) sendTo(a.id,{t:'revived'}); else send({t:'revP',id:a.id}); stats.score+=100; pop('¡COMPAÑERO CURADO!  +100','hs'); break;
     case 'carry': startCarry(npcs.get(a.id)); break;
     case 'drop': dropCarry(); break;
@@ -2797,7 +3406,7 @@ function updateHUD(dt){
   if(W0.melee){ $('ammo').textContent='—'; $('ammo').style.color=''; $('reserve').textContent=''; }
   else { $('ammo').textContent=wpn.ammo; $('ammo').style.color=wpn.ammo<=Math.ceil(W0.mag/5)?'#e05040':''; $('reserve').textContent='/ '+wpn.reserve; }
   $('nades').textContent='GRANADAS ×'+wpn.nades;
-  const sel=wpn.switchT>0?wpn.next:wpn.cur; for(const el of $('slots').children) el.className=el.dataset.k===sel?'on':'';
+  const sel=wpn.switchT>0?wpn.next:wpn.cur; for(const el of $('slots').children) el.className=(el.dataset.k===sel?'on':'')+(weaponUnlocked(el.dataset.k)?'':' lock');
   if(NET.mode==='missions'){ $('wave').textContent=`MISIÓN ${MIS.i+1} DE ${MISSIONS.length} · BAJAS ${stats.kills}`; $('score').style.display=''; $('teams').style.display='none'; $('score').textContent=stats.score; }
   else if(NET.mode==='teams'){ $('wave').textContent=`BANDO ${myTeam==='A'?'AZUL':'ROJO'} · BAJAS ${stats.kills}`; $('score').style.display='none'; $('teams').style.display='block'; $('tsA').textContent='AZUL '+teamScore.A; $('tsB').textContent=teamScore.B+' ROJO'; }
   else { const left=isAuth()?enemiesLeft():W.left; $('wave').textContent=`OLEADA ${Math.max(1,W.n)} · ENEMIGOS ${left??0} · BAJAS ${stats.kills}`; $('score').style.display=''; $('teams').style.display='none'; $('score').textContent=stats.score; }
@@ -2809,7 +3418,7 @@ function updateHUD(dt){
   const scoped=WEAPONS[wpn.cur].bolt && wpn.ads>0.85 && player.alive && !player.vehicle; $('scope').style.opacity=scoped?1:0; view.root.visible=player.alive&&!scoped&&!player.vehicle&&!player.downed;
   $('cross').style.opacity=(player.sprinting||wpn.reloading||player.carry?0.25:1)*(1-wpn.ads)*(player.vehicle||player.downed?0:1);
   const ob=$('obj'); if(MIS.on){ ob.style.display='block'; $('objT').textContent=`MISIÓN ${MIS.i+1} · ${MIS.title}`; $('objX').textContent=MIS.tx; $('objTm').textContent=MIS.tm!=null?`${Math.floor(MIS.tm/60)}:${String(Math.max(0,Math.floor(MIS.tm%60))).padStart(2,'0')}`:''; } else ob.style.display='none';
-  updateMarks();
+  updateMarks(); updateRadioHUD();
   { const a=ACT.cur, c=ACT.carry;
     if(!isTouch){ const el=$('act'); if(a||c){ el.style.display='block'; $('actL').innerHTML=(a?`<span class="${a.disabled?'dis':''}">${a.disabled?'':'[E] '}${a.label}${a.hold?' · MANTÉN':''}</span>`:'')+(a&&c?'<br>':'')+(c?`<span>[C] ${c.label}</span>`:''); $('actBar').style.display=ACT.holding?'block':'none'; $('actFill').style.width=(a&&a.hold?Math.min(100,ACT.hold/a.hold*100):0)+'%'; } else el.style.display='none'; }
     else { const ta=$('tAct'), tc=$('tCarry'); if(a){ ta.style.display='flex'; ta.textContent=a.label; ta.classList.toggle('dis',!!a.disabled); const pc=a.hold?Math.min(100,ACT.hold/a.hold*100):0; ta.style.background=ACT.holding?`linear-gradient(90deg,rgba(240,198,116,.7) ${pc}%,rgba(0,0,0,.45) ${pc}%)`:''; } else ta.style.display='none'; if(c){ tc.style.display='flex'; tc.textContent=c.label; } else tc.style.display='none'; } }
@@ -2856,7 +3465,7 @@ function resetWorldState(){
   for(const n of npcs.values()) n.vis.dispose(); npcs.clear();
   for(const id of [...pickups.keys()]) removePickup(id);
   for(const g of grenades) scene.remove(g.m); grenades.length=0;
-  clearObjs(); MIS.on=false; resetVehicles(); removeArmors(); for(const r of rockets) scene.remove(r.m); rockets.length=0; for(const w of WORLD_PK) w.back=0; player.vehicle=null; document.body.classList.remove('driving');
+  clearObjs(); MIS.on=false; RADIO.queue=[]; openOrders(false); resetVehicles(); removeArmors(); for(const r of rockets) scene.remove(r.m); rockets.length=0; for(const w of WORLD_PK) w.back=0; player.vehicle=null; document.body.classList.remove('driving');
   Object.assign(W,{n:0,queue:0,spawnT:0,between:3,active:false,t:0});
   teamScore.A=teamScore.B=0;
 }
@@ -2875,7 +3484,7 @@ function resetPlayer(){
   showModel('rifle'); KX.streak=0; TOUCH.fireHeld=false;
 }
 function localDeath(by,part){
-  player.alive=false; wpn.firing=false; wpn.adsHeld=false; stats.deaths++; KX.streak=0;
+  player.alive=false; wpn.firing=false; wpn.adsHeld=false; stats.deaths++; KX.streak=0; if(SAVE.data){ SAVE.data.stats.deaths++; SAVE.commit('baja'); }
   if(NET.role==='solo'){ registerKill(by,NET.myId,part); gameOver(); return; }
   player.respawnT=CFG.respawnTime;
   if(isAuth()) registerKill(by,NET.myId,part); else send({t:'died',by,part});
@@ -2906,7 +3515,8 @@ document.addEventListener('pointerlockchange',()=>{
 });
 renderer.domElement.addEventListener('click',()=>{ if(state==='paused'&&started) enterPlay(); });
 function beginGame(keep){
-  const mi=keep?MIS.i:0;
+  if(NET.mode==='missions'&&isAuth()) ensureSave();
+  const mi=keep?MIS.i:(SAVE.data?SAVE.data.campaign.current:0);
   resetWorldState(); resetPlayer(); stats.score=0; stats.kills=0; stats.deaths=0;
   scores.clear(); scores.set(NET.myId,{name:myName,team:myTeam,k:0,d:0});
   started=true; time=0;
@@ -2917,11 +3527,19 @@ function readName(){ myName=($('pname').value.trim()||'SOLDADO').toUpperCase().s
 let wantMode='missions', wantBots=true;
 try{ wantMode=localStorage.getItem('fdc_mode')||'missions'; }catch(e){}
 const MODE_INFO={missions:'Misiones con tu escuadra: buscar pistas, rescatar heridos, sabotear y defender. Solo o con amigos contra la máquina.',coop:'Oleadas de enemigos cada vez más difíciles. Tú y tus amigos (y tu escuadra) contra la máquina.',teams:'Azul contra Rojo: tú y tus amigos se enfrentan entre ustedes, con bots o solo amigos.'};
-function setMode(m){ if(!MODE_INFO[m]) m='missions'; wantMode=m; document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('on',x.dataset.mode===m)); $('rowTeam').style.display=$('rowBots').style.display=m==='teams'?'flex':'none'; $('modeInfo').textContent=MODE_INFO[m]; try{ localStorage.setItem('fdc_mode',m); }catch(e){} }
+function setMode(m){ if(!MODE_INFO[m]) m='missions'; wantMode=m; document.querySelectorAll('[data-mode]').forEach(x=>x.classList.toggle('on',x.dataset.mode===m)); $('rowTeam').style.display=$('rowBots').style.display=m==='teams'?'flex':'none'; $('modeInfo').textContent=MODE_INFO[m]; try{ localStorage.setItem('fdc_mode',m); }catch(e){} try{ if(SAVE.slot) refreshSaveUI(); }catch(e){} }
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
 document.querySelectorAll('[data-bots]').forEach(b=>b.onclick=()=>{ wantBots=b.dataset.bots==='1'; document.querySelectorAll('[data-bots]').forEach(x=>x.classList.toggle('on',x===b)); });
 setMode(wantMode);
-$('bSolo').onclick=()=>{ readName(); Object.assign(NET,{role:'solo',mode:wantMode,myId:'h',bots:true}); myTeam=wantMode==='teams'?wantTeam:'A'; beginGame(); };
+$('bSolo').onclick=()=>{ readName(); if(wantMode==='missions'){ const d=ensureSave(); if(!d){ status(SAVE.notice); return; } const c=d.campaign; let i=c.completed.findIndex((x,k)=>!x&&k<=c.unlocked); if(i<0) i=c.current; playMission(i); return; } Object.assign(NET,{role:'solo',mode:wantMode,myId:'h',bots:true}); myTeam=wantMode==='teams'?wantTeam:'A'; beginGame(); };
+$('bContinue').onclick=()=>continueGame();
+document.querySelectorAll('[data-slot]').forEach(b=>b.onclick=()=>selectSlot(+b.dataset.slot));
+$('bNew').onclick=()=>{ const go=()=>{ SAVE.fresh(SAVE.slot); legacyImport(SAVE.data); SAVE.commit('nueva'); SAVE.notice='Campaña nueva creada en la partida '+SAVE.slot+'. La anterior quedó como copia de seguridad.'; refreshSaveUI(); };
+  if(SAVE.locked){ status(SAVE.notice); return; } if(SAVE.data&&(SAVE.data.campaign.completed.some(Boolean)||SAVE.data.checkpoint)) askConfirm(`La PARTIDA ${SAVE.slot} tiene progreso (${summary(SAVE.data).done} misiones). ¿Empezar una campaña nueva aquí? Se guardará una copia de seguridad de la anterior.`,go); else go(); };
+$('cYes').onclick=()=>{ $('confirmBox').style.display='none'; const cb=confirmCb; confirmCb=null; if(SAVE.data){ try{ LS.set(key(SAVE.slot,'bak'),wrapSave(SAVE.data)); }catch(e){} } cb&&cb(); };
+$('cNo').onclick=()=>{ $('confirmBox').style.display='none'; confirmCb=null; };
+$('orders').addEventListener('click',orderPanelClick); $('orders').addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});
+$('retryCP').onclick=()=>{ $('over').style.display='none'; continueGame(); };
 async function hostClick(mode){
   readName(); initAudio(); status('Creando sala…');
   try{ await netHost(mode); NET.bots=wantBots; myTeam = mode==='teams'?wantTeam:'A'; beginGame(); showMsg('SALA '+NET.code); hint('Pásale el código '+NET.code+' a tus amigos'); }
@@ -2935,18 +3553,19 @@ $('bJoin').onclick=async()=>{
     resetWorldState(); for(const e of w.pks||[]) spawnPickupAt(...e); resetPlayer(); started=true; scores.clear(); enterPlay(); showMsg(NET.mode==='teams'?`BANDO ${myTeam==='A'?'AZUL':'ROJO'}`:NET.mode==='missions'?'MISIONES EN EQUIPO':'OLEADAS EN EQUIPO'); }
   catch(e){ status((e.message||String(e))+' · Si abriste el juego desde el enlace de Claude, el modo con amigos no funciona ahí: usa GitHub Pages o tu PC.'); }
 };
-document.querySelectorAll('[data-team]').forEach(b=>b.onclick=()=>{ wantTeam=b.dataset.team; document.querySelectorAll('[data-team]').forEach(x=>x.classList.toggle('on',x===b)); });
-document.querySelectorAll('[data-q]').forEach(b=>{ b.classList.toggle('on',b.dataset.q===QUAL); b.onclick=()=>{ if(b.dataset.q===QUAL) return; try{ localStorage.setItem('fdc_q2',b.dataset.q); }catch(e){} location.reload(); }; });
+document.querySelectorAll('[data-team]').forEach(b=>b.onclick=()=>{ wantTeam=b.dataset.team; setTimeout(saveSettings,0); document.querySelectorAll('[data-team]').forEach(x=>x.classList.toggle('on',x===b)); });
+document.querySelectorAll('[data-q]').forEach(b=>{ b.classList.toggle('on',b.dataset.q===QUAL); b.onclick=()=>{ if(b.dataset.q===QUAL) return; try{ localStorage.setItem('fdc_q2',b.dataset.q); }catch(e){} QUAL=b.dataset.q; saveSettings(); location.reload(); }; });
 $('bResume').onclick=()=>enterPlay();
 $('bLeave').onclick=()=>{ location.href=location.pathname; };
 $('bCopy').onclick=()=>{ const url=location.origin+location.pathname+'?sala='+NET.code; navigator.clipboard?.writeText(url).then(()=>status('Enlace copiado: '+url)).catch(()=>status(url)); };
-$('retry').onclick=()=>{ $('over').style.display='none'; beginGame(NET.mode==='missions'); };
+$('retry').onclick=()=>{ $('over').style.display='none'; if(NET.mode==='missions') playMission(MIS.i); else beginGame(); };
 $('overMenu').onclick=()=>{ location.href=location.pathname; };
 function gameOver(){
   state='dead'; wpn.firing=false;
   if(stats.score>stats.best){ stats.best=stats.score; try{ localStorage.setItem('fdc_best',stats.best); }catch(e){} }
   $('stats').innerHTML=`${NET.mode==='missions'?'MISIÓN '+(MIS.i+1)+': '+MIS.title:'OLEADA '+W.n} · BAJAS ${stats.kills} · PUNTOS ${stats.score}<br><br>RÉCORD ${stats.best}`;
-  $('hud').style.display='none'; $('touch').style.display='none'; $('over').style.display='flex';
+  const cpOk=NET.mode==='missions'&&SAVE.data&&SAVE.data.checkpoint&&SAVE.data.checkpoint.mi===MIS.i; $('retryCP').style.display=cpOk?'block':'none'; $('retry').textContent=NET.mode==='missions'?'REINICIAR LA MISIÓN':'VOLVER A JUGAR';
+  $('hud').style.display='none'; $('touch').style.display='none'; $('over').style.display='flex'; openOrders(false);
   if(document.pointerLockElement) document.exitPointerLock();
 }
 
@@ -2976,6 +3595,7 @@ function warmUp(){
 
 // ======================= BUCLE PRINCIPAL =======================
 let netT=0;
+let autoSaveT=30;
 function frame(){
   requestAnimationFrame(frame);
   const dt=Math.min(clock.getDelta(),0.05); time+=dt; frameNo++; adaptQuality(dt);
@@ -2987,6 +3607,8 @@ function frame(){
     updateVehicles(dt); updateMissionFx(dt);
     if(!player.alive&&NET.role!=='solo'){ player.respawnT-=dt; if(player.respawnT<=0){ resetPlayer(); hint('¡DE VUELTA AL COMBATE!'); } }
     if(isAuth()) updateMode(dt);
+    updateSquadComms(dt);
+    autoSaveT-=dt; if(autoSaveT<=0){ autoSaveT=30; if(SAVE.data&&!SAVE.locked){ SAVE.data.stats.playTime+=30; SAVE.commit('auto'); } }
     for(const n of [...npcs.values()]) n.update(dt);
     updateRemotes(dt); updateGrenades(dt); updateBarrels(dt); updatePickups(dt); updateRockets(dt); updateArmors(dt); updateWorldAmmo();
     netT-=dt;
@@ -2997,6 +3619,7 @@ function frame(){
     }
   } else if(state==='dead'){ for(const n of npcs.values()) n.vis.animate(dt,0); }
   updateFx(dt); updateCamera(dt);
+  if(started) updateRadio(dt);
   if(started&&state!=='menu') updateHUD(dt);
   composer.render(dt);
 }
@@ -3018,10 +3641,11 @@ async function boot(){
   const ok=await loadSoldier();
   warmUp();
   status(ok?'Listo.':'Sin internet para el modelo 3D: se usan soldados simplificados.');
+  status('Cargando partidas guardadas…'); await initSaves(); status(ok?'Listo.':'Sin internet para el modelo 3D: se usan soldados simplificados.');
   for(const b of ['bSolo','bHost','bJoin']) $(b).disabled=false;
   $('bSolo').textContent='JUGAR SOLO';
   if(!window.Peer) status('Listo. (El modo con amigos necesita internet)');
-  window.__g={hasLOS,heightAt,armors,rockets,pickups,WORLD_PK,spawnArmor,WEAPONS,MIS,vehicles,startMission,HOUSES,ACT,performAct,enterVehicle,exitVehicle,downedAll,findClimb,colAt,colliders,supportY,player,npcs,wpn,camera,W,NET,remotes,GUNPOSE,setPlaying,beginGame,fire,equip,throwNade,grenades,view,NPC,soldier:()=>soldierTpl,placeEnemy,state:()=>state,scores,teamScore,gameOver,posts};
+  window.__g={SAVE,LS,RADIO,issueOrder,squadMembers,restoreCheckpoint,continueGame,playMission,checkpoint,completeMission,recordMissionComplete,actObj,initSaves,selectSlot,unwrapSave,wrapSave,defaultSave,SAVE_VERSION,relEvent,hasLOS,heightAt,armors,rockets,pickups,WORLD_PK,spawnArmor,WEAPONS,MIS,vehicles,startMission,HOUSES,ACT,performAct,enterVehicle,exitVehicle,downedAll,findClimb,colAt,colliders,supportY,player,npcs,wpn,camera,W,NET,remotes,GUNPOSE,setPlaying,beginGame,fire,equip,throwNade,grenades,view,NPC,soldier:()=>soldierTpl,placeEnemy,state:()=>state,scores,teamScore,gameOver,posts};
   if(TEST&&QS.has('auto')) $('bSolo').click();
 }
 boot();
