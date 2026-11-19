@@ -177,6 +177,8 @@
     },
     put(coll, id, data) {
       const updated = Date.now();
+      // solo datos serializables: los nodos DOM se guardan como texto
+      data = JSON.parse(JSON.stringify(data, (k, v) => (v && typeof v === 'object' && v.nodeType ? v.textContent : v)));
       applyDoc(coll, id, data, updated, false);
       persistCache();
       enqueue({ op: 'put', coll, id, data, updated });

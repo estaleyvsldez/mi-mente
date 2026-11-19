@@ -25,7 +25,7 @@
     major: ['shapes', 'num-images', 'chunking'], pao: ['major', 'num-images'], palace: ['loci', 'story', 'peg'],
     loci: ['story', 'image-chain'], peg: ['rhyme-num', 'image-chain'], story: ['image-chain', 'scenes'],
     keyword: ['phonetic', 'visual-assoc'], conceptmap: ['mindmap', 'hierarchy'], feynman: ['self-explain', 'elaboration'],
-    'sentence-build': ['generation', 'reconstruct'], 'vocab-cat': ['chunking', 'families']
+    'sentence-build': ['generation', 'reconstruct'], visualize: ['visual-assoc', 'scenes'], scenes: ['visualize', 'image-chain'], chunking: ['vocab-cat', 'hierarchy'], 'vocab-cat': ['chunking', 'families']
   };
   /* Orden de aprendizaje recomendado (coincide con el entrenamiento progresivo). */
   const LEARN_ORDER = ['visual-assoc', 'visualize', 'chunking', 'vocab-cat', 'active-recall', 'cued-recall', 'spaced', 'loci', 'palace', 'story', 'image-chain', 'peg', 'shapes', 'exaggerate', 'scenes', 'reconstruct', 'free-recall', 'interleave', 'keyword', 'acronym', 'elaboration', 'analogy', 'major', 'num-images', 'pao'];

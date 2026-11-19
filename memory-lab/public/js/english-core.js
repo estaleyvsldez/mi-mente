@@ -41,24 +41,34 @@
   const NEG_RE = /\b(not|never|no|don't|doesn't|didn't|can't|won't|isn't|aren't|wasn't|weren't|haven't|hasn't|hadn't|shouldn't|wouldn't|couldn't|mustn't|nobody|nothing|nowhere)\b/i;
   const Q_RE = /^(what|where|when|why|who|whose|which|how(?: much| many| long| often| old| far)?)\b/i;
   /* Segmentos con su color final: separa negaciones y palabras interrogativas dentro de la estructura fija. */
+  const SUBJ_RE = /^(i|you|he|she|we|they|it|i'm|you're|he's|she's|we're|they're|it's|i've|you've|we've|they've|i'll|you'll|he'll|she'll|we'll|they'll|it'll|i'd|you'd|he'd|she'd|we'd|they'd|there's|there|that's)$/i;
+  const AUX_RE = /^(do|does|did|can|could|would|will|should|is|are|was|were|have|has|may|am)$/i;
   SEM.colorSegments = function (m) {
     const out = [];
+    const isQuestion = /\?/.test(m);
+    let sentStart = true, afterAux = false;
     SEM.parse(m).forEach(s => {
-      if (s.r !== 'F') { out.push({ c: SEM.COLOR_OF[s.r] || 'O', t: s.t, r: s.r }); return; }
-      // dividir la estructura fija en partes: interrogativa inicial, negaciones, resto
+      if (s.r !== 'F') { out.push({ c: SEM.COLOR_OF[s.r] || 'O', t: s.t, r: s.r }); if (s.t.trim()) { sentStart = false; afterAux = s.r === 'Q'; } return; }
       const parts = s.t.split(/(\s+)/);
       let buf = '';
       const flush = () => { if (buf) { out.push({ c: 'F', t: buf, r: 'F' }); buf = ''; } };
-      parts.forEach((w, i) => {
+      parts.forEach(w => {
+        if (!w) return;
+        if (/^\s+$/.test(w)) { buf += w; return; }
         const bare = w.replace(/[^A-Za-z']/g, '');
-        if (bare && NEG_RE.test(bare) && bare.replace(NEG_RE, '') === '') { flush(); out.push({ c: 'NEG', t: w, r: 'F' }); }
-        else if (bare && Q_RE.test(bare) && bare.replace(Q_RE, '') === '' && !out.length && !buf.trim()) { flush(); out.push({ c: 'Q', t: w, r: 'F' }); }
-        else buf += w;
+        const lead = /^[.!?]/.test(w);
+        if (lead) sentStart = true;
+        if (bare && NEG_RE.test(bare) && bare.replace(NEG_RE, '') === '') { flush(); out.push({ c: 'NEG', t: w, r: 'F' }); afterAux = false; }
+        else if (bare && (sentStart || afterAux) && SUBJ_RE.test(bare)) { flush(); out.push({ c: 'S', t: w, r: 'F' }); afterAux = false; }
+        else if (bare && sentStart && (Q_RE.test(bare) && bare.replace(Q_RE, '') === '' || (isQuestion && AUX_RE.test(bare)))) { flush(); out.push({ c: 'Q', t: w, r: 'F' }); afterAux = true; }
+        else { buf += w; afterAux = false; }
+        sentStart = /[.!?]$/.test(w);
       });
       flush();
     });
     return out;
   };
+
 
   SEM.REGISTERS = {
     informal: { name: 'Informal', desc: 'Con amigos, familia, mensajes. Natural y relajado.' },
@@ -105,28 +115,29 @@
 
   /* Bloques para reconstrucción. fine=true divide la estructura fija en palabras. */
   SEM.chunks = function (m, fine) {
-    const segs = SEM.parse(m);
     const out = [];
-    segs.forEach(s => {
-      let t = s.t.trim();
+    const push = (t, c, r) => {
+      // la puntuación inicial pertenece al bloque anterior («. Can» → «…» + «Can»)
+      const lead = /^([.,!?;:]+)\s*/.exec(t);
+      if (lead && out.length) { out[out.length - 1].t += lead[1]; t = t.slice(lead[0].length); }
+      t = t.trim();
       if (!t) return;
-      if (s.r === 'F') {
-        // puntuación final pegada al bloque anterior
-        if (/^[.,!?;:]+$/.test(t)) {
-          if (out.length) out[out.length - 1].t += t; else out.push({ r: 'F', t });
-          return;
-        }
-        const words = t.split(/\s+/);
-        if (fine || words.length > 4) {
-          const size = fine ? 1 : 2;
-          for (let i = 0; i < words.length; i += size) out.push({ r: 'F', t: words.slice(i, i + size).join(' ') });
-        } else out.push({ r: 'F', t });
-      } else {
-        out.push({ r: s.r, t });
-      }
+      if (/^[.,!?;:]+$/.test(t)) { if (out.length) out[out.length - 1].t += t; else out.push({ r, c, t }); return; }
+      out.push({ r, c, t });
+    };
+    SEM.colorSegments(m).forEach(s => {
+      const t = s.t;
+      if (!t.trim()) return;
+      if (s.r === 'F' && s.c === 'F') {
+        // dividir por oraciones y después en grupos de 1-2 palabras
+        const words = t.trim().split(/\s+/);
+        if (fine || words.length > 3) { const size = fine ? 1 : 2; for (let i = 0; i < words.length; i += size) push(words.slice(i, i + size).join(' '), 'F', 'F'); }
+        else push(t, 'F', 'F');
+      } else push(t, s.c, s.r);
     });
     return out;
   };
+
 
   /* ---------- Normalización para comparar respuestas ---------- */
   const CONTRACTIONS = [
@@ -137,7 +148,10 @@
     [/\b(\w+)n't\b/g, '$1 not'], [/\b(\w+)'re\b/g, '$1 are'], [/\b(\w+)'ve\b/g, '$1 have'],
     [/\b(\w+)'ll\b/g, '$1 will'], [/\b(\w+)'d\b/g, '$1 would'],
     [/\b(he|she|it|that|what|where|who|there|here|how|when|this)'s\b/g, '$1 is'],
-    [/\bok\b/g, 'okay'], [/\bo\.k\.?\b/g, 'okay']
+    [/\bok\b/g, 'okay'], [/\bo\.k\.?\b/g, 'okay'],
+    /* contracciones escritas sin apóstrofo (muy frecuente al teclear rápido) */
+    [/\b(do|does|did|is|are|was|were|has|have|had|could|would|should)nt\b/g, '$1 not'], [/\bcant\b/g, 'cannot'],
+    [/\bim\b/g, 'i am'], [/\b(you|they|we)re\b/g, '$1 are'], [/\b(that|what|it)s\b/g, '$1 is'], [/\bive\b/g, 'i have'], [/\bid\b/g, 'i would']
   ];
   SEM.norm = function (s) {
     let t = String(s || '').toLowerCase()
