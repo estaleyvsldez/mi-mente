@@ -1,0 +1,17 @@
+{
+  "name": "memory-lab",
+  "version": "1.0.0",
+  "description": "Sistema integral de entrenamiento de memoria, técnicas de memorización y aprendizaje estructural del inglés",
+  "main": "server/server.js",
+  "private": true,
+  "scripts": {
+    "start": "node --no-warnings server/server.js",
+    "test": "node --no-warnings --test tests/*.test.js",
+    "validate": "node --no-warnings tools/validate.js"
+  },
+  "engines": { "node": ">=22.13" },
+  "optionalDependencies": {
+    "@anthropic-ai/sdk": "^1.10.0"
+  },
+  "license": "MIT"
+}
