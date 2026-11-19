@@ -11,21 +11,20 @@
   App.ai = () => aiStatus;
   App.applyTheme = () => { const t = App.settings().theme; if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t); };
 
-  const NAV = [
-    ['grp', 'Inicio'], ['#/', '◆', 'Dashboard'],
-    ['grp', 'Entrenamiento'], ['#/training', '📈', 'Progressive Training'], ['#/athlete', '🏅', 'Memory Athlete'], ['#/modules', '🧩', 'Módulos de memoria'], ['#/quick', '⚡', 'Quick & Hidden Memory'], ['#/multimodal', '🎛️', 'Desafíos multimodales'], ['#/voice', '🎙️', 'Voice Recall'], ['#/lab', '🧪', 'Strategy Lab'],
-    ['grp', 'Inglés'], ['#/english', '🇬🇧', 'Structural English'], ['#/english/lib', '📚', 'Biblioteca de inglés'], ['#/english/talk', '💬', 'Conversaciones'],
-    ['grp', 'Conocimiento'], ['#/techniques', '📖', 'Biblioteca de técnicas'], ['#/strategy', '🧠', 'Motor de estrategias'],
-    ['grp', 'Progreso'], ['#/stats', '📊', 'Analytics'], ['#/calendar', '🗓️', 'Calendario y racha'], ['#/history', '🕘', 'Historial'], ['#/goals', '🎯', 'Objetivos y logros'], ['#/settings', '⚙️', 'Configuración']
+  const NAV_MAIN = [['#/', '🧭', 'Mi ruta'], ['#/english/lib', '📚', 'Mis estructuras'], ['#/stats', '📊', 'Progreso']];
+  const NAV_MORE = [
+    ['#/english/talk', '💬', 'Conversaciones'], ['#/voice', '🎙️', 'Voice Recall'], ['#/training', '📈', 'Trucos de memoria'], ['#/techniques', '📖', 'Biblioteca de técnicas'],
+    ['#/athlete', '🏅', 'Memory Athlete'], ['#/modules', '🧩', 'Módulos de memoria'], ['#/quick', '⚡', 'Quick & Hidden Memory'], ['#/multimodal', '🎛️', 'Desafíos multimodales'],
+    ['#/lab', '🧪', 'Strategy Lab'], ['#/strategy', '🧠', 'Motor de estrategias'], ['#/calendar', '🗓️', 'Calendario y racha'], ['#/history', '🕘', 'Historial'], ['#/goals', '🎯', 'Objetivos y logros']
   ];
   function drawNav() {
     const side = $('#side'); side.innerHTML = '';
     if (!Store.loggedIn) return;
     const cur = location.hash || '#/';
-    NAV.forEach(n => {
-      if (n[0] === 'grp') side.append(h('div', { class: 'grp' }, n[1]));
-      else side.append(h('a', { href: n[0], class: cur === n[0] || (n[0] !== '#/' && cur.startsWith(n[0] + '/') && !NAV.some(m => m[0] !== n[0] && cur.startsWith(m[0]) && m[0].length > n[0].length)) ? 'on' : '', onclick: () => side.classList.remove('open') }, h('span', { class: 'ic' }, n[1]), n[2]));
-    });
+    const link = n => h('a', { href: n[0], class: cur === n[0] ? 'on' : '', onclick: () => side.classList.remove('open') }, h('span', { class: 'ic' }, n[1]), n[2]);
+    NAV_MAIN.forEach(n => side.append(link(n)));
+    const more = h('details', { class: 'more', open: NAV_MORE.some(n => cur.startsWith(n[0])) || null }, h('summary', null, 'Más herramientas'), NAV_MORE.map(link));
+    side.append(more, link(['#/settings', '⚙️', 'Configuración']));
     side.append(h('div', { class: 'grp' }, Store.S.user ? Store.S.user.username : ''));
   }
   $('#menuBtn').addEventListener('click', () => $('#side').classList.toggle('open'));
@@ -43,7 +42,7 @@
 
   /* ---------- sesiones ---------- */
   let pendingSession = null;
-  App.start = function (session) { pendingSession = session; location.hash = '#/run'; if (location.hash === '#/run') App.route(); };
+  App.start = function (session) { pendingSession = session; if (location.hash === '#/run') App.route(); else location.hash = '#/run'; };
 
   /* ---------- router ---------- */
   App.route = function () {
@@ -55,7 +54,8 @@
     const parts = hash.slice(2).split('/');
     const r = parts[0];
     try {
-      if (r === '' ) return viewDashboard(view);
+      if (r === '') return Route.view(view);
+      if (r === 'panel') return viewDashboard(view);
       if (r === 'run') {
         if (pendingSession) { const s = pendingSession; pendingSession = null; if (s.kind === 'learn' || s.kind === 'review' || s.kind === 'exam' || s.module === 'english') { const od = s.onDone; s.onDone = (ss, acc) => { const a = EN.onDone(ss); const b = od ? od(ss, acc) : null; return h('div', null, a, b); }; } return Ex.run(view, s); }
         const ip = Store.get('inprogress', 'current'); if (ip) return resume(ip);
@@ -208,12 +208,11 @@
     const save = (k, v) => { const cur = App.settings(); cur[k] = v; Store.put('settings', 'main', cur); App.applyTheme(); toast('Guardado'); };
     const sel = (k, opts) => { const x = h('select', null, opts.map(([v, n]) => h('option', { value: v, selected: String(s[k]) === String(v) }, n))); x.addEventListener('change', () => save(k, isNaN(Number(x.value)) || x.value === '' ? x.value : Number(x.value))); return x; };
     const num = (k, min, max) => { const x = h('input', { type: 'number', value: s[k], min, max }); x.addEventListener('change', () => save(k, Math.max(min, Math.min(max, Number(x.value) || min)))); return x; };
-    const voices = Voice.voices().filter(v => v.lang.startsWith('en'));
+    const voices = Voice.voices().filter(v => /^en[-_]US/i.test(v.lang));
     const F = (l, c, d) => h('div', null, h('label', { class: 'f' }, l), c, d ? h('div', { class: 'small muted' }, d) : null);
     root.append(h('h1', null, 'Configuración'),
       h('div', { class: 'card' }, h('h2', null, 'Apariencia y voz'), h('div', { class: 'grid g3' },
         F('Tema', sel('theme', [['auto', 'Automático'], ['dark', 'Oscuro'], ['light', 'Claro']])),
-        F('Acento', sel('accent', [['en-US', 'Inglés americano'], ['en-GB', 'Inglés británico']])),
         F('Voz', sel('voice', [['', 'Automática']].concat(voices.map(v => [v.name, v.name + ' (' + v.lang + ')'])))),
         F('Velocidad de voz', sel('rate', [[0.75, 'Lenta'], [0.95, 'Normal'], [1.1, 'Rápida']])),
         F('Leer en voz alta la respuesta modelo', sel('autoplay', [[true, 'Sí'], ['', 'No']])))),

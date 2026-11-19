@@ -37,21 +37,25 @@
     return it;
   };
 
-  TR.startPhase = function (L, phase) {
+  /* Construye la sesión de una fase. Devuelve {session} o {error, wait}. */
+  TR.buildPhase = function (L, phase) {
     const cfg = L[phase];
+    const done = (s, acc) => TR.record(L, phase, acc, s);
     if (phase === 'exam' && cfg.kind === 'delayed') {
       const pend = Store.list('delayed').filter(d => d.item && d.item.lesson === 'L4' && !d.done);
       const ready = pend.filter(d => d.due <= Date.now());
-      if (!ready.length) return toast(pend.length ? 'La evaluación diferida estará lista el ' + UI.timeStr(Math.min(...pend.map(d => d.due))) : 'Primero haz el ejercicio independiente: mañana te pediremos recordarlo.', 'bad');
-      return App.start({ title: L.n + ' · evaluación diferida', module: 'training', items: ready.slice(0, 2).map(d => Object.assign({}, d.item, { skipStudy: true, phase: 'exam', lesson: L.id })), back: '#/training/' + L.id, onDone: (s, acc) => TR.record(L, 'exam', acc, s) });
+      if (!ready.length) return { error: pend.length ? 'La evaluación diferida estará lista el ' + UI.timeStr(Math.min(...pend.map(d => d.due))) : 'Primero haz el ejercicio independiente: mañana te pediremos recordarlo.', wait: true };
+      return { session: { title: L.n + ' · evaluación diferida', module: 'training', items: ready.slice(0, 2).map(d => Object.assign({}, d.item, { skipStudy: true, phase: 'exam', lesson: L.id })), back: '#/training/' + L.id, onDone: done } };
     }
-    if (cfg.kind === 'palace' && !Athlete.palaces().length) { toast('Primero crea tu palacio de la memoria (8+ lugares).'); location.hash = '#/athlete/palaces'; return; }
+    if (cfg.kind === 'palace' && !Athlete.palaces().length) {
+      // palacio inicial automático (la casa) para no frenar la ruta; el usuario puede editarlo después
+      Store.put('palaces', 'p-casa', { name: 'Mi casa', type: 'casa', loci: ['puerta de entrada', 'recibidor', 'sofá', 'televisor', 'mesa del comedor', 'cocina', 'nevera', 'baño', 'cama', 'ventana'], created: Date.now(), uses: [], perLocus: 1 });
+    }
     const items = [];
-    if (phase === 'guided') items.push({ type: 'info', title: 'Demostración · ' + (SEM.techById[L.newTech] || {}).n, paras: [L.explain].concat(L.demo.map(d => h('div', { class: 'notice small' }, d))), button: 'Probar con guía →' });
+    if (phase === 'guided') items.push({ type: 'info', title: 'Truco de memoria · ' + (SEM.techById[L.newTech] || {}).n, paras: [L.explain].concat(L.demo), button: 'Probar con guía →' });
     const it = cfgToItem(cfg, L, phase);
-    if (!it) return toast('Esta fase no está disponible todavía.', 'bad');
+    if (!it) return { error: 'Esta fase no está disponible todavía.' };
     items.push(it);
-    // Repaso de técnicas anteriores que lo necesitan (no todo): la lección anterior con menor retención.
     if (phase === 'practice') {
       const idx = SEM.LESSONS.indexOf(L);
       const prev = SEM.LESSONS.slice(0, idx).filter(P => P[phase] && P[phase].kind !== 'delayed' && P[phase].kind !== 'palace' && P[phase].kind !== 'major');
@@ -60,7 +64,24 @@
         const r = cfgToItem(weakest.practice, weakest, 'practice'); if (r) { r.label = 'Repaso acumulativo · ' + weakest.n; items.push(r); }
       }
     }
-    App.start({ title: L.n + ' · ' + { guided: 'guiado', practice: 'independiente', exam: 'evaluación' }[phase], module: 'training', items, back: '#/training/' + L.id, onDone: (s, acc) => TR.record(L, phase, acc, s) });
+    return { session: { title: L.n + ' · ' + { guided: 'guiado', practice: 'independiente', exam: 'evaluación' }[phase], module: 'training', items, back: '#/training/' + L.id, onDone: done } };
+  };
+  TR.startPhase = function (L, phase) {
+    const r = TR.buildPhase(L, phase);
+    if (r.error) return toast(r.error, 'bad');
+    App.start(r.session);
+  };
+  /* Próxima fase pendiente de una lección (o null si hoy no toca: evaluaciones separadas ≥20 h). */
+  TR.nextPhase = function (L) {
+    const st = TR.lesson(L.id);
+    if (st.mastered) return null;
+    if (!st.steps.guided) return 'guided';
+    if (!st.steps.practice) return 'practice';
+    const last = (st.exams || []).slice(-1)[0];
+    const lastPass = (st.exams || []).filter(e => e.acc >= 0.85).slice(-1)[0];
+    if (lastPass && Date.now() - lastPass.ts < 20 * HOUR) return null;
+    if (last && last.acc < 0.85 && Date.now() - last.ts < 2 * HOUR) return 'practice';
+    return 'exam';
   };
   TR.record = function (L, phase, acc, session) {
     const st = TR.lesson(L.id);

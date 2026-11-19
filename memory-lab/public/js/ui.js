@@ -124,7 +124,7 @@
         speechSynthesis.cancel();
         const u = new SpeechSynthesisUtterance(String(text).replace(/\[[A-Z]:([^\]]*)\]/g, '$1'));
         const set = (window.App && App.settings()) || {};
-        u.lang = lang || set.accent || 'en-US';
+        u.lang = lang || 'en-US'; // inglés americano siempre
         u.rate = rate || set.rate || 0.95;
         const want = set.voice && this.voices().find(v => v.name === set.voice);
         const v = want || this.voices().find(v => v.lang === u.lang) || this.voices().find(v => v.lang.startsWith(u.lang.slice(0, 2)));

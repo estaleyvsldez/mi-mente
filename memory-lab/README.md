@@ -49,6 +49,10 @@ seguridad (tokens, validación, rutas), copias de seguridad, FSRS, rachas, estad
 récords, criterio de dominio, motor de estrategias, diagnóstico, verificación de respuestas en inglés y la
 biblioteca completa. `npm run validate` revisa la biblioteca de inglés (duplicados, referencias, formato).
 
+## Cómo se usa
+
+Abre la app y pulsa **Empezar** (o **Continuar**). Cada día el botón encadena, en orden: lo que dejaste a medias, lo que toca recordar de ayer, el repaso de inglés, una fase del siguiente truco de memoria y las estructuras nuevas del día. La pantalla de inicio muestra tu camino completo: 6 etapas (A1 → C1) de inglés americano en unidades ordenadas, con los 9 trucos de memoria intercalados. El resto de herramientas está en «Más herramientas».
+
 ## Qué incluye
 
 | Sección | Contenido |

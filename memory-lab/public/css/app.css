@@ -156,3 +156,23 @@ button.tile{cursor:pointer;color:var(--ink)}
 .hero{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 .kbd{font-family:var(--mono);font-size:.82rem;border:1px solid var(--line);border-radius:5px;padding:0 5px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+/* ruta única */
+.route-hero{display:flex;flex-direction:column;gap:6px}
+.btn.big{font-size:1.2rem;padding:14px 28px;min-height:56px;margin-top:12px;align-self:flex-start}
+.today{margin:12px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.today li{display:flex;flex-direction:column}
+.path{display:flex;flex-direction:column;gap:8px;max-width:760px}
+.stage-head{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-top:14px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+.step{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--panel);margin:0}
+.step summary,.step.trick{display:flex;gap:12px;align-items:center;list-style:none}
+.step summary::-webkit-details-marker{display:none}
+.step .dot{flex:0 0 34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;background:var(--panel2);border:1px solid var(--line);font-size:.9rem}
+.step.done .dot{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.step.now{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.step.now .dot{background:var(--accent);color:#fff;border-color:var(--accent)}
+.step.lock{opacity:.6}
+.step.trick{background:var(--panel2)}
+.trick-tip{border-color:var(--accent)}
+.side details.more{border:0;background:none;padding:0;margin:8px 0}
+.side details.more summary{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--soft);padding:10px 10px 4px;font-weight:600}

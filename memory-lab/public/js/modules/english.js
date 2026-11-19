@@ -116,6 +116,7 @@
       el.append(
         h('div', { class: 'hero' }, h('div', { style: { fontSize: '3rem' } }, p.img), h('div', null, h('h2', null, p.t), h('div', { class: 'muted' }, p.m),
           h('div', null, h('span', { class: 'tag acc' }, SEM.STAGES[p.st - 1].name), h('span', { class: 'tag' }, SEM.REGISTERS[p.reg].name), h('span', { class: 'tag' }, (SEM.catById[p.cat] || {}).name)))),
+        (window.Route && Route.tipFor(p)) ? (t => h('div', { class: 'notice trick-tip' }, h('b', null, '🧠 Truco de memoria · ' + t.name + ': '), t.text))(Route.tipFor(p)) : null,
         h('h3', null, 'El molde'), h('div', null, Ex.blocks(p.f, 'full')), h('div', { class: 'muted small' }, p.es),
         h('div', { style: { margin: '8px 0' } }, Ex.legend()),
         h('p', { class: 'small muted' }, 'Fragmentación: la parte amarilla es fija y nunca cambia. El hueco cambia. Toca una palabra del banco para construir una oración nueva:'));
