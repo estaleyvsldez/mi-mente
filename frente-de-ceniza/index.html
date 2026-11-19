@@ -1585,7 +1585,7 @@ const dmgDir={ang:0,t:0};
 const stats={score:0,kills:0,best:0,deaths:0};
 try{ stats.best=+localStorage.getItem('fdc_best')||0; }catch(e){}
 
-addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; keys[e.code]=true; if(state!=='playing'||!player.alive) return;
+addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; keys[e.code]=true; if(e.code==='Escape'&&noLock&&state==='playing'){ showPause(); return; } if(state!=='playing'||!player.alive) return;
   if(e.code==='KeyF') punch(); if(e.code==='KeyR'||e.code==='KeyP') reload(); if(e.code==='KeyG') throwNade(); if(e.code==='KeyQ') equip(wpn.prev);
   if(/^Digit[1-5]$/.test(e.code)) equip(ORDER[+e.code.slice(5)-1]);
   if(e.code==='Space'&&player.onGround){ player.vy=4.6; player.onGround=false; }
@@ -1596,7 +1596,7 @@ addEventListener('mouseup',e=>{ if(e.button===0){ wpn.firing=false; wpn.trigHeld
 let lastWheel=0;
 addEventListener('wheel',e=>{ if(state!=='playing'||performance.now()-lastWheel<180) return; lastWheel=performance.now(); cycleWeapon(e.deltaY>0?1:-1); },{passive:true});
 addEventListener('contextmenu',e=>e.preventDefault());
-addEventListener('mousemove',e=>{ if(state!=='playing'||isTouch||(!document.pointerLockElement&&!TEST)) return; const mx=clamp(e.movementX,-200,200), my=clamp(e.movementY,-200,200);
+addEventListener('mousemove',e=>{ if(state!=='playing'||isTouch||(!document.pointerLockElement&&!TEST&&!noLock)) return; const mx=clamp(e.movementX,-200,200), my=clamp(e.movementY,-200,200);
   const s=CFG.sens*(camera.fov/75); player.yaw-=mx*s; player.pitch=clamp(player.pitch-my*s,-1.45,1.45); mdx+=mx; mdy+=my; });
 function cycleWeapon(dir){ const i=ORDER.indexOf(wpn.switchT>0?wpn.next:wpn.cur); equip(ORDER[(i+dir+ORDER.length)%ORDER.length]); }
 
@@ -2022,8 +2022,12 @@ function enterPlay(){
   initAudio();
   if(isTouch||TEST){ setPlaying(); try{ if(isTouch&&document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(()=>{}); }catch(e){} return; }
   state='paused';
-  try{ const p=renderer.domElement.requestPointerLock(); if(p&&p.catch) p.catch(()=>showPause()); }catch(e){ showPause(); }
+  if(noLock){ setPlaying(); return; }
+  try{ const p=renderer.domElement.requestPointerLock(); if(p&&p.catch) p.catch(freeLook); }catch(e){ freeLook(); }
 }
+let noLock=false;
+function freeLook(){ noLock=true; setPlaying(); hint('Mueve el ratón para mirar · Esc para pausar'); }
+document.addEventListener('pointerlockerror',()=>{ if(state==='paused'&&started) freeLook(); });
 function showPause(){
   if(!started) return;
   state='paused'; wpn.firing=false; wpn.adsHeld=false;
