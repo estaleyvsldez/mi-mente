@@ -337,7 +337,8 @@ addEventListener('resize', ()=>{
 });
 
 function loadHDRI(){
-  new RGBELoader().load('https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/industrial_sunset_puresky_1k.hdr', tex=>{
+  const urls=['assets/quarry_01_1k.hdr','https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/industrial_sunset_puresky_1k.hdr'];
+  const go=i=>new RGBELoader().load(urls[i], tex=>{
     tex.mapping = THREE.EquirectangularReflectionMapping; renderer.initTexture(tex);
     try{
       const {width:W,height:H,data} = tex.image; const half = data instanceof Uint16Array;
@@ -354,9 +355,10 @@ function loadHDRI(){
       if(hn){ const c=new THREE.Color(hor[0]/hn, hor[1]/hn, hor[2]/hn); const m=Math.max(c.r,c.g,c.b); c.multiplyScalar(0.62/m);
         FOG.copy(c); scene.fog.color.copy(c); hazeMat.uniforms.col.value.copy(c); }
     }catch(e){ console.warn(e); }
-    scene.background = tex; scene.environment = pmrem.fromEquirectangular(tex).texture; wScene.environment = scene.environment;
+    scene.background = tex; scene.backgroundIntensity = 0.9; scene.environment = pmrem.fromEquirectangular(tex).texture; wScene.environment = scene.environment;
     scene.remove(sky);
-  });
+  }, undefined, ()=>{ if(i+1<urls.length) go(i+1); });
+  go(0);
 }
 
 // ======================= TEXTURAS =======================
@@ -384,10 +386,17 @@ function genTex(size, fn){
     const h=clamp(r[3],0,1)*255; d2.data[i]=d2.data[i+1]=d2.data[i+2]=h; d2.data[i+3]=255;
   }
   g1.putImageData(d1,0,0); g2.putImageData(d2,0,0);
+  const c3=document.createElement('canvas'); c3.width=c3.height=size; const g3=c3.getContext('2d'), d3=g3.createImageData(size,size), H=d2.data, k=size/40;
+  for(let y=0;y<size;y++) for(let x=0;x<size;x++){
+    const at=(xx,yy)=>H[(((yy+size)%size)*size+((xx+size)%size))*4]/255;
+    let nx=(at(x-1,y)-at(x+1,y))*k, ny=(at(x,y+1)-at(x,y-1))*k; const L=Math.hypot(nx,ny,1), i=(y*size+x)*4;
+    d3.data[i]=(nx/L*0.5+0.5)*255; d3.data[i+1]=(ny/L*0.5+0.5)*255; d3.data[i+2]=(1/L*0.5+0.5)*255; d3.data[i+3]=255;
+  }
+  g3.putImageData(d3,0,0);
   const map=new THREE.CanvasTexture(c1); map.colorSpace=THREE.SRGBColorSpace;
-  const bump=new THREE.CanvasTexture(c2);
-  for(const t of [map,bump]){ t.wrapS=t.wrapT=THREE.RepeatWrapping; t.anisotropy=maxAniso; }
-  return {map,bump};
+  const bump=new THREE.CanvasTexture(c2), normal=new THREE.CanvasTexture(c3);
+  for(const t of [map,bump,normal]){ t.wrapS=t.wrapT=THREE.RepeatWrapping; t.anisotropy=maxAniso; }
+  return {map,bump,normal};
 }
 const TX = {};
 function buildTextures(){
@@ -414,7 +423,7 @@ function buildTextures(){
 
 // ======================= MATERIALES =======================
 const M = {};
-function std(tex, p={}, bump=1){ return new THREE.MeshStandardMaterial(Object.assign({map:tex?.map||null, bumpMap:tex?.bump||null, bumpScale:bump, roughness:0.92, metalness:0, envMapIntensity:0.8}, p)); }
+function std(tex, p={}, bump=1){ const ns=Math.min(1.6,0.45*bump); return new THREE.MeshStandardMaterial(Object.assign({map:tex?.map||null, normalMap:tex?.normal||null, normalScale:new THREE.Vector2(ns,ns), roughness:0.92, metalness:0, envMapIntensity:0.8}, p)); }
 function loadPH(slug, mat, o={}){
   const tl=new THREE.TextureLoader(); tl.setCrossOrigin('anonymous');
   const base=`https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/${slug}/${slug}_`;
@@ -531,7 +540,7 @@ function buildGround(){
   }
   gg.setAttribute('color', new THREE.BufferAttribute(cols,3));
   gg.computeVertexNormals();
-  for(const t of [TX.ground.map, TX.ground.bump]) t.repeat.set(GS/5, GS/5);
+  for(const t of [TX.ground.map, TX.ground.bump, TX.ground.normal]) t.repeat.set(GS/5, GS/5);
   const ground=new THREE.Mesh(gg, M.ground); ground.receiveShadow=true; scene.add(ground);
   const rg=new THREE.PlaneGeometry(200,9,200,6); rg.rotateX(-Math.PI/2);
   const rp=rg.attributes.position; for(let i=0;i<rp.count;i++) rp.setY(i, heightAt(rp.getX(i), rp.getZ(i)-4)+0.04);
@@ -571,7 +580,8 @@ function ruinBuilding(cx,cz,w,d,floors,mk){
   });
   addStatic('concrete', boxGeo(w,0.3,d,3), V3(cx,g0-0.1,cz), 0, {collide:false});
   if(floors>1){
-    addStatic('concrete', boxGeo(w*0.5,0.24,d*0.45,3), V3(cx-w*0.24,base+3.6,cz-d*0.24), 0, {collide:false});
+    addStatic('concrete', boxGeo(w*0.5,0.24,d*0.45,3), V3(cx-w*0.24,base+3.6,cz-d*0.24), 0);
+    stairs(cx-w*0.49+0.75, cz-d*0.015, 0,1, g0, base+3.72, 1.1);
     addStatic('concrete', boxGeo(w*0.42,0.24,d*0.4,3), V3(cx+w*0.18,g0+1.4,cz+d*0.18), 0, {rz:0.5});
   }
   rubblePile(cx+R(-w/4,w/4), cz+R(-d/4,d/4), R(1.4,2.4), 'concrete');
@@ -591,8 +601,8 @@ function house(cx,cz,w,d,o={}){
   beginCluster();
   const base=Math.max(heightAt(cx-w/2,cz-d/2),heightAt(cx+w/2,cz-d/2),heightAt(cx-w/2,cz+d/2),heightAt(cx+w/2,cz+d/2),heightAt(cx,cz))+0.03;
   const H=2.9, T=0.25, mk=o.mk||'plaster', x0=cx-w/2, z0=cz-d/2;
-  addStatic('floor', boxGeo(w,0.2,d,2), V3(cx,base-0.1,cz),0,{collide:false});
-  addStatic('concrete', boxGeo(w+0.12,0.7,d+0.12,2.5), V3(cx,base-0.46,cz),0,{collide:false});
+  addStatic('floor', boxGeo(w,0.2,d,2), V3(cx,base-0.1,cz),0);
+  addStatic('concrete', boxGeo(w+0.12,0.7,d+0.12,2.5), V3(cx,base-0.46,cz),0);
   const door=c=>({c,w:1.15,y0:0,y1:2.15}), win=c=>({c,w:1.2,y0:0.95,y1:2.05});
   wallOpen(mk,x0,z0,w,true,base,H,T,[door(w*0.3),win(w*0.75)]);
   wallOpen(mk,x0,z0+d,w,true,base,H,T,[win(w*0.25),win(w*0.72)]);
@@ -656,10 +666,16 @@ function wreckCar(x,z,ry){ const y=heightAt(x,z); addStatic('char', boxGeo(4.2,0
 function tent(x,z,ry){ const sh=new THREE.Shape(); sh.moveTo(-2,0); sh.lineTo(2,0); sh.lineTo(0,2.6); sh.lineTo(-2,0);
   const g=new THREE.ExtrudeGeometry(sh,{depth:5,bevelEnabled:false}); g.translate(0,0,-2.5); const uv=g.attributes.uv; for(let i=0;i<uv.count;i++) uv.setXY(i,uv.getX(i)*0.3,uv.getY(i)*0.3);
   addStatic('cloth', g, V3(x,heightAt(x,z),z), ry); }
+function stairs(x,z,dx,dz,y0,y1,width,mk='concrete'){
+  const n=Math.max(2,Math.ceil((y1-y0)/0.27)), rise=(y1-y0)/n, run=0.3;
+  for(let i=0;i<n;i++){ const top=y1-i*rise, bot=y0-0.35, cx=x+dx*(i+0.5)*run, cz=z+dz*(i+0.5)*run;
+    addStatic(mk, boxGeo(dx?run:width, top-bot, dz?run:width, 1.5), V3(cx,(top+bot)/2,cz), 0); }
+}
 function tower(x,z){ beginCluster(); const y=heightAt(x,z);
   for(const [a,b] of [[-1.2,-1.2],[1.2,-1.2],[-1.2,1.2],[1.2,1.2]]) addStatic('wood', new THREE.CylinderGeometry(0.1,0.12,5,7), V3(x+a,y+2.5,z+b), 0);
-  addStatic('wood', boxGeo(3.2,0.15,3.2,1.5), V3(x,y+5,z), 0, {collide:false});
-  for(const [a,b,w,d] of [[0,-1.5,3.2,0.1],[0,1.5,3.2,0.1],[-1.5,0,0.1,3.2],[1.5,0,0.1,3.2]]) addStatic('wood', boxGeo(w,1,d,1.5), V3(x+a,y+5.55,z+b), 0, {collide:false});
+  addStatic('wood', boxGeo(3.2,0.15,3.2,1.5), V3(x,y+5,z), 0);
+  for(const [a,b,w,d] of [[0,-1.5,3.2,0.1],[0,1.5,3.2,0.1],[1.5,0,0.1,3.2]]) addStatic('wood', boxGeo(w,1,d,1.5), V3(x+a,y+5.55,z+b), 0);
+  stairs(x-1.6,z,-1,0,y,y+5.075,1.0,'wood');
   addStatic('container', boxGeo(3.8,0.06,3.8,2), V3(x,y+7.4,z), 0, {rz:0.08,collide:false});
   for(const [a,b] of [[-1.4,-1.4],[1.4,-1.4],[-1.4,1.4],[1.4,1.4]]) addStatic('wood', new THREE.CylinderGeometry(0.05,0.05,2.3,5), V3(x+a,y+6.2,z+b), 0, {collide:false});
   endCluster(); }
@@ -1044,7 +1060,7 @@ const TEAMTINT={E:0x8a8574, A:0x7a8aa0, B:0xa27a66};
 const matCache=new Map();
 function tintMat(m,team){ const k=m.uuid+team; if(!matCache.has(k)){ const c=m.clone(); c.color.setHex(TEAMTINT[team]||0x8a8574); c.envMapIntensity=0.6; matCache.set(k,c);} return matCache.get(k); }
 async function loadSoldier(){
-  const urls=['https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/models/gltf/Soldier.glb','https://threejs.org/examples/models/gltf/Soldier.glb'];
+  const urls=['assets/Soldier.glb','https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/models/gltf/Soldier.glb','https://threejs.org/examples/models/gltf/Soldier.glb'];
   const loader=new GLTFLoader();
   for(const u of urls){
     try{
@@ -1491,9 +1507,40 @@ function traceBullet(o,d,max,fromMe){
   if(gt<Infinity&&(!best||gt<best.dist)){ const p=V3().copy(o).addScaledVector(d,gt); best={point:p,normal:groundNormal(p.x,p.z),dist:gt,obj:null}; }
   return best;
 }
+const STEP=0.5;
+function supportY(x,z,feet,r=0.25){
+  let y=heightAt(x,z);
+  for(const c of colliders){ if(c.off||c.maxX-c.minX>90) continue;
+    if(c.maxY>y && c.maxY<=feet+STEP && x>c.minX-r&&x<c.maxX+r&&z>c.minZ-r&&z<c.maxZ+r) y=c.maxY; }
+  return y;
+}
+function colAt(x,z,y0,y1,r=0.3){ for(const c of colliders){ if(c.off||c.maxX-c.minX>90) continue; if(c.maxY>y0&&c.minY<y1&&x>c.minX-r&&x<c.maxX+r&&z>c.minZ-r&&z<c.maxZ+r) return c; } return null; }
+function findClimb(){
+  const P=player.pos, feet=P.y, f=V3(-Math.sin(player.yaw),0,-Math.cos(player.yaw));
+  let blk=null, d0=0;
+  for(const d of [0.45,0.7,0.95,1.2]){ blk=colAt(P.x+f.x*d,P.z+f.z*d,feet+STEP,feet+1.5,0.05); if(blk){ d0=d; break; } }
+  if(!blk) return null;
+  const px=P.x+f.x*d0, pz=P.z+f.z*d0; let top=blk.maxY;
+  for(let k=0;k<6;k++){ let up=false; for(const c of colliders){ if(c.off||c.maxX-c.minX>90) continue; if(px>c.minX-0.05&&px<c.maxX+0.05&&pz>c.minZ-0.05&&pz<c.maxZ+0.05&&c.minY<=top+0.05&&c.maxY>top+0.01){ top=c.maxY; up=true; } } if(!up) break; }
+  if(top-feet>2.75) return null;
+  const optA=()=>{ for(const e of [0.15,0.35,0.6]){ const lx=px+f.x*e, lz=pz+f.z*e; if(!colAt(lx,lz,top+0.05,top+1.75,0.28) && supportY(lx,lz,top+0.05)>=top-0.05) return V3(lx,top,lz); } return null; };
+  const optB=()=>{ if(colAt(px,pz,top+0.05,top+0.95,0.2)) return null;
+    let e=0.1; while(e<2.4 && colAt(px+f.x*e,pz+f.z*e,feet+STEP,top-0.02,0.05)) e+=0.1; if(e>=2.4) return null;
+    for(const x of [0.45,0.3,0.65]){ const lx=px+f.x*(e+x), lz=pz+f.z*(e+x), gy=supportY(lx,lz,top);
+      if(!colAt(lx,lz,gy+0.05,gy+1.75,0.2)) return V3(lx,gy,lz); } return null; };
+  let to=null;
+  if(top-feet<1.25) to=optB()||optA(); else to=optA()||optB();
+  return to ? {from:V3().copy(P), to, top, t:0, dur:0.28+(top-feet)*0.16} : null;
+}
+function jumpOrClimb(){
+  if(!player.alive||player.climb||player.vehicle||player.downed) return;
+  const c=findClimb();
+  if(c){ player.climb=c; player.vel.set(0,0,0); player.vy=0; SFX.step(true); nb({dur:.15,vol:.25,type:'bandpass',f0:500,f1:250,q:1,verb:0}); return; }
+  if(player.onGround){ player.vy=4.6; player.onGround=false; }
+}
 function resolve(pos,r,feetY){
   for(const c of colliders){
-    if(c.maxY<feetY+0.45||c.minY>feetY+1.75) continue;
+    if(c.maxY<=feetY+STEP||c.minY>feetY+1.75||c.off) continue;
     const cx=clamp(pos.x,c.minX,c.maxX), cz=clamp(pos.z,c.minZ,c.maxZ); const dx=pos.x-cx, dz=pos.z-cz, d2=dx*dx+dz*dz;
     if(d2<r*r){
       if(d2>1e-8){ const d=Math.sqrt(d2); pos.x+=dx/d*(r-d); pos.z+=dz/d*(r-d); }
@@ -1602,7 +1649,7 @@ try{ stats.best=+localStorage.getItem('fdc_best')||0; }catch(e){}
 addEventListener('keydown',e=>{ if(e.target.tagName==='INPUT') return; keys[e.code]=true; if(e.code==='Escape'&&noLock&&state==='playing'){ showPause(); return; } if(state!=='playing'||!player.alive) return;
   if(e.code==='KeyE') wpn.adsHeld=!wpn.adsHeld; if(e.code==='KeyF') punch(); if(e.code==='KeyR'||e.code==='KeyP') reload(); if(e.code==='KeyG') throwNade(); if(e.code==='KeyQ') equip(wpn.prev);
   if(/^Digit[1-5]$/.test(e.code)) equip(ORDER[+e.code.slice(5)-1]);
-  if(e.code==='Space'&&player.onGround){ player.vy=4.6; player.onGround=false; }
+  if(e.code==='Space') jumpOrClimb();
   if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)) e.preventDefault(); });
 addEventListener('keyup',e=>{ keys[e.code]=false; });
 addEventListener('mousedown',e=>{ if(state!=='playing'||isTouch) return; if(e.button===0){ wpn.firing=true; wpn.queuedT=time; } if(e.button===2) wpn.adsHeld=true; if(e.button===1){ e.preventDefault(); punch(); } });
@@ -1623,7 +1670,7 @@ function touchBtn(b,down){
     return;
   }
   if(!down) return;
-  if(b==='reload') reload(); else if(b==='jump'&&player.onGround){ player.vy=4.6; player.onGround=false; }
+  if(b==='reload') reload(); else if(b==='jump') jumpOrClimb();
   else if(b==='nade') throwNade(); else if(b==='swap') cycleWeapon(1);
   else if(b==='pause') pauseGame();
 }
@@ -1653,7 +1700,17 @@ function onTouchEnd(e){
 }
 const tlay=$('touch'); tlay.addEventListener('touchstart',onTouchStart,{passive:false}); tlay.addEventListener('touchmove',onTouchMove,{passive:false}); tlay.addEventListener('touchend',onTouchEnd); tlay.addEventListener('touchcancel',onTouchEnd);
 
+let climbT=0, climbShown=false;
+function climbHint(dt){ climbT-=dt; if(climbT>0) return; climbT=0.25; const c=player.onGround&&!player.carry?findClimb():null; if(c&&!climbShown){ hint(isTouch?'TOCA SALTAR PARA TREPAR':'ESPACIO PARA TREPAR'); } climbShown=!!c; }
+function updateClimb(dt){
+  const c=player.climb; c.t+=dt/c.dur; const k=Math.min(1,c.t), up=Math.max(c.top+0.12,c.to.y);
+  const kh = k<0.45 ? k/0.45*0.3 : 0.3+(k-0.45)/0.55*0.7;
+  player.pos.x=lerp(c.from.x,c.to.x,kh); player.pos.z=lerp(c.from.z,c.to.z,kh);
+  player.pos.y = k<0.5 ? lerp(c.from.y,up,Math.sin(k/0.5*Math.PI/2)) : lerp(up,c.to.y,(k-0.5)/0.5);
+  if(k>=1){ player.pos.copy(c.to); player.climb=null; player.onGround=true; player.vy=0; SFX.step(false); }
+}
 function updatePlayer(dt){
+  if(player.climb){ updateClimb(dt); return; }
   let fwd = keys.KeyW||keys.ArrowUp, back=keys.KeyS||keys.ArrowDown, left=keys.KeyA||keys.ArrowLeft, right=keys.KeyD||keys.ArrowRight;
   let ix=(right?1:0)-(left?1:0), iz=(fwd?1:0)-(back?1:0);
   if(TOUCH.stick!==null){ ix+=TOUCH.mx; iz+=-TOUCH.my; fwd = fwd || TOUCH.my<-0.3; }
@@ -1668,10 +1725,13 @@ function updatePlayer(dt){
   const acc = player.onGround ? 11 : 2.5;
   player.vel.x=lerp(player.vel.x,target.x,Math.min(1,dt*acc)); player.vel.z=lerp(player.vel.z,target.z,Math.min(1,dt*acc));
   player.pos.x+=player.vel.x*dt; player.pos.z+=player.vel.z*dt;
-  const gh=heightAt(player.pos.x,player.pos.z);
-  player.vy-=14*dt; player.pos.y+=player.vy*dt;
-  if(player.pos.y<=gh){ if(!player.onGround&&player.vy<-3) SFX.step(true); player.pos.y=gh; player.vy=0; player.onGround=true; }
   resolve(player.pos,0.4,player.pos.y);
+  const gh=supportY(player.pos.x,player.pos.z,player.pos.y);
+  if(player.onGround && player.vy<=0 && player.pos.y>gh && player.pos.y-gh<0.6) player.pos.y=gh;
+  else { player.vy-=14*dt; player.pos.y+=player.vy*dt; }
+  if(player.pos.y<=gh){ if(!player.onGround&&player.vy<-3) SFX.step(true); if(!player.onGround&&player.vy<-11) player.damage((-player.vy-11)*9,player.pos,NET.myId,'fall'); player.pos.y=gh; player.vy=0; player.onGround=true; }
+  else if(player.pos.y>gh+0.05) player.onGround=false;
+  climbHint(dt);
   const hs=Math.hypot(player.vel.x,player.vel.z); player.moving=hs>0.6;
   if(player.onGround&&hs>0.5){ player.bob+=dt*hs*1.55; player.stepAcc+=hs*dt; if(player.stepAcc>(player.sprinting?2.0:1.5)){ player.stepAcc=0; SFX.step(player.sprinting); } }
   else player.bob=lerp(player.bob, Math.round(player.bob/Math.PI)*Math.PI, Math.min(1,dt*4));
@@ -1681,7 +1741,8 @@ function updateCamera(dt){
   if(state==='menu'){ player.yaw+=dt*0.04; }
   const hs=Math.hypot(player.vel.x,player.vel.z), bobAmt=clamp(hs/CFG.sprint,0,1)*(1-wpn.ads*0.8);
   const deadDrop = player.alive?0:Math.min(1.2,(CFG.respawnTime-player.respawnT)*1.5);
-  camera.position.set(player.pos.x+Math.cos(player.bob)*0.035*bobAmt*Math.cos(player.yaw), player.pos.y+1.65+Math.abs(Math.sin(player.bob))*0.06*bobAmt-deadDrop, player.pos.z-Math.cos(player.bob)*0.035*bobAmt*Math.sin(player.yaw));
+  player.camY = Math.abs(player.pos.y-(player.camY??player.pos.y))>1.2||player.climb ? player.pos.y : lerp(player.camY??player.pos.y, player.pos.y, Math.min(1,dt*16));
+  camera.position.set(player.pos.x+Math.cos(player.bob)*0.035*bobAmt*Math.cos(player.yaw), player.camY+1.65+Math.abs(Math.sin(player.bob))*0.06*bobAmt-deadDrop, player.pos.z-Math.cos(player.bob)*0.035*bobAmt*Math.sin(player.yaw));
   shake=Math.max(0,shake-dt*1.8);
   const sx=(Math.random()-0.5)*shake*0.05, sy=(Math.random()-0.5)*shake*0.05;
   wpn.camKick=Math.max(0,wpn.camKick-dt*0.25-wpn.camKick*dt*10);
@@ -1701,7 +1762,7 @@ function updateCamera(dt){
 const _v1=V3(), _v2=V3(), _v3=V3();
 function fire(){
   const W0=WEAPONS[wpn.cur];
-  if(wpn.switchT>0||wpn.throwT>=0||wpn.punchT>=0) return;
+  if(wpn.switchT>0||wpn.throwT>=0||wpn.punchT>=0||player.climb) return;
   if(W0.melee){ stab(); return; }
   if(wpn.reloading){ if(W0.perShell&&wpn.ammo>0) wpn.reloading=false; else return; }
   if(wpn.pumpT>=0) return;
@@ -1811,6 +1872,7 @@ function updateWeapon(dt){
   wpn.flashT-=dt; if(wpn.flashT<=0){ view.flash.visible=false; wFlashLight.intensity=0; }
   let low=0;
   if(wpn.switchT>0){ wpn.switchT-=dt; if(wpn.switchT<=0.22&&wpn.cur!==wpn.next) swapNow(); low=clamp(1-Math.abs(wpn.switchT-0.22)/0.22,0,1); if(wpn.switchT<=0) wpn.switchT=0; }
+  if(player.climb) low=Math.max(low,0.7);
   const W0=WEAPONS[wpn.cur], ud=view.gun.userData;
   let rx=0, rz=0, py=0, magY=0, magVis=true;
   if(wpn.reloading){
@@ -2170,7 +2232,7 @@ async function boot(){
   for(const b of ['bSolo','bHostCoop','bHostTeams','bJoin']) $(b).disabled=false;
   $('bSolo').textContent='JUGAR SOLO';
   if(!window.Peer) status('Listo. (El modo con amigos necesita internet)');
-  window.__g={player,npcs,wpn,camera,W,NET,remotes,GUNPOSE,setPlaying,beginGame,fire,equip,throwNade,grenades,view,NPC,soldier:()=>soldierTpl,placeEnemy,state:()=>state,scores,teamScore,gameOver,posts};
+  window.__g={findClimb,colAt,colliders,supportY,player,npcs,wpn,camera,W,NET,remotes,GUNPOSE,setPlaying,beginGame,fire,equip,throwNade,grenades,view,NPC,soldier:()=>soldierTpl,placeEnemy,state:()=>state,scores,teamScore,gameOver,posts};
   if(TEST&&QS.has('auto')) $('bSolo').click();
 }
 boot();
