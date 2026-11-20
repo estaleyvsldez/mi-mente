@@ -101,3 +101,11 @@ details summary{cursor:pointer;font-weight:600;padding:6px 0}
 .kbmic{font-size:.95rem;margin:4px 0 8px}
 textarea.resp{font-size:1.2rem;min-height:96px}
 .history{margin-top:14px}
+
+/* nota de voz estilo WhatsApp */
+.wa-row{display:flex;gap:10px;align-items:stretch}
+.wa-row .live-text{flex:1;min-width:0}
+.wa-mic{flex:0 0 76px;height:76px;border-radius:50%;border:0;background:#25d366;color:#fff;font-size:2rem;cursor:pointer;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.wa-mic.rec{background:#e5484d;transform:scale(1.12);animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(229,72,77,.25)}}
+.wa-hint{margin-top:6px}

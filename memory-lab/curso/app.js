@@ -68,8 +68,37 @@
   /* Dictado (micrófono) a través de claude.ai cuando está disponible; si no, el usuario confirma que lo dijo. */
   let DICT = null;
   let activeMic = null; // solo una frase escucha a la vez
+  /* Reconocimiento de voz del propio navegador (Safari en iPhone, Chrome en Android) con la misma interfaz que el dictado de claude.ai. */
+  function webSpeech() {
+    const R = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!R) return null;
+    let fin = null, part = null, st = null, rec = null;
+    return {
+      web: true,
+      onFinal: f => { fin = f; }, onPartial: f => { part = f; }, onState: f => { st = f; },
+      start(o) {
+        return new Promise((resolve, reject) => {
+          let started = false;
+          try { if (rec) rec.abort(); } catch (_) { /* nada */ }
+          rec = new R();
+          rec.lang = (o && o.language) || 'en-US'; rec.interimResults = true; rec.continuous = true; rec.maxAlternatives = 1;
+          rec.onstart = () => { started = true; st && st({ state: 'listening' }); resolve(); };
+          rec.onresult = e => {
+            let interim = '';
+            for (let i = e.resultIndex; i < e.results.length; i++) { const r = e.results[i]; if (r.isFinal) fin && fin({ text: r[0].transcript.trim() }); else interim += r[0].transcript; }
+            if (interim && part) part({ text: interim.trim() });
+          };
+          rec.onerror = e => { const code = /not-allowed|service-not-allowed/.test(e.error) ? 'not_granted' : e.error === 'no-speech' ? 'no_speech' : e.error === 'aborted' ? 'stopped' : 'unavailable'; if (!started) reject({ code }); };
+          rec.onend = () => { rec = null; st && st({ state: 'idle' }); };
+          try { rec.start(); } catch (e) { reject({ code: 'unavailable' }); }
+        });
+      },
+      stop() { try { rec && rec.stop(); } catch (_) { /* ya parado */ } return Promise.resolve(); }
+    };
+  }
   async function initDictation() {
     try { if (window.claude && window.claude.use) DICT = await window.claude.use('dictation'); } catch (_) { DICT = null; }
+    if (!DICT) DICT = webSpeech(); // página normal (fuera de claude.ai): reconocimiento de voz del navegador
     if (!DICT) return;
     try {
       DICT.onFinal(({ text }) => { if (activeMic) { activeMic.heard = (activeMic.heard + ' ' + text).trim(); activeMic.partial && activeMic.partial(activeMic.heard); } });
@@ -537,7 +566,7 @@
   const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   function micHelp() {
     return h('details', { class: 'note' }, h('summary', null, '🎙️ ¿Cómo hablo si no aparece el micrófono?'),
-      h('p', { class: 'small' }, 'claude.ai solo deja usar el micrófono dentro de la página si la abres en Google Chrome (celular Android o computadora). En la app de Claude o en iPhone usa el micrófono del teclado: toca el cuadro y pulsa 🎤; hablas y se escribe solo.'),
+      h('p', { class: 'small' }, window.claude ? 'Dentro de claude.ai el micrófono solo funciona en Google Chrome. Para hablar con notas de voz en cualquier celular, abre la versión web del curso (enlace en el inicio). Mientras tanto, usa el 🎤 del teclado: toca el cuadro, pulsa 🎤 y habla.' : 'Da permiso al micrófono cuando el navegador lo pida. Si lo negaste, actívalo en los ajustes del navegador para este sitio, o usa el 🎤 del teclado.'),
       isIOS ? h('p', { class: 'small' }, 'iPhone: para que te entienda en inglés, añade el teclado «Inglés (EE. UU.)» en Ajustes › General › Teclado › Teclados, y cámbialo con 🌐 antes de pulsar 🎤.') : h('p', { class: 'small' }, 'Android: en el teclado (Gboard) pulsa 🎤. Si te escribe en español, cambia el idioma del teclado a English (US) con la tecla 🌐 o en Ajustes de Gboard › Idiomas.'));
   }
 
@@ -589,25 +618,35 @@
 
       /* Responder con el micrófono de la página */
       function voiceAnswer(box, status) {
-        const live = h('div', { class: 'live-text' }, 'Pulsa el botón de abajo y habla.');
-        box.append(live, h('button', { class: 'btn small-link', type: 'button', onclick: () => { box.innerHTML = ''; keyboardAnswer(box, status); } }, '⌨️ Mejor uso el micrófono del teclado'));
+        const live = h('div', { class: 'live-text' }, 'Mantén pulsado 🎙️ y habla en inglés. Suelta para enviar.');
+        const wa = h('button', { class: 'wa-mic', type: 'button', 'aria-label': 'Mantén pulsado para hablar' }, '🎙️');
+        const hint = h('div', { class: 'wa-hint small muted' }, 'Mantén pulsado para hablar · o toca una vez para empezar y otra para terminar');
+        box.append(h('div', { class: 'wa-row' }, live, wa), hint, h('button', { class: 'btn small-link', type: 'button', onclick: () => { stopNow(); box.innerHTML = ''; keyboardAnswer(box, status); } }, '⌨️ Mejor uso el micrófono del teclado'));
+        let listening = false, downAt = 0, held = false;
+        const stopNow = () => { if (listening) { try { DICT.stop(); } catch (_) { /* ya parado */ } } };
         const startMic = () => {
+          if (listening) return;
           const mic = { heard: '', partial: t => { live.textContent = t || '…'; live.classList.add('on'); }, end: () => {
-            live.classList.remove('on');
+            listening = false; wa.classList.remove('rec'); live.classList.remove('on');
             if (mic.heard.trim()) send(mic.heard, status);
-            else { live.textContent = 'No te escuché. Pulsa otra vez y habla cerca del micrófono.'; foot('🎙️ Pulsa y responde', startMic); }
+            else { live.textContent = 'No te escuché. Mantén pulsado 🎙️ y habla cerca del celular.'; foot('🎙️ Pulsa y habla', startMic); }
           } };
-          activeMic = mic;
-          live.textContent = '🎙️ Te escucho… habla ahora'; live.classList.add('on');
-          foot('⏹️ Ya terminé de hablar', () => { try { DICT.stop(); } catch (_) { /* ya parado */ } });
+          activeMic = mic; listening = true;
+          wa.classList.add('rec');
+          live.textContent = '🔴 Grabando… habla ahora'; live.classList.add('on');
+          foot('⏹️ Enviar mi nota de voz', stopNow);
           let pr; try { pr = DICT.start({ language: 'en-US' }); } catch (e) { pr = Promise.reject(e); }
           Promise.resolve(pr).catch(err => {
-            activeMic = null; live.classList.remove('on');
-            if (err && (err.code === 'unavailable' || err.code === 'not_granted')) { DICT = null; box.innerHTML = ''; status.textContent = err.code === 'not_granted' ? 'No se dio permiso al micrófono de la página.' : 'El micrófono de la página no está disponible aquí.'; keyboardAnswer(box, status); }
-            else { live.textContent = 'No se pudo empezar a escuchar. Pulsa otra vez.'; foot('🎙️ Pulsa y responde', startMic); }
+            activeMic = null; listening = false; wa.classList.remove('rec'); live.classList.remove('on');
+            if (err && (err.code === 'unavailable' || err.code === 'not_granted')) { DICT = null; box.innerHTML = ''; status.textContent = err.code === 'not_granted' ? 'No diste permiso al micrófono. Actívalo en los ajustes del navegador o usa el micrófono del teclado.' : 'El micrófono no está disponible aquí.'; keyboardAnswer(box, status); }
+            else { live.textContent = 'No se pudo empezar a grabar. Prueba otra vez.'; foot('🎙️ Pulsa y habla', startMic); }
           });
         };
-        foot('🎙️ Pulsa y responde', startMic);
+        wa.addEventListener('pointerdown', e => { e.preventDefault(); downAt = Date.now(); held = false; if (listening) { stopNow(); return; } startMic(); setTimeout(() => { if (listening && downAt) held = true; }, 450); });
+        const release = () => { if (!downAt) return; const long = held || Date.now() - downAt > 450; downAt = 0; if (long && listening) stopNow(); };
+        wa.addEventListener('pointerup', release); wa.addEventListener('pointercancel', release); wa.addEventListener('pointerleave', release);
+        wa.addEventListener('contextmenu', e => e.preventDefault());
+        foot('🎙️ Pulsa y habla', startMic);
       }
       /* Responder con el micrófono del teclado (iPhone, app de Claude) */
       function keyboardAnswer(box, status) {
