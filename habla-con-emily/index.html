@@ -1,0 +1,610 @@
+<title>Habla con Emily</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: una sola pantalla tipo "estudio de radio": arriba la lección, al centro la frase en turno, abajo el micrófono vivo. */
+:root{
+  --bg:#eef0f6; --panel:#ffffff; --ink:#151a33; --muted:#5d6386; --line:#d9dcea;
+  --stan:#2f55e4; --stan-soft:#e3e9ff; --emily:#c2366f; --emily-soft:#fbe3ec;
+  --on-stan:#ffffff; --ok:#138a5b; --ok-soft:#dcf3e8; --bad:#c2410c; --bad-soft:#fde7dc;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1224; --panel:#181c36; --ink:#eceefb; --muted:#a2a7c8; --line:#2b3056;
+  --stan:#7d98ff; --stan-soft:#1f2a5c; --on-stan:#0f1224; --emily:#ff7aa8; --emily-soft:#4a1a30;
+  --ok:#4fd39a; --ok-soft:#123a2a; --bad:#ff9a6b; --bad-soft:#44210f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1224; --panel:#181c36; --ink:#eceefb; --muted:#a2a7c8; --line:#2b3056;
+  --stan:#7d98ff; --stan-soft:#1f2a5c; --on-stan:#0f1224; --emily:#ff7aa8; --emily-soft:#4a1a30;
+  --ok:#4fd39a; --ok-soft:#123a2a; --bad:#ff9a6b; --bad-soft:#44210f; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
+.wrap{max-width:720px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;gap:16px;
+  padding-block:16px 24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));box-sizing:border-box}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--stan);outline-offset:3px}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.who-a{color:var(--stan)} .who-b{color:var(--emily)}
+
+/* ---------- inicio ---------- */
+.brand{display:flex;align-items:center;gap:12px}
+.duo{display:flex}
+.duo span{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:800;color:#fff;font-size:1.2rem;border:3px solid var(--bg)}
+.duo .a{background:var(--stan)} .duo .b{background:var(--emily);margin-left:-12px}
+.brand h1{font-size:clamp(1.7rem,6vw,2.4rem);font-weight:800;letter-spacing:-.02em}
+.lead{color:var(--muted);margin:0;max-width:60ch}
+.rules{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.rules li{display:flex;gap:10px;align-items:flex-start}
+.rules b{font-family:var(--display)}
+.dot{flex:none;width:10px;height:10px;border-radius:50%;margin-top:.45em;background:var(--stan)}
+.path{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.path li{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;background:var(--panel);border:1px solid var(--line)}
+.path .n{font-family:var(--display);font-weight:800;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
+.path .t{min-width:0}
+.path .t strong{display:block;font-family:var(--display);font-weight:700}
+.path .t small{color:var(--muted)}
+.path .st{font-size:.8rem;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.path li.done .st{background:var(--ok-soft);color:var(--ok)}
+.path li.cur{border-color:var(--stan);box-shadow:0 0 0 2px var(--stan-soft)}
+.path li.cur .st{background:var(--stan);color:var(--on-stan)}
+.path li.lock{opacity:.55}
+.path li.lock .st{color:var(--muted)}
+.big{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:18px;border:0;border-radius:16px;background:var(--stan);color:var(--on-stan);font-family:var(--display);font-weight:800;font-size:1.25rem}
+.big svg{width:26px;height:26px}
+.fine{font-size:.85rem;color:var(--muted);margin:0}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;padding:4px;font-size:.85rem}
+.warn{background:var(--bad-soft);color:var(--ink);border-radius:12px;padding:12px 14px;margin:0}
+
+/* ---------- sesión ---------- */
+.top{display:flex;align-items:center;gap:12px}
+.top .ttl{flex:1;min-width:0}
+.top h2{font-size:1.15rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pause{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:99px;padding:8px 14px;font-weight:700}
+.phases{display:flex;gap:6px;flex-wrap:wrap}
+.phases span{font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.phases span.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.phases span.past{color:var(--ok);border-color:var(--ok)}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:0;color:var(--muted)}
+.note b{color:var(--ink)}
+.chat{display:flex;flex-direction:column;gap:6px;max-height:22vh;overflow-y:auto;padding-right:4px}
+.bub{max-width:82%;padding:7px 12px;border-radius:14px;font-size:.92rem}
+.bub.a{align-self:flex-end;background:var(--stan-soft);border-bottom-right-radius:4px}
+.bub.b{align-self:flex-start;background:var(--emily-soft);border-bottom-left-radius:4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:12px}
+.card .spk{display:flex;align-items:center;gap:8px;font-weight:700;font-family:var(--display)}
+.card .spk i{width:12px;height:12px;border-radius:50%;background:currentColor}
+.en{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,6.5vw,2.4rem);line-height:1.12;letter-spacing:-.01em;margin:0}
+.en.hide{color:var(--muted);font-weight:500;font-size:1.2rem;font-style:italic;font-family:var(--body)}
+.rows{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:baseline}
+.row .k{font-size:.75rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.row .v{min-width:0}
+.pr{font-size:1.2rem;font-style:italic}
+.es{font-size:1.05rem}
+.mic{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:14px 16px}
+.orb{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--line);color:var(--muted);position:relative;transition:background .2s}
+.orb svg{width:28px;height:28px}
+.orb.listen{background:var(--stan);color:#fff}
+.orb.listen::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--stan);opacity:.5;animation:pulse 1.4s ease-out infinite}
+.orb.speak{background:var(--emily);color:#fff}
+.orb.ok{background:var(--ok);color:#fff}
+.orb.bad{background:var(--bad);color:#fff}
+@keyframes pulse{from{transform:scale(.9);opacity:.6}to{transform:scale(1.25);opacity:0}}
+@media (prefers-reduced-motion:reduce){.orb.listen::after{animation:none}}
+.mic .st{font-weight:700;font-family:var(--display)}
+.mic .heard{color:var(--muted);min-height:1.4em;overflow-wrap:anywhere}
+.fb{border-radius:14px;padding:10px 14px;margin:0}
+.fb.ok{background:var(--ok-soft);color:var(--ok);font-weight:700}
+.fb.bad{background:var(--bad-soft)}
+.fb.bad mark{background:none;color:var(--bad);font-weight:700;text-decoration:underline}
+.cmds{font-size:.85rem;color:var(--muted);margin:0;text-align:center}
+.cmds q{font-weight:700;color:var(--ink);quotes:"«" "»"}
+.wake{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 88%,transparent);display:grid;place-items:center;padding:24px;z-index:20}
+.wake div{max-width:420px;display:grid;gap:14px;text-align:center}
+.grow{flex:1}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* =========================================================
+   CONTENIDO — cada lección es UNA estructura nueva.
+   A = Stanley (tú).  B = Emily.
+   [quién, inglés, español, cómo se lee]
+   ========================================================= */
+const LESSONS = [
+ {t:"Preséntate", s:"I'm / You're",
+  n:"<b>I'm</b> = I am (yo soy / estoy). <b>You're</b> = you are (tú eres / estás). Los nativos casi nunca dicen «I am»: dicen «I'm».",
+  l:[["A","Hey! I'm Stanley.","¡Hola! Soy Stanley.","jéi! áim Stánli"],
+     ["B","Hi, Stanley. I'm Emily.","Hola, Stanley. Soy Emily.","jái, Stánli. áim Émili"],
+     ["A","Nice to meet you, Emily.","Mucho gusto, Emily.","náis tu míchu, Émili"],
+     ["B","Nice to meet you too.","Igualmente, mucho gusto.","náis tu míchu túu"],
+     ["A","You're really nice.","Eres muy amable.","iór ríli náis"],
+     ["B","Aw, thanks! You're sweet.","¡Ay, gracias! Eres un encanto.","áa, zénks! iór suít"]]},
+ {t:"¿Qué onda?", s:"What's / How's",
+  n:"<b>What's</b> = what is. <b>How's</b> = how is. «What's up?» es el «¿qué onda?» de los gringos.",
+  l:[["B","Hey Stanley, what's up?","Hola Stanley, ¿qué onda?","jéi Stánli, uáts áp"],
+     ["A","Not much. How's it going?","No mucho. ¿Cómo te va?","nát mách. jáus it góuin"],
+     ["B","It's going good. How are you?","Me va bien. ¿Y tú cómo estás?","its góuin gud. jáuar iú"],
+     ["A","I'm doing great, thanks.","Estoy muy bien, gracias.","áim dúin gréit, zénks"],
+     ["B","That's awesome!","¡Qué padre!","dáts ósom"],
+     ["A","What's new with you?","¿Qué hay de nuevo contigo?","uáts núu uíd iú"]]},
+ {t:"No puedo", s:"don't / can't",
+  n:"<b>don't</b> = do not. <b>can't</b> = can not (no puedo). En EE.UU. «can't» suena «quént».",
+  l:[["B","Do you wanna grab a coffee?","¿Quieres ir por un café?","diú uána grab a cófi"],
+     ["A","Sorry, I can't right now.","Perdón, ahorita no puedo.","sóri, ái quént ráit náu"],
+     ["B","Oh, why not?","Ay, ¿por qué no?","óu, uái nát"],
+     ["A","I don't have time today.","Hoy no tengo tiempo.","ái dóun jav táim tudéi"],
+     ["B","That's okay, don't worry about it.","Está bien, no te preocupes.","dáts oukéi, dóun uóri abáurit"],
+     ["A","How about tomorrow?","¿Qué tal mañana?","jáu abáut tumórou"]]},
+ {t:"Voy a…", s:"gonna (going to)",
+  n:"<b>gonna</b> = going to (voy a…). Así hablan todos: «I'm gonna…» = voy a…",
+  l:[["B","What are you gonna do this weekend?","¿Qué vas a hacer este fin de semana?","uárar iú góna dú dis uíkend"],
+     ["A","I'm gonna visit my family.","Voy a visitar a mi familia.","áim góna vísit mái fámili"],
+     ["B","Nice! Are you gonna drive?","¡Qué bien! ¿Vas a manejar?","náis! ar iú góna dráiv"],
+     ["A","No, I'm gonna take the bus.","No, voy a tomar el camión.","nóu, áim góna téik de bás"],
+     ["B","When are you gonna be back?","¿Cuándo vas a regresar?","uénar iú góna bi bák"],
+     ["A","I'm gonna be back on Sunday.","Voy a regresar el domingo.","áim góna bi bák an sándei"]]},
+ {t:"Quiero…", s:"wanna (want to)",
+  n:"<b>wanna</b> = want to (quiero / quieres). «Wanna go?» = ¿quieres ir?",
+  l:[["B","I'm hungry. Do you wanna eat something?","Tengo hambre. ¿Quieres comer algo?","áim jángri. diú uána ít sámzin"],
+     ["A","Yeah, I wanna get some tacos.","Sí, quiero unos tacos.","iéa, ái uána guét sam tácos"],
+     ["B","Me too! Where do you wanna go?","¡Yo también! ¿A dónde quieres ir?","mi túu! uér diú uána góu"],
+     ["A","I wanna try that new place downtown.","Quiero probar ese lugar nuevo del centro.","ái uána trái dat núu pléis dáuntaun"],
+     ["B","Sounds good. Wanna go now?","Suena bien. ¿Quieres ir ya?","sáunds gud. uána góu náu"],
+     ["A","Sure, let's go!","¡Claro, vámonos!","shúr, léts góu"]]},
+ {t:"Tengo que…", s:"gotta (got to)",
+  n:"<b>gotta</b> = got to / have to (tengo que…). La «t» suena casi como «r»: «gára».",
+  l:[["B","Hey, are you leaving?","Oye, ¿ya te vas?","jéi, ar iú lívin"],
+     ["A","Yeah, I gotta go.","Sí, me tengo que ir.","iéa, ái gára góu"],
+     ["B","Already? Why?","¿Tan pronto? ¿Por qué?","olrédi? uái"],
+     ["A","I gotta work early tomorrow.","Tengo que trabajar temprano mañana.","ái gára uérk érli tumórou"],
+     ["B","Okay. You gotta rest, then.","Ok. Entonces tienes que descansar.","oukéi. iú gára rést, den"],
+     ["A","Yeah, I gotta get some sleep.","Sí, tengo que dormir un rato.","iéa, ái gára guét sam slíip"]]},
+ {t:"Lo que pasó", s:"was / didn't",
+  n:"<b>was</b> = estuvo / fue. <b>didn't</b> = did not (no hice). <b>kinda</b> = kind of (medio, algo).",
+  l:[["B","How was your day?","¿Cómo estuvo tu día?","jáu uás iór déi"],
+     ["A","It was kinda long.","Estuvo medio largo.","it uás káinda lóng"],
+     ["B","Why? What happened?","¿Por qué? ¿Qué pasó?","uái? uát jápend"],
+     ["A","I worked a lot and I didn't eat lunch.","Trabajé mucho y no comí.","ái uérkt a lát an ái dírnt ít lánch"],
+     ["B","Oh no! Did you eat dinner?","¡No manches! ¿Y sí cenaste?","óu nóu! díyu ít díner"],
+     ["A","Yeah, I had pizza at home.","Sí, cené pizza en casa.","iéa, ái jad pítsa at jóum"]]},
+ {t:"Preguntar", s:"where's / can you / do you",
+  n:"<b>where's</b> = where is. «Do you…?» se dice rápido: «diú». «Can you…?» = ¿puedes…?",
+  l:[["A","Excuse me, where's the bathroom?","Disculpa, ¿dónde está el baño?","ikskiús mi, uérs de bázrum"],
+     ["B","It's down the hall, on the left.","Está al fondo del pasillo, a la izquierda.","its dáun de jól, an de léft"],
+     ["A","Can you show me?","¿Me puedes enseñar?","quen iú shóu mi"],
+     ["B","Sure, follow me.","Claro, sígueme.","shúr, fálou mi"],
+     ["A","Do you work here?","¿Trabajas aquí?","diú uérk jíir"],
+     ["B","Yeah, I've worked here for a while.","Sí, ya llevo un rato trabajando aquí.","iéa, áiv uérkt jíir for a uáil"]]},
+ {t:"Pedir algo", s:"I'd like / I like",
+  n:"<b>I'd like</b> = I would like (me gustaría, para pedir). <b>I like</b> = me gusta.",
+  l:[["B","Hi! What can I get you?","¡Hola! ¿Qué te sirvo?","jái! uát quen ái guéchu"],
+     ["A","I'd like a coffee, please.","Me gustaría un café, por favor.","áid láik a cófi, plíis"],
+     ["B","Sure. Do you want milk?","Claro. ¿Quieres leche?","shúr. diú uánt mílk"],
+     ["A","No thanks, I like it black.","No, gracias, me gusta negro.","nóu zénks, ái láik it blák"],
+     ["B","Anything else?","¿Algo más?","énizin éls"],
+     ["A","That's it. How much is it?","Es todo. ¿Cuánto es?","dáts it. jáu mách ísit"]]},
+ {t:"Hacer planes", s:"I'll / let's",
+  n:"<b>I'll</b> = I will (lo hago, decidido ahorita). <b>let's</b> = let us (vamos a…, hagamos…).",
+  l:[["B","It's gonna rain later.","Va a llover más tarde.","its góna réin léirer"],
+     ["A","Then I'll bring an umbrella.","Entonces voy a llevar paraguas.","den áil bríng an ambréla"],
+     ["B","Good idea. Let's meet at the park.","Buena idea. Veámonos en el parque.","gud aidía. léts mít at de párk"],
+     ["A","Okay, I'll text you when I get there.","Va, te mando mensaje cuando llegue.","oukéi, áil tékst iú uén ái guét déer"],
+     ["B","Perfect. We'll have fun.","Perfecto. Nos la vamos a pasar bien.","pérfekt. uíl jav fán"],
+     ["A","Yeah, see you later!","¡Sí, nos vemos al rato!","iéa, síiu léirer"]]},
+ {t:"En la fiesta", s:"Repaso: todo junto",
+  n:"Aquí no hay estructura nueva: <b>mezclamos todo</b> lo que ya dominas, como en una plática real.",
+  l:[["B","Stanley! I didn't know you were coming.","¡Stanley! No sabía que ibas a venir.","Stánli! ái dírnt nóu iú uér cámin"],
+     ["A","Hey Emily! I'm so glad you're here.","¡Hola Emily! Qué gusto que estés aquí.","jéi Émili! áim sóu glád iór jíir"],
+     ["B","Me too. Do you wanna get a drink?","Yo también. ¿Quieres algo de tomar?","mi túu. diú uána guéra drínk"],
+     ["A","Sure, I'd like a soda.","Claro, me gustaría un refresco.","shúr, áid láik a sóuda"],
+     ["B","What are you gonna do after the party?","¿Qué vas a hacer después de la fiesta?","uárar iú góna du áfter de párri"],
+     ["A","I gotta go home, but let's hang out tomorrow.","Me tengo que ir a casa, pero salgamos mañana.","ái gára góu jóum, bat léts jáng áut tumórou"]]},
+ {t:"Por teléfono", s:"Repaso: todo junto",
+  n:"Otra plática real con todo mezclado. Si la dominas, ya puedes <b>platicar libre</b> con Emily.",
+  l:[["B","Hello?","¿Bueno?","jelóu"],
+     ["A","Hey, it's Stanley. Can you talk?","Hola, soy Stanley. ¿Puedes hablar?","jéi, its Stánli. quen iú tók"],
+     ["B","Yeah, what's going on?","Sí, ¿qué pasa?","iéa, uáts góuin án"],
+     ["A","I can't find my keys. Did you see them?","No encuentro mis llaves. ¿Las viste?","ái quént fáind mái kíis. díyu síi dem"],
+     ["B","I think they're on the kitchen table.","Creo que están en la mesa de la cocina.","ái zínk déir an de kíchen téibol"],
+     ["A","You're the best! I'll call you later.","¡Eres la mejor! Te llamo al rato.","iór de bést! áil cól iu léirer"]]}
+];
+LESSONS.forEach((L,i)=>L.l.forEach((x,j)=>x.id=i+"."+j));
+
+/* =========================================================
+   COMPARAR LO QUE DIJISTE
+   ========================================================= */
+const NUM={"0":"zero","1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven","8":"eight","9":"nine","10":"ten"};
+const SAME=[["yeah","yes","yep","yea","yah","ya"],["hey","hi","hay","hai","hello","hallo"],["okay","ok","k","kay"],
+  ["stanley","stan","standley","stanly","stanely"],["emily","emilie","emmy","emely","emilee"],["thanks","thank"],
+  ["sure","shore"],["tacos","taco"],["aw","awe"]];
+const CANON={}; SAME.forEach(g=>g.forEach(w=>CANON[w]=g[0]));
+const FILL=new Set(["oh","ah","um","uh","hmm","aw","awe","so","well","like"]);
+function norm(s){
+  s=(" "+s+" ").toLowerCase().replace(/[’‘`´]/g,"'").replace(/o\.k\./g,"okay");
+  s=s.replace(/\b(\d+)\b/g,m=>NUM[m]||m);
+  s=s.replace(/\bcan't\b|\bcannot\b/g,"can not").replace(/\bwon't\b/g,"will not").replace(/\bain't\b/g,"is not")
+     .replace(/n't\b/g," not").replace(/'re\b/g," are").replace(/'ll\b/g," will").replace(/'ve\b/g," have")
+     .replace(/'d\b/g," would").replace(/'m\b/g," am").replace(/\blet's\b/g,"let us").replace(/'s\b/g," is");
+  s=s.replace(/\bgonna\b/g,"going to").replace(/\bwanna\b/g,"want to").replace(/\bgotta\b/g,"got to")
+     .replace(/\bkinda\b/g,"kind of").replace(/\blemme\b/g,"let me").replace(/\bgimme\b/g,"give me")
+     .replace(/'bout\b/g,"about").replace(/\bthank you\b/g,"thanks").replace(/\balright\b/g,"all right")
+     .replace(/\bgoin\b/g,"going").replace(/\bdoin\b/g,"doing");
+  s=s.replace(/[^a-z' ]+/g," ").replace(/'/g,"");
+  return s.split(/\s+/).filter(Boolean).map(w=>CANON[w]||w);
+}
+function lev(a,b){const m=a.length,n=b.length;let p=Array.from({length:n+1},(_,j)=>j);
+  for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
+const wEq=(a,b)=>a===b||(a.length>=4&&b.length>=4&&lev(a,b)<=1);
+function compare(target,heard){
+  const T=norm(target).filter(w=>!FILL.has(w)), H=norm(heard).filter(w=>!FILL.has(w));
+  const m=T.length,n=H.length, d=[];
+  for(let i=0;i<=m;i++){d[i]=[];for(let j=0;j<=n;j++)d[i][j]=i===0?j:j===0?i:0}
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(wEq(T[i-1],H[j-1])?0:1));
+  // qué palabras de la frase faltaron
+  const miss=new Array(m).fill(true);let i=m,j=n;
+  while(i>0&&j>0){ if(wEq(T[i-1],H[j-1])&&d[i][j]===d[i-1][j-1]){miss[i-1]=false;i--;j--}
+    else if(d[i][j]===d[i-1][j]+1)i--; else if(d[i][j]===d[i][j-1]+1)j--; else{i--;j--} }
+  const allowed=m<=7?0:1;
+  return {ok:n>0&&d[m][n]<=allowed, dist:d[m][n], words:T, miss, heardWords:H};
+}
+function command(heard){
+  const w=norm(heard).join(" ");
+  if(/^(please )?(repeat|repeat that|again|one more time|repeat it|say it again)( please)?$/.test(w))return "repeat";
+  if(/^(slow|slower|slowly|slow down|more slowly|slow please)$/.test(w))return "slow";
+  return null;
+}
+
+/* =========================================================
+   PROGRESO (sólo en este navegador)
+   ========================================================= */
+const KEY="hablaConEmily.v1";
+let P={done:[],cur:0};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&Array.isArray(s.done))P=s}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(P))}catch(e){}}
+
+/* =========================================================
+   VOZ QUE HABLA (síntesis del navegador)
+   ========================================================= */
+const synth=window.speechSynthesis||null;
+let V={a:null,b:null,es:null}, slowNext=false, speaking=false, lastSpeakEnd=0;
+function pickVoices(){
+  if(!synth)return; const vs=synth.getVoices(); if(!vs.length)return;
+  const us=vs.filter(v=>/^en[-_]US/i.test(v.lang)), en=us.length?us:vs.filter(v=>/^en/i.test(v.lang));
+  const fem=/samantha|zira|aria|jenny|ava|allison|susan|google us english|female|victoria|karen|joanna|salli|emma|michelle|serena|nicky/i;
+  const mal=/alex|guy|david|daniel|fred|tom\b|aaron|mark|christopher|eric|male|davis|tony|evan|nathan|ryan/i;
+  V.b=en.find(v=>fem.test(v.name))||en[0]||null;
+  V.a=en.find(v=>mal.test(v.name)&&!/female/i.test(v.name))||en.find(v=>v!==V.b)||V.b;
+  const es=vs.filter(v=>/^es/i.test(v.lang));
+  V.es=es.find(v=>/es[-_](MX|US|419)/i.test(v.lang))||es[0]||null;
+}
+if(synth){pickVoices();synth.onvoiceschanged=pickVoices}
+function speak(text,who,lang){
+  return new Promise(res=>{
+    if(!synth){res();return}
+    synth.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    if(lang==="es"){u.voice=V.es;u.lang=V.es?V.es.lang:"es-MX";u.rate=1.02}
+    else{u.voice=who==="A"?V.a:V.b;u.lang="en-US";u.rate=slowNext?0.62:0.9;
+      if(who==="A"&&V.a===V.b)u.pitch=0.75; if(who==="B")u.pitch=1.08}
+    slowNext=false; speaking=true; setOrb("speak", who==="A"?"Stanley (modelo)":lang==="es"?"Guía":"Emily habla");
+    let done=false;const fin=()=>{if(done)return;done=true;speaking=false;lastSpeakEnd=Date.now();res()};
+    u.onend=fin;u.onerror=fin;
+    setTimeout(fin, 2500+text.length*110);
+    synth.speak(u);
+  });
+}
+
+/* =========================================================
+   OÍDO (dictado de Claude o reconocimiento de Chrome)
+   ========================================================= */
+let dict=null, dictReady=false, engine=null, micOn=false, phraseStart=0, pending=null;
+const capP=(window.claude&&window.claude.use)?Promise.all([
+  window.claude.use("dictation").catch(()=>null),
+  window.claude.use("sample").catch(()=>null)]):Promise.resolve([null,null]);
+let sample=null;
+capP.then(([d,s])=>{dict=d;sample=s;dictReady=true;
+  if(dict){
+    dict.onPartial(({text})=>onPartial(text));
+    dict.onFinal(({text})=>onFinal(text));
+    dict.onState(({state,reason})=>{ if(state==="idle"&&engine==="dict"){micOn=false; if(running&&reason!=="stopped")askWake(reason)} });
+  }
+  if(view==="home")renderHome();
+});
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let rec=null;
+function startMic(){ /* se llama directo desde un toque */
+  if(dict){engine="dict";
+    return dict.start({language:"en"}).then(()=>{micOn=true}).catch(e=>{micOn=false;throw e});}
+  if(SR){engine="sr";
+    if(!rec){rec=new SR();rec.lang="en-US";rec.continuous=true;rec.interimResults=true;
+      rec.onresult=ev=>{let part="";for(let i=ev.resultIndex;i<ev.results.length;i++){const r=ev.results[i];
+        if(r.isFinal)onFinal(r[0].transcript);else part+=r[0].transcript}
+        if(part)onPartial(part)};
+      rec.onerror=ev=>{if(ev.error==="not-allowed"||ev.error==="service-not-allowed"){micOn=false;askWake("not_granted")}};
+      rec.onend=()=>{if(micOn&&running){try{rec.start()}catch(e){}}};}
+    try{rec.start()}catch(e){}
+    micOn=true;return Promise.resolve();
+  }
+  return Promise.reject({code:"unavailable"});
+}
+function stopMic(){micOn=false;try{if(engine==="dict"&&dict)dict.stop();if(engine==="sr"&&rec)rec.stop()}catch(e){}}
+function onPartial(text){
+  if(!text){return}
+  if(!phraseStart)phraseStart=Date.now();
+  if(!pending||speaking)return;
+  if(phraseStart<lastSpeakEnd+250)return;
+  showHeard((pending.buf+" "+text).trim(),true);
+  if(pending.timer){clearTimeout(pending.timer);pending.timer=setTimeout(pending.flush,pending.wait)}
+}
+function onFinal(text){
+  const started=phraseStart||Date.now(); phraseStart=0;
+  if(!pending||speaking||started<lastSpeakEnd+250)return;   // ignora lo que se oyó mientras hablaba la app
+  text=(text||"").trim(); if(!text)return;
+  pending.buf=(pending.buf+" "+text).trim(); showHeard(pending.buf,false);
+  const c=command(pending.buf); if(c){const p=pending;pending=null;clearTimeout(p.timer);p.resolve({cmd:c});return}
+  if(pending.target&&compare(pending.target,pending.buf).ok){pending.flush();return}
+  clearTimeout(pending.timer);pending.timer=setTimeout(pending.flush,pending.wait);
+}
+function listen(target,wait){
+  return new Promise((resolve,reject)=>{
+    const p={target,buf:"",timer:null,wait:wait||1400,resolve,reject};
+    p.flush=()=>{if(pending!==p)return;pending=null;clearTimeout(p.timer);resolve({text:p.buf})};
+    pending=p; cancelPending=()=>{if(pending===p){pending=null;clearTimeout(p.timer);reject(CANCEL)}};
+    setOrb("listen", "Te escucho… habla");showHeard("",false);
+  });
+}
+let cancelPending=()=>{};
+
+/* =========================================================
+   SONIDITOS de acierto / error
+   ========================================================= */
+let ac=null;
+function tone(ok){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+  const t=ac.currentTime,notes=ok?[660,880]:[300,220];
+  notes.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.type="sine";
+    g.gain.setValueAtTime(0.0001,t+i*.12);g.gain.exponentialRampToValueAtTime(.18,t+i*.12+.02);
+    g.gain.exponentialRampToValueAtTime(.0001,t+i*.12+.18);o.connect(g).connect(ac.destination);o.start(t+i*.12);o.stop(t+i*.12+.2)})}catch(e){}}
+
+/* =========================================================
+   PANTALLAS
+   ========================================================= */
+const $=s=>document.querySelector(s);
+const app=$("#app");
+const MIC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>';
+const SPK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>';
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let view="home", running=false;
+const CANCEL={cancel:true};
+
+function renderHome(){
+  view="home";
+  const all=LESSONS.length, cur=Math.min(P.cur,all);
+  const loading=!!(window.claude&&window.claude.use)&&!dictReady;
+  const canHear=loading||dict||SR, canSpeak=!!synth;
+  app.innerHTML=`
+  <div class="brand"><div class="duo"><span class="a">S</span><span class="b">E</span></div>
+    <div><div class="eyebrow">Inglés hablado · sólo con tu voz</div><h1>Habla con Emily</h1></div></div>
+  <p class="lead">Tú eres <b class="who-a">Stanley</b>. Ella es <b class="who-b">Emily</b>, una gringa buena onda. Platican en frases cortas, con contracciones como hablan los nativos. Sólo avanzas <b>hablando bien</b>.</p>
+  <ul class="rules">
+    <li><span class="dot"></span><span><b>Aprende:</b> Emily dice la frase y tú la repites.</span></li>
+    <li><span class="dot" style="background:var(--emily)"></span><span><b>Practica:</b> ella te habla y tú le contestas con tu parte.</span></li>
+    <li><span class="dot" style="background:var(--ok)"></span><span><b>Domina:</b> sólo ves el español y lo dices en inglés de memoria. Cero errores = siguiente estructura.</span></li>
+    <li><span class="dot" style="background:var(--muted)"></span><span><b>Repaso:</b> cada lección nueva empieza repasando las anteriores.</span></li>
+  </ul>
+  ${!canHear?'<p class="warn">Este navegador no puede escucharte. Abre la app en <b>Google Chrome</b> (computadora o Android).</p>':""}
+  ${!canSpeak?'<p class="warn">Este navegador no tiene voces para hablar. Abre la app en <b>Google Chrome</b>.</p>':""}
+  <button class="big" id="go" ${loading||!canHear||!canSpeak?"disabled style='opacity:.5'":""}>${MIC}<span>${loading?"Preparando el micrófono…":cur>=all?"Platicar libre con Emily":P.done.length?"Seguir hablando":"Empezar a hablar"}</span></button>
+  <p class="fine">Usa <b>audífonos</b>: así el micrófono no confunde la voz de Emily con la tuya. El navegador pide un toque para prender el micrófono; después todo es con la voz.</p>
+  <div class="eyebrow">Tu camino</div>
+  <ol class="path">
+    ${LESSONS.map((L,i)=>{const st=P.done.includes(i)?"done":i===cur?"cur":"lock";
+      return `<li class="${st}"><span class="n">${i+1}</span><span class="t"><strong>${esc(L.s)}</strong><small>${esc(L.t)}</small></span>
+      <span class="st">${st==="done"?"Dominada":st==="cur"?"Ahora":"Bloqueada"}</span></li>`}).join("")}
+    <li class="${cur>=all?"cur":"lock"}"><span class="n">★</span><span class="t"><strong>Plática libre</strong><small>Conversación normal con Emily</small></span>
+      <span class="st">${cur>=all?"Ahora":"Bloqueada"}</span></li>
+  </ol>
+  <button class="link" id="reset">Borrar mi progreso</button>`;
+  $("#go").onclick=()=>{ startMic().then(()=>{}).catch(e=>{askWake(e&&e.code)}); runFrom(cur) };
+  $("#reset").onclick=()=>{const b=$("#reset");if(b.dataset.sure){P={done:[],cur:0};save();renderHome()}else{b.dataset.sure=1;b.textContent="Toca otra vez para confirmar: se borra todo"}};
+}
+
+function renderSession(L,idx,phase){
+  view="session";
+  const ph=["Repaso","Aprende","Practica","Domina"], pi=ph.indexOf(phase);
+  app.innerHTML=`
+  <div class="top"><div class="ttl"><div class="eyebrow">${idx==="free"?"Plática libre":"Lección "+(idx+1)+" de "+LESSONS.length}</div>
+    <h2>${idx==="free"?"Habla de lo que quieras":esc(L.s)+" · "+esc(L.t)}</h2></div>
+    <button class="pause" id="pause">Pausa</button></div>
+  ${idx==="free"?"":`<div class="phases">${ph.map((p,i)=>`<span class="${i===pi?"on":i<pi?"past":""}">${p}</span>`).join("")}</div>`}
+  <p class="note" id="note">${idx==="free"?"Contéstale a Emily con tus propias palabras. Si algo no suena natural, te dice cómo lo diría un nativo y lo repites.":L.n}</p>
+  <div class="chat" id="chat"></div>
+  <div class="card" id="card"></div>
+  <div class="grow"></div>
+  <p class="fb" id="fb" hidden></p>
+  <div class="mic"><div class="orb" id="orb">${MIC}</div><div><div class="st" id="st">Listo</div><div class="heard" id="heard"></div></div></div>
+  <p class="cmds">Di <q>repeat</q> para oírla otra vez · <q>slow</q> para oírla despacio</p>`;
+  $("#pause").onclick=stopAll;
+}
+function setOrb(kind,label){const o=$("#orb");if(!o)return;o.className="orb "+kind;o.innerHTML=kind==="speak"?SPK:MIC;$("#st").textContent=label}
+function showHeard(t,partial){const h=$("#heard");if(h){h.textContent=t?(partial?t+"…":"«"+t+"»"):"";}}
+function showCard(line,mode){
+  const [who,en,es,pr]=line, c=$("#card"); if(!c)return;
+  const nm=who==="A"?"Stanley (tú)":"Emily", cl=who==="A"?"who-a":"who-b";
+  const hide=mode==="recall";
+  const task={repeat:"Repite después de oírla",respond:"Tu turno: contéstale",recall:"Dilo en inglés de memoria",listen:"Escucha a Emily"}[mode]||"";
+  c.innerHTML=`<div class="spk ${cl}"><i></i>${nm}<span class="eyebrow" style="margin-left:auto">${task}</span></div>
+   <p class="en ${hide?"hide":""}">${hide?"¿Cómo se dice en inglés?":esc(en)}</p>
+   <div class="rows">
+     <div class="row"><span class="k">En español</span><span class="v es">${esc(es)}</span></div>
+     ${hide?"":`<div class="row"><span class="k">Se lee</span><span class="v pr">${esc(pr)}</span></div>`}
+   </div>`;
+}
+function reveal(line){const c=$("#card .en");if(c){c.className="en";c.textContent=line[1]}
+  const rows=$("#card .rows");if(rows&&!rows.querySelector(".pr"))rows.insertAdjacentHTML("beforeend",`<div class="row"><span class="k">Se lee</span><span class="v pr">${esc(line[3])}</span></div>`)}
+function addBubble(who,text){const ch=$("#chat");if(!ch)return;const b=document.createElement("div");b.className="bub "+(who==="A"?"a":"b");b.textContent=text;ch.appendChild(b);ch.scrollTop=ch.scrollHeight}
+function feedback(r){const f=$("#fb");if(!f)return;
+  if(!r){f.hidden=true;return}
+  f.hidden=false;
+  if(r.ok){f.className="fb ok";f.textContent=["¡Eso!","¡Perfecto!","¡Así se dice!","¡Muy bien!","¡Como nativo!"][Math.floor(Math.random()*5)];return}
+  f.className="fb bad";
+  const words=r.words.map((w,i)=>r.miss[i]?"<mark>"+esc(w)+"</mark>":esc(w)).join(" ");
+  f.innerHTML=r.heardWords.length?`Casi. Revisa lo marcado: ${words}`:"No te escuché. Habla un poquito más fuerte.";
+}
+function askWake(reason){
+  if(document.querySelector(".wake"))return;
+  const msg=reason==="not_granted"?"El micrófono está bloqueado. Permite el micrófono para esta página y toca el botón.":
+            reason==="unavailable"?"El dictado en inglés no está disponible aquí. Prueba abrir la app en Google Chrome.":
+            "El micrófono se apagó. Tócalo para seguir hablando.";
+  const w=document.createElement("div");w.className="wake";
+  w.innerHTML=`<div><p>${msg}</p><button class="big" id="wk">${MIC}<span>Prender micrófono</span></button>
+    <button class="link" id="wkx">Volver al inicio</button></div>`;
+  document.body.appendChild(w);
+  $("#wk").onclick=()=>{startMic().then(()=>w.remove()).catch(e=>{w.querySelector("p").textContent=e&&e.code==="not_granted"?"El micrófono sigue bloqueado. Revisa los permisos de la página.":"No se pudo prender. Intenta otra vez."})};
+  $("#wkx").onclick=()=>{w.remove();stopAll()};
+}
+function stopAll(){running=false;token++;cancelPending();stopMic();if(synth)synth.cancel();renderHome()}
+
+/* =========================================================
+   FLUJO DE LAS LECCIONES
+   ========================================================= */
+let token=0;
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function guard(t){if(t!==token)throw CANCEL}
+async function sayLine(line,t){guard(t);await speak(line[1],line[0]);guard(t)}
+
+// Un intento de una frase. Devuelve true si salió bien a la primera.
+async function drill(line,mode,t){
+  let firstTry=true, heardModel=mode==="repeat";
+  showCard(line,mode); feedback(null);
+  if(mode==="repeat")await sayLine(line,t);
+  while(true){
+    guard(t);
+    const r=await listen(line[1]); guard(t);
+    if(r.cmd){ if(r.cmd==="slow")slowNext=true; if(mode==="recall")reveal(line); await sayLine(line,t); heardModel=true; continue }
+    const c=compare(line[1],r.text); feedback(c);
+    if(c.ok){tone(true);setOrb("ok","¡Bien!");await wait(700);guard(t);return firstTry}
+    tone(false);setOrb("bad","Otra vez");firstTry=false;
+    if(mode==="recall")reveal(line);
+    await wait(600);guard(t);
+    slowNext=!heardModel?false:true;  // la segunda vez la oyes más despacio
+    await sayLine(line,t); heardModel=true;
+  }
+}
+async function sayEs(text,t){guard(t);if(V.es)await speak(text,null,"es");guard(t)}
+
+async function lesson(i,t){
+  const L=LESSONS[i];
+  // 1) Repaso de lo anterior
+  const prev=LESSONS.slice(0,i).flatMap(x=>x.l.filter(l=>l[0]==="A"));
+  if(prev.length){
+    renderSession(L,i,"Repaso");
+    $("#note").innerHTML="Primero un <b>repaso</b> de lo que ya dominas. Ves el español y lo dices en inglés.";
+    await sayEs("Primero, repaso.",t);
+    const pick=prev.sort(()=>Math.random()-.5).slice(0,Math.min(3,prev.length));
+    for(const l of pick)await drill(l,"recall",t);
+  }
+  // 2) Aprende: repetir cada frase
+  renderSession(L,i,"Aprende");
+  await sayEs("Lección "+(i+1)+". Repite después de mí.",t);
+  let again=[];
+  for(const l of L.l){ if(!await drill(l,"repeat",t))again.push(l); addBubble(l[0],l[1]) }
+  for(const l of again)await drill(l,"repeat",t);
+  // 3) Practica: conversación, tú eres Stanley
+  renderSession(L,i,"Practica");
+  await sayEs("Ahora platicamos. Tú eres Stanley.",t);
+  for(const l of L.l){
+    if(l[0]==="B"){showCard(l,"listen");feedback(null);await sayLine(l,t);await wait(250)}
+    else await drill(l,"respond",t);
+    addBubble(l[0],l[1]);
+  }
+  // 4) Domina: de memoria, cero errores
+  let round=0;
+  while(true){
+    round++;
+    renderSession(L,i,"Domina");
+    $("#note").innerHTML="Ahora <b>de memoria</b>. Sólo ves el español. Si sale sin errores, pasas a la siguiente estructura.";
+    await sayEs(round===1?"Ahora de memoria. Sin errores y pasas.":"Casi. Otra vez, sin errores.",t);
+    let errors=0;
+    for(const l of L.l){
+      if(l[0]==="B"){showCard(l,"listen");feedback(null);await sayLine(l,t);await wait(250)}
+      else if(!await drill(l,"recall",t))errors++;
+      addBubble(l[0],l[1]);
+    }
+    if(!errors)break;
+  }
+  if(!P.done.includes(i))P.done.push(i);
+  P.cur=Math.max(P.cur,i+1);save();
+  feedback({ok:true});$("#fb").textContent="¡Dominaste "+L.s+"! Seguimos con la siguiente.";
+  await speak("Awesome, Stanley! You got it!","B");guard(t);
+  await sayEs("¡Dominaste esta estructura!",t);
+}
+
+async function runFrom(i){
+  running=true;const t=++token;
+  try{
+    for(let k=i;k<LESSONS.length;k++){await lesson(k,t)}
+    await freeTalk(t);
+  }catch(e){if(e!==CANCEL)console.error(e)}
+}
+
+/* =========================================================
+   PLÁTICA LIBRE (cuando ya dominas todo)
+   ========================================================= */
+async function freeTalk(t){
+  renderSession(null,"free","");
+  if(!sample){
+    $("#note").innerHTML="La plática libre con Emily funciona cuando abres esta app <b>dentro de Claude</b>. Mientras, aquí tienes un <b>repaso sin fin</b> de todas las conversaciones.";
+    const all=LESSONS.flatMap(x=>x.l.filter(l=>l[0]==="A"));
+    while(true){await drill(all[Math.floor(Math.random()*all.length)],"recall",t)}
+  }
+  const hist=[]; let line=["B","Hey Stanley! How's it going today?","¡Hola Stanley! ¿Cómo te va hoy?","jéi Stánli! jáus it góuin tudéi"];
+  while(true){
+    guard(t);
+    showCard(line,"listen");feedback(null);addBubble("B",line[1]);hist.push("Emily: "+line[1]);
+    await sayLine(line,t);
+    const c=$("#card .eyebrow");if(c)c.textContent="Contéstale como quieras";
+    let said="";
+    while(!said){const r=await listen(null,1900);guard(t);
+      if(r.cmd){if(r.cmd==="slow")slowNext=true;await sayLine(line,t);continue}
+      said=(r.text||"").trim();}
+    addBubble("A",said);hist.push("Stanley: "+said);
+    setOrb("speak","Emily está pensando…");
+    let out;
+    try{
+      out=await sample.json(
+`You are Emily, a friendly young American woman chatting BY VOICE with Stanley, a Mexican Spanish speaker learning to SPEAK casual American English.
+Conversation so far:
+${hist.slice(-12).join("\n")}
+
+Stanley's last line came from speech-to-text, so ignore punctuation, capitalization and small recognition glitches.
+Reply ONLY with a JSON object with these keys:
+"ok": false only if what Stanley said has a real mistake a native speaker would not say; true otherwise.
+"better": if not ok, the natural native way to say what he meant, using contractions (I'm, you're, don't, gonna, wanna, gotta). Empty string if ok.
+"better_es": Mexican Spanish translation of "better" (empty if ok).
+"better_pr": how "better" sounds, written with Spanish spelling the way a Mexican would read it, with accent marks on stressed syllables (examples: you = iú, I'm = áim, gonna = góna, gotta = gára, what's up = uáts áp, thanks = zénks). Empty if ok.
+"reply": your next line: one or two SHORT casual sentences, simple everyday words, contractions like a native, and end with an easy question so he keeps talking.
+"reply_es": Mexican Spanish translation of "reply".
+"reply_pr": how "reply" sounds, written in Spanish spelling with accent marks, same style.`,{cache:false,modelTier:"quick"});
+    }catch(e){
+      if(e&&e.code==="not_granted"){sample=null;return freeTalk(t)}
+      feedback(null);const f=$("#fb");f.hidden=false;f.className="fb bad";f.textContent="Emily no pudo contestar ahorita. Volvemos a intentar.";
+      await wait(2500);continue;
+    }
+    guard(t);
+    if(out&&out.ok===false&&out.better){
+      const fix=["A",String(out.better),String(out.better_es||""),String(out.better_pr||"")];
+      const f=$("#fb");f.hidden=false;f.className="fb bad";f.textContent="Un nativo lo diría así. Repítelo:";
+      await drill(fix,"repeat",t);
+    }
+    line=["B",String(out&&out.reply||"Cool! Tell me more."),String(out&&out.reply_es||""),String(out&&out.reply_pr||"")];
+  }
+}
+
+renderHome();
+</script>
