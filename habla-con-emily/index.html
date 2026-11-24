@@ -728,13 +728,19 @@ async function aiJSON(prompt){
     "anthropic-beta":"server-side-fallback-2026-07-01","anthropic-dangerous-direct-browser-access":"true"},
     body:JSON.stringify({model:"claude-opus-5-5",max_tokens:16000,output_config:{effort:"low"},fallbacks:"default",
       messages:[{role:"user",content:prompt+"\n\nRespond with only the JSON object, nothing else."}]})});
-  if(!r.ok){let m="";try{m=(await r.json()).error.message}catch(e){}throw {code:r.status===401?"bad_key":r.status===429?"rate_limited":"http",message:m}}
+  if(!r.ok){let m="";try{m=(await r.json()).error.message}catch(e){}throw {code:r.status===401?"bad_key":r.status===403?"forbidden":r.status===429?"rate_limited":/credit|balance|billing/i.test(m)?"no_credit":"http",message:m}}
   const j=await r.json();if(j.stop_reason==="refusal")throw {code:"refusal"};
   return looseJSON((j.content||[]).filter(b=>b.type==="text").map(b=>b.text).join(""));
 }
 const PRON_RULE=`written with Spanish spelling the way a Mexican would read it out loud, with accent marks on stressed syllables (examples: you = iú, I'm = áim, gonna = góna, gotta = gára, wanna = uána, what's up = uáts áp, thanks = zénks, do you = diú)`;
-function aiErr(e){return e&&e.code==="bad_key"?"Tu llave de Claude no sirve. Revísala en Yo → Inteligencia.":
-  e&&e.code==="no_ai"?"Activa la inteligencia en Yo → Inteligencia.":e&&e.code==="rate_limited"?"Muchas solicitudes. Espera un momento.":"La inteligencia no contestó. Intenta otra vez."}
+function aiErr(e){const c=e&&e.code;
+  if(c==="bad_key")return "Claude dice que tu llave no es válida. Revisa que la copiaste completa (empieza con sk-ant-api) en Yo → Inteligencia.";
+  if(c==="no_credit")return "Tu cuenta de Claude API no tiene saldo. Agrega saldo en console.anthropic.com → Billing.";
+  if(c==="forbidden")return "Tu llave no tiene permiso para usar este modelo. Revisa tu cuenta en console.anthropic.com.";
+  if(c==="no_ai")return "Activa la inteligencia en Yo → Inteligencia.";
+  if(c==="rate_limited")return "Muchas solicitudes seguidas. Espera un momento.";
+  if(e&&e.name==="TypeError")return "No hay conexión con Claude. Revisa tu internet.";
+  return "La inteligencia no contestó"+(e&&e.message?": "+e.message:"")+". Intenta otra vez.";}
 
 /* =====================================================================
    6. STANLEY y EMILY (dibujos animados)
@@ -1078,7 +1084,7 @@ function renderYo(app){
      ${sample?`<p><b style="color:var(--ok)">Activa.</b> Estás usando la app dentro de Claude, así que Emily ya tiene inteligencia.</p>`
      :`<p class="sub">Con la inteligencia, Emily platica libre contigo, lee tus notas, las traduce con pronunciación y crea práctica nueva con tus fallas. Pega una llave de la API de Claude (empieza con <code>sk-ant-</code>). Se guarda sólo en este teléfono y sólo se manda a Claude.</p>
        <input type="password" id="key" placeholder="sk-ant-…" value="${esc(DB.settings.key)}" autocomplete="off">
-       <div class="row"><button class="btn small" id="ksave">Guardar llave</button>${DB.settings.key?`<button class="btn small ghost" id="kdel">Quitar</button>`:""}</div>
+       <div class="row"><button class="btn small" id="ksave">Guardar llave</button>${DB.settings.key?`<button class="btn small ghost" id="ktest">Probar llave</button>`:""}${DB.settings.key?`<button class="btn small ghost" id="kdel">Quitar</button>`:""}</div>
        <p class="sub" style="font-size:.85rem">${DB.settings.key?"Estado: <b>activa</b>.":"Estado: apagada."} La llave se saca en console.anthropic.com → API Keys. Cada plática gasta un poquito de tu saldo.</p>`}
    </div>
    <div class="sec-t"><h3>Respaldo de tu cerebro</h3></div>
@@ -1090,7 +1096,14 @@ function renderYo(app){
   $("#slow").onchange=e=>{DB.settings.slow=e.target.checked;save()};
   ["A","B"].forEach(w=>{const sel=$("#v"+w);if(sel)sel.onchange=()=>{DB.settings["voice"+w]=sel.value;save();pickVoices()}});
   app.querySelectorAll("[data-test]").forEach(b=>b.onclick=()=>{unlockAudio();const w=b.dataset.test;speak(w==="B"?"Hey Stanley! How's it going? I'm Emily.":"Hey Emily! I'm doing great, thanks.",w)});
-  const ks=$("#ksave");if(ks)ks.onclick=()=>{DB.settings.key=$("#key").value.trim();save();toast(DB.settings.key?"Llave guardada":"Llave vacía");render()};
+  const ks=$("#ksave");if(ks)ks.onclick=()=>{const k=$("#key").value.replace(/^\s*(bearer\s+)?["'“”]?|["'“”]?\s*$/gi,"").replace(/\s+/g,"");
+    if(k&&!/^sk-ant-/.test(k)){toast("Esa no parece una llave de la API. Debe empezar con sk-ant-api");return}
+    if(/^sk-ant-(oat|ort|sid)/.test(k)){toast("Esa llave es de tu sesión de Claude, no de la API. Crea una en console.anthropic.com → API Keys");return}
+    DB.settings.key=k;save();toast(k?"Llave guardada. Toca «Probar llave»":"Llave vacía");render()};
+  const kt=$("#ktest");if(kt)kt.onclick=async()=>{kt.disabled=true;kt.textContent="Probando…";
+    try{const r=await aiJSON('Reply with this JSON exactly: {"ok":true}');toast(r&&r.ok?"✅ La llave funciona. Ya puedes platicar con Emily":"La llave contestó raro, pero funciona")}
+    catch(e){sheet(`<h3>La llave no funcionó</h3><p>${esc(aiErr(e))}</p>`)}
+    kt.disabled=false;kt.textContent="Probar llave"};
   const kd=$("#kdel");if(kd)kd.onclick=()=>{DB.settings.key="";save();render()};
   $("#exp").onclick=async()=>{const data=JSON.stringify(Object.assign({},DB,{settings:Object.assign({},DB.settings,{key:""})}));
     try{const f=new File([data],"cerebro-habla-con-emily.json",{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Mi cerebro en inglés"});return}}catch(e){if(e&&e.name==="AbortError")return}
@@ -1288,6 +1301,7 @@ Return JSON with these keys:
     guard(t);return r;
   }
   const getTurn=async said=>{while(true){try{return await turn(said)}catch(e){if(e===CANCEL)throw e;if(e&&e.code==="not_granted"){sample=null;if(!aiOn())throw CANCEL}
+    if(e&&/bad_key|no_credit|forbidden|no_ai/.test(e.code)){feedback({ok:false},aiErr(e));setOrb("bad","No se pudo conectar con Claude");await wait(6000);throw CANCEL}
     feedback({ok:false},aiErr(e)+" Reintento en un momento…");await wait(3000);guard(t)}}};
   let out=await getTurn(null),k=0;
   while(true){guard(t);
