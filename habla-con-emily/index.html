@@ -188,6 +188,7 @@ code{font-size:.85em;background:var(--fill);padding:1px 5px;border-radius:5px}
 .who i{width:10px;height:10px;border-radius:50%;background:currentColor}
 .who em{margin-left:auto;font-style:normal;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--sub)}
 .en{font-family:var(--round);font-weight:900;font-size:clamp(1.55rem,7vw,2.2rem);line-height:1.1;letter-spacing:-.01em}
+.en.long{font-size:clamp(1.2rem,5.2vw,1.6rem)}
 .en.hide{font-family:var(--text);font-weight:600;font-size:1.1rem;color:var(--sub)}
 .kv{display:grid;grid-template-columns:88px 1fr;gap:4px 10px;align-items:baseline}
 .kv .k{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub)}
@@ -213,6 +214,10 @@ code{font-size:.85em;background:var(--fill);padding:1px 5px;border-radius:5px}
 .tbar{display:flex;gap:8px;align-items:center}
 .tbar input{flex:1;min-width:0;padding:9px 12px}
 .tbar button{background:var(--brain);color:#fff;font-weight:800;padding:9px 14px;border-radius:10px}
+.snote .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.snote .chips::-webkit-scrollbar{display:none}
+.snote .chip{flex:none;font-size:.82rem;padding:5px 10px}
+.sess .schat{max-height:12vh}
 .hints{display:grid;gap:8px}
 .hint{background:var(--card2);border-radius:14px;padding:10px 12px;display:grid;gap:2px}
 .hint .e{font-weight:800} .hint .s{color:var(--sub);font-size:.9rem} .hint .r{color:var(--emily);font-style:italic;font-size:.9rem}
@@ -846,7 +851,7 @@ function renderHoy(app){
      <button class="cell" id="goPila"><span class="ico" style="background:var(--ok)">${I.stack}</span><span class="grow"><strong>Pila de conversación</strong>
        <small>Plática tras plática con todo lo que ya dominas</small></span><span class="chev">${I.chev}</span></button>
      <button class="cell" id="goFree"><span class="ico" style="background:var(--emily)">${I.chat}</span><span class="grow"><strong>Sección libre con Emily</strong>
-       <small>${aiOn()?"Tú eliges el tema, ella te pregunta y te guía":"Necesita la inteligencia (Yo → Inteligencia)"}</small></span><span class="chev">${I.chev}</span></button>
+       <small>Tú eliges el tema, ella te pregunta y te guía</small></span><span class="chev">${I.chev}</span></button>
    </div>
    ${ww.length?`<div class="card" style="display:grid;gap:10px"><div class="cap">Palabras donde más fallas</div><div class="chips">${ww.map(([w])=>`<span class="chip">${esc(w)}</span>`).join("")}</div>
      <p class="sub" style="font-size:.9rem">Emily las vuelve a meter en tus repasos hasta que te salgan solas.</p></div>`:""}
@@ -855,7 +860,7 @@ function renderHoy(app){
   $("#goNow").onclick=()=>start(u?t=>runFrom(nu,t):t=>pila(t));
   $("#goFix").onclick=()=>{if(!wi.length&&!aiOn()){toast("Aún no tienes fallas guardadas");return}start(t=>refuerzo(t))};
   $("#goPila").onclick=()=>{if(!ORDER.some(id=>UNIT[id].dlg&&isDone(id))){toast("Primero domina una plática de la ruta (día 4)");return}start(t=>pila(t))};
-  $("#goFree").onclick=()=>{if(!aiOn()){go("yo");setTimeout(()=>{const e=$("#aiSec");if(e)e.scrollIntoView({behavior:"smooth"})},60);return}topicSheet()};
+  $("#goFree").onclick=()=>topicSheet();
 }
 
 /* ---------- RUTA ---------- */
@@ -1079,7 +1084,7 @@ function renderYo(app){
        <select id="v${w}" style="flex:1;min-width:0">${enVoices().map(v=>`<option value="${esc(v.voiceURI)}" ${V[w.toLowerCase()==="a"?"a":"b"]===v?"selected":""}>${esc(v.name)}${vScore(v)>=70?" ★":""}</option>`).join("")||"<option>Sin voces en inglés</option>"}</select>
        <button class="btn small ghost" data-test="${w}">Probar</button></div>`).join("")}</div>
    <div class="card sub" style="font-size:.9rem">Para que no suene robótica, descarga una voz de mejor calidad en tu iPhone: <b>Ajustes → Accesibilidad → Contenido leído → Voces → Inglés</b>. Para Emily: <b>Ava (Premium)</b> o <b>Zoe (Premium)</b>. Para Stanley: <b>Evan (Mejorada)</b> o <b>Nathan (Mejorada)</b>. Después vuelve aquí y elígelas (las buenas tienen ★).</div>
-   <div class="sec-t" id="aiSec"><h3>Inteligencia</h3></div>
+   <div class="sec-t" id="aiSec"><h3>Inteligencia</h3><span class="sub">opcional</span></div>
    <div class="card" style="display:grid;gap:10px">
      ${sample?`<p><b style="color:var(--ok)">Activa.</b> Estás usando la app dentro de Claude, así que Emily ya tiene inteligencia.</p>`
      :`<p class="sub">Con la inteligencia, Emily platica libre contigo, lee tus notas, las traduce con pronunciación y crea práctica nueva con tus fallas. Pega una llave de la API de Claude (empieza con <code>sk-ant-</code>). Se guarda sólo en este teléfono y sólo se manda a Claude.</p>
@@ -1157,7 +1162,7 @@ function showCard(line,mode){const c=$("#scard");if(!c)return;
   const [who,en,es,pr]=line,hide=mode==="recall"&&es,isA=who==="A";
   const task={repeat:"Repite",respond:"Tu turno",recall:"De memoria",listen:"Escucha",free:"Contesta como quieras"}[mode]||"";
   c.innerHTML=`<div class="who" style="color:${isA?"var(--stan)":"var(--emily)"}"><i></i>${isA?"Stanley (tú)":"Emily"}<em>${task}</em></div>
-   <div class="en ${hide?"hide":""}">${hide?"¿Cómo se dice en inglés?":esc(en)}</div>
+   <div class="en ${hide?"hide":""} ${en.length>40?"long":""}">${hide?"¿Cómo se dice en inglés?":esc(en)}</div>
    <div class="kv">${es?`<span class="k">Significa</span><span class="es">${esc(es)}</span>`:""}${hide||!pr?"":`<span class="k">Se lee</span><span class="pr">${esc(pr)}</span>`}</div>`}
 function reveal(line){const e=$("#scard .en");if(e){e.className="en";e.textContent=line[1]}const kv=$("#scard .kv");if(kv&&!kv.querySelector(".pr")&&line[3])kv.insertAdjacentHTML("beforeend",`<span class="k">Se lee</span><span class="pr">${esc(line[3])}</span>`)}
 function addBubble(who,text){const ch=$("#schat");if(!ch)return;const b=document.createElement("div");b.className="bub "+(who==="A"?"a":"b");b.textContent=text;ch.appendChild(b);ch.scrollTop=ch.scrollHeight}
@@ -1262,8 +1267,227 @@ async function pila(t){
     const w=weakItems(1);if(n%3===0&&w.length){setPhase("Refuerzo rápido","Una frase que se te ha atorado.");await drill(w[0],"recall",t)}
   }
 }
+/* ===== pláticas guiadas sin inteligencia: Emily pregunta, tú contestas ===== */
+const FT={};
+function T(id,keys,en,es,pr,txt){const qs=[];txt.trim().split("\n").forEach(r=>{const [k,a,b,c]=r.trim().split("|");if(k==="Q")qs.push({q:["B",a,b,c],h:[]});else qs[qs.length-1].h.push({en:a,es:b,pr:c})});FT[id]={id,keys,en,es,pr,qs}}
+T("comida",/comida|comer|pizza|taco|hamburgues|food|cena|desayun|restaurant|cocina/i,"food","comida","fúud",`
+Q|What's your favorite food?|¿Cuál es tu comida favorita?|uáts iór féivorit fúud
+H|I love tacos.|Me encantan los tacos.|ái láv tácos
+H|Pizza, for sure.|Pizza, seguro.|pítsa, for shúr
+Q|Do you like to cook?|¿Te gusta cocinar?|diú láik tu cúk
+H|Yeah, I cook every day.|Sí, cocino diario.|iéa, ái cúk évri déi
+H|Not really. I'm not good at it.|La verdad no. No soy bueno.|nát ríli. áim nát gud ærit
+Q|What did you eat today?|¿Qué comiste hoy?|uát díyu ít tudéi
+H|I had eggs for breakfast.|Desayuné huevos.|ái jád égs for brékfast
+H|I had a burger for lunch.|Comí una hamburguesa.|ái jád a bérguer for lánch
+Q|Do you like spicy food?|¿Te gusta lo picante?|diú láik spáisi fúud
+H|Yeah, I love spicy food!|¡Sí, me encanta lo picante!|iéa, ái láv spáisi fúud
+H|A little bit.|Un poquito.|a lírel bit
+Q|What's the best place to eat in your city?|¿Cuál es el mejor lugar para comer en tu ciudad?|uáts de bést pléis tu ít in iór síri
+H|There's a great taco place downtown.|Hay unos tacos buenísimos en el centro.|déars a gréit táco pléis dáuntaun
+H|I don't know, I usually eat at home.|No sé, casi siempre como en casa.|ái dóuno, ái iúshuali ít at jóum`);
+T("viajes",/viaj|avi[oó]n|aeropuerto|vuelo|vacacion|playa|travel|trip|plane/i,"travel","viajes","trável",`
+Q|Do you like to travel?|¿Te gusta viajar?|diú láik tu trável
+H|Yeah, I love it.|Sí, me encanta.|iéa, ái lávit
+H|Yeah, but flying makes me nervous.|Sí, pero volar me pone nervioso.|iéa, bat fláin méiks mi nérvos
+Q|Where was your last trip?|¿A dónde fue tu último viaje?|uér uás iór lást tríp
+H|I went to Mexico.|Fui a México.|ái uént tu méksicou
+H|I went to see my family.|Fui a ver a mi familia.|ái uént tu sí mái fámili
+Q|Do you like flying?|¿Te gusta volar en avión?|diú láik fláin
+H|I like the window seat.|Me gusta el asiento de la ventana.|ái láik de uíndou síit
+H|Not really. It's kinda scary.|No mucho. Da medio miedo.|nát ríli. its káinda skéri
+Q|Where do you wanna go next?|¿A dónde quieres ir después?|uér diú uána góu nékst
+H|I wanna go to New York.|Quiero ir a Nueva York.|ái uána góu tu núu iórk
+H|I wanna see the beach.|Quiero ver la playa.|ái uána síi de bíich
+Q|Do you travel alone or with family?|¿Viajas solo o con familia?|diú trável alóun or uíd fámili
+H|Usually with my family.|Casi siempre con mi familia.|iúshuali uíd mái fámili
+H|I like to travel alone.|Me gusta viajar solo.|ái láik tu trável alóun`);
+T("carros",/carro|coche|auto|troca|camioneta|manejar|car|truck/i,"cars","carros","cárs",`
+Q|Do you have a car?|¿Tienes carro?|diú jáv a cár
+H|Yeah, I've got a truck.|Sí, tengo una troca.|iéa, áiv gára trák
+H|No, I take the bus.|No, ando en camión.|nóu, ái téik de bás
+Q|What kind of car do you like?|¿Qué tipo de carro te gusta?|uát káind av cár diú láik
+H|I like fast cars.|Me gustan los carros rápidos.|ái láik fást cárs
+H|I like big trucks.|Me gustan las trocas grandes.|ái láik big tráks
+Q|What's your dream car?|¿Cuál es el carro de tus sueños?|uáts iór dríim cár
+H|A black Mustang.|Un Mustang negro.|a blák mástang
+H|A Tesla, for sure.|Un Tesla, seguro.|a tésla, for shúr
+Q|Do you like driving?|¿Te gusta manejar?|diú láik dráivin
+H|Yeah, I love driving at night.|Sí, me encanta manejar de noche.|iéa, ái láv dráivin at náit
+H|Not in traffic!|¡En el tráfico no!|nát in tráfik
+Q|How long is your drive to work?|¿Cuánto haces al trabajo?|jáu lóng is iór dráiv tu uérk
+H|About twenty minutes.|Como veinte minutos.|abáut tuéni mínits
+H|It's like an hour.|Como una hora.|its láik an áuer`);
+T("trabajo",/trabaj|chamba|jale|empleo|oficina|work|job|jefe/i,"work","el trabajo","uérk",`
+Q|What do you do for work?|¿En qué trabajas?|uádiu dú for uérk
+H|I work in construction.|Trabajo en construcción.|ái uérk in constrákshen
+H|I work at a restaurant.|Trabajo en un restaurante.|ái uérk at a réstorant
+Q|Do you like your job?|¿Te gusta tu trabajo?|diú láik iór yób
+H|Yeah, it's pretty good.|Sí, está bastante bien.|iéa, its príri gud
+H|It's okay, but it's tiring.|Está bien, pero cansa.|its oukéi, bat its táierin
+Q|What time do you start?|¿A qué hora entras?|uát táim diú stárt
+H|I start at seven.|Entro a las siete.|ái stárt at séven
+H|Super early, like six.|Bien temprano, como a las seis.|súper érli, láik síks
+Q|How are your coworkers?|¿Cómo son tus compañeros?|jáu ar iór cóuuerkers
+H|They're cool.|Son buena onda.|déir cúl
+H|Some are nice, some aren't.|Unos sí son buena onda y otros no.|sam ar náis, sam árnt
+Q|What do you do after work?|¿Qué haces después del trabajo?|uádiu dú áfter uérk
+H|I just go home and rest.|Nomás me voy a casa a descansar.|ái yást góu jóum an rést
+H|I go to the gym.|Voy al gym.|ái góu tu de yím`);
+T("futbol",/f[uú]tbol|soccer|deporte|partido|equipo|b[eé]isbol|basket|sport/i,"soccer","fútbol","sáker",`
+Q|Do you like soccer?|¿Te gusta el fútbol?|diú láik sáker
+H|Yeah, I love soccer.|Sí, me encanta el fútbol.|iéa, ái láv sáker
+H|I like it, but I don't play.|Me gusta, pero no juego.|ái láikit, bat ái dóun pléi
+Q|What's your favorite team?|¿Cuál es tu equipo favorito?|uáts iór féivorit tíim
+H|I'm a big America fan.|Le voy mucho al América.|áim a big amérika fán
+H|I like Real Madrid.|Me gusta el Real Madrid.|ái láik reál madríd
+Q|Do you play any sports?|¿Practicas algún deporte?|diú pléi éni spórts
+H|I play soccer on weekends.|Juego fútbol los fines.|ái pléi sáker an uíkends
+H|Not anymore.|Ya no.|nát énimor
+Q|Did you watch the game last night?|¿Viste el partido anoche?|díyu uách de guéim lást náit
+H|Yeah, it was crazy!|¡Sí, estuvo bien loco!|iéa, it uás créisi
+H|No, I missed it.|No, me lo perdí.|nóu, ái místit
+Q|Who's the best player right now?|¿Quién es el mejor jugador ahorita?|júus de bést pléier ráit náu
+H|Messi, for sure.|Messi, seguro.|mési, for shúr
+H|I don't know, there are a lot.|No sé, hay muchos.|ái dóuno, déar ar a lát`);
+T("familia",/famil|hij|esposa|esposo|mam[aá]|pap[aá]|herman|novia|family/i,"family","la familia","fámili",`
+Q|Do you have a big family?|¿Tienes una familia grande?|diú jáv a big fámili
+H|Yeah, I've got a big family.|Sí, tengo una familia grande.|iéa, áiv gára big fámili
+H|No, it's just me and my mom.|No, nomás mi mamá y yo.|nóu, its yást mí an mái mám
+Q|Do you have brothers or sisters?|¿Tienes hermanos?|diú jáv bráders or sísters
+H|I have two brothers.|Tengo dos hermanos.|ái jáv túu bráders
+H|I have one sister.|Tengo una hermana.|ái jáv uán síster
+Q|Do you have kids?|¿Tienes hijos?|diú jáv kíds
+H|Yeah, I have a son.|Sí, tengo un hijo.|iéa, ái jáv a sán
+H|Not yet.|Todavía no.|nát iét
+Q|Where does your family live?|¿Dónde vive tu familia?|uér dás iór fámili lív
+H|They live in Mexico.|Viven en México.|déi lív in méksicou
+H|They live close to me.|Viven cerca de mí.|déi lív clóus tu mí
+Q|What do you like to do with your family?|¿Qué te gusta hacer con tu familia?|uádiu láik tu dú uíd iór fámili
+H|We like to eat together.|Nos gusta comer juntos.|uí láik tu ít tuguéder
+H|We watch movies on Sundays.|Vemos películas los domingos.|uí uách múvis an sándeis`);
+T("musica",/m[uú]sica|canci[oó]n|cantante|banda|concierto|music|song/i,"music","música","miúsik",`
+Q|What kind of music do you like?|¿Qué música te gusta?|uát káind av miúsik diú láik
+H|I like reggaeton.|Me gusta el reguetón.|ái láik regueitón
+H|I like all kinds of music.|Me gusta de todo.|ái láik ól káinds av miúsik
+Q|Who's your favorite singer?|¿Quién es tu cantante favorito?|júus iór féivorit sínguer
+H|I really like Bad Bunny.|Me gusta mucho Bad Bunny.|ái ríli láik bad báni
+H|I don't have a favorite.|No tengo favorito.|ái dóun jáv a féivorit
+Q|Do you play an instrument?|¿Tocas algún instrumento?|diú pléi an ínstrument
+H|I play the guitar a little.|Toco un poco la guitarra.|ái pléi de guitár a lírel
+H|No, but I wanna learn.|No, pero quiero aprender.|nóu, bat ái uána lérn
+Q|Have you been to a concert?|¿Has ido a un concierto?|jáv iu bín tu a cánsert
+H|Yeah, it was awesome.|Sí, estuvo increíble.|iéa, it uás ósom
+H|Not yet, but I want to.|Todavía no, pero quiero.|nát iét, bat ái uánt tu
+Q|When do you listen to music?|¿Cuándo escuchas música?|uén diú lísen tu miúsik
+H|When I'm driving.|Cuando manejo.|uén áim dráivin
+H|All day at work.|Todo el día en el trabajo.|ól déi at uérk`);
+T("peliculas",/pel[ií]cula|peli|cine|serie|netflix|movie/i,"movies","películas","múvis",`
+Q|Do you like movies?|¿Te gustan las películas?|diú láik múvis
+H|Yeah, I watch movies every weekend.|Sí, veo películas cada fin.|iéa, ái uách múvis évri uíkend
+H|I like series more.|Me gustan más las series.|ái láik síris mór
+Q|What's the last movie you saw?|¿Cuál es la última película que viste?|uáts de lást múvi iú só
+H|I saw an action movie.|Vi una de acción.|ái só an ákshen múvi
+H|I don't remember.|No me acuerdo.|ái dóun rimémber
+Q|Do you like scary movies?|¿Te gustan las de miedo?|diú láik skéri múvis
+H|No way, they scare me.|Para nada, me dan miedo.|nóu uéi, déi skér mi
+H|Yeah, I love them.|Sí, me encantan.|iéa, ái lávem
+Q|Do you go to the movies or watch at home?|¿Vas al cine o ves en casa?|diú góu tu de múvis or uách at jóum
+H|I usually watch at home.|Casi siempre en casa.|ái iúshuali uách at jóum
+H|I like the movie theater.|Me gusta el cine.|ái láik de múvi zíater
+Q|What's your favorite movie?|¿Cuál es tu película favorita?|uáts iór féivorit múvi
+H|I love Fast and Furious.|Me encanta Rápido y Furioso.|ái láv fást an fiúrios
+H|That's hard. I have a lot.|Está difícil. Tengo muchas.|dáts járd. ái jáv a lát`);
+T("gym",/gym|gimnasio|ejercicio|pesas|correr|entrenar|workout/i,"the gym","el gym","de yím",`
+Q|Do you go to the gym?|¿Vas al gym?|diú góu tu de yím
+H|Yeah, almost every day.|Sí, casi diario.|iéa, ólmoust évri déi
+H|Not really, but I want to.|La verdad no, pero quiero.|nát ríli, bat ái uánt tu
+Q|What time do you work out?|¿A qué hora haces ejercicio?|uát táim diú uérk áut
+H|In the morning.|En la mañana.|in de mórnin
+H|After work.|Después del trabajo.|áfter uérk
+Q|What's your favorite exercise?|¿Cuál es tu ejercicio favorito?|uáts iór féivorit éksersais
+H|I like running.|Me gusta correr.|ái láik ránin
+H|Bench press, for sure.|Press de banca, seguro.|bénch prés, for shúr
+Q|Do you eat healthy?|¿Comes sano?|diú ít jélzi
+H|I try, but I love tacos.|Lo intento, pero amo los tacos.|ái trái, bat ái láv tácos
+H|Yeah, I eat a lot of chicken.|Sí, como mucho pollo.|iéa, ái ít a lára chíken
+Q|How do you feel after the gym?|¿Cómo te sientes después del gym?|jáu diú fíil áfter de yím
+H|I feel great.|Me siento súper bien.|ái fíil gréit
+H|Super tired!|¡Bien cansado!|súper táierd`);
+T("dinero",/dinero|lana|ahorr|compra|gast|money|shopping|tienda|ropa/i,"money","el dinero","máni",`
+Q|Do you like to save money?|¿Te gusta ahorrar dinero?|diú láik tu séiv máni
+H|Yeah, I'm trying to save.|Sí, estoy tratando de ahorrar.|iéa, áim tráin tu séiv
+H|It's hard to save.|Está difícil ahorrar.|its járd tu séiv
+Q|What do you spend the most money on?|¿En qué gastas más?|uádiu spénd de móust máni an
+H|Food, for sure.|En comida, seguro.|fúud, for shúr
+H|Gas for my car.|Gasolina para mi carro.|gás for mái cár
+Q|What would you buy with a lot of money?|¿Qué comprarías con mucho dinero?|uát uúdiu bái uíd a lára máni
+H|I'd buy a house.|Compraría una casa.|áid bái a jáus
+H|I'd travel the world.|Viajaría por el mundo.|áid trável de uérld
+Q|Do you like shopping?|¿Te gusta ir de compras?|diú láik shápin
+H|Not really.|No mucho.|nát ríli
+H|Yeah, I love buying shoes.|Sí, me encanta comprar tenis.|iéa, ái láv báin shúus
+Q|Is life expensive where you live?|¿Está cara la vida donde vives?|is láif ikspénsiv uér iú lív
+H|Yeah, everything's expensive.|Sí, todo está caro.|iéa, évrizins ikspénsiv
+H|It's not too bad.|No está tan mal.|its nát túu bád`);
+T("dia",/d[ií]a|hoy|lo que sea|cualquier|day/i,"your day","tu día","iór déi",`
+Q|How's your day going?|¿Cómo va tu día?|jáus iór déi góuin
+H|It's going good, thanks.|Va bien, gracias.|its góuin gud, zénks
+H|Kinda busy today.|Medio ocupado hoy.|káinda bísi tudéi
+Q|What did you do this morning?|¿Qué hiciste en la mañana?|uát díyu dú dis mórnin
+H|I went to work.|Fui al trabajo.|ái uént tu uérk
+H|I slept late.|Dormí hasta tarde.|ái slépt léit
+Q|What are you gonna do later?|¿Qué vas a hacer al rato?|uárar iú góna dú léirer
+H|I'm gonna rest.|Voy a descansar.|áim góna rést
+H|I'm gonna see my friends.|Voy a ver a mis amigos.|áim góna síi mái frénds
+Q|Are you tired?|¿Estás cansado?|ar iú táierd
+H|Yeah, a little bit.|Sí, un poquito.|iéa, a lírel bit
+H|No, I feel good.|No, me siento bien.|nóu, ái fíil gud
+Q|What's the best part of your day?|¿Qué es lo mejor de tu día?|uáts de bést párt av iór déi
+H|When I get home.|Cuando llego a casa.|uén ái guet jóum
+H|Talking to you!|¡Platicar contigo!|tókin tu iú`);
+const REACT_POS=[["Nice!","¡Qué bien!","náis"],["Oh, cool!","¡Qué padre!","óu, cúl"],["That's awesome!","¡Qué chido!","dáts ósom"],["I love that!","¡Me encanta!","ái láv dat"],["Sounds good!","¡Suena bien!","sáunds gud"]];
+const REACT_NEG=[["Oh, I see.","Ah, ya veo.","óu, ái síi"],["Really? Okay.","¿En serio? Va.","ríli? oukéi"],["No worries.","No pasa nada.","nóu uóris"]];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function topicOf(txt){return Object.values(FT).find(x=>x.keys.test(txt))||null}
+async function freeTalkGuided(t,topic,note){
+  let T0=topicOf(topic),unknown=!T0;T0=T0||FT.dia;let newTopic=null,k=0;
+  setPhase("Sección libre","","Con Emily");
+  const n=$("#snote");n.hidden=false;$("#schat").style.display="none";
+  n.innerHTML=`<div class="tbar"><span style="font-weight:800;color:var(--ink)">Tema:</span><input type="text" id="tp" value="${esc(topic)}" aria-label="Tema"><button id="tpb">Cambiar</button></div>`+
+   `<div class="chips" style="margin-top:8px">${Object.values(FT).map(x=>`<button class="chip p" data-tt="${x.id}">${esc(x.es)}</button>`).join("")}</div>`;
+  const change=v=>{v=(v||"").trim();if(!v)return;newTopic=v;DB.settings.topic=v;save();$("#tp").value=v;answer("topic")};
+  $("#tpb").onclick=()=>change($("#tp").value);$("#tp").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();$("#tp").blur();change($("#tp").value)}};
+  n.querySelectorAll("[data-tt]").forEach(b=>b.onclick=()=>change(FT[b.dataset.tt].es));
+  if(note)feedback({ok:false},note);
+  let order=T0.qs.slice().sort(()=>Math.random()-.5),qi=0,prefix=["Okay! Let's talk about "+T0.en+".","¡Va! Hablemos de "+T0.es+".","oukéi! léts tók abáut "+T0.pr];
+  if(unknown)feedback({ok:false},"Ese tema todavía no lo tengo. Platicamos de tu día, o toca uno de los temas de arriba.");
+  while(true){guard(t);
+    if(qi>=order.length){order=T0.qs.slice().sort(()=>Math.random()-.5);qi=0;prefix=["I'm having fun! Let's keep going.","¡Me la estoy pasando bien! Sigamos.","áim jávin fán! léts kíip góuin"]}
+    const Q=order[qi++],line=["B",prefix[0]+" "+Q.q[1],prefix[1]+" "+Q.q[2],prefix[2]+". "+Q.q[3]];prefix=null;
+    showCard(line,"listen");addBubble("B",line[1]);await sayLine(line,t);showCard(line,"free");setProg((++k%10)/10||1);
+    let said="",helped=false;
+    while(!said){const r=await listen(null,2600);guard(t);
+      if(r.cmd==="topic")break;
+      if(r.cmd==="help"){const c=$("#scard");if(c&&!c.querySelector(".hints")){c.insertAdjacentHTML("beforeend",`<div class="cap">Puedes contestar algo así:</div><div class="hints">${Q.h.map(h=>`<div class="hint"><span class="e">${esc(h.en)}</span><span class="s">${esc(h.es)}</span><span class="r">${esc(h.pr)}</span></div>`).join("")}</div>`)}
+        helped=true;slowNext=true;await speak(Q.h[0].en,"A");guard(t);continue}
+      if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;await sayLine(line,t);continue}
+      const txt=(r.text||"").trim();
+      if(norm(txt).length<2){feedback({ok:false},"Contéstale con una frase completa. Si no sabes qué decir, toca 💡 Ayuda.");continue}
+      said=txt}
+    if(newTopic){const nt=topicOf(newTopic);T0=nt||FT.dia;newTopic=null;order=T0.qs.slice().sort(()=>Math.random()-.5);qi=0;
+      prefix=["Okay! Let's talk about "+T0.en+".","¡Va! Hablemos de "+T0.es+".","oukéi! léts tók abáut "+T0.pr];
+      const ch=$("#schat");if(ch)ch.innerHTML="";feedback(nt?null:{ok:false},nt?null:"Ese tema todavía no lo tengo. Platicamos de tu día, o toca uno de los temas de arriba.");continue}
+    addBubble("A",said);
+    const neg=/\b(no|not|nope|never|don't|dont|nah)\b/i.test(said),R=pick(neg?REACT_NEG:REACT_POS);
+    const close=Q.h.some(h=>compare(h.en,said).ok);
+    feedback({ok:true},close?(helped?"¡Bien dicho!":"¡Perfecto, como nativo!"):"¡Eso! Emily te entendió.");tone(true);cheer(true);addXP(helped?3:6);save();
+    prefix=R;await wait(500);guard(t);
+  }
+}
+
 /* ===== SECCIÓN LIBRE: tú eliges el tema, Emily te pregunta y tú contestas ===== */
-const TOPICS=["Comida","Pizza","Carros","Trabajo","Fútbol","Viajes","Familia","Música","Películas","El gym","Mi día","Dinero"];
+const TOPICS=["Comida","Viajes","Carros","Trabajo","Fútbol","Familia","Música","Películas","El gym","Dinero","Mi día"];
 function topicSheet(){
   sheet(`<h3>Sección libre</h3><p class="sub">Escribe de qué quieres hablar. Emily te hace preguntas sobre eso y tú le contestas con tu voz. Si no sabes qué decir, toca <b>💡 Ayuda</b>.</p>
    <input type="text" id="tp0" placeholder="Ej. comida, pizza, carros…" value="${esc(DB.settings.topic||"")}">
@@ -1275,10 +1499,10 @@ function topicSheet(){
 }
 async function freeTalk(t,topic){
   topic=topic||DB.settings.topic||"lo que sea";
-  if(!aiOn()){setPhase("Sección libre","La sección libre necesita la inteligencia. Actívala en <b>Yo → Inteligencia</b>.");await wait(3500);return}
+  if(!aiOn())return freeTalkGuided(t,topic);
   let newTopic=null,hints=[];const hist=[],ww=weakWords(6).map(([w])=>w);
   setPhase("Sección libre","","Con Emily");
-  const n=$("#snote");n.hidden=false;
+  const n=$("#snote");n.hidden=false;$("#schat").style.display="none";
   n.innerHTML=`<div class="tbar"><span style="font-weight:800;color:var(--ink)">Tema:</span><input type="text" id="tp" value="${esc(topic)}" aria-label="Tema"><button id="tpb">Cambiar</button></div>`;
   const change=()=>{const v=$("#tp").value.trim();if(!v||v===topic)return;newTopic=v;DB.settings.topic=v;save();toast("Cambiamos a: "+v);answer("topic")};
   $("#tpb").onclick=change;$("#tp").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();$("#tp").blur();change()}};
@@ -1301,9 +1525,10 @@ Return JSON with these keys:
     guard(t);return r;
   }
   const getTurn=async said=>{while(true){try{return await turn(said)}catch(e){if(e===CANCEL)throw e;if(e&&e.code==="not_granted"){sample=null;if(!aiOn())throw CANCEL}
-    if(e&&/bad_key|no_credit|forbidden|no_ai/.test(e.code)){feedback({ok:false},aiErr(e));setOrb("bad","No se pudo conectar con Claude");await wait(6000);throw CANCEL}
+    if(e&&/bad_key|no_credit|forbidden|no_ai/.test(e.code))throw {fallback:aiErr(e)};
     feedback({ok:false},aiErr(e)+" Reintento en un momento…");await wait(3000);guard(t)}}};
-  let out=await getTurn(null),k=0;
+  let out,k=0;
+  try{out=await getTurn(null)}catch(e){if(e&&e.fallback)return freeTalkGuided(t,topic,"Seguimos sin inteligencia. ("+e.fallback+")");throw e}
   while(true){guard(t);
     if(out&&out.ok===false&&out.better){const fix=["A",String(out.better),String(out.better_es||""),String(out.better_pr||autoPron(String(out.better))),"Sección libre"];
       feedback({ok:false},"Un nativo lo diría así. Repítelo:");await drill(fix,"repeat",t);hist.push("(Emily corrected him; he repeated: "+fix[1]+")")}
@@ -1321,9 +1546,9 @@ Return JSON with these keys:
       if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;await sayLine(line,t);continue}
       said=(r.text||"").trim()}
     if(newTopic){topic=newTopic;newTopic=null;hist.push("(Stanley changed the topic to: "+topic+")");const ch=$("#schat");if(ch)ch.innerHTML="";
-      out=await getTurn(null);continue}
+      try{out=await getTurn(null)}catch(e){if(e&&e.fallback)return freeTalkGuided(t,topic,"Seguimos sin inteligencia. ("+e.fallback+")");throw e}continue}
     addBubble("A",said);hist.push("Stanley: "+said);addXP(4);save();
-    out=await getTurn(said);
+    try{out=await getTurn(said)}catch(e){if(e&&e.fallback)return freeTalkGuided(t,topic,"Seguimos sin inteligencia. ("+e.fallback+")");throw e}
   }
 }
 
