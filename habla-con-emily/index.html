@@ -182,7 +182,8 @@ code{font-size:.85em;background:var(--fill);padding:1px 5px;border-radius:5px}
 .bub{max-width:82%;padding:7px 12px;border-radius:16px;font-size:.9rem}
 .bub.a{align-self:flex-end;background:var(--stan);color:#fff;border-bottom-right-radius:5px}
 .bub.b{align-self:flex-start;background:var(--card);border-bottom-left-radius:5px}
-.scard{background:var(--card);border-radius:24px;padding:16px 18px;display:grid;gap:10px}
+.scard{background:var(--card);border-radius:24px;padding:16px 18px;display:grid;gap:10px;flex:0 1 auto;min-height:0;overflow-y:auto}
+.dock,.acts,.shead,.sinfo,.sstage{flex:none}
 .who{display:flex;align-items:center;gap:8px;font-weight:800;font-family:var(--round);font-size:.95rem}
 .who i{width:10px;height:10px;border-radius:50%;background:currentColor}
 .who em{margin-left:auto;font-style:normal;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--sub)}
@@ -200,8 +201,21 @@ code{font-size:.85em;background:var(--fill);padding:1px 5px;border-radius:5px}
 .dock{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:22px;padding:12px 14px}
 .orb{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--fill);color:var(--sub);flex:none;position:relative;transition:background .2s}
 .orb svg{width:28px;height:28px}
-.orb.listen{background:var(--stan);color:#fff}
-.orb.listen::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--stan);animation:ping 1.3s ease-out infinite}
+.orb{width:72px;height:72px;cursor:pointer}
+.orb svg{width:32px;height:32px}
+.orb.ready{background:var(--stan);color:#fff;box-shadow:0 0 0 6px var(--stan-soft)}
+.orb.ready::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:3px solid var(--stan);animation:ping 1.8s ease-out infinite}
+.orb.listen{background:var(--bad);color:#fff}
+.orb.listen::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--bad);animation:ping 1s ease-out infinite}
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.acts button{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 6px;border-radius:12px;background:var(--card);font-weight:700;font-size:.88rem}
+.acts button svg{width:18px;height:18px}
+.tbar{display:flex;gap:8px;align-items:center}
+.tbar input{flex:1;min-width:0;padding:9px 12px}
+.tbar button{background:var(--brain);color:#fff;font-weight:800;padding:9px 14px;border-radius:10px}
+.hints{display:grid;gap:8px}
+.hint{background:var(--card2);border-radius:14px;padding:10px 12px;display:grid;gap:2px}
+.hint .e{font-weight:800} .hint .s{color:var(--sub);font-size:.9rem} .hint .r{color:var(--emily);font-style:italic;font-size:.9rem}
 .orb.speak{background:var(--emily);color:#fff}
 .orb.ok{background:var(--ok);color:#fff}
 .orb.bad{background:var(--bad);color:#fff}
@@ -640,55 +654,62 @@ function speak(text,who,lang){
     synth.speak(u);
   });
 }
-let dict=null,sample=null,capsReady=!(window.claude&&window.claude.use),engine=null,micOn=false,phraseStart=0,pending=null,cancelPending=()=>{};
+let dict=null,sample=null,capsReady=!(window.claude&&window.claude.use),pending=null,cancelPending=()=>{};
 if(!capsReady){Promise.all([window.claude.use("dictation").catch(()=>null),window.claude.use("sample").catch(()=>null)]).then(([d,s])=>{
   dict=d;sample=s;capsReady=true;
-  if(dict){dict.onPartial(({text})=>onPartial([text]));dict.onFinal(({text})=>onFinal([text]));
-    dict.onState(({state,reason})=>{if(state==="idle"&&engine==="dict"){micOn=false;if(running&&reason!=="stopped")askWake(reason)}})}
+  if(dict){
+    dict.onPartial(({text})=>{const c=cap;if(!c||!c.dict)return;c.part=text||"";c.cands=[(c.fin+" "+c.part).trim()];capUpdate(c)});
+    dict.onFinal(({text})=>{const c=cap;if(!c||!c.dict)return;c.fin=(c.fin+" "+(text||"")).trim();c.part="";c.cands=[c.fin];capUpdate(c)});
+    dict.onState(({state,reason})=>{const c=cap;if(state==="idle"&&c&&c.dict){if(reason==="not_granted")micBlocked();capFinal(c)}})}
   if(!running)render()})}
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-const IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1);
-let rec=null,recPaused=false,ac=null,lastPartial=null;
-function pauseRec(){if(engine==="sr"&&rec&&micOn&&IOS){recPaused=true;try{rec.abort()}catch(e){}}}
-function resumeRec(){if(recPaused){recPaused=false;setTimeout(()=>{if(micOn&&running){try{rec.start()}catch(e){}}},150)}}
+let ac=null,cap=null,capId=0;
+function pauseRec(){} function resumeRec(){}
 function unlockAudio(){try{if(synth){const u=new SpeechSynthesisUtterance(" ");u.volume=0;synth.speak(u)}}catch(e){}
   try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){}}
-function startMic(){
-  if(dict){engine="dict";return dict.start({language:"en"}).then(()=>{micOn=true}).catch(e=>{micOn=false;throw e})}
-  if(SR){engine="sr";
-    if(!rec){rec=new SR();rec.lang="en-US";rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=5;
-      rec.onresult=ev=>{let part=null;for(let i=ev.resultIndex;i<ev.results.length;i++){const r=ev.results[i],alts=Array.from({length:r.length},(_,k)=>r[k]&&r[k].transcript).filter(Boolean);
-        if(r.isFinal){lastPartial=null;onFinal(alts)}else part=alts}
-        if(part&&part.length){lastPartial=part;onPartial(part)}};
-      rec.onerror=ev=>{if(ev.error==="not-allowed"||ev.error==="service-not-allowed"){micOn=false;askWake("not_granted")}};
-      rec.onend=()=>{if(lastPartial&&pending&&!speaking){const lp=lastPartial;lastPartial=null;onFinal(lp)}lastPartial=null;
-        if(micOn&&running&&!recPaused)setTimeout(()=>{if(micOn&&running&&!recPaused){try{rec.start()}catch(e){}}},120)}}
-    try{rec.start()}catch(e){}micOn=true;return Promise.resolve()}
-  return Promise.reject({code:"unavailable"});
+/* ===== micrófono de "toca y habla": cada toque empieza a escuchar desde cero ===== */
+function micBlocked(){setOrb("ready","Micrófono bloqueado");feedback({ok:false},"Permite el micrófono: en iPhone, Ajustes → Safari → Micrófono → Permitir. Luego toca otra vez el micrófono.")}
+function capStart(){
+  if(!pending||cap)return;
+  if(synth&&speaking)synth.cancel();
+  const id=++capId,c={id,cands:[],fin:"",part:"",stopping:false};cap=c;
+  setOrb("listen","Te escucho… toca para terminar");setAv("A","listen");showHeard("",false);
+  c.max=setTimeout(()=>capStop(c),15000);
+  c.idle=setTimeout(()=>{if(cap===c&&!c.cands.length)capStop(c)},8000);
+  if(dict){c.dict=true;dict.start({language:"en"}).catch(e=>{if(e&&e.code==="not_granted")micBlocked();if(cap===c){cap=null;clearTimeout(c.max);clearTimeout(c.idle);if(pending&&!(e&&e.code==="not_granted"))setOrb("ready","Toca el micrófono y habla")}});return}
+  const r=new SR();c.rec=r;r.lang="en-US";r.continuous=true;r.interimResults=true;r.maxAlternatives=5;
+  r.onresult=ev=>{if(cap!==c)return;const segs=[];
+    for(let i=0;i<ev.results.length;i++){const res=ev.results[i];segs.push(Array.from({length:res.length},(_,k)=>res[k]&&res[k].transcript||"").filter(Boolean))}
+    const S=segs.filter(a=>a.length);if(!S.length)return;
+    const base=S.slice(0,-1).map(a=>a[0]).join(" "),last=S[S.length-1];
+    c.cands=[...last.map(a=>(base+" "+a).trim()),...last];capUpdate(c)};
+  r.onerror=ev=>{if(ev.error==="not-allowed"||ev.error==="service-not-allowed")micBlocked()};
+  r.onend=()=>{if(cap===c)capFinal(c)};
+  try{r.start()}catch(e){cap=null;setOrb("ready","Toca otra vez el micrófono")}
 }
-function stopMic(){micOn=false;try{if(engine==="dict"&&dict)dict.stop();if(engine==="sr"&&rec)rec.abort()}catch(e){}}
-/* escucha varias interpretaciones de lo que dijiste y se queda con la que más se parece */
-function onPartial(alts){alts=[].concat(alts).map(x=>(x||"").trim()).filter(Boolean);if(!alts.length)return;if(!phraseStart)phraseStart=Date.now();
-  if(!pending||speaking||phraseStart<lastSpeakEnd+250)return;
-  const p=pending,cands=alts.map(a=>(p.buf+" "+a).trim());showHeard(cands[0],true);
-  if(p.target){const hit=cands.find(x=>compare(p.target,x).ok);if(hit){p.buf=hit;phraseStart=0;lastPartial=null;p.flush();return}}
-  p.part=cands[0];clearTimeout(p.timer);p.timer=setTimeout(p.flush,p.wait+700)}
-function onFinal(alts){alts=[].concat(alts).map(x=>(x||"").trim()).filter(Boolean);const started=phraseStart||Date.now();phraseStart=0;
-  if(!pending||speaking||started<lastSpeakEnd+250||!alts.length)return;
-  const p=pending;let cands=alts.map(a=>(p.buf+" "+a).trim());
-  const c=command(cands[0]);if(c){pending=null;clearTimeout(p.timer);p.resolve({cmd:c});return}
-  if(p.target){const hit=cands.find(x=>compare(p.target,x).ok);if(hit){p.buf=hit;p.flush();return}
-    cands.sort((a,b)=>compare(p.target,a).dist-compare(p.target,b).dist)}
-  p.buf=cands[0];p.part="";showHeard(p.buf,false);
-  clearTimeout(p.timer);p.timer=setTimeout(p.flush,p.wait)}
+function capUpdate(c){if(cap!==c)return;const p=pending;if(!p)return;showHeard(c.cands[0]||"",true);clearTimeout(c.idle);
+  if(p.target&&c.cands.some(x=>compare(p.target,x).ok)){capFinal(c);return}
+  if(!c.stopping){clearTimeout(c.timer);c.timer=setTimeout(()=>capStop(c),p.wait)}}
+function capStop(c){c=c||cap;if(!c||cap!==c||c.stopping)return;c.stopping=true;clearTimeout(c.timer);setOrb("think","Revisando…");
+  if(c.dict){dict.stop().catch(()=>{}).then(()=>capFinal(c))}
+  else{try{c.rec.stop()}catch(e){}c.fall=setTimeout(()=>capFinal(c),1500)}}
+function capFinal(c){if(cap!==c)return;cap=null;["timer","max","idle","fall"].forEach(k=>clearTimeout(c[k]));
+  if(c.rec){c.rec.onresult=c.rec.onend=c.rec.onerror=null;try{c.rec.abort()}catch(e){}}
+  if(c.dict&&!c.stopping){try{dict.stop()}catch(e){}}
+  setAv("A","");const p=pending;if(!p)return;
+  let cands=c.cands.filter(Boolean);
+  if(!cands.length){setOrb("ready","No te escuché. Toca y vuelve a hablar");return}
+  if(p.target){const sc=x=>{const r=compare(p.target,x);return (r.ok?0:100)+r.dist};cands.sort((a,b)=>sc(a)-sc(b))}
+  const best=cands[0],cmd=command(best);showHeard(best,false);pending=null;p.resolve(cmd?{cmd}:{text:best})}
+function micTap(){if(!pending)return;unlockAudio();if(cap)capStop(cap);else capStart()}
 function listen(target,wait){
   return new Promise((resolve,reject)=>{
-    const p={target,buf:"",part:"",timer:null,wait:wait||1600,resolve};
-    p.flush=()=>{if(pending!==p)return;pending=null;clearTimeout(p.timer);resolve({text:p.buf||p.part})};
-    pending=p;cancelPending=()=>{if(pending===p){pending=null;clearTimeout(p.timer);reject(CANCEL)}};
-    setOrb("listen","Te escucho… habla");showHeard("",false);setAv("A","listen");
+    const p={target,resolve,wait:wait||1800};pending=p;
+    cancelPending=()=>{if(pending===p){pending=null;if(cap){const c=cap;cap=null;["timer","max","idle","fall"].forEach(k=>clearTimeout(c[k]));try{c.rec?c.rec.abort():dict&&dict.stop()}catch(e){}}reject(CANCEL)}};
+    showHeard("",false);setOrb("ready","Toca el micrófono y habla");setAv("A","");
   });
 }
+function answer(cmd){const p=pending;if(!p)return;if(cap){const c=cap;cap=null;["timer","max","idle","fall"].forEach(k=>clearTimeout(c[k]));try{c.rec?c.rec.abort():dict&&dict.stop()}catch(e){}}pending=null;p.resolve({cmd})}
 function tone(ok){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t=ac.currentTime,notes=ok?[660,880]:[300,220];
   notes.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.setValueAtTime(.0001,t+i*.12);
     g.gain.exponentialRampToValueAtTime(.18,t+i*.12+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.12+.18);o.connect(g).connect(ac.destination);o.start(t+i*.12);o.stop(t+i*.12+.2)})}catch(e){}}
@@ -818,8 +839,8 @@ function renderHoy(app){
        <small>${wi.length?wi.length+" frases que se te atoran":"Aún no hay fallas. ¡Sigue así!"}</small></span><span class="chev">${I.chev}</span></button>
      <button class="cell" id="goPila"><span class="ico" style="background:var(--ok)">${I.stack}</span><span class="grow"><strong>Pila de conversación</strong>
        <small>Plática tras plática con todo lo que ya dominas</small></span><span class="chev">${I.chev}</span></button>
-     <button class="cell" id="goFree"><span class="ico" style="background:var(--emily)">${I.chat}</span><span class="grow"><strong>Plática libre con Emily</strong>
-       <small>${aiOn()?"Habla de lo que quieras; ella te corrige":"Necesita la inteligencia (Yo → Inteligencia)"}</small></span><span class="chev">${I.chev}</span></button>
+     <button class="cell" id="goFree"><span class="ico" style="background:var(--emily)">${I.chat}</span><span class="grow"><strong>Sección libre con Emily</strong>
+       <small>${aiOn()?"Tú eliges el tema, ella te pregunta y te guía":"Necesita la inteligencia (Yo → Inteligencia)"}</small></span><span class="chev">${I.chev}</span></button>
    </div>
    ${ww.length?`<div class="card" style="display:grid;gap:10px"><div class="cap">Palabras donde más fallas</div><div class="chips">${ww.map(([w])=>`<span class="chip">${esc(w)}</span>`).join("")}</div>
      <p class="sub" style="font-size:.9rem">Emily las vuelve a meter en tus repasos hasta que te salgan solas.</p></div>`:""}
@@ -828,7 +849,7 @@ function renderHoy(app){
   $("#goNow").onclick=()=>start(u?t=>runFrom(nu,t):t=>pila(t));
   $("#goFix").onclick=()=>{if(!wi.length&&!aiOn()){toast("Aún no tienes fallas guardadas");return}start(t=>refuerzo(t))};
   $("#goPila").onclick=()=>{if(!ORDER.some(id=>UNIT[id].dlg&&isDone(id))){toast("Primero domina una plática de la ruta (día 4)");return}start(t=>pila(t))};
-  $("#goFree").onclick=()=>{if(!aiOn()){go("yo");setTimeout(()=>{const e=$("#aiSec");if(e)e.scrollIntoView({behavior:"smooth"})},60);return}start(t=>freeTalk(t))};
+  $("#goFree").onclick=()=>{if(!aiOn()){go("yo");setTimeout(()=>{const e=$("#aiSec");if(e)e.scrollIntoView({behavior:"smooth"})},60);return}topicSheet()};
 }
 
 /* ---------- RUTA ---------- */
@@ -1089,7 +1110,6 @@ function closeSheet(){document.querySelectorAll(".sheetbg").forEach(e=>e.remove(
 function start(flow){
   if(!canRun())return;
   unlockAudio();
-  if(!micOn)startMic().catch(e=>askWake(e&&e.code));
   running=true;const t=++token;openSess();
   flow(t).catch(e=>{if(e!==CANCEL)console.error(e)}).finally(()=>{if(t===token)endSess()});
 }
@@ -1104,18 +1124,21 @@ function openSess(){
    <div class="scard" id="scard"></div>
    <div class="spacer"></div>
    <p class="fb" id="sfb" hidden></p>
-   <div class="dock"><div class="orb" id="sorb">${I.mic}</div><div class="t"><div class="st" id="sst">Listo</div><div class="heard" id="sheard"></div></div></div>
-   <p class="cmds">Di <b>«repeat»</b> para oírla otra vez · <b>«slow»</b> para oírla despacio</p></div>`;
+   <div class="dock"><button class="orb" id="sorb" aria-label="Hablar">${I.mic}</button><div class="t"><div class="st" id="sst">Listo</div><div class="heard" id="sheard"></div></div></div>
+   <div class="acts"><button data-cmd="repeat">${I.spk}Otra vez</button><button data-cmd="slow">🐢 Despacio</button><button data-cmd="help">💡 Ayuda</button></div></div>`;
   document.body.appendChild(s);document.body.style.overflow="hidden";
   $("#sx").onclick=()=>{token++;if(synth)synth.cancel();endSess()};
+  $("#sorb").onclick=micTap;
+  s.querySelectorAll("[data-cmd]").forEach(b=>b.onclick=()=>{unlockAudio();answer(b.dataset.cmd)});
 }
 function closeSess(){const s=$("#sess");if(s)s.remove();document.body.style.overflow=""}
-function endSess(){running=false;cancelPending();stopMic();closeSess();const w=$(".wake");if(w)w.remove();render()}
+function endSess(){running=false;cancelPending();closeSess();render()}
 const guard=t=>{if(t!==token)throw CANCEL};
 function setPhase(name,note,title){const p=$("#sph");if(p)p.textContent=name;const n=$("#snote");if(n){n.hidden=!note;n.innerHTML=note||""}
   if(title!==undefined){const x=$("#stt");if(x)x.textContent=title}const c=$("#schat");if(c)c.innerHTML=""}
 function setProg(f){const b=$("#sbar");if(b)b.style.width=Math.round(Math.min(1,f)*100)+"%"}
-function setOrb(kind,label){const o=$("#sorb");if(!o)return;o.className="orb "+kind;o.innerHTML=kind==="speak"?I.spk:kind==="think"?I.brain:I.mic;$("#sst").textContent=label}
+function setOrb(kind,label){const o=$("#sorb");if(!o)return;o.className="orb "+kind;o.innerHTML=kind==="speak"?I.spk:kind==="think"?I.brain:I.mic;$("#sst").textContent=label;
+  const h=$("#sheard");if(h&&kind==="ready"&&!h.textContent)h.textContent="Cuando estés listo, toca el botón azul"}
 function showHeard(t,partial){const h=$("#sheard");if(h)h.textContent=t?(partial?t+"…":"«"+t+"»"):""}
 function showCard(line,mode){const c=$("#scard");if(!c)return;
   const [who,en,es,pr]=line,hide=mode==="recall"&&es,isA=who==="A";
@@ -1129,16 +1152,6 @@ function feedback(r,msg){const f=$("#sfb");if(!f)return;if(!r&&!msg){f.hidden=tr
   if(msg){f.className="fb "+(r&&r.ok?"ok":"bad");f.textContent=msg;return}
   if(r.ok){f.className="fb ok";f.textContent=["¡Eso!","¡Perfecto!","¡Así se dice!","¡Muy bien!","¡Como nativo!"][Math.floor(Math.random()*5)];return}
   f.className="fb bad";f.innerHTML=r.heardWords.length?"Casi. Revisa lo marcado: "+r.words.map((w,i)=>r.miss[i]?"<mark>"+esc(w)+"</mark>":esc(w)).join(" "):"No te escuché. Acerca el teléfono o usa audífonos con micrófono."}
-function askWake(reason){
-  if(document.querySelector(".wake")||!running)return;
-  const msg=reason==="not_granted"?"El micrófono está bloqueado. En iPhone: Ajustes → Safari → Micrófono → Permitir. Luego toca el botón.":
-    reason==="unavailable"?"Aquí no se puede usar el micrófono en inglés. Abre la app en Safari (iPhone) o Chrome.":"El micrófono se apagó. Tócalo para seguir hablando.";
-  const w=document.createElement("div");w.className="wake";
-  w.innerHTML=`<div><p>${msg}</p><button class="btn" id="wk">${I.mic}<span>Prender micrófono</span></button><button class="link" id="wkx">Salir</button></div>`;
-  document.body.appendChild(w);
-  $("#wk").onclick=()=>{unlockAudio();startMic().then(()=>w.remove()).catch(e=>{w.querySelector("p").textContent=e&&e.code==="not_granted"?"Sigue bloqueado. Revisa los permisos del micrófono.":"No se pudo prender. Intenta otra vez."})};
-  $("#wkx").onclick=()=>{w.remove();token++;endSess()};
-}
 async function sayLine(l,t){guard(t);await speak(l[1],l[0]);guard(t)}
 async function sayEs(text,t){guard(t);if(V.es)await speak(text,"B","es");guard(t)}
 
@@ -1150,7 +1163,9 @@ async function drill(line,mode,t){
   if(mode==="repeat")await sayLine(line,t);
   while(true){
     guard(t);const r=await listen(line[1]);guard(t);
-    if(r.cmd){if(r.cmd==="slow")slowNext=true;if(mode==="recall")reveal(line);await sayLine(line,t);heard=true;continue}
+    if(r.cmd){if(r.cmd==="slow"||r.cmd==="help")slowNext=true;if(mode==="recall"){reveal(line);if(r.cmd==="help")first=false}
+      if(r.cmd==="help")feedback({ok:true},"Así se dice. Escúchala y dila tú.");showHeard("",false);await sayLine(line,t);heard=true;continue}
+    if(!r.text)continue;
     const c=compare(line[1],r.text);feedback(c);record(line,c.ok,c,first);
     if(c.ok){tone(true);setOrb("ok","¡Bien!");cheer(true);await wait(650);guard(t);return first}
     tone(false);setOrb("bad","Otra vez");cheer(false);first=false;if(mode==="recall")reveal(line);
@@ -1234,38 +1249,67 @@ async function pila(t){
     const w=weakItems(1);if(n%3===0&&w.length){setPhase("Refuerzo rápido","Una frase que se te ha atorado.");await drill(w[0],"recall",t)}
   }
 }
-/* plática libre con Emily (inteligencia) */
-async function freeTalk(t){
-  if(!aiOn()){await pila(t);return}
-  setPhase("Plática libre","Contéstale a Emily como quieras. Si algo no suena natural, te dice cómo lo diría un nativo y lo repites.","Con Emily");
-  const topics=DB.notes.flatMap(n=>[n.title,...(n.topics||[])]).slice(0,10),ww=weakWords(6).map(([w])=>w);
-  const hist=[];let line=["B","Hey Stanley! How's it going today?","¡Hola Stanley! ¿Cómo te va hoy?","jéi Stánli! jáus it góuin tudéi"],turn=0;
-  while(true){guard(t);turn++;
-    showCard(line,"listen");feedback(null);addBubble("B",line[1]);hist.push("Emily: "+line[1]);await sayLine(line,t);
-    showCard(line,"free");let said="";
-    while(!said){const r=await listen(null,1900);guard(t);if(r.cmd){if(r.cmd==="slow")slowNext=true;await sayLine(line,t);continue}said=(r.text||"").trim()}
-    addBubble("A",said);hist.push("Stanley: "+said);setOrb("think","Emily está pensando…");setAv("A","");
-    let out;
-    try{out=await aiJSON(`You are Emily, a friendly young American woman chatting BY VOICE with Stanley, a Mexican Spanish speaker learning to SPEAK casual American English.
-${topics.length?"Topics Stanley has in his notes (bring them up sometimes): "+topics.join(", ")+".\n":""}${ww.length?"Words he struggles with (use them naturally now and then): "+ww.join(", ")+".\n":""}Conversation so far:
-${hist.slice(-14).join("\n")}
-
-Stanley's last line came from speech-to-text, so ignore punctuation, capitalization and small recognition glitches.
+/* ===== SECCIÓN LIBRE: tú eliges el tema, Emily te pregunta y tú contestas ===== */
+const TOPICS=["Comida","Pizza","Carros","Trabajo","Fútbol","Viajes","Familia","Música","Películas","El gym","Mi día","Dinero"];
+function topicSheet(){
+  sheet(`<h3>Sección libre</h3><p class="sub">Escribe de qué quieres hablar. Emily te hace preguntas sobre eso y tú le contestas con tu voz. Si no sabes qué decir, toca <b>💡 Ayuda</b>.</p>
+   <input type="text" id="tp0" placeholder="Ej. comida, pizza, carros…" value="${esc(DB.settings.topic||"")}">
+   <div class="chips">${TOPICS.map(x=>`<button class="chip p" data-t="${esc(x)}">${esc(x)}</button>`).join("")}</div>
+   <button class="btn pink" id="tgo" style="background:var(--emily)">${I.chat}<span>Empezar a platicar</span></button>`,s=>{
+    s.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{s.querySelector("#tp0").value=b.dataset.t});
+    s.querySelector("#tgo").onclick=()=>{const tp=s.querySelector("#tp0").value.trim()||"lo que sea";DB.settings.topic=tp;save();closeSheet();start(t=>freeTalk(t,tp))};
+  });
+}
+async function freeTalk(t,topic){
+  topic=topic||DB.settings.topic||"lo que sea";
+  if(!aiOn()){setPhase("Sección libre","La sección libre necesita la inteligencia. Actívala en <b>Yo → Inteligencia</b>.");await wait(3500);return}
+  let newTopic=null,hints=[];const hist=[],ww=weakWords(6).map(([w])=>w);
+  setPhase("Sección libre","","Con Emily");
+  const n=$("#snote");n.hidden=false;
+  n.innerHTML=`<div class="tbar"><span style="font-weight:800;color:var(--ink)">Tema:</span><input type="text" id="tp" value="${esc(topic)}" aria-label="Tema"><button id="tpb">Cambiar</button></div>`;
+  const change=()=>{const v=$("#tp").value.trim();if(!v||v===topic)return;newTopic=v;DB.settings.topic=v;save();toast("Cambiamos a: "+v);answer("topic")};
+  $("#tpb").onclick=change;$("#tp").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();$("#tp").blur();change()}};
+  async function turn(said){
+    setOrb("think","Emily está pensando…");
+    const r=await aiJSON(`You are Emily, a friendly young American woman chatting BY VOICE with Stanley, a Mexican Spanish speaker who is learning to SPEAK casual American English. He is a beginner.
+The topic Stanley chose (he may write it in Spanish): "${topic}". Keep the chat about that topic. Lead the conversation: ask him simple questions about the topic so he has to answer, one question at a time, like a real friendly chat.
+${ww.length?"Words he struggles with (use them naturally sometimes): "+ww.join(", ")+".\n":""}Conversation so far:
+${hist.slice(-16).join("\n")||"(nothing yet; you start)"}
+${said===null?"Start the conversation about the topic with a short greeting and an easy question.":"Stanley's last line came from speech-to-text, so ignore punctuation, capitalization and small recognition glitches."}
 Return JSON with these keys:
-"ok": false only if what Stanley said has a real mistake a native would not say; true otherwise.
-"better": if not ok, the natural native way to say what he meant, with contractions (I'm, you're, don't, gonna, wanna, gotta). Empty if ok.
+"ok": ${said===null?"true":"false only if what Stanley said has a real mistake a native would not say; true otherwise"}.
+"better": if not ok, the natural native way to say what he meant, with contractions. Empty if ok.
 "better_es": Mexican Spanish translation of "better" (empty if ok).
 "better_pr": pronunciation of "better" ${PRON_RULE}. Empty if ok.
-"reply": your next line: one or two SHORT casual sentences, simple everyday words, contractions like a native, ending with an easy question.
+"reply": your next line: max two SHORT casual sentences, simple everyday words, contractions like a native (I'm, you're, gonna, wanna, gotta), ending with ONE easy question about the topic.
 "reply_es": Mexican Spanish translation of "reply".
-"reply_pr": pronunciation of "reply" ${PRON_RULE}.`)}
-    catch(e){if(e===CANCEL)throw e;if(e&&e.code==="not_granted"){sample=null;if(!aiOn())return pila(t)}feedback({ok:false},aiErr(e));await wait(2500);guard(t);hist.pop();continue}
-    guard(t);
-    if(out&&out.ok===false&&out.better){const fix=["A",String(out.better),String(out.better_es||""),String(out.better_pr||autoPron(String(out.better))),"Plática libre"];
-      feedback({ok:false},"Un nativo lo diría así. Repítelo:");await drill(fix,"repeat",t)}
-    else{addXP(4);save()}
-    setProg((turn%10)/10);
-    line=["B",String(out&&out.reply||"Cool! Tell me more."),String(out&&out.reply_es||""),String(out&&out.reply_pr||"")];
+"reply_pr": pronunciation of "reply" ${PRON_RULE}.
+"hints": 3 different short answers Stanley could give to your question (max 10 words each), each as {"en":"...","es":"Mexican Spanish translation","pr":"pronunciation ${PRON_RULE}"}.`);
+    guard(t);return r;
+  }
+  const getTurn=async said=>{while(true){try{return await turn(said)}catch(e){if(e===CANCEL)throw e;if(e&&e.code==="not_granted"){sample=null;if(!aiOn())throw CANCEL}
+    feedback({ok:false},aiErr(e)+" Reintento en un momento…");await wait(3000);guard(t)}}};
+  let out=await getTurn(null),k=0;
+  while(true){guard(t);
+    if(out&&out.ok===false&&out.better){const fix=["A",String(out.better),String(out.better_es||""),String(out.better_pr||autoPron(String(out.better))),"Sección libre"];
+      feedback({ok:false},"Un nativo lo diría así. Repítelo:");await drill(fix,"repeat",t);hist.push("(Emily corrected him; he repeated: "+fix[1]+")")}
+    const line=["B",String(out&&out.reply||"Cool! Tell me more."),String(out&&out.reply_es||""),String(out&&out.reply_pr||"")];
+    hints=Array.isArray(out&&out.hints)?out.hints.filter(h=>h&&h.en).slice(0,3):[];
+    showCard(line,"listen");feedback(null);addBubble("B",line[1]);hist.push("Emily: "+line[1]);await sayLine(line,t);
+    showCard(line,"free");setProg((++k%10)/10||1);
+    let said="";
+    while(!said){const r=await listen(null,2600);guard(t);
+      if(r.cmd==="topic")break;
+      if(r.cmd==="help"){const c=$("#scard");if(c&&!c.querySelector(".hints")){
+          const H=hints.length?hints:[{en:"Yeah, I like it a lot.",es:"Sí, me gusta mucho.",pr:"iéa, ái láikit a lát"},{en:"Not really. What about you?",es:"La verdad no. ¿Y tú?",pr:"nát ríli. uát abáut iú"}];
+          c.insertAdjacentHTML("beforeend",`<div class="cap">Puedes contestar algo así:</div><div class="hints">${H.map(h=>`<div class="hint"><span class="e">${esc(h.en)}</span><span class="s">${esc(h.es||"")}</span><span class="r">${esc(h.pr||"")}</span></div>`).join("")}</div>`);
+          slowNext=true;await speak(String(H[0].en),"A");guard(t)}continue}
+      if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;await sayLine(line,t);continue}
+      said=(r.text||"").trim()}
+    if(newTopic){topic=newTopic;newTopic=null;hist.push("(Stanley changed the topic to: "+topic+")");const ch=$("#schat");if(ch)ch.innerHTML="";
+      out=await getTurn(null);continue}
+    addBubble("A",said);hist.push("Stanley: "+said);addXP(4);save();
+    out=await getTurn(said);
   }
 }
 
