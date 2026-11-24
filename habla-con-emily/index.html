@@ -150,6 +150,7 @@ p{margin:0}
 .hbar .t{height:10px;border-radius:9px;background:var(--fill);overflow:hidden}
 .hbar .t u{display:block;height:100%;background:var(--bad);border-radius:9px}
 .hbar .n{text-align:right;color:var(--sub);font-variant-numeric:tabular-nums;font-size:.85rem}
+select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid var(--sep);border-radius:10px;padding:9px 10px}
 input[type=text],input[type=password],textarea{width:100%;font:inherit;color:var(--ink);background:var(--card2);border:1px solid var(--sep);border-radius:12px;padding:12px}
 textarea{min-height:160px;resize:vertical}
 code{font-size:.85em;background:var(--fill);padding:1px 5px;border-radius:5px}
@@ -543,7 +544,8 @@ function norm(s){
 }
 function lev(a,b){const m=a.length,n=b.length;let p=Array.from({length:n+1},(_,j)=>j);
   for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
-const wEq=(a,b)=>a===b||(a.length>=4&&b.length>=4&&lev(a,b)<=1);
+const skey=w=>w.replace(/ph/g,"f").replace(/ck/g,"k").replace(/(.)\1+/g,"$1").replace(/e$/,"").replace(/s$/,"");
+const wEq=(a,b)=>a===b||skey(a)===skey(b)||(a[0]===b[0]&&((a.length>=3&&b.length>=3&&lev(a,b)<=1)||(a.length>=6&&b.length>=6&&lev(a,b)<=2)));
 function compare(target,heard){
   const T=norm(target).filter(w=>!FILL.has(w)),H=norm(heard).filter(w=>!FILL.has(w));
   const m=T.length,n=H.length,d=[];
@@ -552,8 +554,9 @@ function compare(target,heard){
   const miss=new Array(m).fill(true);let i=m,j=n;
   while(i>0&&j>0){if(wEq(T[i-1],H[j-1])&&d[i][j]===d[i-1][j-1]){miss[i-1]=false;i--;j--}
     else if(d[i][j]===d[i-1][j]+1)i--;else if(d[i][j]===d[i][j-1]+1)j--;else{i--;j--}}
-  const allowed=m<=7?0:1;
-  return {ok:n>0&&d[m][n]<=allowed,dist:d[m][n],words:T,miss,heardWords:H};
+  /* las palabras importantes tienen que estar; se perdona alguna palabrita chica que el micrófono no agarró */
+  const allowed=m<=4?0:m<=9?1:2,keyMiss=T.some((w,i)=>miss[i]&&!STOP.has(w));
+  return {ok:n>0&&!keyMiss&&d[m][n]<=allowed,dist:d[m][n],words:T,miss,heardWords:H};
 }
 function command(heard){
   const w=norm(heard).join(" ");
@@ -611,22 +614,25 @@ function weakStructs(n){return Object.entries(DB.structs).filter(([s,x])=>x.fail
    ===================================================================== */
 const synth=window.speechSynthesis||null;
 let V={a:null,b:null,es:null},slowNext=false,speaking=false,lastSpeakEnd=0;
+const NOVELTY=/bells|bubbles|albert|bad news|good news|zarvox|whisper|trinoids|cellos|jester|organ|superstar|wobble|boing|junior|ralph|bahh|deranged|hysterical|pipe|grandma|grandpa|rocko|shelley|sandy|eddy|flo|reed/i;
+const FEM=/ava|zoe|samantha|allison|susan|nicky|joelle|noelle|aria|jenny|emma|michelle|serena|karen|moira|tessa|victoria|joanna|salli|kendra|kimberly|zira|google us english|female/i;
+const MAL=/evan|nathan|tom\b|alex|aaron|fred|guy|davis|tony|christopher|eric|ryan|daniel|oliver|arthur|andrew|brian|male/i;
+function vScore(v){const n=v.name;let s=0;if(/premium/i.test(n))s+=100;else if(/enhanced|mejorad|neural|natural|online/i.test(n))s+=70;else if(/google/i.test(n))s+=40;if(/^en[-_]US/i.test(v.lang))s+=15;return s}
+function enVoices(){return synth?synth.getVoices().filter(v=>/^en/i.test(v.lang)&&!NOVELTY.test(v.name)).sort((a,b)=>vScore(b)-vScore(a)):[]}
 function pickVoices(){if(!synth)return;const vs=synth.getVoices();if(!vs.length)return;
-  const us=vs.filter(v=>/^en[-_]US/i.test(v.lang)),en=us.length?us:vs.filter(v=>/^en/i.test(v.lang));
-  const fem=/samantha|zira|aria|jenny|ava|allison|susan|google us english|female|victoria|karen|joanna|salli|emma|michelle|serena|nicky/i;
-  const mal=/alex|guy|david|daniel|fred|tom\b|aaron|mark|christopher|eric|male|davis|tony|evan|nathan|ryan/i;
-  V.b=en.find(v=>fem.test(v.name))||en[0]||null;
-  V.a=en.find(v=>mal.test(v.name)&&!/female/i.test(v.name))||en.find(v=>v!==V.b)||V.b;
+  const en=enVoices(),by=u=>u&&en.find(v=>v.voiceURI===u);
+  V.b=by(DB.settings.voiceB)||en.find(v=>FEM.test(v.name))||en[0]||null;
+  V.a=by(DB.settings.voiceA)||en.find(v=>MAL.test(v.name)&&!/female/i.test(v.name)&&v!==V.b)||en.find(v=>v!==V.b)||V.b;
   const es=vs.filter(v=>/^es/i.test(v.lang));V.es=es.find(v=>/es[-_](MX|US|419)/i.test(v.lang))||es[0]||null}
-if(synth){pickVoices();synth.onvoiceschanged=pickVoices}
+if(synth){pickVoices();synth.onvoiceschanged=()=>{pickVoices();if(view==="yo"&&!running)render()}}
 function speak(text,who,lang){
   return new Promise(res=>{
     if(!synth){res();return}
     synth.cancel();
     const u=new SpeechSynthesisUtterance(text);
     if(lang==="es"){u.voice=V.es;u.lang=V.es?V.es.lang:"es-MX";u.rate=1.02}
-    else{u.voice=who==="A"?V.a:V.b;u.lang="en-US";u.rate=(slowNext||DB.settings.slow)?0.62:0.9;
-      if(who==="A"&&V.a===V.b)u.pitch=0.75;if(who==="B")u.pitch=1.08}
+    else{u.voice=who==="A"?V.a:V.b;u.lang="en-US";u.rate=(slowNext||DB.settings.slow)?0.72:0.97;
+      if(who==="A"&&V.a===V.b)u.pitch=0.85}
     slowNext=false;speaking=true;pauseRec();
     const av=who==="A"?"A":"B";setAv(av,"talk");setOrb("speak",who==="A"?"Así se dice":lang==="es"?"Emily te explica":"Emily habla");
     let done=false;const fin=()=>{if(done)return;done=true;speaking=false;lastSpeakEnd=Date.now();setAv(av,"");resumeRec();res()};
@@ -637,12 +643,12 @@ function speak(text,who,lang){
 let dict=null,sample=null,capsReady=!(window.claude&&window.claude.use),engine=null,micOn=false,phraseStart=0,pending=null,cancelPending=()=>{};
 if(!capsReady){Promise.all([window.claude.use("dictation").catch(()=>null),window.claude.use("sample").catch(()=>null)]).then(([d,s])=>{
   dict=d;sample=s;capsReady=true;
-  if(dict){dict.onPartial(({text})=>onPartial(text));dict.onFinal(({text})=>onFinal(text));
+  if(dict){dict.onPartial(({text})=>onPartial([text]));dict.onFinal(({text})=>onFinal([text]));
     dict.onState(({state,reason})=>{if(state==="idle"&&engine==="dict"){micOn=false;if(running&&reason!=="stopped")askWake(reason)}})}
   if(!running)render()})}
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 const IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1);
-let rec=null,recPaused=false,ac=null;
+let rec=null,recPaused=false,ac=null,lastPartial=null;
 function pauseRec(){if(engine==="sr"&&rec&&micOn&&IOS){recPaused=true;try{rec.abort()}catch(e){}}}
 function resumeRec(){if(recPaused){recPaused=false;setTimeout(()=>{if(micOn&&running){try{rec.start()}catch(e){}}},150)}}
 function unlockAudio(){try{if(synth){const u=new SpeechSynthesisUtterance(" ");u.volume=0;synth.speak(u)}}catch(e){}
@@ -650,29 +656,35 @@ function unlockAudio(){try{if(synth){const u=new SpeechSynthesisUtterance(" ");u
 function startMic(){
   if(dict){engine="dict";return dict.start({language:"en"}).then(()=>{micOn=true}).catch(e=>{micOn=false;throw e})}
   if(SR){engine="sr";
-    if(!rec){rec=new SR();rec.lang="en-US";rec.continuous=true;rec.interimResults=true;
-      rec.onresult=ev=>{let part="";for(let i=ev.resultIndex;i<ev.results.length;i++){const r=ev.results[i];if(r.isFinal)onFinal(r[0].transcript);else part+=r[0].transcript}if(part)onPartial(part)};
+    if(!rec){rec=new SR();rec.lang="en-US";rec.continuous=true;rec.interimResults=true;rec.maxAlternatives=5;
+      rec.onresult=ev=>{let part=null;for(let i=ev.resultIndex;i<ev.results.length;i++){const r=ev.results[i],alts=Array.from({length:r.length},(_,k)=>r[k]&&r[k].transcript).filter(Boolean);
+        if(r.isFinal){lastPartial=null;onFinal(alts)}else part=alts}
+        if(part&&part.length){lastPartial=part;onPartial(part)}};
       rec.onerror=ev=>{if(ev.error==="not-allowed"||ev.error==="service-not-allowed"){micOn=false;askWake("not_granted")}};
-      rec.onend=()=>{if(micOn&&running&&!recPaused)setTimeout(()=>{if(micOn&&running&&!recPaused){try{rec.start()}catch(e){}}},120)}}
+      rec.onend=()=>{if(lastPartial&&pending&&!speaking){const lp=lastPartial;lastPartial=null;onFinal(lp)}lastPartial=null;
+        if(micOn&&running&&!recPaused)setTimeout(()=>{if(micOn&&running&&!recPaused){try{rec.start()}catch(e){}}},120)}}
     try{rec.start()}catch(e){}micOn=true;return Promise.resolve()}
   return Promise.reject({code:"unavailable"});
 }
 function stopMic(){micOn=false;try{if(engine==="dict"&&dict)dict.stop();if(engine==="sr"&&rec)rec.abort()}catch(e){}}
-function onPartial(text){if(!text)return;if(!phraseStart)phraseStart=Date.now();
+/* escucha varias interpretaciones de lo que dijiste y se queda con la que más se parece */
+function onPartial(alts){alts=[].concat(alts).map(x=>(x||"").trim()).filter(Boolean);if(!alts.length)return;if(!phraseStart)phraseStart=Date.now();
   if(!pending||speaking||phraseStart<lastSpeakEnd+250)return;
-  showHeard((pending.buf+" "+text).trim(),true);
-  if(pending.timer){clearTimeout(pending.timer);pending.timer=setTimeout(pending.flush,pending.wait)}}
-function onFinal(text){const started=phraseStart||Date.now();phraseStart=0;
-  if(!pending||speaking||started<lastSpeakEnd+250)return;
-  text=(text||"").trim();if(!text)return;
-  pending.buf=(pending.buf+" "+text).trim();showHeard(pending.buf,false);
-  const c=command(pending.buf);if(c){const p=pending;pending=null;clearTimeout(p.timer);p.resolve({cmd:c});return}
-  if(pending.target&&compare(pending.target,pending.buf).ok){pending.flush();return}
-  clearTimeout(pending.timer);pending.timer=setTimeout(pending.flush,pending.wait)}
+  const p=pending,cands=alts.map(a=>(p.buf+" "+a).trim());showHeard(cands[0],true);
+  if(p.target){const hit=cands.find(x=>compare(p.target,x).ok);if(hit){p.buf=hit;phraseStart=0;lastPartial=null;p.flush();return}}
+  p.part=cands[0];clearTimeout(p.timer);p.timer=setTimeout(p.flush,p.wait+700)}
+function onFinal(alts){alts=[].concat(alts).map(x=>(x||"").trim()).filter(Boolean);const started=phraseStart||Date.now();phraseStart=0;
+  if(!pending||speaking||started<lastSpeakEnd+250||!alts.length)return;
+  const p=pending;let cands=alts.map(a=>(p.buf+" "+a).trim());
+  const c=command(cands[0]);if(c){pending=null;clearTimeout(p.timer);p.resolve({cmd:c});return}
+  if(p.target){const hit=cands.find(x=>compare(p.target,x).ok);if(hit){p.buf=hit;p.flush();return}
+    cands.sort((a,b)=>compare(p.target,a).dist-compare(p.target,b).dist)}
+  p.buf=cands[0];p.part="";showHeard(p.buf,false);
+  clearTimeout(p.timer);p.timer=setTimeout(p.flush,p.wait)}
 function listen(target,wait){
   return new Promise((resolve,reject)=>{
-    const p={target,buf:"",timer:null,wait:wait||1400,resolve};
-    p.flush=()=>{if(pending!==p)return;pending=null;clearTimeout(p.timer);resolve({text:p.buf})};
+    const p={target,buf:"",part:"",timer:null,wait:wait||1600,resolve};
+    p.flush=()=>{if(pending!==p)return;pending=null;clearTimeout(p.timer);resolve({text:p.buf||p.part})};
     pending=p;cancelPending=()=>{if(pending===p){pending=null;clearTimeout(p.timer);reject(CANCEL)}};
     setOrb("listen","Te escucho… habla");showHeard("",false);setAv("A","listen");
   });
@@ -1035,7 +1047,11 @@ function renderYo(app){
    ${DB.log.length?`<div class="cap">Lo último que se te atoró</div><div class="group">${DB.log.slice(0,6).map(m=>`<div class="phr"><span class="e">${esc(m.en)}</span><span class="s">Escuché: «${esc(m.heard||"nada")}»</span></div>`).join("")}</div>`:""}
    <button class="btn" id="yfix" ${weakItems(1).length&&canRun()?"":"disabled"}>${I.target}<span>Practicar mis fallas</span></button>
    <div class="sec-t"><h3>Voz</h3></div>
-   <div class="group"><label class="cell"><span class="grow"><strong>Emily habla despacio</strong><small>Para cuando estás empezando</small></span><input type="checkbox" id="slow" ${DB.settings.slow?"checked":""} style="width:24px;height:24px"></label></div>
+   <div class="group"><label class="cell"><span class="grow"><strong>Emily habla despacio</strong><small>Para cuando estás empezando</small></span><input type="checkbox" id="slow" ${DB.settings.slow?"checked":""} style="width:24px;height:24px"></label>
+     ${[["B","Voz de Emily"],["A","Voz de Stanley"]].map(([w,n])=>`<div class="cell" style="flex-wrap:wrap"><span class="grow" style="min-width:100%"><strong>${n}</strong></span>
+       <select id="v${w}" style="flex:1;min-width:0">${enVoices().map(v=>`<option value="${esc(v.voiceURI)}" ${V[w.toLowerCase()==="a"?"a":"b"]===v?"selected":""}>${esc(v.name)}${vScore(v)>=70?" ★":""}</option>`).join("")||"<option>Sin voces en inglés</option>"}</select>
+       <button class="btn small ghost" data-test="${w}">Probar</button></div>`).join("")}</div>
+   <div class="card sub" style="font-size:.9rem">Para que no suene robótica, descarga una voz de mejor calidad en tu iPhone: <b>Ajustes → Accesibilidad → Contenido leído → Voces → Inglés</b>. Para Emily: <b>Ava (Premium)</b> o <b>Zoe (Premium)</b>. Para Stanley: <b>Evan (Mejorada)</b> o <b>Nathan (Mejorada)</b>. Después vuelve aquí y elígelas (las buenas tienen ★).</div>
    <div class="sec-t" id="aiSec"><h3>Inteligencia</h3></div>
    <div class="card" style="display:grid;gap:10px">
      ${sample?`<p><b style="color:var(--ok)">Activa.</b> Estás usando la app dentro de Claude, así que Emily ya tiene inteligencia.</p>`
@@ -1051,6 +1067,8 @@ function renderYo(app){
   </div>`;
   $("#yfix").onclick=()=>start(t=>refuerzo(t));
   $("#slow").onchange=e=>{DB.settings.slow=e.target.checked;save()};
+  ["A","B"].forEach(w=>{const sel=$("#v"+w);if(sel)sel.onchange=()=>{DB.settings["voice"+w]=sel.value;save();pickVoices()}});
+  app.querySelectorAll("[data-test]").forEach(b=>b.onclick=()=>{unlockAudio();const w=b.dataset.test;speak(w==="B"?"Hey Stanley! How's it going? I'm Emily.":"Hey Emily! I'm doing great, thanks.",w)});
   const ks=$("#ksave");if(ks)ks.onclick=()=>{DB.settings.key=$("#key").value.trim();save();toast(DB.settings.key?"Llave guardada":"Llave vacía");render()};
   const kd=$("#kdel");if(kd)kd.onclick=()=>{DB.settings.key="";save();render()};
   $("#exp").onclick=async()=>{const data=JSON.stringify(Object.assign({},DB,{settings:Object.assign({},DB.settings,{key:""})}));
@@ -1110,7 +1128,7 @@ function addBubble(who,text){const ch=$("#schat");if(!ch)return;const b=document
 function feedback(r,msg){const f=$("#sfb");if(!f)return;if(!r&&!msg){f.hidden=true;return}f.hidden=false;
   if(msg){f.className="fb "+(r&&r.ok?"ok":"bad");f.textContent=msg;return}
   if(r.ok){f.className="fb ok";f.textContent=["¡Eso!","¡Perfecto!","¡Así se dice!","¡Muy bien!","¡Como nativo!"][Math.floor(Math.random()*5)];return}
-  f.className="fb bad";f.innerHTML=r.heardWords.length?"Casi. Revisa lo marcado: "+r.words.map((w,i)=>r.miss[i]?"<mark>"+esc(w)+"</mark>":esc(w)).join(" "):"No te escuché. Habla un poquito más fuerte."}
+  f.className="fb bad";f.innerHTML=r.heardWords.length?"Casi. Revisa lo marcado: "+r.words.map((w,i)=>r.miss[i]?"<mark>"+esc(w)+"</mark>":esc(w)).join(" "):"No te escuché. Acerca el teléfono o usa audífonos con micrófono."}
 function askWake(reason){
   if(document.querySelector(".wake")||!running)return;
   const msg=reason==="not_granted"?"El micrófono está bloqueado. En iPhone: Ajustes → Safari → Micrófono → Permitir. Luego toca el botón.":
@@ -1153,8 +1171,8 @@ async function runUnit(u,t){
     setPhase("Escucha",u.n);await sayEs("Escucha la plática completa.",t);
     for(const l of u.l){showCard(l,"listen");feedback(null);await sayLine(l,t);addBubble(l[0],l[1]);await wait(250)}
   }else{
-    setPhase("Aprende",u.n);await sayEs("Repite después de mí.",t);
-    const again=[];for(const l of u.l){const ok=await drill(l,"repeat",t);if(!ok)again.push(l);addBubble(l[0],l[1]);if(l[0]==="A")tick()}
+    setPhase("Aprende",u.n+(u.dlg?" <b>Emily dice lo suyo; tú repites sólo lo de Stanley.</b>":""));await sayEs(u.dlg?"Escucha a Emily y repite lo de Stanley.":"Repite después de mí.",t);
+    const again=[];for(const l of u.l){if(l[0]==="B"){showCard(l,"listen");feedback(null);await sayLine(l,t);await wait(250)}else{const ok=await drill(l,"repeat",t);if(!ok)again.push(l);tick()}addBubble(l[0],l[1])}
     for(const l of again)await drill(l,"repeat",t);
   }
   if(u.dlg){
