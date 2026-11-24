@@ -292,8 +292,8 @@ function speak(text,who,lang){
     if(lang==="es"){u.voice=V.es;u.lang=V.es?V.es.lang:"es-MX";u.rate=1.02}
     else{u.voice=who==="A"?V.a:V.b;u.lang="en-US";u.rate=slowNext?0.62:0.9;
       if(who==="A"&&V.a===V.b)u.pitch=0.75; if(who==="B")u.pitch=1.08}
-    slowNext=false; speaking=true; setOrb("speak", who==="A"?"Stanley (modelo)":lang==="es"?"Guía":"Emily habla");
-    let done=false;const fin=()=>{if(done)return;done=true;speaking=false;lastSpeakEnd=Date.now();res()};
+    slowNext=false; speaking=true; pauseRec(); setOrb("speak", who==="A"?"Stanley (modelo)":lang==="es"?"Guía":"Emily habla");
+    let done=false;const fin=()=>{if(done)return;done=true;speaking=false;lastSpeakEnd=Date.now();resumeRec();res()};
     u.onend=fin;u.onerror=fin;
     setTimeout(fin, 2500+text.length*110);
     synth.speak(u);
@@ -317,7 +317,13 @@ capP.then(([d,s])=>{dict=d;sample=s;dictReady=true;
   if(view==="home")renderHome();
 });
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-let rec=null;
+const IOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&navigator.maxTouchPoints>1);
+let rec=null, recPaused=false;
+function pauseRec(){ if(engine==="sr"&&rec&&micOn&&IOS){recPaused=true;try{rec.abort()}catch(e){}} }
+function resumeRec(){ if(recPaused){recPaused=false; setTimeout(()=>{if(micOn&&running){try{rec.start()}catch(e){}}},150)} }
+function unlockAudio(){ /* Safari sólo deja hablar si la primera voz sale de un toque */
+  try{if(synth){const u=new SpeechSynthesisUtterance(" ");u.volume=0;synth.speak(u)}}catch(e){}
+  try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){} }
 function startMic(){ /* se llama directo desde un toque */
   if(dict){engine="dict";
     return dict.start({language:"en"}).then(()=>{micOn=true}).catch(e=>{micOn=false;throw e});}
@@ -327,7 +333,7 @@ function startMic(){ /* se llama directo desde un toque */
         if(r.isFinal)onFinal(r[0].transcript);else part+=r[0].transcript}
         if(part)onPartial(part)};
       rec.onerror=ev=>{if(ev.error==="not-allowed"||ev.error==="service-not-allowed"){micOn=false;askWake("not_granted")}};
-      rec.onend=()=>{if(micOn&&running){try{rec.start()}catch(e){}}};}
+      rec.onend=()=>{if(micOn&&running&&!recPaused){setTimeout(()=>{if(micOn&&running&&!recPaused){try{rec.start()}catch(e){}}},120)}};}
     try{rec.start()}catch(e){}
     micOn=true;return Promise.resolve();
   }
@@ -410,7 +416,7 @@ function renderHome(){
       <span class="st">${cur>=all?"Ahora":"Bloqueada"}</span></li>
   </ol>
   <button class="link" id="reset">Borrar mi progreso</button>`;
-  $("#go").onclick=()=>{ startMic().then(()=>{}).catch(e=>{askWake(e&&e.code)}); runFrom(cur) };
+  $("#go").onclick=()=>{ unlockAudio(); startMic().then(()=>{}).catch(e=>{askWake(e&&e.code)}); runFrom(cur) };
   $("#reset").onclick=()=>{const b=$("#reset");if(b.dataset.sure){P={done:[],cur:0};save();renderHome()}else{b.dataset.sure=1;b.textContent="Toca otra vez para confirmar: se borra todo"}};
 }
 
@@ -465,7 +471,7 @@ function askWake(reason){
   w.innerHTML=`<div><p>${msg}</p><button class="big" id="wk">${MIC}<span>Prender micrófono</span></button>
     <button class="link" id="wkx">Volver al inicio</button></div>`;
   document.body.appendChild(w);
-  $("#wk").onclick=()=>{startMic().then(()=>w.remove()).catch(e=>{w.querySelector("p").textContent=e&&e.code==="not_granted"?"El micrófono sigue bloqueado. Revisa los permisos de la página.":"No se pudo prender. Intenta otra vez."})};
+  $("#wk").onclick=()=>{unlockAudio();startMic().then(()=>w.remove()).catch(e=>{w.querySelector("p").textContent=e&&e.code==="not_granted"?"El micrófono sigue bloqueado. Revisa los permisos de la página.":"No se pudo prender. Intenta otra vez."})};
   $("#wkx").onclick=()=>{w.remove();stopAll()};
 }
 function stopAll(){running=false;token++;cancelPending();stopMic();if(synth)synth.cancel();renderHome()}
