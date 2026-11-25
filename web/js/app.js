@@ -88,6 +88,8 @@
     $('kAnthropic').value = MM.settings.anthropicKey; $('kFal').value = MM.settings.falKey;
     $('quality').value = MM.settings.quality; $('mT2V').value = MM.settings.t2vModel;
     $('mI2V').value = MM.settings.i2vModel; $('mWhisper').value = MM.settings.whisperModel; $('mMusic').value = MM.settings.musicModel; $('mTTS').value = MM.settings.ttsModel;
+    $('engine').value = MM.settings.videoEngine || 'auto'; $('colabURL').value = MM.settings.colabURL || '';
+    $('hfToken').value = MM.settings.hfToken || ''; $('hfSpaces').value = MM.settings.hfSpaces || MM.DEFAULT_HF_SPACES;
     $('settingsSheet').hidden = false;
   }
   $('openSettings').onclick = openSettings;
@@ -101,6 +103,8 @@
       whisperModel: $('mWhisper').value.trim() || MM.defaults.whisperModel,
       musicModel: $('mMusic').value.trim() || MM.defaults.musicModel,
       ttsModel: $('mTTS').value.trim() || MM.defaults.ttsModel,
+      videoEngine: $('engine').value, colabURL: $('colabURL').value.trim(), hfToken: $('hfToken').value.trim(),
+      hfSpaces: $('hfSpaces').value.trim() || MM.DEFAULT_HF_SPACES,
     });
     MM.saveSettings();
     $('settingsSheet').hidden = true;
@@ -146,11 +150,12 @@
     await Promise.all(added.map(async (src) => {
       src.frames = await MM.sampleFrames(src, project.sources.length > 3 ? 4 : undefined).catch(() => []);
     }));
-    if (MM.settings.falKey) {
+    if (added.some((s) => s.audio)) {
       onAgent('sound', 'working');
-      await Promise.all(added.filter((s) => s.audio).map(async (src) => {
-        try { src.words = await MM.transcribe(src, (s) => status('🎧 Escuchando el audio… ' + s)); } catch (e) { src.words = []; }
-      }));
+      for (const src of added.filter((s) => s.audio)) {
+        try { src.words = await MM.transcribe(src, (s) => status('🎧 Escuchando el audio… ' + s)); }
+        catch (e) { src.words = []; say('error', 'Subtítulos: ' + e.message); }
+      }
       $('agent-sound').dataset.state = 'idle';
     }
     return added;
@@ -167,7 +172,6 @@
       await addSources(files);
       if (!project.sources.length) throw new Error('No pude abrir ningún archivo.');
       applyPlan(MM.sanitizePlan(MM.emptyPlan(project), project), false);
-      if (!MM.settings.falKey) say('ai', 'Tip: con una key de fal.ai en Ajustes también pongo subtítulos automáticos y escenas con IA.', 'producer');
       const t0 = performance.now();
       const result = await MM.teamEdit(project, onAgent, (p) => { kickGeneration(p); applyPlan(MM.sanitizePlan(JSON.parse(JSON.stringify(p)), project), false); });
       applyPlan(result, false);
@@ -182,7 +186,7 @@
 
   async function startCreate(idea, format) {
     if (!idea) { $('idea').focus(); return; }
-    if (!MM.settings.anthropicKey || !MM.settings.falKey) {
+    if (!MM.settings.anthropicKey) {
       openSettings();
       return;
     }
@@ -222,7 +226,7 @@
     if (!plan) return;
     const a = plan.audio;
     if (a.music || !a.musicMood || a.musicMood === 'none') return;
-    const useAI = !!(a.musicPrompt && MM.settings.falKey);
+    const useAI = !!(a.musicPrompt && (MM.settings.colabURL || (MM.settings.falKey && MM.videoEngine() === 'fal')));
     const name = useAI ? 'IA · ' + a.musicPrompt.slice(0, 40) : 'Base · ' + a.musicMood;
     let song = project.songs.find((s) => s.name === name);
     if (!song) {
@@ -249,7 +253,6 @@
   function kickGeneration(p) {
     const missing = p.segments.filter((s) => s.kind === 'ai_video' && !project.aiClips[MM.aiKey(s)] && !pending[MM.aiKey(s)]);
     if (!missing.length) return Promise.resolve();
-    if (!MM.settings.falKey) { say('error', 'Para escenas con IA pon tu key de fal.ai en Ajustes.'); return Promise.resolve(); }
     return generateAll(p);
   }
   async function generateAll(p) {

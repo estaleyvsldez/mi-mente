@@ -150,14 +150,27 @@
   /// Transcribe lo que se dice (Whisper en fal.ai, cualquier idioma) → palabras con tiempos.
   /// Los videos largos se parten en bloques de 4 min que se transcriben a la vez.
   MM.transcribe = async (src, onStatus) => {
-    if (!src.audio || !MM.settings.falKey) return [];
+    if (!src.audio) return [];
+    const engine = MM.settings.falKey && MM.videoEngine() === 'fal' ? 'fal' : MM.settings.colabURL ? 'colab' : 'local';
+    if (engine === 'local') {
+      // Gratis, en tu equipo: por bloques para no llenar la memoria.
+      const all = [];
+      for (let t = 0; t < src.audio.duration; t += 600) {
+        const part = sliceBuffer(src.audio, t, Math.min(src.audio.duration, t + 600));
+        const words = await MM.localTranscribe(part, onStatus);
+        words.forEach((w) => { w.start += t; w.end += t; all.push(w); });
+      }
+      return all;
+    }
     const CH = 240;
     const parts = [];
     for (let t = 0; t < src.audio.duration; t += CH) parts.push([t, Math.min(src.audio.duration, t + CH)]);
     let done = 0;
     const all = [];
     const run = async ([a, b]) => {
-      const words = await transcribePart(sliceBuffer(src.audio, a, b), parts.length > 1 ? null : onStatus);
+      const piece = sliceBuffer(src.audio, a, b);
+      const words = engine === 'colab' ? await MM.colabTranscribe(MM.wavDataURL(piece), parts.length > 1 ? null : onStatus)
+        : await transcribePart(piece, parts.length > 1 ? null : onStatus);
       words.forEach((w) => { w.start += a; w.end += a; });
       all.push(...words);
       done++;

@@ -468,7 +468,7 @@ button.card:active { transform: scale(.995); }
       <p class="kicker">Sala de edición con IA</p>
       <p class="headline">Tu propio equipo de edición, <em>trabajando contigo.</em></p>
       <p class="tag">Editor, colorista, diseñador, VFX y sonido trabajan a la vez sobre tus clips. También crea videos desde una idea y produce series enteras.</p>
-      <div id="keyBanner" class="banner" hidden>Para empezar, pon tu API key de Anthropic en Ajustes. La de fal.ai se usa para video con IA y subtítulos.</div>
+      <div id="keyBanner" class="banner" hidden>Para empezar, pon tu API key de Anthropic en Ajustes. El video con IA, los subtítulos y la música son gratis (Hugging Face, tu Colab o en tu propio equipo).</div>
 
       <div class="monitor" aria-hidden="true">
         <div class="mon-head"><span class="live"></span><span>El equipo en vivo</span><span class="mon-tc">00:00:12:08</span></div>
@@ -514,7 +514,7 @@ button.card:active { transform: scale(.995); }
           <button class="pill" data-f="1:1" aria-pressed="false"><span class="ar r11" aria-hidden="true"></span><span class="fmt-name">1:1</span><span class="fmt-sub">Cuadrado</span></button>
         </div>
         <button class="btn" id="startCreate">Crear video con IA</button>
-        <p class="small">Usa tu key de fal.ai (Kling). Cada toma tarda 1–4 min y cuesta entre centavos y ~1 USD.</p>
+        <p class="small">Gratis con modelos open source (LTX-Video, Wan) en Hugging Face o tu Colab. Cada toma tarda unos minutos y a veces hay fila.</p>
       </article>
 
       <article class="card bay-studio">
@@ -596,19 +596,35 @@ button.card:active { transform: scale(.995); }
     <div class="field-group">
       <div class="ctl"><label for="kAnthropic">API key de Anthropic (el equipo de IA)</label>
         <input type="password" id="kAnthropic" placeholder="sk-ant-…" autocomplete="off"></div>
-      <div class="ctl"><label for="kFal">Key de fal.ai (video con IA y subtítulos)</label>
-        <input type="password" id="kFal" placeholder="opcional" autocomplete="off"></div>
+    </div>
+    <div class="field-group">
+      <div class="ctl"><label for="engine">Motor de video con IA</label>
+        <select id="engine">
+          <option value="auto">Gratis automático (Colab si está conectado, si no Hugging Face)</option>
+          <option value="colab">Gratis · mi Google Colab</option>
+          <option value="hf">Gratis · demos de Hugging Face</option>
+          <option value="fal">De pago · fal.ai (más rápido)</option>
+        </select></div>
+      <div class="ctl"><label for="colabURL">Link de tu Colab gratis (video, subtítulos, música y voz)</label>
+        <input type="text" id="colabURL" placeholder="https://xxxx.trycloudflare.com" autocomplete="off" inputmode="url"></div>
+      <p class="small">Abre el cuaderno gratis, dale ▶ a todo y pega aquí el link que te da:
+        <a href="https://colab.research.google.com/github/estaleyvsldez/mi-mente/blob/claude/video-editing-app-ai-2xnavh/web/colab/MiMente_Motor_Gratis.ipynb" target="_blank" rel="noopener">abrir el cuaderno en Google Colab</a>.</p>
+      <div class="ctl"><label for="hfToken">Token gratis de Hugging Face (opcional: más videos gratis al día)</label>
+        <input type="password" id="hfToken" placeholder="hf_…" autocomplete="off"></div>
     </div>
     <div class="ctl"><label for="quality">Calidad de exportación</label>
       <select id="quality"><option value="720">720p (rápido)</option><option value="1080">1080p Full HD</option><option value="1440">1440p 2K</option><option value="4k">2160p 4K (máxima calidad)</option></select></div>
-    <details><summary>Modelos (avanzado)</summary>
+    <details><summary>Opcional de pago y modelos (avanzado)</summary>
+      <div class="ctl"><label for="kFal">Key de fal.ai (opcional, de pago)</label>
+        <input type="password" id="kFal" placeholder="opcional" autocomplete="off"></div>
+      <div class="ctl"><label for="hfSpaces">Demos gratis de Hugging Face (en orden)</label><input type="text" id="hfSpaces"></div>
       <div class="ctl"><label for="mT2V">Texto → video</label><input type="text" id="mT2V"></div>
       <div class="ctl"><label for="mI2V">Imagen → video</label><input type="text" id="mI2V"></div>
       <div class="ctl"><label for="mWhisper">Transcripción</label><input type="text" id="mWhisper"></div>
       <div class="ctl"><label for="mMusic">Música IA</label><input type="text" id="mMusic"></div>
       <div class="ctl"><label for="mTTS">Voz IA (narración)</label><input type="text" id="mTTS"></div>
     </details>
-    <p class="small">Las keys se guardan solo en este navegador. Crea la de Anthropic en console.anthropic.com y la de fal.ai en fal.ai → Keys.</p>
+    <p class="small">Todo se guarda solo en este navegador. La key de Anthropic se crea en console.anthropic.com. El token de Hugging Face es gratis: huggingface.co → Settings → Access Tokens.</p>
     <div class="row actions"><button class="btn ghost" id="closeSettings">Cancelar</button><button class="btn" id="saveSettings">Guardar</button></div>
   </div>
 </div>
@@ -643,6 +659,7 @@ button.card:active { transform: scale(.995); }
 <script src="js/media.js"></script>
 <script src="js/plan.js"></script>
 <script src="js/ai.js"></script>
+<script src="js/free.js"></script>
 <script src="vendor/mp4-muxer.js"></script>
 <script src="js/player.js"></script>
 <script src="js/export.js"></script>

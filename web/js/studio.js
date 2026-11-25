@@ -55,9 +55,9 @@
         ctl('Estilo visual', el('input', { id: 'stStyle', type: 'text', placeholder: 'realista cinematográfico, anime, 3D tipo Pixar…' })),
         ctl('Formato', sel('stFormat', [['16:9', '16:9 YouTube / TV'], ['9:16', '9:16 TikTok / Reels'], ['1:1', '1:1']])),
       ),
-      el('label', { class: 'small' }, el('input', { id: 'stVoice', type: 'checkbox', checked: 'checked' }), ' Narración con voz IA (fal.ai)'),
+      el('label', { class: 'small' }, el('input', { id: 'stVoice', type: 'checkbox', checked: 'checked' }), ' Narración con voz IA (gratis con tu Colab)'),
       el('button', { class: 'btn', 'data-busy': '1', onclick: createSeries, text: 'Escribir la historia' }),
-      el('p', { class: 'small', text: 'Cada toma de 5 s cuesta en fal.ai entre centavos y ~0.5 USD según el modelo. Un capítulo de 1 min ≈ 12 tomas. Tú apruebas el guion antes de que se genere nada.' }),
+      el('p', { class: 'small', text: 'Las tomas se generan gratis con modelos open source (Hugging Face o tu Colab). Un capítulo de 1 min ≈ 12 tomas: con Colab tarda unos 20–40 min, en Hugging Face depende de la fila. Tú apruebas el guion antes de que se genere nada.' }),
     );
     box.appendChild(form);
     if (series.length) {
@@ -215,7 +215,6 @@
       finally { setWorking(false); }
       return;
     }
-    if (!MM.settings.falKey) { log('Para producir necesitas tu key de fal.ai (Ajustes).', 'error'); return; }
     state.approved = true;
     await saveSeries(series);
     const shots = state.script.scenes.flatMap((sc, si) => sc.shots.map((sh) => ({ ...sh, scene: si })));
@@ -260,7 +259,7 @@
           });
         });
       }
-      const workers = Array.from({ length: 4 }, async () => { while (queue.length) await queue.shift()(); });
+      const workers = Array.from({ length: MM.videoEngine() === 'hf' ? 1 : MM.videoEngine() === 'colab' ? 2 : 4 }, async () => { while (queue.length) await queue.shift()(); });
       await Promise.all(workers);
 
       const plan = {

@@ -87,6 +87,9 @@
   /// Genera un clip de video con IA (desde texto o desde una imagen).
   MM.generateClip = async ({ prompt, camera, imageURL, seconds, aspect }, onStatus) => {
     const full = `${prompt}. Camera: ${MM.CAMERA_TEXT[camera] || 'steady camera'}.`;
+    const engine = MM.videoEngine();
+    if (engine === 'colab') return MM.colabVideo({ prompt: full, imageURL, seconds, aspect }, onStatus);
+    if (engine === 'hf') return MM.hfVideo({ prompt: full, imageURL, seconds, aspect }, onStatus);
     const model = imageURL ? MM.settings.i2vModel : MM.settings.t2vModel;
     const input = { prompt: full };
     if (imageURL) input.image_url = imageURL;
@@ -104,6 +107,10 @@
 
   /// Música original generada con IA (fal.ai).
   MM.generateMusic = async (prompt, onStatus) => {
+    if (MM.videoEngine() !== 'fal') {
+      if (!MM.settings.colabURL) throw new Error('la música IA gratis necesita tu Colab conectado');
+      return MM.audioCtx().decodeAudioData(await MM.colabMusic(prompt, 30, onStatus));
+    }
     const r = await MM.fal.run(MM.settings.musicModel, { prompt }, onStatus);
     const url = r?.audio?.url || r?.audio_file?.url || r?.output?.audio?.url || r?.audio_url || (Array.isArray(r?.audios) && r.audios[0]?.url);
     if (!url) throw new Error('La IA no devolvió música.');
@@ -113,6 +120,10 @@
 
   /// Narración con voz IA: devuelve los bytes del audio (para guardarlos y no pagar dos veces).
   MM.generateVoiceBytes = async (text, onStatus) => {
+    if (MM.videoEngine() !== 'fal') {
+      if (!MM.settings.colabURL) throw new Error('la voz IA gratis necesita tu Colab conectado');
+      return MM.colabVoice(text, onStatus);
+    }
     const r = await MM.fal.run(MM.settings.ttsModel, { text }, onStatus);
     const url = r?.audio?.url || r?.audio_file?.url || r?.audio_url || r?.output?.url;
     if (!url) throw new Error('La IA no devolvió la voz.');
@@ -216,7 +227,8 @@
     });
     content.push({ type: 'text', text: [
       'Imported songs: ' + (project.songs.length ? project.songs.map((s) => s.name).join(', ') : '(none)'),
-      'AI video generation: ' + (MM.settings.falKey ? 'AVAILABLE' : 'NOT configured (no fal.ai key) — do not use ai_video'),
+      'AI video generation: AVAILABLE via ' + MM.engineLabel() + (MM.videoEngine() === 'hf' ? ' — free public demos: slow and with a daily quota, so use at most 1–2 new ai_video shots and only when they add a lot' : ''),
+      'AI music: ' + (MM.videoEngine() === 'fal' || MM.settings.colabURL ? 'available via musicPrompt' : 'only composed mood beds (leave musicPrompt "")'),
     ].join('\n') });
     return content;
   }
@@ -440,7 +452,7 @@ Each issue: severity blocker|major|minor, ONE department (story|color|text|vfx|s
     try {
       route = await claude({
         system: PRODUCER, effort: 'low', maxTokens: 8000, schema: SCHEMAS.producer(), timeoutMs: 90000,
-        content: [{ type: 'text', text: `Current edit: ${JSON.stringify(summary)}\nAI video generation: ${MM.settings.falKey ? 'available' : 'not configured'}\nRecent conversation:\n${(project.chatLog || []).slice(-6).join('\n') || '(none)'}\nUser request (verbatim): ${request}` }],
+        content: [{ type: 'text', text: `Current edit: ${JSON.stringify(summary)}\nAI video generation: available via ${MM.engineLabel()}\nRecent conversation:\n${(project.chatLog || []).slice(-6).join('\n') || '(none)'}\nUser request (verbatim): ${request}` }],
       });
     } catch (e) { onAgent('producer', 'error', e.message); throw e; }
     onAgent('producer', 'done', route.reply);

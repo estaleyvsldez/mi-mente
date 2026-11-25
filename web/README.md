@@ -6,11 +6,17 @@ iPhone: Safari → Compartir → **Agregar a pantalla de inicio**. Laptop Dell: 
 
 ## Primer uso (2 minutos)
 1. Toca ⚙︎ **Ajustes**.
-2. **API key de Anthropic** (obligatoria, es el equipo de IA): console.anthropic.com → API Keys → Create Key.
-3. **Key de fal.ai** (recomendada): video con IA, subtítulos automáticos, música y voz IA. fal.ai → Dashboard → Keys.
-4. Elige la calidad de exportación (hasta **4K**).
-
-Las keys se quedan guardadas solo en tu navegador.
+2. **API key de Anthropic** (es el equipo de IA que edita; cuesta centavos por edición):
+   console.anthropic.com → API Keys → Create Key.
+3. Listo. **El video con IA, los subtítulos, la música y la voz son GRATIS** con modelos open source:
+   - **Hugging Face** (automático, sin instalar nada): usa los demos públicos de LTX-Video y Wan. Hay fila y una
+     cuota diaria; con un **token gratis** de Hugging Face (huggingface.co → Settings → Access Tokens) tienes más.
+   - **Tu Google Colab gratis** (más potente y sin fila): abre
+     [el cuaderno](https://colab.research.google.com/github/estaleyvsldez/mi-mente/blob/claude/video-editing-app-ai-2xnavh/web/colab/MiMente_Motor_Gratis.ipynb),
+     Entorno de ejecución → **GPU T4** → **Ejecutar todo**, copia el link `…trycloudflare.com` y pégalo en Ajustes.
+     Corre LTX-Video (video), Whisper (subtítulos), MusicGen (música) y MMS (voz). Deja la pestaña abierta.
+   - **Subtítulos en tu equipo**: sin Colab, Whisper corre dentro del navegador (la primera vez baja ~80 MB).
+4. fal.ai queda como opción de pago (más rápida) en Ajustes → avanzado. No hace falta.
 
 ## Qué hace
 - **Le hablas normal y lo hace todo** ("quita esa parte", "ponle colores fuertes", "más risa en el chiste").
@@ -38,5 +44,7 @@ Las keys se quedan guardadas solo en tu navegador.
   Guárdalo en tu galería y súbelo como **video de referencia** (botón ＋): el equipo copia el estilo y lo mejora.
 - **Videos muy largos en el iPhone**: Safari tiene poca memoria. Hasta ~20–30 min va bien en el teléfono.
   Para películas largas o 4K largo usa la laptop.
-- **Video con IA**: cada toma de 5 s cuesta en fal.ai entre centavos y ~0.5 USD según el modelo, y tarda
-  1–4 min. Se generan varias a la vez. En el Estudio apruebas el guion antes de gastar.
+- **Video con IA gratis**: los modelos gratis (LTX-Video, Wan) hacen tomas de buena calidad pero menos
+  realistas que los de pago (Kling/Veo), y tardan: en Colab ~2–5 min por toma; en Hugging Face depende de la
+  fila y de la cuota diaria. Google Colab gratis da unas horas de GPU al día.
+- **El equipo de IA que edita** (Claude) sí cuesta centavos por edición con tu key de Anthropic.
