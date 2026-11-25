@@ -28,6 +28,10 @@ IA rehace la edición.
 | **Efectos** | cámara: zoom, punch-in, Ken Burns, temblor, cámara en mano · estilo: glitch, RGB split, VHS, película vieja, light leak, flash, estrobo, zoom blur, motion blur, enfoque, espejo, caleidoscopio, pixelado, cómic, póster, boceto, bordes neón, duotono, térmico, invertir, ciclo de color, glow soñador, franjas de cine · **con detección de persona**: fondo desenfocado, color pop, contorno brillante, foco de luz |
 | Transiciones | corte, crossfade, fundido a negro, flash, zoom in/out, deslizar, whip pan, giro, glitch, blur, iris, cortinilla, light leak |
 | Escenas IA | gráficos animados (degradados) o zoom "Ken Burns" sobre un cuadro de tu video, con título |
+| **Escenas con IA real** (tipo Higgsfield) | video generado por IA (Kling/Wan vía fal.ai): **otro ángulo de cámara** desde un cuadro de tu video, o escenas nuevas desde texto · 20 movimientos de cámara (dolly, órbita, grúa, dron FPV, bullet time, crash zoom…) |
+| **Estudio de audio** | cancelador de ruido · EQ de 3 bandas · compresor · de-esser · reverb (sala, estudio, hall, catedral, plate) · tono · volumen parejo · 15 voces (podcast, locutor, grave, robot, alien, teléfono, megáfono, walkie, cueva, estadio, bajo el agua…) · música importada con **auto-ducking** (baja sola cuando hablas) |
+| **Video de referencia** | elige un video que te guste y la IA copia su estilo: ritmo de cortes, color, tipografía, efectos y formato |
+| **Editor de fotos** | la IA la retoca sola · todo el color pro y los efectos · textos de diseño (también detrás de la persona) · recorte, enderezar · suavizar piel · quitar / desenfocar / cambiar fondo · **relleno generativo** (quitar personas, cambiar el cielo, otro ángulo…) |
 | **Editor pro manual** | botón de deslizadores: clips, color completo, cada texto, cada efecto, subtítulos, formato y audio |
 
 > Las "escenas con IA" son gráficos animados que se generan en el iPhone. Generar video
@@ -36,7 +40,9 @@ IA rehace la edición.
 
 ## Ponerla en tu iPhone
 
-Necesitas una **Mac con Xcode 16 o más nuevo**. Apple solo deja instalar apps propias desde Xcode
+**Sin laptop:** sigue [TESTFLIGHT.md](TESTFLIGHT.md) — una Mac en la nube de GitHub la compila y te llega por TestFlight.
+
+**Con una Mac:** necesitas **Xcode 16 o más nuevo**. Apple solo deja instalar apps propias desde Xcode
 (o desde TestFlight con cuenta de desarrollador de pago).
 
 ```bash
@@ -61,8 +67,11 @@ Con un Apple ID gratis la app deja de abrir a los 7 días; vuelves a darle ▶�
 
 ## Costos
 
-Cada edición es una llamada a la API de Anthropic que pagas con tu key (centavos por edición,
-según lo largo del video). La key se guarda en el llavero del iPhone. **No publiques la app en la
+- Cada edición es una llamada a la API de Anthropic que pagas con tu key (centavos por edición,
+  según lo largo del video).
+- Las escenas con IA real y el relleno generativo usan tu key de **fal.ai** (opcional): pagas por uso,
+  desde centavos hasta ~1 USD por escena según el modelo. Los modelos se cambian en Ajustes.
+- Lo demás (color, efectos, textos, audio, quitar fondo) se procesa gratis en el iPhone. La key se guarda en el llavero del iPhone. **No publiques la app en la
 App Store así**, con la key dentro del teléfono: para eso hace falta un servidor propio que guarde la key.
 
 ## Estructura
