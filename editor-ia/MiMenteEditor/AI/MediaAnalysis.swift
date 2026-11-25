@@ -108,14 +108,15 @@ enum Transcriber {
         func flush() {
             guard let first = current.first, let last = current.last else { return }
             let text = current.map(\.substring).joined(separator: " ")
-            lines.append(CaptionLine(start: first.timestamp, end: last.timestamp + last.duration, text: text))
+            let words = current.map { CaptionWord(text: $0.substring, start: $0.timestamp, end: $0.timestamp + $0.duration) }
+            lines.append(CaptionLine(start: first.timestamp, end: last.timestamp + last.duration, text: text, words: words))
             current.removeAll()
         }
         for w in words {
             if let last = current.last {
                 let gap = w.timestamp - (last.timestamp + last.duration)
                 let endsSentence = last.substring.last.map { ".?!".contains($0) } ?? false
-                if gap > 0.6 || current.count >= 6 || endsSentence { flush() }
+                if gap > 0.6 || current.count >= 8 || endsSentence { flush() }
             }
             current.append(w)
         }

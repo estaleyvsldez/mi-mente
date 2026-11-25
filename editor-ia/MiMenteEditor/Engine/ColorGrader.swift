@@ -2,98 +2,148 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 import UIKit
 
-/// Aplica el "look" de color del plan a cada cuadro.
-enum ColorGrader {
-    static func apply(_ input: CIImage, grade: ColorGrade, rect: CGRect) -> CIImage {
+/// Aplica un ColorGrade a un cuadro: LUT 3D tonal + LUT importado + acabados espaciales.
+/// Se crea una vez por edición (los LUTs se calculan al inicio, no en cada cuadro).
+final class ColorGrader {
+    let grade: ColorGrade
+    private let cube: CIFilter?
+    private let userCube: CIFilter?
+    private let spatial: (clarity: Double, sharpen: Double, grain: Double, bloom: Double, halation: Double, vignette: Double)
+    private let isNeutral: Bool
+
+    init(grade: ColorGrade) {
+        self.grade = grade
+        var tonal = grade
+        tonal.lut = ""
+        isNeutral = tonal == .neutral || (tonal.preset == .none && ColorGrader.isTonalNeutral(tonal))
+        cube = isNeutral ? nil : ColorLUT.filter(for: grade)
+        if let lut = ColorLUT.loadLUT(named: grade.lut) {
+            let f = CIFilter(name: "CIColorCubeWithColorSpace")
+            f?.setValue(lut.dimension, forKey: "inputCubeDimension")
+            f?.setValue(lut.data, forKey: "inputCubeData")
+            f?.setValue(CGColorSpace(name: CGColorSpace.sRGB), forKey: "inputColorSpace")
+            userCube = f
+        } else {
+            userCube = nil
+        }
+        spatial = ColorLUT.spatial(grade)
+    }
+
+    private static func isTonalNeutral(_ g: ColorGrade) -> Bool {
+        var n = ColorGrade.neutral
+        n.skinProtect = g.skinProtect
+        n.presetIntensity = g.presetIntensity
+        n.clarity = g.clarity; n.sharpen = g.sharpen; n.grain = g.grain
+        n.bloom = g.bloom; n.halation = g.halation; n.vignette = g.vignette
+        n.lutIntensity = g.lutIntensity
+        n.splitShadows = g.splitShadows; n.splitHighlights = g.splitHighlights
+        return n == g
+    }
+
+    func apply(_ input: CIImage, rect: CGRect, time: Double) -> CIImage {
         var img = input
-        var contrast = grade.contrast
-        var saturation = grade.saturation
-        var exposure = grade.exposure
-        var temperature = grade.temperature
-        var vignette = grade.vignette
 
-        switch grade.preset {
-        case .none: break
-        case .cinematic:
-            contrast *= 1.12; saturation *= 0.9; vignette = max(vignette, 0.3)
-            img = matrix(img, r: 1.0, g: 1.0, b: 1.0, bias: (-0.01, 0.0, 0.025))
-        case .warm:
-            temperature += 0.35; saturation *= 1.05
-        case .cool:
-            temperature -= 0.35
-        case .vintage:
-            img = sepia(img, 0.35)
-            contrast *= 0.9; saturation *= 0.85
-            img = matrix(img, r: 0.94, g: 0.94, b: 0.92, bias: (0.05, 0.045, 0.04))
-            vignette = max(vignette, 0.35)
-        case .blackWhite:
-            img = img.applyingFilter("CIPhotoEffectNoir")
-            saturation = 0
-        case .vibrant:
-            let f = CIFilter.vibrance(); f.inputImage = img; f.amount = 0.6
-            img = f.outputImage ?? img
-            saturation *= 1.15; contrast *= 1.06
-        case .tealOrange:
-            // Sombras hacia azul verdoso, tonos de piel hacia naranja.
-            let f = CIFilter.colorMatrix()
-            f.inputImage = img
-            f.rVector = CIVector(x: 1.08, y: 0.02, z: 0, w: 0)
-            f.gVector = CIVector(x: 0, y: 1.0, z: 0.02, w: 0)
-            f.bVector = CIVector(x: -0.05, y: 0.08, z: 0.9, w: 0)
-            f.aVector = CIVector(x: 0, y: 0, z: 0, w: 1)
-            f.biasVector = CIVector(x: 0, y: 0.01, z: 0.04, w: 0)
-            img = f.outputImage ?? img
-            contrast *= 1.08; saturation *= 1.1
-        case .moody:
-            exposure -= 0.2; saturation *= 0.75; contrast *= 1.15; temperature -= 0.15
-            vignette = max(vignette, 0.45)
-        case .pastel:
-            contrast *= 0.85; saturation *= 0.8; exposure += 0.1
-            img = matrix(img, r: 0.95, g: 0.95, b: 0.95, bias: (0.06, 0.06, 0.07))
+        if let cube {
+            cube.setValue(img, forKey: kCIInputImageKey)
+            img = cube.outputImage ?? img
+        }
+        if let userCube {
+            userCube.setValue(img, forKey: kCIInputImageKey)
+            if let out = userCube.outputImage {
+                img = grade.lutIntensity >= 0.999 ? out : Self.mix(img, out, grade.lutIntensity, rect)
+            }
         }
 
-        if abs(exposure) > 0.001 {
-            let f = CIFilter.exposureAdjust(); f.inputImage = img; f.ev = Float(exposure)
-            img = f.outputImage ?? img
+        // Claridad: contraste local (micro-contraste) como en Lightroom.
+        if abs(spatial.clarity) > 0.01 {
+            if spatial.clarity > 0 {
+                let f = CIFilter.unsharpMask()
+                f.inputImage = img.clampedToExtent()
+                f.radius = Float(max(rect.width, rect.height) * 0.02)
+                f.intensity = Float(spatial.clarity * 0.9)
+                img = (f.outputImage ?? img).cropped(to: rect)
+            } else {
+                let soft = img.clampedToExtent().applyingGaussianBlur(sigma: Double(rect.width) * 0.006).cropped(to: rect)
+                img = Self.mix(img, soft, -spatial.clarity * 0.7, rect)
+            }
         }
-        if abs(contrast - 1) > 0.001 || abs(saturation - 1) > 0.001 {
-            let f = CIFilter.colorControls()
+        if spatial.sharpen > 0.01 {
+            let f = CIFilter.sharpenLuminance()
             f.inputImage = img
-            f.contrast = Float(contrast)
-            f.saturation = Float(saturation)
-            f.brightness = 0
-            img = f.outputImage ?? img
+            f.sharpness = Float(spatial.sharpen * 0.8)
+            f.radius = Float(1.5)
+            img = (f.outputImage ?? img).cropped(to: rect)
         }
-        if abs(temperature) > 0.001 {
-            let t = temperature.clamped(-1, 1) * 0.12
-            img = matrix(img, r: 1 + t, g: 1 + t * 0.15, b: 1 - t, bias: (0, 0, 0))
+        if spatial.halation > 0.01 {
+            img = Self.halation(img, amount: spatial.halation, rect: rect)
         }
-        if vignette > 0.001 {
+        if spatial.bloom > 0.01 {
+            let f = CIFilter.bloom()
+            f.inputImage = img.clampedToExtent()
+            f.radius = Float(max(rect.width, rect.height) * 0.02)
+            f.intensity = Float(spatial.bloom * 0.9)
+            img = (f.outputImage ?? img).cropped(to: rect)
+        }
+        if spatial.vignette > 0.01 {
             let f = CIFilter.vignetteEffect()
             f.inputImage = img
             f.center = CGPoint(x: rect.midX, y: rect.midY)
-            f.radius = Float(hypot(rect.width, rect.height) * 0.38)
-            f.intensity = Float(vignette)
-            f.falloff = 0.6
+            f.radius = Float(hypot(rect.width, rect.height) * 0.4)
+            f.intensity = Float(spatial.vignette)
+            f.falloff = 0.55
             img = f.outputImage ?? img
+        }
+        if spatial.grain > 0.01 {
+            img = Self.grain(img, amount: spatial.grain, rect: rect, time: time)
         }
         return img.cropped(to: rect)
     }
 
-    private static func matrix(_ img: CIImage, r: Double, g: Double, b: Double, bias: (Double, Double, Double)) -> CIImage {
-        let f = CIFilter.colorMatrix()
-        f.inputImage = img
-        f.rVector = CIVector(x: r, y: 0, z: 0, w: 0)
-        f.gVector = CIVector(x: 0, y: g, z: 0, w: 0)
-        f.bVector = CIVector(x: 0, y: 0, z: b, w: 0)
-        f.aVector = CIVector(x: 0, y: 0, z: 0, w: 1)
-        f.biasVector = CIVector(x: bias.0, y: bias.1, z: bias.2, w: 0)
-        return f.outputImage ?? img
+    // MARK: - Utilidades compartidas
+
+    static func mix(_ a: CIImage, _ b: CIImage, _ k: Double, _ rect: CGRect) -> CIImage {
+        let f = CIFilter.dissolveTransition()
+        f.inputImage = a
+        f.targetImage = b
+        f.time = Float(k.clamped(0, 1))
+        return (f.outputImage ?? b).cropped(to: rect)
     }
 
-    private static func sepia(_ img: CIImage, _ amount: Double) -> CIImage {
-        let f = CIFilter.sepiaTone(); f.inputImage = img; f.intensity = Float(amount)
-        return f.outputImage ?? img
+    /// Halación: el brillo rojizo alrededor de las luces fuertes que tiene la película.
+    static func halation(_ img: CIImage, amount: Double, rect: CGRect) -> CIImage {
+        let threshold = CIFilter.colorMatrix()
+        threshold.inputImage = img
+        threshold.rVector = CIVector(x: 1.6, y: 0, z: 0, w: 0)
+        threshold.gVector = CIVector(x: 0, y: 0.5, z: 0, w: 0)
+        threshold.bVector = CIVector(x: 0, y: 0, z: 0.25, w: 0)
+        threshold.biasVector = CIVector(x: -0.75, y: -0.4, z: -0.2, w: 0)
+        let hot = (threshold.outputImage ?? img).clampedToExtent()
+            .applyingGaussianBlur(sigma: Double(rect.width) * 0.012).cropped(to: rect)
+        let dim = CIFilter.colorMatrix()
+        dim.inputImage = hot
+        dim.rVector = CIVector(x: amount * 0.8, y: 0, z: 0, w: 0)
+        dim.gVector = CIVector(x: 0, y: amount * 0.35, z: 0, w: 0)
+        dim.bVector = CIVector(x: 0, y: 0, z: amount * 0.2, w: 0)
+        let glow = dim.outputImage ?? hot
+        return glow.applyingFilter("CIScreenBlendMode", parameters: [kCIInputBackgroundImageKey: img]).cropped(to: rect)
+    }
+
+    /// Grano de película animado.
+    static func grain(_ img: CIImage, amount: Double, rect: CGRect, time: Double) -> CIImage {
+        guard let noise = CIFilter.randomGenerator().outputImage else { return img }
+        let frame = Int(time * 24)
+        let ox = CGFloat((frame * 7919) % 997), oy = CGFloat((frame * 104729) % 991)
+        let mono = CIFilter.colorMatrix()
+        mono.inputImage = noise.transformed(by: CGAffineTransform(translationX: -ox, y: -oy)
+            .concatenating(CGAffineTransform(scaleX: 1.6, y: 1.6)))
+        let a = amount * 0.3
+        mono.rVector = CIVector(x: a, y: 0, z: 0, w: 0)
+        mono.gVector = CIVector(x: a, y: 0, z: 0, w: 0)
+        mono.bVector = CIVector(x: a, y: 0, z: 0, w: 0)
+        mono.aVector = CIVector(x: 0, y: 0, z: 0, w: 1)
+        mono.biasVector = CIVector(x: 0.5 - a / 2, y: 0.5 - a / 2, z: 0.5 - a / 2, w: 0)
+        let grain = (mono.outputImage ?? noise).cropped(to: rect)
+        return grain.applyingFilter("CISoftLightBlendMode", parameters: [kCIInputBackgroundImageKey: img]).cropped(to: rect)
     }
 }
 
@@ -117,9 +167,21 @@ extension UIColor {
         }
     }
 
+    var hexString: String {
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        return String(format: "#%02X%02X%02X", Int((r.clampedUnit) * 255), Int(g.clampedUnit * 255), Int(b.clampedUnit * 255))
+    }
+
     var luminance: CGFloat {
         var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
         getRed(&r, green: &g, blue: &b, alpha: &a)
         return 0.299 * r + 0.587 * g + 0.114 * b
     }
+
+    var asCIColor: CIColor { CIColor(color: self) }
+}
+
+private extension CGFloat {
+    var clampedUnit: CGFloat { Swift.min(Swift.max(self, 0), 1) }
 }

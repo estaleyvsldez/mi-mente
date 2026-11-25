@@ -21,9 +21,12 @@ final class EditorModel {
     var exportedURL: URL?
     var hasVideo: Bool { source != nil }
     var aspectRatio: CGFloat {
-        guard let s = source?.renderSize, s.height > 0 else { return 9 / 16 }
+        guard let s = built?.renderSize ?? source?.renderSize, s.height > 0 else { return 9 / 16 }
         return s.width / s.height
     }
+    var sourceDuration: Double { source?.duration ?? 0 }
+    var transcript: [CaptionLine] { context?.transcript ?? [] }
+    var importedLUTs: [String] = ColorLUT.importedLUTNames()
     let player = AVPlayer()
 
     var apiKey: String = Keychain.load("anthropic_api_key") ?? "" {
@@ -115,6 +118,32 @@ final class EditorModel {
         exportedURL = nil
     }
 
+    /// Cambios hechos a mano desde el editor profesional.
+    func applyManual(_ edited: EditPlan) async {
+        guard let source, let current = plan, edited != current else { return }
+        let clean = edited.sanitized(sourceDuration: source.duration)
+        status = "Renderizando…"
+        do {
+            undoStack.append(current)
+            try await apply(clean, autoplay: true)
+            requestHistory.append("(manual edit in the pro editor)")
+        } catch {
+            messages.append(ChatMessage(role: .error, text: error.localizedDescription))
+        }
+        status = nil
+    }
+
+    func importLUT(_ url: URL) -> String? {
+        do {
+            let name = try ColorLUT.importLUT(from: url)
+            importedLUTs = ColorLUT.importedLUTNames()
+            return name
+        } catch {
+            messages.append(ChatMessage(role: .error, text: error.localizedDescription))
+            return nil
+        }
+    }
+
     // MARK: - Internos
 
     private func runDirector(request: String?) async throws {
@@ -168,7 +197,7 @@ final class EditorModel {
     /// Genera (o reutiliza) los clips de las escenas creadas por la IA.
     private func prepareScenes(_ plan: EditPlan, source: SourceMedia) async throws -> [Int: URL] {
         var urls: [Int: URL] = [:]
-        let size = source.renderSize
+        let size = CompositionBuilder.renderSize(for: plan.format, source: source)
         for (i, seg) in plan.segments.enumerated() where seg.kind == .scene {
             let data = (try? JSONEncoder.sorted.encode(seg)) ?? Data()
             let key = "\(data.hashValue)-\(Int(size.width))x\(Int(size.height))"

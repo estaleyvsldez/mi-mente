@@ -14,7 +14,7 @@ struct ClaudeClient {
     func requestJSON(system: String, content: [[String: Any]], schema: [String: Any]) async throws -> Data {
         let body: [String: Any] = [
             "model": Self.model,
-            "max_tokens": 16000,
+            "max_tokens": 32000,
             "system": system,
             "messages": [["role": "user", "content": content]],
             "output_config": [

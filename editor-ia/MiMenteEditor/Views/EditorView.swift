@@ -5,12 +5,14 @@ struct EditorView: View {
     @Environment(EditorModel.self) private var model
     @State private var draft = ""
     @State private var showExport = false
+    @State private var showPro = false
     @FocusState private var typing: Bool
 
     private let suggestions = [
-        "Más cinematográfico", "Colores más cálidos", "Hazlo más corto y rápido",
-        "Agrega una intro", "Subtítulos más grandes", "Blanco y negro",
-        "Quita las transiciones", "Ponle un título al inicio",
+        "Colores más fuertes", "Look de película", "Hazlo vertical para TikTok",
+        "Subtítulos karaoke", "Texto detrás de mí", "Más efectos impresionantes",
+        "Fondo desenfocado", "Color pop", "Cámara lenta en lo mejor",
+        "Agrega una intro", "Estilo cyberpunk", "Hazlo más corto y rápido",
     ]
 
     var body: some View {
@@ -44,6 +46,8 @@ struct EditorView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
+                Button { showPro = true } label: { Image(systemName: "slider.horizontal.3") }
+                    .disabled(model.plan == nil || model.isBusy)
                 Button { Task { await model.undo() } } label: { Image(systemName: "arrow.uturn.backward") }
                     .disabled(!model.canUndo || model.isBusy)
                 Button {
@@ -56,6 +60,9 @@ struct EditorView: View {
             }
         }
         .sheet(isPresented: $showExport) { ExportSheet() }
+        .sheet(isPresented: $showPro) {
+            if let plan = model.plan { ProEditorView(plan: plan) }
+        }
     }
 
     @ViewBuilder private var statusBanner: some View {
@@ -159,8 +166,10 @@ private struct PlanSummary: View {
                     Chip(icon: "camera.filters", text: plan.color.preset.rawValue.replacingOccurrences(of: "_", with: " "))
                     if transitions > 0 { Chip(icon: "rectangle.2.swap", text: "\(transitions) transiciones") }
                     if !plan.texts.isEmpty { Chip(icon: "textformat", text: "\(plan.texts.count) textos") }
-                    if plan.captions.enabled { Chip(icon: "captions.bubble", text: "subtítulos") }
-                    if scenes > 0 { Chip(icon: "sparkles", text: "\(scenes) escenas IA") }
+                    if plan.captions.enabled { Chip(icon: "captions.bubble", text: "subtítulos \(plan.captions.template.rawValue)") }
+                    if scenes > 0 { Chip(icon: "sparkles.rectangle.stack", text: "\(scenes) escenas IA") }
+                    if !plan.effects.isEmpty { Chip(icon: "sparkles", text: "\(plan.effects.count) efectos") }
+                    if plan.format != .original { Chip(icon: "aspectratio", text: plan.format.rawValue) }
                 }
             }
         }

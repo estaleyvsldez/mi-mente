@@ -85,14 +85,26 @@ private struct ScenePainter {
             self.background = nil
         }
         let textColor = segment.sceneStyle == .light ? "#111111" : "#FFFFFF"
-        let titleStyle: TextStyle = segment.sceneStyle == .neon ? .neon : .title
-        self.title = segment.sceneTitle.isEmpty ? nil :
-            TextImageRenderer.render(text: segment.sceneTitle, style: titleStyle, size: .large,
-                                     colorHex: segment.sceneStyle == .neon ? "#FFFFFF" : textColor,
-                                     canvasWidth: rect.width, sizeFactor: 0.1).map { CIImage(cgImage: $0) }
-        self.subtitle = segment.sceneSubtitle.isEmpty ? nil :
-            TextImageRenderer.render(text: segment.sceneSubtitle, style: .minimal, size: .medium,
-                                     colorHex: textColor, canvasWidth: rect.width, sizeFactor: 0.05).map { CIImage(cgImage: $0) }
+        let isNeon = segment.sceneStyle == .neon
+        var titleSpec = TextOverlay.basic(segment.sceneTitle)
+        titleSpec.size = 0.1
+        titleSpec.color = textColor
+        titleSpec.font = isNeon ? .rounded : .futura
+        titleSpec.weight = .black
+        titleSpec.uppercase = true
+        titleSpec.letterSpacing = 0.04
+        titleSpec.shadow = segment.sceneStyle == .light ? 0 : 0.5
+        if isNeon { titleSpec.glowColor = segment.sceneColors.last ?? "#FF00E5"; titleSpec.glowAmount = 0.8 }
+        var subSpec = TextOverlay.basic(segment.sceneSubtitle)
+        subSpec.size = 0.045
+        subSpec.color = textColor
+        subSpec.font = .avenir
+        subSpec.weight = .medium
+        subSpec.letterSpacing = 0.15
+        subSpec.uppercase = true
+        subSpec.shadow = 0.3
+        self.title = segment.sceneTitle.isEmpty ? nil : TextEngine.image(for: titleSpec, canvas: rect.size)
+        self.subtitle = segment.sceneSubtitle.isEmpty ? nil : TextEngine.image(for: subSpec, canvas: rect.size)
     }
 
     func frame(at t: Double) -> CIImage {
