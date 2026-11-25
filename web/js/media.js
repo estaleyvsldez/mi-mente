@@ -46,7 +46,13 @@
     if (type === 'image') {
       const img = new Image();
       img.src = url;
-      await img.decode();
+      try { await img.decode(); }
+      catch {
+        URL.revokeObjectURL(url);
+        throw new Error(/\.(heic|heif)$/i.test(name || '') || /hei[cf]/i.test(fileOrBlob.type || '')
+          ? 'Este navegador no puede abrir fotos HEIC del iPhone. Conviértela a JPG (o súbela desde el iPhone, que la convierte sola).'
+          : 'Este navegador no puede abrir esa foto (formato no compatible o archivo dañado).');
+      }
       return { id: MM.uid(), name, kind: 'image', url, el: img, duration: 6, width: img.naturalWidth, height: img.naturalHeight, audio: null, words: [] };
     }
     const v = document.createElement('video');
@@ -59,7 +65,20 @@
       URL.revokeObjectURL(url);
       throw new Error('Este navegador no puede mostrar la imagen de ese video (seguramente está en HEVC / H.265, el formato "Alta eficiencia" del iPhone). Ábrelo en Safari o en Chrome actualizado, o conviértelo a MP4 H.264 (en el iPhone: Ajustes → Cámara → Formatos → "Más compatible").');
     }
-    const src = { id: MM.uid(), name, kind: 'video', url, el: v, duration: v.duration, width: v.videoWidth, height: v.videoHeight, audio: null, words: [], blob: fileOrBlob };
+    // WebM grabados en el navegador (MediaRecorder) no traen la duración: se averigua saltando al final.
+    if (!Number.isFinite(v.duration) || !(v.duration > 0)) {
+      v.currentTime = 1e7;
+      await waitEvent(v, 'seeked', 8000).catch(() => {});
+    }
+    const duration = v.duration;
+    const src = { id: MM.uid(), name, kind: 'video', url, el: v, duration, width: v.videoWidth, height: v.videoHeight, audio: null, words: [], blob: fileOrBlob };
+    // Este elemento ya no hace falta (la vista previa usa sus propios reproductores): se suelta para no gastar
+    // memoria ni decodificadores (el iPhone tiene pocos).
+    v.removeAttribute('src'); v.load();
+    if (!Number.isFinite(duration) || !(duration > 0)) {
+      URL.revokeObjectURL(url);
+      throw new Error('No pude saber cuánto dura ese video. Prueba exportándolo de nuevo como MP4.');
+    }
     const isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent);
     if (isPhone && fileOrBlob.size > 450e6) {
       src.tooBig = true;   // el teléfono no aguanta leerlo entero: se usa sin audio procesable
@@ -67,7 +86,7 @@
     }
     try {
       // Videos largos: audio a menor resolución para que quepa en la memoria del teléfono.
-      const long = v.duration > 12 * 60;
+      const long = duration > 12 * 60;
       const buf = await fileOrBlob.arrayBuffer();
       const decoder = long ? new OfflineAudioContext(1, 1, 22050) : MM.audioCtx();
       src.audio = await decoder.decodeAudioData(buf);
@@ -87,7 +106,7 @@
     }
     const v = document.createElement('video');
     v.muted = true; v.playsInline = true; v.preload = 'auto'; v.src = src.url;
-    await waitEvent(v, 'loadeddata').catch(() => {});
+    await waitEvent(v, 'loadeddata', 5000).catch(() => {});
     const n = count || MM.clamp(Math.round(src.duration / 4), 4, src.duration > 600 ? 24 : 12);
     const out = [];
     for (let i = 0; i < n; i++) {
@@ -112,10 +131,11 @@
     if (src.kind === 'image') { ctx.drawImage(src.el, 0, 0, c.width, c.height); return c.toDataURL('image/jpeg', 0.88); }
     const v = document.createElement('video');
     v.muted = true; v.playsInline = true; v.src = src.url;
-    await waitEvent(v, 'loadeddata').catch(() => {});
+    await waitEvent(v, 'loadeddata', 5000).catch(() => {});
     v.currentTime = Math.min(time, Math.max(0, src.duration - 0.05));
     await waitEvent(v, 'seeked', 6000).catch(() => {});
     ctx.drawImage(v, 0, 0, c.width, c.height);
+    v.removeAttribute('src'); v.load();
     return c.toDataURL('image/jpeg', 0.88);
   };
 

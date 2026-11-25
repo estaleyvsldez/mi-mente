@@ -165,11 +165,18 @@
       try { tf = await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.1/+esm'); }
       catch { throw new Error('no pude bajar el modelo de subtítulos (revisa tu internet, o conecta tu Colab gratis).'); }
     }
-    const device = navigator.gpu ? 'webgpu' : 'wasm';
-    asr = await tf.pipeline('automatic-speech-recognition', 'onnx-community/whisper-base_timestamped', {
+    const load = (device) => tf.pipeline('automatic-speech-recognition', 'onnx-community/whisper-base_timestamped', {
       device, dtype: device === 'webgpu' ? { encoder_model: 'fp32', decoder_model_merged: 'q4' } : 'q8',
       progress_callback: (p) => { if (p.status === 'progress' && p.progress) onStatus?.(`bajando el modelo de subtítulos… ${Math.round(p.progress)}%`); },
     });
+    try {
+      // WebGPU es más rápido, pero no funciona en todos los equipos (p. ej. algunos iPhone): si falla, se usa WebAssembly.
+      try { asr = await load(navigator.gpu ? 'webgpu' : 'wasm'); }
+      catch (e) { if (!navigator.gpu) throw e; asr = await load('wasm'); }
+    } catch (e) {
+      asr = null;
+      throw new Error('no pude preparar el modelo de subtítulos en este equipo (' + String(e.message || e).slice(0, 80) + '). El video se edita igual, sin subtítulos; para tenerlos conecta tu Colab gratis.');
+    }
     return asr;
   }
   /// Audio a 16 kHz mono para Whisper.
@@ -182,7 +189,12 @@
   MM.localTranscribe = async (buffer, onStatus) => {
     const pipe = await localASR(onStatus);
     onStatus?.('escuchando el audio en tu equipo…');
-    const r = await pipe(to16k(buffer), { return_timestamps: 'word', chunk_length_s: 30, stride_length_s: 5, task: 'transcribe' });
+    let r;
+    try { r = await pipe(to16k(buffer), { return_timestamps: 'word', chunk_length_s: 30, stride_length_s: 5, task: 'transcribe' }); }
+    catch (e) {
+      asr = null;
+      throw new Error('no pude escuchar el audio en este equipo (' + String(e.message || e).slice(0, 80) + '). El video se edita igual, sin subtítulos.');
+    }
     return (r.chunks || []).map((c) => ({ text: String(c.text || '').trim(), start: c.timestamp[0], end: c.timestamp[1] ?? c.timestamp[0] + 0.3 }))
       .filter((w) => w.text && Number.isFinite(w.start));
   };

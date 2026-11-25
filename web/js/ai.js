@@ -48,7 +48,11 @@
       }
       const text = (json.content || []).find((b) => b.type === 'text')?.text;
       if (!text) throw new Error('La IA no devolvió nada.');
-      return JSON.parse(text);
+      try { return JSON.parse(text); }
+      catch {
+        if (attempt < 3) continue;   // respuesta rota: se vuelve a pedir
+        throw new Error('La IA respondió algo que no entendí. Intenta de nuevo.');
+      }
     }
   }
 

@@ -176,7 +176,7 @@
     for (const f of files) {
       status(`Leyendo ${f.name}…`);
       try {
-        const kind = f.type.startsWith('image') ? 'image' : 'video';
+        const kind = f.type.startsWith('image') || (!f.type && /\.(jpe?g|png|gif|webp|heic|heif|avif|bmp)$/i.test(f.name)) ? 'image' : 'video';
         const src = await MM.loadSource(f, f.name, kind);
         project.sources.push(src);
         if (src.tooBig) say('error', `"${f.name}" pesa ${(f.size / 1e9).toFixed(1)} GB: el iPhone no puede procesar su audio. Para videos tan pesados usa la laptop, o recórtalo en Fotos antes de subirlo.`);
@@ -184,9 +184,12 @@
       } catch (e) { say('error', `No pude abrir ${f.name}. ${e.message || ''}`.trim()); }
     }
     status('El equipo está mirando tus clips…');
-    await Promise.all(added.map(async (src) => {
-      src.frames = await MM.sampleFrames(src, project.sources.length > 3 ? 4 : undefined).catch(() => []);
-    }));
+    // De dos en dos: el iPhone tiene pocos decodificadores de video a la vez.
+    for (let i = 0; i < added.length; i += 2) {
+      await Promise.all(added.slice(i, i + 2).map(async (src) => {
+        src.frames = await MM.sampleFrames(src, project.sources.length > 3 ? 4 : undefined).catch(() => []);
+      }));
+    }
     if (added.some((s) => s.audio)) {
       onAgent('sound', 'working');
       for (const src of added.filter((s) => s.audio)) {
@@ -599,10 +602,11 @@
     $('undo').disabled = busy || !undoStack.length;
     if (!plan.audio.music && plan.audio.musicMood !== 'none') ensureMusic();
   }
+  let ctlSeq = 0;
   function slider(label, get, set, min, max, step = 0.01) {
     const wrap = document.createElement('div');
     wrap.className = 'ctl';
-    const id = 'm-' + label.replace(/\W+/g, '');
+    const id = 'm-' + label.replace(/\W+/g, '') + '-' + (ctlSeq++);   // único: varios controles se llaman igual (Tamaño, Fuente…)
     const v = get();
     wrap.innerHTML = `<label for="${id}"><span>${label}</span><span>${(+v).toFixed(2)}</span></label><input id="${id}" type="range" min="${min}" max="${max}" step="${step}" value="${v}">`;
     const input = wrap.querySelector('input'), out = wrap.querySelector('label span:last-child');
@@ -612,7 +616,7 @@
   function select(label, options, get, set) {
     const wrap = document.createElement('div');
     wrap.className = 'ctl';
-    const id = 'm-' + label.replace(/\W+/g, '');
+    const id = 'm-' + label.replace(/\W+/g, '') + '-' + (ctlSeq++);   // único: varios controles se llaman igual (Tamaño, Fuente…)
     wrap.innerHTML = `<label for="${id}"><span>${label}</span></label>`;
     const sel = document.createElement('select');
     sel.id = id;
@@ -673,9 +677,12 @@
     addText.className = 'pill'; addText.textContent = '＋ Agregar texto';
     addText.onclick = () => {
       const tl = MM.buildTimeline(plan, project);
-      const cur = tl.items.find((it) => player.t >= it.start && player.t < it.start + it.dur) || tl.items[0];
+      // Si la reproducción está al final, el texto empieza un poco antes para que se vea.
+      const at = MM.clamp(player.t, 0, Math.max(0, tl.total - Math.min(3, tl.total)));
+      const cur = tl.items.find((it) => at >= it.start && at < it.start + it.dur) || tl.items[0];
       if (!cur) return;
-      manualChange((p) => { p.texts.push(Object.assign(MM.basicText('Tu texto'), { segmentIndex: cur.index, startOffset: Math.max(0, player.t - cur.start), duration: 3, userEdited: true })); }, 'added a text by hand');
+      manualChange((p) => { p.texts.push(Object.assign(MM.basicText('Tu texto'), { segmentIndex: cur.index, startOffset: Math.max(0, at - cur.start), duration: 3, userEdited: true })); }, 'added a text by hand');
+      if (!player.playing) player.seek(at + 0.5);
       renderManual();
       say('ai', 'Agregué un texto donde está la reproducción. Arrástralo sobre el video para moverlo y cámbiale las palabras aquí.', 'text');
     };
