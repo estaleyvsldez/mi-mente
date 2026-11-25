@@ -4,7 +4,7 @@
 
   // ---------- Claude ----------
   async function claude({ system, content, schema, effort = 'low', maxTokens = 16000, timeoutMs = 180000 }) {
-    const key = (MM.settings.anthropicKey || '').trim();
+    const key = (MM.settings.anthropicKey || '').replace(/\s+/g, '');
     if (!key) throw new Error('Falta tu API key de Anthropic (Ajustes ⚙︎).');
     let cap = maxTokens;
     for (let attempt = 1; ; attempt++) {
@@ -38,7 +38,7 @@
         continue;
       }
       const json = await res.json().catch(() => ({}));
-      if (res.status === 401) throw new Error('Tu API key de Anthropic no es válida (Ajustes ⚙︎).');
+      if (res.status === 401 || res.status === 403 || /credit balance/i.test(json.error?.message || '')) throw new Error(MM.keyHelp(res.status, json.error?.message, key));
       if (!res.ok) throw new Error('La IA respondió con un error: ' + (json.error?.message || res.status));
       if (json.stop_reason === 'refusal') throw new Error('La IA no quiso hacer eso. Pídelo de otra forma.');
       if (json.stop_reason === 'max_tokens') {
@@ -50,6 +50,32 @@
       return JSON.parse(text);
     }
   }
+
+  /// Explica en simple por qué la key no funciona.
+  MM.keyHelp = (status, msg, key) => {
+    if (/credit balance/i.test(msg || '')) return 'Tu cuenta de Anthropic no tiene saldo. Entra a console.anthropic.com → Billing y carga crédito (desde 5 USD).';
+    if (key && !key.startsWith('sk-ant-')) return 'Esa no es una API key de Anthropic: tiene que empezar con "sk-ant-". Créala en console.anthropic.com → API Keys (la suscripción de la app de Claude no sirve para esto).';
+    if (status === 403) return 'Tu key de Anthropic no tiene permiso (403). Revisa en console.anthropic.com que la cuenta esté activa y con saldo.';
+    return 'Anthropic dice que tu API key no es válida. Copia una nueva en console.anthropic.com → API Keys → Create Key y pégala completa en Ajustes (empieza con "sk-ant-api").';
+  };
+  /// Prueba la key con una consulta mínima.
+  MM.testAnthropicKey = async (key) => {
+    key = (key || '').replace(/\s+/g, '');
+    if (!key) return { ok: false, msg: 'Pega tu key primero.' };
+    if (!key.startsWith('sk-ant-')) return { ok: false, msg: MM.keyHelp(401, '', key) };
+    try {
+      const r = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2026-10-21', 'anthropic-dangerous-direct-browser-access': 'true' },
+        body: JSON.stringify({ model: MODEL, max_tokens: 16, messages: [{ role: 'user', content: 'Responde solo: ok' }] }),
+      });
+      const j = await r.json().catch(() => ({}));
+      if (r.ok) return { ok: true, msg: '✅ Tu key funciona. El equipo está listo.' };
+      if (r.status === 401 || r.status === 403 || /credit balance/i.test(j.error?.message || '')) return { ok: false, msg: MM.keyHelp(r.status, j.error?.message, key) };
+      if (r.status === 429) return { ok: true, msg: '✅ Tu key funciona (ahora mismo hay mucha demanda, espera un momento).' };
+      return { ok: false, msg: 'Anthropic respondió: ' + (j.error?.message || r.status) };
+    } catch { return { ok: false, msg: 'No hay conexión con Anthropic. Revisa tu internet.' }; }
+  };
 
   // ---------- fal.ai ----------
   MM.fal = {
@@ -226,7 +252,7 @@
       content.push({ type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: f.data } });
     });
     content.push({ type: 'text', text: [
-      'Imported songs: ' + (project.songs.length ? project.songs.map((s) => s.name).join(', ') : '(none)'),
+      'Imported songs: ' + (project.songs.length ? project.songs.map((s) => `${s.name}${s.info ? ` (${s.info.duration.toFixed(0)} s, ~${s.info.bpm} BPM, best part / drop at ${s.info.best.toFixed(1)} s${s.info.peaks.length ? ', other strong moments at ' + s.info.peaks.map((x) => x.toFixed(1) + ' s').join(', ') : ''})` : ''}`).join('; ') : '(none)'),
       'AI video generation: AVAILABLE via ' + MM.engineLabel() + (MM.videoEngine() === 'hf' ? ' — free public demos: slow and with a daily quota, so use at most 1–2 new ai_video shots and only when they add a lot' : ''),
       'AI music: ' + (MM.videoEngine() === 'fal' || MM.settings.colabURL ? 'available via musicPrompt' : 'only composed mood beds (leave musicPrompt "")'),
     ].join('\n') });
@@ -270,6 +296,7 @@ Texts with "userEdited": true were placed or edited BY HAND by the user: return 
     vfx: `ROLE vfx — THE VFX ARTIST. effects[]: type ${MM.EFFECTS.join('|')}; segmentIndex (timeline #, or −1 = whole video where startOffset counts from the video start); startOffset; duration (0 = until end of segment/video); intensity 0–1; color/secondaryColor ("" = default; duotone and light_leak use them); sfx = the matching sound (punch_in→impact or hit, shake→impact/boom, flash→hit, glitch→glitch, light_leak→whoosh…) or "none".
 Camera moves (zoom_in, zoom_out, punch_in on emphasis words/punchlines using the word offsets, ken_burns for stills, shake for impacts, handheld for life) + style moments (flash on a hit, glitch for energy, light_leak for warm montages, vhs/old_film for retro, letterbox for cinematic). Create 2–6 deliberate "wow" moments (more for long videos, spread out); never random noise.`,
     sound: `ROLE sound — THE SOUND ENGINEER. audio: voiceVolume 0–2; cleanup 0–1 (removes rumble/hiss, evens the voice); voicePreset ${MM.VOICE_PRESETS.join('|')}; eqLow/eqMid/eqHigh −1..1 (±12 dB); compression 0–1; reverb 0–1; music = exact name of an imported song or ""; musicVolume 0–1 (0.2–0.35 under speech, 0.7–0.9 montage); musicStart (seconds into the song, start at the drop/chorus); ducking 0–1; fadeInOut. For talking videos a light cleanup (0.4), podcast or natural, compression ~0.5 sounds pro.
+SPECIFIC ARTISTS/SONGS: you cannot download music. If the user asks for a song or artist that is in the imported list, use it and set musicStart to its best part (listed). If it is NOT imported, never pretend: set musicPrompt to an original track in a similar genre, tempo and vibe (describe the style, do NOT name the artist) and in reply tell the user (in their language) that they can import the song file with ＋ → "Agregar canción" and you'll place it at its best part, or add the official sound when posting on TikTok/Instagram.
 MUSIC: if no song is imported and music fits, set music "" and musicMood (${MM.MUSIC_MOODS.join('|')}) — the app composes a bed in that mood, or generates real AI music when musicPrompt is a vivid English description (genre, instruments, tempo, energy); musicPrompt "" = composed bed.
 SFX ARSENAL (sfx[]): ${MM.SFX_TYPES.join(', ')}. Each: segmentIndex (timeline #, or −1 for absolute time from the video start) + startOffset (may be −1..0 to land just before a cut) + volume 0–1.5. Texts and effects already bring their own sounds; you add the rest: whoosh/swoosh_fast/swipe on transitions, riser before a reveal or drop, bass_drop on the drop, cash on money talk, ding/notification on tips. Comedy: boing, record_scratch, fail_trombone, crowd_laugh right after the punchline (use the word offsets). Suspense/horror: suspense_drone, heartbeat, horror_sting, thunder, wind. Usually 3–12; never bury the speech.`,
   };

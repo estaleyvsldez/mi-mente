@@ -95,10 +95,28 @@
   $('openSettings').onclick = openSettings;
   $('openSettings2').onclick = openSettings;
   $('closeSettings').onclick = () => { $('settingsSheet').hidden = true; };
+  // Botón "Probar key"
+  (() => {
+    const input = $('kAnthropic');
+    const row = document.createElement('div');
+    row.className = 'row';
+    const btn = document.createElement('button');
+    btn.className = 'btn ghost'; btn.type = 'button'; btn.id = 'testKey'; btn.textContent = 'Probar key';
+    const out = document.createElement('p');
+    out.className = 'small'; out.id = 'testKeyResult'; out.style.margin = '0';
+    row.append(btn, out);
+    input.parentNode.appendChild(row);
+    btn.onclick = async () => {
+      btn.disabled = true; out.textContent = 'Probando…'; out.style.color = '';
+      const r = await MM.testAnthropicKey(input.value);
+      out.textContent = r.msg; out.style.color = r.ok ? 'var(--ok, #4ADE80)' : 'var(--err, #F87171)';
+      btn.disabled = false;
+    };
+  })();
   $('saveSettings').onclick = () => {
     const q = MM.settings.quality;
     Object.assign(MM.settings, {
-      anthropicKey: $('kAnthropic').value.trim(), falKey: $('kFal').value.trim(), quality: $('quality').value,
+      anthropicKey: $('kAnthropic').value.replace(/\s+/g, ''), falKey: $('kFal').value.trim(), quality: $('quality').value,
       t2vModel: $('mT2V').value.trim() || MM.defaults.t2vModel, i2vModel: $('mI2V').value.trim() || MM.defaults.i2vModel,
       whisperModel: $('mWhisper').value.trim() || MM.defaults.whisperModel,
       musicModel: $('mMusic').value.trim() || MM.defaults.musicModel,
@@ -689,11 +707,13 @@
     try {
       status('Leyendo la canción…');
       const buffer = await MM.audioCtx().decodeAudioData(await f.arrayBuffer());
-      project.songs.push({ name: f.name, buffer });
+      status('🎧 Buscando la mejor parte de la canción…');
+      const info = MM.analyzeSong(buffer);
+      project.songs.push({ name: f.name, buffer, info });
       status('');
-      manualChange((p) => { p.audio.music = f.name; p.audio.musicVolume = p.audio.musicVolume || 0.35; });
+      manualChange((p) => { p.audio.music = f.name; p.audio.musicStart = info.best; p.audio.musicVolume = p.audio.musicVolume || 0.35; p.audio.musicMood = 'none'; }, `imported song "${f.name}" placed at its best part (${info.best.toFixed(1)} s)`);
       renderManual();
-      say('ai', `Puse "${f.name}" de fondo y baja sola cuando alguien habla. Pide "ajusta la música" para que el ingeniero de sonido la afine.`, 'sound');
+      say('ai', `Puse "${f.name}" desde su mejor parte (segundo ${info.best.toFixed(0)}${info.bpm ? `, ~${info.bpm} BPM` : ''}) y baja sola cuando alguien habla. Si quieres, pídeme "corta al ritmo de la música".`, 'sound');
     } catch { status(''); say('error', 'No pude leer esa canción.'); }
   };
   $('addRef').onchange = async (e) => {

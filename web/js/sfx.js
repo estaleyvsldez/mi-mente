@@ -102,6 +102,35 @@
     return cache[type];
   };
 
+  /// Analiza una canción: mejor parte (coro / drop), otros momentos fuertes y BPM aproximado.
+  MM.analyzeSong = (buf) => {
+    const d = buf.getChannelData(0), sr = buf.sampleRate;
+    const hop = Math.floor(sr * 0.05), n = Math.floor(d.length / hop);
+    const env = new Float32Array(n);
+    for (let i = 0; i < n; i++) { let e = 0; for (let j = i * hop, k = j + hop; j < k; j += 4) e += d[j] * d[j]; env[i] = Math.sqrt(e / (hop / 4)); }
+    // Energía en ventanas de 8 s: la más alta y sostenida es el coro/drop.
+    const win = Math.round(8 / 0.05), score = [];
+    let acc = 0;
+    for (let i = 0; i < n; i++) { acc += env[i]; if (i >= win) acc -= env[i - win]; if (i >= win - 1) score.push({ t: (i - win + 1) * 0.05, v: acc }); }
+    score.sort((a, b) => b.v - a.v);
+    const picks = [];
+    for (const c of score) { if (picks.every((p) => Math.abs(p - c.t) > 12)) picks.push(c.t); if (picks.length >= 4) break; }
+    // Subida brusca justo antes de la mejor parte (el "drop").
+    let best = picks[0] || 0;
+    const i0 = Math.max(1, Math.round(best / 0.05) - 40), i1 = Math.min(n - 1, Math.round(best / 0.05) + 40);
+    let jump = 0;
+    for (let i = i0; i < i1; i++) { const dj = env[i] - env[i - 1]; if (dj > jump) { jump = dj; best = i * 0.05; } }
+    // BPM por autocorrelación de los golpes.
+    const onset = new Float32Array(n);
+    for (let i = 1; i < n; i++) onset[i] = Math.max(0, env[i] - env[i - 1]);
+    let bestLag = 0, bestV = 0;
+    for (let lag = Math.round(60 / 180 / 0.05); lag <= Math.round(60 / 70 / 0.05); lag++) {
+      let v = 0; for (let i = lag; i < n; i++) v += onset[i] * onset[i - lag];
+      if (v > bestV) { bestV = v; bestLag = lag; }
+    }
+    return { duration: buf.duration, best: Math.max(0, best - 0.1), peaks: picks.slice(1).sort((a, b) => a - b), bpm: bestLag ? Math.round(60 / (bestLag * 0.05)) : 0 };
+  };
+
   // ---------- Bases musicales por estado de ánimo ----------
   MM.MUSIC_MOODS = ['none', 'hype', 'chill', 'epic', 'suspense', 'horror', 'comedy', 'sad', 'romantic', 'action', 'lofi'];
   const MOODS = {
