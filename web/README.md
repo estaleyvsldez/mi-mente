@@ -1,25 +1,42 @@
-# Mi Mente — versión web (teléfono y laptop)
+# Mi Mente — editor de video con IA (iPhone y laptop)
 
-Ábrela desde Safari (iPhone) o cualquier navegador de laptop:
+**Link:** https://raw.githack.com/estaleyvsldez/mi-mente/claude/video-editing-app-ai-2xnavh/web/index.html
 
-**https://raw.githack.com/estaleyvsldez/mi-mente/claude/video-editing-app-ai-2xnavh/web/index.html**
+iPhone: Safari → Compartir → **Agregar a pantalla de inicio**. Laptop Dell: Chrome o Edge.
 
-En el iPhone: botón Compartir → **Agregar a pantalla de inicio** y queda como una app.
+## Primer uso (2 minutos)
+1. Toca ⚙︎ **Ajustes**.
+2. **API key de Anthropic** (obligatoria, es el equipo de IA): console.anthropic.com → API Keys → Create Key.
+3. **Key de fal.ai** (recomendada): video con IA, subtítulos automáticos, música y voz IA. fal.ai → Dashboard → Keys.
+4. Elige la calidad de exportación (hasta **4K**).
+
+Las keys se quedan guardadas solo en tu navegador.
 
 ## Qué hace
-- **Equipo de agentes expertos en paralelo**: 🧭 Productor (reparte el trabajo), 🎬 Editor (cortes, ritmo,
-  transiciones, formato), 🎨 Colorista, ✍️ Diseñador (títulos y subtítulos), ✨ VFX, 🎧 Sonido,
-  🎥 Director IA y 🤖 Generador. Solo trabajan los que hacen falta, a la vez, para que sea rápido.
-- **Crear video con IA desde una idea** ("un hombre saltando por encima de un carro"): el Director lo
-  planea en tomas, se generan con Kling vía fal.ai y el equipo lo termina.
-- **Escenas con IA dentro de tus videos**: otro ángulo de cámara a partir de un cuadro tuyo.
-- Color de colorista en la GPU (26 looks, ruedas lift/gamma/gain, split toning, grano, bloom…),
-  16 transiciones, 25 efectos, textos animados por palabra/letra con brillo neón y contorno,
-  subtítulos karaoke / word pop, audio de estudio (limpieza, EQ, compresor, reverb, voces) y música
-  con auto-ducking, video de referencia para copiar estilos, exportación MP4 y compartir.
+- **Le hablas normal y lo hace todo** ("quita esa parte", "ponle colores fuertes", "más risa en el chiste").
+  Entiende jergas de cualquier país (dominicana, mexicana, boricua…) e idiomas, y mete zooms, efectos y
+  sonidos para dar risa, suspenso o susto.
+- **Equipo de agentes expertos en paralelo**: 🧭 Productor, 🎬 Editor, 🎨 Colorista, ✍️ Diseñador,
+  ✨ VFX, 🎧 Sonido, 🎥 Director IA, 🤖 Generador, 📝 Guionista y 🛡️ Control de Calidad.
+- **🛡️ Control de Calidad**: nada se exporta sin que lo apruebe. Revisa cuadros reales del video final y
+  manda a arreglar lo que falle.
+- **Arsenal de sonido**: 31 efectos creados en el momento (whoosh, impactos, boom, risers, boing,
+  record scratch, risas, latidos, suspenso, terror, trueno…) y bases musicales por estado de ánimo, o
+  música original con IA.
+- **Crear video con IA desde una idea** (tipo Higgsfield): el Director lo planea en tomas y se generan
+  todas a la vez (Kling vía fal.ai).
+- **🎬 Estudio de Películas, Series y Novelas**: el Guionista escribe la historia y cada guion, tú los
+  apruebas o pides cambios, y se produce capítulo a capítulo con narración, subtítulos, música y efectos.
+  Todo queda guardado en el navegador para seguir otro día.
+- Color de colorista, 16 transiciones, 25 efectos, textos animados, subtítulos karaoke, audio de estudio,
+  video de referencia para copiar y mejorar un estilo.
+- **Exportación hasta 4K** cuadro por cuadro (sin saltos). Videos largos: en la laptop (Chrome) se guarda
+  directo al disco.
 
-## Keys
-- **Anthropic** (obligatoria): el equipo de agentes. console.anthropic.com → API Keys.
-- **fal.ai** (opcional): video con IA y subtítulos automáticos (Whisper). fal.ai → Keys.
-
-Se guardan solo en tu navegador. Es para uso personal: no publiques la página con tus keys dentro.
+## Límites reales (para que no te agarren de sorpresa)
+- **Links de TikTok / Instagram / YouTube**: esas plataformas no dejan que otra app baje sus videos.
+  Guárdalo en tu galería y súbelo como **video de referencia** (botón ＋): el equipo copia el estilo y lo mejora.
+- **Videos muy largos en el iPhone**: Safari tiene poca memoria. Hasta ~20–30 min va bien en el teléfono.
+  Para películas largas o 4K largo usa la laptop.
+- **Video con IA**: cada toma de 5 s cuesta en fal.ai entre centavos y ~0.5 USD según el modelo, y tarda
+  1–4 min. Se generan varias a la vez. En el Estudio apruebas el guion antes de gastar.
