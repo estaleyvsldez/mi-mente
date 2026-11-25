@@ -80,7 +80,7 @@
   async function createSeries() {
     const premise = $('stPremise').value.trim();
     if (!premise) { $('stPremise').focus(); return; }
-    if (!MM.settings.anthropicKey) { log('Pon tu API key de Anthropic en Ajustes.', 'error'); return; }
+    if (!MM.hasAI()) { log('Pon tu key gratis de Gemini en Ajustes (aistudio.google.com → Get API key).', 'error'); return; }
     const req = { premise, kind: $('stKind').value, chapters: MM.clamp(+$('stChapters').value || 1, 1, 60),
       minutes: +$('stMinutes').value, style: $('stStyle').value.trim(), voice: $('stVoice').checked, language: '', format: $('stFormat').value };
     setWorking(true, 'El Guionista está escribiendo la biblia de la historia…');

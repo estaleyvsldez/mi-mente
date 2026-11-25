@@ -4,8 +4,9 @@
 
   // ---------- Claude ----------
   async function claude({ system, content, schema, effort = 'low', maxTokens = 16000, timeoutMs = 180000 }) {
+    if (MM.aiProvider() === 'gemini') return MM.geminiCall({ system, content, schema, effort, maxTokens, timeoutMs });
     const key = (MM.settings.anthropicKey || '').replace(/\s+/g, '');
-    if (!key) throw new Error('Falta tu API key de Anthropic (Ajustes ⚙︎).');
+    if (!key) throw new Error('Pon tu key gratis de Gemini en Ajustes ⚙︎ (aistudio.google.com → Get API key). Es gratis y sin tarjeta.');
     let cap = maxTokens;
     for (let attempt = 1; ; attempt++) {
       const body = {

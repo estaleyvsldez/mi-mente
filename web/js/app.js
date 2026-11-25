@@ -86,6 +86,7 @@
   // ---------- Ajustes ----------
   function openSettings() {
     $('kAnthropic').value = MM.settings.anthropicKey; $('kFal').value = MM.settings.falKey;
+    $('kGemini').value = MM.settings.geminiKey || ''; $('aiProvider').value = MM.settings.aiProvider || 'auto';
     $('quality').value = MM.settings.quality; $('mT2V').value = MM.settings.t2vModel;
     $('mI2V').value = MM.settings.i2vModel; $('mWhisper').value = MM.settings.whisperModel; $('mMusic').value = MM.settings.musicModel; $('mTTS').value = MM.settings.ttsModel;
     $('engine').value = MM.settings.videoEngine || 'auto'; $('colabURL').value = MM.settings.colabURL || '';
@@ -95,6 +96,24 @@
   $('openSettings').onclick = openSettings;
   $('openSettings2').onclick = openSettings;
   $('closeSettings').onclick = () => { $('settingsSheet').hidden = true; };
+  // Botón "Probar" para la key gratis de Gemini
+  (() => {
+    const input = $('kGemini');
+    const row = document.createElement('div');
+    row.className = 'row';
+    const btn = document.createElement('button');
+    btn.className = 'btn'; btn.type = 'button'; btn.id = 'testGemini'; btn.textContent = 'Probar key gratis';
+    const out = document.createElement('p');
+    out.className = 'small'; out.id = 'testGeminiResult'; out.style.margin = '0';
+    row.append(btn, out);
+    input.parentNode.appendChild(row);
+    btn.onclick = async () => {
+      btn.disabled = true; out.textContent = 'Probando…'; out.style.color = '';
+      const r = await MM.testGeminiKey(input.value);
+      out.textContent = r.msg; out.style.color = r.ok ? 'var(--ok, #4ADE80)' : 'var(--err, #F87171)';
+      btn.disabled = false;
+    };
+  })();
   // Botón "Probar key"
   (() => {
     const input = $('kAnthropic');
@@ -116,7 +135,7 @@
   $('saveSettings').onclick = () => {
     const q = MM.settings.quality;
     Object.assign(MM.settings, {
-      anthropicKey: $('kAnthropic').value.replace(/\s+/g, ''), falKey: $('kFal').value.trim(), quality: $('quality').value,
+      anthropicKey: $('kAnthropic').value.replace(/\s+/g, ''), geminiKey: $('kGemini').value.replace(/\s+/g, ''), aiProvider: $('aiProvider').value, falKey: $('kFal').value.trim(), quality: $('quality').value,
       t2vModel: $('mT2V').value.trim() || MM.defaults.t2vModel, i2vModel: $('mI2V').value.trim() || MM.defaults.i2vModel,
       whisperModel: $('mWhisper').value.trim() || MM.defaults.whisperModel,
       musicModel: $('mMusic').value.trim() || MM.defaults.musicModel,
@@ -129,7 +148,7 @@
     refreshBanner();
     if (plan && q !== MM.settings.quality) player.load(project, plan);
   };
-  function refreshBanner() { $('keyBanner').hidden = !!MM.settings.anthropicKey; }
+  function refreshBanner() { $('keyBanner').hidden = MM.hasAI(); }
 
   // ---------- Inicio ----------
   $('pickFiles').onclick = () => $('files').click();
@@ -180,7 +199,7 @@
   }
 
   async function startEdit(files, request) {
-    if (!MM.settings.anthropicKey) { openSettings(); return; }
+    if (!MM.hasAI()) { openSettings(); return; }
     resetProject();
     show('editor');
     setBusy(true);
@@ -206,7 +225,7 @@
 
   async function startCreate(idea, format) {
     if (!idea) { $('idea').focus(); return; }
-    if (!MM.settings.anthropicKey) {
+    if (!MM.hasAI()) {
       openSettings();
       return;
     }
@@ -746,7 +765,7 @@
   }
   /// El video tiene que pasar por Calidad antes de salir (hasta 2 rondas de arreglos).
   async function qualityGate() {
-    if (!MM.settings.anthropicKey) return true;
+    if (!MM.hasAI()) return true;
     let previous = [];
     for (let round = 1; round <= 3; round++) {
       onAgent('qa', 'working');
@@ -790,7 +809,7 @@
   let approvedKey = null;
   const planKey = () => JSON.stringify(plan);
   async function autoQuality() {
-    if (!plan || !MM.settings.anthropicKey) return;
+    if (!plan || !MM.hasAI()) return;
     try {
       if (await qualityGate()) { approvedKey = planKey(); say('ai', '✅ Aprobado por Control de Calidad: listo para exportar.', 'qa'); }
     } catch (e) { say('error', 'Calidad: ' + e.message); }
@@ -897,7 +916,7 @@
       project.voices = data.voices || {};
       applyPlan(MM.sanitizePlan(newPlan, project), false);
       try {
-        if (opts.polish && MM.settings.anthropicKey) {
+        if (opts.polish && MM.hasAI()) {
           status('El equipo está mirando las tomas…');
           await Promise.all(Object.values(project.aiClips).slice(0, 12).map(async (c) => { if (!c.frames) c.frames = await MM.sampleFrames(c, 1).catch(() => []); }));
           const p = await MM.teamPolish(project, JSON.parse(JSON.stringify(plan)), opts.polish, onAgent, ['color', 'vfx']);

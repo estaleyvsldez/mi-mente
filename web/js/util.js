@@ -55,6 +55,8 @@ MM.store = {
 
 MM.defaults = {
   anthropicKey: '',
+  geminiKey: '',
+  aiProvider: 'auto',
   falKey: '',
   quality: '720',
   t2vModel: 'fal-ai/kling-video/v2.1/master/text-to-video',

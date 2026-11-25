@@ -468,7 +468,7 @@ button.card:active { transform: scale(.995); }
       <p class="kicker">Sala de edición con IA</p>
       <p class="headline">Tu propio equipo de edición, <em>trabajando contigo.</em></p>
       <p class="tag">Editor, colorista, diseñador, VFX y sonido trabajan a la vez sobre tus clips. También crea videos desde una idea y produce series enteras.</p>
-      <div id="keyBanner" class="banner" hidden>Para empezar, pon tu API key de Anthropic en Ajustes. El video con IA, los subtítulos y la música son gratis (Hugging Face, tu Colab o en tu propio equipo).</div>
+      <div id="keyBanner" class="banner" hidden>Para empezar, pon tu key GRATIS de Gemini en Ajustes (aistudio.google.com → Get API key, sin tarjeta). Todo lo demás también es gratis.</div>
 
       <div class="monitor" aria-hidden="true">
         <div class="mon-head"><span class="live"></span><span>El equipo en vivo</span><span class="mon-tc">00:00:12:08</span></div>
@@ -594,8 +594,15 @@ button.card:active { transform: scale(.995); }
       <h2 id="settingsTitle">Ajustes</h2>
     </div>
     <div class="field-group">
-      <div class="ctl"><label for="kAnthropic">API key de Anthropic (el equipo de IA)</label>
+      <div class="ctl"><label for="kGemini">Key GRATIS de Gemini (el cerebro del equipo de IA)</label>
+        <input type="password" id="kGemini" placeholder="AIza…" autocomplete="off"></div>
+      <p class="small">Gratis y sin tarjeta: entra a <b>aistudio.google.com</b> con tu cuenta de Google → <b>Get API key</b> → <b>Create API key</b>, cópiala y pégala aquí.</p>
+      <details><summary class="small">Opcional de pago: Anthropic (Claude)</summary>
+        <div class="ctl"><label for="aiProvider">¿Quién edita?</label>
+          <select id="aiProvider"><option value="auto">Automático (Gemini gratis si hay key)</option><option value="gemini">Gemini (gratis)</option><option value="anthropic">Claude de Anthropic (de pago, más preciso)</option></select></div>
+        <div class="ctl"><label for="kAnthropic">API key de Anthropic (el equipo de IA)</label>
         <input type="password" id="kAnthropic" placeholder="sk-ant-…" autocomplete="off"></div>
+      </details>
     </div>
     <div class="field-group">
       <div class="ctl"><label for="engine">Motor de video con IA</label>
@@ -658,6 +665,7 @@ button.card:active { transform: scale(.995); }
 <script src="js/gl.js"></script>
 <script src="js/media.js"></script>
 <script src="js/plan.js"></script>
+<script src="js/gemini.js"></script>
 <script src="js/ai.js"></script>
 <script src="js/free.js"></script>
 <script src="vendor/mp4-muxer.js"></script>
