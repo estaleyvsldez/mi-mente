@@ -78,50 +78,97 @@ enum PlanSchema {
             "secondaryColor": string,
             ])
 
+    static let segment: [String: Any] = obj([
+        "kind": oneOf(SegmentKind.self),
+        "sourceStart": number,
+        "sourceEnd": number,
+        "speed": number,
+        "speedRamp": oneOf(SpeedRamp.self),
+        "focusX": number,
+        "focusY": number,
+        "sceneDuration": number,
+        "sceneTitle": string,
+        "sceneSubtitle": string,
+        "sceneStyle": oneOf(SceneStyle.self),
+        "sceneColors": array(string),
+        "transitionIn": obj([
+            "type": oneOf(TransitionType.self),
+            "duration": number,
+        ]),
+        "aiPrompt": string,
+        "aiCamera": oneOf(CameraMove.self),
+        "aiUseFrame": boolean,
+        "color": ["anyOf": [colorGrade, ["type": "null"] as [String: Any]] as [[String: Any]]] as [String: Any],
+    ])
+
+    static let captions: [String: Any] = obj([
+        "enabled": boolean,
+        "template": oneOf(CaptionTemplate.self),
+        "font": oneOf(TextFont.self),
+        "color": string,
+        "highlightColor": string,
+        "y": number,
+        "size": number,
+        "uppercase": boolean,
+        "maxWords": integer,
+    ])
+
+    static let audio: [String: Any] = obj([
+        "originalVolume": number,
+        "fadeInOut": boolean,
+        "noiseReduction": number,
+        "voicePreset": oneOf(VoicePreset.self),
+        "eqLow": number,
+        "eqMid": number,
+        "eqHigh": number,
+        "compression": number,
+        "deEss": number,
+        "reverb": number,
+        "reverbSpace": oneOf(ReverbSpace.self),
+        "pitch": number,
+        "normalize": boolean,
+        "music": string,
+        "musicVolume": number,
+        "musicStart": number,
+        "ducking": number,
+        "musicFade": boolean,
+    ])
+
     static let plan: [String: Any] = obj([
         "title": string,
         "summary": string,
         "format": oneOf(VideoFormat.self),
-        "segments": array(obj([
-            "kind": oneOf(SegmentKind.self),
-            "sourceStart": number,
-            "sourceEnd": number,
-            "speed": number,
-            "speedRamp": oneOf(SpeedRamp.self),
-            "focusX": number,
-            "focusY": number,
-            "sceneDuration": number,
-            "sceneTitle": string,
-            "sceneSubtitle": string,
-            "sceneStyle": oneOf(SceneStyle.self),
-            "sceneColors": array(string),
-            "transitionIn": obj([
-                "type": oneOf(TransitionType.self),
-                "duration": number,
-            ]),
-            "aiPrompt": string,
-            "aiCamera": oneOf(CameraMove.self),
-            "aiUseFrame": boolean,
-            "color": ["anyOf": [colorGrade, ["type": "null"] as [String: Any]] as [[String: Any]]] as [String: Any],
-        ])),
+        "segments": array(segment),
         "texts": array(text),
         "effects": array(effect),
         "color": colorGrade,
-        "captions": obj([
-            "enabled": boolean,
-            "template": oneOf(CaptionTemplate.self),
-            "font": oneOf(TextFont.self),
-            "color": string,
-            "highlightColor": string,
-            "y": number,
-            "size": number,
-            "uppercase": boolean,
-            "maxWords": integer,
-        ]),
-        "audio": obj([
-            "originalVolume": number,
-            "fadeInOut": boolean,
-        ]),
+        "captions": captions,
+        "audio": audio,
+    ])
+
+    // MARK: - Un esquema por departamento (equipo de agentes)
+
+    static func department(_ d: Department) -> [String: Any] {
+        switch d {
+        case .story:
+            return obj(["reply": string, "title": string, "summary": string,
+                        "format": oneOf(VideoFormat.self), "segments": array(segment)])
+        case .color: return obj(["reply": string, "color": colorGrade])
+        case .text: return obj(["reply": string, "texts": array(text), "captions": captions])
+        case .vfx: return obj(["reply": string, "effects": array(effect)])
+        case .sound: return obj(["reply": string, "audio": audio])
+        }
+    }
+
+    static let route: [String: Any] = obj([
+        "reply": string, "story": string, "color": string, "text": string, "vfx": string, "sound": string,
+    ])
+
+    static let shots: [String: Any] = obj([
+        "reply": string,
+        "title": string,
+        "format": ["type": "string", "enum": ["9:16", "16:9", "1:1", "4:5"]],
+        "shots": array(obj(["prompt": string, "camera": oneOf(CameraMove.self), "seconds": number])),
     ])
 
     /// Respuesta completa: un mensaje corto para el usuario + el plan entero.

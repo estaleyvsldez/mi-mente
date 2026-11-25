@@ -11,14 +11,15 @@ struct ClaudeClient {
     let apiKey: String
 
     /// Envía un mensaje de usuario y devuelve el JSON (validado por el schema) como Data.
-    func requestJSON(system: String, content: [[String: Any]], schema: [String: Any]) async throws -> Data {
+    func requestJSON(system: String, content: [[String: Any]], schema: [String: Any],
+                     effort: String = "medium", maxTokens: Int = 32000) async throws -> Data {
         let body: [String: Any] = [
             "model": Self.model,
-            "max_tokens": 32000,
+            "max_tokens": maxTokens,
             "system": system,
             "messages": [["role": "user", "content": content]],
             "output_config": [
-                "effort": "medium",
+                "effort": effort,
                 "format": ["type": "json_schema", "schema": schema],
             ],
             // Si el modelo rechaza la solicitud, el servidor reintenta con un modelo de respaldo.

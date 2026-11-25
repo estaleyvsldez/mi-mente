@@ -24,12 +24,15 @@ struct HomeView: View {
     @Binding var showSettings: Bool
     @State private var item: PhotosPickerItem?
     @State private var photoItem: PhotosPickerItem?
+    @State private var idea = ""
+    @State private var ideaFormat = VideoFormat.vertical
     @State private var loading = false
     @State private var errorText: String?
 
     var body: some View {
-        VStack(spacing: 28) {
-            Spacer()
+        ScrollView {
+        VStack(spacing: 24) {
+            Spacer(minLength: 24)
             Image(systemName: "wand.and.stars")
                 .font(.system(size: 64, weight: .semibold))
                 .foregroundStyle(.linearGradient(colors: [.purple, .pink, .orange], startPoint: .topLeading, endPoint: .bottomTrailing))
@@ -62,6 +65,32 @@ struct HomeView: View {
             .disabled(loading)
             .padding(.horizontal, 32)
 
+            VStack(alignment: .leading, spacing: 10) {
+                Text("CREAR CON IA").font(.caption.weight(.bold)).foregroundStyle(.tint)
+                TextField("Ej: un hombre saltando por encima de un carro de noche, cámara lenta", text: $idea, axis: .vertical)
+                    .lineLimit(2...4)
+                    .padding(12)
+                    .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
+                Picker("Formato", selection: $ideaFormat) {
+                    Text("9:16").tag(VideoFormat.vertical)
+                    Text("16:9").tag(VideoFormat.horizontal)
+                    Text("1:1").tag(VideoFormat.square)
+                }
+                .pickerStyle(.segmented)
+                Button {
+                    let text = idea
+                    Task { await model.createFromIdea(text, format: ideaFormat) }
+                } label: {
+                    Label("Crear video con IA", systemImage: "sparkles.tv")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(.white.opacity(0.1), in: RoundedRectangle(cornerRadius: 14))
+                }
+                .disabled(idea.trimmingCharacters(in: .whitespaces).isEmpty || loading)
+            }
+            .padding(.horizontal, 32)
+
             if model.apiKey.isEmpty {
                 Button("Primero pon tu API key de Anthropic") { showSettings = true }
                     .font(.footnote)
@@ -69,7 +98,8 @@ struct HomeView: View {
             if let errorText {
                 Text(errorText).font(.footnote).foregroundStyle(.red).padding(.horizontal)
             }
-            Spacer()
+            Spacer(minLength: 24)
+        }
         }
         .onChange(of: photoItem) { _, newItem in
             guard let newItem else { return }

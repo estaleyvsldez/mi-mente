@@ -53,6 +53,7 @@ final class EditorModel {
     private var undoStack: [EditPlan] = []
     private var built: BuiltEdit?
     private var sceneCache: [String: URL] = [:]
+    private var failedAIKeys = Set<String>()
     private var loopObserver: NSObjectProtocol?
 
     var isBusy: Bool { status != nil }
@@ -202,20 +203,119 @@ final class EditorModel {
         guard !key.isEmpty else {
             throw ClaudeError(message: "Falta tu API key de Anthropic. Ponla en Ajustes (el engranaje).")
         }
-        let director = EditDirector(client: ClaudeClient(apiKey: key))
+        let director = makeDirector(key: key)
         let response: DirectorResponse
+        let started = Date()
         if let request, let plan {
-            status = "Aplicando tu cambio…"
+            status = "🧭 El productor está repartiendo el trabajo…"
             response = try await director.revise(plan: plan, request: request, history: requestHistory, context: context)
             requestHistory.append(request)
         } else {
-            status = "La IA está editando tu video…"
+            status = "🎬 El equipo está editando tu video…"
             response = try await director.createPlan(context: context)
         }
         status = "Renderizando…"
         if let current = plan { undoStack.append(current) }
         try await apply(response.plan, autoplay: true)
-        messages.append(ChatMessage(role: .ai, text: response.reply))
+        messages.append(ChatMessage(role: .ai, text: "✅ Listo en \(Int(Date().timeIntervalSince(started))) s."))
+    }
+
+    /// El equipo de agentes, avisando a la pantalla qué hace cada experto.
+    private func makeDirector(key: String) -> EditDirector {
+        var director = EditDirector(client: ClaudeClient(apiKey: key))
+        director.onAgent = { [weak self] name, reply in
+            Task { @MainActor in
+                guard let self else { return }
+                if let reply {
+                    self.messages.append(ChatMessage(role: .ai, text: "\(name): \(reply)"))
+                } else {
+                    self.status = "\(name) trabajando…"
+                }
+            }
+        }
+        return director
+    }
+
+    /// "Haz un video de un hombre saltando sobre un carro": video 100% hecho con IA.
+    func createFromIdea(_ idea: String, format: VideoFormat) async {
+        let key = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        let fal = falKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !idea.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+        reset()
+        guard !key.isEmpty, !fal.isEmpty else {
+            messages.append(ChatMessage(role: .error, text: "Para crear videos con IA necesitas tu API key de Anthropic y tu key de fal.ai (Ajustes)."))
+            return
+        }
+        messages.append(ChatMessage(role: .user, text: idea))
+        do {
+            // Lienzo vacío: el video se arma solo con tomas generadas.
+            status = "Preparando el proyecto…"
+            let size: CGSize = format == .horizontal ? CGSize(width: 1920, height: 1080)
+                : format == .square ? CGSize(width: 1080, height: 1080) : CGSize(width: 1080, height: 1920)
+            var blank = Segment.clip(0, 0)
+            blank.kind = .scene; blank.sceneDuration = 1; blank.sceneStyle = .dark
+            let blankURL = FileManager.default.temporaryDirectory.appendingPathComponent("blank-\(UUID().uuidString).mp4")
+            try await SceneRenderer.render(segment: blank, size: size, background: nil, to: blankURL)
+            let media = try await SourceMedia.load(blankURL)
+            source = media
+            context = MediaContext(duration: media.duration, width: Int(size.width), height: Int(size.height),
+                                   frames: [], transcript: [], aiVideoAvailable: true)
+
+            status = "🎥 El Director IA está planeando las tomas…"
+            let director = makeDirector(key: key)
+            let shots = try await director.planShots(idea: idea, format: format.rawValue)
+            messages.append(ChatMessage(role: .ai, text: "🎥 Director IA: \(shots.reply)\n" + shots.shots.enumerated().map { "\($0.offset + 1). \($0.element.prompt)" }.joined(separator: "\n")))
+
+            var p = EditPlan.passthrough(duration: media.duration)
+            p.title = shots.title
+            p.format = VideoFormat(rawValue: shots.format) ?? format
+            p.segments = shots.shots.enumerated().map { i, shot in
+                var s = Segment.clip(0, 0)
+                s.kind = .ai
+                s.aiPrompt = shot.prompt
+                s.aiCamera = shot.camera
+                s.aiUseFrame = false
+                s.sceneDuration = shot.seconds > 7.5 ? 10 : 5
+                s.transitionIn = Transition(type: i == 0 ? .none : .crossfade, duration: i == 0 ? 0 : 0.3)
+                return s
+            }
+            p = p.sanitized(sourceDuration: media.duration)
+            try await apply(p, autoplay: false)
+
+            // Que el equipo "vea" las tomas generadas para terminar el video.
+            context?.frames = await generatedFrames(p)
+            if let ctx = context {
+                let polished = await director.polish(
+                    plan: p,
+                    brief: "This video was generated with AI from the idea: \"\(idea)\". Do your department so it looks like a viral, cinematic social video (no speech: captions off; music only if a song is imported).",
+                    context: ctx)
+                undoStack.append(p)
+                try await apply(polished.plan, autoplay: true)
+            }
+            messages.append(ChatMessage(role: .ai, text: "✅ Tu video con IA está listo. Pide más tomas, otro estilo o expórtalo."))
+        } catch {
+            messages.append(ChatMessage(role: .error, text: error.localizedDescription))
+        }
+        status = nil
+    }
+
+    private func generatedFrames(_ plan: EditPlan) async -> [(time: Double, jpeg: Data)] {
+        var frames: [(time: Double, jpeg: Data)] = []
+        for seg in plan.segments where seg.kind == .ai {
+            guard let url = sceneCache[Self.aiKey(seg)] else { continue }
+            let gen = AVAssetImageGenerator(asset: AVURLAsset(url: url))
+            gen.appliesPreferredTrackTransform = true
+            gen.maximumSize = CGSize(width: 512, height: 512)
+            if let img = try? await gen.image(at: CMTime(seconds: 1.5, preferredTimescale: 600)).image,
+               let jpeg = UIImage(cgImage: img).jpegData(compressionQuality: 0.6) {
+                frames.append((Double(frames.count), jpeg))
+            }
+        }
+        return frames
+    }
+
+    static func aiKey(_ seg: Segment) -> String {
+        "ai|\(seg.aiPrompt)|\(seg.aiCamera.rawValue)|\(seg.aiUseFrame)|\(seg.aiUseFrame ? String(format: "%.2f", seg.sourceStart) : "")|\(seg.sceneDuration)"
     }
 
     private func apply(_ newPlan: EditPlan, autoplay: Bool) async throws {
@@ -251,16 +351,65 @@ final class EditorModel {
         if autoplay { player.play() }
     }
 
+    /// Genera a la vez todas las escenas con IA que falten (en vez de una por una).
+    private func generateAIScenesInParallel(_ plan: EditPlan, source: SourceMedia) async {
+        let fal = falKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !fal.isEmpty else { return }
+        var todo: [(String, Segment, CGImage?)] = []
+        var seen = Set<String>()
+        for seg in plan.segments where seg.kind == .ai {
+            let key = Self.aiKey(seg)
+            guard sceneCache[key] == nil, !seen.contains(key) else { continue }
+            seen.insert(key)
+            var frame: CGImage?
+            if seg.aiUseFrame { frame = await source.frame(at: seg.sourceStart, maxSize: CGSize(width: 1280, height: 1280)) }
+            todo.append((key, seg, frame))
+        }
+        guard !todo.isEmpty else { return }
+        status = "🤖 Generando \(todo.count) escena(s) con IA a la vez…"
+        let client = FalClient(key: fal)
+        let i2v = imageToVideoModel, t2v = textToVideoModel
+        let results = await withTaskGroup(of: (String, URL?, String?).self) { group -> [(String, URL?, String?)] in
+            for (key, seg, frame) in todo {
+                group.addTask {
+                    do {
+                        let url = try await client.generateScene(prompt: seg.aiPrompt, camera: seg.aiCamera, startFrame: frame,
+                                                                 seconds: seg.sceneDuration, imageToVideoModel: i2v,
+                                                                 textToVideoModel: t2v) { _ in }
+                        return (key, url, nil)
+                    } catch {
+                        return (key, nil, error.localizedDescription)
+                    }
+                }
+            }
+            var all: [(String, URL?, String?)] = []
+            for await r in group {
+                all.append(r)
+                let done = all.count
+                await MainActor.run { self.status = "🤖 Escenas con IA: \(done) de \(todo.count) listas…" }
+            }
+            return all
+        }
+        for (key, url, err) in results {
+            if let url { sceneCache[key] = url }
+            if let err {
+                failedAIKeys.insert(key)
+                messages.append(ChatMessage(role: .error, text: "🤖 Escena IA: \(err)"))
+            }
+        }
+    }
+
     /// Genera (o reutiliza) los clips de las escenas: gráficos locales y video con IA (fal.ai).
     private func prepareScenes(_ plan: EditPlan, source: SourceMedia) async throws -> [Int: URL] {
         var urls: [Int: URL] = [:]
         let size = CompositionBuilder.renderSize(for: plan.format, source: source)
         var warnedNoKey = false
+        await generateAIScenesInParallel(plan, source: source)
         for (i, seg) in plan.segments.enumerated() where seg.kind != .clip {
             // La clave ignora transición y color: cambiar eso no vuelve a generar (ni a cobrar) la escena.
             let key: String
             if seg.kind == .ai {
-                key = "ai|\(seg.aiPrompt)|\(seg.aiCamera.rawValue)|\(seg.aiUseFrame)|\(seg.aiUseFrame ? String(format: "%.2f", seg.sourceStart) : "")|\(seg.sceneDuration)"
+                key = Self.aiKey(seg)
             } else {
                 key = "scene|\(seg.sceneTitle)|\(seg.sceneSubtitle)|\(seg.sceneStyle.rawValue)|\(seg.sceneColors)|\(seg.sceneDuration)|\(seg.sourceStart)|\(Int(size.width))x\(Int(size.height))"
             }
@@ -271,7 +420,7 @@ final class EditorModel {
 
             if seg.kind == .ai {
                 let falKey = self.falKey.trimmingCharacters(in: .whitespacesAndNewlines)
-                if !falKey.isEmpty {
+                if !falKey.isEmpty && failedAIKeys.contains(key) == false {
                     status = "Preparando escena con IA…"
                     var frame: CGImage?
                     if seg.aiUseFrame { frame = await source.frame(at: seg.sourceStart, maxSize: CGSize(width: 1280, height: 1280)) }
@@ -286,7 +435,7 @@ final class EditorModel {
                     } catch {
                         messages.append(ChatMessage(role: .error, text: "Escena IA: \(error.localizedDescription) Puse una escena animada en su lugar."))
                     }
-                } else if !warnedNoKey {
+                } else if falKey.isEmpty && !warnedNoKey {
                     warnedNoKey = true
                     messages.append(ChatMessage(role: .error, text: "Para escenas con IA real (otro ángulo de cámara, escenas nuevas) pon tu key de fal.ai en Ajustes. Mientras, puse una escena animada."))
                 }

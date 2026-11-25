@@ -12,68 +12,259 @@ struct MediaContext {
     var reference: String = ""   // estilo del video de referencia (si hay)
 }
 
-/// El "director": le pide a Claude que edite el video o que cambie la edición actual.
+/// Los departamentos del equipo de agentes expertos.
+enum Department: String, CaseIterable {
+    case story, color, text, vfx, sound
+
+    var name: String {
+        switch self {
+        case .story: return "🎬 Editor"
+        case .color: return "🎨 Colorista"
+        case .text: return "✍️ Diseñador"
+        case .vfx: return "✨ VFX"
+        case .sound: return "🎧 Sonido"
+        }
+    }
+
+    var role: String {
+        switch self {
+        case .story: return "YOU ARE THE EDITOR. Your department: title, summary, format and segments (cuts, order, speed, speed ramps, reframing focus, transitions, generated scenes and ai_video shots). Return only that."
+        case .color: return "YOU ARE THE COLORIST. Your department: the global color grade. Return only that. (Per-segment grades belong to the editor.)"
+        case .text: return "YOU ARE THE MOTION DESIGNER. Your department: texts (titles, overlays) and captions. Use the FINAL TIMELINE to place texts. Return only that."
+        case .vfx: return "YOU ARE THE VFX ARTIST. Your department: effects (camera moves and style effects, person-aware ones included). Use the FINAL TIMELINE. Return only that."
+        case .sound: return "YOU ARE THE SOUND ENGINEER. Your department: audio (voice cleanup, voice preset, EQ, dynamics, reverb, pitch, loudness, music and ducking). Return only that."
+        }
+    }
+}
+
+private struct StoryPart: Codable { var reply: String; var title: String; var summary: String; var format: VideoFormat; var segments: [Segment] }
+private struct ColorPart: Codable { var reply: String; var color: ColorGrade }
+private struct TextPart: Codable { var reply: String; var texts: [TextOverlay]; var captions: Captions }
+private struct VFXPart: Codable { var reply: String; var effects: [Effect] }
+private struct SoundPart: Codable { var reply: String; var audio: AudioSettings }
+private struct Route: Codable { var reply: String; var story: String; var color: String; var text: String; var vfx: String; var sound: String }
+struct ShotPlan: Codable {
+    struct Shot: Codable { var prompt: String; var camera: CameraMove; var seconds: Double }
+    var reply: String
+    var title: String
+    var format: String
+    var shots: [Shot]
+}
+
+/// El equipo: un productor reparte el trabajo y cada experto hace solo lo suyo, en paralelo.
 struct EditDirector {
     let client: ClaudeClient
+    /// Avisa a la interfaz qué experto empezó (reply nil) o terminó (reply con su mensaje).
+    var onAgent: (String, String?) -> Void = { _, _ in }
 
     func createPlan(context: MediaContext) async throws -> DirectorResponse {
-        let task = """
-        Edit this video from scratch like a senior editor would for a top creator. Cut dead time and \
-        mistakes, build a hook in the first seconds, design a strong color grade that fits the content \
-        (correct first, then a look), add motion typography with intent (a title, key phrases), captions \
-        if there is speech (karaoke or word_pop work great for vertical videos), purposeful transitions and \
-        2–6 effect moments that make the video impressive (punch-ins, flashes, light leaks, person-aware \
-        effects, text behind the subject when a person fills the frame). Add a generated intro/outro scene \
-        if it fits. In "reply", tell the user in 1–2 casual sentences (in Spanish) what you did.
+        var plan = EditPlan.passthrough(duration: context.duration)
+        let brief = """
+        Edit this video from scratch like a senior editor for a top creator: hook in the first seconds, cut dead \
+        time and mistakes, strong color that fits the content, motion typography with intent, captions if there \
+        is speech, purposeful transitions and 2–6 "wow" effect moments (punch-ins, flashes, light leaks, \
+        person-aware effects, text behind the subject). Do YOUR department only.
         """
-        return try await run(context: context, task: task)
+        onAgent(Department.story.name, nil)
+        let story: StoryPart = try await run(.story, context: context, plan: nil, instruction: brief, effort: "medium")
+        apply(story, to: &plan)
+        plan = plan.sanitized(sourceDuration: context.duration)
+        onAgent(Department.story.name, story.reply)
+        var replies = [story.reply]
+        replies += await runParallel([.color, .text, .vfx, .sound], context: context, plan: &plan,
+                                     instructions: Dictionary(uniqueKeysWithValues: Department.allCases.map { ($0, brief) }))
+        return DirectorResponse(reply: replies.joined(separator: "\n"), plan: plan.sanitized(sourceDuration: context.duration))
     }
 
-    func revise(plan: EditPlan, request: String, history: [String], context: MediaContext) async throws -> DirectorResponse {
-        let planJSON = (try? String(data: JSONEncoder.sorted.encode(plan), encoding: .utf8)) ?? "{}"
-        let past = history.isEmpty ? "(none)" : history.enumerated().map { "\($0.offset + 1). \($0.element)" }.joined(separator: "\n")
-        let task = """
-        The user already has this edit and wants a change.
+    func revise(plan current: EditPlan, request: String, history: [String], context: MediaContext) async throws -> DirectorResponse {
+        // 1. El productor decide quién trabaja.
+        onAgent("🧭 Productor", nil)
+        let summary: [String: Any] = [
+            "title": current.title, "format": current.format.rawValue, "segments": current.segments.count,
+            "aiScenes": current.segments.filter { $0.kind == .ai }.count,
+            "look": current.color.preset.rawValue, "texts": current.texts.map(\.text),
+            "captions": current.captions.enabled ? current.captions.template.rawValue : "off",
+            "effects": current.effects.map(\.type.rawValue), "music": current.audio.music,
+            "voice": current.audio.voicePreset.rawValue,
+        ]
+        let summaryJSON = (try? JSONSerialization.data(withJSONObject: summary, options: [.sortedKeys]))
+            .flatMap { String(data: $0, encoding: .utf8) } ?? "{}"
+        let routeData = try await client.requestJSON(
+            system: Self.producerPrompt,
+            content: [["type": "text", "text": """
+            Current edit: \(summaryJSON)
+            Previous requests: \(history.joined(separator: " | "))
+            AI video generation: \(context.aiVideoAvailable ? "available" : "not configured")
+            User request: \(request)
+            """]],
+            schema: PlanSchema.route, effort: "low", maxTokens: 2000)
+        let route = try JSONDecoder().decode(Route.self, from: routeData)
+        onAgent("🧭 Productor", route.reply)
 
-        Previous requests from the user (already applied):
-        \(past)
-
-        Current edit plan:
-        \(planJSON)
-
-        New request from the user:
-        \(request)
-
-        Return the full updated plan. Change only what the request implies and keep everything else \
-        exactly as it is. If indices shift because you add or remove segments, fix the segmentIndex of \
-        the texts. In "reply", confirm in 1-2 casual sentences, in the user's language, what you changed \
-        (or explain briefly what you could not do and what you did instead).
-        """
-        return try await run(context: context, task: task)
+        var plan = current
+        var replies: [String] = []
+        if !route.story.isEmpty {
+            onAgent(Department.story.name, nil)
+            let story: StoryPart = try await run(.story, context: context, plan: plan, instruction: route.story, effort: "low")
+            apply(story, to: &plan)
+            plan = plan.sanitized(sourceDuration: context.duration)
+            onAgent(Department.story.name, story.reply)
+            replies.append(story.reply)
+        }
+        let instructions: [Department: String] = [.color: route.color, .text: route.text, .vfx: route.vfx, .sound: route.sound]
+        let active = instructions.filter { !$0.value.isEmpty }.map(\.key)
+        replies += await runParallel(active, context: context, plan: &plan, instructions: instructions)
+        if replies.isEmpty { replies = [route.reply] }
+        return DirectorResponse(reply: replies.joined(separator: "\n"), plan: plan.sanitized(sourceDuration: context.duration))
     }
 
-    private func run(context: MediaContext, task: String) async throws -> DirectorResponse {
+    /// "Haz un video de un hombre saltando sobre un carro": el Director IA planea las tomas.
+    func planShots(idea: String, format: String) async throws -> ShotPlan {
+        let data = try await client.requestJSON(
+            system: Self.shotsPrompt,
+            content: [["type": "text", "text": "Idea: \(idea)\nPreferred format: \(format)\nCamera moves: \(CameraMove.allCases.map(\.rawValue).joined(separator: ", "))"]],
+            schema: PlanSchema.shots, effort: "low", maxTokens: 4000)
+        return try JSONDecoder().decode(ShotPlan.self, from: data)
+    }
+
+    /// Pulido de un video ya armado (color, texto, efectos, sonido en paralelo).
+    func polish(plan: EditPlan, brief: String, context: MediaContext) async -> DirectorResponse {
+        var p = plan
+        let replies = await runParallel([.color, .text, .vfx, .sound], context: context, plan: &p,
+                                        instructions: Dictionary(uniqueKeysWithValues: Department.allCases.map { ($0, brief) }))
+        return DirectorResponse(reply: replies.joined(separator: "\n"), plan: p.sanitized(sourceDuration: context.duration))
+    }
+
+    // MARK: - Internos
+
+    private func runParallel(_ depts: [Department], context: MediaContext, plan: inout EditPlan,
+                             instructions: [Department: String]) async -> [String] {
+        let snapshot = plan
+        var replies: [String] = []
+        let results = await withTaskGroup(of: (Department, Any?, String?).self) { group -> [(Department, Any?, String?)] in
+            for d in depts {
+                group.addTask {
+                    onAgent(d.name, nil)
+                    let instruction = instructions[d] ?? ""
+                    do {
+                        switch d {
+                        case .color: let r: ColorPart = try await run(d, context: context, plan: snapshot, instruction: instruction, effort: "low"); return (d, r, nil)
+                        case .text: let r: TextPart = try await run(d, context: context, plan: snapshot, instruction: instruction, effort: "low"); return (d, r, nil)
+                        case .vfx: let r: VFXPart = try await run(d, context: context, plan: snapshot, instruction: instruction, effort: "low"); return (d, r, nil)
+                        case .sound: let r: SoundPart = try await run(d, context: context, plan: snapshot, instruction: instruction, effort: "low"); return (d, r, nil)
+                        case .story: let r: StoryPart = try await run(d, context: context, plan: snapshot, instruction: instruction, effort: "low"); return (d, r, nil)
+                        }
+                    } catch {
+                        return (d, nil, error.localizedDescription)
+                    }
+                }
+            }
+            var all: [(Department, Any?, String?)] = []
+            for await r in group { all.append(r) }
+            return all
+        }
+        for (d, part, err) in results {
+            if let err { onAgent(d.name, "⚠️ \(err)"); continue }
+            guard let part else { continue }
+            switch part {
+            case let r as ColorPart: plan.color = r.color; replies.append(r.reply); onAgent(d.name, r.reply)
+            case let r as TextPart: plan.texts = r.texts; plan.captions = r.captions; replies.append(r.reply); onAgent(d.name, r.reply)
+            case let r as VFXPart: plan.effects = r.effects; replies.append(r.reply); onAgent(d.name, r.reply)
+            case let r as SoundPart: plan.audio = r.audio; replies.append(r.reply); onAgent(d.name, r.reply)
+            case let r as StoryPart: apply(r, to: &plan); replies.append(r.reply); onAgent(d.name, r.reply)
+            default: break
+            }
+        }
+        return replies
+    }
+
+    private func apply(_ s: StoryPart, to plan: inout EditPlan) {
+        plan.title = s.title
+        plan.summary = s.summary
+        plan.format = s.format
+        plan.segments = s.segments
+    }
+
+    private func run<T: Decodable>(_ dept: Department, context: MediaContext, plan: EditPlan?,
+                                   instruction: String, effort: String) async throws -> T {
         var content: [[String: Any]] = []
-        for frame in context.frames {
+        let frames = dept == .sound ? Array(context.frames.prefix(2)) : context.frames
+        for frame in frames {
             content.append(["type": "text", "text": String(format: "Frame at %.1fs:", frame.time)])
             content.append(["type": "image",
                             "source": ["type": "base64", "media_type": "image/jpeg",
                                        "data": frame.jpeg.base64EncodedString()]])
         }
-        // El bloque de contexto lleva cache_control: los cuadros y la transcripción no cambian
-        // entre ediciones, así que cada cambio que pidas sale más rápido y barato.
         content.append(["type": "text", "text": contextText(context), "cache_control": ["type": "ephemeral"]])
-        content.append(["type": "text", "text": task])
-
-        let data = try await client.requestJSON(system: Self.systemPrompt, content: content, schema: PlanSchema.response)
+        var parts = [dept.role]
+        if let plan {
+            if dept != .story { parts.append(timelineText(plan)) }
+            parts.append("CURRENT \(dept.rawValue.uppercased()) (keep anything the instruction does not ask to change):\n" + currentPart(dept, plan))
+        }
+        parts.append("INSTRUCTION: " + instruction)
+        parts.append("In \"reply\": one short casual sentence in Spanish (or the user's language) about what you did.")
+        content.append(["type": "text", "text": parts.joined(separator: "\n\n")])
+        let data = try await client.requestJSON(system: Self.systemPrompt, content: content,
+                                                schema: PlanSchema.department(dept), effort: effort,
+                                                maxTokens: dept == .story ? 16000 : 8000)
         do {
-            var result = try JSONDecoder().decode(DirectorResponse.self, from: data)
-            result.plan = result.plan.sanitized(sourceDuration: context.duration)
-            return result
+            return try JSONDecoder().decode(T.self, from: data)
         } catch {
-            throw ClaudeError(message: "No pude leer el plan de la IA. Intenta de nuevo.")
+            throw ClaudeError(message: "\(dept.name): no pude leer su respuesta.")
         }
     }
+
+    private func currentPart(_ d: Department, _ p: EditPlan) -> String {
+        let e = JSONEncoder.sorted
+        func str<T: Encodable>(_ v: T) -> String { (try? String(data: e.encode(v), encoding: .utf8)) ?? "{}" }
+        switch d {
+        case .story: return str(StoryPart(reply: "", title: p.title, summary: p.summary, format: p.format, segments: p.segments))
+        case .color: return str(p.color)
+        case .text: return str(TextPart(reply: "", texts: p.texts, captions: p.captions))
+        case .vfx: return str(p.effects)
+        case .sound: return str(p.audio)
+        }
+    }
+
+    private func timelineText(_ plan: EditPlan) -> String {
+        var t = 0.0
+        var rows: [String] = []
+        for (i, s) in plan.segments.enumerated() {
+            let overlap = i > 0 && s.transitionIn.type != .none
+                ? min(s.transitionIn.duration, min(s.timelineDuration, plan.segments[i - 1].timelineDuration) / 2) : 0
+            t -= overlap
+            let what: String
+            switch s.kind {
+            case .clip: what = String(format: "clip %.2f–%.2fs x%.2f", s.sourceStart, s.sourceEnd, s.speed)
+            case .scene: what = "scene \"\(s.sceneTitle)\""
+            case .ai: what = "ai_video \"\(s.aiPrompt.prefix(60))\""
+            }
+            rows.append(String(format: "#%d %@ → timeline %.2f–%.2fs", i, what, t, t + s.timelineDuration))
+            t += s.timelineDuration
+        }
+        return String(format: "FINAL TIMELINE (%.2f s, format %@):\n", t, plan.format.rawValue) + rows.joined(separator: "\n")
+    }
+
+    static let producerPrompt = """
+    You are the PRODUCER of a team of expert video editors. The user asks for a change to an existing edit. \
+    Decide which departments must act and write each a precise English instruction ("" = does nothing):
+    - story: cuts, order, length, speed, transitions, format, generated scenes, AI shots / new camera angles
+    - color: color grade / look
+    - text: titles, text overlays, captions
+    - vfx: zooms, shakes, glitch, flashes, light leaks, person-aware effects (background blur, color pop…)
+    - sound: noise cleanup, voice effects, EQ, music, volume
+    Activate only what the request needs (often 1–2). If story changes the number or order of segments, also \
+    tell text and vfx to re-check their segment indices. "reply": one short casual sentence in Spanish saying \
+    who is working on it.
+    """
+
+    static let shotsPrompt = """
+    You are an AI FILM DIRECTOR (like Higgsfield) planning a short video made entirely with a text-to-video \
+    model. Write 1–6 shots that tell the idea visually with continuity (same character description, wardrobe, \
+    setting and lighting in every shot) and cinematic camera work. Each prompt: vivid English, subject + action \
+    + environment + lighting + lens/mood, ≤ 60 words. camera: one move. seconds: 5 or 10. format: 9:16 for \
+    social unless asked. "reply": one short casual sentence in Spanish.
+    """
 
     private func contextText(_ c: MediaContext) -> String {
         let orientation = c.height > c.width ? "vertical" : (c.height == c.width ? "square" : "horizontal")
