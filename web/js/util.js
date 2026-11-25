@@ -61,6 +61,7 @@ MM.defaults = {
   i2vModel: 'fal-ai/kling-video/v2.1/standard/image-to-video',
   whisperModel: 'fal-ai/whisper',
   musicModel: 'fal-ai/lyria2',
+  ttsModel: 'fal-ai/elevenlabs/tts/multilingual-v2',
 };
 MM.settings = Object.assign({}, MM.defaults, MM.store.get('settings', {}));
 MM.saveSettings = () => MM.store.set('settings', MM.settings);

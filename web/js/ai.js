@@ -99,6 +99,15 @@
     return MM.audioCtx().decodeAudioData(buf);
   };
 
+  /// Narración con voz IA (fal.ai). Devuelve un AudioBuffer.
+  MM.generateVoice = async (text, onStatus) => {
+    const r = await MM.fal.run(MM.settings.ttsModel, { text }, onStatus);
+    const url = r?.audio?.url || r?.audio_file?.url || r?.audio_url || r?.output?.url;
+    if (!url) throw new Error('La IA no devolvió la voz.');
+    const buf = await fetch(url).then((x) => x.arrayBuffer());
+    return MM.audioCtx().decodeAudioData(buf);
+  };
+
   MM.CAMERA_TEXT = {
     static: 'static locked-off camera', dolly_in: 'slow cinematic dolly-in toward the subject',
     dolly_out: 'dolly-out pulling back to reveal the scene', orbit_left: 'camera orbits around the subject to the left',
@@ -203,6 +212,8 @@ You are part of a team of expert AI editors inside a mobile video app. Each expe
     vfx: { name: 'VFX', icon: '✨' },
     sound: { name: 'Sonido', icon: '🎧' },
     director: { name: 'Director IA', icon: '🎥' },
+    qa: { name: 'Calidad', icon: '🛡️' },
+    writer: { name: 'Guionista', icon: '📝' },
     generator: { name: 'Generador', icon: '🤖' },
   };
 
@@ -239,6 +250,13 @@ SFX ARSENAL (sfx[]): ${MM.SFX_TYPES.join(', ')}. Each: segmentIndex (timeline #,
 - vfx: zooms, shakes, glitch, flashes, light leaks and other effects
 - sound: voice cleanup, voice effects, EQ, music (songs, mood beds, AI-generated music), volume, sound effects (whooshes, impacts, comedy and horror sounds…)
 Only activate what the request needs (often 1–2 departments). If the story changes the number or order of segments, also tell text and vfx to re-check their segment indices. "reply": 1 short casual sentence in Spanish saying who is working on it.`,
+    qa: `You are the QUALITY CONTROL DEPARTMENT of a professional video studio. Nothing is published without your approval. You see real frames of the FINAL render plus the plan. Be strict but fair, like a broadcast QC + senior editor:
+- text: legible (contrast, size), not cut off, not overlapping captions or faces, inside safe margins, spelling/grammar correct in its language, timing makes sense
+- color: no crushed blacks/blown highlights by mistake, natural skin unless a stylized look is intended, consistent between shots
+- story: hook in the first seconds, no awkward cuts mid-sentence, pacing fits, transitions not overused, no missing/black shots, format suits the platform
+- vfx: effects support moments instead of distracting, not overused
+- sound: music level sensible under speech, voice processing appropriate, sound effects not excessive
+approved = true only if it's ready to publish. If not, list concrete issues, each assigned to ONE department (story|color|text|vfx|sound) with a precise English fix instruction. Ignore tiny nitpicks. score 0–100. summary: 1–2 sentences in Spanish for the user.`,
     director: `You are an AI FILM DIRECTOR (like Higgsfield) planning a short video made entirely with a text-to-video model. Write 1–6 shots that tell the user's idea visually, with continuity (same character description, wardrobe, setting, lighting in every shot) and cinematic camera work. Each shot prompt: vivid English, subject + action + environment + lighting + lens/mood, ≤ 60 words. camera: one camera move. seconds: 5 or 10. format: 9:16 for social unless asked. "reply": 1 short casual sentence in Spanish.`,
   };
 
@@ -249,6 +267,7 @@ Only activate what the request needs (often 1–2 departments). If the story cha
     vfx: () => O({ reply: S, effects: A(effectSchema()) }),
     sound: () => O({ reply: S, audio: audioSchema(), sfx: A(sfxSchema()) }),
     producer: () => O({ reply: S, story: S, color: S, text: S, vfx: S, sound: S }),
+    qa: () => O({ approved: B, score: N, summary: S, issues: A(O({ department: E(['story', 'color', 'text', 'vfx', 'sound']), problem: S, fix: S })) }),
     director: () => O({ reply: S, title: S, format: E(['9:16', '16:9', '1:1', '4:5']), shots: A(O({ prompt: S, camera: E(MM.CAMERAS), seconds: N })) }),
   };
 
@@ -341,9 +360,48 @@ Only activate what the request needs (often 1–2 departments). If the story cha
     return MM.sanitizePlan(plan, project);
   };
 
+  /// Departamento de Control de Calidad: revisa el video final antes de que salga.
+  MM.qualityCheck = async (project, plan, snapshots, autoChecks, round) => {
+    const content = [];
+    snapshots.forEach((s) => {
+      content.push({ type: 'text', text: `Final render at ${s.time.toFixed(2)}s:` });
+      content.push({ type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: s.data } });
+    });
+    const tl = MM.buildTimeline(plan, project);
+    content.push({ type: 'text', text: [
+      timelineText(plan, project),
+      'PLAN: ' + JSON.stringify({ format: plan.format, color: plan.color.preset, texts: plan.texts.map((t) => ({ text: t.text, seg: t.segmentIndex, at: t.startOffset, y: t.y, size: t.size })),
+        captions: plan.captions.enabled ? plan.captions.template : 'off', effects: plan.effects.map((e) => e.type + '@' + e.segmentIndex),
+        sfx: (plan.sfx || []).length, audio: plan.audio, duration: tl.total.toFixed(1) }),
+      'AUTOMATIC CHECKS: ' + (autoChecks.length ? autoChecks.join(' | ') : 'all passed'),
+      `Review round ${round}. ${project.request ? 'User goal: ' + project.request : ''}`,
+    ].join('\n\n') });
+    return claude({ system: PROMPTS.qa, content, schema: SCHEMAS.qa(), effort: 'low', maxTokens: 4000 });
+  };
+
+  /// Los expertos arreglan lo que pidió Calidad.
+  MM.teamFix = async (project, current, issues, onAgent) => {
+    const plan = JSON.parse(JSON.stringify(current));
+    const byDept = {};
+    issues.forEach((i) => { if (PROMPTS[i.department]) (byDept[i.department] = byDept[i.department] || []).push(i.fix); });
+    if (byDept.story) {
+      onAgent('story', 'working');
+      const r = await runExpert('story', project, plan, 'Quality control asks: ' + byDept.story.join(' / '), 'low');
+      applyPart(plan, 'story', r); MM.sanitizePlan(plan, project); onAgent('story', 'done', r.reply);
+    }
+    await Promise.all(['color', 'text', 'vfx', 'sound'].filter((d) => byDept[d]).map(async (d) => {
+      onAgent(d, 'working');
+      try {
+        const r = await runExpert(d, project, plan, 'Quality control asks: ' + byDept[d].join(' / '), 'low');
+        applyPart(plan, d, r); onAgent(d, 'done', r.reply);
+      } catch (e) { onAgent(d, 'error', e.message); }
+    }));
+    return MM.sanitizePlan(plan, project);
+  };
+
   /// Pulido en paralelo (color, texto, efectos, sonido) de un video ya armado.
-  MM.teamPolish = async (project, plan, brief, onAgent) => {
-    await Promise.all(['color', 'text', 'vfx', 'sound'].map(async (d) => {
+  MM.teamPolish = async (project, plan, brief, onAgent, depts = ['color', 'text', 'vfx', 'sound']) => {
+    await Promise.all(depts.map(async (d) => {
       onAgent(d, 'working');
       try {
         const r = await runExpert(d, project, plan, brief, 'low');
@@ -362,6 +420,30 @@ Only activate what the request needs (often 1–2 departments). If the story cha
       schema: SCHEMAS.director(), effort: 'low', maxTokens: 4000,
     });
   };
+
+  // ---------- Estudio de películas y series ----------
+  const WRITER = `You are the HEAD SCREENWRITER and SHOWRUNNER of a studio that makes films, series and telenovelas entirely with AI video models (text-to-video, 5 or 10 second shots). Write like a pro: strong hooks, conflict, twists, cliffhangers at the end of each chapter, emotional beats; dialogue and narration in the user's language and natural slang for the setting. Visual consistency is critical: every character has an extremely specific visual description (age, ethnicity, build, face, hair, wardrobe, distinctive marks) and the series has one visual style string; shot prompts must repeat them verbatim. Shot prompts are vivid English: subject + action + setting + lighting + lens/camera + style, ≤ 70 words, describing what is VISIBLE (AI video can't do readable text or complex lip-sync; prefer narration/voice-over and reaction shots over long dialogue). "reply": 1 short sentence in the user's language.`;
+  const characterS = O({ name: S, look: S, voice: S });
+  const bibleSchema = () => O({ reply: S, title: S, logline: S, style: S, language: S, characters: A(characterS), chapters: A(O({ number: I, title: S, summary: S })) });
+  const shotS = () => O({ prompt: S, camera: E(MM.CAMERAS), seconds: N, narration: S, sfx: E(['none', ...MM.SFX_TYPES]) });
+  const scriptSchema = () => O({ reply: S, title: S, musicMood: E(MM.MUSIC_MOODS), scenes: A(O({ heading: S, shots: A(shotS()) })) });
+
+  MM.writeBible = (req) => claude({
+    system: WRITER, effort: 'medium', maxTokens: 8000, schema: bibleSchema(),
+    content: [{ type: 'text', text: `Create the series bible.\nKind: ${req.kind}\nPremise from the user: ${req.premise}\nNumber of chapters: ${req.chapters}\nTarget length per chapter: ${req.minutes} min\nVisual style wanted: ${req.style || 'your choice, cinematic'}\nLanguage: ${req.language || 'same as the premise'}` }],
+  });
+  MM.reviseBible = (bible, instruction) => claude({
+    system: WRITER, effort: 'low', maxTokens: 8000, schema: bibleSchema(),
+    content: [{ type: 'text', text: `Current bible:\n${JSON.stringify(bible)}\n\nThe user asks: ${instruction}\nReturn the full updated bible.` }],
+  });
+  MM.writeChapter = (bible, number, minutes, previous) => claude({
+    system: WRITER, effort: 'medium', maxTokens: 24000, schema: scriptSchema(),
+    content: [{ type: 'text', text: `Bible:\n${JSON.stringify(bible)}\n\n${previous ? 'Previous chapter ended with: ' + previous + '\n\n' : ''}Write the full shooting script for chapter ${number}. Target ≈ ${Math.round(minutes * 60)} seconds total (sum of shot seconds), so about ${Math.max(3, Math.round(minutes * 60 / 5))} shots of 5 s (use 10 s only for long takes). Group shots into scenes. narration: what the narrator/character says over that shot ("" if silent), short enough to fit the shot. sfx: one sound effect for the shot or "none". Each prompt must include the character looks and the style string verbatim.` }],
+  });
+  MM.reviseChapter = (bible, script, instruction) => claude({
+    system: WRITER, effort: 'low', maxTokens: 24000, schema: scriptSchema(),
+    content: [{ type: 'text', text: `Bible:\n${JSON.stringify(bible)}\n\nCurrent chapter script:\n${JSON.stringify(script)}\n\nThe user asks: ${instruction}\nReturn the full updated script.` }],
+  });
 
   /// Copia el estilo de un video de referencia.
   MM.analyzeReference = async (src) => {

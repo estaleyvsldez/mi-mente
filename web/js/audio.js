@@ -67,21 +67,25 @@
     constructor() { this.nodes = []; this.master = null; this.recordDest = null; }
 
     /// Programa todo el audio desde el segundo t0 de la línea de tiempo.
-    start(plan, tl, project, t0, forRecording) {
-      this.stop();
-      const ctx = MM.audioCtx();
-      if (ctx.state === 'suspended') ctx.resume();
+    /// Con `offline` (un OfflineAudioContext) mezcla sin tiempo real, para exportar.
+    start(plan, tl, project, t0, forRecording, offline) {
+      if (!offline) this.stop();
+      const ctx = offline || MM.audioCtx();
+      if (!offline && ctx.state === 'suspended') ctx.resume();
       const a = plan.audio;
-      this.master = ctx.createGain();
-      this.master.connect(ctx.destination);
-      if (forRecording) {
+      const master = ctx.createGain();
+      master.connect(ctx.destination);
+      if (!offline) this.master = master;
+      if (forRecording && !offline) {
         this.recordDest = ctx.createMediaStreamDestination();
-        this.master.connect(this.recordDest);
+        master.connect(this.recordDest);
       }
-      const voiceIn = voiceChain(ctx, a, this.master);
-      const now = ctx.currentTime + 0.06;
-      this.startedAt = now; this.t0 = t0;
-      const at = (tt) => now + (tt - t0);
+      this.master = offline ? this.master : master;
+      const voiceIn = voiceChain(ctx, a, master);
+      const now = offline ? 0 : ctx.currentTime + 0.06;
+      if (!offline) { this.startedAt = now; this.t0 = t0; }
+      const at = (tt) => Math.max(now, now + (tt - t0));
+      const nodes = offline ? [] : this.nodes;
 
       for (const it of tl.items) {
         if (it.seg.kind !== 'clip' || !it.src || !it.src.audio) continue;
@@ -100,7 +104,7 @@
         node.connect(g); g.connect(voiceIn);
         const offset = it.seg.sourceStart + (s - it.start) * it.seg.speed;
         node.start(at(s), offset, (end - s) * it.seg.speed);
-        this.nodes.push(node);
+        nodes.push(node);
       }
 
       // Música de fondo con ducking.
@@ -116,7 +120,11 @@
         if (a.fadeInOut && t0 < 1) g.gain.linearRampToValueAtTime(base, at(1));
         if (a.ducking > 0.01) {
           const ranges = [];
-          for (const w of MM.timelineWords(plan, tl, project)) {
+          const voRanges = (plan.voiceovers || []).map((vo) => {
+            const it = tl.items.find((x) => x.index === vo.segmentIndex); const b = project.voices && project.voices[vo.key];
+            return it && b ? { start: it.start + (vo.startOffset || 0), end: it.start + (vo.startOffset || 0) + b.duration } : null;
+          }).filter(Boolean);
+          for (const w of [...MM.timelineWords(plan, tl, project), ...voRanges].sort((x, y) => x.start - y.start)) {
             const last = ranges[ranges.length - 1];
             if (last && w.start - last[1] < 0.8) last[1] = Math.max(last[1], w.end); else ranges.push([w.start, w.end]);
           }
@@ -131,14 +139,30 @@
           const fs = Math.max(t0, tl.total - 2);
           g.gain.setValueAtTime(base, at(fs)); g.gain.linearRampToValueAtTime(0, at(tl.total));
         }
-        node.connect(g); g.connect(this.master);
+        node.connect(g); g.connect(master);
         const offset = ((a.musicStart || 0) + t0) % song.buffer.duration;
         node.start(now, offset);
-        node.stop(at(tl.total) + 0.1);
-        this.nodes.push(node);
+        node.stop(Math.max(now, at(tl.total)) + 0.1);
+        nodes.push(node);
       }
+      // Narración / voces en off (Estudio de películas).
+      const byIdx = {};
+      tl.items.forEach((it) => { byIdx[it.index] = it; });
+      for (const vo of plan.voiceovers || []) {
+        const buf = project.voices && project.voices[vo.key];
+        const it = byIdx[vo.segmentIndex];
+        if (!buf || !it) continue;
+        const time = it.start + (vo.startOffset || 0);
+        if (time + buf.duration < t0) continue;
+        const node = ctx.createBufferSource(); node.buffer = buf;
+        const g = ctx.createGain(); g.gain.value = MM.clamp(vo.volume ?? 1, 0, 2);
+        node.connect(g); g.connect(voiceIn);
+        node.start(at(Math.max(time, t0)), Math.max(0, t0 - time));
+        nodes.push(node);
+      }
+
       // Arsenal de efectos de sonido.
-      const sfxBus = ctx.createGain(); sfxBus.gain.value = 0.9; sfxBus.connect(this.master);
+      const sfxBus = ctx.createGain(); sfxBus.gain.value = 0.9; sfxBus.connect(master);
       for (const x of MM.scheduleSfx(plan, tl)) {
         const buf = MM.sfxReady[x.type];
         if (!buf || x.time + buf.duration < t0 || x.time > tl.total) continue;
@@ -147,7 +171,7 @@
         node.connect(g); g.connect(sfxBus);
         const offset = Math.max(0, t0 - x.time);
         node.start(at(Math.max(x.time, t0)), offset);
-        this.nodes.push(node);
+        nodes.push(node);
       }
       return this.recordDest ? this.recordDest.stream : null;
     }

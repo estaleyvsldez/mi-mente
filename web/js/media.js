@@ -34,8 +34,11 @@
     await waitEvent(v, 'loadedmetadata');
     const src = { id: MM.uid(), name, kind: 'video', url, el: v, duration: v.duration, width: v.videoWidth, height: v.videoHeight, audio: null, words: [], blob: fileOrBlob };
     try {
+      // Videos largos: audio a menor resolución para que quepa en la memoria del teléfono.
+      const long = v.duration > 12 * 60;
       const buf = await fileOrBlob.arrayBuffer();
-      src.audio = await MM.audioCtx().decodeAudioData(buf.slice(0));
+      const decoder = long ? new OfflineAudioContext(1, 1, 22050) : MM.audioCtx();
+      src.audio = await decoder.decodeAudioData(buf);
     } catch { src.audio = null; }
     return src;
   };
@@ -53,7 +56,7 @@
     const v = document.createElement('video');
     v.muted = true; v.playsInline = true; v.preload = 'auto'; v.src = src.url;
     await waitEvent(v, 'loadeddata').catch(() => {});
-    const n = count || MM.clamp(Math.round(src.duration / 4), 4, 12);
+    const n = count || MM.clamp(Math.round(src.duration / 4), 4, src.duration > 600 ? 24 : 12);
     const out = [];
     for (let i = 0; i < n; i++) {
       const t = src.duration * (i + 0.5) / n;
@@ -109,10 +112,37 @@
     return 'data:audio/wav;base64,' + btoa(bin);
   };
 
-  /// Transcribe lo que se dice (Whisper en fal.ai) → palabras con tiempos.
+  /// Pedazo de un AudioBuffer (para transcribir videos largos por partes).
+  function sliceBuffer(buffer, start, end) {
+    const sr = buffer.sampleRate;
+    const a = Math.floor(start * sr), b = Math.min(buffer.length, Math.floor(end * sr));
+    const out = new AudioBuffer({ length: Math.max(1, b - a), numberOfChannels: buffer.numberOfChannels, sampleRate: sr });
+    for (let c = 0; c < buffer.numberOfChannels; c++) out.copyToChannel(buffer.getChannelData(c).subarray(a, b), c);
+    return out;
+  }
+
+  /// Transcribe lo que se dice (Whisper en fal.ai, cualquier idioma) → palabras con tiempos.
+  /// Los videos largos se parten en bloques de 4 min que se transcriben a la vez.
   MM.transcribe = async (src, onStatus) => {
     if (!src.audio || !MM.settings.falKey) return [];
-    const audioURL = MM.wavDataURL(src.audio);
+    const CH = 240;
+    const parts = [];
+    for (let t = 0; t < src.audio.duration; t += CH) parts.push([t, Math.min(src.audio.duration, t + CH)]);
+    let done = 0;
+    const all = [];
+    const run = async ([a, b]) => {
+      const words = await transcribePart(sliceBuffer(src.audio, a, b), parts.length > 1 ? null : onStatus);
+      words.forEach((w) => { w.start += a; w.end += a; });
+      all.push(...words);
+      done++;
+      if (parts.length > 1) onStatus?.(`${done}/${parts.length} partes`);
+    };
+    for (let i = 0; i < parts.length; i += 4) await Promise.all(parts.slice(i, i + 4).map(run));
+    return all.sort((x, y) => x.start - y.start);
+  };
+
+  async function transcribePart(buffer, onStatus) {
+    const audioURL = MM.wavDataURL(buffer);
     let result;
     try {
       result = await MM.fal.run(MM.settings.whisperModel, { audio_url: audioURL, task: 'transcribe', chunk_level: 'word' }, onStatus);
@@ -132,7 +162,7 @@
       parts.forEach((p, i) => words.push({ text: p, start: s + i * step, end: s + (i + 1) * step }));
     }
     return words;
-  };
+  }
 
   /// Líneas de habla (para la IA y para bajar la música).
   MM.linesFromWords = (words, maxWords = 8) => {

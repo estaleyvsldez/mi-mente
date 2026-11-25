@@ -17,7 +17,7 @@
   MM.emptyPlan = (project) => ({
     title: 'Mi video', summary: '', format: 'original',
     segments: project.sources.map((s, i) => clip(i, 0, s.kind === 'image' ? 3 : s.duration)),
-    color: MM.neutralGrade(), texts: [], captions: MM.defaultCaptions(), effects: [], audio: MM.defaultAudio(), sfx: [],
+    color: MM.neutralGrade(), texts: [], captions: MM.defaultCaptions(), effects: [], audio: MM.defaultAudio(), sfx: [], voiceovers: [],
   });
 
   MM.aiKey = (seg) => [seg.aiPrompt, seg.aiCamera, seg.aiUseFrame ? `${seg.source}@${(+seg.sourceStart).toFixed(2)}` : 'txt', seg.aiDuration > 7.5 ? 10 : 5].join('|');
@@ -59,14 +59,15 @@
     plan.effects = (plan.effects || []).filter((e) => MM.EFFECTS.includes(e.type) && (e.segmentIndex === -1 || plan.segments[e.segmentIndex]));
     plan.audio = Object.assign(MM.defaultAudio(), plan.audio);
     if (!MM.MUSIC_MOODS.includes(plan.audio.musicMood)) plan.audio.musicMood = 'none';
+    plan.voiceovers = (plan.voiceovers || []).filter((v) => v && v.key && plan.segments[v.segmentIndex]);
     plan.sfx = (plan.sfx || []).filter((x) => x && MM.SFX_TYPES.includes(x.type) && (x.segmentIndex === -1 || plan.segments[x.segmentIndex]))
       .map((x) => Object.assign({ startOffset: 0, volume: 0.8 }, x, { volume: MM.clamp(+x.volume || 0.8, 0, 1.5) }));
     if (plan.audio.music && !project.songs.some((s) => s.name === plan.audio.music)) plan.audio.music = '';
     return plan;
   };
 
-  MM.renderSize = (plan, project) => {
-    const q = MM.settings.quality === '1080' ? 1080 : 720;
+  MM.renderSize = (plan, project, quality = '720') => {
+    const q = quality === '4k' ? 2160 : quality === '1440' ? 1440 : quality === '1080' ? 1080 : 720;
     const ratios = { '9:16': 9 / 16, '4:5': 4 / 5, '1:1': 1, '16:9': 16 / 9, '21:9': 21 / 9 };
     let r = ratios[plan.format];
     if (!r) {

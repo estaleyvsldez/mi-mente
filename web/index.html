@@ -154,6 +154,22 @@ textarea, input[type=text], input[type=password], select {
     <button class="btn" id="startCreate">Crear video con IA</button>
     <p class="small">Usa tu key de fal.ai (Kling). Cada toma tarda 1–4 min y cuesta entre centavos y ~1 USD.</p>
   </div>
+  <div class="card">
+    <span class="eyebrow">Estudio</span>
+    <h2>Películas, series y novelas con IA</h2>
+    <p>El Guionista escribe la historia y los guiones; tú los apruebas o pides cambios, y la app produce capítulo a capítulo con narración, música y efectos.</p>
+    <button class="btn" id="openStudio">Abrir el Estudio</button>
+  </div>
+</section>
+
+<section id="studio" class="screen" hidden>
+  <div class="topbar">
+    <button class="icon-btn" id="studioBack" aria-label="Volver">‹</button>
+    <div class="title">🎬 Estudio de Películas y Series</div>
+  </div>
+  <div class="status" id="studioStatus" hidden style="position:relative;left:auto;bottom:auto;transform:none;align-self:flex-start"><span class="spin"></span><span id="studioStatusText"></span></div>
+  <div class="panel" id="studioBody" style="padding-block:8px"></div>
+  <div class="panel" id="studioLog" hidden style="flex:0 0 auto;max-height:22vh"></div>
 </section>
 
 <section id="editor" class="screen" hidden>
@@ -207,12 +223,13 @@ textarea, input[type=text], input[type=password], select {
     <div class="ctl"><label for="kFal">Key de fal.ai (video con IA y subtítulos)</label>
       <input type="password" id="kFal" placeholder="opcional" autocomplete="off"></div>
     <div class="ctl"><label for="quality">Calidad de exportación</label>
-      <select id="quality"><option value="720">720p (rápido)</option><option value="1080">1080p</option></select></div>
+      <select id="quality"><option value="720">720p (rápido)</option><option value="1080">1080p Full HD</option><option value="1440">1440p 2K</option><option value="4k">2160p 4K (máxima calidad)</option></select></div>
     <details><summary class="small">Modelos (avanzado)</summary>
       <div class="ctl"><label for="mT2V">Texto → video</label><input type="text" id="mT2V"></div>
       <div class="ctl"><label for="mI2V">Imagen → video</label><input type="text" id="mI2V"></div>
       <div class="ctl"><label for="mWhisper">Transcripción</label><input type="text" id="mWhisper"></div>
       <div class="ctl"><label for="mMusic">Música IA</label><input type="text" id="mMusic"></div>
+      <div class="ctl"><label for="mTTS">Voz IA (narración)</label><input type="text" id="mTTS"></div>
     </details>
     <p class="small">Las keys se guardan solo en este navegador. Crea la de Anthropic en console.anthropic.com y la de fal.ai en fal.ai → Keys.</p>
     <div class="row"><button class="btn" id="saveSettings">Guardar</button><button class="btn ghost" id="closeSettings">Cancelar</button></div>
@@ -246,7 +263,11 @@ textarea, input[type=text], input[type=password], select {
 <script src="js/media.js"></script>
 <script src="js/plan.js"></script>
 <script src="js/ai.js"></script>
+<script src="vendor/mp4-muxer.js"></script>
 <script src="js/player.js"></script>
+<script src="js/export.js"></script>
+<script src="js/db.js"></script>
 <script src="js/app.js"></script>
+<script src="js/studio.js"></script>
 </body>
 </html>

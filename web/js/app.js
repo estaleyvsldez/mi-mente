@@ -1,10 +1,11 @@
 // Interfaz: inicio, editor con el equipo de agentes, ajustes a mano y exportación.
 (function () {
   const $ = (id) => document.getElementById(id);
-  const project = { sources: [], songs: [], aiClips: {}, request: '', reference: '' };
+  const project = { sources: [], songs: [], aiClips: {}, voices: {}, request: '', reference: '' };
   let plan = null;
   const undoStack = [];
   let busy = false;
+  let forceExport = false;
   let player = null;
   let ideaFormat = '9:16';
   let pickedFiles = [];
@@ -45,7 +46,7 @@
   function renderAgents() {
     const box = $('agents');
     box.innerHTML = '';
-    ['producer', 'story', 'color', 'text', 'vfx', 'sound', 'director', 'generator'].forEach((k) => {
+    ['producer', 'story', 'color', 'text', 'vfx', 'sound', 'director', 'generator', 'qa'].forEach((k) => {
       const a = MM.AGENTS[k];
       const el = document.createElement('div');
       el.className = 'agent'; el.id = 'agent-' + k; el.dataset.state = 'idle';
@@ -68,6 +69,8 @@
   function applyPlan(newPlan, pushUndo = true) {
     if (plan && pushUndo) undoStack.push(JSON.parse(JSON.stringify(plan)));
     plan = newPlan;
+    forceExport = false;
+    $('exportBtn').textContent = 'Exportar';
     $('projTitle').textContent = plan.title || 'Mi video';
     player.load(project, plan);
     $('undo').disabled = busy || !undoStack.length;
@@ -80,7 +83,7 @@
   function openSettings() {
     $('kAnthropic').value = MM.settings.anthropicKey; $('kFal').value = MM.settings.falKey;
     $('quality').value = MM.settings.quality; $('mT2V').value = MM.settings.t2vModel;
-    $('mI2V').value = MM.settings.i2vModel; $('mWhisper').value = MM.settings.whisperModel; $('mMusic').value = MM.settings.musicModel;
+    $('mI2V').value = MM.settings.i2vModel; $('mWhisper').value = MM.settings.whisperModel; $('mMusic').value = MM.settings.musicModel; $('mTTS').value = MM.settings.ttsModel;
     $('settingsSheet').hidden = false;
   }
   $('openSettings').onclick = openSettings;
@@ -93,6 +96,7 @@
       t2vModel: $('mT2V').value.trim() || MM.defaults.t2vModel, i2vModel: $('mI2V').value.trim() || MM.defaults.i2vModel,
       whisperModel: $('mWhisper').value.trim() || MM.defaults.whisperModel,
       musicModel: $('mMusic').value.trim() || MM.defaults.musicModel,
+      ttsModel: $('mTTS').value.trim() || MM.defaults.ttsModel,
     });
     MM.saveSettings();
     $('settingsSheet').hidden = true;
@@ -494,17 +498,99 @@
     if (project.reference) send('Edítalo igual que el video de referencia: mismo ritmo, color, textos, efectos y formato.');
   };
 
+  // ---------- Control de Calidad ----------
+  function autoChecks() {
+    const issues = [];
+    const tl = MM.buildTimeline(plan, project);
+    plan.segments.forEach((s, i) => { if (s.kind === 'ai_video' && !project.aiClips[MM.aiKey(s)]) issues.push(`segment #${i} is an AI shot that failed to generate (shows black)`); });
+    tl.items.forEach((it) => { if (it.dur < 0.35) issues.push(`segment #${it.index} is very short (${it.dur.toFixed(2)}s)`); });
+    plan.texts.forEach((t) => { if (t.size * (t.text.length / Math.max(1, Math.round(t.text.length / 18))) > 1.4) issues.push(`text "${t.text}" may be too big for the frame`); });
+    if (plan.audio.music && plan.audio.musicVolume > 0.6 && project.sources.some((s) => (s.words || []).length)) issues.push('music volume high for a video with speech');
+    if (tl.total < 1) issues.push('video shorter than 1 second');
+    return issues;
+  }
+  /// El video tiene que pasar por Calidad antes de salir (hasta 2 rondas de arreglos).
+  async function qualityGate() {
+    if (!MM.settings.anthropicKey) return true;
+    for (let round = 1; round <= 3; round++) {
+      onAgent('qa', 'working');
+      status(`🛡️ Control de Calidad revisando (ronda ${round})…`);
+      const tl = MM.buildTimeline(plan, project);
+      const times = [];
+      const n = MM.clamp(Math.round(tl.total / 3), 6, 12);
+      for (let i = 0; i < n; i++) times.push(tl.total * (i + 0.5) / n);
+      MM.buildTextItems(plan, tl, project).slice(0, 6).forEach((t) => times.push(Math.min(tl.total - 0.05, t.start + Math.min(0.8, (t.end - t.start) / 2))));
+      times.sort((a, b) => a - b);
+      const shots = await player.snapshots(times);
+      let qa;
+      try { qa = await MM.qualityCheck(project, plan, shots, autoChecks(), round); }
+      catch (e) { onAgent('qa', 'error', e.message); return true; }
+      if (qa.approved || !qa.issues.length) {
+        onAgent('qa', 'done', `✅ Aprobado (${Math.round(qa.score)}/100). ${qa.summary}`);
+        return true;
+      }
+      onAgent('qa', 'done', `❌ No aprobado (${Math.round(qa.score)}/100). ${qa.summary}\n` + qa.issues.map((i) => `• ${MM.AGENTS[i.department].icon} ${i.problem}`).join('\n'));
+      if (round === 3) break;
+      const fixed = await MM.teamFix(project, plan, qa.issues, onAgent);
+      await Promise.all(Object.values(pending));
+      applyPlan(fixed);
+      await ensureMusic();
+    }
+    say('ai', 'Calidad todavía ve detalles. Puedes pedir cambios por chat o exportar igual con "Exportar sin revisión".', 'qa');
+    return false;
+  }
+
   // ---------- Exportar ----------
+  let saveHandle = null;
   $('exportBtn').onclick = async () => {
     if (!plan || busy) return;
+    const longVideo = player.duration > 10 * 60 || (MM.settings.quality === '4k' && player.duration > 3 * 60);
+    if (longVideo && window.showSaveFilePicker) {
+      try {
+        saveHandle = await window.showSaveFilePicker({ suggestedName: (plan.title || 'mi-mente').replace(/[^\w\-]+/g, '-') + '.mp4',
+          types: [{ description: 'Video MP4', accept: { 'video/mp4': ['.mp4'] } }] });
+      } catch { saveHandle = null; }
+    }
     setBusy(true);
+    player.pause(); $('playBtn').textContent = '▶';
+    const approved = forceExport ? true : await qualityGate();
+    forceExport = false;
+    if (!approved) {
+      status('');
+      setBusy(false);
+      $('exportBtn').textContent = 'Exportar sin revisión';
+      forceExport = true;
+      return;
+    }
+    $('exportBtn').textContent = 'Exportar';
+    status('');
     $('exportSheet').hidden = false;
     $('exportResult').hidden = true;
     $('exportTitle').textContent = 'Exportando…';
     $('exportBar').style.width = '0%';
     $('exportNote').textContent = 'Se graba en tiempo real: deja esta pantalla abierta.';
     try {
-      const { blob, ext } = await player.export((p) => { $('exportBar').style.width = Math.round(p * 100) + '%'; });
+      const progress = (p) => { $('exportBar').style.width = Math.round(p * 100) + '%'; };
+      const quality = MM.settings.quality;
+      let result = null;
+      const sz = MM.renderSize(plan, project, quality);
+      if (await MM.offlineExportSupport(sz.w, sz.h)) {
+        $('exportNote').textContent = `Exportando ${sz.w}×${sz.h} cuadro por cuadro (máxima calidad)…`;
+        result = await player.exportOffline(quality, progress, saveHandle);
+      }
+      if (!result) {
+        $('exportNote').textContent = 'Este navegador graba en tiempo real: deja esta pantalla abierta.';
+        result = await player.export(progress);
+      }
+      saveHandle = null;
+      if (result.saved) {
+        $('exportTitle').textContent = '¡Guardado en tu computadora!';
+        $('exportNote').textContent = `${result.size.w}×${result.size.h} MP4`;
+        $('exportBar').style.width = '100%';
+        setBusy(false);
+        return;
+      }
+      const { blob, ext } = result;
       const url = URL.createObjectURL(blob);
       const name = (plan.title || 'mi-mente').replace(/[^\w\-]+/g, '-').toLowerCase() + '.' + ext;
       $('exportVideo').src = url;
@@ -513,7 +599,7 @@
       $('exportResult').hidden = false;
       $('exportTitle').textContent = '¡Tu video está listo!';
       $('exportBar').style.width = '100%';
-      $('exportNote').textContent = `${(blob.size / 1e6).toFixed(1)} MB · ${ext.toUpperCase()}`;
+      $('exportNote').textContent = `${(blob.size / 1e6).toFixed(1)} MB · ${ext.toUpperCase()}${result.size ? ` · ${result.size.w}×${result.size.h}` : ''}`;
       $('shareBtn').onclick = async () => {
         const file = new File([blob], name, { type: blob.type });
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -532,11 +618,36 @@
 
   function resetProject() {
     player?.pause();
-    project.sources = []; project.aiClips = {}; project.reference = ''; project.request = '';
+    project.sources = []; project.aiClips = {}; project.voices = {}; project.reference = ''; project.request = '';
     plan = null; undoStack.length = 0;
     $('chat').innerHTML = '';
     renderAgents();
   }
+
+  // Abrir en el editor algo hecho en el Estudio de películas.
+  MM.app = {
+    async openProject(data, newPlan, opts = {}) {
+      resetProject();
+      $('studio').hidden = true;
+      show('editor');
+      setBusy(true);
+      Object.assign(project.aiClips, data.aiClips || {});
+      project.voices = data.voices || {};
+      applyPlan(MM.sanitizePlan(newPlan, project), false);
+      try {
+        if (opts.polish && MM.settings.anthropicKey) {
+          status('El equipo está mirando las tomas…');
+          await Promise.all(Object.values(project.aiClips).slice(0, 12).map(async (c) => { if (!c.frames) c.frames = await MM.sampleFrames(c, 1).catch(() => []); }));
+          const p = await MM.teamPolish(project, JSON.parse(JSON.stringify(plan)), opts.polish, onAgent, ['color', 'vfx']);
+          applyPlan(p, false);
+        }
+        await ensureMusic();
+        say('ai', 'Capítulo armado. Revísalo, pide cambios por chat y exporta (pasa por Control de Calidad).', 'producer');
+      } catch (e) { say('error', e.message); }
+      status('');
+      setBusy(false);
+    },
+  };
 
   // Arranque
   window.addEventListener('resize', () => player?.fit());

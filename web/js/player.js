@@ -26,7 +26,7 @@
       this.project = project;
       this.plan = plan;
       this.tl = MM.buildTimeline(plan, project);
-      const size = MM.renderSize(plan, project);
+      const size = MM.renderSize(plan, project, '720');   // vista previa ligera; se exporta en la calidad elegida
       if (size.w !== this.renderer.w || size.h !== this.renderer.h) this.renderer.resize(size.w, size.h);
       this.textCanvas.width = size.w; this.textCanvas.height = size.h;
       this.fit();
@@ -182,6 +182,21 @@
       }));
       this.renderFrame(this.t, false);
       this.onTime?.(this.t);
+    }
+
+    /// Fotos del video final (para Control de Calidad).
+    async snapshots(times, maxSide = 640) {
+      const out = [];
+      const c = document.createElement('canvas');
+      const k = Math.min(1, maxSide / Math.max(this.renderer.w, this.renderer.h));
+      c.width = Math.round(this.renderer.w * k); c.height = Math.round(this.renderer.h * k);
+      const ctx = c.getContext('2d');
+      for (const t of times) {
+        await this.seek(t);
+        ctx.drawImage(this.canvas, 0, 0, c.width, c.height);
+        out.push({ time: t, data: c.toDataURL('image/jpeg', 0.72).split(',')[1] });
+      }
+      return out;
     }
 
     /// Exporta el video final (se graba en tiempo real).
