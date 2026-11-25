@@ -37,6 +37,7 @@
   };
 
   async function renderList() {
+    if (working) return;
     current = null;
     const box = $('studioBody');
     box.innerHTML = '';
@@ -93,7 +94,7 @@
     setWorking(false);
   }
 
-  function openSeries(s) { current = s; renderSeries(); }
+  function openSeries(s) { if (working) return; current = s; renderSeries(); }
 
   function renderSeries() {
     const s = current;
@@ -197,79 +198,118 @@
   }
 
   /// Produce el capítulo: genera todas las tomas (4 a la vez), la narración, y lo arma en el editor.
+  const hashText = (t) => { let h = 2166136261; for (let i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); };
+
+  /// Produce el capítulo: genera todas las tomas (4 a la vez), la narración, y lo arma en el editor.
+  /// Todo queda guardado: abrirlo otra vez no vuelve a cobrar.
   async function produce(n) {
+    if (working) return;
+    const series = current;   // la serie de este trabajo, aunque cambies de pantalla
+    const state = series.chapters[n];
+    if (state.produced && state.plan && state.clipKeys) {
+      setWorking(true, 'Abriendo el capítulo guardado…');
+      try {
+        const { aiClips, voices } = await loadSaved(state);
+        MM.app.openProject({ aiClips, voices }, JSON.parse(JSON.stringify(state.plan)), {});
+      } catch (e) { log(e.message, 'error'); }
+      finally { setWorking(false); }
+      return;
+    }
     if (!MM.settings.falKey) { log('Para producir necesitas tu key de fal.ai (Ajustes).', 'error'); return; }
-    const state = current.chapters[n];
     state.approved = true;
-    await save();
+    await saveSeries(series);
     const shots = state.script.scenes.flatMap((sc, si) => sc.shots.map((sh) => ({ ...sh, scene: si })));
-    const format = current.req.format || '16:9';
+    const format = series.req.format || '16:9';
     const aiClips = {}, voices = {};
     const segments = shots.map((sh, i) => Object.assign(MM.clipSegment(0, 0, 0), {
-      kind: 'ai_video', aiPrompt: sh.prompt, aiCamera: sh.camera, aiUseFrame: false, aiDuration: sh.seconds > 7.5 ? 10 : 5,
+      kind: 'ai_video', aiPrompt: MM.composeShotPrompt(series.bible, sh), aiCamera: sh.camera, aiUseFrame: false, aiDuration: sh.seconds > 7.5 ? 10 : 5,
       transitionIn: { type: i === 0 ? 'none' : (sh.scene !== shots[i - 1].scene ? 'fade_black' : 'none'), duration: i === 0 ? 0 : 0.5 },
     }));
-    let done = 0, failed = 0;
+    let done = 0, failed = 0, voiceWarned = false;
     setWorking(true, `Generando ${shots.length} tomas…`);
-    const queue = segments.map((seg, i) => async () => {
-      const key = MM.aiKey(seg);
-      try {
-        let blob = await MM.db.getBlob('clip:' + key);
-        if (!blob) {
-          const src = await MM.generateClip({ prompt: seg.aiPrompt, camera: seg.aiCamera, seconds: seg.aiDuration, aspect: format },
-            (s) => $('studioStatusText').textContent = `Toma ${i + 1}/${shots.length}: ${s} · listas ${done}/${shots.length}`);
-          blob = src.blob;
-          await MM.db.setBlob('clip:' + key, blob);
-          aiClips[key] = Object.assign(src, { generated: true, prompt: seg.aiPrompt });
-        } else {
-          aiClips[key] = Object.assign(await MM.loadSource(blob, 'IA', 'video'), { generated: true, prompt: seg.aiPrompt });
-        }
-        done++;
-      } catch (e) { failed++; log(`Toma ${i + 1}: ${e.message}`, 'error'); }
-      $('studioStatusText').textContent = `Tomas listas ${done}/${shots.length}${failed ? ` · ${failed} fallaron` : ''}`;
-    });
-    // Voces en off
-    if (current.req.voice) {
-      shots.forEach((sh, i) => {
-        if (!sh.narration || !sh.narration.trim()) return;
-        queue.push(async () => {
-          try { voices['vo' + i] = await MM.generateVoice(sh.narration); }
-          catch (e) { if (!voices.__warned) { voices.__warned = true; log('Voz IA: ' + e.message + ' (uso subtítulos).', 'error'); } }
-        });
+    try {
+      const queue = segments.map((seg, i) => async () => {
+        const key = MM.aiKey(seg);
+        try {
+          let blob = await MM.db.getBlob('clip:' + key);
+          if (!blob) {
+            const src = await MM.generateClip({ prompt: seg.aiPrompt, camera: seg.aiCamera, seconds: seg.aiDuration, aspect: format },
+              (st) => { $('studioStatusText').textContent = `Toma ${i + 1}/${shots.length}: ${st} · listas ${done}/${shots.length}`; });
+            blob = src.blob;
+            await MM.db.setBlob('clip:' + key, blob).catch(() => {});
+            aiClips[key] = Object.assign(src, { generated: true, prompt: seg.aiPrompt });
+          } else {
+            aiClips[key] = Object.assign(await MM.loadSource(blob, 'IA', 'video'), { generated: true, prompt: seg.aiPrompt });
+          }
+          done++;
+        } catch (e) { failed++; log(`Toma ${i + 1}: ${e.message}`, 'error'); }
+        $('studioStatusText').textContent = `Tomas listas ${done}/${shots.length}${failed ? ` · ${failed} fallaron` : ''}`;
       });
-    }
-    // 4 trabajos a la vez
-    const workers = Array.from({ length: 4 }, async () => { while (queue.length) await queue.shift()(); });
-    await Promise.all(workers);
-    delete voices.__warned;
-
-    // Armar el plan del capítulo.
-    const plan = {
-      title: `${current.bible.title} · Cap. ${n}`, summary: state.script.title, format, segments,
-      color: MM.neutralGrade(), captions: MM.defaultCaptions(), effects: [], audio: Object.assign(MM.defaultAudio(), { musicMood: state.script.musicMood, musicVolume: 0.35 }),
-      texts: [], sfx: [], voiceovers: [],
-    };
-    const title = Object.assign(MM.basicText(`${current.bible.title}\nCapítulo ${n}: ${state.script.title}`), {
-      segmentIndex: 0, startOffset: 0.4, duration: 3.2, y: 0.5, font: 'playfair', weight: 'black', size: 0.06,
-      shadow: 0.8, animationIn: 'blur_in', animationOut: 'fade', letterSpacing: 0.04 });
-    plan.texts.push(title);
-    shots.forEach((sh, i) => {
-      if (sh.narration && sh.narration.trim()) {
-        if (voices['vo' + i]) plan.voiceovers.push({ key: 'vo' + i, segmentIndex: i, startOffset: 0.2, volume: 1 });
-        plan.texts.push(Object.assign(MM.basicText(sh.narration), {
-          segmentIndex: i, startOffset: 0.2, duration: (sh.seconds > 7.5 ? 10 : 5) - 0.4, y: 0.86, size: 0.032, weight: 'bold',
-          font: 'inter', background: 'box', backgroundColor: '#000000A6', shadow: 0, animationIn: 'fade', animationOut: 'fade', maxWidth: 0.8 }));
+      if (series.req.voice) {
+        shots.forEach((sh, i) => {
+          if (!sh.narration || !sh.narration.trim()) return;
+          queue.push(async () => {
+            const vkey = 'vo:' + hashText((sh.speaker || '') + '|' + sh.narration);
+            try {
+              let bytes = await MM.db.getBlob(vkey);
+              if (!bytes) { bytes = new Blob([await MM.generateVoiceBytes(sh.narration)]); await MM.db.setBlob(vkey, bytes).catch(() => {}); }
+              voices['vo' + i] = await MM.audioCtx().decodeAudioData(await bytes.arrayBuffer());
+            } catch (e) {
+              if (!voiceWarned) { voiceWarned = true; log('Voz IA: ' + e.message + ' (uso subtítulos).', 'error'); }
+            }
+          });
+        });
       }
-      if (sh.sfx && sh.sfx !== 'none') plan.sfx.push({ type: sh.sfx, segmentIndex: i, startOffset: 0.1, volume: 0.8 });
-    });
-    state.produced = done > 0;
-    await save();
-    setWorking(false);
-    log(`Capítulo ${n}: ${done} tomas listas${failed ? `, ${failed} fallaron (puedes reintentar)` : ''}. Abriendo el editor…`);
-    MM.app.openProject({ aiClips, voices }, plan, {
-      polish: `This is chapter ${n} of "${current.bible.title}" (${current.req.kind}). Style: ${current.bible.style}. Give it a cohesive cinematic grade and subtle purposeful effects that fit the story. Keep narration subtitles and title as they are.`,
-    });
+      const workers = Array.from({ length: 4 }, async () => { while (queue.length) await queue.shift()(); });
+      await Promise.all(workers);
+
+      const plan = {
+        title: `${series.bible.title} · Cap. ${n}`, summary: state.script.title, format, segments,
+        color: MM.neutralGrade(), captions: MM.defaultCaptions(), effects: [], audio: Object.assign(MM.defaultAudio(), { musicMood: state.script.musicMood, musicVolume: 0.35 }),
+        texts: [], sfx: [], voiceovers: [],
+      };
+      plan.texts.push(Object.assign(MM.basicText(`${series.bible.title}\nCapítulo ${n}: ${state.script.title}`), {
+        segmentIndex: 0, startOffset: 0.4, duration: 3.2, y: 0.5, font: 'playfair', weight: 'black', size: 0.06,
+        shadow: 0.8, animationIn: 'blur_in', animationOut: 'fade', letterSpacing: 0.04 }));
+      shots.forEach((sh, i) => {
+        if (sh.narration && sh.narration.trim()) {
+          if (voices['vo' + i]) plan.voiceovers.push({ key: 'vo' + i, segmentIndex: i, startOffset: 0.2, volume: 1 });
+          plan.texts.push(Object.assign(MM.basicText(sh.narration), {
+            segmentIndex: i, startOffset: 0.2, duration: (sh.seconds > 7.5 ? 10 : 5) - 0.4, y: 0.86, size: 0.032, weight: 'bold',
+            font: 'inter', background: 'box', backgroundColor: '#000000A6', shadow: 0, animationIn: 'fade', animationOut: 'fade', maxWidth: 0.8, userEdited: true }));
+        }
+        if (sh.sfx && sh.sfx !== 'none') plan.sfx.push({ type: sh.sfx, segmentIndex: i, startOffset: 0.1, volume: 0.8 });
+      });
+      state.produced = done > 0;
+      state.clipKeys = segments.map((sg) => MM.aiKey(sg));
+      state.voiceKeys = shots.map((sh, i) => (voices['vo' + i] ? { i, key: 'vo:' + hashText((sh.speaker || '') + '|' + sh.narration) } : null)).filter(Boolean);
+      await saveSeries(series);
+      log(`Capítulo ${n}: ${done} tomas listas${failed ? `, ${failed} fallaron (vuelve a tocar producir para reintentarlas)` : ''}. Abriendo el editor…`);
+      setWorking(false);
+      MM.app.openProject({ aiClips, voices }, plan, {
+        polish: `This is chapter ${n} of "${series.bible.title}" (${series.req.kind}). Style: ${series.bible.style}. Give it a cohesive cinematic grade and subtle purposeful effects that fit the story. Keep narration subtitles and title as they are.`,
+        onPlan: async (finalPlan) => { state.plan = finalPlan; await saveSeries(series); },
+      });
+    } catch (e) {
+      log(e.message, 'error');
+    } finally {
+      if (working) setWorking(false);
+    }
   }
+
+  async function loadSaved(state) {
+    const aiClips = {}, voices = {};
+    await Promise.all(state.clipKeys.map(async (key) => {
+      const blob = await MM.db.getBlob('clip:' + key);
+      if (blob) aiClips[key] = Object.assign(await MM.loadSource(blob, 'IA', 'video'), { generated: true });
+    }));
+    await Promise.all((state.voiceKeys || []).map(async ({ i, key }) => {
+      const blob = await MM.db.getBlob(key);
+      if (blob) voices['vo' + i] = await MM.audioCtx().decodeAudioData(await blob.arrayBuffer());
+    }));
+    return { aiClips, voices };
+  }
+  async function saveSeries(series) { await MM.db.set('series:' + series.id, series); }
 
   // Botones del estudio
   $('openStudio').onclick = () => MM.studio.open();

@@ -47,6 +47,11 @@
       const max = src.kind === 'image' ? 30 : src.duration;
       s.sourceStart = MM.clamp(+s.sourceStart, 0, max);
       s.sourceEnd = MM.clamp(+s.sourceEnd, 0, max);
+      // Nunca cortar a mitad de una palabra.
+      for (const w of src.words || []) {
+        if (s.sourceStart > w.start + 0.02 && s.sourceStart < w.end - 0.02) s.sourceStart = Math.max(0, w.start - 0.08);
+        if (s.sourceEnd > w.start + 0.02 && s.sourceEnd < w.end - 0.02) s.sourceEnd = Math.min(max, w.end + 0.08);
+      }
       return s.sourceEnd - s.sourceStart >= 0.2;
     });
     if (!plan.segments.length && n) plan.segments = [clip(0, 0, project.sources[0].kind === 'image' ? 3 : project.sources[0].duration)];

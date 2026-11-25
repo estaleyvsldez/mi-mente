@@ -111,6 +111,14 @@
     return MM.audioCtx().decodeAudioData(buf);
   };
 
+  /// Narración con voz IA: devuelve los bytes del audio (para guardarlos y no pagar dos veces).
+  MM.generateVoiceBytes = async (text, onStatus) => {
+    const r = await MM.fal.run(MM.settings.ttsModel, { text }, onStatus);
+    const url = r?.audio?.url || r?.audio_file?.url || r?.audio_url || r?.output?.url;
+    if (!url) throw new Error('La IA no devolvió la voz.');
+    return fetch(url).then((x) => x.arrayBuffer());
+  };
+
   /// Narración con voz IA (fal.ai). Devuelve un AudioBuffer.
   MM.generateVoice = async (text, onStatus) => {
     const r = await MM.fal.run(MM.settings.ttsModel, { text }, onStatus);

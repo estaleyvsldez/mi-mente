@@ -829,6 +829,7 @@
           applyPlan(p, false);
         }
         await ensureMusic();
+        if (opts.onPlan) await opts.onPlan(JSON.parse(JSON.stringify(plan)));
         say('ai', 'Capítulo armado. Revísalo, pide cambios por chat y exporta (pasa por Control de Calidad).', 'producer');
       } catch (e) { say('error', e.message); }
       status('');
