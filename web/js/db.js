@@ -22,6 +22,7 @@
       const r = fn(t.objectStore(store));
       t.oncomplete = () => resolve(r && 'result' in r ? r.result : undefined);
       t.onerror = () => reject(t.error);
+      t.onabort = () => reject(t.error || new Error('Sin espacio para guardar.'));
     });
   }
   MM.db = {

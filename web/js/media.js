@@ -5,6 +5,17 @@
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     return audioCtx;
   };
+  // iPhone: el audio solo arranca después de un toque. Se desbloquea en cada toque.
+  const unlock = () => { const c = MM.audioCtx(); if (c.state !== 'running') c.resume().catch(() => {}); };
+  document.addEventListener('pointerdown', unlock, { capture: true });
+  document.addEventListener('keydown', unlock, { capture: true });
+
+  // Fuentes de los textos: se cargan antes de medir, y si llegan tarde se vuelve a maquetar.
+  MM.fontsReady = (async () => {
+    if (!document.fonts) return;
+    try { await Promise.all(Object.values(MM.FONTS || {}).map((f) => document.fonts.load('900 40px ' + f).catch(() => {}))); } catch { /* */ }
+  })();
+  if (document.fonts) document.fonts.addEventListener('loadingdone', () => MM.onFontsChanged && MM.onFontsChanged());
 
   function waitEvent(el, ev, timeout = 15000) {
     return new Promise((resolve, reject) => {
@@ -17,6 +28,16 @@
     });
   }
   MM.waitEvent = waitEvent;
+
+  /// Espera a que un video tenga listo el cuadro actual (después de cargar o de saltar).
+  MM.videoReady = (v, timeout = 5000) => new Promise((resolve) => {
+    if (!v.seeking && v.readyState >= 2) { resolve(true); return; }
+    const evs = ['seeked', 'loadeddata', 'canplay', 'error'];
+    const done = () => { clearTimeout(t); evs.forEach((e) => v.removeEventListener(e, check)); resolve(v.readyState >= 2); };
+    const check = () => { if (!v.seeking && v.readyState >= 2) done(); else if (v.error) done(); };
+    const t = setTimeout(done, timeout);
+    evs.forEach((e) => v.addEventListener(e, check));
+  });
 
   /// Un video, foto o clip generado listo para usar.
   MM.loadSource = async (fileOrBlob, name, kind) => {
@@ -33,6 +54,11 @@
     v.src = url;
     await waitEvent(v, 'loadedmetadata');
     const src = { id: MM.uid(), name, kind: 'video', url, el: v, duration: v.duration, width: v.videoWidth, height: v.videoHeight, audio: null, words: [], blob: fileOrBlob };
+    const isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent);
+    if (isPhone && fileOrBlob.size > 450e6) {
+      src.tooBig = true;   // el teléfono no aguanta leerlo entero: se usa sin audio procesable
+      return src;
+    }
     try {
       // Videos largos: audio a menor resolución para que quepa en la memoria del teléfono.
       const long = v.duration > 12 * 60;

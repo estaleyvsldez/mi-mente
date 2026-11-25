@@ -207,6 +207,8 @@
     if (W > hw * 2) cx = MM.clamp(cx, hw, W - hw);
     if (H > hh * 2) cy = MM.clamp(cy, hh, H - hh);
 
+    // Caja del texto (para tocarlo y moverlo con el dedo).
+    item.box = { x: cx - lay.blockW / 2 - px * 0.35, y: cy - lay.blockH / 2 - px * 0.35, w: lay.blockW + px * 0.7, h: lay.blockH + px * 0.7, t };
     ctx.save();
     ctx.translate(cx + dx, cy + dy);
     ctx.rotate(rot);

@@ -131,9 +131,9 @@
     for (const it of items) {
       if (!it.src || it.src.kind !== 'video') continue;
       const d = this.decks[it.lane];
-      if (d.readyState < 2) await MM.waitEvent(d, 'loadeddata', 8000).catch(() => {});
+      await MM.videoReady(d, 8000);
       this.deckFor(it, t, false);
-      if (d.seeking) await MM.waitEvent(d, 'seeked', 8000).catch(() => {});
+      await MM.videoReady(d, 8000);
     }
   };
 })();

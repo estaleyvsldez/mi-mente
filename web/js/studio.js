@@ -55,15 +55,16 @@
         ctl('Formato', sel('stFormat', [['16:9', '16:9 YouTube / TV'], ['9:16', '9:16 TikTok / Reels'], ['1:1', '1:1']])),
       ),
       el('label', { class: 'small' }, el('input', { id: 'stVoice', type: 'checkbox', checked: 'checked' }), ' Narración con voz IA (fal.ai)'),
-      el('button', { class: 'btn', 'data-busy': '1', onclick: createSeries, text: '📝 Escribir la historia' }),
+      el('button', { class: 'btn', 'data-busy': '1', onclick: createSeries, text: 'Escribir la historia' }),
       el('p', { class: 'small', text: 'Cada toma de 5 s cuesta en fal.ai entre centavos y ~0.5 USD según el modelo. Un capítulo de 1 min ≈ 12 tomas. Tú apruebas el guion antes de que se genere nada.' }),
     );
     box.appendChild(form);
     if (series.length) {
       box.appendChild(el('div', { class: 'section-title', text: 'Tus producciones' }));
-      series.forEach((s) => box.appendChild(el('button', { class: 'card', style: 'text-align:left', onclick: () => openSeries(s) },
+      series.forEach((s) => box.appendChild(el('button', { class: 'card st-list-item', onclick: () => openSeries(s) },
         el('h2', { text: s.bible?.title || 'Sin título' }),
-        el('p', { text: `${s.req.kind} · ${s.req.chapters} cap. · ${Object.values(s.chapters || {}).filter((c) => c.produced).length} producidos` }))));
+        el('p', { text: `${s.req.kind} · ${s.req.chapters} cap. · ${Object.values(s.chapters || {}).filter((c) => c.produced).length} producidos` }),
+        el('span', { class: 'st-go', 'aria-hidden': 'true', text: '›' }))));
     }
   }
 
@@ -78,15 +79,15 @@
   async function createSeries() {
     const premise = $('stPremise').value.trim();
     if (!premise) { $('stPremise').focus(); return; }
-    if (!MM.settings.anthropicKey) { log('Pon tu API key de Anthropic en ⚙︎ Ajustes.', 'error'); return; }
+    if (!MM.settings.anthropicKey) { log('Pon tu API key de Anthropic en Ajustes.', 'error'); return; }
     const req = { premise, kind: $('stKind').value, chapters: MM.clamp(+$('stChapters').value || 1, 1, 60),
       minutes: +$('stMinutes').value, style: $('stStyle').value.trim(), voice: $('stVoice').checked, language: '', format: $('stFormat').value };
-    setWorking(true, '📝 El Guionista está escribiendo la biblia de la historia…');
+    setWorking(true, 'El Guionista está escribiendo la biblia de la historia…');
     try {
       const bible = await MM.writeBible(req);
       current = { id: MM.uid(), created: Date.now(), req, bible, chapters: {} };
       await save();
-      log('📝 ' + bible.reply);
+      log(bible.reply);
       renderSeries();
     } catch (e) { log(e.message, 'error'); }
     setWorking(false);
@@ -99,7 +100,7 @@
     const b = s.bible;
     const box = $('studioBody');
     box.innerHTML = '';
-    box.appendChild(el('button', { class: 'pill', onclick: renderList, text: '‹ Todas las producciones' }));
+    box.appendChild(el('button', { class: 'pill', onclick: renderList, text: '‹  Todas las producciones' }));
     const chars = el('div', { class: 'grid2' });
     b.characters.forEach((c, i) => chars.appendChild(el('div', { class: 'ctl' },
       el('label', {}, el('span', { text: c.name })),
@@ -121,12 +122,12 @@
   async function reviseBible() {
     const ask = $('bibleAsk').value.trim();
     if (!ask) return;
-    setWorking(true, '📝 El Guionista está reescribiendo…');
+    setWorking(true, 'El Guionista está reescribiendo…');
     try {
       const nb = await MM.reviseBible(current.bible, ask);
       current.bible = nb;
       await save();
-      log('📝 ' + nb.reply);
+      log(nb.reply);
       renderSeries();
     } catch (e) { log(e.message, 'error'); }
     setWorking(false);
@@ -135,12 +136,14 @@
   function chapterCard(ch) {
     const state = current.chapters[ch.number] || {};
     const card = el('div', { class: 'card' },
-      el('span', { class: 'eyebrow', text: `Capítulo ${ch.number} · ${state.produced ? 'producido ✓' : state.approved ? 'guion aprobado' : state.script ? 'guion para revisar' : 'sin guion'}` }),
+      el('span', { class: 'eyebrow' }, `Capítulo ${ch.number}`,
+        el('span', { class: 'st-status small', 'data-s': state.produced ? 'produced' : state.approved ? 'approved' : state.script ? 'review' : 'none',
+          text: state.produced ? 'Producido' : state.approved ? 'Guion aprobado' : state.script ? 'Guion para revisar' : 'Sin guion' })),
       el('h2', { text: ch.title }),
       el('p', { text: ch.summary }));
     const actions = el('div', { class: 'row' });
     if (!state.script) {
-      actions.appendChild(el('button', { class: 'btn', 'data-busy': '1', onclick: () => writeChapter(ch.number), text: '📝 Escribir guion' }));
+      actions.appendChild(el('button', { class: 'btn', 'data-busy': '1', onclick: () => writeChapter(ch.number), text: 'Escribir guion' }));
     } else {
       const shots = state.script.scenes.flatMap((sc) => sc.shots);
       const secs = shots.reduce((a, x) => a + (x.seconds > 7.5 ? 10 : 5), 0);
@@ -148,7 +151,7 @@
       state.script.scenes.forEach((sc, si) => {
         list.appendChild(el('div', { class: 'section-title', text: `Escena ${si + 1}: ${sc.heading}` }));
         sc.shots.forEach((sh, hi) => list.appendChild(el('div', { class: 'ctl' },
-          el('label', {}, el('span', { text: `Toma ${hi + 1} · ${sh.camera.replace(/_/g, ' ')} · ${sh.seconds > 7.5 ? 10 : 5}s${sh.sfx !== 'none' ? ' · 🔊 ' + sh.sfx : ''}` })),
+          el('label', {}, el('span', { text: `Toma ${hi + 1} · ${sh.camera.replace(/_/g, ' ')} · ${sh.seconds > 7.5 ? 10 : 5}s${sh.sfx !== 'none' ? ' · sonido: ' + sh.sfx : ''}` })),
           el('textarea', { rows: '3', oninput: (e) => { sh.prompt = e.target.value; state.approved = false; save(); } }, sh.prompt),
           el('input', { type: 'text', value: sh.narration, placeholder: 'Narración / diálogo', oninput: (e) => { sh.narration = e.target.value; save(); } }))));
       });
@@ -156,9 +159,9 @@
       card.appendChild(el('div', { class: 'row' },
         el('input', { id: 'chAsk' + ch.number, type: 'text', placeholder: 'Cambios al guion de este capítulo…' }),
         el('button', { class: 'btn ghost', 'data-busy': '1', onclick: () => reviseChapter(ch.number), text: 'Cambiar guion' })));
-      if (!state.produced) actions.appendChild(el('button', { class: 'btn', 'data-busy': '1', onclick: () => produce(ch.number), text: `✅ Aprobar y producir (${shots.length} tomas)` }));
+      if (!state.produced) actions.appendChild(el('button', { class: 'btn', 'data-busy': '1', onclick: () => produce(ch.number), text: `Aprobar y producir · ${shots.length} tomas` }));
       else {
-        actions.appendChild(el('button', { class: 'btn', 'data-busy': '1', onclick: () => produce(ch.number), text: '🎬 Abrir en el editor' }));
+        actions.appendChild(el('button', { class: 'btn', 'data-busy': '1', onclick: () => produce(ch.number), text: 'Abrir en el editor' }));
       }
     }
     card.appendChild(actions);
@@ -166,14 +169,14 @@
   }
 
   async function writeChapter(n) {
-    setWorking(true, `📝 Escribiendo el guion del capítulo ${n}…`);
+    setWorking(true, `Escribiendo el guion del capítulo ${n}…`);
     try {
       const prev = current.chapters[n - 1]?.script;
       const prevEnd = prev ? prev.scenes[prev.scenes.length - 1]?.shots.slice(-1)[0]?.prompt : '';
       const script = await MM.writeChapter(current.bible, n, current.req.minutes, prevEnd);
       current.chapters[n] = { script, approved: false, produced: false };
       await save();
-      log(`📝 Capítulo ${n}: ${script.reply}`);
+      log(`Capítulo ${n}: ${script.reply}`);
       renderSeries();
     } catch (e) { log(e.message, 'error'); }
     setWorking(false);
@@ -182,12 +185,12 @@
   async function reviseChapter(n) {
     const ask = $('chAsk' + n).value.trim();
     if (!ask) return;
-    setWorking(true, `📝 Reescribiendo el capítulo ${n}…`);
+    setWorking(true, `Reescribiendo el capítulo ${n}…`);
     try {
       const script = await MM.reviseChapter(current.bible, current.chapters[n].script, ask);
       current.chapters[n] = { script, approved: false, produced: false };
       await save();
-      log(`📝 ${script.reply}`);
+      log(script.reply);
       renderSeries();
     } catch (e) { log(e.message, 'error'); }
     setWorking(false);
@@ -195,7 +198,7 @@
 
   /// Produce el capítulo: genera todas las tomas (4 a la vez), la narración, y lo arma en el editor.
   async function produce(n) {
-    if (!MM.settings.falKey) { log('Para producir necesitas tu key de fal.ai (⚙︎ Ajustes).', 'error'); return; }
+    if (!MM.settings.falKey) { log('Para producir necesitas tu key de fal.ai (Ajustes).', 'error'); return; }
     const state = current.chapters[n];
     state.approved = true;
     await save();
@@ -207,14 +210,14 @@
       transitionIn: { type: i === 0 ? 'none' : (sh.scene !== shots[i - 1].scene ? 'fade_black' : 'none'), duration: i === 0 ? 0 : 0.5 },
     }));
     let done = 0, failed = 0;
-    setWorking(true, `🤖 Generando ${shots.length} tomas…`);
+    setWorking(true, `Generando ${shots.length} tomas…`);
     const queue = segments.map((seg, i) => async () => {
       const key = MM.aiKey(seg);
       try {
         let blob = await MM.db.getBlob('clip:' + key);
         if (!blob) {
           const src = await MM.generateClip({ prompt: seg.aiPrompt, camera: seg.aiCamera, seconds: seg.aiDuration, aspect: format },
-            (s) => $('studioStatusText').textContent = `🤖 Toma ${i + 1}/${shots.length}: ${s} · listas ${done}/${shots.length}`);
+            (s) => $('studioStatusText').textContent = `Toma ${i + 1}/${shots.length}: ${s} · listas ${done}/${shots.length}`);
           blob = src.blob;
           await MM.db.setBlob('clip:' + key, blob);
           aiClips[key] = Object.assign(src, { generated: true, prompt: seg.aiPrompt });
@@ -223,7 +226,7 @@
         }
         done++;
       } catch (e) { failed++; log(`Toma ${i + 1}: ${e.message}`, 'error'); }
-      $('studioStatusText').textContent = `🤖 Tomas listas ${done}/${shots.length}${failed ? ` · ${failed} fallaron` : ''}`;
+      $('studioStatusText').textContent = `Tomas listas ${done}/${shots.length}${failed ? ` · ${failed} fallaron` : ''}`;
     });
     // Voces en off
     if (current.req.voice) {
@@ -262,7 +265,7 @@
     state.produced = done > 0;
     await save();
     setWorking(false);
-    log(`🎬 Capítulo ${n}: ${done} tomas listas${failed ? `, ${failed} fallaron (puedes reintentar)` : ''}. Abriendo el editor…`);
+    log(`Capítulo ${n}: ${done} tomas listas${failed ? `, ${failed} fallaron (puedes reintentar)` : ''}. Abriendo el editor…`);
     MM.app.openProject({ aiClips, voices }, plan, {
       polish: `This is chapter ${n} of "${current.bible.title}" (${current.req.kind}). Style: ${current.bible.style}. Give it a cohesive cinematic grade and subtle purposeful effects that fit the story. Keep narration subtitles and title as they are.`,
     });

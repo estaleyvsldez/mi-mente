@@ -71,7 +71,7 @@
     start(plan, tl, project, t0, forRecording, offline) {
       if (!offline) this.stop();
       const ctx = offline || MM.audioCtx();
-      if (!offline && ctx.state === 'suspended') ctx.resume();
+      if (!offline && ctx.state !== 'running') ctx.resume().catch(() => {});
       const a = plan.audio;
       const master = ctx.createGain();
       master.connect(ctx.destination);
@@ -107,19 +107,17 @@
         nodes.push(node);
       }
 
-      // Música de fondo con ducking.
+      // Música de fondo: una sola envolvente (fade × ducking), sin automatizaciones que choquen.
       const song = project.songs.find((x) => x.name === a.music);
-      if (song && song.buffer) {
+      if (song && song.buffer && t0 < tl.total) {
         const node = ctx.createBufferSource();
-        node.buffer = song.buffer; node.loop = true;
-        node.loopStart = Math.min(a.musicStart || 0, song.buffer.duration - 1);
-        node.loopEnd = song.buffer.duration;
+        const dur = song.buffer.duration;
+        const ls = Math.min(Math.max(0, a.musicStart || 0), Math.max(0, dur - 1));
+        node.buffer = song.buffer; node.loop = true; node.loopStart = ls; node.loopEnd = dur;
         const g = ctx.createGain();
-        const base = MM.clamp(a.musicVolume, 0, 1), duck = base * (1 - MM.clamp(a.ducking, 0, 1));
-        g.gain.setValueAtTime(a.fadeInOut && t0 < 1 ? 0 : base, now);
-        if (a.fadeInOut && t0 < 1) g.gain.linearRampToValueAtTime(base, at(1));
+        const base = MM.clamp(a.musicVolume, 0, 1), duckK = 1 - MM.clamp(a.ducking, 0, 1);
+        const ranges = [];
         if (a.ducking > 0.01) {
-          const ranges = [];
           const voRanges = (plan.voiceovers || []).map((vo) => {
             const it = tl.items.find((x) => x.index === vo.segmentIndex); const b = project.voices && project.voices[vo.key];
             return it && b ? { start: it.start + (vo.startOffset || 0), end: it.start + (vo.startOffset || 0) + b.duration } : null;
@@ -128,23 +126,33 @@
             const last = ranges[ranges.length - 1];
             if (last && w.start - last[1] < 0.8) last[1] = Math.max(last[1], w.end); else ranges.push([w.start, w.end]);
           }
-          for (const [s, e] of ranges) {
-            if (e < t0) continue;
-            const ds = Math.max(t0 + 0.05, s - 0.3);
-            g.gain.setValueAtTime(base, at(ds)); g.gain.linearRampToValueAtTime(duck, at(ds + 0.3));
-            g.gain.setValueAtTime(duck, at(Math.max(ds + 0.3, e))); g.gain.linearRampToValueAtTime(base, at(Math.max(ds + 0.3, e) + 0.4));
+        }
+        const level = (t) => {
+          let k = base;
+          if (a.fadeInOut) k *= Math.min(1, t / 1, (tl.total - t) / 2);
+          for (const [s0, e0] of ranges) {
+            if (t > s0 - 0.3 && t < e0 + 0.4) {
+              const into = MM.clamp((t - (s0 - 0.3)) / 0.3, 0, 1), out = MM.clamp((e0 + 0.4 - t) / 0.4, 0, 1);
+              k *= 1 - (1 - duckK) * Math.min(into, out);
+              break;
+            }
           }
-        }
-        if (a.fadeInOut) {
-          const fs = Math.max(t0, tl.total - 2);
-          g.gain.setValueAtTime(base, at(fs)); g.gain.linearRampToValueAtTime(0, at(tl.total));
-        }
+          return Math.max(0, k);
+        };
+        const span = Math.max(0.1, tl.total - t0);
+        const steps = Math.max(2, Math.min(200000, Math.ceil(span * 20)));
+        const curve = new Float32Array(steps);
+        for (let i = 0; i < steps; i++) curve[i] = level(t0 + (i / (steps - 1)) * span);
+        g.gain.setValueAtTime(curve[0], now);
+        g.gain.setValueCurveAtTime(curve, now + 0.001, span);
         node.connect(g); g.connect(master);
-        const offset = ((a.musicStart || 0) + t0) % song.buffer.duration;
+        const L = Math.max(0.1, dur - ls), pos = (a.musicStart || 0) + t0;
+        const offset = pos < dur ? pos : ls + ((pos - dur) % L);
         node.start(now, offset);
-        node.stop(Math.max(now, at(tl.total)) + 0.1);
+        node.stop(now + span + 0.1);
         nodes.push(node);
       }
+
       // Narración / voces en off (Estudio de películas).
       const byIdx = {};
       tl.items.forEach((it) => { byIdx[it.index] = it; });

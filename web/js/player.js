@@ -140,6 +140,8 @@
 
     play() {
       if (!this.tl || this.playing) return;
+      const c = MM.audioCtx();
+      if (c.state !== 'running') c.resume().catch(() => {});
       if (this.t >= this.tl.total - 0.05) this.t = 0;
       this.playing = true;
       this.audio.start(this.plan, this.tl, this.project, this.t, false);
@@ -176,9 +178,9 @@
       [act.a, act.b].forEach((it) => this.deckFor(it, this.t, false));
       await Promise.all(this.decks.map(async (d) => {
         if (!d.src) return;
-        if (d.readyState < 2) await MM.waitEvent(d, 'loadeddata', 4000).catch(() => {});
+        await MM.videoReady(d, 4000);
         [act.a, act.b].forEach((it) => { if (it && this.decks[it.lane] === d) this.deckFor(it, this.t, false); });
-        if (d.seeking) await MM.waitEvent(d, 'seeked', 3000).catch(() => {});
+        await MM.videoReady(d, 4000);
       }));
       this.renderFrame(this.t, false);
       this.onTime?.(this.t);
@@ -219,6 +221,9 @@
       rec.start(500);
       this.playing = true;
       const total = this.tl.total;
+      const ctx0 = MM.audioCtx();
+      if (ctx0.state !== 'running') { try { await ctx0.resume(); } catch { /* */ } }
+      if (ctx0.state !== 'running') { rec.stop(); this.audio.stop(); throw new Error('El audio está bloqueado: toca la pantalla y vuelve a exportar.'); }
       await new Promise((resolve) => {
         const step = () => {
           const ctx = MM.audioCtx();

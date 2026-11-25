@@ -311,6 +311,7 @@ void main(){
       this.canvas.width = w; this.canvas.height = h;
       this.w = w; this.h = h;
       for (let i = 0; i < 2; i++) {
+        if (this.fbos[i]) { gl.deleteTexture(this.fbos[i].tex); gl.deleteFramebuffer(this.fbos[i].fb); }
         const tex = this.texture();
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
         const fb = gl.createFramebuffer();

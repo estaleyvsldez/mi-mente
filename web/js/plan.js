@@ -51,12 +51,40 @@
     });
     if (!plan.segments.length && n) plan.segments = [clip(0, 0, project.sources[0].kind === 'image' ? 3 : project.sources[0].duration)];
     if (plan.segments[0]) plan.segments[0].transitionIn = { type: 'none', duration: 0 };
+    // IDs estables: los textos, efectos, sonidos y voces siguen a su segmento aunque se reordene.
+    const used = new Set();
+    let next = Math.max(0, ...plan.segments.map((sg) => (Number.isInteger(sg.id) ? sg.id : -1))) + 1;
+    plan.segments.forEach((sg) => { if (!Number.isInteger(sg.id) || sg.id < 0 || used.has(sg.id)) sg.id = next++; used.add(sg.id); });
+    const remap = (item) => {
+      if (item.segmentIndex === -1) return item;
+      if (item.segmentId != null) {
+        const idx = plan.segments.findIndex((sg) => sg.id === item.segmentId);
+        if (idx >= 0) item.segmentIndex = idx; else item.segmentIndex = -2;   // su segmento ya no existe
+      }
+      if (plan.segments[item.segmentIndex]) item.segmentId = plan.segments[item.segmentIndex].id;
+      return item;
+    };
+    ['texts', 'effects', 'voiceovers', 'sfx'].forEach((k) => { (plan[k] || []).forEach(remap); });
+    const hex = (v, d) => (typeof v === 'string' && /^#?[0-9a-f]{6}([0-9a-f]{2})?$/i.test(v.trim()) ? (v.trim().startsWith('#') ? v.trim() : '#' + v.trim()) : d);
     plan.color = Object.assign(MM.neutralGrade(), plan.color);
     plan.texts = (plan.texts || []).filter((t) => t && String(t.text || '').trim() && plan.segments[t.segmentIndex])
-      .map((t) => Object.assign(MM.basicText(''), t));
+      .map((t) => {
+        const o = Object.assign(MM.basicText(''), t);
+        o.x = MM.clamp(+o.x, 0, 1); o.y = MM.clamp(+o.y, 0, 1); o.size = MM.clamp(+o.size || 0.08, 0.015, 0.3);
+        o.startOffset = Math.max(0, +o.startOffset || 0); o.duration = MM.clamp(+o.duration || 2, 0.3, 600);
+        o.strokeWidth = MM.clamp(+o.strokeWidth || 0, 0, 1); o.shadow = MM.clamp(+o.shadow || 0, 0, 1); o.glowAmount = MM.clamp(+o.glowAmount || 0, 0, 1);
+        o.rotation = MM.clamp(+o.rotation || 0, -180, 180); o.maxWidth = MM.clamp(+o.maxWidth || 0.86, 0.2, 1);
+        o.color = hex(o.color, '#FFFFFF'); o.strokeColor = hex(o.strokeColor, '#000000'); o.backgroundColor = hex(o.backgroundColor, '#000000');
+        o.gradientColor = o.gradientColor ? hex(o.gradientColor, '') : ''; o.glowColor = o.glowColor ? hex(o.glowColor, '') : '';
+        if (!MM.FONT_NAMES.includes(o.font)) o.font = 'montserrat';
+        return o;
+      })
+      .filter((t) => { const sg = plan.segments[t.segmentIndex]; const d = sg.kind === 'clip' ? (sg.sourceEnd - sg.sourceStart) / sg.speed : (sg.aiDuration || 5); return t.startOffset < d; });
     plan.captions = Object.assign(MM.defaultCaptions(), plan.captions);
     plan.captions.maxWords = MM.clamp(plan.captions.maxWords | 0 || 4, 1, 10);
-    plan.effects = (plan.effects || []).filter((e) => MM.EFFECTS.includes(e.type) && (e.segmentIndex === -1 || plan.segments[e.segmentIndex]));
+    plan.effects = (plan.effects || []).filter((e) => MM.EFFECTS.includes(e.type) && (e.segmentIndex === -1 || plan.segments[e.segmentIndex]))
+      .map((e) => Object.assign(e, { intensity: MM.clamp(e.intensity ?? 0.7, 0, 1), startOffset: Math.max(0, +e.startOffset || 0), duration: Math.max(0, +e.duration || 0),
+        focusX: MM.clamp(e.focusX ?? 0.5, 0, 1), focusY: MM.clamp(e.focusY ?? 0.45, 0, 1) }));
     plan.audio = Object.assign(MM.defaultAudio(), plan.audio);
     if (!MM.MUSIC_MOODS.includes(plan.audio.musicMood)) plan.audio.musicMood = 'none';
     plan.voiceovers = (plan.voiceovers || []).filter((v) => v && v.key && plan.segments[v.segmentIndex]);

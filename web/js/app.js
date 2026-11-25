@@ -31,6 +31,9 @@
     renderChips();
   }
   function say(role, text, agent) {
+    project.chatLog = project.chatLog || [];
+    project.chatLog.push(`${role === 'user' ? 'USER' : agent ? MM.AGENTS[agent].name : 'APP'}: ${String(text).slice(0, 300)}`);
+    if (project.chatLog.length > 30) project.chatLog.shift();
     const div = document.createElement('div');
     div.className = 'msg ' + role;
     if (agent) {
@@ -70,6 +73,7 @@
     if (plan && pushUndo) undoStack.push(JSON.parse(JSON.stringify(plan)));
     plan = newPlan;
     forceExport = false;
+    if (typeof selectText === 'function') selectText(null);
     $('exportBtn').textContent = 'Exportar';
     $('projTitle').textContent = plan.title || 'Mi video';
     player.load(project, plan);
@@ -134,6 +138,7 @@
         const kind = f.type.startsWith('image') ? 'image' : 'video';
         const src = await MM.loadSource(f, f.name, kind);
         project.sources.push(src);
+        if (src.tooBig) say('error', `"${f.name}" pesa ${(f.size / 1e9).toFixed(1)} GB: el iPhone no puede procesar su audio. Para videos tan pesados usa la laptop, o recórtalo en Fotos antes de subirlo.`);
         added.push(src);
       } catch (e) { say('error', `No pude abrir ${f.name}.`); }
     }
@@ -340,6 +345,145 @@
     say('ai', 'Volví a la versión anterior.', 'producer');
   };
 
+  // ---------- Edición directa sobre el video (tocar, arrastrar, agrandar) ----------
+  const view = $('view');
+  let drag = null;
+  let selected = null;          // { spec, idx, isCaption }
+  const bar = document.createElement('div');
+  bar.id = 'textBar';
+  bar.hidden = true;
+  bar.style.cssText = 'position:absolute;z-index:4;display:flex;gap:6px;padding:6px;border-radius:14px;background:rgba(14,13,18,.9);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)';
+  const mkBtn = (label, title, fn) => {
+    const b = document.createElement('button');
+    b.className = 'icon-btn'; b.textContent = label; b.title = title; b.setAttribute('aria-label', title);
+    b.onclick = (e) => { e.stopPropagation(); fn(); };
+    bar.appendChild(b);
+    return b;
+  };
+  const barInput = document.createElement('input');
+  barInput.type = 'text'; barInput.id = 'textBarInput';
+  barInput.style.cssText = 'width:9.5em;min-width:0;padding:8px 10px;border-radius:10px';
+  barInput.setAttribute('aria-label', 'Texto');
+  mkBtn('A−', 'Más pequeño', () => resizeSelected(0.88));
+  mkBtn('A+', 'Más grande', () => resizeSelected(1.14));
+  bar.appendChild(barInput);
+  mkBtn('🗑', 'Borrar texto', () => deleteSelected());
+  mkBtn('✕', 'Listo', () => selectText(null));
+  $('stage').appendChild(bar);
+
+  function canvasPoint(e) {
+    const r = view.getBoundingClientRect();
+    return { x: ((e.clientX - r.left) / r.width) * view.width, y: ((e.clientY - r.top) / r.height) * view.height };
+  }
+  function hitText(pt) {
+    const t = player.t;
+    const items = (player.textItems || []).filter((it) => it.box && Math.abs(it.box.t - t) < 0.05 && t >= it.start && t <= it.end);
+    for (let i = items.length - 1; i >= 0; i--) {
+      const b = items[i].box;
+      if (pt.x >= b.x && pt.x <= b.x + b.w && pt.y >= b.y && pt.y <= b.y + b.h) return items[i];
+    }
+    return null;
+  }
+  function positionBar() {
+    if (!selected) return;
+    const item = (player.textItems || []).find((it) => it.spec === selected.spec) || (player.textItems || []).find((it) => selected.isCaption && it.spec.y === plan.captions.y);
+    const r = view.getBoundingClientRect(), sr = $('stage').getBoundingClientRect();
+    const b = item && item.box;
+    const k = r.width / view.width;
+    let top = b ? r.top - sr.top + (b.y + b.h) * k + 6 : 8;
+    if (top > sr.height - 60) top = Math.max(8, (b ? r.top - sr.top + b.y * k : 8) - 58);
+    bar.style.top = top + 'px';
+    bar.style.left = Math.max(8, Math.min(sr.width - bar.offsetWidth - 8, (b ? r.left - sr.left + (b.x + b.w / 2) * k : sr.width / 2) - bar.offsetWidth / 2)) + 'px';
+  }
+  function selectText(sel) {
+    selected = sel;
+    bar.hidden = !sel;
+    if (!sel) return;
+    barInput.value = sel.isCaption ? '(subtítulos)' : sel.spec.text;
+    barInput.disabled = sel.isCaption;
+    positionBar();
+  }
+  function commitManual(before, note) {
+    undoStack.push(before);
+    noteManual(note);
+    $('undo').disabled = busy || !undoStack.length;
+    player.load(project, plan);
+    renderManual();
+    if (selected && !selected.isCaption) selected.spec = plan.texts[selected.idx] || null;
+    if (selected && !selected.spec && !selected.isCaption) selectText(null); else positionBar();
+  }
+  function resizeSelected(k) {
+    if (!selected) return;
+    const before = JSON.parse(JSON.stringify(plan));
+    if (selected.isCaption) { plan.captions.size = MM.clamp(plan.captions.size * k, 0.03, 0.15); plan.captions.userEdited = true; commitManual(before, `captions size ${plan.captions.size.toFixed(3)}`); return; }
+    const t = plan.texts[selected.idx];
+    t.size = MM.clamp(t.size * k, 0.02, 0.3); t.userEdited = true;
+    commitManual(before, `text "${t.text}" resized to ${t.size.toFixed(3)}`);
+  }
+  function deleteSelected() {
+    if (!selected) return;
+    const before = JSON.parse(JSON.stringify(plan));
+    if (selected.isCaption) { plan.captions.enabled = false; commitManual(before, 'captions turned off'); selectText(null); return; }
+    const [t] = plan.texts.splice(selected.idx, 1);
+    selectText(null);
+    commitManual(before, `deleted text "${t.text}"`);
+  }
+  barInput.addEventListener('change', () => {
+    if (!selected || selected.isCaption || !barInput.value.trim()) return;
+    const before = JSON.parse(JSON.stringify(plan));
+    const t = plan.texts[selected.idx];
+    t.text = barInput.value.trim(); t.userEdited = true;
+    commitManual(before, `text changed to "${t.text}"`);
+  });
+
+  view.addEventListener('pointerdown', (e) => {
+    if (!plan || busy || !player) return;
+    const pt = canvasPoint(e);
+    const item = hitText(pt);
+    if (!item) { selectText(null); return; }
+    e.preventDefault();
+    try { view.setPointerCapture(e.pointerId); } catch { /* */ }
+    if (player.playing) { player.pause(); $('playBtn').textContent = '▶'; }
+    const idx = plan.texts.indexOf(item.spec);
+    const isCaption = idx < 0;
+    drag = { item, idx, isCaption, start: pt, x0: item.spec.x, y0: item.spec.y, moved: false, before: JSON.parse(JSON.stringify(plan)) };
+    selectText({ spec: item.spec, idx, isCaption });
+  });
+  view.addEventListener('pointermove', (e) => {
+    if (!drag) return;
+    const pt = canvasPoint(e);
+    const dx = (pt.x - drag.start.x) / view.width, dy = (pt.y - drag.start.y) / view.height;
+    if (!drag.moved && Math.hypot(dx, dy) < 0.01) return;
+    drag.moved = true;
+    if (drag.isCaption) {
+      const y = MM.clamp(drag.y0 + dy, 0.05, 0.95);
+      (player.textItems || []).forEach((it) => { if (plan.texts.indexOf(it.spec) < 0) it.spec.y = y; });
+      plan.captions.y = y;
+    } else {
+      drag.item.spec.x = MM.clamp(drag.x0 + dx, 0, 1);
+      drag.item.spec.y = MM.clamp(drag.y0 + dy, 0, 1);
+    }
+    player.renderFrame(player.t, false);
+    positionBar();
+  });
+  const endDrag = () => {
+    if (!drag) return;
+    const d = drag;
+    drag = null;
+    if (!d.moved) return;
+    if (d.isCaption) {
+      plan.captions.userEdited = true;
+      commitManual(d.before, `captions moved to y=${plan.captions.y.toFixed(2)}`);
+    } else {
+      const t = plan.texts[d.idx];
+      t.userEdited = true;
+      commitManual(d.before, `text "${t.text}" moved by hand to x=${t.x.toFixed(2)}, y=${t.y.toFixed(2)}`);
+    }
+  };
+  view.addEventListener('pointerup', endDrag);
+  view.addEventListener('pointercancel', endDrag);
+  view.style.touchAction = 'none';
+
   // ---------- Pestañas ----------
   document.querySelectorAll('[data-tab]').forEach((b) => {
     b.onclick = () => {
@@ -351,8 +495,17 @@
 
   // ---------- Ajustes a mano ----------
   let manualTimer = null;
-  function manualChange(mut) {
+  /// Guarda lo que el usuario cambió a mano para que el equipo lo respete.
+  function noteManual(note) {
+    project.manualNotes = project.manualNotes || [];
+    const last = project.manualNotes[project.manualNotes.length - 1];
+    if (last !== note) project.manualNotes.push(note);
+    if (project.manualNotes.length > 30) project.manualNotes.shift();
+  }
+  function manualChange(mut, note) {
     if (!plan) return;
+    if (note) noteManual(note);
+    const prev = JSON.parse(JSON.stringify(plan));
     const next = JSON.parse(JSON.stringify(plan));
     mut(next);
     MM.sanitizePlan(next, project);
@@ -360,7 +513,7 @@
     const pushUndo = !manualTimer;
     plan = next;
     manualTimer = setTimeout(() => { manualTimer = null; }, 1200);
-    if (pushUndo) undoStack.push(JSON.parse(JSON.stringify(plan)));
+    if (pushUndo) undoStack.push(prev);
     player.load(project, plan);
     $('undo').disabled = busy || !undoStack.length;
     if (!plan.audio.music && plan.audio.musicMood !== 'none') ensureMusic();
@@ -372,7 +525,7 @@
     const v = get();
     wrap.innerHTML = `<label for="${id}"><span>${label}</span><span>${(+v).toFixed(2)}</span></label><input id="${id}" type="range" min="${min}" max="${max}" step="${step}" value="${v}">`;
     const input = wrap.querySelector('input'), out = wrap.querySelector('label span:last-child');
-    input.oninput = () => { out.textContent = (+input.value).toFixed(2); manualChange((p) => set(p, +input.value)); };
+    input.oninput = () => { out.textContent = (+input.value).toFixed(2); manualChange((p) => set(p, +input.value), `${label} = ${(+input.value).toFixed(2)}`); };
     return wrap;
   }
   function select(label, options, get, set) {
@@ -384,7 +537,7 @@
     sel.id = id;
     options.forEach(([v, t]) => { const o = document.createElement('option'); o.value = v; o.textContent = t; sel.appendChild(o); });
     sel.value = get();
-    sel.onchange = () => manualChange((p) => set(p, sel.value));
+    sel.onchange = () => manualChange((p) => set(p, sel.value), `${label} = ${sel.value}`);
     wrap.appendChild(sel);
     return wrap;
   }
@@ -421,14 +574,32 @@
         const wrap = document.createElement('div'); wrap.className = 'ctl';
         wrap.innerHTML = `<label for="m-text${i}"><span>Texto ${i + 1}</span></label>`;
         const inp = document.createElement('input'); inp.type = 'text'; inp.id = 'm-text' + i; inp.value = t.text;
-        inp.onchange = () => manualChange((p) => { p.texts[i].text = inp.value; });
+        inp.onchange = () => manualChange((p) => { p.texts[i].text = inp.value; p.texts[i].userEdited = true; }, `text ${i + 1} changed to "${inp.value}"`);
         wrap.appendChild(inp); tg.appendChild(wrap);
         tg.appendChild(select('Fuente', MM.FONT_NAMES.map((f) => [f, nice(f)]), () => t.font, (p, v) => { p.texts[i].font = v; }));
         tg.appendChild(select('Entrada', MM.ANIM_IN.map((f) => [f, nice(f)]), () => t.animationIn, (p, v) => { p.texts[i].animationIn = v; }));
-        tg.appendChild(slider('Tamaño', () => t.size, (p, v) => { p.texts[i].size = v; }, 0.02, 0.25, 0.005));
+        tg.appendChild(slider('Tamaño', () => t.size, (p, v) => { p.texts[i].size = v; p.texts[i].userEdited = true; }, 0.02, 0.25, 0.005));
+        tg.appendChild(slider('Horizontal', () => t.x, (p, v) => { p.texts[i].x = v; p.texts[i].userEdited = true; }, 0, 1));
+        tg.appendChild(slider('Vertical', () => t.y, (p, v) => { p.texts[i].y = v; p.texts[i].userEdited = true; }, 0, 1));
+        tg.appendChild(slider('Rotación', () => t.rotation || 0, (p, v) => { p.texts[i].rotation = v; p.texts[i].userEdited = true; }, -45, 45, 1));
+        const del = document.createElement('button');
+        del.className = 'pill'; del.textContent = 'Borrar este texto';
+        del.onclick = () => { manualChange((p) => { p.texts.splice(i, 1); }, `deleted text "${t.text}"`); renderManual(); };
+        tg.appendChild(del);
       });
     }
-    title('Audio');
+    const addText = document.createElement('button');
+    addText.className = 'pill'; addText.textContent = '＋ Agregar texto';
+    addText.onclick = () => {
+      const tl = MM.buildTimeline(plan, project);
+      const cur = tl.items.find((it) => player.t >= it.start && player.t < it.start + it.dur) || tl.items[0];
+      if (!cur) return;
+      manualChange((p) => { p.texts.push(Object.assign(MM.basicText('Tu texto'), { segmentIndex: cur.index, startOffset: Math.max(0, player.t - cur.start), duration: 3, userEdited: true })); }, 'added a text by hand');
+      renderManual();
+      say('ai', 'Agregué un texto donde está la reproducción. Arrástralo sobre el video para moverlo y cámbiale las palabras aquí.', 'text');
+    };
+    box.appendChild(addText);
+        title('Audio');
     g = grid();
     g.appendChild(select('Voz', MM.VOICE_PRESETS.map((v) => [v, nice(v)]), () => plan.audio.voicePreset, (p, v) => { p.audio.voicePreset = v; }));
     [['Volumen voz', 'voiceVolume', 0, 2], ['Limpieza de ruido', 'cleanup', 0, 1], ['Compresor', 'compression', 0, 1],
@@ -512,26 +683,37 @@
   /// El video tiene que pasar por Calidad antes de salir (hasta 2 rondas de arreglos).
   async function qualityGate() {
     if (!MM.settings.anthropicKey) return true;
+    let previous = [];
     for (let round = 1; round <= 3; round++) {
       onAgent('qa', 'working');
       status(`🛡️ Control de Calidad revisando (ronda ${round})…`);
       const tl = MM.buildTimeline(plan, project);
+      const textItems = MM.buildTextItems(plan, tl, project);
       const times = [];
       const n = MM.clamp(Math.round(tl.total / 3), 6, 12);
       for (let i = 0; i < n; i++) times.push(tl.total * (i + 0.5) / n);
-      MM.buildTextItems(plan, tl, project).slice(0, 6).forEach((t) => times.push(Math.min(tl.total - 0.05, t.start + Math.min(0.8, (t.end - t.start) / 2))));
+      textItems.slice(0, 6).forEach((t) => times.push(Math.min(tl.total - 0.05, t.start + Math.min(0.8, (t.end - t.start) / 2))));
       times.sort((a, b) => a - b);
       const shots = await player.snapshots(times);
+      const fx = MM.scheduleEffects(plan, tl);
+      shots.forEach((sh) => {
+        const it = tl.items.find((x) => sh.time >= x.start && sh.time < x.start + x.dur);
+        const texts = textItems.filter((x) => sh.time >= x.start && sh.time <= x.end).map((x) => `"${x.spec.text}"`);
+        const effs = [...fx.global, ...(it ? fx.bySeg[it.index] || [] : [])].filter((x) => sh.time >= x.start && sh.time <= x.end).map((x) => x.e.type);
+        sh.label = `segment #${it ? it.index : '?'}${texts.length ? ', texts ' + texts.join(' ') : ''}${effs.length ? ', effects ' + effs.join(' ') : ''}`;
+      });
       let qa;
-      try { qa = await MM.qualityCheck(project, plan, shots, autoChecks(), round); }
+      try { qa = await MM.qualityCheck(project, plan, shots, autoChecks(), round, previous); }
       catch (e) { onAgent('qa', 'error', e.message); return true; }
-      if (qa.approved || !qa.issues.length) {
+      const serious = qa.issues.filter((i) => i.severity !== 'minor');
+      if (qa.approved || !serious.length) {
         onAgent('qa', 'done', `✅ Aprobado (${Math.round(qa.score)}/100). ${qa.summary}`);
         return true;
       }
-      onAgent('qa', 'done', `❌ No aprobado (${Math.round(qa.score)}/100). ${qa.summary}\n` + qa.issues.map((i) => `• ${MM.AGENTS[i.department].icon} ${i.problem}`).join('\n'));
+      onAgent('qa', 'done', `❌ No aprobado (${Math.round(qa.score)}/100). ${qa.summary}\n` + serious.map((i) => `• ${MM.AGENTS[i.department].icon} ${i.problem}`).join('\n'));
       if (round === 3) break;
-      const fixed = await MM.teamFix(project, plan, qa.issues, onAgent);
+      previous = serious;
+      const fixed = await MM.teamFix(project, plan, serious, onAgent);
       await Promise.all(Object.values(pending));
       applyPlan(fixed);
       await ensureMusic();
@@ -542,6 +724,7 @@
 
   // ---------- Exportar ----------
   let saveHandle = null;
+  let lastExportURL = null;
   $('exportBtn').onclick = async () => {
     if (!plan || busy) return;
     const longVideo = player.duration > 10 * 60 || (MM.settings.quality === '4k' && player.duration > 3 * 60);
@@ -553,7 +736,9 @@
     }
     setBusy(true);
     player.pause(); $('playBtn').textContent = '▶';
-    const approved = forceExport ? true : await qualityGate();
+    let approved;
+    try { approved = forceExport ? true : await qualityGate(); }
+    catch (e) { say('error', e.message); approved = false; }
     forceExport = false;
     if (!approved) {
       status('');
@@ -591,7 +776,9 @@
         return;
       }
       const { blob, ext } = result;
+      if (lastExportURL) URL.revokeObjectURL(lastExportURL);
       const url = URL.createObjectURL(blob);
+      lastExportURL = url;
       const name = (plan.title || 'mi-mente').replace(/[^\w\-]+/g, '-').toLowerCase() + '.' + ext;
       $('exportVideo').src = url;
       $('downloadLink').href = url;
@@ -618,7 +805,7 @@
 
   function resetProject() {
     player?.pause();
-    project.sources = []; project.aiClips = {}; project.voices = {}; project.reference = ''; project.request = '';
+    project.sources = []; project.aiClips = {}; project.voices = {}; project.reference = ''; project.request = ''; project.manualNotes = []; project.chatLog = [];
     plan = null; undoStack.length = 0;
     $('chat').innerHTML = '';
     renderAgents();
@@ -651,6 +838,11 @@
 
   // Arranque
   window.addEventListener('resize', () => player?.fit());
+  MM.onFontsChanged = () => {
+    if (!player || !player.textItems) return;
+    player.textItems.forEach((i) => { delete i.layout; });
+    if (!player.playing) player.renderFrame(player.t, false);
+  };
   refreshBanner();
   renderAgents();
   // Para pruebas automáticas.
