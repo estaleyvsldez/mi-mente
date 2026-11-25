@@ -1,0 +1,7 @@
+# Se genera con `xcodegen generate`
+MiMenteEditor.xcodeproj/
+MiMenteEditor/Info.plist
+build/
+DerivedData/
+xcuserdata/
+.DS_Store

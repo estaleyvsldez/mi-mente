@@ -1,0 +1,27 @@
+name: Editor IA (iOS build)
+
+on:
+  push:
+    paths:
+      - "editor-ia/**"
+      - ".github/workflows/editor-ia-ios.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    defaults:
+      run:
+        working-directory: editor-ia
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Build for iOS Simulator
+        run: |
+          set -o pipefail
+          xcodebuild -project MiMenteEditor.xcodeproj -scheme MiMenteEditor \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            -configuration Debug CODE_SIGNING_ALLOWED=NO build | tail -n 200
