@@ -241,6 +241,7 @@
       return pending[key];
     }));
     onAgent('generator', 'done', `Generé ${segs.filter((s) => project.aiClips[MM.aiKey(s)]).length} de ${segs.length} toma(s) con IA.`);
+    if (!busy) status('');
   }
 
   // ---------- Chat ----------
