@@ -20,8 +20,10 @@ struct PickedMovie: Transferable {
 
 struct HomeView: View {
     @Environment(EditorModel.self) private var model
+    @Environment(PhotoModel.self) private var photo
     @Binding var showSettings: Bool
     @State private var item: PhotosPickerItem?
+    @State private var photoItem: PhotosPickerItem?
     @State private var loading = false
     @State private var errorText: String?
 
@@ -33,7 +35,7 @@ struct HomeView: View {
                 .foregroundStyle(.linearGradient(colors: [.purple, .pink, .orange], startPoint: .topLeading, endPoint: .bottomTrailing))
             VStack(spacing: 10) {
                 Text("Mi Mente").font(.largeTitle.bold())
-                Text("Sube un video y la IA lo edita sola: cortes, colores, textos, transiciones, subtítulos y escenas nuevas. Si algo no te gusta, solo escríbelo.")
+                Text("Sube un video o una foto y la IA la edita sola como un profesional: color, texto, efectos, audio de estudio y escenas con IA. Si algo no te gusta, solo escríbelo.")
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 24)
@@ -50,6 +52,16 @@ struct HomeView: View {
             .disabled(loading)
             .padding(.horizontal, 32)
 
+            PhotosPicker(selection: $photoItem, matching: .images, photoLibrary: .shared()) {
+                Label("Editar una foto", systemImage: "photo.badge.plus")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(.white.opacity(0.1), in: RoundedRectangle(cornerRadius: 16))
+            }
+            .disabled(loading)
+            .padding(.horizontal, 32)
+
             if model.apiKey.isEmpty {
                 Button("Primero pon tu API key de Anthropic") { showSettings = true }
                     .font(.footnote)
@@ -58,6 +70,19 @@ struct HomeView: View {
                 Text(errorText).font(.footnote).foregroundStyle(.red).padding(.horizontal)
             }
             Spacer()
+        }
+        .onChange(of: photoItem) { _, newItem in
+            guard let newItem else { return }
+            loading = true
+            Task {
+                if let data = try? await newItem.loadTransferable(type: Data.self), let image = UIImage(data: data) {
+                    await photo.load(image, keys: model)
+                } else {
+                    errorText = "No pude abrir esa foto."
+                }
+                loading = false
+                photoItem = nil
+            }
         }
         .onChange(of: item) { _, newItem in
             guard let newItem else { return }

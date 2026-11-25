@@ -177,11 +177,8 @@ private struct ClipsTab: View {
 // MARK: - Color
 
 private struct ColorTab: View {
-    @Environment(EditorModel.self) private var model
     @Binding var plan: EditPlan
     @State private var target = -1   // -1 = general
-    @State private var band = HSLBand.orange
-    @State private var importing = false
 
     private var grade: Binding<ColorGrade> {
         Binding(
@@ -199,35 +196,51 @@ private struct ColorTab: View {
                     Text("Todo el video").tag(-1)
                     ForEach(plan.segments.indices, id: \.self) { i in Text("Segmento \(i + 1)").tag(i) }
                 }
-                EnumPicker("Look", selection: grade.preset)
-                SliderRow("Intensidad del look", value: grade.presetIntensity, range: 0...1)
-                Button("Restablecer color") { grade.wrappedValue = .neutral }
+            }
+            GradeSections(grade: grade)
+        }
+    }
+}
+
+/// Todos los controles de color de un colorista (se usan en video y en fotos).
+struct GradeSections: View {
+    @Environment(EditorModel.self) private var model
+    @Binding var grade: ColorGrade
+    @State private var band = HSLBand.orange
+    @State private var importing = false
+
+    var body: some View {
+        Group {
+            Section {
+                EnumPicker("Look", selection: $grade.preset)
+                SliderRow("Intensidad del look", value: $grade.presetIntensity, range: 0...1)
+                Button("Restablecer color") { grade = .neutral }
             }
             Section("Luz") {
-                SliderRow("Exposición", value: grade.exposure, range: -2...2, format: "%.2f EV")
-                SliderRow("Contraste", value: grade.contrast, range: -1...1)
-                SliderRow("Altas luces", value: grade.highlights, range: -1...1)
-                SliderRow("Sombras", value: grade.shadows, range: -1...1)
-                SliderRow("Blancos", value: grade.whites, range: -1...1)
-                SliderRow("Negros", value: grade.blacks, range: -1...1)
+                SliderRow("Exposición", value: $grade.exposure, range: -2...2, format: "%.2f EV")
+                SliderRow("Contraste", value: $grade.contrast, range: -1...1)
+                SliderRow("Altas luces", value: $grade.highlights, range: -1...1)
+                SliderRow("Sombras", value: $grade.shadows, range: -1...1)
+                SliderRow("Blancos", value: $grade.whites, range: -1...1)
+                SliderRow("Negros", value: $grade.blacks, range: -1...1)
             }
             Section("Color") {
-                SliderRow("Temperatura", value: grade.temperature, range: -1...1)
-                SliderRow("Tinte", value: grade.tint, range: -1...1)
-                SliderRow("Saturación", value: grade.saturation, range: -1...1)
-                SliderRow("Vibrancia", value: grade.vibrance, range: -1...1)
-                SliderRow("Proteger piel", value: grade.skinProtect, range: 0...1)
+                SliderRow("Temperatura", value: $grade.temperature, range: -1...1)
+                SliderRow("Tinte", value: $grade.tint, range: -1...1)
+                SliderRow("Saturación", value: $grade.saturation, range: -1...1)
+                SliderRow("Vibrancia", value: $grade.vibrance, range: -1...1)
+                SliderRow("Proteger piel", value: $grade.skinProtect, range: 0...1)
             }
             Section("Ruedas de color") {
-                WheelEditor(title: "Lift · sombras", wheel: grade.lift)
-                WheelEditor(title: "Gamma · medios", wheel: grade.gamma)
-                WheelEditor(title: "Gain · altas", wheel: grade.gain)
+                WheelEditor(title: "Lift · sombras", wheel: $grade.lift)
+                WheelEditor(title: "Gamma · medios", wheel: $grade.gamma)
+                WheelEditor(title: "Gain · altas", wheel: $grade.gain)
             }
             Section("Split toning") {
-                HexColorPicker("Sombras", hex: grade.splitShadows)
-                HexColorPicker("Altas luces", hex: grade.splitHighlights)
-                SliderRow("Cantidad", value: grade.splitAmount, range: 0...1)
-                SliderRow("Balance", value: grade.splitBalance, range: -1...1)
+                HexColorPicker("Sombras", hex: $grade.splitShadows)
+                HexColorPicker("Altas luces", hex: $grade.splitHighlights)
+                SliderRow("Cantidad", value: $grade.splitAmount, range: 0...1)
+                SliderRow("Balance", value: $grade.splitBalance, range: -1...1)
             }
             Section("HSL por color") {
                 EnumPicker("Color", selection: $band)
@@ -236,44 +249,42 @@ private struct ColorTab: View {
                 SliderRow("Luminancia", value: hslBinding(\.luminance), range: -1...1)
             }
             Section("Acabado") {
-                SliderRow("Fade (negros mate)", value: grade.fade, range: 0...1)
-                SliderRow("Claridad", value: grade.clarity, range: -1...1)
-                SliderRow("Nitidez", value: grade.sharpen, range: 0...1)
-                SliderRow("Grano", value: grade.grain, range: 0...1)
-                SliderRow("Bloom", value: grade.bloom, range: 0...1)
-                SliderRow("Halación", value: grade.halation, range: 0...1)
-                SliderRow("Viñeta", value: grade.vignette, range: 0...1)
+                SliderRow("Fade (negros mate)", value: $grade.fade, range: 0...1)
+                SliderRow("Claridad", value: $grade.clarity, range: -1...1)
+                SliderRow("Nitidez", value: $grade.sharpen, range: 0...1)
+                SliderRow("Grano", value: $grade.grain, range: 0...1)
+                SliderRow("Bloom", value: $grade.bloom, range: 0...1)
+                SliderRow("Halación", value: $grade.halation, range: 0...1)
+                SliderRow("Viñeta", value: $grade.vignette, range: 0...1)
             }
             Section("LUT (.cube)") {
-                Picker("LUT", selection: grade.lut) {
+                Picker("LUT", selection: $grade.lut) {
                     Text("Ninguno").tag("")
                     ForEach(model.importedLUTs, id: \.self) { Text($0).tag($0) }
                 }
-                SliderRow("Intensidad LUT", value: grade.lutIntensity, range: 0...1)
+                SliderRow("Intensidad LUT", value: $grade.lutIntensity, range: 0...1)
                 Button { importing = true } label: { Label("Importar LUT…", systemImage: "square.and.arrow.down") }
             }
         }
         .fileImporter(isPresented: $importing,
                       allowedContentTypes: [UTType(filenameExtension: "cube") ?? .data, .data]) { result in
             if case .success(let url) = result, let name = model.importLUT(url) {
-                grade.wrappedValue.lut = name
+                grade.lut = name
             }
         }
     }
 
     private func hslBinding(_ kp: WritableKeyPath<HSLAdjust, Double>) -> Binding<Double> {
         Binding(
-            get: { grade.wrappedValue.hsl.first(where: { $0.band == band })?[keyPath: kp] ?? 0 },
+            get: { grade.hsl.first(where: { $0.band == band })?[keyPath: kp] ?? 0 },
             set: { v in
-                var g = grade.wrappedValue
-                if let i = g.hsl.firstIndex(where: { $0.band == band }) {
-                    g.hsl[i][keyPath: kp] = v
+                if let i = grade.hsl.firstIndex(where: { $0.band == band }) {
+                    grade.hsl[i][keyPath: kp] = v
                 } else {
                     var adj = HSLAdjust(band: band, hue: 0, saturation: 0, luminance: 0)
                     adj[keyPath: kp] = v
-                    g.hsl.append(adj)
+                    grade.hsl.append(adj)
                 }
-                grade.wrappedValue = g
             })
     }
 }
@@ -343,17 +354,20 @@ private struct TextsTab: View {
     }
 }
 
-private struct TextInspector: View {
+struct TextInspector: View {
     @Binding var text: TextOverlay
     let segmentCount: Int
+    var forPhoto = false
 
     var body: some View {
         Form {
             Section("Texto") {
                 TextField("Texto", text: $text.text, axis: .vertical)
-                Stepper("Segmento \(text.segmentIndex + 1)", value: $text.segmentIndex, in: 0...max(segmentCount - 1, 0))
-                SliderRow("Empieza en", value: $text.startOffset, range: 0...20, format: "%.1fs")
-                SliderRow("Dura", value: $text.duration, range: 0.3...20, format: "%.1fs")
+                if !forPhoto {
+                    Stepper("Segmento \(text.segmentIndex + 1)", value: $text.segmentIndex, in: 0...max(segmentCount - 1, 0))
+                    SliderRow("Empieza en", value: $text.startOffset, range: 0...20, format: "%.1fs")
+                    SliderRow("Dura", value: $text.duration, range: 0.3...20, format: "%.1fs")
+                }
             }
             Section("Tipografía") {
                 EnumPicker("Fuente", selection: $text.font)
@@ -381,10 +395,12 @@ private struct TextInspector: View {
                 SliderRow("Rotación", value: $text.rotation, range: -45...45, format: "%.0f°")
                 Toggle("Detrás de la persona", isOn: $text.behindSubject)
             }
-            Section("Animación") {
-                EnumPicker("Entrada", selection: $text.animationIn)
-                EnumPicker("Salida", selection: $text.animationOut)
-                EnumPicker("En bucle", selection: $text.loop)
+            if !forPhoto {
+                Section("Animación") {
+                    EnumPicker("Entrada", selection: $text.animationIn)
+                    EnumPicker("Salida", selection: $text.animationOut)
+                    EnumPicker("En bucle", selection: $text.loop)
+                }
             }
         }
         .navigationTitle("Texto")

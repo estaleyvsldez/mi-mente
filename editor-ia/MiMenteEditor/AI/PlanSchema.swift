@@ -37,33 +37,7 @@ enum PlanSchema {
         "lut": string, "lutIntensity": number,
     ])
 
-    static let plan: [String: Any] = obj([
-        "title": string,
-        "summary": string,
-        "format": oneOf(VideoFormat.self),
-        "segments": array(obj([
-            "kind": oneOf(SegmentKind.self),
-            "sourceStart": number,
-            "sourceEnd": number,
-            "speed": number,
-            "speedRamp": oneOf(SpeedRamp.self),
-            "focusX": number,
-            "focusY": number,
-            "sceneDuration": number,
-            "sceneTitle": string,
-            "sceneSubtitle": string,
-            "sceneStyle": oneOf(SceneStyle.self),
-            "sceneColors": array(string),
-            "transitionIn": obj([
-                "type": oneOf(TransitionType.self),
-                "duration": number,
-            ]),
-            "aiPrompt": string,
-            "aiCamera": oneOf(CameraMove.self),
-            "aiUseFrame": boolean,
-            "color": ["anyOf": [colorGrade, ["type": "null"] as [String: Any]] as [[String: Any]]] as [String: Any],
-        ])),
-        "texts": array(obj([
+    static let text: [String: Any] = obj([
             "text": string,
             "segmentIndex": integer,
             "startOffset": number,
@@ -90,8 +64,9 @@ enum PlanSchema {
             "animationOut": oneOf(TextAnimOut.self),
             "loop": oneOf(TextLoop.self),
             "behindSubject": boolean,
-        ])),
-        "effects": array(obj([
+            ])
+
+    static let effect: [String: Any] = obj([
             "type": oneOf(EffectType.self),
             "segmentIndex": integer,
             "startOffset": number,
@@ -101,7 +76,36 @@ enum PlanSchema {
             "focusY": number,
             "color": string,
             "secondaryColor": string,
+            ])
+
+    static let plan: [String: Any] = obj([
+        "title": string,
+        "summary": string,
+        "format": oneOf(VideoFormat.self),
+        "segments": array(obj([
+            "kind": oneOf(SegmentKind.self),
+            "sourceStart": number,
+            "sourceEnd": number,
+            "speed": number,
+            "speedRamp": oneOf(SpeedRamp.self),
+            "focusX": number,
+            "focusY": number,
+            "sceneDuration": number,
+            "sceneTitle": string,
+            "sceneSubtitle": string,
+            "sceneStyle": oneOf(SceneStyle.self),
+            "sceneColors": array(string),
+            "transitionIn": obj([
+                "type": oneOf(TransitionType.self),
+                "duration": number,
+            ]),
+            "aiPrompt": string,
+            "aiCamera": oneOf(CameraMove.self),
+            "aiUseFrame": boolean,
+            "color": ["anyOf": [colorGrade, ["type": "null"] as [String: Any]] as [[String: Any]]] as [String: Any],
         ])),
+        "texts": array(text),
+        "effects": array(effect),
         "color": colorGrade,
         "captions": obj([
             "enabled": boolean,
