@@ -2,7 +2,7 @@
 (function () {
   MM.defaultAudio = () => ({
     voiceVolume: 1, cleanup: 0, voicePreset: 'none', eqLow: 0, eqMid: 0, eqHigh: 0, compression: 0, reverb: 0,
-    music: '', musicVolume: 0.5, musicStart: 0, ducking: 0.6, fadeInOut: true,
+    music: '', musicVolume: 0.5, musicStart: 0, ducking: 0.6, fadeInOut: true, musicMood: 'none', musicPrompt: '',
   });
   MM.defaultCaptions = () => ({
     enabled: false, template: 'karaoke', font: 'montserrat', color: '#FFFFFF', highlightColor: '#FFE600',
@@ -17,7 +17,7 @@
   MM.emptyPlan = (project) => ({
     title: 'Mi video', summary: '', format: 'original',
     segments: project.sources.map((s, i) => clip(i, 0, s.kind === 'image' ? 3 : s.duration)),
-    color: MM.neutralGrade(), texts: [], captions: MM.defaultCaptions(), effects: [], audio: MM.defaultAudio(),
+    color: MM.neutralGrade(), texts: [], captions: MM.defaultCaptions(), effects: [], audio: MM.defaultAudio(), sfx: [],
   });
 
   MM.aiKey = (seg) => [seg.aiPrompt, seg.aiCamera, seg.aiUseFrame ? `${seg.source}@${(+seg.sourceStart).toFixed(2)}` : 'txt', seg.aiDuration > 7.5 ? 10 : 5].join('|');
@@ -58,6 +58,9 @@
     plan.captions.maxWords = MM.clamp(plan.captions.maxWords | 0 || 4, 1, 10);
     plan.effects = (plan.effects || []).filter((e) => MM.EFFECTS.includes(e.type) && (e.segmentIndex === -1 || plan.segments[e.segmentIndex]));
     plan.audio = Object.assign(MM.defaultAudio(), plan.audio);
+    if (!MM.MUSIC_MOODS.includes(plan.audio.musicMood)) plan.audio.musicMood = 'none';
+    plan.sfx = (plan.sfx || []).filter((x) => x && MM.SFX_TYPES.includes(x.type) && (x.segmentIndex === -1 || plan.segments[x.segmentIndex]))
+      .map((x) => Object.assign({ startOffset: 0, volume: 0.8 }, x, { volume: MM.clamp(+x.volume || 0.8, 0, 1.5) }));
     if (plan.audio.music && !project.songs.some((s) => s.name === plan.audio.music)) plan.audio.music = '';
     return plan;
   };
@@ -128,6 +131,16 @@
       }
     }
     return out.sort((a, b) => a.start - b.start);
+  };
+
+  /// Efectos de sonido en segundos absolutos.
+  MM.scheduleSfx = (plan, tl) => {
+    const byIndex = {};
+    tl.items.forEach((it) => { byIndex[it.index] = it; });
+    return (plan.sfx || []).map((x) => {
+      const base = x.segmentIndex === -1 ? 0 : (byIndex[x.segmentIndex] ? byIndex[x.segmentIndex].start : null);
+      return base == null ? null : { type: x.type, time: Math.max(0, base + (x.startOffset || 0)), volume: x.volume };
+    }).filter(Boolean);
   };
 
   /// Textos y subtítulos listos para dibujar.

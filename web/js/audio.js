@@ -137,6 +137,18 @@
         node.stop(at(tl.total) + 0.1);
         this.nodes.push(node);
       }
+      // Arsenal de efectos de sonido.
+      const sfxBus = ctx.createGain(); sfxBus.gain.value = 0.9; sfxBus.connect(this.master);
+      for (const x of MM.scheduleSfx(plan, tl)) {
+        const buf = MM.sfxReady[x.type];
+        if (!buf || x.time + buf.duration < t0 || x.time > tl.total) continue;
+        const node = ctx.createBufferSource(); node.buffer = buf;
+        const g = ctx.createGain(); g.gain.value = x.volume;
+        node.connect(g); g.connect(sfxBus);
+        const offset = Math.max(0, t0 - x.time);
+        node.start(at(Math.max(x.time, t0)), offset);
+        this.nodes.push(node);
+      }
       return this.recordDest ? this.recordDest.stream : null;
     }
 

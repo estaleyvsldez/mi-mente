@@ -90,6 +90,15 @@
     return MM.loadSource(blob, 'IA: ' + prompt.slice(0, 40), 'video');
   };
 
+  /// Música original generada con IA (fal.ai).
+  MM.generateMusic = async (prompt, onStatus) => {
+    const r = await MM.fal.run(MM.settings.musicModel, { prompt }, onStatus);
+    const url = r?.audio?.url || r?.audio_file?.url || r?.output?.audio?.url || r?.audio_url || (Array.isArray(r?.audios) && r.audios[0]?.url);
+    if (!url) throw new Error('La IA no devolvió música.');
+    const buf = await fetch(url).then((x) => x.arrayBuffer());
+    return MM.audioCtx().decodeAudioData(buf);
+  };
+
   MM.CAMERA_TEXT = {
     static: 'static locked-off camera', dolly_in: 'slow cinematic dolly-in toward the subject',
     dolly_out: 'dolly-out pulling back to reveal the scene', orbit_left: 'camera orbits around the subject to the left',
@@ -135,8 +144,9 @@
   });
   const audioSchema = () => O({
     voiceVolume: N, cleanup: N, voicePreset: E(MM.VOICE_PRESETS), eqLow: N, eqMid: N, eqHigh: N, compression: N,
-    reverb: N, music: S, musicVolume: N, musicStart: N, ducking: N, fadeInOut: B,
+    reverb: N, music: S, musicVolume: N, musicStart: N, ducking: N, fadeInOut: B, musicMood: E(MM.MUSIC_MOODS), musicPrompt: S,
   });
+  const sfxSchema = () => O({ type: E(MM.SFX_TYPES), segmentIndex: I, startOffset: N, volume: N });
 
   // ---------- Contexto compartido ----------
   function mediaContent(project, { frames = true, maxFrames = 24 } = {}) {
@@ -181,7 +191,8 @@
     return `FINAL TIMELINE (${tl.total.toFixed(2)} s, format ${plan.format}):\n` + rows.join('\n');
   }
 
-  const CRAFT = `You are part of a team of expert AI editors inside a mobile video app. Each expert owns ONE department and only returns its own part; the app merges everything and renders it frame by frame. Work fast and decisively, with the taste of a top creator / commercial editor. "reply": 1 short casual sentence in Spanish (or the user's language) about what you did in your department.`;
+  const CRAFT = `LANGUAGE & HUMOR: speech can be in any language or dialect and full of slang (Dominican, Mexican, Puerto Rican, Colombian, Venezuelan, Argentine, Spanish, Spanglish, English, Portuguese…). Understand the jokes, double meanings, punchlines, emotional beats and cultural references like a native, and time the edit to them: comedy → punch_in + boing/record_scratch right after the punchline, quick cuts, meme-style captions; suspense → slow zoom_in, darker look, suspense_drone/heartbeat, longer shots; scare → flash + shake + horror_sting on the jump; hype → fast cuts, glitch, bass_drop. Reply to the user in the language/slang they write in.
+You are part of a team of expert AI editors inside a mobile video app. Each expert owns ONE department and only returns its own part; the app merges everything and renders it frame by frame. Work fast and decisively, with the taste of a top creator / commercial editor. "reply": 1 short casual sentence in Spanish (or the user's language) about what you did in your department.`;
 
   // ---------- Los expertos ----------
   MM.AGENTS = {
@@ -218,13 +229,15 @@ YOU ARE THE VFX ARTIST. effects[]: type ${MM.EFFECTS.join('|')}; segmentIndex (t
 Camera moves (zoom_in, zoom_out, punch_in on emphasis words/beats, ken_burns for stills, shake for impacts, handheld for life) + style moments (flash on a hit, glitch for energy, light_leak for warm montages, vhs/old_film for retro, letterbox for cinematic). Create 2–6 deliberate "wow" moments; never random noise.`,
     sound: `${CRAFT}
 YOU ARE THE SOUND ENGINEER. audio: voiceVolume 0–2; cleanup 0–1 (removes rumble/hiss and evens the voice); voicePreset ${MM.VOICE_PRESETS.join('|')}; eqLow/eqMid/eqHigh −1..1 (±12 dB); compression 0–1; reverb 0–1; music = exact name of an imported song or ""; musicVolume 0–1 (0.2–0.35 under speech, 0.7–0.9 montage); musicStart (seconds into the song, start at the drop/chorus); ducking 0–1 (auto-lower music while people talk); fadeInOut.
-For talking videos a light cleanup (0.4), podcast or natural, compression ~0.5 usually sounds pro.`,
+For talking videos a light cleanup (0.4), podcast or natural, compression ~0.5 usually sounds pro.
+MUSIC: if no song is imported and music fits, set music "" and musicMood (${MM.MUSIC_MOODS.join('|')}) — the app composes a bed in that mood, or generates real AI music when musicPrompt is a vivid English description (genre, instruments, tempo, energy); musicPrompt "" = procedural bed.
+SFX ARSENAL (sfx[]): ${MM.SFX_TYPES.join(', ')}. Each: segmentIndex (timeline #, or −1 for absolute time from the video start) + startOffset (may be −1..0 to land just before a cut) + volume 0–1.5. Sound design like a pro: whoosh/swoosh_fast/swipe on transitions and fast moves, impact/hit/boom on punch-ins, flashes and big titles, riser before a reveal or drop, bass_drop on the drop, pop/click on text pops, typing on typewriter text, camera_shutter on freeze moments, ding/notification on tips, cash on money talk. Comedy: boing, record_scratch, fail_trombone, crowd_laugh right after the punchline. Suspense/horror: suspense_drone, heartbeat, horror_sting, thunder, wind. Usually 4–15 sfx; never cover the speech with loud effects.`,
     producer: `You are the PRODUCER of a team of expert video editors. The user asks for a change to an existing edit. Decide which departments must act and write each one a precise instruction in English ("" = that department does nothing):
 - story: cuts, order, length, speed, transitions, format, AI-generated shots / new camera angles
 - color: color grade / look
 - text: titles, text overlays, captions/subtitles
 - vfx: zooms, shakes, glitch, flashes, light leaks and other effects
-- sound: voice cleanup, voice effects, EQ, music, volume
+- sound: voice cleanup, voice effects, EQ, music (songs, mood beds, AI-generated music), volume, sound effects (whooshes, impacts, comedy and horror sounds…)
 Only activate what the request needs (often 1–2 departments). If the story changes the number or order of segments, also tell text and vfx to re-check their segment indices. "reply": 1 short casual sentence in Spanish saying who is working on it.`,
     director: `You are an AI FILM DIRECTOR (like Higgsfield) planning a short video made entirely with a text-to-video model. Write 1–6 shots that tell the user's idea visually, with continuity (same character description, wardrobe, setting, lighting in every shot) and cinematic camera work. Each shot prompt: vivid English, subject + action + environment + lighting + lens/mood, ≤ 60 words. camera: one camera move. seconds: 5 or 10. format: 9:16 for social unless asked. "reply": 1 short casual sentence in Spanish.`,
   };
@@ -234,7 +247,7 @@ Only activate what the request needs (often 1–2 departments). If the story cha
     color: () => O({ reply: S, color: gradeSchema() }),
     text: () => O({ reply: S, texts: A(textSchema()), captions: captionsSchema() }),
     vfx: () => O({ reply: S, effects: A(effectSchema()) }),
-    sound: () => O({ reply: S, audio: audioSchema() }),
+    sound: () => O({ reply: S, audio: audioSchema(), sfx: A(sfxSchema()) }),
     producer: () => O({ reply: S, story: S, color: S, text: S, vfx: S, sound: S }),
     director: () => O({ reply: S, title: S, format: E(['9:16', '16:9', '1:1', '4:5']), shots: A(O({ prompt: S, camera: E(MM.CAMERAS), seconds: N })) }),
   };
@@ -245,7 +258,7 @@ Only activate what the request needs (often 1–2 departments). If the story cha
       case 'color': return { color: plan.color };
       case 'text': return { texts: plan.texts, captions: plan.captions };
       case 'vfx': return { effects: plan.effects };
-      case 'sound': return { audio: plan.audio };
+      case 'sound': return { audio: plan.audio, sfx: plan.sfx };
     }
     return {};
   }
@@ -267,7 +280,7 @@ Only activate what the request needs (often 1–2 departments). If the story cha
       case 'color': plan.color = r.color; break;
       case 'text': plan.texts = r.texts; plan.captions = r.captions; break;
       case 'vfx': plan.effects = r.effects; break;
-      case 'sound': plan.audio = r.audio; break;
+      case 'sound': plan.audio = r.audio; plan.sfx = r.sfx; break;
     }
   }
 
@@ -299,7 +312,8 @@ Only activate what the request needs (often 1–2 departments). If the story cha
     const summary = {
       title: current.title, format: current.format, segments: current.segments.length,
       look: current.color.preset, texts: current.texts.map((t) => t.text), captions: current.captions.enabled ? current.captions.template : 'off',
-      effects: current.effects.map((e) => e.type), music: current.audio.music || 'none', voice: current.audio.voicePreset,
+      effects: current.effects.map((e) => e.type), music: current.audio.music || current.audio.musicMood || 'none', voice: current.audio.voicePreset,
+      sfx: (current.sfx || []).map((x) => x.type),
     };
     const route = await claude({
       system: PROMPTS.producer,

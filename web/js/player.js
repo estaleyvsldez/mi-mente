@@ -33,6 +33,7 @@
       this.textItems = MM.buildTextItems(plan, this.tl, project);
       this.fx = MM.scheduleEffects(plan, this.tl);
       this.grade = MM.effectiveGrade(plan.color);
+      [...new Set((plan.sfx || []).map((x) => x.type))].forEach((t) => MM.sfxBuffer(t));
       this.t = MM.clamp(this.t, 0, Math.max(0, this.tl.total - 0.05));
       const wasPlaying = this.playing;
       if (wasPlaying) { this.pause(); this.play(); } else { this.seek(this.t); }

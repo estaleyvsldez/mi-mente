@@ -80,7 +80,7 @@
   function openSettings() {
     $('kAnthropic').value = MM.settings.anthropicKey; $('kFal').value = MM.settings.falKey;
     $('quality').value = MM.settings.quality; $('mT2V').value = MM.settings.t2vModel;
-    $('mI2V').value = MM.settings.i2vModel; $('mWhisper').value = MM.settings.whisperModel;
+    $('mI2V').value = MM.settings.i2vModel; $('mWhisper').value = MM.settings.whisperModel; $('mMusic').value = MM.settings.musicModel;
     $('settingsSheet').hidden = false;
   }
   $('openSettings').onclick = openSettings;
@@ -92,6 +92,7 @@
       anthropicKey: $('kAnthropic').value.trim(), falKey: $('kFal').value.trim(), quality: $('quality').value,
       t2vModel: $('mT2V').value.trim() || MM.defaults.t2vModel, i2vModel: $('mI2V').value.trim() || MM.defaults.i2vModel,
       whisperModel: $('mWhisper').value.trim() || MM.defaults.whisperModel,
+      musicModel: $('mMusic').value.trim() || MM.defaults.musicModel,
     });
     MM.saveSettings();
     $('settingsSheet').hidden = true;
@@ -161,6 +162,7 @@
       const t0 = performance.now();
       const result = await MM.teamEdit(project, onAgent, (p) => { kickGeneration(p); applyPlan(MM.sanitizePlan(JSON.parse(JSON.stringify(p)), project), false); });
       applyPlan(result, false);
+      await ensureMusic();
       say('ai', `Listo en ${Math.round((performance.now() - t0) / 1000)} s. Dale ▶ y dime qué cambiar.`, 'producer');
     } catch (e) {
       say('error', e.message);
@@ -195,14 +197,42 @@
       await generateAll(p);
       applyPlan(MM.sanitizePlan(p, project), false);
       const polished = await MM.teamPolish(project, JSON.parse(JSON.stringify(plan)),
-        `This video was generated with AI from the idea: "${idea}". Do your department to make it look like a viral, cinematic social video (no speech: captions off; music only if a song is imported).`, onAgent);
+        `This video was generated with AI from the idea: "${idea}". Do your department to make it look like a viral, cinematic social video (no speech: captions off; give it music via musicMood/musicPrompt and cinematic sound effects).`, onAgent);
       applyPlan(polished, false);
+      await ensureMusic();
       say('ai', 'Tu video con IA está listo. Puedes pedir más tomas, cambiar el estilo o exportarlo.', 'producer');
     } catch (e) {
       say('error', e.message);
     }
     status('');
     setBusy(false);
+  }
+
+  // ---------- Música (base por estado de ánimo o música IA) ----------
+  async function ensureMusic() {
+    if (!plan) return;
+    const a = plan.audio;
+    if (a.music || !a.musicMood || a.musicMood === 'none') return;
+    const useAI = !!(a.musicPrompt && MM.settings.falKey);
+    const name = useAI ? 'IA · ' + a.musicPrompt.slice(0, 40) : 'Base · ' + a.musicMood;
+    let song = project.songs.find((s) => s.name === name);
+    if (!song) {
+      onAgent('sound', 'working');
+      status(useAI ? '🎧 Componiendo música original con IA…' : '🎧 Componiendo la base musical…');
+      let buffer = null, finalName = name;
+      if (useAI) {
+        try { buffer = await MM.generateMusic(a.musicPrompt, (s) => status('🎧 Música IA ' + s)); }
+        catch (e) { say('error', 'Música IA: ' + e.message + ' Uso una base compuesta en su lugar.', 'sound'); }
+      }
+      if (!buffer) { buffer = await MM.renderMusicBed(a.musicMood === 'none' ? 'chill' : a.musicMood); finalName = 'Base · ' + a.musicMood; }
+      song = project.songs.find((s) => s.name === finalName) || { name: finalName, buffer };
+      if (!project.songs.includes(song)) project.songs.push(song);
+      $('agent-sound').dataset.state = 'done';
+      if (!busy) status('');
+    }
+    plan.audio.music = song.name;
+    player.load(project, plan);
+    renderManual();
   }
 
   // ---------- Generación de clips con IA ----------
@@ -261,6 +291,7 @@
       const result = await MM.teamRevise(project, plan, text, onAgent, (p) => kickGeneration(p));
       await Promise.all(Object.values(pending));
       applyPlan(result);
+      await ensureMusic();
       say('ai', `Hecho en ${Math.round((performance.now() - t0) / 1000)} s.`, 'producer');
       player.seek(0).then(() => { player.play(); $('playBtn').textContent = '❚❚'; });
     } catch (e) { say('error', e.message); }
@@ -328,6 +359,7 @@
     if (pushUndo) undoStack.push(JSON.parse(JSON.stringify(plan)));
     player.load(project, plan);
     $('undo').disabled = busy || !undoStack.length;
+    if (!plan.audio.music && plan.audio.musicMood !== 'none') ensureMusic();
   }
   function slider(label, get, set, min, max, step = 0.01) {
     const wrap = document.createElement('div');
@@ -398,7 +430,9 @@
     [['Volumen voz', 'voiceVolume', 0, 2], ['Limpieza de ruido', 'cleanup', 0, 1], ['Compresor', 'compression', 0, 1],
       ['Graves', 'eqLow', -1, 1], ['Medios', 'eqMid', -1, 1], ['Agudos', 'eqHigh', -1, 1], ['Reverb', 'reverb', 0, 1]]
       .forEach(([l, k, a, b]) => g.appendChild(slider(l, () => plan.audio[k] ?? 0, (p, v) => { p.audio[k] = v; }, a, b)));
-    g.appendChild(select('Música', [['', 'Sin música'], ...project.songs.map((s) => [s.name, s.name])], () => plan.audio.music, (p, v) => { p.audio.music = v; }));
+    g.appendChild(select('Música', [['', 'Sin música'], ...project.songs.map((s) => [s.name, s.name])], () => plan.audio.music, (p, v) => { p.audio.music = v; if (!v) p.audio.musicMood = 'none'; }));
+    g.appendChild(select('Crear base musical', MM.MUSIC_MOODS.map((m) => [m, m === 'none' ? '—' : nice(m)]), () => (plan.audio.music ? 'none' : plan.audio.musicMood),
+      (p, v) => { p.audio.music = ''; p.audio.musicMood = v; p.audio.musicPrompt = ''; }));
     g.appendChild(slider('Volumen música', () => plan.audio.musicVolume, (p, v) => { p.audio.musicVolume = v; }, 0, 1));
     g.appendChild(slider('Bajar música al hablar', () => plan.audio.ducking, (p, v) => { p.audio.ducking = v; }, 0, 1));
   }
