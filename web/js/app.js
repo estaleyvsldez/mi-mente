@@ -176,7 +176,9 @@
       const result = await MM.teamEdit(project, onAgent, (p) => { kickGeneration(p); applyPlan(MM.sanitizePlan(JSON.parse(JSON.stringify(p)), project), false); });
       applyPlan(result, false);
       await ensureMusic();
-      say('ai', `Listo en ${Math.round((performance.now() - t0) / 1000)} s. Dale ▶ y dime qué cambiar.`, 'producer');
+      await Promise.all(Object.values(pending));
+      await autoQuality();
+      say('ai', `Listo en ${Math.round((performance.now() - t0) / 1000)} s. Dale ▶ y dime qué cambiar, o exporta.`, 'producer');
     } catch (e) {
       say('error', e.message);
     }
@@ -213,6 +215,7 @@
         `This video was generated with AI from the idea: "${idea}". Do your department to make it look like a viral, cinematic social video (no speech: captions off; give it music via musicMood/musicPrompt and cinematic sound effects).`, onAgent);
       applyPlan(polished, false);
       await ensureMusic();
+      await autoQuality();
       say('ai', 'Tu video con IA está listo. Puedes pedir más tomas, cambiar el estilo o exportarlo.', 'producer');
     } catch (e) {
       say('error', e.message);
@@ -304,13 +307,51 @@
       await Promise.all(Object.values(pending));
       applyPlan(result);
       await ensureMusic();
+      await autoQuality();
       say('ai', `Hecho en ${Math.round((performance.now() - t0) / 1000)} s.`, 'producer');
-      player.seek(0).then(() => { player.play(); $('playBtn').textContent = '❚❚'; });
+      await player.seek(0); player.play(); $('playBtn').textContent = '❚❚';
     } catch (e) { say('error', e.message); }
     status('');
     setBusy(false);
   }
   $('send').onclick = () => send($('input').value);
+
+  // Hablarle con la voz (dictado del navegador).
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SR) {
+    const mic = document.createElement('button');
+    mic.className = 'icon-btn'; mic.id = 'mic'; mic.type = 'button';
+    mic.setAttribute('aria-label', 'Hablarle al equipo'); mic.title = 'Hablarle al equipo';
+    mic.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>';
+    $('send').parentNode.insertBefore(mic, $('send'));
+    let rec = null;
+    mic.onclick = () => {
+      if (rec) { rec.stop(); return; }
+      if (busy) return;
+      rec = new SR();
+      rec.lang = navigator.language || 'es-ES';
+      rec.interimResults = true;
+      rec.continuous = false;
+      let finalText = '';
+      mic.style.background = 'var(--tally, #FF4D2E)'; mic.style.color = '#fff';
+      $('input').placeholder = 'Te escucho…';
+      rec.onresult = (e) => {
+        let interim = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) finalText += e.results[i][0].transcript; else interim += e.results[i][0].transcript;
+        }
+        $('input').value = (finalText + interim).trim();
+      };
+      rec.onerror = (e) => { if (e.error === 'not-allowed') say('error', 'Dale permiso al micrófono en tu navegador para hablarle al equipo.'); };
+      rec.onend = () => {
+        rec = null;
+        mic.style.background = ''; mic.style.color = '';
+        $('input').placeholder = 'Dile al equipo qué cambiar…';
+        if (finalText.trim()) send(finalText.trim());
+      };
+      try { rec.start(); } catch { rec = null; }
+    };
+  }
   $('input').addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send($('input').value); } });
   $('input').addEventListener('input', () => { const t = $('input'); t.style.height = 'auto'; t.style.height = Math.min(120, t.scrollHeight) + 'px'; });
 
@@ -725,6 +766,17 @@
     return false;
   }
 
+  /// Control de Calidad revisa solo después de cada trabajo del equipo.
+  let approvedKey = null;
+  const planKey = () => JSON.stringify(plan);
+  async function autoQuality() {
+    if (!plan || !MM.settings.anthropicKey) return;
+    try {
+      if (await qualityGate()) { approvedKey = planKey(); say('ai', '✅ Aprobado por Control de Calidad: listo para exportar.', 'qa'); }
+    } catch (e) { say('error', 'Calidad: ' + e.message); }
+    await player.seek(0);   // Calidad revisa cuadros de todo el video: la reproducción vuelve al inicio
+  }
+
   // ---------- Exportar ----------
   let saveHandle = null;
   let lastExportURL = null;
@@ -740,7 +792,7 @@
     setBusy(true);
     player.pause(); $('playBtn').textContent = '▶';
     let approved;
-    try { approved = forceExport ? true : await qualityGate(); }
+    try { approved = forceExport || approvedKey === planKey() ? true : await qualityGate(); }
     catch (e) { say('error', e.message); approved = false; }
     forceExport = false;
     if (!approved) {
@@ -833,7 +885,8 @@
         }
         await ensureMusic();
         if (opts.onPlan) await opts.onPlan(JSON.parse(JSON.stringify(plan)));
-        say('ai', 'Capítulo armado. Revísalo, pide cambios por chat y exporta (pasa por Control de Calidad).', 'producer');
+        await autoQuality();
+        say('ai', 'Capítulo armado y revisado por Control de Calidad. Pide cambios por chat o expórtalo.', 'producer');
       } catch (e) { say('error', e.message); }
       status('');
       setBusy(false);
