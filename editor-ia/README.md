@@ -20,12 +20,15 @@ IA rehace la edición.
 
 | Qué edita | Opciones |
 |---|---|
-| Cortes | quitar partes, reordenar, repetir, cámara lenta o rápida (0.25×–4×) |
-| Color | cinematic, warm, cool, vintage, black & white, vibrant, teal & orange, moody, pastel + exposición, contraste, saturación, temperatura y viñeta |
-| Transiciones | corte, crossfade, fundido a negro, flash blanco, zoom, deslizar |
-| Textos | 6 estilos, 3 tamaños, 4 posiciones, animaciones (fade, pop, subir, máquina de escribir) |
-| Subtítulos | automáticos a partir del audio |
+| Cortes | quitar partes, reordenar, repetir, velocidad 0.25×–4× y **rampas de velocidad** (cámara lenta en el mejor momento) |
+| Formato | original, 9:16, 4:5, 1:1, 16:9, 21:9, con reencuadre en el punto de interés |
+| **Color (nivel colorista)** | LUT 3D generado por plan · 25 looks (cinematic, teal & orange, Kodak, Fuji, bleach bypass, cyberpunk, noir…) · exposición, contraste, altas, sombras, blancos, negros · temperatura y tinte · **ruedas lift / gamma / gain** · **HSL por color** · split toning · protección de piel · claridad, nitidez, grano, bloom, halación, viñeta · **importar LUTs .cube** · color distinto por segmento |
+| **Texto (motion graphics)** | 21 fuentes · contorno, degradado, sombra, **brillo neón**, caja/píldora/barra · espaciado, rotación, posición libre · entradas (pop, drop, blur, glitch, **palabra por palabra, letra por letra, máquina de escribir**), salidas y bucles (pulso, ola, flicker, arcoíris) · **texto detrás de la persona** |
+| Subtítulos | automáticos desde el audio · plantillas karaoke (palabra activa resaltada), word pop, boxed, bold stroke, neón, minimal |
+| **Efectos** | cámara: zoom, punch-in, Ken Burns, temblor, cámara en mano · estilo: glitch, RGB split, VHS, película vieja, light leak, flash, estrobo, zoom blur, motion blur, enfoque, espejo, caleidoscopio, pixelado, cómic, póster, boceto, bordes neón, duotono, térmico, invertir, ciclo de color, glow soñador, franjas de cine · **con detección de persona**: fondo desenfocado, color pop, contorno brillante, foco de luz |
+| Transiciones | corte, crossfade, fundido a negro, flash, zoom in/out, deslizar, whip pan, giro, glitch, blur, iris, cortinilla, light leak |
 | Escenas IA | gráficos animados (degradados) o zoom "Ken Burns" sobre un cuadro de tu video, con título |
+| **Editor pro manual** | botón de deslizadores: clips, color completo, cada texto, cada efecto, subtítulos, formato y audio |
 
 > Las "escenas con IA" son gráficos animados que se generan en el iPhone. Generar video
 > realista desde texto necesita un servicio aparte (de pago); el motor ya está listo para
