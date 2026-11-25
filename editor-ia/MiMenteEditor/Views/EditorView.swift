@@ -1,4 +1,5 @@
 import AVKit
+import PhotosUI
 import SwiftUI
 
 struct EditorView: View {
@@ -6,6 +7,7 @@ struct EditorView: View {
     @State private var draft = ""
     @State private var showExport = false
     @State private var showPro = false
+    @State private var referenceItem: PhotosPickerItem?
     @FocusState private var typing: Bool
 
     private let suggestions = [
@@ -61,6 +63,15 @@ struct EditorView: View {
             }
         }
         .sheet(isPresented: $showExport) { ExportSheet() }
+        .onChange(of: referenceItem) { _, item in
+            guard let item else { return }
+            Task {
+                if let movie = try? await item.loadTransferable(type: PickedMovie.self) {
+                    await model.useReference(movie.url)
+                }
+                referenceItem = nil
+            }
+        }
         .sheet(isPresented: $showPro) {
             if let plan = model.plan { ProEditorView(plan: plan) }
         }
@@ -105,6 +116,12 @@ struct EditorView: View {
 
     private var inputBar: some View {
         HStack(alignment: .bottom, spacing: 10) {
+            PhotosPicker(selection: $referenceItem, matching: .videos, photoLibrary: .shared()) {
+                Image(systemName: "film.stack").font(.system(size: 22))
+                    .frame(width: 34, height: 40)
+            }
+            .disabled(model.isBusy || model.plan == nil)
+            .accessibilityLabel("Video de referencia")
             TextField("Dime qué cambiar…", text: $draft, axis: .vertical)
                 .lineLimit(1...4)
                 .focused($typing)

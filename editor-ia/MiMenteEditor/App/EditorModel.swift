@@ -87,8 +87,33 @@ final class EditorModel {
         let request = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !request.isEmpty, !isBusy else { return }
         messages.append(ChatMessage(role: .user, text: request))
+        if request.range(of: #"https?://|www\.|tiktok\.com|instagram\.com|youtu"#, options: .regularExpression) != nil {
+            messages.append(ChatMessage(role: .ai, text: "No puedo abrir links de TikTok, Instagram o YouTube (esas apps no lo permiten). Guarda ese video en tu galería (o grábalo con la grabación de pantalla) y toca el botón de película (a la izquierda del chat): lo analizo y edito el tuyo con el mismo estilo."))
+            return
+        }
         do {
             try await runDirector(request: request)
+        } catch {
+            messages.append(ChatMessage(role: .error, text: error.localizedDescription))
+        }
+        status = nil
+    }
+
+    /// Copia el estilo de un video de referencia y re-edita el tuyo igual.
+    func useReference(_ url: URL) async {
+        guard !isBusy, context != nil else { return }
+        let key = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !key.isEmpty else {
+            messages.append(ChatMessage(role: .error, text: "Falta tu API key de Anthropic (Ajustes)."))
+            return
+        }
+        messages.append(ChatMessage(role: .user, text: "🎞️ Edítalo como este video de referencia"))
+        do {
+            status = "Estudiando el video de referencia…"
+            let style = try await ReferenceAnalyzer.analyze(url, client: ClaudeClient(apiKey: key))
+            context?.reference = style
+            messages.append(ChatMessage(role: .ai, text: "Esto es lo que vi en la referencia:\n\(style)"))
+            try await runDirector(request: "Re-edit my video so it matches the REFERENCE STYLE in the context as closely as possible (pacing, cuts, color, typography, captions, transitions, effects, format), while keeping my own content and story.")
         } catch {
             messages.append(ChatMessage(role: .error, text: error.localizedDescription))
         }

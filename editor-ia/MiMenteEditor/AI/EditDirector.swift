@@ -86,6 +86,13 @@ struct EditDirector {
             "",
             "Speech transcript (source-video seconds):",
         ]
+        if !c.reference.isEmpty {
+            lines.append("")
+            lines.append("REFERENCE STYLE (the user wants their edit to look like this reference video):")
+            lines.append(c.reference)
+            lines.append("")
+            lines.append("Speech transcript (source-video seconds):")
+        }
         if c.transcript.isEmpty {
             lines.append("(no speech detected)")
         } else {
