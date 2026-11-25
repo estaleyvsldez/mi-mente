@@ -30,7 +30,7 @@ iPhone: Safari → Compartir → **Agregar a pantalla de inicio**. Laptop Dell: 
   record scratch, risas, latidos, suspenso, terror, trueno…) y bases musicales por estado de ánimo, o
   música original con IA.
 - **Crear video con IA desde una idea** (tipo Higgsfield): el Director lo planea en tomas y se generan
-  todas a la vez (Kling vía fal.ai).
+  todas a la vez con modelos open source gratis (LTX-Video, Wan).
 - **🎬 Estudio de Películas, Series y Novelas**: el Guionista escribe la historia y cada guion, tú los
   apruebas o pides cambios, y se produce capítulo a capítulo con narración, subtítulos, música y efectos.
   Todo queda guardado en el navegador para seguir otro día.
