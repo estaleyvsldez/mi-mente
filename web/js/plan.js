@@ -105,7 +105,7 @@
     let r = ratios[plan.format];
     if (!r) {
       const first = project.sources.find((s) => s.kind === 'video') || project.sources[0];
-      r = first ? first.width / first.height : 9 / 16;
+      r = first && first.width > 0 && first.height > 0 ? first.width / first.height : 9 / 16;
     }
     const even = (v) => Math.max(2, Math.round(v / 2) * 2);
     return r >= 1 ? { w: even(q * r), h: q } : { w: q, h: even(q / r) };

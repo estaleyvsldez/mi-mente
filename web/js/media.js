@@ -19,9 +19,9 @@
 
   function waitEvent(el, ev, timeout = 15000) {
     return new Promise((resolve, reject) => {
-      const t = setTimeout(() => { cleanup(); reject(new Error('timeout ' + ev)); }, timeout);
+      const t = setTimeout(() => { cleanup(); reject(new Error('El archivo tardó demasiado en abrir (' + ev + ').')); }, timeout);
       const ok = () => { cleanup(); resolve(); };
-      const bad = () => { cleanup(); reject(new Error('No pude leer el archivo.')); };
+      const bad = () => { cleanup(); reject(new Error('Este navegador no puede leer ese archivo (formato no compatible o archivo dañado).')); };
       function cleanup() { clearTimeout(t); el.removeEventListener(ev, ok); el.removeEventListener('error', bad); }
       el.addEventListener(ev, ok, { once: true });
       el.addEventListener('error', bad, { once: true });
@@ -52,7 +52,13 @@
     const v = document.createElement('video');
     v.muted = true; v.playsInline = true; v.preload = 'auto'; v.crossOrigin = 'anonymous';
     v.src = url;
-    await waitEvent(v, 'loadedmetadata');
+    await waitEvent(v, 'loadedmetadata', 30000);
+    // Si el navegador lee el audio pero no la imagen (p. ej. HEVC del iPhone en una PC sin soporte), el video sale con tamaño 0.
+    if (!v.videoWidth || !v.videoHeight) await waitEvent(v, 'resize', 2000).catch(() => {});
+    if (!v.videoWidth || !v.videoHeight) {
+      URL.revokeObjectURL(url);
+      throw new Error('Este navegador no puede mostrar la imagen de ese video (seguramente está en HEVC / H.265, el formato "Alta eficiencia" del iPhone). Ábrelo en Safari o en Chrome actualizado, o conviértelo a MP4 H.264 (en el iPhone: Ajustes → Cámara → Formatos → "Más compatible").');
+    }
     const src = { id: MM.uid(), name, kind: 'video', url, el: v, duration: v.duration, width: v.videoWidth, height: v.videoHeight, audio: null, words: [], blob: fileOrBlob };
     const isPhone = /iPhone|iPad|Android/i.test(navigator.userAgent);
     if (isPhone && fileOrBlob.size > 450e6) {

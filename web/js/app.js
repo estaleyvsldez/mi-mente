@@ -181,7 +181,7 @@
         project.sources.push(src);
         if (src.tooBig) say('error', `"${f.name}" pesa ${(f.size / 1e9).toFixed(1)} GB: el iPhone no puede procesar su audio. Para videos tan pesados usa la laptop, o recórtalo en Fotos antes de subirlo.`);
         added.push(src);
-      } catch (e) { say('error', `No pude abrir ${f.name}.`); }
+      } catch (e) { say('error', `No pude abrir ${f.name}. ${e.message || ''}`.trim()); }
     }
     status('El equipo está mirando tus clips…');
     await Promise.all(added.map(async (src) => {
