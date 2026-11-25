@@ -85,16 +85,25 @@ enum CompositionBuilder {
                         pieces.append((src, CMTime(seconds: src.seconds / p.speed, preferredTimescale: ts)))
                     }
                 }
-            case .scene:
+            case .scene, .ai:
                 guard let url = sceneURLs[i] else { continue }
                 let asset = AVURLAsset(url: url)
                 guard let track = try await asset.loadTracks(withMediaType: .video).first else { continue }
                 let assetDuration = try await asset.load(.duration)
+                let (natural, transform) = try await track.load(.naturalSize, .preferredTransform)
+                _ = natural
                 assetTrack = track
                 audioTrack = nil
-                sourceRange = CMTimeRange(start: .zero, duration: assetDuration)
-                orientation = .up
-                pieces = [(assetDuration, CMTime(seconds: seg.sceneDuration, preferredTimescale: ts))]
+                orientation = CGImagePropertyOrientation(transform: transform)
+                if seg.kind == .ai {
+                    // Video generado: se usa tal cual (recortado a la duración pedida).
+                    let take = CMTimeMinimum(assetDuration, CMTime(seconds: seg.sceneDuration, preferredTimescale: ts))
+                    sourceRange = CMTimeRange(start: .zero, duration: take)
+                    pieces = [(take, take)]
+                } else {
+                    sourceRange = CMTimeRange(start: .zero, duration: assetDuration)
+                    pieces = [(assetDuration, CMTime(seconds: seg.sceneDuration, preferredTimescale: ts))]
+                }
             }
             let duration = pieces.reduce(CMTime.zero) { CMTimeAdd($0, $1.target) }
             guard duration.seconds > 0.05 else { continue }

@@ -14,7 +14,59 @@ enum VideoFormat: String, Codable, CaseIterable {
     case cinema = "21:9"
 }
 
-enum SegmentKind: String, Codable, CaseIterable { case clip, scene }
+enum SegmentKind: String, Codable, CaseIterable {
+    case clip, scene
+    case ai = "ai_video"
+}
+
+/// Movimientos de cámara para las escenas generadas con IA (estilo Higgsfield).
+enum CameraMove: String, Codable, CaseIterable {
+    case none = "static"
+    case dollyIn = "dolly_in"
+    case dollyOut = "dolly_out"
+    case orbitLeft = "orbit_left"
+    case orbitRight = "orbit_right"
+    case craneUp = "crane_up"
+    case craneDown = "crane_down"
+    case panLeft = "pan_left"
+    case panRight = "pan_right"
+    case tiltUp = "tilt_up"
+    case lowAngle = "low_angle"
+    case highAngle = "high_angle"
+    case topDown = "top_down"
+    case fpvDrone = "fpv_drone"
+    case handheld
+    case crashZoom = "crash_zoom"
+    case bulletTime = "bullet_time"
+    case closeUp = "close_up"
+    case wideShot = "wide_shot"
+    case overShoulder = "over_the_shoulder"
+
+    var promptText: String {
+        switch self {
+        case .none: return "static locked-off camera"
+        case .dollyIn: return "slow cinematic dolly-in push toward the subject"
+        case .dollyOut: return "smooth dolly-out pulling back to reveal the scene"
+        case .orbitLeft: return "camera orbits around the subject to the left, 360 arc shot"
+        case .orbitRight: return "camera orbits around the subject to the right, arc shot"
+        case .craneUp: return "crane shot rising up and over the scene"
+        case .craneDown: return "crane shot descending down toward the subject"
+        case .panLeft: return "smooth pan to the left"
+        case .panRight: return "smooth pan to the right"
+        case .tiltUp: return "camera tilts up revealing the sky"
+        case .lowAngle: return "dramatic low-angle shot looking up at the subject"
+        case .highAngle: return "high-angle shot looking down at the subject"
+        case .topDown: return "top-down overhead bird's-eye view"
+        case .fpvDrone: return "fast FPV drone flythrough"
+        case .handheld: return "handheld documentary camera with natural shake"
+        case .crashZoom: return "sudden crash zoom into the subject"
+        case .bulletTime: return "bullet-time frozen moment with camera sweeping around"
+        case .closeUp: return "extreme close-up on the subject's face and details"
+        case .wideShot: return "wide establishing shot of the whole environment"
+        case .overShoulder: return "over-the-shoulder shot"
+        }
+    }
+}
 
 enum SpeedRamp: String, Codable, CaseIterable {
     case none
@@ -235,11 +287,16 @@ struct Segment: Codable, Equatable {
     var transitionIn: Transition
     /// Color propio de este segmento (si es nil usa el color general).
     var color: ColorGrade?
+    /// Escenas generadas con IA (kind = ai_video): qué pasa y cómo se mueve la cámara.
+    var aiPrompt: String
+    var aiCamera: CameraMove
+    /// true = parte del cuadro del video en sourceStart (mismo lugar/persona, otro ángulo).
+    var aiUseFrame: Bool
 
     var ramp: RampMap { RampMap(segment: self) }
     /// Duración en la línea de tiempo final.
     var timelineDuration: Double {
-        kind == .scene ? sceneDuration : ramp.timelineDuration
+        kind == .clip ? ramp.timelineDuration : sceneDuration
     }
 }
 
@@ -404,6 +461,13 @@ struct EditPlan: Codable, Equatable {
                 s.sourceStart = s.sourceStart.clamped(0, d)
                 s.sourceEnd = s.sourceEnd.clamped(0, d)
                 if s.sourceEnd - s.sourceStart < 0.2 { return nil }
+            case .ai:
+                s.sceneDuration = s.sceneDuration > 7.5 ? 10 : 5
+                s.sourceStart = s.sourceStart.clamped(0, max(0, d - 0.1))
+                s.sourceEnd = s.sourceStart
+                s.speed = 1
+                s.speedRamp = .none
+                if s.aiPrompt.trimmingCharacters(in: .whitespaces).isEmpty { s.aiPrompt = "cinematic shot" }
             case .scene:
                 s.sceneDuration = s.sceneDuration.clamped(1, 8)
                 s.sourceStart = s.sourceStart.clamped(0, max(0, d - 0.1))
@@ -492,7 +556,7 @@ extension Segment {
         Segment(kind: .clip, sourceStart: start, sourceEnd: end, speed: 1, speedRamp: .none,
                 focusX: 0.5, focusY: 0.5, sceneDuration: 0, sceneTitle: "", sceneSubtitle: "",
                 sceneStyle: .aurora, sceneColors: [], transitionIn: Transition(type: .none, duration: 0),
-                color: nil)
+                color: nil, aiPrompt: "", aiCamera: .none, aiUseFrame: true)
     }
 }
 

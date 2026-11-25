@@ -58,6 +58,9 @@ enum PlanSchema {
                 "type": oneOf(TransitionType.self),
                 "duration": number,
             ]),
+            "aiPrompt": string,
+            "aiCamera": oneOf(CameraMove.self),
+            "aiUseFrame": boolean,
             "color": ["anyOf": [colorGrade, ["type": "null"] as [String: Any]] as [[String: Any]]] as [String: Any],
         ])),
         "texts": array(obj([

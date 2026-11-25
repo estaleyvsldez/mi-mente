@@ -13,6 +13,7 @@ struct EditorView: View {
         "Subtítulos karaoke", "Texto detrás de mí", "Más efectos impresionantes",
         "Fondo desenfocado", "Color pop", "Cámara lenta en lo mejor",
         "Agrega una intro", "Estilo cyberpunk", "Hazlo más corto y rápido",
+        "Escena IA con otro ángulo", "Toma de dron con IA", "Limpia el ruido del audio", "Voz de locutor",
     ]
 
     var body: some View {
@@ -154,7 +155,7 @@ private struct Bubble: View {
 private struct PlanSummary: View {
     let plan: EditPlan
     var body: some View {
-        let scenes = plan.segments.filter { $0.kind == .scene }.count
+        let scenes = plan.segments.filter { $0.kind != .clip }.count
         let cuts = plan.segments.filter { $0.kind == .clip }.count
         let transitions = plan.segments.dropFirst().filter { $0.transitionIn.type != .none }.count
         VStack(alignment: .leading, spacing: 8) {

@@ -8,6 +8,8 @@ struct MediaContext {
     var height: Int
     var frames: [(time: Double, jpeg: Data)]
     var transcript: [CaptionLine]
+    var aiVideoAvailable = false
+    var reference: String = ""   // estilo del video de referencia (si hay)
 }
 
 /// El "director": le pide a Claude que edite el video o que cambie la edición actual.
@@ -78,6 +80,7 @@ struct EditDirector {
         var lines = [
             "Source video duration: \(String(format: "%.2f", c.duration)) s",
             "Resolution: \(c.width)x\(c.height) (\(orientation))",
+            "AI video generation (ai_video segments): " + (c.aiVideoAvailable ? "AVAILABLE" : "NOT configured — the app will substitute an animated scene; still use ai_video if the user asks, and mention they need a fal.ai key in Settings"),
             "Imported songs available for audio.music: " + (MusicLibrary.names().isEmpty ? "(none — music can't be added until the user imports a song)" : MusicLibrary.names().joined(separator: ", ")),
             "Imported LUTs available: " + (ColorLUT.importedLUTNames().isEmpty ? "(none)" : ColorLUT.importedLUTNames().joined(separator: ", ")),
             "",
@@ -116,6 +119,18 @@ struct EditDirector {
     consistently with the style.
     - color: null to use the global grade, or a full grade for this segment (shot matching, a flashback in \
     black_white, etc.).
+
+    - kind "ai_video": a REAL generated video shot made by a video-generation model (Kling/Wan, like \
+    Higgsfield). Use it when the user asks for a new scene, a different camera angle, a shot that doesn't exist \
+    in the footage, or "make it epic". aiUseFrame true = starts from the source frame at sourceStart, so it keeps \
+    the same person/place but the camera moves or the angle changes; false = generated only from aiPrompt. \
+    aiPrompt: a vivid English shot description (subject, action, environment, lighting, mood). aiCamera: static, \
+    dolly_in, dolly_out, orbit_left, orbit_right, crane_up, crane_down, pan_left, pan_right, tilt_up, low_angle, \
+    high_angle, top_down, fpv_drone, handheld, crash_zoom, bullet_time, close_up, wide_shot, over_the_shoulder. \
+    sceneDuration 5 or 10. Each generation costs the user money and takes 1–5 min: use 1–3 per edit at most, \
+    only where they add real value, and never regenerate existing ones unless asked (keep their fields identical). \
+    For ai_video: sourceEnd = sourceStart, speed 1, speedRamp none, focus 0.5, scene fields like a clip. \
+    For clip and scene segments: aiPrompt "", aiCamera "static", aiUseFrame true.
 
     FORMAT: original, 9:16, 4:5, 1:1, 16:9, 21:9. Keep "original" unless the user asks or it clearly helps.
 

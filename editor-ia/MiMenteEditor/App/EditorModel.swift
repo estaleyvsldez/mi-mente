@@ -33,6 +33,18 @@ final class EditorModel {
     var apiKey: String = Keychain.load("anthropic_api_key") ?? "" {
         didSet { Keychain.save(apiKey, for: "anthropic_api_key") }
     }
+    var falKey: String = Keychain.load("fal_api_key") ?? "" {
+        didSet { Keychain.save(falKey, for: "fal_api_key") }
+    }
+    var imageToVideoModel: String = UserDefaults.standard.string(forKey: "i2v_model") ?? FalClient.defaultImageToVideo {
+        didSet { UserDefaults.standard.set(imageToVideoModel, forKey: "i2v_model") }
+    }
+    var textToVideoModel: String = UserDefaults.standard.string(forKey: "t2v_model") ?? FalClient.defaultTextToVideo {
+        didSet { UserDefaults.standard.set(textToVideoModel, forKey: "t2v_model") }
+    }
+    var imageEditModel: String = UserDefaults.standard.string(forKey: "img_edit_model") ?? FalClient.defaultImageEdit {
+        didSet { UserDefaults.standard.set(imageEditModel, forKey: "img_edit_model") }
+    }
 
     // Estado interno
     private var source: SourceMedia?
@@ -159,6 +171,7 @@ final class EditorModel {
     // MARK: - Internos
 
     private func runDirector(request: String?) async throws {
+        context?.aiVideoAvailable = !falKey.trimmingCharacters(in: .whitespaces).isEmpty
         guard let context else { return }
         let key = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !key.isEmpty else {
@@ -213,17 +226,58 @@ final class EditorModel {
         if autoplay { player.play() }
     }
 
-    /// Genera (o reutiliza) los clips de las escenas creadas por la IA.
+    /// Genera (o reutiliza) los clips de las escenas: gráficos locales y video con IA (fal.ai).
     private func prepareScenes(_ plan: EditPlan, source: SourceMedia) async throws -> [Int: URL] {
         var urls: [Int: URL] = [:]
         let size = CompositionBuilder.renderSize(for: plan.format, source: source)
-        for (i, seg) in plan.segments.enumerated() where seg.kind == .scene {
-            let data = (try? JSONEncoder.sorted.encode(seg)) ?? Data()
-            let key = "\(data.hashValue)-\(Int(size.width))x\(Int(size.height))"
+        var warnedNoKey = false
+        for (i, seg) in plan.segments.enumerated() where seg.kind != .clip {
+            // La clave ignora transición y color: cambiar eso no vuelve a generar (ni a cobrar) la escena.
+            let key: String
+            if seg.kind == .ai {
+                key = "ai|\(seg.aiPrompt)|\(seg.aiCamera.rawValue)|\(seg.aiUseFrame)|\(seg.aiUseFrame ? String(format: "%.2f", seg.sourceStart) : "")|\(seg.sceneDuration)"
+            } else {
+                key = "scene|\(seg.sceneTitle)|\(seg.sceneSubtitle)|\(seg.sceneStyle.rawValue)|\(seg.sceneColors)|\(seg.sceneDuration)|\(seg.sourceStart)|\(Int(size.width))x\(Int(size.height))"
+            }
             if let cached = sceneCache[key], FileManager.default.fileExists(atPath: cached.path) {
                 urls[i] = cached
                 continue
             }
+
+            if seg.kind == .ai {
+                let falKey = self.falKey.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !falKey.isEmpty {
+                    status = "Preparando escena con IA…"
+                    var frame: CGImage?
+                    if seg.aiUseFrame { frame = await source.frame(at: seg.sourceStart, maxSize: CGSize(width: 1280, height: 1280)) }
+                    do {
+                        let url = try await FalClient(key: falKey).generateScene(
+                            prompt: seg.aiPrompt, camera: seg.aiCamera, startFrame: frame, seconds: seg.sceneDuration,
+                            imageToVideoModel: imageToVideoModel, textToVideoModel: textToVideoModel
+                        ) { [weak self] text in Task { @MainActor in self?.status = text } }
+                        sceneCache[key] = url
+                        urls[i] = url
+                        continue
+                    } catch {
+                        messages.append(ChatMessage(role: .error, text: "Escena IA: \(error.localizedDescription) Puse una escena animada en su lugar."))
+                    }
+                } else if !warnedNoKey {
+                    warnedNoKey = true
+                    messages.append(ChatMessage(role: .error, text: "Para escenas con IA real (otro ángulo de cámara, escenas nuevas) pon tu key de fal.ai en Ajustes. Mientras, puse una escena animada."))
+                }
+                // Respaldo: escena animada local con un cuadro del video.
+                var fallback = seg
+                fallback.kind = .scene
+                fallback.sceneStyle = .photoKenBurns
+                fallback.sceneTitle = ""
+                fallback.sceneSubtitle = ""
+                let background = await source.frame(at: seg.sourceStart, maxSize: size)
+                let url = FileManager.default.temporaryDirectory.appendingPathComponent("scene-\(UUID().uuidString).mp4")
+                try await SceneRenderer.render(segment: fallback, size: size, background: background, to: url)
+                urls[i] = url
+                continue
+            }
+
             status = "Creando escena: \(seg.sceneTitle.isEmpty ? "nueva" : seg.sceneTitle)…"
             var background: CGImage?
             if seg.sceneStyle == .photoKenBurns {

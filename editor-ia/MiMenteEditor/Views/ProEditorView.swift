@@ -77,10 +77,14 @@ private struct ClipsTab: View {
                     segmentEditor(i)
                 } label: {
                     let s = plan.segments[i]
-                    Label(s.kind == .clip
-                          ? String(format: "Clip %d · %.1fs–%.1fs", i + 1, s.sourceStart, s.sourceEnd)
-                          : "Escena \(i + 1) · \(s.sceneTitle.isEmpty ? "sin título" : s.sceneTitle)",
-                          systemImage: s.kind == .clip ? "film" : "sparkles.rectangle.stack")
+                    switch s.kind {
+                    case .clip:
+                        Label(String(format: "Clip %d · %.1fs–%.1fs", i + 1, s.sourceStart, s.sourceEnd), systemImage: "film")
+                    case .scene:
+                        Label("Escena \(i + 1) · \(s.sceneTitle.isEmpty ? "sin título" : s.sceneTitle)", systemImage: "sparkles.rectangle.stack")
+                    case .ai:
+                        Label("IA \(i + 1) · \(s.aiCamera.rawValue.replacingOccurrences(of: "_", with: " "))", systemImage: "camera.aperture")
+                    }
                 }
             }
             Section {
@@ -93,13 +97,31 @@ private struct ClipsTab: View {
                     s.transitionIn = Transition(type: .crossfade, duration: 0.5)
                     plan.segments.append(s)
                 } label: { Label("Agregar escena generada", systemImage: "wand.and.stars") }
+                Button {
+                    var s = Segment.clip(0, 0)
+                    s.kind = .ai; s.sceneDuration = 5; s.aiCamera = .orbitRight
+                    s.aiPrompt = "the same scene from a dramatic new angle"
+                    s.transitionIn = Transition(type: .crossfade, duration: 0.4)
+                    plan.segments.append(s)
+                } label: { Label("Agregar escena con IA (otro ángulo)", systemImage: "camera.aperture") }
             }
         }
     }
 
     @ViewBuilder private func segmentEditor(_ i: Int) -> some View {
         let seg = $plan.segments[i]
-        if plan.segments[i].kind == .clip {
+        if plan.segments[i].kind == .ai {
+            TextField("¿Qué pasa en la escena? (inglés funciona mejor)", text: seg.aiPrompt, axis: .vertical)
+            EnumPicker("Movimiento de cámara", selection: seg.aiCamera)
+            Toggle("Partir de un cuadro de mi video", isOn: seg.aiUseFrame)
+            if plan.segments[i].aiUseFrame {
+                SliderRow("Cuadro de partida", value: seg.sourceStart, range: 0...max(sourceDuration, 0.1), format: "%.1fs")
+            }
+            Picker("Duración", selection: seg.sceneDuration) {
+                Text("5 s").tag(5.0)
+                Text("10 s").tag(10.0)
+            }
+        } else if plan.segments[i].kind == .clip {
             SliderRow("Inicio", value: seg.sourceStart, range: 0...max(sourceDuration, 0.1), format: "%.2fs")
             SliderRow("Fin", value: seg.sourceEnd, range: 0...max(sourceDuration, 0.1), format: "%.2fs")
             SliderRow("Velocidad", value: seg.speed, range: 0.25...4, format: "%.2f×")
