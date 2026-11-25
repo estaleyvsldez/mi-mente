@@ -27,6 +27,7 @@ final class EditorModel {
     var sourceDuration: Double { source?.duration ?? 0 }
     var transcript: [CaptionLine] { context?.transcript ?? [] }
     var importedLUTs: [String] = ColorLUT.importedLUTNames()
+    var songs: [String] = MusicLibrary.names()
     let player = AVPlayer()
 
     var apiKey: String = Keychain.load("anthropic_api_key") ?? "" {
@@ -144,6 +145,17 @@ final class EditorModel {
         }
     }
 
+    func importSong(_ url: URL) -> String? {
+        do {
+            let name = try MusicLibrary.importSong(from: url)
+            songs = MusicLibrary.names()
+            return name
+        } catch {
+            messages.append(ChatMessage(role: .error, text: "No pude importar la canción: \(error.localizedDescription)"))
+            return nil
+        }
+    }
+
     // MARK: - Internos
 
     private func runDirector(request: String?) async throws {
@@ -171,8 +183,15 @@ final class EditorModel {
     private func apply(_ newPlan: EditPlan, autoplay: Bool) async throws {
         guard let source else { return }
         let sceneURLs = try await prepareScenes(newPlan, source: source)
+        var voiceURL: URL?
+        if newPlan.audio.needsProcessing {
+            status = "Procesando el audio en el estudio…"
+            voiceURL = try? await AudioStudio.process(source, settings: newPlan.audio)
+        }
         let edit = try await CompositionBuilder.build(plan: newPlan, source: source, sceneURLs: sceneURLs,
-                                                      transcript: context?.transcript ?? [])
+                                                      transcript: context?.transcript ?? [],
+                                                      voiceURL: voiceURL,
+                                                      musicURL: MusicLibrary.url(for: newPlan.audio.music))
         built = edit
         plan = newPlan
 

@@ -35,7 +35,7 @@ enum CompositionBuilder {
     }
 
     static func build(plan: EditPlan, source: SourceMedia, sceneURLs: [Int: URL],
-                      transcript: [CaptionLine]) async throws -> BuiltEdit {
+                      transcript: [CaptionLine], voiceURL: URL? = nil, musicURL: URL? = nil) async throws -> BuiltEdit {
         let ts: CMTimeScale = 600
         let size = renderSize(for: plan.format, source: source)
         let composition = AVMutableComposition()
@@ -52,6 +52,11 @@ enum CompositionBuilder {
         var prevEnd = CMTime.zero
         var prevDuration = CMTime.zero
         let sourceOrientation = CGImagePropertyOrientation(transform: source.transform)
+        // Voz procesada en el estudio (si hay), alineada con el video original.
+        var voiceTrack = source.audioTrack
+        if let voiceURL, let t = try? await AVURLAsset(url: voiceURL).loadTracks(withMediaType: .audio).first {
+            voiceTrack = t
+        }
 
         for (i, seg) in plan.segments.enumerated() {
             let assetTrack: AVAssetTrack
@@ -63,7 +68,7 @@ enum CompositionBuilder {
             switch seg.kind {
             case .clip:
                 assetTrack = source.videoTrack
-                audioTrack = source.audioTrack
+                audioTrack = voiceTrack
                 sourceRange = CMTimeRange(start: CMTime(seconds: seg.sourceStart, preferredTimescale: ts),
                                           end: CMTime(seconds: seg.sourceEnd, preferredTimescale: ts))
                 orientation = sourceOrientation
@@ -197,7 +202,13 @@ enum CompositionBuilder {
         videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
         videoComposition.instructions = instructions
 
-        let audioMix = makeAudioMix(plan: plan, placed: placed, lanes: audioLanes, total: totalEnd)
+        var mixParams = makeAudioParams(plan: plan, placed: placed, lanes: audioLanes, total: totalEnd)
+        if let musicURL, let music = try await addMusic(musicURL, to: composition, plan: plan, placed: placed,
+                                                         transcript: transcript, total: totalEnd) {
+            mixParams.append(music)
+        }
+        let audioMix = AVMutableAudioMix()
+        audioMix.inputParameters = mixParams
 
         return BuiltEdit(composition: composition, videoComposition: videoComposition,
                          audioMix: audioMix, duration: total, renderSize: size)
@@ -205,8 +216,83 @@ enum CompositionBuilder {
 
     // MARK: - Audio
 
-    private static func makeAudioMix(plan: EditPlan, placed: [Placed], lanes: [AVMutableCompositionTrack],
-                                     total: CMTime) -> AVAudioMix {
+    /// Pone la música de fondo (en bucle si es corta) y la baja sola cuando alguien habla.
+    private static func addMusic(_ url: URL, to composition: AVMutableComposition, plan: EditPlan,
+                                 placed: [Placed], transcript: [CaptionLine],
+                                 total: CMTime) async throws -> AVMutableAudioMixInputParameters? {
+        let asset = AVURLAsset(url: url)
+        guard let musicTrack = try await asset.loadTracks(withMediaType: .audio).first,
+              let lane = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid)
+        else { return nil }
+        let songDuration = try await asset.load(.duration)
+        guard songDuration.seconds > 0.5 else { return nil }
+        let a = plan.audio
+        var cursor = CMTime.zero
+        var from = CMTime(seconds: min(a.musicStart, max(0, songDuration.seconds - 1)), preferredTimescale: 600)
+        while cursor < total {
+            let available = CMTimeSubtract(songDuration, from)
+            guard available.seconds > 0.1 else { from = .zero; continue }
+            let take = CMTimeMinimum(available, CMTimeSubtract(total, cursor))
+            try lane.insertTimeRange(CMTimeRange(start: from, duration: take), of: musicTrack, at: cursor)
+            cursor = CMTimeAdd(cursor, take)
+            from = .zero
+        }
+
+        let params = AVMutableAudioMixInputParameters(track: lane)
+        let base = Float(a.musicVolume)
+        let ducked = Float(a.musicVolume * (1 - a.ducking))
+        let ramp = 0.3
+        // Zonas con voz en la línea de tiempo final.
+        var speech: [(Double, Double)] = []
+        if a.ducking > 0.01 {
+            for p in placed where plan.segments[p.index].kind == .clip {
+                let seg = plan.segments[p.index]
+                for line in transcript {
+                    let s = max(line.start, seg.sourceStart), e = min(line.end, seg.sourceEnd)
+                    guard e > s else { continue }
+                    speech.append((p.start.seconds + seg.ramp.timelineOffset(forSource: s),
+                                   p.start.seconds + seg.ramp.timelineOffset(forSource: e)))
+                }
+            }
+            speech.sort { $0.0 < $1.0 }
+            var merged: [(Double, Double)] = []
+            for r in speech {
+                if let last = merged.last, r.0 - last.1 < 0.8 { merged[merged.count - 1].1 = max(last.1, r.1) }
+                else { merged.append(r) }
+            }
+            speech = merged
+        }
+        func t(_ s: Double) -> CMTime { CMTime(seconds: max(0, s), preferredTimescale: 600) }
+        var now = 0.0
+        let fadeIn = a.musicFade ? 1.0 : 0
+        if fadeIn > 0 {
+            params.setVolumeRamp(fromStartVolume: 0, toEndVolume: speech.first.map { $0.0 < 1.2 } == true ? ducked : base,
+                                 timeRange: CMTimeRange(start: .zero, duration: t(fadeIn)))
+            now = fadeIn
+        } else {
+            params.setVolume(base, at: .zero)
+        }
+        for (s, e) in speech {
+            let downStart = max(now, s - ramp)
+            if downStart + ramp <= e {
+                params.setVolumeRamp(fromStartVolume: base, toEndVolume: ducked,
+                                     timeRange: CMTimeRange(start: t(downStart), duration: t(ramp)))
+                params.setVolumeRamp(fromStartVolume: ducked, toEndVolume: base,
+                                     timeRange: CMTimeRange(start: t(e), duration: t(ramp)))
+                now = e + ramp
+            }
+        }
+        if a.musicFade {
+            let out = min(2.0, total.seconds * 0.2)
+            let start = max(now, total.seconds - out)
+            params.setVolumeRamp(fromStartVolume: base, toEndVolume: 0,
+                                 timeRange: CMTimeRange(start: t(start), duration: t(total.seconds - start)))
+        }
+        return params
+    }
+
+    private static func makeAudioParams(plan: EditPlan, placed: [Placed], lanes: [AVMutableCompositionTrack],
+                                        total: CMTime) -> [AVMutableAudioMixInputParameters] {
         let volume = Float(plan.audio.originalVolume)
         let params = lanes.map { lane -> AVMutableAudioMixInputParameters in
             AVMutableAudioMixInputParameters(track: lane)
@@ -236,9 +322,7 @@ enum CompositionBuilder {
                                    timeRange: CMTimeRange(start: CMTimeSubtract(total, out), duration: out))
             }
         }
-        let mix = AVMutableAudioMix()
-        mix.inputParameters = params
-        return mix
+        return params
     }
 
     // MARK: - Textos y subtítulos

@@ -9,7 +9,7 @@ struct ProEditorView: View {
     @State private var tab = Tab.color
 
     enum Tab: String, CaseIterable, Identifiable {
-        case clips = "Clips", color = "Color", text = "Texto", effects = "Efectos", general = "General"
+        case clips = "Clips", color = "Color", text = "Texto", effects = "Efectos", audio = "Audio", general = "Más"
         var id: String { rawValue }
         var icon: String {
             switch self {
@@ -17,6 +17,7 @@ struct ProEditorView: View {
             case .color: return "paintpalette"
             case .text: return "textformat"
             case .effects: return "sparkles"
+            case .audio: return "waveform"
             case .general: return "slider.horizontal.3"
             }
         }
@@ -39,6 +40,7 @@ struct ProEditorView: View {
                     case .color: ColorTab(plan: $draft)
                     case .text: TextsTab(plan: $draft)
                     case .effects: EffectsTab(plan: $draft)
+                    case .audio: AudioTab(plan: $draft)
                     case .general: GeneralTab(plan: $draft)
                     }
                 }
@@ -420,10 +422,52 @@ private struct GeneralTab: View {
                 TextField("Título", text: $plan.title)
                 EnumPicker("Formato", selection: $plan.format)
             }
-            Section("Audio") {
-                SliderRow("Volumen original", value: $plan.audio.originalVolume, range: 0...2)
+        }
+    }
+}
+
+// MARK: - Audio
+
+private struct AudioTab: View {
+    @Environment(EditorModel.self) private var model
+    @Binding var plan: EditPlan
+    @State private var importing = false
+
+    var body: some View {
+        Form {
+            Section {
+                SliderRow("Volumen de la voz", value: $plan.audio.originalVolume, range: 0...2)
+                SliderRow("Cancelador de ruido", value: $plan.audio.noiseReduction, range: 0...1)
+                EnumPicker("Efecto de voz", selection: $plan.audio.voicePreset)
+                SliderRow("Tono (semitonos)", value: $plan.audio.pitch, range: -12...12, format: "%.1f")
+                Toggle("Volumen parejo (normalizar)", isOn: $plan.audio.normalize)
                 Toggle("Fundido al inicio y final", isOn: $plan.audio.fadeInOut)
+            } header: { Text("Voz") } footer: { Text("Todo se procesa en tu iPhone, como en un estudio.") }
+            Section("Ecualizador") {
+                SliderRow("Graves", value: $plan.audio.eqLow, range: -1...1)
+                SliderRow("Medios / presencia", value: $plan.audio.eqMid, range: -1...1)
+                SliderRow("Agudos / aire", value: $plan.audio.eqHigh, range: -1...1)
             }
+            Section("Dinámica y espacio") {
+                SliderRow("Compresor", value: $plan.audio.compression, range: 0...1)
+                SliderRow("De-esser (suaviza las S)", value: $plan.audio.deEss, range: 0...1)
+                SliderRow("Reverb", value: $plan.audio.reverb, range: 0...1)
+                EnumPicker("Espacio", selection: $plan.audio.reverbSpace)
+            }
+            Section("Música de fondo") {
+                Picker("Canción", selection: $plan.audio.music) {
+                    Text("Sin música").tag("")
+                    ForEach(model.songs, id: \.self) { Text($0).tag($0) }
+                }
+                Button { importing = true } label: { Label("Importar canción…", systemImage: "music.note.list") }
+                SliderRow("Volumen música", value: $plan.audio.musicVolume, range: 0...1)
+                SliderRow("Empieza en (seg. de la canción)", value: $plan.audio.musicStart, range: 0...240, format: "%.0fs")
+                SliderRow("Bajar música al hablar", value: $plan.audio.ducking, range: 0...1)
+                Toggle("Fundido de música", isOn: $plan.audio.musicFade)
+            }
+        }
+        .fileImporter(isPresented: $importing, allowedContentTypes: [.audio, .mp3, .mpeg4Audio, .wav]) { result in
+            if case .success(let url) = result, let name = model.importSong(url) { plan.audio.music = name }
         }
     }
 }

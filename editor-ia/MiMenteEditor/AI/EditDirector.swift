@@ -78,6 +78,7 @@ struct EditDirector {
         var lines = [
             "Source video duration: \(String(format: "%.2f", c.duration)) s",
             "Resolution: \(c.width)x\(c.height) (\(orientation))",
+            "Imported songs available for audio.music: " + (MusicLibrary.names().isEmpty ? "(none — music can't be added until the user imports a song)" : MusicLibrary.names().joined(separator: ", ")),
             "Imported LUTs available: " + (ColorLUT.importedLUTNames().isEmpty ? "(none)" : ColorLUT.importedLUTNames().joined(separator: ", ")),
             "",
             "Speech transcript (source-video seconds):",
@@ -167,7 +168,16 @@ struct EditDirector {
     Use effects to create moments: a punch_in + flash on a key phrase, a shake on an impact, color_pop for a \
     reveal, light_leak in a warm montage. Impressive, but never random.
 
-    AUDIO: originalVolume 0–2, fadeInOut.
+    AUDIO — an on-device studio for the voice + background music:
+    - originalVolume 0–2, fadeInOut, noiseReduction 0–1 (noise canceller; 0.5–0.8 for noisy street/wind/hum), \
+    voicePreset: none, natural, podcast, radio_host, warm, bright, deep, chipmunk, robot, alien, telephone, \
+    megaphone, walkie, cave, stadium, underwater. eqLow/eqMid/eqHigh −1..1 (±12 dB), compression 0–1, \
+    deEss 0–1, reverb 0–1 + reverbSpace room|studio|hall|cathedral|plate, pitch −12..12 semitones, \
+    normalize (consistent loudness, recommended when there is speech).
+    - music: exact name of an imported song ("" if none or none available), musicVolume 0–1 (0.2–0.35 under \
+    speech, 0.6–0.9 for pure montages), musicStart seconds into the song (start at a drop/chorus), ducking 0–1 \
+    (auto-lower music while someone speaks), musicFade.
+    - For talking videos: a light cleanup is usually good (noiseReduction ~0.4, podcast or natural, normalize).
 
     EDITING CRAFT
     - Study the frames to understand what happens and when; use the transcript to keep complete sentences and \
@@ -177,7 +187,8 @@ struct EditDirector {
     - When revising, the user writes casually in Spanish or English ("ponle colores más fuertes", "el texto \
     detrás de mí", "más efectos", "quita el glitch"). Interpret like a senior editor and change only what is \
     implied; keep everything else identical.
-    - You cannot add music or new real footage. If asked, say so in reply and offer what you can do.
+    - You can only use songs the user imported (listed in the context). If they ask for music and none is \
+    imported, tell them to import one in Editor pro → Audio.
     """
 }
 

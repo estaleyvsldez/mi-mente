@@ -306,9 +306,55 @@ struct Captions: Codable, Equatable {
     var maxWords: Int
 }
 
+enum VoicePreset: String, Codable, CaseIterable {
+    case none, natural, podcast
+    case radioHost = "radio_host"
+    case warm, bright, deep, chipmunk, robot, alien, telephone, megaphone, walkie, cave, stadium, underwater
+}
+
+enum ReverbSpace: String, Codable, CaseIterable {
+    case room, studio, hall, cathedral, plate
+}
+
 struct AudioSettings: Codable, Equatable {
-    var originalVolume: Double
+    var originalVolume: Double   // 0...2
     var fadeInOut: Bool
+    // Estudio de voz (se procesa en el iPhone)
+    var noiseReduction: Double   // 0...1 (cancelador de ruido)
+    var voicePreset: VoicePreset
+    var eqLow: Double            // -1...1 (±12 dB)
+    var eqMid: Double
+    var eqHigh: Double
+    var compression: Double      // 0...1
+    var deEss: Double            // 0...1
+    var reverb: Double           // 0...1
+    var reverbSpace: ReverbSpace
+    var pitch: Double            // semitonos -12...12
+    var normalize: Bool          // volumen parejo tipo plataforma
+    // Música
+    var music: String            // nombre de una canción importada, "" = sin música
+    var musicVolume: Double      // 0...1
+    var musicStart: Double       // segundos dentro de la canción
+    var ducking: Double          // 0...1 cuánto baja la música cuando alguien habla
+    var musicFade: Bool
+
+    static let standard = AudioSettings(
+        originalVolume: 1, fadeInOut: false, noiseReduction: 0, voicePreset: .none, eqLow: 0, eqMid: 0,
+        eqHigh: 0, compression: 0, deEss: 0, reverb: 0, reverbSpace: .room, pitch: 0, normalize: false,
+        music: "", musicVolume: 0.5, musicStart: 0, ducking: 0.6, musicFade: true)
+
+    /// ¿Hay que procesar la voz? (si no, se usa el audio original tal cual)
+    var needsProcessing: Bool {
+        noiseReduction > 0.01 || voicePreset != .none || abs(eqLow) > 0.01 || abs(eqMid) > 0.01 ||
+            abs(eqHigh) > 0.01 || compression > 0.01 || deEss > 0.01 || reverb > 0.01 || abs(pitch) > 0.01 || normalize
+    }
+
+    /// Clave para reutilizar el audio ya procesado.
+    var processingKey: String {
+        [noiseReduction, eqLow, eqMid, eqHigh, compression, deEss, reverb, pitch]
+            .map { String(format: "%.3f", $0) }.joined(separator: "_")
+            + "_\(voicePreset.rawValue)_\(reverbSpace.rawValue)_\(normalize)"
+    }
 }
 
 struct EditPlan: Codable, Equatable {
@@ -329,7 +375,7 @@ struct EditPlan: Codable, Equatable {
             segments: [Segment.clip(0, duration)], texts: [], effects: [], color: .neutral,
             captions: Captions(enabled: false, template: .classic, font: .rounded, color: "#FFFFFF",
                                highlightColor: "#FFE600", y: 0.82, size: 0.055, uppercase: false, maxWords: 5),
-            audio: AudioSettings(originalVolume: 1, fadeInOut: false))
+            audio: .standard)
     }
 
     var totalDuration: Double {
@@ -400,6 +446,14 @@ struct EditPlan: Codable, Equatable {
         p.captions.size = p.captions.size.clamped(0.03, 0.15)
         p.captions.maxWords = min(max(p.captions.maxWords, 1), 10)
         p.audio.originalVolume = p.audio.originalVolume.clamped(0, 2)
+        for kp in [\AudioSettings.noiseReduction, \.compression, \.deEss, \.reverb, \.musicVolume, \.ducking] {
+            p.audio[keyPath: kp] = p.audio[keyPath: kp].clamped(0, 1)
+        }
+        for kp in [\AudioSettings.eqLow, \.eqMid, \.eqHigh] {
+            p.audio[keyPath: kp] = p.audio[keyPath: kp].clamped(-1, 1)
+        }
+        p.audio.pitch = p.audio.pitch.clamped(-12, 12)
+        p.audio.musicStart = max(0, p.audio.musicStart)
         return p
     }
 }
