@@ -35,8 +35,8 @@ function renderPilares(app){
    <div class="sec-mini">Y los otros 4 pilares, igual de importantes:</div>
    <div class="cols small">${["pron","prep","conj","inter"].map((t,i)=>`<button class="col" data-t="${t}" style="--c:${TAGS[t].c};animation-delay:${.5+i*.1}s"><span class="cap2">${TEMPLE_DEMO[t]}</span><span class="shaft"><span class="band">${t==="inter"?"Muletillas":TAGS[t].n+(t==="prep"?"es":"s")}</span></span><span class="base"></span></button>`).join("")}</div>
    <div class="card sub" style="font-size:.92rem">💡 En las misiones, lo que dices sale <b>pintado</b> con estos colores. Toca cualquier palabra para ver qué es y qué significa.</div>
-   ${typeof NATIVO!=="undefined"?nativoCardHTML():""}${typeof oyeCardHTML==="function"?oyeCardHTML():""}</div>`;
-  app.querySelectorAll(".col").forEach(b=>b.onclick=()=>pillarSheet(b.dataset.t));if(typeof bindNativo==="function")bindNativo();if(typeof bindOye==="function")bindOye()}
+   ${typeof NATIVO!=="undefined"?nativoCardHTML():""}${typeof oyeCardHTML==="function"?oyeCardHTML():""}${typeof preguntasCardHTML==="function"?preguntasCardHTML():""}</div>`;
+  app.querySelectorAll(".col").forEach(b=>b.onclick=()=>pillarSheet(b.dataset.t));if(typeof bindNativo==="function")bindNativo();if(typeof bindOye==="function")bindOye();if(typeof bindPreguntas==="function")bindPreguntas()}
 function pillarSheet(tag){const p=HAS_PIL?PILARES.find(x=>x.tag===tag):null,T=TAGS[tag],used=usedWords(tag);
   sheet(`<div class="pilhead" style="--c:${T.c}"><span class="big">${p?p.em:T.em}</span><div><h3>${esc(p?p.nombre:T.n)}</h3><span class="sub">${esc(p?p.en:"")}</span></div></div>
    ${p?`<p>${esc(p.que)}</p><div class="card" style="display:grid;gap:4px"><span class="cap">🗣️ Así lo hacen los nativos</span><p>${esc(p.truco)}</p></div>
@@ -104,4 +104,32 @@ function playOye(){if(!canRun()||!HAS_C)return;unlockAudio();running=true;const 
     let k=0;for(const x of pool){setProg(k/pool.length);bubble("emily",x[0],x[3]);await say(x[0],"emily","happy");guard(t);
       await youSay(oyeY(x),"help",t,{npc:{who:"emily",en:x[0],es:x[3],emo:"happy"},m,label:"Cópiale, rapidito y pegado"});k++}
     setProg(1);addXP(20);save();confetti();sfx("win");const bye="Okay, now you sound like you're from here!";bubble("emily",bye,"¡Ya suenas de aquí!");await say(bye,"emily","laugh");await wait(1000)})()
+  .catch(e=>{if(e!==CANCEL)console.error(e)}).finally(()=>{if(t===token)endSess()})}
+
+/* =====================================================================
+   LAS 8 PREGUNTAS: completa (libro) → contraída (nativo) → cómo se oye
+   ===================================================================== */
+const HAS_Q=typeof PREGUNTAS!=="undefined";
+const qY=x=>({formal:x[2],en:x[3],norm:x[2]!==x[3]?x[2]:undefined,oye:x[4],pr:x[5],es:x[6],em:x[7],alts:[x[2]],m:"preguntas"});
+function preguntasCardHTML(){if(!HAS_Q)return "";const W=[...new Set(PREGUNTAS.map(x=>x[0]))];
+  return `<button class="ncard qcard" id="qgo"><div class="nfoot"><b>❓ Las 8 preguntas</b><small>Lo que más vas a usar. Como lo dice el libro y como lo dice un gringo.</small></div>
+    <div class="qw">${W.map(w=>`<span>${w}</span>`).join("")}</div>
+    <div class="orow"><span style="text-decoration:line-through">What is your name?</span><b>What's your name? <i>/whatcher-name/</i></b></div>
+    <div class="orow"><span style="text-decoration:line-through">You live where?</span><b>Where d'you live? <i>/whereja-live/</i></b></div></button>
+    <button class="btn ghost" id="qlist">📖 Ver las 8 preguntas y las trampas</button>`}
+function bindPreguntas(){const g=document.getElementById("qgo");if(g)g.onclick=()=>playPreguntas();const l=document.getElementById("qlist");if(l)l.onclick=preguntasList}
+function preguntasList(){const by={};PREGUNTAS.forEach(x=>(by[x[0]]=by[x[0]]||[]).push(x));
+  sheet(`<h3>❓ Las 8 preguntas</h3><p class="sub">Arriba tachado: como en el libro. En verde: como lo dice un nativo. En morado: como se oye rápido. Toca para oír.</p>
+   ${Object.entries(by).map(([w,L])=>`<div class="cap">${esc(w.toUpperCase())} · ${esc(L[0][1])}</div><div class="group">${L.map(x=>`<button class="cell" data-say="${esc(x[3])}"><span style="font-size:1.3rem">${esc(x[7])}</span><span class="grow">${x[2]!==x[3]?`<small style="text-decoration:line-through">${esc(x[2])}</small>`:""}<strong style="color:var(--ok)">${esc(x[3])}</strong><small style="color:#7C4DFF;font-weight:800">${esc(x[4])}</small><small style="color:var(--emily);font-style:italic">${esc(x[5])}</small><small>${esc(x[6])}</small></span></button>`).join("")}</div>`).join("")}
+   <div class="cap">⚠️ Trampas de hispano</div><div class="group">${TRAMPAS.map(t=>`<button class="cell" data-say="${esc(t[1].replace(/ \\(.*\\)$/,""))}"><span class="grow"><small style="color:var(--bad);text-decoration:line-through">✗ ${esc(t[0])}</small><strong style="color:var(--ok)">✓ ${esc(t[1])}</strong><small>${esc(t[2])}</small></span></button>`).join("")}</div>`,
+   el=>el.querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>{unlockAudio();say(b.dataset.say,"emily","happy")}))}
+function playPreguntas(){if(!canRun()||!HAS_Q)return;unlockAudio();running=true;const t=++token;
+  const pool=PREGUNTAS.map(x=>({x,it:DB.items[x[3].toLowerCase()]})).sort((a,b)=>((a.it?a.it.due:0)-(b.it?b.it.due:0))||Math.random()-.5).slice(0,8).map(o=>o.x);
+  const m={id:"preguntas",w:0,o:0,t:"Las 8 preguntas",place:"cafe",cast:["emily"],steps:[],mems:[],n:"",ys:pool.length};
+  (async()=>{openSess(m);$("#stt").textContent="Pregúntale tú";meet(true);setPhase("❓ Las 8 preguntas");
+    const hi="Okay, now you ask me the questions. Ask me like a real American!";bubble("emily",hi,"Ahora tú me preguntas. ¡Pregúntame como gringo de verdad!");await say(hi,"emily","flirty");guard(t);
+    let k=0;for(const x of pool){setProg(k/pool.length);bubble("emily","(Pregúntale: "+x[6]+")","");
+      await youSay(qY(x),"help",t,{npc:{who:"emily",en:x[3],es:x[6],emo:"happy"},m,label:"Pregúntale tú, contraído"});k++;
+      const r=[["Ha, good question!","¡Buena pregunta!"],["Nice! You sound like a local.","¡Bien! Suenas de aquí."],["Ooh, smooth.","Uy, qué fluido."]][k%3];bubble("emily",r[0],r[1]);await say(r[0],"emily","laugh");guard(t)}
+    setProg(1);addXP(20);save();confetti();sfx("win");const bye="Okay, you're a pro at questions now!";bubble("emily",bye,"¡Ya eres pro de las preguntas!");await say(bye,"emily","laugh");await wait(900)})()
   .catch(e=>{if(e!==CANCEL)console.error(e)}).finally(()=>{if(t===token)endSess()})}

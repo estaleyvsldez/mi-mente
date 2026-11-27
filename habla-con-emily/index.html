@@ -246,6 +246,8 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 .ncard .nfoot{display:grid;gap:2px;margin-top:4px}.ncard .nfoot b{font-family:var(--round);font-size:1.15rem}.ncard .nfoot small{opacity:.8}
 .tri .oye{color:#7C4DFF;font-weight:900;font-family:var(--round);cursor:pointer}.tri .oye small{display:block;font-weight:600;font-size:.72rem;color:var(--sub);font-family:inherit}
 .ocard{background:linear-gradient(160deg,#2a1f5c,#120f2b)}.ocard .orow{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:baseline}.ocard .orow span{opacity:.85}.ocard .orow b{color:#c9b6ff;font-family:var(--round)}
+.qcard{background:linear-gradient(160deg,#5c2a1f,#2b1210)}.qcard .qw{display:flex;flex-wrap:wrap;gap:6px}.qcard .qw span{background:rgba(255,255,255,.9);color:#111;font-weight:900;font-family:var(--round);border-radius:10px;padding:2px 9px}
+.qcard .orow{display:grid;grid-template-columns:1fr 1.3fr;gap:8px;align-items:baseline}.qcard .orow span{opacity:.75;font-size:.85rem}.qcard .orow b{color:#ffd9b0;font-family:var(--round)}.qcard .orow i{display:block;font-style:normal;color:#c9b6ff;font-size:.82rem}
 .spacer{flex:1 1 0;min-height:0}
 /* ---------- la ciudad ---------- */
 #city{position:fixed;inset:0;overflow:hidden;touch-action:none;background:#7DBE6A}
@@ -320,6 +322,7 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 <script src="mundos/pilares.js"></script>
 <script src="mundos/nativo.js"></script>
 <script src="mundos/conectado.js"></script>
+<script src="mundos/preguntas.js"></script>
 <script src="voz/lista.js"></script>
 <script>
 /* =====================================================================
@@ -884,7 +887,7 @@ const FORMAL=[[/\bI'm\b/g,"I am"],[/\b(\w+)'re\b/gi,"$1 are"],[/\b(he|she|it|tha
  [/\byeah\b/gi,"yes"],[/\byep\b/gi,"yes"],[/\bnope\b/gi,"no"],[/\bnah\b/gi,"no"]];
 function formal(en){let s=en.replace(/[’]/g,"'");FORMAL.forEach(([re,r])=>{s=s.replace(re,(...a)=>{const m=a[0];let out=r.replace(/\$(\d)/g,(_,i)=>a[+i]);if(/^[A-Z]/.test(m)&&/^[a-z]/.test(out))out=out[0].toUpperCase()+out.slice(1);return out})});return s}
 function nvn(y){return y.norm?`<div class="nvn"><div class="nb"><span>🙅 normal</span><b>${esc(y.norm)}</b></div><div class="arr">➜</div><div class="nb nat"><span>🗣️ nativo</span><b>${esc(y.en)}</b></div></div>`:""}
-function threeForms(y){const f=formal(y.en),same=f.replace(/\W/g,"").toLowerCase()===y.en.replace(/\W/g,"").toLowerCase();
+function threeForms(y){const f=y.formal||formal(y.en),same=f.replace(/\W/g,"").toLowerCase()===y.en.replace(/\W/g,"").toLowerCase();
   return `${nvn(y)}<div class="tri"><span class="k">✍️ Se escribe</span><span class="v fo">${same?"<i>igual</i>":esc(f)}</span>
    <span class="k">🗣️ Los nativos dicen <small style="text-transform:none;letter-spacing:0">(toca una palabra)</small></span><span class="v en ${y.en.length>38?"long":""}">${colorize(y.en)}</span>
    ${typeof oyeHTML==="function"?oyeHTML(y):""}<span class="k">👄 Se lee</span><span class="v pr">${esc(y.pr)}</span><span class="k">🇲🇽 Significa</span><span class="v es">${esc(y.es)}</span>${legendOf(y.en)}</div>`}
