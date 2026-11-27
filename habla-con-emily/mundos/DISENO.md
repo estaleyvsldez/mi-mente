@@ -16,6 +16,7 @@ MUNDO_TXT.push(`
 N|personaje|emoción|lo que dice en inglés|traducción al español
 Y|lo que dice Stanley en inglés|español|cómo se lee|dibujo con 2-4 emojis
 A|otra forma válida de decir la línea Y de arriba (opcional, puede haber varias)
+L|cómo lo diría alguien que aprendió inglés en la escuela (versión «normal», de libro) — opcional, va justo después de su Y
 M|personaje|clave|recuerdo en inglés (frase corta en pasado o plan, desde el punto de vista del personaje hablándole a Stanley)|recuerdo en español
 `);
 ```
@@ -71,3 +72,8 @@ Quien escribe la misión que **planta** el recuerdo pone la línea `M` con la cl
 
 ## Validar
 Después de escribir, corre: `node tools/validar.js` desde la carpeta `habla-con-emily`. Corrige todo lo que marque.
+
+## Normal contra nativo (línea L)
+Después de cada línea Y puede ir una línea `L|...` con la versión «normal» o de libro: cómo lo diría un extranjero que aprendió en la escuela.
+Ejemplos: `Y|Whatever.` → `L|I don't care.` · `Y|Hang on.` → `L|Wait.` · `Y|No worries.` → `L|It's fine.` · `Y|It's up to you.` → `L|You choose.` · `Y|I'm starving.` → `L|I am very hungry.` · `Y|I'm beat.` → `L|I am very tired.` · `Y|I'm heading out.` → `L|I am leaving now.` · `Y|Got it.` → `L|I understand.`
+La línea L debe tener el MISMO significado y sonar rígida, formal o de libro. Si la frase nativa ya es igual a como la diría cualquiera (por ejemplo «Thanks.»), no pongas L.

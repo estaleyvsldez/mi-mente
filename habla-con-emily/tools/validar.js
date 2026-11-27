@@ -22,6 +22,7 @@ MUNDO_TXT.join("\n").split("\n").forEach((raw,ln)=>{const r=raw.trim();if(!r||r.
   if(p[0]==="N"){if(p.length!==5)E("N necesita 5 campos");if(!CAST.has(p[1]))E("personaje inválido "+p[1]);else if(!cur.cast.includes(p[1]))E("personaje "+p[1]+" no está en el cast");if(!EMO.has(p[2]))E("emoción inválida "+p[2]);if(p.some(x=>!x.trim()))E("campo vacío")}
   else if(p[0]==="Y"){cur.y++;if(p.length!==5)E("Y necesita 5 campos");if(p.some(x=>!x.trim()))E("campo vacío");if(/[^\x00-\x7F’]/.test(p[1].replace(/[éñ]/g,"")))E("la línea en inglés tiene caracteres raros");if(p[1].split(/\s+/).length>16)E("línea Y muy larga (>16 palabras)")}
   else if(p[0]==="A"){if(p.length!==2)E("A necesita 2 campos")}
+  else if(p[0]==="L"){if(p.length!==2||!p[1].trim())E("L necesita 2 campos (la versión normal/de libro)")}
   else if(p[0]==="M"){if(p.length!==5)E("M necesita 5 campos");(mems[p[2]]=mems[p[2]]||[]).push(cur.id)}
   else E("tipo de línea desconocido "+p[0]);
   if(/`|\$\{/.test(r))E("no uses backtick ni ${");});

@@ -4,6 +4,7 @@
 <meta name="theme-color" content="#0E1024">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="3d/juego3d.css">
 <style>
 /* Layout: juego de iPhone. Pestañas abajo (Mundos · Gente · Yo). Cada misión abre a pantalla completa: arriba el mundo animado con los personajes, en medio tu tarjeta con el dibujo, abajo el micrófono. */
 :root{
@@ -232,6 +233,17 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 .pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .pword{background:var(--card);border-radius:14px;padding:8px 10px;text-align:left;display:grid;gap:1px;border-left:4px solid var(--c)}
 .pword b{font-family:var(--round);font-weight:900}.pword small{color:var(--sub)}.pword i{color:var(--emily);font-size:.85rem}
+.nvn{display:grid;grid-template-columns:1fr auto 1fr;gap:6px;align-items:stretch;margin-bottom:6px}
+.nvn .nb{background:var(--fill);border-radius:12px;padding:6px 9px;display:grid;gap:1px;min-width:0}
+.nvn .nb span{font-size:.6rem;font-weight:900;text-transform:uppercase;letter-spacing:.05em;color:var(--sub)}
+.nvn .nb b{font-family:var(--round);font-weight:800;font-size:.95rem;overflow-wrap:anywhere;color:var(--sub);text-decoration:line-through;text-decoration-color:rgba(229,72,77,.5)}
+.nvn .nb.nat{background:var(--ok-soft)}.nvn .nb.nat span{color:var(--ok)}.nvn .nb.nat b{color:var(--ok);text-decoration:none}
+.nvn .arr{align-self:center;font-weight:900;color:var(--sub)}
+.ncard{background:linear-gradient(160deg,#3a2f3f,#1b1622);color:#fff;border-radius:24px;padding:16px;display:grid;gap:8px;text-align:left;width:100%}
+.ncard .nhead,.ncard .nrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ncard .nhead span{background:rgba(255,255,255,.88);color:#111;font-weight:900;font-family:var(--round);font-size:1.3rem;text-align:center;border-radius:14px;padding:4px 0}
+.ncard .nrow span{text-align:right;font-size:1.05rem;opacity:.85}.ncard .nrow b{font-size:1.05rem}
+.ncard .nfoot{display:grid;gap:2px;margin-top:4px}.ncard .nfoot b{font-family:var(--round);font-size:1.15rem}.ncard .nfoot small{opacity:.8}
 .spacer{flex:1 1 0;min-height:0}
 /* ---------- la ciudad ---------- */
 #city{position:fixed;inset:0;overflow:hidden;touch-action:none;background:#7DBE6A}
@@ -301,7 +313,9 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 <script src="mundos/w6.js"></script>
 <script src="mundos/w7.js"></script>
 <script src="mundos/w8.js"></script>
+<script src="3d/chambas.js"></script>
 <script src="mundos/pilares.js"></script>
+<script src="mundos/nativo.js"></script>
 <script>
 /* =====================================================================
    1. MUNDOS, LUGARES Y MISIONES
@@ -352,14 +366,17 @@ const PLACES={
  banco:{n:"El banco",sky1:"#CFE0FF",sky2:"#EAF2FF",floor:"#B9C3D3",far:"🏦🏦",near:"💵💳🧾💰",fx:"💵",mode:"fall",rate:2000},
  doctor:{n:"El consultorio",sky1:"#D2F4FF",sky2:"#EAFBFF",floor:"#BFDCE3",far:"🩻🩺",near:"🩺💉🌡️🩹",fx:"💊",mode:"fall",rate:2400},
  estadio:{n:"El estadio",sky1:"#1C3B7A",sky2:"#3D6FD1",floor:"#3F9E4D",far:"🏟️📣🏟️",near:"🏈⚽📣🌭🍺",fx:"🎉",mode:"fall",rate:700,extra:"night"}};
-const MISSIONS=[];
-(function(){let cur=null;(window.MUNDO_TXT||[]).join("\n").split("\n").forEach(raw=>{const r=raw.trim();if(!r||r.startsWith("//"))return;const f=r.split("|").map(x=>x.trim());
+function parseMissions(TXT){const MISSIONS=[];
+(function(){let cur=null;(TXT||[]).join("\n").split("\n").forEach(raw=>{const r=raw.trim();if(!r||r.startsWith("//"))return;const f=r.split("|").map(x=>x.trim());
   if(f[0].startsWith("#")){cur={id:f[0].slice(1),w:+f[1],o:+f[2],t:f[3],place:PLACES[f[4]]?f[4]:"barrio",cast:(f[5]||"").split(",").map(x=>x.trim()).filter(Boolean),n:f[6]||"",steps:[],mems:[]};MISSIONS.push(cur);return}
   if(!cur)return;
   if(f[0]==="N")cur.steps.push({k:"N",who:f[1],emo:f[2]||"neutral",en:f[3],es:f[4]||""});
   else if(f[0]==="Y")cur.steps.push({k:"Y",en:f[1],es:f[2]||"",pr:f[3]||"",em:f[4]||"💬",alts:[],m:cur.id});
   else if(f[0]==="A"){for(let i=cur.steps.length-1;i>=0;i--)if(cur.steps[i].k==="Y"){cur.steps[i].alts.push(f[1]);break}}
+  else if(f[0]==="L"){for(let i=cur.steps.length-1;i>=0;i--)if(cur.steps[i].k==="Y"){cur.steps[i].norm=f[1];break}}
   else if(f[0]==="M")cur.mems.push({who:f[1],key:f[2],en:f[3],es:f[4]||""})})})();
+MISSIONS.forEach(m=>m.ys=m.steps.filter(s=>s.k==="Y").length);return MISSIONS}
+const MISSIONS=parseMissions(window.MUNDO_TXT);
 MISSIONS.sort((a,b)=>a.w-b.w||a.o-b.o);MISSIONS.forEach((m,i)=>{m.i=i;m.num=i+1;m.ys=m.steps.filter(s=>s.k==="Y").length});
 const MI=Object.fromEntries(MISSIONS.map(m=>[m.id,m]));
 const STAN={name:"Stanley",gender:"m",age:30,skin:"moreno",hair:"short",hairColor:"#2A1D16",shirt:"#3557FF",extra:[],voice:"am_michael",speed:0.95};
@@ -586,10 +603,10 @@ const EMOJI={laugh:"😂",flirty:"😘",angry:"💢",sad:"💧",cry:"😭",surpr
   css+=`.p:not([class*="e-"]) .b-n,.p:not([class*="e-"]) .e-n,.p:not([class*="e-"]) .m-n{display:inline}`;
   const st=document.createElement("style");st.textContent=css;document.head.appendChild(st)})();
 function personHTML(id,size,me){const c=CH(id);return `<div class="p e-neutral ${c.dog?"dog":""} ${me?"me":""}" data-who="${id}" style="--sz:${(size||80)*(c.age<13?.82:c.dog?.86:1)}px">${personSVG(c)}<span class="emo"></span><span class="nm">${esc(c.name)}</span></div>`}
-function setEmo(id,emo){document.querySelectorAll(`#sess .p[data-who="${id}"]`).forEach(el=>{Object.keys(EMOS).forEach(e=>el.classList.remove("e-"+e));el.classList.add("e-"+(EMOS[emo]?emo:"neutral"));
+function setEmo(id,emo){if(window.W3D&&W3D.on)W3D.emo(id,emo);document.querySelectorAll(`#sess .p[data-who="${id}"]`).forEach(el=>{Object.keys(EMOS).forEach(e=>el.classList.remove("e-"+e));el.classList.add("e-"+(EMOS[emo]?emo:"neutral"));
   const b=el.querySelector(".emo");if(b){b.textContent=EMOJI[emo]||"";b.classList.toggle("on",!!EMOJI[emo])}});
   if(emo==="angry")shakeScene();if(emo==="flirty")burst("💕",6);if(emo==="laugh")burst("😂",4);if(emo==="cry")burst("💧",5)}
-function setTalk(id,on){document.querySelectorAll(`#sess .p[data-who="${id}"]`).forEach(el=>el.classList.toggle("talk",on));document.querySelectorAll("#sess .p").forEach(el=>el.classList.toggle("spk",on&&el.dataset.who===id))}
+function setTalk(id,on){if(window.W3D&&W3D.on)W3D.talk(id,on);document.querySelectorAll(`#sess .p[data-who="${id}"]`).forEach(el=>el.classList.toggle("talk",on));document.querySelectorAll("#sess .p").forEach(el=>el.classList.toggle("spk",on&&el.dataset.who===id))}
 function setListen(on){document.querySelectorAll('#sess .p.me').forEach(el=>{el.classList.toggle("spk",on);if(on)setEmo("stanley","neutral")})}
 
 /* =====================================================================
@@ -614,8 +631,10 @@ function burst(e,n){const fx=document.querySelector("#scn .fx");if(!fx)return;fo
 function shakeScene(){const s=$("#scn");if(!s)return;s.classList.remove("shake");void s.offsetWidth;s.classList.add("shake")}
 function walk(on){const s=$("#scn");if(s)s.classList.toggle("walk",on)}
 function meet(on){const s=$("#scn");if(s)s.classList.toggle("meet",on)}
+function tapWords(en,who){return String(en).split(/(\s+)/).map(w=>/\S/.test(w)?`<span class="tw" data-who="${esc(who)}" data-w="${esc(w.replace(/[^\w'’-]/g,""))}">${esc(w)}</span>`:w).join("")}
+const HUD3D=()=>!!(window.W3D&&W3D.on);
 function bubble(who,en,es){const b=$("#say"),sc=$("#scn");if(!b||!sc)return;if(!en){b.classList.remove("on");return}
-  const c=CH(who);b.className="say"+(who==="stanley"?" me":"");b.innerHTML=`<b>${esc(c.name)}</b>${esc(en)}${es?`<small>${esc(es)}</small>`:""}`;
+  const c=CH(who);b.className="say"+(who==="stanley"?" me":"");b.innerHTML=`<b>${esc(c.name)}</b>${tapWords(en,who)}${es?`<small>${esc(es)}</small>`:""}`;
   const el=sc.querySelector(`.p[data-who="${who}"]`);const W=sc.clientWidth;b.style.left="0px";b.classList.add("on");
   requestAnimationFrame(()=>{const bw=b.offsetWidth;let x=W/2-bw/2;if(el){const r=el.getBoundingClientRect(),R=sc.getBoundingClientRect();x=r.left-R.left+r.width/2-bw/2}b.style.left=Math.max(8,Math.min(W-bw-8,x))+"px"})}
 function confetti(){const c=document.createElement("div");c.className="confetti";const E="🎉✨⭐🎊💥🔥💖";for(let i=0;i<40;i++){const s=document.createElement("span");s.textContent=[...E][i%[...E].length];
@@ -799,15 +818,15 @@ function renderYo(app){const its=Object.values(DB.items),tot=its.reduce((s,x)=>s
    12. LA MISIÓN
    ===================================================================== */
 let combo=0;
-function openSess(m){closeSess();clearInterval(fxTimer);running=true;const s=document.createElement("div");s.className="sess";s.id="sess";
+function openSess(m){closeSess();clearInterval(fxTimer);running=true;const s=document.createElement("div");const hud=HUD3D();s.className="sess"+(hud?" hud":"");s.id="sess";
   s.innerHTML=`<div class="in">
    <div class="shead"><button class="xbtn" id="sx" aria-label="Salir">✕</button><div class="pbar"><u id="sbar"></u></div><span class="combo" id="cmb"></span></div>
    <div class="sinfo"><span class="phase" id="sph">${esc(m.t)}</span><span class="sub" id="stt" style="font-size:.82rem;text-align:right">Mundo ${m.w} · ${m.o}</span></div>
-   ${sceneHTML(m.place,m.cast,{cast:true,id:"scn",sz:m.cast.length>2?74:82})}
+   ${hud?`<div class="scene hudscn" id="scn"><div class="fx"></div><div class="say" id="say"></div></div>`:sceneHTML(m.place,m.cast,{cast:true,id:"scn",sz:m.cast.length>2?74:82})}
    <div class="scard" id="scard" hidden></div><div class="spacer"></div><p class="fb" id="sfb" hidden></p>
    <div class="dock"><button class="orb" id="sorb" aria-label="Hablar">${MIC}</button><div class="t"><div class="st" id="sst">Listo</div><div class="heard" id="sheard"></div></div></div>
    <div class="acts"><button data-cmd="repeat">🔊 Repetir</button><button data-cmd="slow">🐢 Despacio</button><button data-cmd="help">💡 Ayuda</button></div></div>`;
-  document.body.appendChild(s);document.body.style.overflow="hidden";startFx(s);
+  document.body.appendChild(s);document.body.style.overflow="hidden";if(!hud)startFx(s);
   $("#sx").onclick=()=>{token++;stopVoice();endSess()};$("#sorb").onclick=micTap;
   s.querySelectorAll("[data-cmd]").forEach(b=>b.onclick=()=>{unlockAudio();answer(b.dataset.cmd)})}
 function closeSess(){const s=$("#sess");if(s)s.remove();document.body.style.overflow=""}
@@ -820,9 +839,9 @@ function setOrb(kind,label){const o=$("#sorb");if(!o)return;o.className="orb "+k
 function showHeard(t,partial){const h=$("#sheard");if(h)h.textContent=t?(partial?t+"…":"«"+t+"»"):""}
 function feedback(kind,html){const f=$("#sfb");if(!f)return;if(!kind){f.hidden=true;return}f.hidden=false;f.className="fb "+kind;f.innerHTML=html}
 function showCombo(){const c=$("#cmb");if(!c)return;c.textContent=combo>=2?"🔥x"+combo:"";c.classList.remove("pop");void c.offsetWidth;if(combo>=2)c.classList.add("pop")}
-function showYou(y,mode,label){const c=$("#scard");if(!c)return;c.hidden=false;const hide=mode==="recall";
-  c.innerHTML=`<div class="who">● Tú (Stanley)<em>${label||(hide?"Dilo tú, sin ayuda":"Tú dices esto")}</em></div>
-   <div class="body">${hide?`<div class="en hide">Dile: «${esc(y.es)}»</div>`:threeForms(y)}</div><div class="draw">${esc(y.em)}</div>`}
+function showYou(y,mode,label){const c=$("#scard");if(!c)return;c.hidden=false;const hide=mode==="recall"||mode==="native";
+  c.innerHTML=`<div class="who">● Tú (Stanley)<em>${label||(mode==="native"?"Dilo como nativo":hide?"Dilo tú, sin ayuda":"Tú dices esto")}</em></div>
+   <div class="body">${mode==="native"?`<div class="nvn"><div class="nb"><span>🙅 normal</span><b>${esc(y.norm)}</b></div><div class="arr">➜</div><div class="nb nat"><span>🗣️ nativo</span><b>¿…?</b></div></div><div class="es">${esc(y.es)}</div>`:hide?`<div class="en hide">Dile: «${esc(y.es)}»</div>`:threeForms(y)}</div><div class="draw">${esc(y.em)}</div>`}
 function reveal(y){const b=$("#scard .body");if(b)b.innerHTML=threeForms(y)}
 /* cómo se escribe "correcto" (sin contracciones ni jerga) */
 const FORMAL=[[/\bI'm\b/g,"I am"],[/\b(\w+)'re\b/gi,"$1 are"],[/\b(he|she|it|that|what|where|how|who|there|here|everything|nothing|something|everybody|nobody)'s\b/gi,"$1 is"],[/\blet's\b/gi,"let us"],
@@ -832,8 +851,9 @@ const FORMAL=[[/\bI'm\b/g,"I am"],[/\b(\w+)'re\b/gi,"$1 are"],[/\b(he|she|it|tha
  [/\by'all\b/gi,"you all"],[/\bya\b/gi,"you"],[/'cause\b/gi,"because"],[/\bcuz\b/gi,"because"],[/\b'em\b/gi,"them"],[/\bc'mon\b/gi,"come on"],[/\b(\w+)in'(?=\W|$)/g,"$1ing"],
  [/\byeah\b/gi,"yes"],[/\byep\b/gi,"yes"],[/\bnope\b/gi,"no"],[/\bnah\b/gi,"no"]];
 function formal(en){let s=en.replace(/[’]/g,"'");FORMAL.forEach(([re,r])=>{s=s.replace(re,(...a)=>{const m=a[0];let out=r.replace(/\$(\d)/g,(_,i)=>a[+i]);if(/^[A-Z]/.test(m)&&/^[a-z]/.test(out))out=out[0].toUpperCase()+out.slice(1);return out})});return s}
+function nvn(y){return y.norm?`<div class="nvn"><div class="nb"><span>🙅 normal</span><b>${esc(y.norm)}</b></div><div class="arr">➜</div><div class="nb nat"><span>🗣️ nativo</span><b>${esc(y.en)}</b></div></div>`:""}
 function threeForms(y){const f=formal(y.en),same=f.replace(/\W/g,"").toLowerCase()===y.en.replace(/\W/g,"").toLowerCase();
-  return `<div class="tri"><span class="k">✍️ Se escribe</span><span class="v fo">${same?"<i>igual</i>":esc(f)}</span>
+  return `${nvn(y)}<div class="tri"><span class="k">✍️ Se escribe</span><span class="v fo">${same?"<i>igual</i>":esc(f)}</span>
    <span class="k">🗣️ Los nativos dicen <small style="text-transform:none;letter-spacing:0">(toca una palabra)</small></span><span class="v en ${y.en.length>38?"long":""}">${colorize(y.en)}</span>
    <span class="k">👄 Se lee</span><span class="v pr">${esc(y.pr)}</span><span class="k">🇲🇽 Significa</span><span class="v es">${esc(y.es)}</span>${legendOf(y.en)}</div>`}
 const lastSpeaker=(m,idx)=>{for(let i=idx-1;i>=0;i--)if(m.steps[i].k==="N")return m.steps[i];return null};
@@ -845,9 +865,13 @@ async function youSay(y,mode,t,ctx){
   if(mode==="help"&&ctx.model){slowNext=true;await say(y.en,"stanley");guard(t);heard=true}
   while(true){guard(t);const r=await listen(y,{lenient:mode==="recall"});guard(t);
     if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;if(ctx.npc){bubble(ctx.npc.who,ctx.npc.en,ctx.showEs?ctx.npc.es:"");await say(ctx.npc.en,ctx.npc.who,ctx.npc.emo)}else await say(y.en,"stanley");guard(t);continue}
-    if(r.cmd==="help"){if(mode==="recall"){reveal(y);first=false}feedback("ok","Así se dice. Escúchalo y dilo tú.");slowNext=true;await say(y.en,"stanley");guard(t);heard=true;continue}
+    if(r.cmd==="help"){if(mode==="recall"||mode==="native"){reveal(y);first=false}feedback("ok","Así se dice. Escúchalo y dilo tú.");slowNext=true;await say(y.en,"stanley");guard(t);heard=true;continue}
     if(!r.text)continue;
-    const c=compareY(y,r.text,mode==="recall");
+    /* dijo la versión de libro: el personaje se burla tantito y no pasa */
+    if(y.norm&&!compareY(y,r.text,true).ok&&compare1(y.norm,r.text,true).ok){first=false;sfx("fun");bubble("stanley",r.text);await wait(400);guard(t);
+      const tb=pick([["Ha! You sound like a textbook. Say it like us!","¡Ja! Suenas a libro. ¡Dilo como nosotros!"],["Okay, professor! Now say it like a normal person.","¡Ok, profe! Ahora dilo como persona normal."],["Bro, nobody talks like that. Try again!","Nadie habla así. ¡Otra vez!"]]);
+      bubble(who,tb[0],tb[1]);await say(tb[0],who,"laugh");guard(t);reveal(y);feedback("fun",`📚 Eso es de libro. Un nativo dice: <b>${esc(y.en)}</b>`);continue}
+    const c=compareY(y,r.text,mode==="recall"||mode==="native");
     if(c.ok){record(y,true,c,first);bubble("stanley",y.en);combo=first?combo+1:0;DB.bestCombo=Math.max(DB.bestCombo||0,combo);addXP(first?10+Math.min(combo,10)*2:4);showCombo();
       sfx(combo>=3?"combo":"ok");setEmo("stanley","happy");setOrb("ok",combo>=3?"¡Combo x"+combo+"!":"¡Bien!");feedback("ok",pick(["¡Eso!","¡Así mero!","¡Como gringo!","¡Perfecto!","¡Qué nivel!"]));
       if(ctx.npc&&ctx.npc.who)relAdd(ctx.npc.who,1);await wait(650);guard(t);setEmo("stanley","neutral");return first}
@@ -870,7 +894,7 @@ async function round(m,mode,t,showEs,p0,pN){let errs=0,k=0;const n=m.steps.lengt
     setProg(p0+(pN-p0)*(++k/n))}
   return errs}
 async function intro(m,t){return new Promise((res,rej)=>{const s=$("#sess .in");const o=document.createElement("div");o.className="over";
-  o.innerHTML=`<div class="box"><span class="cap">Mundo ${m.w} · Misión ${m.o}</span><b class="t">${esc(m.t)}</b><div class="castrow">${m.cast.map(id=>personHTML(id,64)).join("")}</div>
+  o.innerHTML=`<div class="box"><span class="cap">Mundo ${m.w} · Misión ${m.o}</span><b class="t">${esc(m.t)}</b>${HUD3D()?"":`<div class="castrow">${m.cast.map(id=>personHTML(id,64)).join("")}</div>`}
    <p class="sub">${m.cast.map(id=>esc(CH(id).name)).join(", ")}${m.cast.some(id=>DB.met[id])?" · ya los conoces":""}</p>${m.n?`<p>💡 ${esc(m.n)}</p>`:""}
    <button class="btn" id="go1">¡Dale! 🎬</button></div>`;
   s.parentNode.appendChild(o);o.querySelectorAll(".p").forEach(p=>{p.classList.remove("e-neutral");p.classList.add("e-happy")});
@@ -893,11 +917,11 @@ async function runMission(m,t){
   await win(m,stars,xp,after!==before?after:null,t);return stars}
 async function win(m,stars,xp,newRank,t){const sess=$("#sess");if(!sess)return;const o=document.createElement("div");o.className="over";const star=m.cast.find(id=>!CH(id).dog)||m.cast[0];
   const msg=stars===3?"¡Perfecta! Hablaste como nativo.":stars===2?"¡Muy bien! Pasas.":stars===1?"Pasas, pero esta va a regresar en tus calentamientos.":"Todavía no. Lo que fallaste va a tus repasos y la repetimos.";
-  o.innerHTML=`<div class="box">${personHTML(star,110)}<span class="big">${starStr(stars)}</span><b class="t">${stars?"¡Misión superada!":"Casi…"}</b><p class="sub">${msg}</p>
+  o.innerHTML=`<div class="box">${HUD3D()?"":personHTML(star,110)}<span class="big">${starStr(stars)}</span><b class="t">${stars?"¡Misión superada!":"Casi…"}</b><p class="sub">${msg}</p>
    <span class="xp">+${xp} XP ${DB.bestCombo?"· mejor combo x"+DB.bestCombo:""}</span>${newRank?`<p style="font-weight:900">🎖️ ¡Subiste de rango: ${esc(newRank)}!</p>`:""}
    ${m.mems.length&&stars?`<p class="sub">🧠 ${m.mems.map(x=>esc(CH(x.who).name)).join(", ")} se va a acordar de esto.</p>`:""}
    <button class="btn" id="nx1">${stars?(view==="ciudad"?"Seguir jugando ▶":"Siguiente misión ▶"):"Intentar otra vez ↻"}</button><button class="link" id="nx0">Salir</button></div>`;
-  sess.appendChild(o);o.querySelector(".p").classList.add(stars?(CH(star).gender==="f"&&m.w>=5?"e-flirty":"e-laugh"):"e-sad");
+  sess.appendChild(o);if(o.querySelector(".p"))o.querySelector(".p").classList.add(stars?(CH(star).gender==="f"&&m.w>=5?"e-flirty":"e-laugh"):"e-sad");
   sfx(stars?"win":"bad");if(stars)confetti();
   say(stars===3?pick(["Awesome! You nailed it!","Yo, that was fire!","Look at you, talking like a local!"]):stars?"Nice job, Stanley!":"Don't worry, we'll try again.",star);
   return new Promise(res=>{o.querySelector("#nx1").onclick=()=>{unlockAudio();o.remove();res("next")};o.querySelector("#nx0").onclick=()=>{token++;o.remove();endSess();res("exit")}})}
@@ -910,6 +934,8 @@ function playFrom(m,single){if(!canRun()||!m)return;unlockAudio();running=true;c
 </script>
 <script src="pilares-motor.js"></script>
 <script src="ciudad.js"></script>
+<script type="importmap">{"imports":{"three":"./3d/vendor/three.module.min.js"}}</script>
+<script type="module" src="3d/juego3d.js"></script>
 <script>
 render();
 if(DB.settings.human&&!(window.claude&&window.claude.use))setTimeout(()=>koLoad().catch(()=>{}),800);

@@ -16,7 +16,11 @@ function legendOf(en){const s=new Set();en.split(/\s+/).forEach(w=>{const t=tagO
   return `<div class="plegend">${["adj","noun","verb","adv","pron","prep","conj","inter"].filter(x=>s.has(x)).map(x=>`<span style="--c:${TAGS[x].c}">${TAGS[x].n}</span>`).join("")}</div>`}
 /* tocar una palabra: qué es y qué significa */
 document.addEventListener("click",e=>{const w=e.target.closest&&e.target.closest(".pw");if(!w)return;const t=tagOf(w.dataset.w)||["noun",""];
-  const names=t[0].split("+").map(x=>(TAGS[x]||TAGS.noun).em+" "+(TAGS[x]||TAGS.noun).n).join(" + ");toast(`${w.dataset.w} → ${names}${t[1]?" · "+t[1]:""}`)});
+  const names=t[0].split("+").map(x=>(TAGS[x]||TAGS.noun).em+" "+(TAGS[x]||TAGS.noun).n).join(" + ");toast(`${w.dataset.w} → ${names}${t[1]?" · "+t[1]:""}`);
+  try{unlockAudio();stopVoice();slowNext=true;say(w.dataset.w,"stanley")}catch(_){}});
+/* tocar cualquier palabra que dice tu compañero (o tú) y se escucha con su voz */
+document.addEventListener("click",e=>{const w=e.target.closest&&e.target.closest(".tw");if(!w||!w.dataset.w)return;e.stopPropagation();
+  w.classList.remove("hit");void w.offsetWidth;w.classList.add("hit");try{unlockAudio();stopVoice();slowNext=true;say(w.dataset.w,w.dataset.who||"emily")}catch(_){}},true);
 
 /* ---------- el Templo ---------- */
 const TEMPLE_DEMO={adj:"HAPPY",noun:"STUDENTS",verb:"LEARN",adv:"FAST",pron:"I · YOU",prep:"IN · AT",conj:"AND · BUT",inter:"YO · LIKE"};
@@ -30,8 +34,9 @@ function renderPilares(app){
      <div class="steps"><i></i><i></i><i></i></div></div>
    <div class="sec-mini">Y los otros 4 pilares, igual de importantes:</div>
    <div class="cols small">${["pron","prep","conj","inter"].map((t,i)=>`<button class="col" data-t="${t}" style="--c:${TAGS[t].c};animation-delay:${.5+i*.1}s"><span class="cap2">${TEMPLE_DEMO[t]}</span><span class="shaft"><span class="band">${t==="inter"?"Muletillas":TAGS[t].n+(t==="prep"?"es":"s")}</span></span><span class="base"></span></button>`).join("")}</div>
-   <div class="card sub" style="font-size:.92rem">💡 En las misiones, lo que dices sale <b>pintado</b> con estos colores. Toca cualquier palabra para ver qué es y qué significa.</div></div>`;
-  app.querySelectorAll(".col").forEach(b=>b.onclick=()=>pillarSheet(b.dataset.t))}
+   <div class="card sub" style="font-size:.92rem">💡 En las misiones, lo que dices sale <b>pintado</b> con estos colores. Toca cualquier palabra para ver qué es y qué significa.</div>
+   ${typeof NATIVO!=="undefined"?nativoCardHTML():""}</div>`;
+  app.querySelectorAll(".col").forEach(b=>b.onclick=()=>pillarSheet(b.dataset.t));if(typeof bindNativo==="function")bindNativo()}
 function pillarSheet(tag){const p=HAS_PIL?PILARES.find(x=>x.tag===tag):null,T=TAGS[tag],used=usedWords(tag);
   sheet(`<div class="pilhead" style="--c:${T.c}"><span class="big">${p?p.em:T.em}</span><div><h3>${esc(p?p.nombre:T.n)}</h3><span class="sub">${esc(p?p.en:"")}</span></div></div>
    ${p?`<p>${esc(p.que)}</p><div class="card" style="display:grid;gap:4px"><span class="cap">🗣️ Así lo hacen los nativos</span><p>${esc(p.truco)}</p></div>
@@ -41,3 +46,29 @@ function pillarSheet(tag){const p=HAS_PIL?PILARES.find(x=>x.tag===tag):null,T=TA
    <span class="cap">Las que ya dijiste en tus misiones (${used.length})</span>
    ${used.length?`<div class="chips">${used.slice(0,60).map(([w,es])=>`<span class="chip" style="background:color-mix(in srgb,${T.c} 18%,transparent);color:${T.c}" title="${esc(es)}">${esc(w)}</span>`).join("")}</div>`:`<p class="sub">Todavía ninguna. ¡Juega misiones y se van llenando!</p>`}`,
    el=>{const b=el.querySelector("#pex");if(b)b.onclick=()=>{unlockAudio();say(p.ejemplo.en,"emily","happy")};el.querySelectorAll("[data-say]").forEach(x=>x.onclick=()=>{unlockAudio();say(x.dataset.say,"emily","happy")})})}
+
+/* =====================================================================
+   NORMAL → NATIVO: te sale cómo lo diría alguien de libro y tú lo dices como gringo
+   ===================================================================== */
+const HAS_N=typeof NATIVO!=="undefined";
+const NCAT={saludos:"👋 Saludos",despedidas:"✌️ Despedidas",reacciones:"😲 Reacciones",acuerdo_y_desacuerdo:"🤝 Sí y no",emociones:"😤 Emociones",dinero_y_compras:"💵 Dinero",comida_y_bebida:"🍔 Comida",
+  trabajo:"💼 Trabajo",fiesta_y_noche:"🪩 Fiesta",amor_y_coqueteo:"💋 Amor",pleitos:"🥊 Pleitos",pedir_favores:"🙏 Favores",opiniones:"🗣️ Opiniones",tiempo_y_planes:"📅 Planes"};
+const natY=x=>({en:x.nativo,es:x.es,pr:x.pr,em:x.em,alts:[],norm:x.normal,m:"nativo"});
+function nativoCardHTML(){if(!HAS_N)return "";const done=NATIVO.filter(x=>{const it=DB.items[x.nativo.toLowerCase()];return it&&it.box>=2}).length;
+  return `<button class="ncard" id="natgo"><div class="nhead"><span>normal</span><span>native</span></div>
+    <div class="nrow"><span>I don't care</span><b>whatever</b></div><div class="nrow"><span>wait</span><b>hang on</b></div><div class="nrow"><span>it's fine</span><b>no worries</b></div>
+    <div class="nfoot"><b>🔥 Normal → Nativo</b><small>${NATIVO.length} frases · ya dominas ${done}. Te sale la de libro y tú la dices como gringo.</small></div></button>
+    <button class="btn ghost" id="natlist">📖 Ver todo el diccionario</button>`}
+function bindNativo(){const g=$("#natgo");if(g)g.onclick=()=>playNativo();const l=$("#natlist");if(l)l.onclick=nativoList}
+function nativoList(){const by={};NATIVO.forEach(x=>(by[x.cat]=by[x.cat]||[]).push(x));
+  sheet(`<h3>📖 Normal → Nativo</h3><p class="sub">Toca una frase para oírla.</p>${Object.entries(by).map(([c,L])=>`<div class="cap">${esc(NCAT[c]||c)}</div><div class="group">${L.map(x=>`<button class="cell" data-say="${esc(x.nativo)}"><span style="font-size:1.4rem">${esc(x.em)}</span><span class="grow"><small style="text-decoration:line-through">${esc(x.normal)}</small><strong>${esc(x.nativo)}</strong><small style="color:var(--emily);font-style:italic">${esc(x.pr)}</small><small>${esc(x.es)}${x.nota?" · "+esc(x.nota):""}</small></span></button>`).join("")}</div>`).join("")}`,
+   el=>el.querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>{unlockAudio();say(b.dataset.say,"emily","happy")}))}
+function playNativo(cat){if(!canRun()||!HAS_N)return;unlockAudio();running=true;const t=++token;
+  const pool=NATIVO.filter(x=>!cat||x.cat===cat).map(x=>({x,it:DB.items[x.nativo.toLowerCase()]})).sort((a,b)=>((a.it?a.it.due:0)-(b.it?b.it.due:0))||Math.random()-.5).slice(0,10).map(o=>o.x);
+  const m={id:"nativo",w:0,o:0,t:"Normal → Nativo",place:"cafe",cast:["emily"],steps:[],mems:[],n:"",ys:pool.length};
+  (async()=>{openSess(m);$("#stt").textContent="Habla como nativo";meet(true);setPhase("🔥 Normal → Nativo");
+    bubble("emily","Okay, I'll say it like a textbook. You say it like a real American!","Yo lo digo como libro. ¡Tú dilo como gringo de verdad!");await say("Okay, I'll say it like a textbook. You say it like a real American!","emily","flirty");guard(t);
+    const q=pool.slice();let k=0;while(q.length){const x=q.shift();setProg(k/pool.length);bubble("emily",x.normal,"");await say(x.normal,"emily","bored");guard(t);
+      const ok=await youSay(natY(x),"native",t,{npc:{who:"emily",en:x.normal,es:"",emo:"bored"},m});if(!ok)q.push(x);else k++}
+    setProg(1);addXP(20);save();confetti();sfx("win");bubble("emily","See? Now you sound like a local!","¿Ves? ¡Ya suenas de aquí!");await say("See? Now you sound like a local!","emily","laugh");await wait(1200)})()
+  .catch(e=>{if(e!==CANCEL)console.error(e)}).finally(()=>{if(t===token)endSess()})}
