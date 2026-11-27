@@ -305,6 +305,8 @@ function movePlayer(dt){const p=PL.p,inp=W3D.input,k=S.keys;let ix=inp.x+(k.KeyD
   const fx=-Math.sin(S.yaw),fz=-Math.cos(S.yaw),rx=Math.cos(S.yaw),rz=-Math.sin(S.yaw);
   let vx=(fx*iy+rx*ix),vz=(fz*iy+rz*ix);const l=Math.hypot(vx,vz)||1;vx/=l;vz/=l;
   if(sp>0){PL.pos.x+=vx*sp*dt;PL.pos.z+=vz*sp*dt;p.face=angLerp(p.face,Math.atan2(vx,vz),Math.min(1,dt*12))}
+  /* la cámara se acomoda sola detrás de ti cuando caminas (si no estás mirando con el dedo) */
+  if(sp>0&&!S.fp&&!S.locked&&S.t-(S.lookAt||-9)>1.2&&Math.abs(ix)>.15){S.yaw=angLerp(S.yaw,p.face+Math.PI,Math.min(1,dt*1.1*Math.abs(ix)))}
   collide(PL.pos,.35);
   const gy=groundY(PL.pos.x,PL.pos.z);S.vy-=18*dt;S.y+=S.vy*dt;if(S.y<=gy){S.y=gy;S.vy=0;S.onGround=true}else S.onGround=S.y-gy<.02;
   PL.pos.y=S.y;p.speed=lerp(p.speed,sp,Math.min(1,dt*10));p.air=!S.onGround;p.add.sneak_pose=S.crouch?1:0;
@@ -563,10 +565,15 @@ function bindControls(host){const joy=$3('#w3joy'),knob=$3('#w3knob');let jid=nu
   joy.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();unlock();jid=e.pointerId;joy.setPointerCapture(jid);const r=joy.getBoundingClientRect();jx=r.left+r.width/2;jy=r.top+r.height/2;mv(e)});
   const mv=e=>{if(e.pointerId!==jid)return;let dx=e.clientX-jx,dy=e.clientY-jy;const l=Math.hypot(dx,dy);if(l>R){dx*=R/l;dy*=R/l}knob.style.transform=`translate(${dx}px,${dy}px)`;W3D.input.x=dx/R;W3D.input.y=-dy/R};
   joy.addEventListener('pointermove',mv);const up=e=>{if(e.pointerId!==jid)return;jid=null;knob.style.transform='';W3D.input.x=W3D.input.y=0};joy.addEventListener('pointerup',up);joy.addEventListener('pointercancel',up);joy.addEventListener('lostpointercapture',e=>{jid=e.pointerId;up(e)});
+  /* mirar: arrastra un dedo en cualquier parte libre de la pantalla (funciona junto con el control) */
+  const lookBy=(dx,dy)=>{if(S.locked)return;S.lookAt=S.t;if(S.inCar&&!S.fp){S.freeYaw=(S.freeYaw||0)-dx*.008;S.freeAt=S.t}else{S.yaw-=dx*.0085;S.pitch=clamp(S.pitch-dy*.006,-1.1,.9)}};
+  const free=t=>!(t.closest&&t.closest('button,.w3joy,.w3ph,.w3ring,.w3ctx,.w3top'));const T={};
+  host.addEventListener('touchstart',e=>{for(const t of e.changedTouches)if(free(t.target)){T[t.identifier]={x:t.clientX,y:t.clientY};unlock()}},{passive:true});
+  host.addEventListener('touchmove',e=>{let used=false;for(const t of e.changedTouches){const o=T[t.identifier];if(!o)continue;lookBy(t.clientX-o.x,t.clientY-o.y);o.x=t.clientX;o.y=t.clientY;used=true}if(used&&e.cancelable)e.preventDefault()},{passive:false});
+  const tend=e=>{for(const t of e.changedTouches)delete T[t.identifier]};host.addEventListener('touchend',tend);host.addEventListener('touchcancel',tend);
   const cv=renderer.domElement;let lid=null,lx=0,ly=0;
-  cv.addEventListener('pointerdown',e=>{unlock();lid=e.pointerId;lx=e.clientX;ly=e.clientY;cv.setPointerCapture(lid)});
-  cv.addEventListener('pointermove',e=>{if(e.pointerId!==lid)return;const dx=e.clientX-lx,dy=e.clientY-ly;lx=e.clientX;ly=e.clientY;if(S.locked)return;
-    if(S.inCar&&!S.fp){S.freeYaw=(S.freeYaw||0)-dx*.006;S.freeAt=S.t}else{S.yaw-=dx*.0065;S.pitch=clamp(S.pitch-dy*.005,-1.1,.9)}});
+  cv.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;unlock();lid=e.pointerId;lx=e.clientX;ly=e.clientY;cv.setPointerCapture(lid)});
+  cv.addEventListener('pointermove',e=>{if(e.pointerId!==lid)return;const dx=e.clientX-lx,dy=e.clientY-ly;lx=e.clientX;ly=e.clientY;lookBy(dx,dy)});
   const lu=e=>{if(e.pointerId===lid)lid=null};cv.addEventListener('pointerup',lu);cv.addEventListener('pointercancel',lu);
   const tap=(id,f)=>{const b=$3('#b-'+id);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();unlock();f()})};
   tap('jump',jump);tap('crouch',crouch);tap('run',()=>{S.run=!S.run;UI.btn('run',S.run)});tap('cam',toggleCam);tap('phone',()=>UI.phone());
