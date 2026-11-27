@@ -488,7 +488,7 @@ function banner(big,small,color){const b=$3('#w3ban');if(!b)return;b.innerHTML=`
 function gtaStart(m){if(!m)return;cancelJob();S.forced=null;S.gm={m,i:-1,giverStage:true};setTarget()}
 function gtaBegin(){const G=S.gm;G.giverStage=false;G.i=0;banner(G.m.t.toUpperCase(),G.m.brief);gtaObj()}
 function gtaObj(){const G=S.gm;if(!G)return;const o=G.m.obj[G.i];if(!o){gtaEnd();return}
-  if(o.k==="money"){DB.money=(DB.money||0)+o.amt;try{save()}catch(e){}toast3((o.amt<0?'💸 ':'💵 ')+(o.txt||((o.amt<0?'-':'+')+'$'+Math.abs(o.amt))));G.i++;gtaObj();return}
+  if(o.k==="money"){DB.money=Math.max(0,(DB.money||0)+o.amt);try{save()}catch(e){}toast3((o.amt<0?'💸 ':'💵 ')+(o.txt||((o.amt<0?'-':'+')+'$'+Math.abs(o.amt))));G.i++;gtaObj();return}
   if(o.k==="end"){gtaEnd(o.txt);return}
   if(o.k==="pickup"){let n=NPCS.find(x=>x.id===o.who&&!x.ped);if(!n){n=makePerson(o.who);n.temp=true;n.keep=true;NPCS.push(n);const L=lotFor((typeof HOME!=='undefined'&&HOME[o.who])||'casa');n.g.position.set(L.door.x+1.5,.16,L.door.z);n.home={x:L.door.x+1.5,z:L.door.z}}
     n.hidden=false;G.n=n}
