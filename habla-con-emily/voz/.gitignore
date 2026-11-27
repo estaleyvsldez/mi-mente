@@ -1,1 +1,3 @@
 *.tmp.mp3
+# mientras se generan, los nuevos se suben al final con git add -f
+*.mp3
