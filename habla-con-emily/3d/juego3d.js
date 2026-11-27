@@ -589,7 +589,7 @@ async function boot(app,onp){initRenderer();await loadModels(onp);
   // Stanley
   PL.p=makePerson('stanley');const pos=DB.pos3,L=LOTS.casa;if(pos&&isFinite(pos.x)){PL.pos.set(pos.x,0,pos.z);S.yaw=pos.yaw||0}else{PL.pos.set(L.door.x-9,0,L.door.z-3.5);S.yaw=Math.PI*.75}
   // tu carro estacionado
-  const mine=makeCar('normal',0x1d4ed8);CARS.push(mine);carAt(mine,L.door.x+8,L.door.z-4.6,Math.PI/2);
+  const mine=makeCar('normal',0x1d4ed8);CARS.push(mine);carAt(mine,L.door.x+8,Math.round(L.door.z/P)*P+3.2,Math.PI/2);
   W3D.CHAMBAS=typeof parseMissions==='function'?parseMissions(window.CHAMBA_TXT||[]):[];
   W3D.ready=true}
 W3D.mount=function(app){if(typeof stopCity2D==='function'&&typeof CITY!=='undefined'&&CITY.raf)cancelAnimationFrame(CITY.raf);
