@@ -428,7 +428,7 @@ function command(heard){const w=norm(heard).join(" ");
    3. BASE DE DATOS (se guarda en este teléfono)
    ===================================================================== */
 const KEY="hablaConEmily.v4";
-const blank=()=>({v:4,ms:{},items:{},words:{},days:{},xp:0,best:0,log:[],hot:0,bestCombo:0,met:{},rel:{},mem:{},talk:{},settings:{human:false,slow:false,key:""}});
+const blank=()=>({v:4,ms:{},items:{},words:{},days:{},xp:0,best:0,log:[],hot:0,bestCombo:0,met:{},rel:{},mem:{},talk:{},settings:{human:true,hands:true,slow:false,key:""}});
 let DB=blank();
 try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.v===4){DB=Object.assign(blank(),s);DB.settings=Object.assign(blank().settings,s.settings||{})}
   else{const o=JSON.parse(localStorage.getItem("hablaConEmily.v3")||"null");if(o){DB.xp=o.xp||0;DB.days=o.days||{};DB.best=o.best||0;if(o.settings){DB.settings.key=o.settings.key||"";DB.settings.human=!!o.settings.human}}}}catch(e){}
@@ -478,11 +478,13 @@ function koLoad(){if(KO)return Promise.resolve(KO);if(koP)return koP;koState="lo
 function koGen(text,c){const v=c.voice,sp=((slowNext||DB.settings.slow)?0.8:1)*(c.speed||1);const k=v+"|"+sp+"|"+text;if(koCache.has(k))return koCache.get(k);
   const p=KO.generate(text,{voice:v,speed:sp}).then(a=>{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const b=ac.createBuffer(1,a.audio.length,a.sampling_rate);b.copyToChannel(a.audio,0);return b});
   p.catch(()=>koCache.delete(k));koCache.set(k,p);if(koCache.size>90)koCache.delete(koCache.keys().next().value);return p}
-function prefetch(text,who){const c=CH(who);if(KO&&c.voice&&c.voice!=="dog")koGen(text,c).catch(()=>{})}
-function stopVoice(){try{if(curSrc)curSrc.stop()}catch(e){}curSrc=null;if(synth)synth.cancel()}
+function prefetch(text,who){const c=CH(who);if(KO&&c.voice&&c.voice!=="dog")splitSay(text).forEach(t=>koGen(t,c).catch(()=>{}))}
+let sayTok=0;function stopVoice(){sayTok++;try{if(curSrc)curSrc.stop()}catch(e){}curSrc=null;if(synth)synth.cancel()}
 function bark(n){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t0=ac.currentTime;for(let i=0;i<(n||2);i++){const t=t0+i*.28,o=ac.createOscillator(),g=ac.createGain();o.type="sawtooth";
   o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(180,t+.16);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.35,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.2);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.22)}}catch(e){}
   return wait(300*(n||2)+200)}
+/* parte en oraciones para que la voz humana empiece rápido */
+function splitSay(t){const m=String(t).match(/[^.!?]+[.!?]+["')]*\s*|[^.!?]+$/g)||[t];const out=[];m.forEach(x=>{x=x.trim();if(!x)return;if(out.length&&(out[out.length-1].length<14||x.length<6))out[out.length-1]+=" "+x;else out.push(x)});return out.length?out:[t]}
 /* habla un personaje (id) — "es" = guía en español */
 async function say(text,who,emo){
   const c=who==="es"?null:CH(who);const av=who==="es"?null:who;
@@ -490,7 +492,8 @@ async function say(text,who,emo){
   setOrb("speak",who==="stanley"?"Así se dice":who==="es"?"Escucha":"Escucha…");
   try{
     if(c&&c.voice==="dog"){await bark(2);return}
-    if(KO&&c&&c.voice){try{const b=await koGen(text,c);slowNext=false;await new Promise(res=>{ac.resume();const s=ac.createBufferSource();s.buffer=b;s.connect(ac.destination);curSrc=s;s.onended=res;s.start();setTimeout(res,b.duration*1000+800)});return}catch(e){console.warn(e)}}
+    if(KO&&c&&c.voice){try{const parts=splitSay(text),gens=parts.map(t=>koGen(t,c)),tk=sayTok;slowNext=false;
+        for(const g of gens){const b=await g;if(tk!==sayTok)break;await new Promise(res=>{ac.resume();const s=ac.createBufferSource();s.buffer=b;s.connect(ac.destination);curSrc=s;s.onended=res;s.start();setTimeout(res,b.duration*1000+600)})}return}catch(e){console.warn(e)}}
     await new Promise(res=>{if(!synth){res();return}synth.cancel();const u=new SpeechSynthesisUtterance(text);
       if(!c){u.voice=SV.es;u.lang=SV.es?SV.es.lang:"es-MX";u.rate=1.04}
       else{u.voice=c.gender==="f"?SV.f:SV.m;u.lang="en-US";u.rate=((slowNext||DB.settings.slow)?0.74:0.98)*(c.age>70?.92:1);u.pitch=c.age<13?1.45:c.age>70?.85:c.gender==="f"?1.1:.95}
@@ -520,7 +523,7 @@ function capStart(){if(!pending||cap)return;stopVoice();const c={cands:[],fin:""
   const r=new SR();c.rec=r;r.lang="en-US";r.continuous=true;r.interimResults=true;r.maxAlternatives=5;
   r.onresult=ev=>{if(cap!==c)return;const S=[];for(let i=0;i<ev.results.length;i++){const res=ev.results[i],a=Array.from({length:res.length},(_,k)=>res[k]&&res[k].transcript||"").filter(Boolean);if(a.length)S.push(a)}
     if(!S.length)return;const base=S.slice(0,-1).map(a=>a[0]).join(" "),last=S[S.length-1];c.cands=[...last.map(a=>(base+" "+a).trim()),...last];capUpdate(c)};
-  r.onerror=ev=>{if(ev.error==="not-allowed"||ev.error==="service-not-allowed")micBlocked()};r.onend=()=>{if(cap===c)capFinal(c)};
+  r.onerror=ev=>{if(ev.error==="not-allowed"||ev.error==="service-not-allowed"){if(!c.user&&!handsOff){handsOff=true;setOrb("ready","Toca el micrófono y habla")}else micBlocked()}};r.onend=()=>{if(cap===c)capFinal(c)};
   try{r.start()}catch(e){cap=null;setListen(false);setOrb("ready","Toca otra vez el micrófono")}}
 function capUpdate(c){if(cap!==c)return;const p=pending;if(!p)return;showHeard(c.cands[0]||"",true);clearTimeout(c.idle);
   if(p.y&&c.cands.some(x=>compareY(p.y,x,p.lenient).ok)){capFinal(c);return}
@@ -530,13 +533,15 @@ function capStop(c){c=c||cap;if(!c||cap!==c||c.stopping)return;c.stopping=true;c
 function capFinal(c){if(cap!==c)return;cap=null;clr(c);setListen(false);
   if(c.rec){c.rec.onresult=c.rec.onend=c.rec.onerror=null;try{c.rec.abort()}catch(e){}}if(c.dict&&!c.stopping){try{dict.stop()}catch(e){}}
   const p=pending;if(!p)return;let cands=c.cands.filter(Boolean);
-  if(!cands.length){setOrb("ready","No te escuché. Toca y vuelve a hablar");return}
+  if(!cands.length){setOrb("ready","No te escuché. Toca y vuelve a hablar");if(p.auto<1){p.auto++;autoMic(p)}return}
   if(p.y){const sc=x=>{const r=compareY(p.y,x,p.lenient);return (r.ok?0:100)+r.dist};cands.sort((a,b)=>sc(a)-sc(b))}
   const best=cands[0],cmd=command(best);showHeard(best,false);pending=null;p.resolve(cmd?{cmd}:{text:best})}
-function micTap(){if(!pending)return;unlockAudio();if(cap)capStop(cap);else capStart()}
+function micTap(){if(!pending)return;unlockAudio();if(cap)capStop(cap);else{capStart();if(cap)cap.user=true}}
 function abortCap(){if(cap){const c=cap;cap=null;clr(c);setListen(false);try{c.rec?c.rec.abort():dict&&dict.stop()}catch(e){}}}
-function listen(y,opt){opt=opt||{};return new Promise((resolve,reject)=>{const p={y,resolve,wait:opt.wait||2300,lenient:!!opt.lenient};pending=p;
-  cancelPending=()=>{if(pending===p){pending=null;abortCap();reject(CANCEL)}};showHeard("",false);setOrb("ready","Toca el micrófono y habla")})}
+let handsOff=false;
+function autoMic(p){if(DB.settings.hands===false||handsOff)return;setTimeout(()=>{if(pending===p&&!cap&&!speaking)capStart()},280)}
+function listen(y,opt){opt=opt||{};return new Promise((resolve,reject)=>{const p={y,resolve,wait:opt.wait||1500,lenient:!!opt.lenient,auto:0};pending=p;
+  cancelPending=()=>{if(pending===p){pending=null;abortCap();reject(CANCEL)}};showHeard("",false);setOrb("ready",DB.settings.hands===false||handsOff?"Toca el micrófono y habla":"Habla cuando quieras");autoMic(p)})}
 function answer(cmd){const p=pending;if(!p)return;abortCap();pending=null;p.resolve({cmd})}
 
 /* =====================================================================
@@ -874,7 +879,7 @@ async function youSay(y,mode,t,ctx){
     const c=compareY(y,r.text,mode==="recall"||mode==="native");
     if(c.ok){record(y,true,c,first);bubble("stanley",y.en);combo=first?combo+1:0;DB.bestCombo=Math.max(DB.bestCombo||0,combo);addXP(first?10+Math.min(combo,10)*2:4);showCombo();
       sfx(combo>=3?"combo":"ok");setEmo("stanley","happy");setOrb("ok",combo>=3?"¡Combo x"+combo+"!":"¡Bien!");feedback("ok",pick(["¡Eso!","¡Así mero!","¡Como gringo!","¡Perfecto!","¡Qué nivel!"]));
-      if(ctx.npc&&ctx.npc.who)relAdd(ctx.npc.who,1);await wait(650);guard(t);setEmo("stanley","neutral");return first}
+      if(ctx.npc&&ctx.npc.who)relAdd(ctx.npc.who,1);await wait(380);guard(t);setEmo("stanley","neutral");return first}
     /* ¿dijo otra cosa (no un intento)? -> el personaje reacciona */
     const it=intentOf(r.text);
     if(c.hit<0.35||(it!=="other"&&c.hit<0.6)){
@@ -938,5 +943,5 @@ function playFrom(m,single){if(!canRun()||!m)return;unlockAudio();running=true;c
 <script type="module" src="3d/juego3d.js"></script>
 <script>
 render();
-if(DB.settings.human&&!(window.claude&&window.claude.use))setTimeout(()=>koLoad().catch(()=>{}),800);
+if(DB.settings.human!==false&&!(window.claude&&window.claude.use))setTimeout(()=>koLoad().catch(()=>{}),600);
 </script>

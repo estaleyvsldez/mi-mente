@@ -201,7 +201,7 @@ async function freeChat(id){stopCity();const c=CH(id),bld=B[HOME[id]]||B.casa,pl
   try{openSess(m);$("#stt").textContent="Plática libre";meet(true);setPhase("💬 "+c.name);
     const mem=(DB.mem[id]||[])[0],met=DB.met[id];
     let g=c.dog?["Woof! Woof!","(Max te trae una pelota babeada.)"]:!met?pick(GREET.first):mem&&Math.random()<.6?[`Hey Stanley! ${mem.en}`,`¡Hola Stanley! ${mem.es}`]:pick(GREET.again);
-    g=[g[0].replace("{n}",c.name),g[1].replace("{n}",c.name)];
+    g=[g[0].replace("{n}",c.name),g[1].replace("{n}",c.name)];if(window.W3D&&W3D.calling){W3D.calling=false;g=pick([["Hello? Oh hey, Stanley! What's up?","¿Bueno? ¡Ah, hola Stanley! ¿Qué onda?"],["Hey you! I was literally just thinking about you.","¡Hola! Justo estaba pensando en ti."],["Yo! What's good? You never call me!","¡Qué onda! ¡Nunca me llamas!"]])}
     bubble(id,g[0],g[1]);await say(g[0],id,c.dog?"happy":mem?"laugh":"happy");guard(t);
     const card=$("#scard");card.hidden=false;card.innerHTML=`<div class="who">💬 Dile lo que quieras<em>Plática libre</em></div><div class="body"><div class="es">Salúdalo, échale un piropo, pregúntale algo, dile «I don't remember»… Va a reaccionar como persona.</div></div><div class="draw">🗣️</div>`;
     for(let k=0;k<3;k++){const r=await listen(null,{wait:2600});guard(t);if(r.cmd==="repeat"||r.cmd==="slow"){await say(g[0],id);continue}if(r.cmd==="help"){feedback("fun","Prueba: «What's up?», «You look great today», «I don't remember».");k--;continue}

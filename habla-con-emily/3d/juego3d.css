@@ -87,3 +87,17 @@
 .w3ctx .w3row button{width:62px;height:62px;padding:0;border-radius:18px;display:grid;place-items:center;align-content:center;font-size:24px;line-height:1}
 .w3ctx .w3row button small{font:800 9.5px Nunito,sans-serif;margin-top:3px}
 .sess.hud .over,.sess.hud .over *{pointer-events:auto}
+.w3ko{position:absolute;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top,0px) + 168px);border:0;border-radius:18px;padding:7px 14px;background:rgba(255,61,127,.92);color:#fff;font:800 13px Nunito,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.w3ph .pback{background:none;border:0;color:#fff;font:800 14px Inter,sans-serif;padding:0}
+.w3ph .plist{display:grid;gap:8px;margin-top:6px}
+.w3ph .plist>button,.w3ph .ct{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:0;border-radius:16px;padding:9px 10px;color:#fff;text-align:left}
+.w3ph .plist>button.lk{opacity:.5}
+.w3ph .plist i{font-style:normal;font-size:22px;min-width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.14);font-weight:900}
+.w3ph .plist span{flex:1;min-width:0;display:grid;gap:2px}.w3ph .plist b{font:800 13.5px Nunito,sans-serif}.w3ph .plist small{font-size:11px;opacity:.8}
+.w3ph .plist u{display:block;height:4px;border-radius:4px;background:rgba(255,255,255,.18);overflow:hidden}.w3ph .plist u s{display:block;height:100%;background:#ffd23a}
+.w3ph .plist em{font-style:normal;font-weight:800;font-size:12px}
+.w3ph .ct button{border:0;border-radius:50%;width:38px;height:38px;font-size:17px;background:#12a150;color:#fff}.w3ph .ct button+button{background:#3557ff}
+.w3ctx .w3row{flex-wrap:wrap}
+.w3ph .phbar{display:flex;justify-content:space-between;align-items:center;min-height:22px}
+.w3ctx{width:min(94vw,440px)}
+.w3ctx .w3row button{width:56px;height:56px;font-size:22px}

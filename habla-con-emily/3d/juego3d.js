@@ -300,8 +300,8 @@ const groundY=(x,z)=>onBlock(x,z)?.16:0;
 
 function movePlayer(dt){const p=PL.p,inp=W3D.input,k=S.keys;let ix=inp.x+(k.KeyD||k.ArrowRight?1:0)-(k.KeyA||k.ArrowLeft?1:0),iy=inp.y+(k.KeyW||k.ArrowUp?1:0)-(k.KeyS||k.ArrowDown?1:0);
   if(S.locked){ix=iy=0}
-  const mag=Math.min(1,Math.hypot(ix,iy));const run=(S.run||k.ShiftLeft||mag>.92)&&!S.crouch;
-  const sp=mag<.05?0:(S.crouch?1.4:run?5.6:2.1)*Math.max(.45,mag);
+  const mag=Math.min(1,Math.hypot(ix,iy));const run=(S.run||k.ShiftLeft||mag>.72)&&!S.crouch;const sprint=S.run&&mag>.72&&!S.crouch;
+  const sp=mag<.05?0:S.crouch?1.5*Math.max(.5,mag):sprint?8.6:run?6.4:2.3*Math.max(.5,mag/.72);S.fov=lerp(S.fov||62,sp>6?72:62,Math.min(1,dt*4));if(Math.abs(camera.fov-S.fov)>.1){camera.fov=S.fov;camera.updateProjectionMatrix()}
   const fx=-Math.sin(S.yaw),fz=-Math.cos(S.yaw),rx=Math.cos(S.yaw),rz=-Math.sin(S.yaw);
   let vx=(fx*iy+rx*ix),vz=(fz*iy+rz*ix);const l=Math.hypot(vx,vz)||1;vx/=l;vz/=l;
   if(sp>0){PL.pos.x+=vx*sp*dt;PL.pos.z+=vz*sp*dt;p.face=angLerp(p.face,Math.atan2(vx,vz),Math.min(1,dt*12))}
@@ -370,6 +370,27 @@ function offScript(kind){const n=S.near;if(!n)return;const w=who4(n),T=OFF[kind]
   const l=pick3(T[w]||T.m);line(n,l,kind==='hug'?(w==='f_lo'||w==='karen'?-1:2):-2);
   if(kind==='push'){const a=n.g.position,dx=a.x-PL.pos.x,dz=a.z-PL.pos.z,d=Math.hypot(dx,dz)||1;n.goTo={x:a.x+dx/d*1.6,z:a.z+dz/d*1.6,run:true};UI.shake()}
   if(kind==='hug')n.bounce=.5}
+/* ---------------- números de teléfono y contactos ---------------- */
+const NUM={yes:{f_hi:[["Okay, gimme your phone. Text me tonight, okay?","Ok, dame tu cel. Mándame mensaje en la noche, ¿va?","flirty"],["Took you long enough! Here, put it in.","¡Ya te habías tardado! Ten, guárdalo.","laugh"]],
+   f_lo:[["Hmm... okay, fine. But don't be weird about it.","Mmm… bueno, va. Pero no te pongas raro.","neutral"]],m:[["Bet. Here, lemme put it in your phone.","Va. Dame, te lo guardo en tu cel.","happy"],["For sure, bro. Hit me up anytime.","Claro, bro. Échame un grito cuando quieras.","happy"]],
+   old:[["Oh, how nice! Write it down, sweetie. Call me for pie.","¡Ay, qué lindo! Anótalo, mijo. Llámame para el pay.","happy"]],kid:[["My mom's number! Call her if you wanna play soccer.","¡El número de mi mamá! Llámala si quieres jugar fut.","happy"]]},
+ no:{f_lo:[["Ha! Nice try. Maybe buy me a coffee first.","¡Ja! Buen intento. Invítame un café primero.","laugh"],["Uh, I don't even know you, dude.","Ni te conozco, güey.","bored"]],karen:[["Absolutely not. Do I look like I give my number to strangers?","Para nada. ¿Tengo cara de darle mi número a extraños?","angry"]],
+   m:[["Nah, man. We just met. Talk to me first.","Nel. Apenas nos conocemos. Platícame primero.","neutral"]],f_hi:[["Not yet, cutie. Make me laugh first.","Todavía no, guapo. Hazme reír primero.","flirty"]],kid:[["I'm not allowed to talk to strangers!","¡No me dejan hablar con extraños!","scared"]],old:[["Oh, I don't remember my own number, honey!","¡Ay, ni me acuerdo de mi número, mijo!","laugh"]]},
+ have:[["You already have it, silly!","¡Ya lo tienes, tontito!","laugh"]],dog:[["Woof?","(Max no tiene teléfono, pero te lame la mano)","happy"]]};
+function askNumber(n){if(!n)return;DB.contacts=DB.contacts||{};if(n.dog)return line(n,NUM.dog[0]);if(DB.contacts[n.id])return line(n,pick3(NUM.have));
+  const w=who4(n),r=(DB.rel&&DB.rel[n.id])||0,met=(DB.met&&DB.met[n.id])||0;
+  const chance={f_hi:.75,m:.85,old:.95,kid:.6,f_lo:.3,karen:0}[w]+r*.08+met*.1;
+  if(Math.random()<chance){DB.contacts[n.id]={at:Date.now()};DB.met[n.id]=(DB.met[n.id]||0)+1;relAdd(n.id,1);try{save()}catch(e){}line(n,pick3(NUM.yes[w]||NUM.yes.m));setTimeout(()=>toast3('📱 Guardaste el número de '+n.c.name+'. Búscalo en Contactos.'),900)}
+  else{line(n,pick3(NUM.no[w]||NUM.no.m));setTimeout(()=>toast3('💡 Platica más con '+n.c.name+' o échale un piropo y vuelve a pedírselo.'),1200)}
+  UI.ctx()}
+function phoneCall(id){if(S.busy||typeof freeChat!=='function')return;UI.phone(false);S.busy=true;S.locked=true;const fx=-Math.sin(S.yaw),fz=-Math.cos(S.yaw);S.conv={pos:new THREE.Vector3(PL.pos.x-fx*1.6,5.2,PL.pos.z-fz*1.6),look:new THREE.Vector3(PL.pos.x+fx*1.2,-1.2,PL.pos.z+fz*1.2)};W3D.calling=true;PL.p.face=S.yaw;PL.p.g.visible=true;UI.hud(false);
+  W3D.after=()=>{S.busy=false;S.locked=false;S.conv=null;UI.hud(true)};freeChat(id)}
+function meetUp(id){const n=NPCS.find(x=>x.id===id);UI.phone(false);if(!n){toast3('No contesta. Intenta más tarde.');return}
+  n.hidden=false;n.ped=null;const along=Math.abs(PL.pos.x-Math.round(PL.pos.x/P)*P)<Math.abs(PL.pos.z-Math.round(PL.pos.z/P)*P);
+  const sx=along?PL.pos.x:PL.pos.x+24,sz=along?PL.pos.z+24:PL.pos.z;const q=new THREE.Vector3(sx,0,sz);collide(q,.4);n.g.position.set(q.x,groundY(q.x,q.z),q.z);
+  n.goTo={x:PL.pos.x+1,z:PL.pos.z+1,run:false,done:()=>{n.home={x:n.g.position.x,z:n.g.position.z};line(n,pick3([["Hey! Here I am. So what's the plan?","¡Hey! Aquí estoy. ¿Cuál es el plan?","happy"],["What's up? You called?","¿Qué onda? ¿Me llamaste?","happy"],["Okay, I'm here. This better be good!","Ya llegué. ¡Más te vale que valga la pena!","laugh"]]))}};
+  const l=pick3([["On my way! Give me two minutes.","¡Voy para allá! Dame dos minutos.","happy"],["Okay, okay, I'm coming. Don't move!","Ok, ok, ya voy. ¡No te muevas!","laugh"]]);sub(id,l[0],l[1]);try{say(l[0],id,'happy')}catch(e){}
+  setTimeout(()=>{if(UI.subWho===id)sub(null)},2600);toast3('📍 '+n.c.name+' viene para acá')}
 function nearMiss(n){if(S.t-(n.yell||0)<4)return;n.yell=S.t;showEmo(n,'angry');line(n,pick3(OFF.bump),-1)}
 function carYell(o){if(S.t-(o.yell||0)<4)return;o.yell=S.t;const l=pick3(OFF.car);sub('extrano',l[0],l[1]);try{say(l[0],'extrano','angry')}catch(e){}}
 
@@ -400,7 +421,7 @@ function updateCamera(dt){const sm=Math.min(1,dt*10);
 /* ---------------- misiones, GPS, chambas ---------------- */
 const placeLot=p=>{const b=typeof placeBld==='function'?placeBld(p):null;return b?LOTS[b.id]:null};
 function setTarget(){if(S.job){S.target=S.job.target;UI.obj(S.job.label);return}
-  const m=typeof nextMission==='function'?nextMission():null;if(!m){S.target=null;UI.obj('🏆 ¡Terminaste todas las misiones! Pasea por la ciudad.');return}
+  if(S.forced&&(DB.ms[S.forced.id]||{}).stars>0)S.forced=null;const m=S.forced||(typeof nextMission==='function'?nextMission():null);if(!m){S.target=null;UI.obj('🏆 ¡Terminaste todas las misiones! Pasea por la ciudad.');return}
   if(m.place==='telefono'){S.target={m,phone:true};UI.obj(`📱 Espera la llamada: «${m.t}»`);S.ringAt=S.t+5;return}
   if(m.place==='coche'){S.target={m,car:true};UI.obj(`🚗 Súbete a un carro: «${m.t}»`);return}
   const L=placeLot(m.place)||LOTS.casa;S.target={m,L,x:L.door.x,z:L.door.z};UI.obj(`🎯 ${m.t} · ${L.b.em} ${L.b.name}`);
@@ -425,6 +446,7 @@ function startMission(m,cast){if(S.busy)return;if(typeof canRun==='function'&&!c
   frameConv(ids);S.locked=true;UI.hud(false);
   W3D.after=()=>{S.busy=false;S.locked=false;S.conv=null;NPCS.forEach(n=>{n.conv=null;if(n._back){n.g.position.copy(n._back);n._back=null}});
     for(let i=NPCS.length-1;i>=0;i--)if(NPCS[i].temp&&!NPCS[i].keep){scene.remove(NPCS[i].g);NPCS.splice(i,1)}UI.hud(true);setTarget()};
+  if(typeof koGen==='function'&&typeof KO!=='undefined'&&KO)(async()=>{for(const st of m.steps.slice(0,8)){if(st.k==='N'){const c=CH(st.who);if(c.voice&&c.voice!=='dog')for(const t of (typeof splitSay==='function'?splitSay(st.en):[st.en]))await koGen(t,c).catch(()=>{})}}})();
   if(typeof playFrom==='function')playFrom(m,true)}
 function frameConv(ids){const ns=ids.map(id=>NPCS.find(n=>n.id===id)).filter(Boolean);const c=new THREE.Vector3();ns.forEach(n=>c.add(n.g.position));if(ns.length)c.divideScalar(ns.length);else c.set(PL.pos.x-Math.sin(S.yaw)*2,0,PL.pos.z-Math.cos(S.yaw)*2);
   const dx=c.x-PL.pos.x,dz=c.z-PL.pos.z,l=Math.hypot(dx,dz)||1,ux=dx/l,uz=dz/l;
@@ -471,13 +493,13 @@ const UI={subWho:null,
    <div class="w3hud" id="w3hud" hidden>
     <div class="w3top"><canvas id="w3mini" width="220" height="220"></canvas><div class="w3obj" id="w3obj"></div><div class="w3stat" id="w3stat"></div></div>
     <div class="w3arrow" id="w3arrow"><b>➤</b><span id="w3dist"></span></div>
-    <div class="w3sub" id="w3sub" hidden></div>
+    <div class="w3sub" id="w3sub" hidden></div><button class="w3ko" id="w3ko" hidden></button>
     <div class="w3joy" id="w3joy"><div class="w3knob" id="w3knob"></div></div>
     <div class="w3btns"><button id="b-jump" aria-label="Brincar">⤒<small>Brincar</small></button><button id="b-crouch" aria-label="Agacharse">⤓<small>Agachar</small></button><button id="b-run" aria-label="Correr">🏃<small>Correr</small></button><button id="b-cam" aria-label="Cámara">👁<small>1ª/3ª</small></button></div>
     <button class="w3phone" id="b-phone" aria-label="Teléfono">📱</button>
     <div class="w3ctx" id="w3ctx"></div>
    </div><div class="w3ph" id="w3ph" hidden></div><div class="w3ring" id="w3ring" hidden></div></div>`;
-    const host=$3('#w3d');host.prepend(renderer.domElement);bindControls(host)},
+    const host=$3('#w3d');host.prepend(renderer.domElement);bindControls(host);const ko=$3('#w3ko');if(ko)ko.onclick=()=>{unlock();if(typeof koLoad==='function')koLoad().catch(()=>{})}},
   hud(on){const h=$3('#w3hud');if(h)h.hidden=!on;if(!on){W3D.input.x=W3D.input.y=0;const k=$3('#w3knob');if(k)k.style.transform=''}},
   obj(t){const o=$3('#w3obj');if(o)o.innerHTML=t},
   btn(id,on){const b=$3('#b-'+id);if(b)b.classList.toggle('on',!!on)},
@@ -491,23 +513,37 @@ const UI={subWho:null,
     if(S.inCar){h+=`<button data-a="exit">🚪 Bajar del carro</button>`;if(S.inCar.kind==='police')h+=`<button data-a="siren">🚨 Sirena</button>`}
     else{if(T&&T.x!==undefined&&!S.job&&Math.hypot(PL.pos.x-T.x,PL.pos.z-T.z)<3)h+=`<button class="big" data-a="start">🎬 Empezar: ${escH(T.m.t)}</button>`;
       const car=nearCar();if(car)h+=`<button data-a="enter">🚗 Subirte${car.kind==='taxi'?' al taxi':car.kind==='police'?' a la patrulla':''}</button>`;
-      const n=S.near;if(n){h+=`<div class="w3who">${escH(n.c.name)}</div><div class="w3row"><button data-a="talk">💬<small>Platicar</small></button><button data-a="grab">${S.grab===n?'✋<small>Soltar</small>':'🤝<small>Del brazo</small>'}</button><button data-a="hug">🤗<small>Abrazar</small></button><button data-a="push">😤<small>Empujar</small></button></div>`}
+      const n=S.near;if(n){h+=`<div class="w3who">${escH(n.c.name)}</div><div class="w3row"><button data-a="talk">💬<small>Platicar</small></button><button data-a="grab">${S.grab===n?'✋<small>Soltar</small>':'🤝<small>Del brazo</small>'}</button><button data-a="hug">🤗<small>Abrazar</small></button><button data-a="push">😤<small>Empujar</small></button><button data-a="num">📱<small>${DB.contacts&&DB.contacts[n.id]?"Agendado":"Su número"}</small></button></div>`}
       else if(S.grab)h+=`<button data-a="grab">✋ Soltar a ${escH(S.grab.c.name)}</button>`}
-    if(c._h!==h){c._h=h;c.innerHTML=h;c.querySelectorAll('[data-a]').forEach(b=>b.onclick=e=>{e.stopPropagation();unlock();act(b.dataset.a)})}},
+    if(c._h!==h){c._h=h;c.innerHTML=h;c.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();unlock();c._h='';act(b.dataset.a)}))}},
   ctxMission(m){const c=$3('#w3ctx');c._h='';c.innerHTML=`<button class="big" data-a="startcar">🎬 Empezar: ${escH(m.t)}</button>`;c.querySelector('button').onclick=()=>{c.innerHTML='';startMission(m)}},
   ring(m){const r=$3('#w3ring');const who=m.cast.find(id=>!CH(id).dog)||m.cast[0];r.hidden=false;r.innerHTML=`<div class="rc"><span class="cap">📱 Llamada entrante</span><b>${escH(CH(who).name)}</b><small>${escH(m.t)}</small><div class="rr"><button class="no">✕</button><button class="yes">📞</button></div></div>`;
     try{for(let i=0;i<3;i++)setTimeout(()=>{if(!r.hidden&&typeof sfx==='function')sfx('combo')},i*900)}catch(e){}
     r.querySelector('.yes').onclick=()=>{unlock();r.hidden=true;S.target={m};startMission(m,[])};r.querySelector('.no').onclick=()=>{r.hidden=true;S.ringAt=S.t+20}},
+  curso(w){const p=$3('#w3ph .scr');if(!p)return;const ms=typeof MISSIONS!=='undefined'?MISSIONS:[];const W=typeof WORLDS!=='undefined'?WORLDS:[];
+    const st=id=>(DB.ms[id]||{}).stars||0,open=m=>typeof msOpen==='function'?msOpen(m):true;
+    if(!w){p.innerHTML=`<div class="phbar"><button class="pback" data-b="1">‹ Inicio</button><span></span></div><div class="pt"><b>📚 Tu curso</b><small>8 niveles, de fácil a difícil. Cada nivel repasa lo de antes.</small></div>
+      <div class="plist">${W.map(x=>{const L=ms.filter(m=>m.w===x.n),d=L.filter(m=>st(m.id)>0).length,lock=L.length&&!open(L[0]);return `<button data-w="${x.n}" class="${lock?'lk':''}"><i>${lock?'🔒':x.em}</i><span><b>Nivel ${x.n} · ${escH(x.t)}</b><small>${escH(x.d)}</small><u><s style="width:${L.length?Math.round(d/L.length*100):0}%"></s></u></span><em>${d}/${L.length}</em></button>`}).join('')}</div>`;
+      p.querySelector('[data-b]').onclick=()=>UI.phone(true);p.querySelectorAll('[data-w]').forEach(b=>b.onclick=()=>UI.curso(+b.dataset.w));return}
+    const X=W.find(x=>x.n===w)||{t:''},L=ms.filter(m=>m.w===w);
+    p.innerHTML=`<div class="phbar"><button class="pback" data-b="1">‹ Curso</button><span></span></div><div class="pt"><b>${escH(X.em||'')} Nivel ${w}</b><small>${escH(X.t)}</small></div>
+      <div class="plist">${L.map(m=>{const o=open(m),s=st(m.id);return `<button data-m="${m.id}" class="${o?'':'lk'}"><i>${o?(s?'⭐'.repeat(s):'▶️'):'🔒'}</i><span><b>${m.o}. ${escH(m.t)}</b><small>${escH(m.n||'')}</small></span></button>`}).join('')}</div>`;
+    p.querySelector('[data-b]').onclick=()=>UI.curso();p.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{const m=ms.find(x=>x.id===b.dataset.m);if(!m)return;if(!open(m)){toast3('🔒 Primero pasa la misión anterior');return}
+      cancelJob();S.forced=m;setTarget();UI.phone(false);toast3('🎯 GPS puesto: '+m.t)})},
+  contacts(){const p=$3('#w3ph .scr');if(!p)return;const C=Object.entries(DB.contacts||{});
+    p.innerHTML=`<div class="phbar"><button class="pback" data-b="1">‹ Inicio</button><span></span></div><div class="pt"><b>📇 Contactos</b><small>${C.length?'Llámales o queda de verte con ellos.':'Acércate a la gente y toca «📱 Su número».'}</small></div>
+      <div class="plist">${C.map(([id])=>{const c=CH(id),r=(DB.rel&&DB.rel[id])||0;return `<div class="ct"><i>${escH((c.name||id)[0])}</i><span><b>${escH(c.name||id)}</b><small>${r>0?'❤️'.repeat(Math.min(5,Math.ceil(r/4))):'🤍'} ${r}</small></span><button data-call="${id}">📞</button><button data-meet="${id}">📍</button></div>`}).join('')}</div>`;
+    p.querySelector('[data-b]').onclick=()=>UI.phone(true);p.querySelectorAll('[data-call]').forEach(b=>b.onclick=()=>{unlock();phoneCall(b.dataset.call)});p.querySelectorAll('[data-meet]').forEach(b=>b.onclick=()=>{unlock();meetUp(b.dataset.meet)})},
   phone(on){const p=$3('#w3ph');if(!p)return;if(on===undefined)on=p.hidden;p.hidden=!on;if(!on)return;
     const ms=typeof MISSIONS!=='undefined'?MISSIONS:[];const nx=typeof nextMission==='function'?nextMission():null;
     p.innerHTML=`<div class="scr"><div class="pbar"><span>${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span><span>📶 🔋</span></div>
      <div class="pt">${nx?`<b>Siguiente misión</b><small>${escH(nx.t)}</small>`:'<b>¡Ciudad libre!</b>'}</div>
-     <div class="apps">${[['miss','🎯','Misiones'],['taxi','🚕','Taxista'],['poli','🚓','Policía'],['night','🌙','Día/Noche'],['cam','👁','Cámara'],['voz','🔊','Voces'],['les','📚','Lecciones'],['pil','🏛️','Pilares'],['gen','👥','Contactos'],['yo','🙂','Yo']].map(([k,i,n])=>`<button data-p="${k}"><i>${i}</i><span>${n}</span></button>`).join('')}</div>
+     <div class="apps">${[['miss','🎯','Misiones'],['taxi','🚕','Taxista'],['poli','🚓','Policía'],['night','🌙','Día/Noche'],['cam','👁','Cámara'],['voz','🔊','Voces'],['cur','📚','Curso'],['con','📇','Contactos'],['pil','🏛️','Pilares'],['gen','👥','Gente'],['yo','🙂','Yo']].map(([k,i,n])=>`<button data-p="${k}"><i>${i}</i><span>${n}</span></button>`).join('')}</div>
      <button class="home" data-p="close"></button></div>`;
     p.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{unlock();const k=b.dataset.p;
       if(k==='close')UI.phone(false);else if(k==='taxi')chamba('taxi');else if(k==='poli')chamba('police');else if(k==='night'){S.nightT=S.nightT>.5?0:1}else if(k==='cam'){toggleCam()}
       else if(k==='voz'){if(typeof koLoad==='function')koLoad().then(()=>toast3('¡Voces humanas listas!')).catch(()=>toast3('No se pudieron bajar las voces'))}
-      else if(k==='miss'){cancelJob();setTarget();UI.phone(false)}else{UI.phone(false);const v={les:'mundos',pil:'pilares',gen:'gente',yo:'yo'}[k];W3D.leave();go(v)}})}};
+      else if(k==='miss'){cancelJob();S.forced=null;setTarget();UI.phone(false)}else if(k==='cur')UI.curso();else if(k==='con')UI.contacts();else{UI.phone(false);const v={les:'mundos',pil:'pilares',gen:'gente',yo:'yo'}[k];W3D.leave();go(v)}})}};
 function sub(who,en,es){UI.sub(who,en,es)}
 const escH=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function wordsHTML(en,who){return String(en).split(/(\s+)/).map(w=>/\S/.test(w)?`<span class="tw" data-who="${who}" data-w="${escH(w.replace(/[^\w'’-]/g,''))}">${escH(w)}</span>`:w).join('')}
@@ -520,6 +556,7 @@ function act(a){if(a==='start'||a==='startcar'){const T=S.target;if(T&&T.m)start
   else if(a==='siren'&&S.inCar){S.inCar.sirenOn=!S.inCar.sirenOn}
   else if(a==='talk'){const n=S.near;if(!n||typeof freeChat!=='function')return;S.busy=true;n.conv=PL.pos.clone();PL.p.face=Math.atan2(n.g.position.x-PL.pos.x,n.g.position.z-PL.pos.z);frameConv([n.id]);S.locked=true;UI.hud(false);
     W3D.after=()=>{S.busy=false;S.locked=false;S.conv=null;n.conv=null;UI.hud(true)};freeChat(n.id)}
+  else if(a==='num')askNumber(S.near);
   else offScript(a)}
 function toggleCam(){S.fp=!S.fp;UI.btn('cam',S.fp)}
 function bindControls(host){const joy=$3('#w3joy'),knob=$3('#w3knob');let jid=null,jx=0,jy=0;const R=52;
@@ -547,7 +584,8 @@ function drawMini(){const c=$3('#w3mini');if(!c)return;const g=c.getContext('2d'
   const T=S.target;if(T&&T.x!==undefined){g.fillStyle='#ffd23a';g.beginPath();g.arc(T.x,T.z,3.4,0,7);g.fill()}
   g.restore();g.fillStyle='#fff';g.beginPath();g.moveTo(W/2,W/2-9);g.lineTo(W/2+6,W/2+7);g.lineTo(W/2,W/2+3);g.lineTo(W/2-6,W/2+7);g.closePath();g.fill();
   g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=3;g.beginPath();g.arc(W/2,W/2,W/2-2,0,7);g.stroke()}
-function hudTick(){const T=S.target,a=$3('#w3arrow');if(a){if(T&&T.x!==undefined&&!S.locked){const dx=T.x-PL.pos.x,dz=T.z-PL.pos.z,d=Math.hypot(dx,dz);const fy=S.inCar?S.inCar.h:S.yaw+Math.PI;const ang=Math.atan2(dx,dz)-fy;
+function hudTick(){const kp=$3('#w3ko');if(kp&&typeof koState!=='undefined'){const st=koState;kp.hidden=st==='ready'&&!kp._show;kp.textContent=st==='loading'?`🎙️ Bajando voces humanas… ${koPct}%`:st==='error'?'🎙️ Voces humanas: toca para reintentar':'🎙️ Voces humanas listas';if(st==='ready'&&!kp._done){kp._done=1;kp._show=1;setTimeout(()=>{kp._show=0},3000)}}
+const T=S.target,a=$3('#w3arrow');if(a){if(T&&T.x!==undefined&&!S.locked){const dx=T.x-PL.pos.x,dz=T.z-PL.pos.z,d=Math.hypot(dx,dz);const fy=S.inCar?S.inCar.h:S.yaw+Math.PI;const ang=Math.atan2(dx,dz)-fy;
     a.hidden=false;a.querySelector('b').style.transform=`rotate(${-ang*180/Math.PI-90}deg)`;$3('#w3dist').textContent=d<1000?Math.round(d)+' m':''}else a.hidden=true}
   const st=$3('#w3stat');if(st&&typeof DB!=='undefined'){const s=typeof streak==='function'?streak():0;const v=S.inCar?Math.round(Math.abs(S.inCar.v)*3.6)+' km/h':'';st.innerHTML=`<span>⭐ ${DB.xp}</span><span>🔥 ${s}</span>${v?`<span>${v}</span>`:''}`}}
 
@@ -558,12 +596,12 @@ function frame(dt){S.t+=dt;
   if(S.inCar)driveCar(S.inCar,dt);else movePlayer(dt);
   if(S.freeYaw&&S.t-(S.freeAt||0)>1.5)S.freeYaw=lerp(S.freeYaw,0,dt*3);
   for(const c of CARS)if(c.ai)aiCar(c,dt);
-  for(const n of NPCS){npcAI(n,dt);const d=n.g.position.distanceTo(PL.pos),dc=n.g.position.distanceTo(camera.position);n.g.visible=!n.hidden&&(d<95||!!n.conv);const sh=d<30;if(n._sh!==sh){n._sh=sh;n.g.traverse(o=>{if(o.isMesh)o.castShadow=sh})}n.tag.visible=d<14&&dc>2.6&&!S.locked;if(dc<2.2)n.emo.visible=false;
+  for(const n of NPCS){npcAI(n,dt);const d=n.g.position.distanceTo(PL.pos),dc=n.g.position.distanceTo(camera.position);n.g.visible=!n.hidden&&(d<(n.ped?62:95)||!!n.conv);const sh=d<30;if(n._sh!==sh){n._sh=sh;n.g.traverse(o=>{if(o.isMesh)o.castShadow=sh})}n.tag.visible=d<14&&dc>2.6&&!S.locked;if(dc<2.2)n.emo.visible=false;
     if(n.bounce>0){n.bounce-=dt;n.g.position.y=groundY(n.g.position.x,n.g.position.z)+Math.abs(Math.sin(n.bounce*14))*.12}
     if(n.emoT>0){n.emoT-=dt;if(n.emoT<=0)n.emo.visible=false}
     if(d<70)animate(n,dt)}
   animate(PL.p,dt);if(PL.p.emoT>0){PL.p.emoT-=dt;if(PL.p.emoT<=0)PL.p.emo.visible=false}PL.p.tag.visible=false;
-  S.near=S.inCar||S.locked?null:nearestNPC();
+  {const keep=S.near&&!S.inCar&&!S.locked&&S.near.g.visible&&Math.hypot(S.near.g.position.x-PL.pos.x,S.near.g.position.z-PL.pos.z)<3.3;S.near=S.inCar||S.locked?null:keep?S.near:nearestNPC()}
   if(S.t-S.routeAt>.5){S.routeAt=S.t;drawRoute();UI.ctx();hudTick()}
   if(W3D.marker.visible){W3D.marker.userData.ar.position.y=3.2+Math.sin(S.t*3)*.25;W3D.marker.userData.ar.rotation.y+=dt*2}
   checkMission(dt);
@@ -580,14 +618,18 @@ addEventListener('resize',()=>{if(renderer)resize()});
 let booting=null;
 async function boot(app,onp){initRenderer();await loadModels(onp);
   W3D.aoTex=await new THREE.TextureLoader().loadAsync(BASE+'modelos/ferrari_ao.png');
-  buildCity();spawnTraffic(9);
+  buildCity();spawnTraffic(14);
   // la gente del barrio, cada quien en su lugar
   const home=typeof HOME!=='undefined'?HOME:{};
   Object.entries(home).forEach(([id,h])=>{const L=LOTS[h];if(!L)return;const n=makePerson(id);const x=L.door.x+rnd(-4,4),z=L.door.z+(L.open?-3:0);n.g.position.set(x,groundY(x,z),z);n.home={x,z};n.face=L.face;NPCS.push(n);
     if(id==='chloe')n.base='dance'});
   // peatones
-  const ex=['cajera','cajero','mesera','mesero','chofer','agente','extrano','doctor'];
-  for(let i=0;i<6;i++){const n=makePerson(ex[i%ex.length]);const ci=1+(i%4),cj=1+Math.floor(i/2)%4;const x0=ci*P+RH+1.6,z0=cj*P+RH+1.6,x1=(ci+1)*P-RH-1.6,z1=(cj+1)*P-RH-1.6;
+  const NF=["Ashley","Brittany","Kayla","Jessica","Megan","Tiffany","Maria","Lupita","Keisha","Amber","Vanessa","Sarah","Daniela","Monique"],NM=["Tyler","Josh","Kevin","DeShawn","Luis","Ryan","Derek","Andre","Kyle","Mateo","Brandon","Chris","Jamal","Diego"];
+  const FV=['af_bella','af_heart','af_nicole','af_heart','af_bella','af_nicole'],MV=['am_michael','am_fenrir','am_puck','am_echo','am_eric','am_liam','am_onyx'];
+  const SH=['#E5484D','#3557FF','#12A150','#F5B400','#7C4DFF','#FF7EB3','#222','#eee','#0E7490','#9A3412'];
+  if(typeof EXTRAS!=='undefined')for(let i=0;i<24;i++){const f=i%2===0,nm=(f?NF:NM)[Math.floor(i/2)%14];EXTRAS['ped'+i]={name:nm,gender:f?'f':'m',age:20+(i*7)%26,skin:'moreno',voice:(f?FV:MV)[i%(f?6:7)],speed:1,shirt:SH[i%SH.length],fillers:f?["Like,","Oh my God,","Girl,"]:["Bro,","Dude,","Yo,"],es:'Vive en la ciudad'}}
+  const ex=Array.from({length:24},(_,i)=>typeof EXTRAS!=='undefined'?'ped'+i:'extrano');
+  for(let i=0;i<24;i++){const n=makePerson(ex[i]);const ci=i%NC,cj=Math.floor(i/4)%NC;const x0=ci*P+RH+1.6,z0=cj*P+RH+1.6,x1=(ci+1)*P-RH-1.6,z1=(cj+1)*P-RH-1.6;
     n.ped={x0,z0,x1,z1,len:2*(x1-x0+z1-z0)/40};n.lt=Math.random();NPCS.push(n)}
   // Stanley
   PL.p=makePerson('stanley');const pos=DB.pos3,L=LOTS.casa;if(pos&&isFinite(pos.x)){PL.pos.set(pos.x,0,pos.z);S.yaw=pos.yaw||0}else{PL.pos.set(L.door.x-9,0,L.door.z-3.5);S.yaw=Math.PI*.75}
