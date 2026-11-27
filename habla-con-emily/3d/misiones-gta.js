@@ -57,6 +57,9 @@ N|rose|happy|You're an angel. Back in my day, young men had manners like you.|Er
 Y|Aw, you're too sweet. Buckle up, okay?|Ay, qué linda. Abróchese, ¿sí?|ó, iór tú suít. bákel áp, okéi|🥰🔒🚗
 A|Buckle up, okay?
 L|You are very kind. Please fasten your seat belt.
+N|rose|laugh|Oh, and don't drive fast. My heart can't take it.|Ah, y no maneje rápido. Mi corazón no aguanta.
+Y|Don't worry. I drive like a grandpa.|No se preocupe. Manejo como abuelito.|dóunt uóri. ái dráiv láik a gránpa|🐢🚗👴
+L|Do not worry. I drive very slowly.
 O|pickup|rose|Ayuda a Grandma Rose a subirse
 O|car|Súbete a tu carro
 O|drop|super|Lleva a Grandma Rose al supermercado
@@ -117,6 +120,10 @@ N|mike|neutral|Can you start Monday? Six a.m. sharp. Not six-oh-five.|¿Puedes e
 Y|Six sharp. I'll be there, man.|Seis en punto. Ahí estaré.|síks shárp. áil bi dér, mán|⏰💯👷‍♂️
 A|I'll be there.
 L|At six o'clock exactly. I will be present.
+N|mike|laugh|And bring boots. Last guy came in flip-flops.|Y trae botas. El último vino en chanclas.
+Y|Flip-flops? No way. See you Monday, boss.|¿En chanclas? No manches. Nos vemos el lunes, jefe.|flíp flóps? nóu uéi. sí iú mándei, bás|🩴😂👷‍♂️
+A|See you Monday.
+L|In sandals? That is incredible. I will see you on Monday.
 O|end|¡Tienes chamba! Ahora nomás falta despertarte a las cinco. Suerte con eso.
 
 #g04|Café para la cuadrilla|45|mike|Primer día y ya eres el nuevo. Ya sabes lo que eso significa: te toca ir por el café de todos. Y que no se te olvide ninguno.
@@ -163,6 +170,14 @@ N|mike|happy|There he is! Did you get the extra caramel?|¡Ahí está! ¿Le pusi
 Y|Extra caramel, boss. And here's your change.|Extra caramelo, jefe. Y aquí está su cambio.|ékstra kárameel, bás. and jíers iór chéinch|🍮💵😎
 A|Here's your change.
 L|Yes, with extra caramel. And here is your change.
+N|mike|laugh|Ha! You're alright, kid. Same time tomorrow?|¡Ja! Eres buena onda, chavo. ¿Mañana igual?
+Y|Tomorrow? Bro, you're buying tomorrow.|¿Mañana? Bro, mañana invitas tú.|tumárou? bróu, iór báiin tumárou|☕😏💸
+A|You're buying tomorrow.
+L|Tomorrow you will pay for the coffee.
+N|mike|neutral|Deal. Now grab a shovel, rookie. Break's over.|Trato. Ahora agarra una pala, novato. Se acabó el descanso.
+Y|On it, boss. Let's get to work.|Ya voy, jefe. A chambear.|án it, bás. léts guét tu uérk|⛏️💪👷‍♂️
+A|Let's get to work.
+L|I will do it now. Let us begin working.
 O|end|La cuadrilla te ama. Mike te ama más. El caramelo une a la gente.
 
 #g05|Abre tu cuenta|35|carlos|Ya te pagaron tu primer cheque y lo traes en la bolsa como un ranchero. Carlos dice que ya estuvo: ve al banco y abre una cuenta.
@@ -249,6 +264,13 @@ N|tony|surprised|He paid? All of it? Nobody gets money outta Jake!|¿Pagó? ¿To
 Y|I got skills. Do I get a tip?|Tengo talento. ¿Me toca propina?|ái gát skíls. du ái guét a típ|😎💪💵
 A|Do I get a tip?
 L|I am very capable. Will I receive a tip?
+N|tony|laugh|A tip? Ha! Okay, ten bucks. And you're hired. Weekend delivery.|¿Propina? ¡Ja! Va, diez dólares. Y estás contratado. Repartidor de fin de semana.
+Y|For real? You're hiring me?|¿En serio? ¿Me vas a contratar?|for ríl? iór jáirin mi|😱🍕💼
+A|You're hiring me?
+L|Really? Are you giving me a job?
+N|tony|neutral|Don't be late. And don't eat the pizzas.|No llegues tarde. Y no te comas las pizzas.
+Y|No promises on the pizzas, Tony.|Lo de las pizzas no lo prometo, Tony.|nóu prámises an de pítsas, tóuni|🍕🤤😂
+L|I cannot promise that I will not eat the pizzas.
 O|money|10|Tony te dio $10 de propina
 O|end|Tony está impresionado. Le cobraste a Jake. Eso es casi un milagro.
 
@@ -281,6 +303,14 @@ N|cajero|neutral|If you sign up for our card, you get fifteen percent off.|Si sa
 Y|Fifteen percent? Bet. Sign me up.|¿Quince por ciento? Va. Apúnteme.|fiftíin persént? bét. sáin mi áp|✍️💳😎
 A|Sign me up.
 L|Fifteen percent? Okay. Please register me.
+N|cajero|neutral|Great. Want me to throw in a tie for ten bucks?|Perfecto. ¿Le agrego una corbata por diez dólares?
+Y|Nah, I'm good. Just the shirt and pants.|No, así está bien. Nomás la camisa y el pantalón.|ná, áim gúd. yást de shért and pánts|👔👖🙅‍♂️
+A|No thanks, I'm good.
+L|No, thank you. Only the shirt and the pants.
+N|cajero|happy|Smart. Good luck with the interview, man.|Buena decisión. Suerte en la entrevista.
+Y|Thanks, man. I'm gonna need it.|Gracias. La voy a necesitar.|zénks, mán. áim góna níd it|🍀😬👔
+A|Thanks, I'll need it.
+L|Thank you. I will need it.
 O|money|-76|Pagaste $76
 O|end|Ya pareces gente de oficina. Jasmine dice que te ves «decent». Viniendo de ella, es un piropo.
 
@@ -319,6 +349,10 @@ N|linda|laugh|Ha! Okay, that's a first. Can you start part-time next week? Eveni
 Y|Absolutely. Thank you so much, Linda.|Claro que sí. Muchísimas gracias, Linda.|ábsolutli. zénk iú sóu mách, línda|🙌💼🎉
 A|For sure. Thank you, Linda.
 L|Certainly. Thank you very much, Linda.
+N|linda|neutral|One more thing. Next time, leave the beer shirt at home. Jasmine told me.|Una cosa más. La próxima, deje la playera de cerveza en casa. Jasmine me contó.
+Y|She told you? Oh my God. Noted.|¿Le contó? No manches. Anotado.|shi tóuld iú? óu mái gád. nóuted|🍺👕🤦‍♂️
+A|Noted.
+L|She informed you? I will remember that.
 O|end|¡Contratado! Ahora tienes dos chambas. Y un problema con los tacos.
 
 #g09|La multa|40|davis|Te estacionaste donde no debías y Officer Davis te está esperando junto a tu carro. Sé educado, págala y que no se ponga peor.
@@ -355,6 +389,9 @@ N|agente|neutral|Seventy-five. Cash or card?|Setenta y cinco. ¿Efectivo o tarje
 Y|Card, please. My new debit card.|Tarjeta, por favor. Mi tarjeta de débito nueva.|kárd, plís. mái nú débit kárd|💳✨😎
 A|Card, please.
 L|I will pay with a card, please.
+N|agente|neutral|Approved. Here's your receipt. Next time, read the curb.|Aprobado. Aquí está su recibo. La próxima, fíjese en la banqueta.
+Y|Trust me, I'm never parking there again.|Créame, nunca me vuelvo a estacionar ahí.|trást mi, áim néver párkin dér agén|🙅‍♂️🅿️😅
+L|Believe me, I will never park there again.
 O|money|-75|Pagaste $75 de multa
 O|end|Multa pagada. Lección aprendida: rojo no significa «estaciónate aquí, guapo».
 
@@ -370,6 +407,10 @@ N|marcus|laugh|No excuses. Get in the car, let's go!|Sin pretextos. ¡Súbete al
 Y|Fine. But you're buying the smoothies.|Va. Pero tú invitas los licuados.|fáin. bat iór báiin de smúdis|🥤💪😏
 A|Fine, but you're buying smoothies.
 L|Okay. However, you will pay for the smoothies.
+N|marcus|laugh|Smoothies? Bro, I'm broke. I'll buy you a banana.|¿Licuados? Bro, ando quebrado. Te compro un plátano.
+Y|A banana? Wow. Best friend ever.|¿Un plátano? Guau. El mejor amigo del mundo.|a banána? uáu. bést frénd éver|🍌🙄😂
+A|Wow, best friend ever.
+L|Only a banana? You are very generous.
 O|pickup|marcus|Recoge a Marcus
 O|car|Súbete a tu carro
 O|drop|gym|Lleva a Marcus al gym
@@ -409,6 +450,10 @@ N|rose|sad|He loves the park. Maybe ask little Tommy, he plays with him.|Le enca
 Y|Tommy, got it. Be right back.|Tommy, va. Ahorita vuelvo.|támi, gárit. bi ráit bák|👦🐕💨
 A|Got it. Be right back.
 L|Tommy, I understand. I will return soon.
+N|rose|cry|Please hurry, sweetie. That hot dog had onions. Onions are bad for dogs!|Apúrate, mi amor. La salchicha traía cebolla. ¡La cebolla le hace daño a los perros!
+Y|Onions? Okay, I'm going right now.|¿Cebolla? Bueno, ya me voy.|ánions? okéi, áim góuin ráit náu|🧅🐕🏃‍♂️
+A|I'm going right now.
+L|Onions? Okay, I am leaving immediately.
 O|car|Súbete a tu carro
 O|goto|parque|Maneja al parque
 O|talk|parque|tommy|Pregúntale a Tommy
@@ -445,6 +490,21 @@ O|drop|porche|Llévale a Max a Grandma Rose
 O|end|Max regresó a casa. Sin salchicha, pero con dignidad. Grandma Rose te debe otro pay.
 
 #g12|Karen en la caja|60|cajera|En el súper te cobraron doble los aguacates. Reclama tu dinero. Ah, y hay una tal Karen que quiere hablar con el gerente desde 2009.
+O|car|Súbete a tu carro
+O|goto|casa|Maneja a la casa
+O|talk|casa|carlos|Habla con Carlos
+N|carlos|surprised|Güey, look at this receipt. You paid twelve bucks for four avocados?|Güey, mira este ticket. ¿Pagaste doce dólares por cuatro aguacates?
+Y|What? They were like a buck fifty each.|¿Qué? Estaban como a dólar cincuenta cada uno.|uát? dei uér láik a bák fífti íich|🥑💵😳
+A|They were a buck fifty each.
+L|Really? They cost approximately one dollar and fifty cents each.
+N|carlos|angry|They charged you twice, bro. Go get your money back. That's guacamole money.|Te cobraron doble, bro. Ve a que te regresen tu lana. Es dinero del guacamole.
+Y|Hell no. I'm going back right now.|Ni madres. Ahorita mismo regreso.|jél nóu. áim góuin bák ráit náu|😤🥑🚗
+A|No way. I'm going back right now.
+L|I will not accept that. I am returning now.
+N|carlos|laugh|And if you see a lady with a short blond haircut and sunglasses, run.|Y si ves a una señora de pelo corto rubio y lentes oscuros, corre.
+Y|Run? Why? What are you talking about?|¿Correr? ¿Por qué? ¿De qué hablas?|rán? uái? uát ar iú tókin abáut|🏃‍♂️❓🤔
+A|What are you talking about?
+L|Why should I run? What do you mean?
 O|car|Súbete a tu carro
 O|goto|super|Maneja al supermercado
 O|talk|super|cajera,karen|Reclama tu dinero
@@ -569,7 +629,11 @@ L|I agree. May I see you again?
 N|emily|happy|You better. Text me when you get home, okay?|Más te vale. Mándame mensaje cuando llegues, ¿sí?
 Y|I will. Goodnight, Emily.|Va. Buenas noches, Emily.|ái uíl. gúdnáit, émili|🌙😘📱
 L|I will do that. Good night, Emily.
-O|end|Primera cita: éxito total. No te dio beso, pero te dio abrazo largo. Eso cuenta.
+N|emily|flirty|Wait. Come here.|Espérate. Ven.
+Y|What? Did I forget something?|¿Qué? ¿Se me olvidó algo?|uát? did ái forguét sámzin|😳💋❓
+A|Did I forget something?
+L|What is it? Did I forget something?
+O|end|Primera cita: éxito total. Y te dio un beso de buenas noches. Vas a soñar con ella toda la semana.
 
 #g15|Jake y sus cincuenta|55|jake|Jake te pidió cincuenta dólares prestados hace un mes «para una emergencia». La emergencia fue un videojuego. Hoy los cobras.
 O|car|Súbete a tu carro
@@ -607,6 +671,10 @@ N|jake|sad|Five to one. Okay. I'm embarrassed. Can I pay you Friday?|Cinco a uno
 Y|Friday. A hundred bucks. No excuses.|El viernes. Cien dólares. Sin pretextos.|fráidei. a jándred báks. nóu ekskiúses|📅💯💵
 A|Friday. No excuses.
 L|On Friday, you will pay one hundred dollars. I will not accept excuses.
+N|jake|happy|Friday. For sure. Pinky promise.|El viernes. Seguro. Te lo juro por la garrita.
+Y|Pinky promise? How old are you, dude?|¿Por la garrita? ¿Cuántos años tienes, güey?|pínki prámis? jáu óuld ar iú, dúd|🤙😂👶
+A|How old are you?
+L|A pinky promise? You are behaving like a child.
 O|end|Ganaste cinco a uno. Jake te debe cien. Spoiler: no te va a pagar el viernes.
 
 #g16|El choque|65|davis|Alguien te pegó en el estacionamiento. Y ese alguien es Karen. Claro que es Karen. Arréglalo sin perder la cabeza y que Officer Davis haga su chamba.
@@ -643,6 +711,10 @@ N|karen|sad|This is... unbelievable.|Esto es... increíble.
 Y|Thanks, officer. Appreciate you.|Gracias, oficial. Se lo agradezco.|zénks, áfiser. apríshieit iú|🙏👮‍♂️😎
 A|Thanks, officer.
 L|Thank you, officer. I appreciate your help.
+N|davis|happy|You kept your cool, sir. Most people would've lost it.|Mantuvo la calma, señor. Casi todos se hubieran vuelto locos.
+Y|Honestly? I was screaming on the inside.|¿La neta? Por dentro estaba gritando.|ánestli? ái uás skrímin an di insáid|😤🤐😂
+A|I was screaming inside.
+L|To be honest, I was very angry internally.
 O|money|200|El seguro de Karen te pagó $200
 O|end|Karen pagó. La cámara no miente. Y tú ni levantaste la voz. Nivel: adulto.
 
@@ -684,6 +756,10 @@ N|doctor|happy|Good news. It's just a sprain. Ice, rest, and no ladders for two 
 Y|Hear that, drama queen? You'll live.|¿Oíste, dramático? Vas a vivir.|jír dat, dráma kuín? iúl lív|👑😂🧊
 A|You'll live, bro.
 L|Did you hear that? You will survive.
+N|carlos|sad|Two weeks? Güey, who's gonna make the carne asada?|¿Dos semanas? Güey, ¿quién va a hacer la carne asada?
+Y|You can sit and boss me around. Like always.|Puedes sentarte y mandarme. Como siempre.|iú kan sít and bás mi aráund. láik ólueis|🪑👑🥩
+A|You can boss me around, like always.
+L|You can sit down and give me instructions, as usual.
 O|money|-50|Pagaste $50 del copago
 O|pickup|carlos|Sube a Carlos al carro
 O|drop|casa|Llévalo a la casa
@@ -705,6 +781,10 @@ N|chloe|sad|Ugh, of course you are. Okay, one dance. As friends. Totally innocen
 Y|One dance. As friends. Hands where I can see them.|Un baile. De amigos. Las manos donde las vea.|uán dáns. as fréns. jánds uér ái kan sí dem|🙌😂🕺
 A|One dance. As friends.
 L|Only one dance, as friends. Please keep your hands visible.
+N|chloe|laugh|Ugh, you're no fun. But okay, I respect it.|Uf, qué aburrido. Pero va, lo respeto.
+Y|I'm a lotta fun. Just not that kinda fun.|Soy muy divertido. Nomás no de ese tipo.|áim a lóra fán. yást nát dat káinda fán|😇🎉🙅‍♂️
+A|I'm fun. Just not that kind of fun.
+L|I am very fun, but not in that way.
 O|talk|antro|emily,chloe|Explícale a Emily
 N|emily|angry|Wow. Okay. So this is what you do on Fridays?|Guau. Bueno. ¿Así que esto haces los viernes?
 Y|Babe, wait. It's not what it looks like.|Amor, espérate. No es lo que parece.|béib, uéit. its nát uát it lúks láik|😰🙏💔
@@ -781,6 +861,10 @@ N|nina|sad|Ugh, long. Delayed two hours and the guy next to me snored the whole 
 Y|That sucks. Lemme grab your bags.|Qué mal. Déjame cargar tus maletas.|dat sáks. lémi gráb iór bágs|🧳💪😴
 A|That sucks. Let me grab your bags.
 L|That is unfortunate. Please allow me to carry your luggage.
+N|nina|flirty|Aw, a gentleman. Emily didn't tell me that part.|Ay, un caballero. Emily no me contó esa parte.
+Y|What did she tell you? Should I be worried?|¿Qué te contó? ¿Me debo preocupar?|uát did shi tél iú? shud ái bi uórid|😬👂🤔
+A|What did she tell you?
+L|What did she say to you? Should I be concerned?
 O|pickup|nina|Recoge a Nina
 O|car|Súbete a tu carro
 O|drop|hotel|Lleva a Nina al hotel

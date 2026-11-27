@@ -534,12 +534,12 @@ function drawRoute(){const r=W3D.ribbon,T=S.target;if(!T||T.x===undefined||S.loc
   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setIndex(idx);r.geometry.dispose();r.geometry=g;r.visible=true;W3D.route=pts}
 function startMission(m,cast,runner){if(S.busy)return;if(typeof canRun==='function'&&!canRun()){toast3('El micrófono todavía no está listo. Intenta otra vez en un momento.');return}S.busy=true;const T=S.target;S.grab=null;if(S.grabCar){S.grabCar.hidden=false;S.grabCar=null}
   const L=T&&T.L;const cx=L?L.door.x:PL.pos.x,cz=L?L.door.z:PL.pos.z;
-  if(L){PL.pos.set(cx,groundY(cx,cz),cz)}
-  const fwd=L?(L.face===0?1:-1):1;const ids=(cast||m.cast).filter(id=>id!=='stanley');
+  const fwd=L?(L.face===0?1:-1):1;
+  if(L){const pz=cz+fwd*2.4;PL.pos.set(cx,groundY(cx,pz),pz)}const ids=(cast||m.cast).filter(id=>id!=='stanley');
   ids.forEach((id,i)=>{let n=S.job&&S.job.n&&S.job.n.id===id?S.job.n:NPCS.find(x=>x.id===id&&!x.ped);if(!n){n=makePerson(id);n.temp=true;NPCS.push(n)}if(!n.temp)n._back=n.g.position.clone();n.hidden=false;
-    const off=(i-(ids.length-1)/2)*1.25;let x=PL.pos.x+off,z=PL.pos.z-fwd*(-2.1);if(S.inCar){const h=S.inCar.h;x=S.inCar.g.position.x-Math.cos(h)*2.4+Math.sin(h)*off;z=S.inCar.g.position.z+Math.sin(h)*2.4+Math.cos(h)*off}n.g.position.set(x,groundY(x,z),z);n.conv=PL.pos.clone();n.goTo=null});
+    const off=(i-(ids.length-1)/2)*1.25;let x=PL.pos.x+off,z=L?cz+fwd*.25:PL.pos.z+fwd*2.1;if(S.inCar){const h=S.inCar.h;x=S.inCar.g.position.x-Math.cos(h)*2.4+Math.sin(h)*off;z=S.inCar.g.position.z+Math.sin(h)*2.4+Math.cos(h)*off}n.g.position.set(x,groundY(x,z),z);n.conv=PL.pos.clone();n.goTo=null});
   // Stanley mira hacia la puerta, la gente queda frente a él
-  const look=new THREE.Vector3(PL.pos.x,0,PL.pos.z+fwd*2.1);PL.p.face=Math.atan2(look.x-PL.pos.x,look.z-PL.pos.z);S.yaw=PL.p.face+Math.PI;
+  const look=new THREE.Vector3(PL.pos.x,0,L?cz:PL.pos.z+fwd*2.1);PL.p.face=Math.atan2(look.x-PL.pos.x,look.z-PL.pos.z);S.yaw=PL.p.face+Math.PI;
   frameConv(ids);S.locked=true;UI.hud(false);
   W3D.after=()=>{S.busy=false;S.locked=false;S.conv=null;NPCS.forEach(n=>{n.conv=null;if(n._back){n.g.position.copy(n._back);n._back=null}});
     for(let i=NPCS.length-1;i>=0;i--)if(NPCS[i].temp&&!NPCS[i].keep){scene.remove(NPCS[i].g);NPCS.splice(i,1)}UI.hud(true);setTarget()};
@@ -549,8 +549,8 @@ function frameConv(ids){const ns=ids.map(id=>NPCS.find(n=>n.id===id)).filter(Boo
   const dx=c.x-PL.pos.x,dz=c.z-PL.pos.z,l=Math.hypot(dx,dz)||1,ux=dx/l,uz=dz/l;
   /* la tarjeta y el micrófono tapan la mitad de abajo: la cámara mira un poco abajo para que la persona quede arriba */
   const D=S.fp?2.4:3.3;const pos=new THREE.Vector3(c.x-ux*D+(S.fp?0:-uz*.7),S.fp?PL.pos.y+1.5:1.55,c.z-uz*D+(S.fp?0:ux*.7));
-  const look=new THREE.Vector3(c.x,ns[0]&&ns[0].dog?-.1:.45,c.z);
-  S.conv={pos,look};if(!S.convInit){CAMP.copy(camera.position);CAMT.copy(look)}PL.p.g.visible=!S.fp&&!S.inCar}
+  const look=new THREE.Vector3(c.x,ns[0]&&ns[0].dog?-.1:.75,c.z);
+  S.conv={pos,look};CAMP.copy(pos);CAMT.copy(look);camera.position.copy(pos);camera.lookAt(look);PL.p.g.visible=false}
 function checkMission(dt){const T=S.target;if(!T||S.busy||S.locked)return;if(T.gta){gtaTick(dt);return}
   if(T.phone&&S.t>S.ringAt&&S.ringAt>0){S.ringAt=0;UI.ring(T.m)}
   
