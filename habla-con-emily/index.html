@@ -5,12 +5,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: app de iPhone. Pantallas por pestañas (Hoy · Ruta · Cerebro · Yo) con barra inferior; la práctica abre a pantalla completa con Stanley y Emily animados arriba y el micrófono abajo. */
+/* Layout: app de iPhone por escenarios. Pestañas abajo (Hoy · Mapa · Tarjetas · Plática · Yo). Cada escena abre a pantalla completa: arriba el lugar animado (Stanley camina, aparece la otra persona), en medio la tarjeta con lo que dices y su dibujo, abajo el micrófono. */
 :root{
   --bg:#F2F2F7; --card:#FFFFFF; --card2:#F7F7FB; --ink:#0B0B14; --sub:#6B6B7D; --sep:rgba(60,60,67,.14); --fill:rgba(120,120,128,.12);
   --stan:#3557FF; --stan-soft:#E4E9FF; --emily:#FF3D7F; --emily-soft:#FFE3EC;
   --flame:#FF8A00; --flame-soft:#FFF0DC; --ok:#12A150; --ok-soft:#DDF5E7; --bad:#E5484D; --bad-soft:#FDE4E4;
-  --brain:#7C4DFF; --brain-soft:#EEE7FF; --hero:#10142B; --hero-ink:#FFFFFF; --on-acc:#FFFFFF;
+  --brain:#7C4DFF; --brain-soft:#EEE7FF; --hero:#10142B; --on-acc:#FFFFFF; --gold:#F5B400;
   --skin-a:#C68A5E; --skin-b:#F2C6A2; --hair-a:#2A1D16; --hair-b:#7A4A2A;
   --round:ui-rounded,"SF Pro Rounded","Nunito",-apple-system,system-ui,sans-serif;
   --text:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif;
@@ -19,17 +19,17 @@
   --bg:#000000; --card:#1C1C1E; --card2:#232326; --ink:#F5F5F7; --sub:#9C9CA8; --sep:rgba(84,84,88,.55); --fill:rgba(120,120,128,.26);
   --stan:#7088FF; --stan-soft:#1D2554; --emily:#FF6B9C; --emily-soft:#4A1729;
   --flame:#FF9F0A; --flame-soft:#3D2706; --ok:#30D158; --ok-soft:#0F3A1E; --bad:#FF6961; --bad-soft:#431615;
-  --brain:#A585FF; --brain-soft:#2A1E52; --hero:#1A1F3D; --on-acc:#0B0B14; color-scheme:dark}}
+  --brain:#A585FF; --brain-soft:#2A1E52; --hero:#1A1F3D; --on-acc:#0B0B14; --gold:#FFD60A; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#000000; --card:#1C1C1E; --card2:#232326; --ink:#F5F5F7; --sub:#9C9CA8; --sep:rgba(84,84,88,.55); --fill:rgba(120,120,128,.26);
   --stan:#7088FF; --stan-soft:#1D2554; --emily:#FF6B9C; --emily-soft:#4A1729;
   --flame:#FF9F0A; --flame-soft:#3D2706; --ok:#30D158; --ok-soft:#0F3A1E; --bad:#FF6961; --bad-soft:#431615;
-  --brain:#A585FF; --brain-soft:#2A1E52; --hero:#1A1F3D; --on-acc:#0B0B14; color-scheme:dark}
+  --brain:#A585FF; --brain-soft:#2A1E52; --hero:#1A1F3D; --on-acc:#0B0B14; --gold:#FFD60A; color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.4;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
-button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--stan);outline-offset:2px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--stan);outline-offset:2px}
 h1,h2,h3{margin:0;font-family:var(--round);text-wrap:balance}
 p{margin:0}
 .page{max-width:560px;margin:0 auto;padding-top:max(14px,env(safe-area-inset-top,0px));padding-bottom:calc(96px + env(safe-area-inset-bottom,0px));
@@ -45,10 +45,11 @@ p{margin:0}
 .card{background:var(--card);border-radius:22px;padding:16px}
 .group{background:var(--card);border-radius:18px;overflow:hidden}
 .group>*+*{border-top:1px solid var(--sep)}
-.cell{display:flex;align-items:center;gap:12px;padding:13px 16px;width:100%;text-align:left;min-height:56px}
+.cell{display:flex;align-items:center;gap:12px;padding:12px 16px;width:100%;text-align:left;min-height:56px}
 .cell .grow{flex:1;min-width:0}
-.cell strong{display:block;font-weight:600}
+.cell strong{display:block;font-weight:700}
 .cell small{color:var(--sub);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cell.lock{opacity:.5}
 .chev{color:var(--sub);flex:none}
 .sec-t{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:0 4px}
 .sec-t h3{font-size:1.25rem;font-weight:800}
@@ -56,91 +57,95 @@ p{margin:0}
 .btn:active{transform:scale(.97)}
 .btn svg{width:24px;height:24px}
 .btn.ghost{background:var(--fill);color:var(--ink)}
-.btn.purple{background:var(--brain)}
+.btn.pink{background:var(--emily)}
 .btn.small{padding:10px 14px;font-size:.95rem;border-radius:12px;width:auto}
 .btn[disabled]{opacity:.45}
 .row{display:flex;gap:10px;flex-wrap:wrap}
 .row>.btn{flex:1;min-width:130px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:6px 12px;border-radius:99px;background:var(--bad-soft);color:var(--bad);font-weight:700;font-size:.9rem}
+.chip.p{background:var(--brain-soft);color:var(--brain)}
+.warn{background:var(--bad-soft);border-radius:14px;padding:12px 14px}
+.link{color:var(--sub);text-decoration:underline;padding:6px;font-size:.9rem}
+input[type=text],input[type=password]{width:100%;font:inherit;color:var(--ink);background:var(--card2);border:1px solid var(--sep);border-radius:12px;padding:12px}
+select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid var(--sep);border-radius:10px;padding:9px 10px}
+code{font-size:.85em;background:var(--fill);padding:1px 5px;border-radius:5px}
 
-/* ---------- héroe ---------- */
-.hero{background:var(--hero);color:var(--hero-ink);border-radius:26px;padding:18px;display:grid;gap:14px;position:relative;overflow:hidden}
+/* ---------- héroe de Hoy ---------- */
+.hero{background:var(--hero);color:#fff;border-radius:26px;padding:18px;display:grid;gap:14px;position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,61,127,.35),transparent 65%);right:-90px;top:-110px}
-.hero::after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(53,87,255,.45),transparent 65%);left:-90px;bottom:-130px}
 .hero>*{position:relative;z-index:1}
-.stage{display:flex;align-items:flex-end;justify-content:center;gap:18px}
-.bubble{background:#fff;color:#0B0B14;border-radius:18px;padding:10px 14px;font-weight:600;position:relative}
-.bubble::after{content:"";position:absolute;left:70%;bottom:-8px;border:9px solid transparent;border-top-color:#fff;border-bottom:0}
 .hero .cap{color:rgba(255,255,255,.65)}
-.hero h2{font-size:1.5rem;font-weight:900}
-.ringrow{display:flex;align-items:center;gap:14px}
-.ring{flex:none;width:58px;height:58px}
-.ring circle{fill:none;stroke-width:7}
-.ring .bgc{stroke:rgba(255,255,255,.15)}
-.ring .fgc{stroke:var(--flame);stroke-linecap:round;transition:stroke-dashoffset .6s}
+.hero h2{font-size:1.55rem;font-weight:900}
+.mini{height:120px;border-radius:18px;overflow:hidden;position:relative}
+.vbanner{display:flex;gap:12px;align-items:center;background:var(--emily-soft);border-radius:18px;padding:12px 14px}
+.vbanner b{display:block}
+.prog{height:8px;border-radius:9px;background:var(--fill);overflow:hidden}
+.prog u{display:block;height:100%;background:var(--emily);border-radius:9px;transition:width .3s}
 
 /* ---------- avatares ---------- */
 .av{width:96px;height:96px;flex:none;position:relative}
-.av.sm{width:64px;height:64px}
+.av.sm{width:72px;height:72px}
 .av svg{width:100%;height:100%;overflow:visible}
 .av .mouth{transform-box:fill-box;transform-origin:center;transform:scaleY(.35)}
 .av.talk .mouth{animation:talk .16s ease-in-out infinite alternate}
 .av .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.6s infinite}
-.av.b .eye{animation-delay:1.3s}
-.av.listen::before{content:"";position:absolute;inset:-5px;border-radius:50%;border:4px solid var(--stan);animation:ping 1.2s ease-out infinite}
+.av.listen::before{content:"";position:absolute;inset:-5px;border-radius:50%;border:4px solid var(--bad);animation:ping 1.1s ease-out infinite}
 .av.happy svg{animation:hop .5s ease}
 .av.sad svg{animation:shake .4s ease}
-.av .tag{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);font-size:.7rem;font-weight:800;font-family:var(--round);padding:2px 8px;border-radius:99px;color:#fff;white-space:nowrap}
+.av .tag{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-size:.66rem;font-weight:800;font-family:var(--round);padding:2px 7px;border-radius:99px;color:#fff;white-space:nowrap}
 .av.a .tag{background:var(--stan)} .av.b .tag{background:var(--emily)}
+.npcface{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:44px;background:#ffffffcc;position:relative;box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.npcface.talk{animation:nod .3s ease-in-out infinite alternate}
+.npcface .tag{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);font-size:.66rem;font-weight:800;font-family:var(--round);padding:2px 7px;border-radius:99px;color:#fff;background:#444;white-space:nowrap}
 @keyframes talk{from{transform:scaleY(.25)}to{transform:scaleY(1.15)}}
 @keyframes blink{0%,94%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
 @keyframes ping{from{transform:scale(.95);opacity:.8}to{transform:scale(1.25);opacity:0}}
 @keyframes hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-12px)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes nod{from{transform:rotate(-4deg) translateY(0)}to{transform:rotate(4deg) translateY(-3px)}}
 
-/* ---------- plan semanal ---------- */
-.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.day{display:grid;gap:4px;justify-items:center;padding:8px 0;border-radius:14px;background:var(--card)}
-.day b{font-family:var(--round);font-weight:900;font-size:1.05rem}
-.day span{font-size:.62rem;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.04em}
-.day i{width:22px;height:5px;border-radius:9px;background:var(--fill);overflow:hidden;display:block}
-.day i u{display:block;height:100%;background:var(--ok)}
-.day.now{background:var(--stan);color:var(--on-acc)}
-.day.now span{color:inherit;opacity:.8}
-.day.now i{background:rgba(255,255,255,.3)} .day.now i u{background:var(--on-acc)}
-.day.done b{color:var(--ok)}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{padding:6px 12px;border-radius:99px;background:var(--bad-soft);color:var(--bad);font-weight:700;font-size:.9rem}
-.chip.p{background:var(--brain-soft);color:var(--brain)}
-.ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;color:#fff;font-family:var(--round);font-weight:900}
-.ico svg{width:22px;height:22px}
+/* ---------- escena animada ---------- */
+.scene{position:relative;height:clamp(150px,23vh,210px);border-radius:24px;overflow:hidden;background:linear-gradient(var(--sky) 0 62%,var(--floor) 62% 100%);flex:none}
+.scene .props{position:absolute;left:0;right:0;top:18%;height:44%;overflow:hidden}
+.scene .track{display:flex;gap:26px;font-size:clamp(32px,5vh,44px);white-space:nowrap;width:max-content;animation:scroll 14s linear infinite;animation-play-state:paused;opacity:.92}
+.scene.walk .track{animation-play-state:running}
+.scene .actor{position:absolute;bottom:8px;transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .6s}
+.scene .actor.me{left:14px}
+.scene.walk .actor.me .av{animation:bob .45s ease-in-out infinite alternate}
+.scene .actor.npc{right:14px;transform:translateX(140%);opacity:0}
+.scene.meet .actor.npc{transform:none;opacity:1}
+.scene .say{position:absolute;top:10px;max-width:68%;background:#fff;color:#0B0B14;border-radius:16px;padding:8px 12px;font-weight:700;font-size:.92rem;line-height:1.25;box-shadow:0 4px 14px rgba(0,0,0,.18);opacity:0;transform:translateY(6px);transition:.25s}
+.scene .say small{display:block;font-weight:500;color:#555;font-size:.8rem;margin-top:2px}
+.scene .say.on{opacity:1;transform:none}
+.scene .say.npc{right:12px;border-bottom-right-radius:4px}
+.scene .say.me{left:12px;background:#3557FF;color:#fff;border-bottom-left-radius:4px}
+.scene .place{position:absolute;left:12px;top:10px;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:rgba(0,0,0,.45)}
+.scene.phone .actor.npc{right:50%;transform:translateX(50%);opacity:1;bottom:40px}
+.scene.phone .ring{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-80px 0 0 -60px;border-radius:50%;border:3px solid rgba(255,255,255,.7);animation:ping 1.6s ease-out infinite}
+.scene.phone .callbar{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;font-weight:700;font-size:.78rem;padding:4px 12px;border-radius:99px;font-variant-numeric:tabular-nums}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes bob{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-5px) rotate(2deg)}}
 
-/* ---------- ruta ---------- */
-.stagehead{display:flex;align-items:center;gap:12px;padding:0 4px}
-.stagehead .bar{height:8px;border-radius:9px;background:var(--fill);overflow:hidden}
-.stagehead .bar u{display:block;height:100%;border-radius:9px}
-.unum{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-family:var(--round);font-weight:900;flex:none;background:var(--fill);color:var(--sub)}
-.unum.done{background:var(--ok);color:#fff}
-.unum.now{background:var(--stan);color:#fff;box-shadow:0 0 0 4px var(--stan-soft)}
-.cell.lock{opacity:.55}
-.tagday{font-size:.72rem;font-weight:800;color:var(--sub);background:var(--fill);padding:3px 8px;border-radius:99px;flex:none}
+/* ---------- mapa ---------- */
+.lvl{display:flex;align-items:center;gap:12px;padding:0 4px}
+.lvl .bar{height:8px;border-radius:9px;background:var(--fill);overflow:hidden}
+.lvl .bar u{display:block;height:100%;border-radius:9px}
+.ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;color:#fff;font-family:var(--round);font-weight:900;font-size:1.3rem}
+.scnum{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none;font-size:1.5rem;background:var(--fill)}
+.scnum.now{background:var(--stan-soft);box-shadow:0 0 0 3px var(--stan)}
+.stars{color:var(--gold);font-size:.85rem;letter-spacing:1px;flex:none}
+.stars i{color:var(--fill);font-style:normal}
 
-/* ---------- cerebro ---------- */
-.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--fill);border-radius:12px;padding:3px}
-.seg button{padding:8px;border-radius:10px;font-weight:700;color:var(--sub)}
-.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
-.graphbox{position:relative;background:var(--card);border-radius:22px;overflow:hidden;touch-action:none}
-.graphbox canvas{display:block;width:100%;height:380px}
-.gtools{position:absolute;right:10px;top:10px;display:grid;gap:6px}
-.gtools button{width:36px;height:36px;border-radius:10px;background:var(--card2);font-weight:900;font-size:1.2rem;box-shadow:0 1px 4px rgba(0,0,0,.15)}
-.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:.8rem;color:var(--sub);padding:0 4px}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
-.detail{display:grid;gap:10px}
-.notebody{white-space:pre-wrap;overflow-wrap:anywhere}
-.wl{color:var(--brain);font-weight:700;background:var(--brain-soft);border-radius:6px;padding:0 4px}
-.phr{display:grid;gap:2px;padding:10px 16px}
-.phr .e{font-weight:700} .phr .s{color:var(--sub);font-size:.92rem} .phr .r{font-style:italic;font-size:.92rem;color:var(--emily)}
-
-/* ---------- yo ---------- */
+/* ---------- tarjetas ---------- */
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.fc{background:var(--card);border-radius:18px;padding:12px;display:grid;gap:4px;align-content:start;text-align:left}
+.fc .em{font-size:2.3rem;line-height:1.1;letter-spacing:2px}
+.fc .e{font-weight:800;font-family:var(--round)}
+.fc .s{color:var(--sub);font-size:.85rem}
+.fc .r{color:var(--emily);font-style:italic;font-size:.85rem}
+.fc.due{box-shadow:0 0 0 2px var(--flame)}
+.fc.weak{box-shadow:0 0 0 2px var(--bad)}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .stat{background:var(--card);border-radius:18px;padding:14px}
 .stat b{display:block;font-family:var(--round);font-size:1.8rem;font-weight:900;font-variant-numeric:tabular-nums}
@@ -150,77 +155,56 @@ p{margin:0}
 .hbar .t{height:10px;border-radius:9px;background:var(--fill);overflow:hidden}
 .hbar .t u{display:block;height:100%;background:var(--bad);border-radius:9px}
 .hbar .n{text-align:right;color:var(--sub);font-variant-numeric:tabular-nums;font-size:.85rem}
-select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid var(--sep);border-radius:10px;padding:9px 10px}
-input[type=text],input[type=password],textarea{width:100%;font:inherit;color:var(--ink);background:var(--card2);border:1px solid var(--sep);border-radius:12px;padding:12px}
-textarea{min-height:160px;resize:vertical}
-code{font-size:.85em;background:var(--fill);padding:1px 5px;border-radius:5px}
 
-/* ---------- barra de pestañas ---------- */
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);
+/* ---------- pestañas ---------- */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(5,1fr);
   background:color-mix(in srgb,var(--card) 82%,transparent);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
   border-top:1px solid var(--sep);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
-.tabs button{display:grid;justify-items:center;gap:2px;padding:8px 0 6px;font-size:.68rem;font-weight:600;color:var(--sub)}
-.tabs button svg{width:26px;height:26px}
+.tabs button{display:grid;justify-items:center;gap:2px;padding:8px 0 6px;font-size:.66rem;font-weight:600;color:var(--sub)}
+.tabs button span.i{font-size:1.45rem;line-height:1;filter:grayscale(1);opacity:.7}
 .tabs button.on{color:var(--stan)}
+.tabs button.on span.i{filter:none;opacity:1}
 
-/* ---------- sesión (pantalla completa) ---------- */
+/* ---------- sesión ---------- */
 .sess{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;overflow:hidden}
-.sess .in{max-width:560px;width:100%;margin:0 auto;flex:1;display:flex;flex-direction:column;gap:12px;min-height:0;
-  padding-top:max(12px,env(safe-area-inset-top,0px));padding-bottom:max(14px,env(safe-area-inset-bottom,0px));
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.shead{display:flex;align-items:center;gap:12px}
+.sess .in{max-width:560px;width:100%;margin:0 auto;flex:1;display:flex;flex-direction:column;gap:10px;min-height:0;
+  padding-top:max(10px,env(safe-area-inset-top,0px));padding-bottom:max(12px,env(safe-area-inset-bottom,0px));
+  padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}
+.shead{display:flex;align-items:center;gap:10px;flex:none}
 .xbtn{width:36px;height:36px;border-radius:50%;background:var(--fill);display:grid;place-items:center;flex:none}
 .xbtn svg{width:18px;height:18px}
 .pbar{flex:1;height:10px;border-radius:9px;background:var(--fill);overflow:hidden}
 .pbar u{display:block;height:100%;width:0;background:var(--ok);border-radius:9px;transition:width .4s}
-.sinfo{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.sinfo{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex:none}
 .phase{font-family:var(--round);font-weight:900;font-size:1.05rem}
-.sstage{display:flex;justify-content:space-between;align-items:flex-end;padding:4px 18px}
-.snote{font-size:.9rem;color:var(--sub);background:var(--card);border-radius:14px;padding:10px 12px}
+.snote{font-size:.88rem;color:var(--sub);background:var(--card);border-radius:14px;padding:8px 12px;flex:none}
 .snote b{color:var(--ink)}
-.schat{display:flex;flex-direction:column;gap:6px;overflow-y:auto;flex:none;max-height:18vh}
-.bub{max-width:82%;padding:7px 12px;border-radius:16px;font-size:.9rem}
-.bub.a{align-self:flex-end;background:var(--stan);color:#fff;border-bottom-right-radius:5px}
-.bub.b{align-self:flex-start;background:var(--card);border-bottom-left-radius:5px}
-.scard{background:var(--card);border-radius:24px;padding:16px 18px;display:grid;gap:10px;flex:0 1 auto;min-height:0;overflow-y:auto}
-.dock,.acts,.shead,.sinfo,.sstage{flex:none}
-.who{display:flex;align-items:center;gap:8px;font-weight:800;font-family:var(--round);font-size:.95rem}
-.who i{width:10px;height:10px;border-radius:50%;background:currentColor}
-.who em{margin-left:auto;font-style:normal;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--sub)}
-.en{font-family:var(--round);font-weight:900;font-size:clamp(1.55rem,7vw,2.2rem);line-height:1.1;letter-spacing:-.01em}
-.en.long{font-size:clamp(1.2rem,5.2vw,1.6rem)}
-.en.hide{font-family:var(--text);font-weight:600;font-size:1.1rem;color:var(--sub)}
-.kv{display:grid;grid-template-columns:88px 1fr;gap:4px 10px;align-items:baseline}
-.kv .k{font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--sub)}
-.kv .pr{font-style:italic;font-size:1.15rem;color:var(--emily);font-weight:600}
-.kv .es{font-size:1.02rem}
+.scard{background:var(--card);border-radius:22px;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:start;flex:0 1 auto;min-height:0;overflow-y:auto}
+.scard .who{grid-column:1/-1;display:flex;align-items:center;gap:8px;font-weight:800;font-family:var(--round);font-size:.9rem;color:var(--stan)}
+.scard .who em{margin-left:auto;font-style:normal;font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--sub)}
+.scard .body{display:grid;gap:6px;min-width:0}
+.scard .draw{font-size:2.8rem;line-height:1;letter-spacing:2px;animation:wobble 2.2s ease-in-out infinite;transform-origin:50% 80%;text-align:center;max-width:120px;overflow-wrap:anywhere}
+@keyframes wobble{0%,100%{transform:rotate(-6deg) scale(1)}50%{transform:rotate(6deg) scale(1.08)}}
+.en{font-family:var(--round);font-weight:900;font-size:clamp(1.3rem,5.6vw,1.8rem);line-height:1.12}
+.en.long{font-size:clamp(1.15rem,5vw,1.5rem)}
+.en.hide{font-family:var(--text);font-weight:700;font-size:1.2rem}
+.pr{font-style:italic;font-size:1.1rem;color:var(--emily);font-weight:600}
+.es{color:var(--sub)}
+.hints{grid-column:1/-1;display:grid;gap:8px}
+.hint{background:var(--card2);border-radius:14px;padding:10px 12px;display:grid;gap:2px}
+.hint .e{font-weight:800} .hint .s{color:var(--sub);font-size:.9rem} .hint .r{color:var(--emily);font-style:italic;font-size:.9rem}
 .spacer{flex:1 1 0;min-height:0}
-.fb{border-radius:14px;padding:10px 14px;font-weight:600}
+.fb{border-radius:14px;padding:9px 14px;font-weight:600;flex:none}
 .fb.ok{background:var(--ok-soft);color:var(--ok)}
 .fb.bad{background:var(--bad-soft);color:var(--ink);font-weight:500}
 .fb.bad mark{background:none;color:var(--bad);font-weight:800;text-decoration:underline}
-.dock{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:22px;padding:12px 14px}
-.orb{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;background:var(--fill);color:var(--sub);flex:none;position:relative;transition:background .2s}
-.orb svg{width:28px;height:28px}
-.orb{width:72px;height:72px;cursor:pointer}
+.dock{display:flex;align-items:center;gap:14px;background:var(--card);border-radius:22px;padding:10px 14px;flex:none}
+.orb{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:var(--fill);color:var(--sub);flex:none;position:relative;transition:background .2s;cursor:pointer}
 .orb svg{width:32px;height:32px}
 .orb.ready{background:var(--stan);color:#fff;box-shadow:0 0 0 6px var(--stan-soft)}
 .orb.ready::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:3px solid var(--stan);animation:ping 1.8s ease-out infinite}
 .orb.listen{background:var(--bad);color:#fff}
 .orb.listen::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--bad);animation:ping 1s ease-out infinite}
-.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.acts button{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 6px;border-radius:12px;background:var(--card);font-weight:700;font-size:.88rem}
-.acts button svg{width:18px;height:18px}
-.tbar{display:flex;gap:8px;align-items:center}
-.tbar input{flex:1;min-width:0;padding:9px 12px}
-.tbar button{background:var(--brain);color:#fff;font-weight:800;padding:9px 14px;border-radius:10px}
-.snote .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-.snote .chips::-webkit-scrollbar{display:none}
-.snote .chip{flex:none;font-size:.82rem;padding:5px 10px}
-.sess .schat{max-height:12vh}
-.hints{display:grid;gap:8px}
-.hint{background:var(--card2);border-radius:14px;padding:10px 12px;display:grid;gap:2px}
-.hint .e{font-weight:800} .hint .s{color:var(--sub);font-size:.9rem} .hint .r{color:var(--emily);font-style:italic;font-size:.9rem}
 .orb.speak{background:var(--emily);color:#fff}
 .orb.ok{background:var(--ok);color:#fff}
 .orb.bad{background:var(--bad);color:#fff}
@@ -228,26 +212,31 @@ code{font-size:.85em;background:var(--fill);padding:1px 5px;border-radius:5px}
 .dock .t{flex:1;min-width:0}
 .dock .st{font-weight:800;font-family:var(--round)}
 .dock .heard{color:var(--sub);font-size:.92rem;overflow-wrap:anywhere;min-height:1.3em}
-.cmds{text-align:center;font-size:.78rem;color:var(--sub)}
-.cmds b{color:var(--ink)}
-.win{position:absolute;inset:0;display:grid;place-items:center;background:color-mix(in srgb,var(--bg) 85%,transparent);z-index:5;animation:fade .25s}
-.win div{text-align:center;display:grid;gap:8px;justify-items:center;padding:24px}
-.win b{font-family:var(--round);font-size:2rem;font-weight:900}
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:none}
+.acts button{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 6px;border-radius:12px;background:var(--card);font-weight:700;font-size:.88rem}
+.tbar{display:flex;gap:8px;align-items:center}
+.tbar input{flex:1;min-width:0;padding:9px 12px}
+.tbar button{background:var(--brain);color:#fff;font-weight:800;padding:9px 14px;border-radius:10px}
+.snote .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-top:8px}
+.snote .chips::-webkit-scrollbar{display:none}
+.snote .chip{flex:none;font-size:.82rem;padding:5px 10px}
+.win{position:absolute;inset:0;display:grid;place-items:center;background:color-mix(in srgb,var(--bg) 88%,transparent);z-index:5;animation:fade .25s}
+.win div{text-align:center;display:grid;gap:8px;justify-items:center;padding:24px;max-width:420px}
+.win b{font-family:var(--round);font-size:1.9rem;font-weight:900}
+.win .big{font-size:2.4rem;color:var(--gold);letter-spacing:4px}
 .win .xp{color:var(--flame);font-family:var(--round);font-weight:900;font-size:1.3rem}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-
-/* ---------- hojas ---------- */
 .sheetbg{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.4);display:flex;align-items:flex-end;justify-content:center;animation:fade .2s}
 .sheet{background:var(--bg);width:100%;max-width:560px;max-height:92%;overflow-y:auto;border-radius:22px 22px 0 0;display:grid;gap:14px;
   padding:10px max(16px,env(safe-area-inset-left,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-right,0px));animation:up .28s cubic-bezier(.2,.8,.2,1)}
 .sheet .grab{width:40px;height:5px;border-radius:9px;background:var(--fill);justify-self:center}
 .sheet h3{font-size:1.4rem;font-weight:900}
+.phr{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;padding:10px 16px;align-items:start}
+.phr .em{grid-row:span 3;font-size:1.6rem}
+.phr .e{font-weight:700} .phr .s{color:var(--sub);font-size:.9rem} .phr .r{font-style:italic;font-size:.9rem;color:var(--emily)}
+.phr.npc .e{color:var(--sub);font-weight:600}
 @keyframes up{from{transform:translateY(40%)}to{transform:none}}
 .toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:90;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:700;animation:fade .2s;max-width:90vw;text-align:center}
-.wake{position:fixed;inset:0;z-index:80;background:color-mix(in srgb,var(--bg) 90%,transparent);display:grid;place-items:center;padding:24px}
-.wake div{max-width:380px;display:grid;gap:14px;text-align:center}
-.link{color:var(--sub);text-decoration:underline;padding:6px;font-size:.9rem}
-.warn{background:var(--bad-soft);border-radius:14px;padding:12px 14px}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition:none!important}}
 </style>
 
@@ -255,309 +244,99 @@ code{font-size:.85em;background:var(--fill);padding:1px 5px;border-radius:5px}
 <nav class="tabs" id="tabs"></nav>
 
 <script>
+/* Temas de la plática guiada: se llenan desde escenas/platica.js */
+const FT={};
+function T(id,keys,en,es,pr,txt){const qs=[];txt.trim().split("\n").forEach(r=>{const [k,a,b,c]=r.trim().split("|");if(k==="Q")qs.push({q:["B",a,b,c],h:[]});else if(qs.length)qs[qs.length-1].h.push({en:a,es:b,pr:c})});FT[id]={id,keys,en,es,pr,qs}}
+window.ESC_TXT=[];
+</script>
+<script src="escenas/platica.js"></script>
+<script src="escenas/n1.js"></script>
+<script src="escenas/n2.js"></script>
+<script src="escenas/n3.js"></script>
+<script src="escenas/n4.js"></script>
+<script src="escenas/n5.js"></script>
+<script src="escenas/n6.js"></script>
+<script src="escenas/n7.js"></script>
+<script>
 /* =====================================================================
-   1. CONTENIDO  —  quién | inglés | español | cómo se lee
-   A = Stanley (tú) · B = Emily
+   1. NIVELES, LUGARES Y ESCENAS
    ===================================================================== */
-const STAGES=[
- {id:"p",n:"Palabras",d:"Pedacitos que los nativos dicen todo el día",c:"--flame"},
- {id:"v",n:"Verbos",d:"Los verbos clave, como suenan de verdad",c:"--emily"},
- {id:"e",n:"Estructuras",d:"Una estructura a la vez, hasta dominarla",c:"--stan"},
- {id:"j",n:"Juntar todo",d:"Todo mezclado en pláticas reales",c:"--brain"},
- {id:"c",n:"Pila de conversación",d:"Plática tras plática: exposición pura",c:"--ok"}];
-const UNITS=[];
-function U(id,t,s,n,txt){UNITS.push({id,t,s,n,stage:id[0],l:txt.trim().split("\n").map(r=>r.trim().split("|"))})}
-
-U("p1","Saludar","Hey · What's up","Así saludan de verdad. Nadie dice «Hello, how are you?» en la calle.",`
-A|Hey!|¡Hola!|jéi
-A|What's up?|¿Qué onda?|uáts áp
-A|How's it going?|¿Cómo te va?|jáus it góuin
-A|Good morning.|Buenos días.|gud mórnin
-A|See you later.|Nos vemos al rato.|síiu léirer
-A|Take care.|Cuídate.|téik kér`);
-U("p2","Contestar rápido","Yeah · Sure · Nope","Respuestas de una o dos palabras que usas mil veces al día.",`
-A|Yeah.|Sí.|iéa
-A|Nope.|Nel / No.|nóup
-A|Sure.|Claro.|shúr
-A|Of course.|Por supuesto.|av córs
-A|I don't know.|No sé.|ái dóuno
-A|No problem.|No hay problema.|nóu práblem`);
-U("p3","Gracias y perdón","Thanks · Sorry · My bad","Para quedar bien. «My bad» = mi culpa, súper común.",`
-A|Thanks a lot.|Muchas gracias.|zénks a lát
-A|Thank you so much.|Muchísimas gracias.|zénkiu sóu mách
-A|You're welcome.|De nada.|iór uélcom
-A|Sorry.|Perdón.|sóri
-A|Excuse me.|Disculpa.|ikskiús mi
-A|My bad.|Mi culpa.|mái bád`);
-U("p4","Cuándo","Right now · Later · Tonight","Palabras de tiempo que van en casi todas las frases.",`
-A|Right now.|Ahorita.|ráit náu
-A|Later.|Al rato.|léirer
-A|Today.|Hoy.|tudéi
-A|Tomorrow.|Mañana.|tumórou
-A|Yesterday.|Ayer.|iésterdei
-A|Tonight.|Esta noche.|tunáit`);
-U("p5","Preguntas cortas","What's · Who's · How much","Preguntas de dos o tres palabras que te sacan de apuros.",`
-A|What's that?|¿Qué es eso?|uáts dat
-A|Where are you?|¿Dónde estás?|uérar iú
-A|Who's that?|¿Quién es?|júus dat
-A|Why not?|¿Por qué no?|uái nát
-A|How much?|¿Cuánto?|jáu mách
-A|What time is it?|¿Qué hora es?|uát táim ísit`);
-U("p6","Reacciones","No way · For real","Lo que dicen los nativos para reaccionar. Con esto suenas natural.",`
-A|You know what I mean?|¿Me entiendes?|iú nóu uát ái mín
-A|For real?|¿En serio?|for ríl
-A|That's crazy!|¡Qué locura!|dáts créisi
-A|No way!|¡No manches!|nóu uéi
-A|Sounds good.|Suena bien.|sáunds gud
-A|I'm down.|Me apunto.|áim dáun`);
-
-U("v1","To be","I'm · You're · It's","Ser y estar, siempre contraído: I'm, you're, it's, we're, she's, they're.",`
-A|I'm tired.|Estoy cansado.|áim táierd
-A|You're right.|Tienes razón.|iór ráit
-A|It's cold.|Hace frío.|its cóuld
-A|We're late.|Vamos tarde.|uír léit
-A|She's nice.|Ella es buena onda.|shíis náis
-A|They're here.|Ya llegaron.|déir jíir`);
-U("v2","To be (pasado)","was · were · wasn't","Fue / estuvo / estaba. «wasn't» = was not.",`
-A|I was busy.|Estaba ocupado.|ái uás bísi
-A|It was fun.|Estuvo divertido.|it uás fán
-A|We were there.|Estuvimos ahí.|uí uér déer
-A|Were you home?|¿Estabas en casa?|uér iú jóum
-A|It wasn't me.|No fui yo.|it uásnt mí
-A|They weren't ready.|No estaban listos.|déi uérnt rédi`);
-U("v3","Have / got","I've got · I had","Tener. Los gringos dicen mucho «I've got» en vez de «I have».",`
-A|I've got a car.|Tengo carro.|áiv gára cár
-A|I have a question.|Tengo una pregunta.|ái jáv a cuéschen
-A|Do you have time?|¿Tienes tiempo?|diú jáv táim
-A|I had a good day.|Tuve un buen día.|ái jád a gud déi
-A|I've got a dog.|Tengo un perro.|áiv gára dóg
-A|She's got a new job.|Ella tiene trabajo nuevo.|shíis gára núu yób`);
-U("v4","Go","going · went · let's go","Ir. «went» = fui / fue. «Let's go» = vámonos.",`
-A|I'm going home.|Me voy a casa.|áim góuin jóum
-A|Let's go.|Vámonos.|léts góu
-A|I went to work.|Fui al trabajo.|ái uént tu uérk
-A|Where did you go?|¿A dónde fuiste?|uér díyu góu
-A|I'm gonna go.|Me voy a ir.|áim góna góu
-A|Go ahead.|Adelante.|góu ajéd`);
-U("v5","Want / need","wanna · need","Querer y necesitar. «wanna» = want to.",`
-A|I wanna go.|Quiero ir.|ái uána góu
-A|I need help.|Necesito ayuda.|ái níid jélp
-A|Do you wanna come?|¿Quieres venir?|diú uána cám
-A|I don't need it.|No lo necesito.|ái dóun nírit
-A|What do you want?|¿Qué quieres?|uádiu uánt
-A|I need a break.|Necesito un descanso.|ái níid a bréik`);
-U("v6","Get","get · got · getting","El verbo comodín: conseguir, llegar, entender, ponerse…",`
-A|I get it.|Ya entendí.|ái guérit
-A|I got it.|Ya lo tengo.|ái gárit
-A|Get in the car.|Súbete al carro.|guérin de cár
-A|I'm getting hungry.|Ya me está dando hambre.|áim guérin jángri
-A|Let's get food.|Vamos por comida.|léts guet fúud
-A|I got home late.|Llegué tarde a casa.|ái gát jóum léit`);
-U("v7","Do / make","doing · did · made","Hacer. «do» para acciones, «make» para crear algo.",`
-A|What are you doing?|¿Qué estás haciendo?|uárar iú dúin
-A|I did it.|Lo hice.|ái dírit
-A|Don't do that.|No hagas eso.|dóun dú dat
-A|I made dinner.|Hice la cena.|ái méid díner
-A|Make it quick.|Hazlo rápido.|méikit cuík
-A|You made it!|¡Lo lograste!|iú méirit`);
-U("v8","Know / think","I know · I think so","Saber y pensar. Para opinar en cualquier plática.",`
-A|I know.|Ya sé.|ái nóu
-A|I knew it!|¡Lo sabía!|ái núu it
-A|I think so.|Creo que sí.|ái zínk sóu
-A|I don't think so.|Creo que no.|ái dóun zínk sóu
-A|Do you know him?|¿Lo conoces?|diú nóu jim
-A|What do you think?|¿Qué opinas?|uádiu zínk`);
-U("v9","Say / tell / talk","say · tell · talk","Decir, contar, platicar.",`
-A|What did you say?|¿Qué dijiste?|uát díyu séi
-A|Tell me.|Dime.|tél mi
-A|Let me tell you something.|Déjame decirte algo.|lémi tél iu sámzin
-A|Can we talk?|¿Podemos hablar?|quen uí tók
-A|She told me.|Ella me dijo.|shí tóuld mi
-A|Say that again?|¿Cómo dijiste?|séi dat aguén`);
-U("v10","Come / take / like","come · take · love","Venir, tomar, gustar. Cierra la caja de verbos.",`
-A|Come here.|Ven acá.|cám jíir
-A|I'm coming.|Ya voy.|áim cámin
-A|Take your time.|Tómate tu tiempo.|téik iór táim
-A|It takes an hour.|Se hace una hora.|it téiks an áuer
-A|I like it.|Me gusta.|ái láikit
-A|I'd love to.|Me encantaría.|áid láv tu`);
-
-U("e1","Preséntate","I'm / You're","<b>I'm</b> = I am. <b>You're</b> = you are. Los nativos casi nunca dicen «I am».",`
-A|Hey! I'm Stanley.|¡Hola! Soy Stanley.|jéi! áim Stánli
-B|Hi, Stanley. I'm Emily.|Hola, Stanley. Soy Emily.|jái, Stánli. áim Émili
-A|Nice to meet you, Emily.|Mucho gusto, Emily.|náis tu míchu, Émili
-B|Nice to meet you too.|Igualmente, mucho gusto.|náis tu míchu túu
-A|You're really nice.|Eres muy amable.|iór ríli náis
-B|Aw, thanks! You're sweet.|¡Ay, gracias! Eres un encanto.|áa, zénks! iór suít`);
-U("e2","¿Qué onda?","What's / How's","<b>What's</b> = what is. <b>How's</b> = how is.",`
-B|Hey Stanley, what's up?|Hola Stanley, ¿qué onda?|jéi Stánli, uáts áp
-A|Not much. How's it going?|No mucho. ¿Cómo te va?|nát mách. jáus it góuin
-B|It's going good. How are you?|Me va bien. ¿Y tú cómo estás?|its góuin gud. jáuar iú
-A|I'm doing great, thanks.|Estoy muy bien, gracias.|áim dúin gréit, zénks
-B|That's awesome!|¡Qué padre!|dáts ósom
-A|What's new with you?|¿Qué hay de nuevo contigo?|uáts núu uíd iú`);
-U("e3","No puedo","don't / can't","<b>don't</b> = do not. <b>can't</b> = can not. En EE.UU. «can't» suena «quént».",`
-B|Do you wanna grab a coffee?|¿Quieres ir por un café?|diú uána grab a cófi
-A|Sorry, I can't right now.|Perdón, ahorita no puedo.|sóri, ái quént ráit náu
-B|Oh, why not?|Ay, ¿por qué no?|óu, uái nát
-A|I don't have time today.|Hoy no tengo tiempo.|ái dóun jav táim tudéi
-B|That's okay, don't worry about it.|Está bien, no te preocupes.|dáts oukéi, dóun uóri abáurit
-A|How about tomorrow?|¿Qué tal mañana?|jáu abáut tumórou`);
-U("e4","Voy a…","gonna","<b>gonna</b> = going to (voy a…).",`
-B|What are you gonna do this weekend?|¿Qué vas a hacer este fin de semana?|uárar iú góna dú dis uíkend
-A|I'm gonna visit my family.|Voy a visitar a mi familia.|áim góna vísit mái fámili
-B|Nice! Are you gonna drive?|¡Qué bien! ¿Vas a manejar?|náis! ar iú góna dráiv
-A|No, I'm gonna take the bus.|No, voy a tomar el camión.|nóu, áim góna téik de bás
-B|When are you gonna be back?|¿Cuándo vas a regresar?|uénar iú góna bi bák
-A|I'm gonna be back on Sunday.|Voy a regresar el domingo.|áim góna bi bák an sándei`);
-U("e5","Quiero…","wanna","<b>wanna</b> = want to. «Wanna go?» = ¿quieres ir?",`
-B|I'm hungry. Do you wanna eat something?|Tengo hambre. ¿Quieres comer algo?|áim jángri. diú uána ít sámzin
-A|Yeah, I wanna get some tacos.|Sí, quiero unos tacos.|iéa, ái uána guét sam tácos
-B|Me too! Where do you wanna go?|¡Yo también! ¿A dónde quieres ir?|mi túu! uér diú uána góu
-A|I wanna try that new place downtown.|Quiero probar ese lugar nuevo del centro.|ái uána trái dat núu pléis dáuntaun
-B|Sounds good. Wanna go now?|Suena bien. ¿Quieres ir ya?|sáunds gud. uána góu náu
-A|Sure, let's go!|¡Claro, vámonos!|shúr, léts góu`);
-U("e6","Tengo que…","gotta","<b>gotta</b> = got to / have to. La «t» suena casi «r»: «gára».",`
-B|Hey, are you leaving?|Oye, ¿ya te vas?|jéi, ar iú lívin
-A|Yeah, I gotta go.|Sí, me tengo que ir.|iéa, ái gára góu
-B|Already? Why?|¿Tan pronto? ¿Por qué?|olrédi? uái
-A|I gotta work early tomorrow.|Tengo que trabajar temprano mañana.|ái gára uérk érli tumórou
-B|Okay. You gotta rest, then.|Ok. Entonces tienes que descansar.|oukéi. iú gára rést, den
-A|Yeah, I gotta get some sleep.|Sí, tengo que dormir un rato.|iéa, ái gára guét sam slíip`);
-U("e7","Lo que pasó","was / didn't","<b>was</b> = estuvo. <b>didn't</b> = did not. <b>kinda</b> = medio, algo.",`
-B|How was your day?|¿Cómo estuvo tu día?|jáu uás iór déi
-A|It was kinda long.|Estuvo medio largo.|it uás káinda lóng
-B|Why? What happened?|¿Por qué? ¿Qué pasó?|uái? uát jápend
-A|I worked a lot and I didn't eat lunch.|Trabajé mucho y no comí.|ái uérkt a lát an ái dírnt ít lánch
-B|Oh no! Did you eat dinner?|¡No manches! ¿Y sí cenaste?|óu nóu! díyu ít díner
-A|Yeah, I had pizza at home.|Sí, cené pizza en casa.|iéa, ái jad pítsa at jóum`);
-U("e8","Preguntar","where's / can you / do you","«Do you…?» se dice rápido: «diú». «Can you…?» = ¿puedes…?",`
-A|Excuse me, where's the bathroom?|Disculpa, ¿dónde está el baño?|ikskiús mi, uérs de bázrum
-B|It's down the hall, on the left.|Está al fondo del pasillo, a la izquierda.|its dáun de jól, an de léft
-A|Can you show me?|¿Me puedes enseñar?|quen iú shóu mi
-B|Sure, follow me.|Claro, sígueme.|shúr, fálou mi
-A|Do you work here?|¿Trabajas aquí?|diú uérk jíir
-B|Yeah, I've worked here for a while.|Sí, ya llevo un rato trabajando aquí.|iéa, áiv uérkt jíir for a uáil`);
-U("e9","Pedir algo","I'd like / I like","<b>I'd like</b> = me gustaría (para pedir). <b>I like</b> = me gusta.",`
-B|Hi! What can I get you?|¡Hola! ¿Qué te sirvo?|jái! uát quen ái guéchu
-A|I'd like a coffee, please.|Me gustaría un café, por favor.|áid láik a cófi, plíis
-B|Sure. Do you want milk?|Claro. ¿Quieres leche?|shúr. diú uánt mílk
-A|No thanks, I like it black.|No, gracias, me gusta negro.|nóu zénks, ái láik it blák
-B|Anything else?|¿Algo más?|énizin éls
-A|That's it. How much is it?|Es todo. ¿Cuánto es?|dáts it. jáu mách ísit`);
-U("e10","Hacer planes","I'll / let's","<b>I'll</b> = I will (lo decido ahorita). <b>let's</b> = hagamos…",`
-B|It's gonna rain later.|Va a llover más tarde.|its góna réin léirer
-A|Then I'll bring an umbrella.|Entonces voy a llevar paraguas.|den áil bríng an ambréla
-B|Good idea. Let's meet at the park.|Buena idea. Veámonos en el parque.|gud aidía. léts mít at de párk
-A|Okay, I'll text you when I get there.|Va, te mando mensaje cuando llegue.|oukéi, áil tékst iú uén ái guét déer
-B|Perfect. We'll have fun.|Perfecto. Nos la vamos a pasar bien.|pérfekt. uíl jav fán
-A|Yeah, see you later!|¡Sí, nos vemos al rato!|iéa, síiu léirer`);
-
-U("j1","En la fiesta","Todo mezclado","Nada nuevo: <b>mezclamos todo</b> lo que ya dominas.",`
-B|Stanley! I didn't know you were coming.|¡Stanley! No sabía que ibas a venir.|Stánli! ái dírnt nóu iú uér cámin
-A|Hey Emily! I'm so glad you're here.|¡Hola Emily! Qué gusto que estés aquí.|jéi Émili! áim sóu glád iór jíir
-B|Me too. Do you wanna get a drink?|Yo también. ¿Quieres algo de tomar?|mi túu. diú uána guéra drínk
-A|Sure, I'd like a soda.|Claro, me gustaría un refresco.|shúr, áid láik a sóuda
-B|What are you gonna do after the party?|¿Qué vas a hacer después de la fiesta?|uárar iú góna du áfter de párri
-A|I gotta go home, but let's hang out tomorrow.|Me tengo que ir a casa, pero salgamos mañana.|ái gára góu jóum, bat léts jáng áut tumórou`);
-U("j2","Por teléfono","Todo mezclado","Otra plática real con todo mezclado.",`
-B|Hello?|¿Bueno?|jelóu
-A|Hey, it's Stanley. Can you talk?|Hola, soy Stanley. ¿Puedes hablar?|jéi, its Stánli. quen iú tók
-B|Yeah, what's going on?|Sí, ¿qué pasa?|iéa, uáts góuin án
-A|I can't find my keys. Did you see them?|No encuentro mis llaves. ¿Las viste?|ái quént fáind mái kíis. díyu síi dem
-B|I think they're on the kitchen table.|Creo que están en la mesa de la cocina.|ái zínk déir an de kíchen téibol
-A|You're the best! I'll call you later.|¡Eres la mejor! Te llamo al rato.|iór de bést! áil cól iu léirer`);
-U("j3","En el trabajo","Todo mezclado","Una mañana normal en el trabajo.",`
-B|Morning, Stanley! You look tired.|¡Buenos días, Stanley! Te ves cansado.|mórnin, Stánli! iú lúk táierd
-A|Yeah, I didn't sleep much last night.|Sí, no dormí mucho anoche.|iéa, ái dírnt slíip mách lást náit
-B|Do you wanna grab a coffee first?|¿Quieres ir por un café primero?|diú uána grábe cófi férst
-A|I'd love to, but I gotta finish this.|Me encantaría, pero tengo que terminar esto.|áid láv tu, bat ái gára fínish dis
-B|Okay, I'll bring you one.|Va, te traigo uno.|oukéi, áil bríng iu uán
-A|You're the best. I owe you one.|Eres la mejor. Te debo una.|iór de bést. ái óu iu uán`);
-U("j4","Planes del fin","Todo mezclado","Invitar, aceptar y organizar.",`
-A|Hey, what are you doing this weekend?|Oye, ¿qué vas a hacer este fin?|jéi, uárar iú dúin dis uíkend
-B|Nothing yet. Why?|Nada todavía. ¿Por qué?|názin iét. uái
-A|I'm gonna have a barbecue. Wanna come?|Voy a hacer una carne asada. ¿Quieres venir?|áim góna jáv a bárbikiu. uána cám
-B|For sure! Can I bring something?|¡Claro! ¿Llevo algo?|for shúr! quen ái bríng sámzin
-A|Just bring some drinks, that's it.|Nomás trae unas bebidas, es todo.|yást bríng sam drínks, dáts it
-B|Cool. I'll be there!|Va. ¡Ahí estaré!|cúl. áil bi déer`);
-
-U("c1","En el restaurante","Pila","Primero la escuchas completa, luego la platicas.",`
-B|Hi there! Are you ready to order?|¡Hola! ¿Listo para ordenar?|jái déer! ar iú rédi tu órder
-A|Yeah, can I get the burger, please?|Sí, ¿me da la hamburguesa, por favor?|iéa, quen ái guet de bérguer, plíis
-B|Sure. Do you want fries with that?|Claro. ¿Quiere papas con eso?|shúr. diú uánt fráis uíd dat
-A|Yes, and a lemonade.|Sí, y una limonada.|iés, an a lémoneid
-B|Anything else for you?|¿Algo más?|énizin éls for iú
-A|No, I'm good. Thanks.|No, así estoy bien. Gracias.|nóu, áim gud. zénks`);
-U("c2","Pedir direcciones","Pila","En la calle, preguntando cómo llegar.",`
-A|Excuse me, how do I get to the mall?|Disculpe, ¿cómo llego al centro comercial?|ikskiús mi, jáu du ái guet tu de mól
-B|Go straight and turn left at the light.|Siga derecho y dé vuelta a la izquierda en el semáforo.|góu stréit an térn léft at de láit
-A|Is it far from here?|¿Está lejos de aquí?|ísit fár fram jíir
-B|Not really, it's like five minutes.|No mucho, como cinco minutos.|nát ríli, its láik fáiv mínits
-A|Awesome, thank you so much!|¡Qué bien, muchas gracias!|ósom, zénkiu sóu mách
-B|No problem. Have a good one!|De nada. ¡Que le vaya bien!|nóu práblem. jáv a gud uán`);
-U("c3","En la tienda","Pila","Comprando ropa.",`
-B|Hi! Can I help you find something?|¡Hola! ¿Te ayudo a buscar algo?|jái! quen ái jélp iu fáind sámzin
-A|Yeah, I'm looking for a jacket.|Sí, busco una chamarra.|iéa, áim lúkin for a yáket
-B|What size do you need?|¿Qué talla necesitas?|uát sáis du iú níid
-A|Medium, I think. Can I try it on?|Mediana, creo. ¿Me la puedo probar?|mídium, ái zínk. quen ái tráirit án
-B|Of course. The fitting room is over there.|Claro. El probador está por allá.|av córs. de fírin rúum is óuver déer
-A|Thanks. I'll be right back.|Gracias. Ahorita regreso.|zénks. áil bi ráit bák`);
-U("c4","Con una amiga","Pila","Platicando de anoche.",`
-B|Hey! Where were you last night?|¡Oye! ¿Dónde estabas anoche?|jéi! uér uér iú lást náit
-A|I was at home. I wasn't feeling good.|Estaba en casa. No me sentía bien.|ái uás at jóum. ái uásnt fílin gud
-B|Oh no. Are you okay now?|Ay no. ¿Ya estás bien?|óu nóu. ar iú oukéi náu
-A|Yeah, I'm way better, thanks.|Sí, estoy mucho mejor, gracias.|iéa, áim uéi bérer, zénks
-B|Good. You missed a great party!|Qué bueno. ¡Te perdiste una fiesta buenísima!|gud. iú míst a gréit párri
-A|Dang! Next time I'm going for sure.|¡Chin! La próxima voy seguro.|déng! nékst táim áim góuin for shúr`);
-U("c5","En el doctor","Pila","Explicar qué te duele.",`
-B|So, what brings you in today?|Y bien, ¿qué lo trae hoy por aquí?|sóu, uát bríngs iu ín tudéi
-A|I've got a headache and a sore throat.|Tengo dolor de cabeza y de garganta.|áiv gára jédeik an a sór zróut
-B|How long have you had it?|¿Desde hace cuánto lo tiene?|jáu lóng jáv iu jád it
-A|Since Monday. It's getting worse.|Desde el lunes. Va empeorando.|sins mándei. its guérin uérs
-B|Okay, let me take a look.|Ok, déjeme revisarlo.|oukéi, lémi téik a lúk
-A|Thanks, doc. I really need to get better.|Gracias, doc. De verdad necesito aliviarme.|zénks, dák. ái ríli níid tu guet bérer`);
-U("c6","Una cita","Pila","Cena con Emily.",`
-A|You look amazing tonight.|Te ves increíble esta noche.|iú lúk améisin tunáit
-B|Aw, thank you! You look great too.|¡Ay, gracias! Tú también te ves muy bien.|áa, zénkiu! iú lúk gréit túu
-A|Have you been here before?|¿Ya habías venido aquí?|jáv iu bín jíir bifór
-B|No, it's my first time. What's good here?|No, es mi primera vez. ¿Qué está bueno aquí?|nóu, its mái férst táim. uáts gud jíir
-A|The pasta is really good. You gotta try it.|La pasta está muy buena. Tienes que probarla.|de pásta is ríli gud. iú gára tráirit
-B|Okay, I'm gonna trust you on that.|Ok, te voy a creer.|oukéi, áim góna trást iu an dat`);
-
-const UNIT=Object.fromEntries(UNITS.map(u=>[u.id,u]));
-UNITS.forEach(u=>{u.dlg=u.l.some(l=>l[0]==="B");u.l.forEach(l=>{l[4]=u.s})});
-const DAYS=[
- {t:"Palabras de diario",u:["p1","p2","p3","p4","p5","p6"]},
- {t:"Verbos, parte 1",u:["v1","v2","v3","v4","v5"]},
- {t:"Verbos, parte 2",u:["v6","v7","v8","v9","v10"]},
- {t:"Estructuras 1",u:["e1","e2","e3","e4"]},
- {t:"Estructuras 2",u:["e5","e6","e7","e8"]},
- {t:"Juntar todo",u:["e9","e10","j1","j2","j3","j4"]},
- {t:"Pila de conversación",u:["c1","c2","c3","c4","c5","c6"]}];
-const ORDER=DAYS.flatMap(d=>d.u);
-const dayOf=id=>DAYS.findIndex(d=>d.u.includes(id));
+const LEVELS=[
+ {n:1,t:"Sobrevivir",d:"Súper, comida, calle y teléfono: lo que necesitas desde el día uno",c:"--flame",em:"🛒"},
+ {n:2,t:"Vida diaria",d:"Banco, doctor, gym, casa, viajes",c:"--ok",em:"🏠"},
+ {n:3,t:"Trabajo",d:"El jefe, los compañeros, entrevistas y clientes",c:"--stan",em:"💼"},
+ {n:4,t:"Amigos y desmadre",d:"Fiestas, fútbol, videojuegos, bares y planes",c:"--brain",em:"🎉"},
+ {n:5,t:"Amor y coqueteo",d:"Ligar, citas, mensajes, la noche y la relación",c:"--emily",em:"💋"},
+ {n:6,t:"Problemas",d:"Policía, accidentes, quejas y emergencias",c:"--bad",em:"🚨"},
+ {n:7,t:"Plática de nativo",d:"Opiniones, historias, chismes y sentimientos",c:"--gold",em:"🗣️"}];
+const PLACES={
+ super:{n:"Supermercado",sky:"#FFF6DF",floor:"#E7D7B3",p:"🥫🍎🥖🧃🧀🥛🍌🍪🥚🛒🍅🥩"},
+ tienda:{n:"Tienda",sky:"#FDEBEF",floor:"#D9C8C8",p:"👕👖👟🧢👗🧥🕶️👜"},
+ cafe:{n:"Cafetería",sky:"#F3E3D3",floor:"#B88B65",p:"☕🥐🍩🧁🥯☕🍰"},
+ comida:{n:"Comida rápida",sky:"#FFE7CF",floor:"#D7A86E",p:"🍔🍟🌭🥤🍗🌮🍕"},
+ restaurante:{n:"Restaurante",sky:"#F7E6D8",floor:"#8E5B3E",p:"🍽️🍷🕯️🍝🥗🍽️🍾"},
+ calle:{n:"La calle",sky:"#CFE9FF",floor:"#9AA3AD",p:"🏢🌳🚦🏪🚗🌳🏬🚌🚕"},
+ bus:{n:"Transporte",sky:"#D8ECFF",floor:"#8D959E",p:"🚌🚏🚕🚖🚇🚲"},
+ gas:{n:"Gasolinera",sky:"#E3F1FF",floor:"#A5A5A5",p:"⛽🚗🛻🧃🍫⛽"},
+ farmacia:{n:"Farmacia",sky:"#E8FFF4",floor:"#C9E3D6",p:"💊🩹🧴🌡️💊🧻"},
+ telefono:{n:"Llamada",sky:"#2B2F55",floor:"#1C1F3A",p:"📞✨📱✨📞",phone:1},
+ casa:{n:"Casa",sky:"#FFF1E6",floor:"#C9A27E",p:"🛋️🖼️🪴📺🛏️🚪"},
+ banco:{n:"Banco",sky:"#EAF2FF",floor:"#B9C3D3",p:"🏦💵💳🧾💰"},
+ doctor:{n:"Consultorio",sky:"#EAFBFF",floor:"#BFDCE3",p:"🩺💉🩻🌡️🧑‍⚕️"},
+ gym:{n:"Gimnasio",sky:"#EDEFF5",floor:"#5B5F6B",p:"🏋️🏃🚴💪🥤🏋️"},
+ pelu:{n:"Peluquería",sky:"#FCEFFF",floor:"#C9B8D3",p:"💈✂️🪒🪞💇"},
+ taller:{n:"Taller",sky:"#E9E4DA",floor:"#6F6658",p:"🔧🛞🚗🔩🛠️"},
+ hotel:{n:"Hotel",sky:"#FFF4DA",floor:"#C3A86E",p:"🛎️🧳🗝️🛏️🏨"},
+ aeropuerto:{n:"Aeropuerto",sky:"#D6EEFF",floor:"#BCC6D1",p:"✈️🧳🛫🛂🕐🛬"},
+ avion:{n:"En el avión",sky:"#E7F3FF",floor:"#A9B9CC",p:"💺☁️🥤☁️💺🧃"},
+ trabajo:{n:"El trabajo",sky:"#EEF1F6",floor:"#9AA5B4",p:"💻☕📊🖨️📎🗂️"},
+ obra:{n:"La obra",sky:"#FFE9C7",floor:"#B08A55",p:"🏗️🦺🔨🧱🚧⛏️"},
+ cancha:{n:"La cancha",sky:"#CFF0FF",floor:"#4FA35A",p:"⚽🥅🏟️👟⚽🏃"},
+ juegos:{n:"Videojuegos",sky:"#1D1B3A",floor:"#2E2A5C",p:"🎮👾🕹️💥🏆🎧"},
+ cine:{n:"El cine",sky:"#2A1530",floor:"#4A2238",p:"🎬🍿🎟️🥤🍿"},
+ bar:{n:"El bar",sky:"#2C1F2E",floor:"#5A3A2C",p:"🍺🍸🎵🍹🥃🎶"},
+ fiesta:{n:"La fiesta",sky:"#2A1E4D",floor:"#5B3D8C",p:"🎉🪩🎶🍕🥤🎈💃"},
+ playa:{n:"La playa",sky:"#BDEBFF",floor:"#F3DDA4",p:"🌴☀️🏖️🌊🍹🐚"},
+ parque:{n:"El parque",sky:"#D8F5FF",floor:"#7CC576",p:"🌳🐕🌼🛝🌳🦆"},
+ cita:{n:"La cita",sky:"#3A1E2E",floor:"#6B2F45",p:"🕯️🌹🍷✨🍝🌹"},
+ noche:{n:"De noche",sky:"#1A1430",floor:"#3B2A4D",p:"🌙✨🕯️🍷🌙💫"},
+ policia:{n:"La policía",sky:"#DDE6F5",floor:"#8B95A6",p:"🚓🚨👮🚔🚦"},
+ hospital:{n:"Hospital",sky:"#EAF7FF",floor:"#C3D6E3",p:"🏥🚑🩺💉🛏️"},
+ escuela:{n:"La escuela",sky:"#FFF8D9",floor:"#C9B37A",p:"📚✏️🎒🏫📝"}};
+const SCENES=[];
+(window.ESC_TXT||[]).join("\n").split("\n").forEach(raw=>{const r=raw.trim();if(!r||r.startsWith("//"))return;const f=r.split("|").map(x=>x.trim());
+  if(f[0].startsWith("#")){SCENES.push({id:f[0].slice(1).trim(),lvl:+f[1],t:f[2],place:PLACES[f[3]]?f[3]:"calle",npcE:f[4]||"🙂",npcN:f[5]||"Persona",voice:f[6]||"F",n:f[7]||"",turns:[]});return}
+  const S=SCENES[SCENES.length-1];if(!S)return;
+  if(f[0]==="N")S.turns.push({npc:{en:f[1],es:f[2]||""}});
+  else if(f[0]==="Y"){const y={en:f[1],es:f[2]||"",pr:f[3]||"",em:f[4]||"💬",sc:S.id};const last=S.turns[S.turns.length-1];if(last&&!last.you)last.you=y;else S.turns.push({you:y})}});
+SCENES.forEach((s,i)=>{s.i=i;s.num=i+1});
+const SC=Object.fromEntries(SCENES.map(s=>[s.id,s]));
 
 /* =====================================================================
    2. COMPARAR LO QUE DIJISTE
    ===================================================================== */
-const NUM={"0":"zero","1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven","8":"eight","9":"nine","10":"ten"};
+const NUM={"0":"zero","1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven","8":"eight","9":"nine","10":"ten","11":"eleven","12":"twelve","15":"fifteen","20":"twenty","30":"thirty","50":"fifty","100":"hundred"};
 const SAME=[["yeah","yes","yep","yea","yah","ya"],["hey","hi","hay","hai","hello","hallo"],["okay","ok","k","kay"],["nope","nah"],
   ["stanley","stan","standley","stanly","stanely"],["emily","emilie","emmy","emely","emilee"],["thanks","thank"],["sure","shore"],
-  ["tacos","taco"],["aw","awe"],["dang","damn","dan"],["doc","doctor"]];
+  ["babe","baby","bae"],["gonna","gona"],["cuz","cause","because","coz"],["dude","bro","man"],["mom","mum"],["cool","coo"],["gotcha","gotya"]];
 const CANON={};SAME.forEach(g=>g.forEach(w=>CANON[w]=g[0]));
-const FILL=new Set(["oh","ah","um","uh","hmm","aw","awe","erm"]);
+const FILL=new Set(["oh","ah","um","uh","hmm","aw","awe","erm","like","well","so"]);
 const STOP=new Set("a an the to i you is am are it of and in on at for my me we he she they be do not so this that with your".split(" "));
+const ONES="zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" "),TENS=",,twenty,thirty,forty,fifty,sixty,seventy,eighty,ninety".split(",");
+function n2w(n){if(n<20)return ONES[n];if(n<100)return TENS[Math.floor(n/10)]+(n%10?" "+ONES[n%10]:"");if(n<1000)return ONES[Math.floor(n/100)]+" hundred"+(n%100?" "+n2w(n%100):"");
+  if(n<10000)return n2w(Math.floor(n/1000))+" thousand"+(n%1000?" "+n2w(n%1000):"");return String(n)}
 function norm(s){
-  s=(" "+s+" ").toLowerCase().replace(/[’‘`´]/g,"'").replace(/o\.k\./g,"okay");
-  s=s.replace(/\b(\d+)\b/g,m=>NUM[m]||m);
+  s=(" "+s+" ").toLowerCase().replace(/[’‘`´]/g,"'").replace(/o\.k\./g,"okay").replace(/(\d),(\d{3})/g,"$1$2").replace(/\$(\d+)/g,"$1 dollars").replace(/(\d+):00/g,"$1").replace(/(\d+):(\d+)/g,"$1 $2");
+  s=s.replace(/\b(\d+)(st|nd|rd|th)?\b/g,(m,d)=>n2w(+d)).replace(/-/g," ");
   s=s.replace(/\bcan't\b|\bcannot\b/g,"can not").replace(/\bwon't\b/g,"will not").replace(/\bain't\b/g,"is not")
      .replace(/n't\b/g," not").replace(/'re\b/g," are").replace(/'ll\b/g," will").replace(/'ve\b/g," have")
      .replace(/'d\b/g," would").replace(/'m\b/g," am").replace(/\blet's\b/g,"let us").replace(/'s\b/g," is");
-  s=s.replace(/\bgonna\b/g,"going to").replace(/\bwanna\b/g,"want to").replace(/\bgotta\b/g,"got to")
-     .replace(/\bkinda\b/g,"kind of").replace(/\blemme\b/g,"let me").replace(/\bgimme\b/g,"give me")
-     .replace(/'bout\b/g,"about").replace(/\bthank you\b/g,"thanks").replace(/\balright\b/g,"all right")
-     .replace(/\bgoin\b/g,"going").replace(/\bdoin\b/g,"doing");
+  s=s.replace(/\bgonna\b/g,"going to").replace(/\bwanna\b/g,"want to").replace(/\bgotta\b/g,"got to").replace(/\bhafta\b/g,"have to")
+     .replace(/\bkinda\b/g,"kind of").replace(/\bsorta\b/g,"sort of").replace(/\blemme\b/g,"let me").replace(/\bgimme\b/g,"give me")
+     .replace(/\bwhatcha\b/g,"what are you").replace(/\bwhaddya\b/g,"what do you").replace(/\bdidja\b/g,"did you").replace(/\bdontcha\b/g,"do not you")
+     .replace(/\bouta\b|\boutta\b/g,"out of").replace(/\blotta\b/g,"lot of").replace(/\bshoulda\b/g,"should have").replace(/\bcoulda\b/g,"could have").replace(/\bwoulda\b/g,"would have")
+     .replace(/'bout\b/g,"about").replace(/'cause\b/g,"because").replace(/\bthank you\b/g,"thanks").replace(/\balright\b/g,"all right")
+     .replace(/\bgoin\b/g,"going").replace(/\bdoin\b/g,"doing").replace(/\bnothin\b/g,"nothing").replace(/\bsomethin\b/g,"something");
   s=s.replace(/[^a-z' ]+/g," ").replace(/'/g,"");
   return s.split(/\s+/).filter(Boolean).map(w=>CANON[w]||w);
 }
@@ -565,992 +344,510 @@ function lev(a,b){const m=a.length,n=b.length;let p=Array.from({length:n+1},(_,j
   for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c}return p[n]}
 const skey=w=>w.replace(/ph/g,"f").replace(/ck/g,"k").replace(/(.)\1+/g,"$1").replace(/e$/,"").replace(/s$/,"");
 const wEq=(a,b)=>a===b||skey(a)===skey(b)||(a[0]===b[0]&&((a.length>=3&&b.length>=3&&lev(a,b)<=1)||(a.length>=6&&b.length>=6&&lev(a,b)<=2)));
-function compare(target,heard){
-  const T=norm(target).filter(w=>!FILL.has(w)),H=norm(heard).filter(w=>!FILL.has(w));
-  const m=T.length,n=H.length,d=[];
+/* lenient=true (sin ayuda): perdona más, pero las palabras clave tienen que estar */
+function compare(target,heard,lenient){
+  const T0=norm(target).filter(w=>!FILL.has(w)),H=norm(heard).filter(w=>!FILL.has(w));
+  const m=T0.length,n=H.length,d=[];
   for(let i=0;i<=m;i++){d[i]=[];for(let j=0;j<=n;j++)d[i][j]=i===0?j:j===0?i:0}
-  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(wEq(T[i-1],H[j-1])?0:1));
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(wEq(T0[i-1],H[j-1])?0:1));
   const miss=new Array(m).fill(true);let i=m,j=n;
-  while(i>0&&j>0){if(wEq(T[i-1],H[j-1])&&d[i][j]===d[i-1][j-1]){miss[i-1]=false;i--;j--}
+  while(i>0&&j>0){if(wEq(T0[i-1],H[j-1])&&d[i][j]===d[i-1][j-1]){miss[i-1]=false;i--;j--}
     else if(d[i][j]===d[i-1][j]+1)i--;else if(d[i][j]===d[i][j-1]+1)j--;else{i--;j--}}
-  /* las palabras importantes tienen que estar; se perdona alguna palabrita chica que el micrófono no agarró */
-  const allowed=m<=4?0:m<=9?1:2,keyMiss=T.some((w,i)=>miss[i]&&!STOP.has(w));
-  return {ok:n>0&&!keyMiss&&d[m][n]<=allowed,dist:d[m][n],words:T,miss,heardWords:H};
+  const keys=T0.map((w,k)=>!STOP.has(w)?k:-1).filter(k=>k>=0),keyMissN=keys.filter(k=>miss[k]).length;
+  const allowed=lenient?Math.max(1,Math.round(m*.3)):(m<=4?0:m<=9?1:2),keyOk=lenient?keyMissN<=Math.floor(keys.length/5):keyMissN===0;
+  return {ok:n>0&&keyOk&&d[m][n]<=allowed,dist:d[m][n],words:T0,miss,heardWords:H};
 }
-function command(heard){
-  const w=norm(heard).join(" ");
-  if(/^(please )?(repeat|repeat that|again|one more time|repeat it)( please)?$/.test(w))return "repeat";
-  if(/^(slow|slower|slowly|slow down|more slowly|slow please)$/.test(w))return "slow";
-  return null;
-}
-/* pronunciación aproximada para frases nuevas, aprendida del contenido */
-const LEX={};
-UNITS.forEach(u=>u.l.forEach(l=>{const e=l[1].replace(/[^A-Za-z' ]/g,"").trim().split(/\s+/),p=l[3].replace(/[.,!?]/g,"").trim().split(/\s+/);
-  if(e.length===p.length)e.forEach((w,i)=>{const k=w.toLowerCase();if(!LEX[k])LEX[k]=p[i]})}));
-function autoPron(en){return en.split(/\s+/).map(w=>{const k=w.replace(/[^A-Za-z']/g,"").toLowerCase();return LEX[k]||k}).join(" ")}
+function command(heard){const w=norm(heard).join(" ");
+  if(/^(please )?(repeat|repeat that|again|one more time|come again)( please)?$/.test(w))return "repeat";
+  if(/^(slow|slower|slowly|slow down|more slowly)$/.test(w))return "slow";
+  if(/^(help|help me|ayuda)$/.test(w))return "help";
+  return null}
 
 /* =====================================================================
-   3. BASE DE DATOS (se guarda en este teléfono)
+   3. BASE DE DATOS (todo se guarda en este teléfono)
    ===================================================================== */
-const KEY="hablaConEmily.v2";
-const blank=()=>({v:2,units:{},items:{},words:{},structs:{},days:{},xp:0,best:0,notes:[],log:[],settings:{slow:false,key:""}});
+const KEY="hablaConEmily.v3";
+const blank=()=>({v:3,sc:{},items:{},words:{},days:{},xp:0,best:0,log:[],streak3:0,settings:{human:false,emily:"af_bella",slow:false,key:"",topic:""}});
 let DB=blank();
-try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.v===2)DB=Object.assign(blank(),s)}catch(e){}
-try{ /* migrar progreso de la versión anterior */
-  const old=JSON.parse(localStorage.getItem("hablaConEmily.v1")||"null");
-  if(old&&Array.isArray(old.done)&&!DB.migrated){old.done.forEach(i=>{const id=i<10?"e"+(i+1):i===10?"j1":"j2";DB.units[id]={done:true,at:Date.now()}});DB.migrated=true}
-}catch(e){}
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&s.v===3){DB=Object.assign(blank(),s);DB.settings=Object.assign(blank().settings,s.settings||{})}
+  else{const o=JSON.parse(localStorage.getItem("hablaConEmily.v2")||"null");if(o){DB.xp=o.xp||0;DB.days=o.days||{};DB.best=o.best||0;if(o.settings&&o.settings.key)DB.settings.key=o.settings.key}}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){toast("No se pudo guardar en el teléfono")}}
 const dayKey=off=>{const d=new Date();d.setDate(d.getDate()-off);return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
 const today=()=>dayKey(0);
 function streak(){let n=0,off=DB.days[today()]?0:1;while(DB.days[dayKey(off)]){n++;off++}return n}
-const GOAL=60;
-const isDone=id=>!!(DB.units[id]&&DB.units[id].done);
-const unlocked=id=>{const k=ORDER.indexOf(id);return k===0||isDone(id)||isDone(ORDER[k-1])};
-const nextUnit=()=>ORDER.find(id=>!isDone(id));
-const curDay=()=>{const n=nextUnit();return n?dayOf(n):DAYS.length};
-const INT=[6e5,432e5,864e5,2592e5,6048e5,12096e5];
+const GOAL=80;
 function addXP(n){DB.xp+=n;const t=today();DB.days[t]=(DB.days[t]||0)+n;const s=streak();if(s>DB.best)DB.best=s}
-function record(line,ok,cmp,first){
-  const k=line[1].toLowerCase(),it=DB.items[k]||(DB.items[k]={line:line.slice(0,5),box:0,due:0,ok:0,fail:0});
+const scDone=id=>!!(DB.sc[id]&&DB.sc[id].stars>0);
+const scStars=id=>DB.sc[id]?DB.sc[id].stars||0:0;
+const scOpen=s=>s.i===0||scDone(s.id)||scDone(SCENES[s.i-1].id);
+const nextScene=()=>SCENES.find(s=>!scDone(s.id));
+const INT=[6e5,6*36e5,864e5,3*864e5,7*864e5,16*864e5];
+const ikey=y=>y.en.toLowerCase();
+function record(y,ok,cmp,first){
+  const k=ikey(y),it=DB.items[k]||(DB.items[k]={y:{en:y.en,es:y.es,pr:y.pr,em:y.em,sc:y.sc},box:0,due:0,ok:0,fail:0});
   if(ok){it.ok++;if(first)it.box=Math.min(it.box+1,5);it.due=Date.now()+INT[it.box];addXP(first?10:4)}
-  else{it.fail++;it.box=0;it.due=Date.now()+INT[0];it.last=Date.now();
-    DB.log.unshift({en:line[1],heard:cmp?cmp.heardWords.join(" "):"",at:Date.now()});DB.log=DB.log.slice(0,40)}
-  if(cmp&&cmp.heardWords.length)cmp.words.forEach((w,i)=>{if(STOP.has(w))return;const s=DB.words[w]||(DB.words[w]={ok:0,miss:0});if(cmp.miss[i]){s.miss++;s.last=Date.now()}else s.ok++});
-  const st=line[4];if(st){const s=DB.structs[st]||(DB.structs[st]={ok:0,fail:0});if(ok&&first)s.ok++;else if(!ok)s.fail++}
-  save();
-}
-function weakItems(n,exclude){const ex=new Set((exclude||[]).map(l=>l[1].toLowerCase()));
-  return Object.entries(DB.items).filter(([k,x])=>x.fail>0&&x.box<3&&!ex.has(k)&&x.line[0]==="A")
-    .sort((a,b)=>(b[1].fail*2-b[1].ok)-(a[1].fail*2-a[1].ok)).slice(0,n).map(([k,x])=>x.line)}
-function dueItems(n,exclude){const ex=new Set((exclude||[]).map(l=>l[1].toLowerCase())),now=Date.now();
-  return Object.entries(DB.items).filter(([k,x])=>x.due<=now&&x.box<5&&!ex.has(k)&&x.line[0]==="A").sort((a,b)=>a[1].due-b[1].due).slice(0,n).map(([k,x])=>x.line)}
-function weakWords(n){return Object.entries(DB.words).filter(([w,s])=>s.miss>0).sort((a,b)=>(b[1].miss*3-b[1].ok)-(a[1].miss*3-a[1].ok)).slice(0,n)}
-function weakStructs(n){return Object.entries(DB.structs).filter(([s,x])=>x.fail>0).sort((a,b)=>b[1].fail/(b[1].ok+b[1].fail)-a[1].fail/(a[1].ok+a[1].fail)).slice(0,n)}
+  else{it.fail++;it.box=0;it.due=Date.now()+INT[0];DB.log.unshift({en:y.en,heard:cmp?cmp.heardWords.join(" "):"",at:Date.now()});DB.log=DB.log.slice(0,40)}
+  if(cmp&&cmp.heardWords.length)cmp.words.forEach((w,i)=>{if(STOP.has(w))return;const s=DB.words[w]||(DB.words[w]={ok:0,miss:0});if(cmp.miss[i])s.miss++;else s.ok++});
+  save()}
+function weakItems(n,ex){const E=new Set((ex||[]).map(ikey));return Object.entries(DB.items).filter(([k,x])=>x.fail>0&&x.box<3&&!E.has(k)).sort((a,b)=>(b[1].fail*2-b[1].ok)-(a[1].fail*2-a[1].ok)).slice(0,n).map(([,x])=>x.y)}
+function dueItems(n,ex){const E=new Set((ex||[]).map(ikey)),now=Date.now();return Object.entries(DB.items).filter(([k,x])=>x.due<=now&&!E.has(k)).sort((a,b)=>a[1].due-b[1].due).slice(0,n).map(([,x])=>x.y)}
+function weakWords(n){return Object.entries(DB.words).filter(([,s])=>s.miss>0).sort((a,b)=>(b[1].miss*3-b[1].ok)-(a[1].miss*3-a[1].ok)).slice(0,n)}
 
 /* =====================================================================
-   4. VOZ (habla) y OÍDO (escucha)
+   4. VOCES: Kokoro (voz humana, código abierto) o la voz del teléfono
    ===================================================================== */
 const synth=window.speechSynthesis||null;
-let V={a:null,b:null,es:null},slowNext=false,speaking=false,lastSpeakEnd=0;
+let SV={f:null,m:null,es:null},slowNext=false,speaking=false,ac=null,curSrc=null;
 const NOVELTY=/bells|bubbles|albert|bad news|good news|zarvox|whisper|trinoids|cellos|jester|organ|superstar|wobble|boing|junior|ralph|bahh|deranged|hysterical|pipe|grandma|grandpa|rocko|shelley|sandy|eddy|flo|reed/i;
 const FEM=/ava|zoe|samantha|allison|susan|nicky|joelle|noelle|aria|jenny|emma|michelle|serena|karen|moira|tessa|victoria|joanna|salli|kendra|kimberly|zira|google us english|female/i;
 const MAL=/evan|nathan|tom\b|alex|aaron|fred|guy|davis|tony|christopher|eric|ryan|daniel|oliver|arthur|andrew|brian|male/i;
-function vScore(v){const n=v.name;let s=0;if(/premium/i.test(n))s+=100;else if(/enhanced|mejorad|neural|natural|online/i.test(n))s+=70;else if(/google/i.test(n))s+=40;if(/^en[-_]US/i.test(v.lang))s+=15;return s}
-function enVoices(){return synth?synth.getVoices().filter(v=>/^en/i.test(v.lang)&&!NOVELTY.test(v.name)).sort((a,b)=>vScore(b)-vScore(a)):[]}
+function vScore(v){let s=0;if(/premium/i.test(v.name))s+=100;else if(/enhanced|mejorad|neural|natural|online/i.test(v.name))s+=70;else if(/google/i.test(v.name))s+=40;if(/^en[-_]US/i.test(v.lang))s+=15;return s}
 function pickVoices(){if(!synth)return;const vs=synth.getVoices();if(!vs.length)return;
-  const en=enVoices(),by=u=>u&&en.find(v=>v.voiceURI===u);
-  V.b=by(DB.settings.voiceB)||en.find(v=>FEM.test(v.name))||en[0]||null;
-  V.a=by(DB.settings.voiceA)||en.find(v=>MAL.test(v.name)&&!/female/i.test(v.name)&&v!==V.b)||en.find(v=>v!==V.b)||V.b;
-  const es=vs.filter(v=>/^es/i.test(v.lang));V.es=es.find(v=>/es[-_](MX|US|419)/i.test(v.lang))||es[0]||null}
-if(synth){pickVoices();synth.onvoiceschanged=()=>{pickVoices();if(view==="yo"&&!running)render()}}
-function speak(text,who,lang){
-  return new Promise(res=>{
-    if(!synth){res();return}
-    synth.cancel();
-    const u=new SpeechSynthesisUtterance(text);
-    if(lang==="es"){u.voice=V.es;u.lang=V.es?V.es.lang:"es-MX";u.rate=1.02}
-    else{u.voice=who==="A"?V.a:V.b;u.lang="en-US";u.rate=(slowNext||DB.settings.slow)?0.72:0.97;
-      if(who==="A"&&V.a===V.b)u.pitch=0.85}
-    slowNext=false;speaking=true;pauseRec();
-    const av=who==="A"?"A":"B";setAv(av,"talk");setOrb("speak",who==="A"?"Así se dice":lang==="es"?"Emily te explica":"Emily habla");
-    let done=false;const fin=()=>{if(done)return;done=true;speaking=false;lastSpeakEnd=Date.now();setAv(av,"");resumeRec();res()};
-    u.onend=fin;u.onerror=fin;setTimeout(fin,2500+text.length*110);
-    synth.speak(u);
-  });
+  const en=vs.filter(v=>/^en/i.test(v.lang)&&!NOVELTY.test(v.name)).sort((a,b)=>vScore(b)-vScore(a));
+  SV.f=en.find(v=>FEM.test(v.name))||en[0]||null;SV.m=en.find(v=>MAL.test(v.name)&&!/female/i.test(v.name))||en.find(v=>v!==SV.f)||SV.f;
+  const es=vs.filter(v=>/^es/i.test(v.lang));SV.es=es.find(v=>/es[-_](MX|US|419)/i.test(v.lang))||es[0]||null}
+if(synth){pickVoices();synth.onvoiceschanged=pickVoices}
+/* quién habla: E Emily · F mujer · M hombre · S Stanley (modelo de lo que dices) · es guía en español */
+const KVOICE={E:()=>DB.settings.emily||"af_bella",F:()=>"af_sarah",M:()=>"am_michael",S:()=>"am_fenrir"};
+let KO=null,koP=null,koState="off",koPct=0;const koCache=new Map();
+function koLoad(){if(KO)return Promise.resolve(KO);if(koP)return koP;koState="loading";renderVoiceBanner();
+  koP=import("https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/dist/kokoro.web.js").then(m=>m.KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX",{dtype:"q8",device:"wasm",
+      progress_callback:p=>{if(p&&p.status==="progress"&&p.total>1e6){koPct=Math.round(p.progress||0);renderVoiceBanner()}}}))
+    .then(t=>{KO=t;koState="ready";DB.settings.human=true;save();renderVoiceBanner();return t})
+    .catch(e=>{console.warn(e);koState="error";koP=null;renderVoiceBanner();throw e});
+  return koP}
+function koGen(text,who){const v=KVOICE[who]?KVOICE[who]():"af_bella",sp=(slowNext||DB.settings.slow)?0.8:(who==="E"?0.95:1);const k=v+"|"+sp+"|"+text;
+  if(koCache.has(k))return koCache.get(k);
+  const p=KO.generate(text,{voice:v,speed:sp}).then(a=>{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const b=ac.createBuffer(1,a.audio.length,a.sampling_rate);b.copyToChannel(a.audio,0);return b});
+  p.catch(()=>koCache.delete(k));koCache.set(k,p);if(koCache.size>80)koCache.delete(koCache.keys().next().value);return p}
+function prefetch(text,who){if(KO&&who!=="es")koGen(text,who).catch(()=>{})}
+function stopVoice(){try{if(curSrc)curSrc.stop()}catch(e){}curSrc=null;if(synth)synth.cancel()}
+async function speak(text,who){
+  who=who||"E";const av=who==="S"?"A":"B";setAv(av,"talk");
+  setOrb("speak",who==="S"?"Así se dice":who==="es"?"Emily te explica":"Escucha…");speaking=true;
+  try{
+    if(KO&&who!=="es"){try{const b=await koGen(text,who);slowNext=false;await new Promise(res=>{ac.resume();const s=ac.createBufferSource();s.buffer=b;s.connect(ac.destination);curSrc=s;s.onended=res;s.start();setTimeout(res,b.duration*1000+800)});return}catch(e){console.warn(e)}}
+    await new Promise(res=>{if(!synth){res();return}synth.cancel();const u=new SpeechSynthesisUtterance(text);
+      if(who==="es"){u.voice=SV.es;u.lang=SV.es?SV.es.lang:"es-MX";u.rate=1.03}
+      else{u.voice=(who==="M"||who==="S")?SV.m:SV.f;u.lang="en-US";u.rate=(slowNext||DB.settings.slow)?0.72:0.97;if(who==="E")u.pitch=1.05}
+      slowNext=false;let done=false;const fin=()=>{if(!done){done=true;res()}};u.onend=fin;u.onerror=fin;setTimeout(fin,2500+text.length*110);synth.speak(u)});
+  }finally{speaking=false;curSrc=null;setAv(av,"")}
 }
-let dict=null,sample=null,capsReady=!(window.claude&&window.claude.use),pending=null,cancelPending=()=>{};
+function unlockAudio(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){}
+  try{if(synth&&!KO){const u=new SpeechSynthesisUtterance(" ");u.volume=0;synth.speak(u)}}catch(e){}}
+function tone(ok){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t=ac.currentTime,notes=ok?[660,880]:[300,220];
+  notes.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.setValueAtTime(.0001,t+i*.12);
+    g.gain.exponentialRampToValueAtTime(.16,t+i*.12+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.12+.18);o.connect(g).connect(ac.destination);o.start(t+i*.12);o.stop(t+i*.12+.2)})}catch(e){}}
+
+/* =====================================================================
+   5. MICRÓFONO: tocas y hablas (cada toque escucha desde cero)
+   ===================================================================== */
+let dict=null,sample=null,capsReady=!(window.claude&&window.claude.use),pending=null,cancelPending=()=>{},cap=null;
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(!capsReady){Promise.all([window.claude.use("dictation").catch(()=>null),window.claude.use("sample").catch(()=>null)]).then(([d,s])=>{
   dict=d;sample=s;capsReady=true;
-  if(dict){
-    dict.onPartial(({text})=>{const c=cap;if(!c||!c.dict)return;c.part=text||"";c.cands=[(c.fin+" "+c.part).trim()];capUpdate(c)});
+  if(dict){dict.onPartial(({text})=>{const c=cap;if(!c||!c.dict)return;c.part=text||"";c.cands=[(c.fin+" "+c.part).trim()];capUpdate(c)});
     dict.onFinal(({text})=>{const c=cap;if(!c||!c.dict)return;c.fin=(c.fin+" "+(text||"")).trim();c.part="";c.cands=[c.fin];capUpdate(c)});
     dict.onState(({state,reason})=>{const c=cap;if(state==="idle"&&c&&c.dict){if(reason==="not_granted")micBlocked();capFinal(c)}})}
   if(!running)render()})}
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-let ac=null,cap=null,capId=0;
-function pauseRec(){} function resumeRec(){}
-function unlockAudio(){try{if(synth){const u=new SpeechSynthesisUtterance(" ");u.volume=0;synth.speak(u)}}catch(e){}
-  try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){}}
-/* ===== micrófono de "toca y habla": cada toque empieza a escuchar desde cero ===== */
 function micBlocked(){setOrb("ready","Micrófono bloqueado");feedback({ok:false},"Permite el micrófono: en iPhone, Ajustes → Safari → Micrófono → Permitir. Luego toca otra vez el micrófono.")}
+const clr=c=>["timer","max","idle","fall"].forEach(k=>clearTimeout(c[k]));
 function capStart(){
-  if(!pending||cap)return;
-  if(synth&&speaking)synth.cancel();
-  const id=++capId,c={id,cands:[],fin:"",part:"",stopping:false};cap=c;
+  if(!pending||cap)return;stopVoice();
+  const c={cands:[],fin:"",part:"",stopping:false};cap=c;
   setOrb("listen","Te escucho… toca para terminar");setAv("A","listen");showHeard("",false);
-  c.max=setTimeout(()=>capStop(c),15000);
-  c.idle=setTimeout(()=>{if(cap===c&&!c.cands.length)capStop(c)},8000);
-  if(dict){c.dict=true;dict.start({language:"en"}).catch(e=>{if(e&&e.code==="not_granted")micBlocked();if(cap===c){cap=null;clearTimeout(c.max);clearTimeout(c.idle);if(pending&&!(e&&e.code==="not_granted"))setOrb("ready","Toca el micrófono y habla")}});return}
+  c.max=setTimeout(()=>capStop(c),20000);c.idle=setTimeout(()=>{if(cap===c&&!c.cands.length)capStop(c)},9000);
+  if(dict){c.dict=true;dict.start({language:"en"}).catch(e=>{if(e&&e.code==="not_granted")micBlocked();if(cap===c){cap=null;clr(c);if(pending)setOrb("ready","Toca el micrófono y habla")}});return}
   const r=new SR();c.rec=r;r.lang="en-US";r.continuous=true;r.interimResults=true;r.maxAlternatives=5;
-  r.onresult=ev=>{if(cap!==c)return;const segs=[];
-    for(let i=0;i<ev.results.length;i++){const res=ev.results[i];segs.push(Array.from({length:res.length},(_,k)=>res[k]&&res[k].transcript||"").filter(Boolean))}
-    const S=segs.filter(a=>a.length);if(!S.length)return;
-    const base=S.slice(0,-1).map(a=>a[0]).join(" "),last=S[S.length-1];
-    c.cands=[...last.map(a=>(base+" "+a).trim()),...last];capUpdate(c)};
+  r.onresult=ev=>{if(cap!==c)return;const S=[];for(let i=0;i<ev.results.length;i++){const res=ev.results[i],a=Array.from({length:res.length},(_,k)=>res[k]&&res[k].transcript||"").filter(Boolean);if(a.length)S.push(a)}
+    if(!S.length)return;const base=S.slice(0,-1).map(a=>a[0]).join(" "),last=S[S.length-1];c.cands=[...last.map(a=>(base+" "+a).trim()),...last];capUpdate(c)};
   r.onerror=ev=>{if(ev.error==="not-allowed"||ev.error==="service-not-allowed")micBlocked()};
   r.onend=()=>{if(cap===c)capFinal(c)};
-  try{r.start()}catch(e){cap=null;setOrb("ready","Toca otra vez el micrófono")}
-}
+  try{r.start()}catch(e){cap=null;setOrb("ready","Toca otra vez el micrófono")}}
 function capUpdate(c){if(cap!==c)return;const p=pending;if(!p)return;showHeard(c.cands[0]||"",true);clearTimeout(c.idle);
-  if(p.target&&c.cands.some(x=>compare(p.target,x).ok)){capFinal(c);return}
+  if(p.target&&c.cands.some(x=>compare(p.target,x,p.lenient).ok)){capFinal(c);return}
   if(!c.stopping){clearTimeout(c.timer);c.timer=setTimeout(()=>capStop(c),p.wait)}}
 function capStop(c){c=c||cap;if(!c||cap!==c||c.stopping)return;c.stopping=true;clearTimeout(c.timer);setOrb("think","Revisando…");
-  if(c.dict){dict.stop().catch(()=>{}).then(()=>capFinal(c))}
-  else{try{c.rec.stop()}catch(e){}c.fall=setTimeout(()=>capFinal(c),1500)}}
-function capFinal(c){if(cap!==c)return;cap=null;["timer","max","idle","fall"].forEach(k=>clearTimeout(c[k]));
+  if(c.dict){dict.stop().catch(()=>{}).then(()=>capFinal(c))}else{try{c.rec.stop()}catch(e){}c.fall=setTimeout(()=>capFinal(c),1500)}}
+function capFinal(c){if(cap!==c)return;cap=null;clr(c);
   if(c.rec){c.rec.onresult=c.rec.onend=c.rec.onerror=null;try{c.rec.abort()}catch(e){}}
   if(c.dict&&!c.stopping){try{dict.stop()}catch(e){}}
-  setAv("A","");const p=pending;if(!p)return;
-  let cands=c.cands.filter(Boolean);
+  setAv("A","");const p=pending;if(!p)return;let cands=c.cands.filter(Boolean);
   if(!cands.length){setOrb("ready","No te escuché. Toca y vuelve a hablar");return}
-  if(p.target){const sc=x=>{const r=compare(p.target,x);return (r.ok?0:100)+r.dist};cands.sort((a,b)=>sc(a)-sc(b))}
+  if(p.target){const sc=x=>{const r=compare(p.target,x,p.lenient);return (r.ok?0:100)+r.dist};cands.sort((a,b)=>sc(a)-sc(b))}
   const best=cands[0],cmd=command(best);showHeard(best,false);pending=null;p.resolve(cmd?{cmd}:{text:best})}
 function micTap(){if(!pending)return;unlockAudio();if(cap)capStop(cap);else capStart()}
-function listen(target,wait){
-  return new Promise((resolve,reject)=>{
-    const p={target,resolve,wait:wait||1800};pending=p;
-    cancelPending=()=>{if(pending===p){pending=null;if(cap){const c=cap;cap=null;["timer","max","idle","fall"].forEach(k=>clearTimeout(c[k]));try{c.rec?c.rec.abort():dict&&dict.stop()}catch(e){}}reject(CANCEL)}};
-    showHeard("",false);setOrb("ready","Toca el micrófono y habla");setAv("A","");
-  });
-}
-function answer(cmd){const p=pending;if(!p)return;if(cap){const c=cap;cap=null;["timer","max","idle","fall"].forEach(k=>clearTimeout(c[k]));try{c.rec?c.rec.abort():dict&&dict.stop()}catch(e){}}pending=null;p.resolve({cmd})}
-function tone(ok){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t=ac.currentTime,notes=ok?[660,880]:[300,220];
-  notes.forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.setValueAtTime(.0001,t+i*.12);
-    g.gain.exponentialRampToValueAtTime(.18,t+i*.12+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.12+.18);o.connect(g).connect(ac.destination);o.start(t+i*.12);o.stop(t+i*.12+.2)})}catch(e){}}
+function abortCap(){if(cap){const c=cap;cap=null;clr(c);try{c.rec?c.rec.abort():dict&&dict.stop()}catch(e){}}}
+function listen(target,opt){opt=opt||{};return new Promise((resolve,reject)=>{
+  const p={target,resolve,wait:opt.wait||2200,lenient:!!opt.lenient};pending=p;
+  cancelPending=()=>{if(pending===p){pending=null;abortCap();reject(CANCEL)}};
+  showHeard("",false);setOrb("ready","Toca el micrófono y habla");setAv("A","")})}
+function answer(cmd){const p=pending;if(!p)return;abortCap();pending=null;p.resolve({cmd})}
 
 /* =====================================================================
-   5. INTELIGENCIA (Claude)
+   6. INTELIGENCIA (opcional: dentro de Claude o con llave)
    ===================================================================== */
 const aiOn=()=>!!sample||!!DB.settings.key;
-function looseJSON(t){t=String(t||"").trim().replace(/^```(?:json)?/i,"").replace(/```$/,"");
-  try{return JSON.parse(t)}catch(e){}const a=t.indexOf("{"),b=t.lastIndexOf("}");if(a>=0&&b>a)return JSON.parse(t.slice(a,b+1));throw {code:"invalid_json"}}
+function looseJSON(t){t=String(t||"").trim().replace(/^```(?:json)?/i,"").replace(/```$/,"");try{return JSON.parse(t)}catch(e){}const a=t.indexOf("{"),b=t.lastIndexOf("}");if(a>=0&&b>a)return JSON.parse(t.slice(a,b+1));throw {code:"invalid_json"}}
 async function aiJSON(prompt){
   if(sample)return await sample.json(prompt,{cache:false});
   if(!DB.settings.key)throw {code:"no_ai"};
-  const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{
-    "content-type":"application/json","x-api-key":DB.settings.key,"anthropic-version":"2026-10-21",
+  const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":DB.settings.key,"anthropic-version":"2026-10-21",
     "anthropic-beta":"server-side-fallback-2026-07-01","anthropic-dangerous-direct-browser-access":"true"},
-    body:JSON.stringify({model:"claude-opus-5-5",max_tokens:16000,output_config:{effort:"low"},fallbacks:"default",
-      messages:[{role:"user",content:prompt+"\n\nRespond with only the JSON object, nothing else."}]})});
+    body:JSON.stringify({model:"claude-opus-5-5",max_tokens:16000,output_config:{effort:"low"},fallbacks:"default",messages:[{role:"user",content:prompt+"\n\nRespond with only the JSON object, nothing else."}]})});
   if(!r.ok){let m="";try{m=(await r.json()).error.message}catch(e){}throw {code:r.status===401?"bad_key":r.status===403?"forbidden":r.status===429?"rate_limited":/credit|balance|billing/i.test(m)?"no_credit":"http",message:m}}
   const j=await r.json();if(j.stop_reason==="refusal")throw {code:"refusal"};
-  return looseJSON((j.content||[]).filter(b=>b.type==="text").map(b=>b.text).join(""));
-}
+  return looseJSON((j.content||[]).filter(b=>b.type==="text").map(b=>b.text).join(""))}
 const PRON_RULE=`written with Spanish spelling the way a Mexican would read it out loud, with accent marks on stressed syllables (examples: you = iú, I'm = áim, gonna = góna, gotta = gára, wanna = uána, what's up = uáts áp, thanks = zénks, do you = diú)`;
-function aiErr(e){const c=e&&e.code;
-  if(c==="bad_key")return "Claude dice que tu llave no es válida. Revisa que la copiaste completa (empieza con sk-ant-api) en Yo → Inteligencia.";
-  if(c==="no_credit")return "Tu cuenta de Claude API no tiene saldo. Agrega saldo en console.anthropic.com → Billing.";
-  if(c==="forbidden")return "Tu llave no tiene permiso para usar este modelo. Revisa tu cuenta en console.anthropic.com.";
-  if(c==="no_ai")return "Activa la inteligencia en Yo → Inteligencia.";
-  if(c==="rate_limited")return "Muchas solicitudes seguidas. Espera un momento.";
-  if(e&&e.name==="TypeError")return "No hay conexión con Claude. Revisa tu internet.";
-  return "La inteligencia no contestó"+(e&&e.message?": "+e.message:"")+". Intenta otra vez.";}
+function aiErr(e){const c=e&&e.code;if(c==="bad_key")return "Claude dice que tu llave no es válida.";if(c==="no_credit")return "Tu cuenta de Claude API no tiene saldo.";
+  if(c==="rate_limited")return "Muchas solicitudes seguidas.";if(e&&e.name==="TypeError")return "No hay conexión con Claude.";return "La inteligencia no contestó."}
 
 /* =====================================================================
-   6. STANLEY y EMILY (dibujos animados)
+   7. DIBUJOS: Stanley, Emily y la gente de las escenas
    ===================================================================== */
-function avatar(who,size){
-  const a=who==="A";
-  let svg=a?`<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="58" fill="var(--stan-soft)"/>
-   <path d="M22 118c4-22 20-32 38-32s34 10 38 32z" fill="var(--stan)"/><path d="M48 88l12 10 12-10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
-   <rect x="52" y="70" width="16" height="16" rx="6" fill="var(--skin-a)"/>
-   <ellipse cx="60" cy="54" rx="25" ry="27" fill="var(--skin-a)"/>
-   <path d="M34 50c-2-20 12-30 27-30 16 0 28 9 26 28-6-9-14-12-26-12-11 0-20 4-27 14z" fill="var(--hair-a)"/>
-   <ellipse class="eye" cx="50" cy="56" rx="3.2" ry="4" fill="#1b1b1b"/><ellipse class="eye" cx="70" cy="56" rx="3.2" ry="4" fill="#1b1b1b"/>
-   <path d="M44 48q6-3 11 0M65 48q6-3 11 0" stroke="var(--hair-a)" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-   <ellipse class="mouth" cx="60" cy="70" rx="7" ry="5" fill="#5a1f1f"/></svg>`
-  :`<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="58" fill="var(--emily-soft)"/>
-   <path d="M30 40c0-18 14-26 30-26s30 8 30 26v44c-6 4-14 4-18 2H48c-4 2-12 2-18-2z" fill="var(--hair-b)"/>
-   <path d="M22 118c4-22 20-32 38-32s34 10 38 32z" fill="var(--emily)"/>
-   <rect x="52" y="70" width="16" height="16" rx="6" fill="var(--skin-b)"/>
-   <ellipse cx="60" cy="54" rx="24" ry="26" fill="var(--skin-b)"/>
-   <path d="M35 50c0-18 11-27 25-27 15 0 26 9 25 27-9-4-16-12-19-18-6 10-18 16-31 18z" fill="var(--hair-b)"/>
-   <ellipse class="eye" cx="50" cy="57" rx="3.2" ry="4" fill="#1b1b1b"/><ellipse class="eye" cx="70" cy="57" rx="3.2" ry="4" fill="#1b1b1b"/>
-   <circle cx="45" cy="66" r="4" fill="var(--emily)" opacity=".25"/><circle cx="75" cy="66" r="4" fill="var(--emily)" opacity=".25"/>
-   <ellipse class="mouth" cx="60" cy="71" rx="6.5" ry="4.6" fill="#8a2240"/>
-   <circle cx="86" cy="62" r="3" fill="#FFD166"/></svg>`;
+function avatar(who,size){const a=who==="A";
+  let svg=a?`<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="58" fill="var(--stan-soft)"/><path d="M22 118c4-22 20-32 38-32s34 10 38 32z" fill="var(--stan)"/><path d="M48 88l12 10 12-10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/><rect x="52" y="70" width="16" height="16" rx="6" fill="var(--skin-a)"/><ellipse cx="60" cy="54" rx="25" ry="27" fill="var(--skin-a)"/><path d="M34 50c-2-20 12-30 27-30 16 0 28 9 26 28-6-9-14-12-26-12-11 0-20 4-27 14z" fill="var(--hair-a)"/><ellipse class="eye" cx="50" cy="56" rx="3.2" ry="4" fill="#1b1b1b"/><ellipse class="eye" cx="70" cy="56" rx="3.2" ry="4" fill="#1b1b1b"/><path d="M44 48q6-3 11 0M65 48q6-3 11 0" stroke="var(--hair-a)" stroke-width="2.6" fill="none" stroke-linecap="round"/><ellipse class="mouth" cx="60" cy="70" rx="7" ry="5" fill="#5a1f1f"/></svg>`
+  :`<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="58" fill="var(--emily-soft)"/><path d="M30 40c0-18 14-26 30-26s30 8 30 26v44c-6 4-14 4-18 2H48c-4 2-12 2-18-2z" fill="var(--hair-b)"/><path d="M22 118c4-22 20-32 38-32s34 10 38 32z" fill="var(--emily)"/><rect x="52" y="70" width="16" height="16" rx="6" fill="var(--skin-b)"/><ellipse cx="60" cy="54" rx="24" ry="26" fill="var(--skin-b)"/><path d="M35 50c0-18 11-27 25-27 15 0 26 9 25 27-9-4-16-12-19-18-6 10-18 16-31 18z" fill="var(--hair-b)"/><ellipse class="eye" cx="50" cy="57" rx="3.2" ry="4" fill="#1b1b1b"/><ellipse class="eye" cx="70" cy="57" rx="3.2" ry="4" fill="#1b1b1b"/><path d="M45 50l-3-2M75 50l3-2" stroke="#1b1b1b" stroke-width="1.6" stroke-linecap="round"/><circle cx="45" cy="66" r="4" fill="var(--emily)" opacity=".3"/><circle cx="75" cy="66" r="4" fill="var(--emily)" opacity=".3"/><ellipse class="mouth" cx="60" cy="71" rx="6.5" ry="4.6" fill="#c0264f"/><circle cx="86" cy="62" r="3" fill="#FFD166"/></svg>`;
   svg=svg.replace(/(fill|stroke)="(var\([^)]+\))"/g,'style="$1:$2"');
-  return `<div class="av ${a?"a":"b"} ${size||""}" data-av="${who}">${svg}<span class="tag">${a?"Stanley":"Emily"}</span></div>`;
-}
+  return `<div class="av ${a?"a":"b"} ${size||""}" data-av="${who}">${svg}<span class="tag">${a?"Stanley":"Emily"}</span></div>`}
+function npcHTML(s){return s.voice==="E"?avatar("B","sm"):`<div class="npcface" data-av="B">${esc(s.npcE)}<span class="tag">${esc(s.npcN)}</span></div>`}
 function setAv(who,state){document.querySelectorAll(`.sess [data-av="${who}"]`).forEach(el=>{el.classList.remove("talk","listen","happy","sad");if(state)el.classList.add(state)})}
-function cheer(ok){["A","B"].forEach(w=>setAv(w,ok?"happy":(w==="A"?"sad":"")));setTimeout(()=>{document.querySelectorAll(".sess .av").forEach(e=>e.classList.remove("happy","sad"))},600)}
+function cheer(ok){setAv("A",ok?"happy":"sad");setTimeout(()=>document.querySelectorAll(".sess .av").forEach(e=>e.classList.remove("happy","sad")),600)}
+function sceneHTML(place,npc,mini){const P=PLACES[place]||PLACES.calle,props=[...P.p].join(" ");
+  return `<div class="scene ${P.phone?"phone":""}" ${mini?"":'id="scn"'} style="--sky:${P.sky};--floor:${P.floor};${mini?"height:120px":""}">
+   <div class="place" style="${P.phone?"color:rgba(255,255,255,.6)":""}">${esc(P.n)}</div>
+   <div class="props"><div class="track">${props} ${props} ${props} ${props}</div></div>
+   ${P.phone?`<div class="ring"></div><div class="callbar" ${mini?"":'id="callt"'}>📞 00:00</div>`:""}
+   ${mini?"":`<div class="actor me">${avatar("A","sm")}</div><div class="actor npc">${npc||""}</div><div class="say npc" id="sayN"></div><div class="say me" id="sayY"></div>`}</div>`}
 
 /* =====================================================================
-   7. ÍCONOS y utilidades
+   8. UTILIDADES
    ===================================================================== */
-const I={
- mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
- spk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>',
- flame:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-4 2-5 0 2 1 3 2 3 0-4-1-6 1-9z"/></svg>',
- bolt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
- home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></svg>',
- path:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6.5"/></svg>',
- brain:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="6" cy="7" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="17" r="2.5"/><circle cx="19" cy="15" r="1.8"/><path d="M8.3 8.2l2.6 6.6M15.6 6.5 8.5 7M13.6 15.6l3.7-.6M17.6 8.4l-4.6 6.4"/></svg>',
- me:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>',
- x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
- chev:'<svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 2l6 6-6 6"/></svg>',
- check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12l5 5 9-10"/></svg>',
- target:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/></svg>',
- chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>',
- stack:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3 3 8l9 5 9-5zM3 13l9 5 9-5"/></svg>',
- note:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg>'};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const CANCEL={cancel:true};
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
 function toast(t){const e=document.createElement("div");e.className="toast";e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2600)}
+const I={
+ mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+ spk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg>',
+ think:'<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="18" cy="12" r="2"/></svg>',
+ flame:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-4 2-5 0 2 1 3 2 3 0-4-1-6 1-9z"/></svg>',
+ bolt:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
+ x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+ chev:'<svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 2l6 6-6 6"/></svg>'};
+const starStr=n=>`<span class="stars">${"★".repeat(n)}<i>${"★".repeat(3-n)}</i></span>`;
 
 /* =====================================================================
-   8. PANTALLAS
+   9. PANTALLAS
    ===================================================================== */
-const VIEWS=["hoy","ruta","cerebro","yo"];
+const VIEWS=["hoy","mapa","tarjetas","platica","yo"];
 let view=(location.hash||"#hoy").slice(1);if(!VIEWS.includes(view))view="hoy";
 let running=false,token=0;
 window.addEventListener("hashchange",()=>{const v=location.hash.slice(1);if(VIEWS.includes(v)&&v!==view){view=v;render()}});
 function go(v){view=v;try{history.replaceState(null,"","#"+v)}catch(e){}render();window.scrollTo(0,0)}
+function canRun(){return !!(capsReady&&(dict||SR))}
 function render(){
-  stopGraph();
-  const app=$("#app");
-  ({hoy:renderHoy,ruta:renderRuta,cerebro:renderCerebro,yo:renderYo})[view](app);
-  const T=[["hoy","Hoy",I.home],["ruta","Ruta",I.path],["cerebro","Cerebro",I.brain],["yo","Yo",I.me]];
-  $("#tabs").innerHTML=T.map(([k,n,ic])=>`<button class="${k===view?"on":""}" data-tab="${k}">${ic}<span>${n}</span></button>`).join("");
+  const app=$("#app");({hoy:renderHoy,mapa:renderMapa,tarjetas:renderTarjetas,platica:renderPlatica,yo:renderYo})[view](app);
+  const T=[["hoy","Hoy","🏠"],["mapa","Mapa","🗺️"],["tarjetas","Tarjetas","🃏"],["platica","Plática","💬"],["yo","Yo","🙂"]];
+  $("#tabs").innerHTML=T.map(([k,n,ic])=>`<button class="${k===view?"on":""}" data-tab="${k}"><span class="i">${ic}</span><span>${n}</span></button>`).join("");
   $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>go(b.dataset.tab));
 }
-function canRun(){return !!(capsReady&&(dict||SR)&&synth)}
-function blockers(){
-  if(!capsReady)return "";
-  if(!synth)return `<p class="warn">Este navegador no tiene voces. Abre la app en Safari (iPhone) o Chrome.</p>`;
-  if(!(dict||SR))return `<p class="warn">Este navegador no puede escucharte. En iPhone ábrela en <b>Safari</b>; en Android o computadora, en <b>Chrome</b>.</p>`;
-  return "";
-}
+function blockers(){if(!capsReady)return "";
+  if(!(dict||SR))return `<p class="warn">Este navegador no puede escucharte. En iPhone ábrela en <b>Safari</b>; en Android o computadora, en <b>Chrome</b>.</p>`;return ""}
+function voiceBannerHTML(){
+  if(KO)return "";
+  const st=koState==="loading"?`<div class="prog" style="margin-top:6px"><u style="width:${koPct}%"></u></div><small class="sub">Descargando la voz de Emily… ${koPct}% (sólo esta vez)</small>`
+    :koState==="error"?`<small class="sub">No se pudo cargar aquí. Seguimos con la voz del teléfono.</small>`:`<small class="sub">Suena como persona real. Descarga ~90 MB una sola vez (mejor con WiFi).</small>`;
+  return `<div class="vbanner" id="vban"><span style="font-size:2rem">🎙️</span><div style="flex:1;min-width:0"><b>Voz humana para Emily</b>${st}</div>
+    ${koState==="loading"?"":`<button class="btn small pink" id="kogo">${koState==="error"?"Reintentar":"Activar"}</button>`}</div>`}
+function renderVoiceBanner(){const b=$("#vban");if(!b){if(KO&&view==="yo"&&!running)render();return}b.outerHTML=voiceBannerHTML();bindKo()}
+function bindKo(){const k=$("#kogo");if(k)k.onclick=()=>{unlockAudio();koLoad().then(()=>{toast("¡Listo! Emily ya tiene voz humana");speak("Hey Stanley! Can you hear me now? I sound way better, right?","E")}).catch(()=>toast("No se pudo cargar la voz humana aquí"))}}
 
 /* ---------- HOY ---------- */
 function renderHoy(app){
-  const nu=nextUnit(),u=nu&&UNIT[nu],cd=curDay(),st=streak(),tx=DB.days[today()]||0,pct=Math.min(1,tx/GOAL),C=2*Math.PI*24;
-  const ww=weakWords(5),wi=weakItems(10);
-  let fecha="";try{fecha=new Date().toLocaleDateString("es-MX",{weekday:"long",day:"numeric",month:"long"})}catch(e){}
+  const s=nextScene(),st=streak(),tx=DB.days[today()]||0,due=dueItems(999).length,done=SCENES.filter(x=>scDone(x.id)).length,ww=weakWords(5);
   app.innerHTML=`<div class="page">
-   <div class="toprow"><div style="min-width:0"><div class="cap">${esc(fecha)}</div><h1 class="large">Hola, Stanley</h1></div>
-     <div class="row" style="gap:6px;flex-wrap:nowrap"><span class="pill p-flame" title="Días seguidos">${I.flame}${st}</span><span class="pill p-xp" title="XP">${I.bolt}${DB.xp}</span></div></div>
-   <section class="hero">
-     <div class="bubble">${u?`Hoy toca <b>${esc(u.s)}</b>. ¿Le damos?`:"¡Ya dominaste toda la ruta! Vamos a platicar."}</div>
-     <div class="stage">${avatar("A")}${avatar("B")}</div>
-     <div class="ringrow">
-       <svg class="ring" viewBox="0 0 58 58"><circle class="bgc" cx="29" cy="29" r="24"/><circle class="fgc" cx="29" cy="29" r="24" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 29 29)"/></svg>
-       <div style="min-width:0"><div class="cap">${cd<DAYS.length?"Día "+(cd+1)+" de 7 · "+esc(DAYS[cd].t):"Ruta completa"}</div><h2>${u?esc(u.t):"Pila de conversación"}</h2>
-       <div style="opacity:.75;font-size:.9rem">Meta de hoy: ${Math.min(tx,GOAL)} / ${GOAL} XP</div></div></div>
-     <button class="btn" id="goNow" ${canRun()?"":"disabled"}>${I.mic}<span>${!capsReady?"Preparando micrófono…":u?(Object.keys(DB.units).length?"Seguir hablando":"Empezar a hablar"):"Pila de conversación"}</span></button>
-   </section>
+   <div class="toprow"><div style="min-width:0"><div class="cap">Tu curso de inglés hablado</div><h1 class="large">Hola, Stanley</h1></div>
+     <div class="row" style="gap:6px;flex-wrap:nowrap"><span class="pill p-flame">${I.flame}${st}</span><span class="pill p-xp">${I.bolt}${DB.xp}</span></div></div>
+   ${voiceBannerHTML()}
+   ${s?`<section class="hero">
+     <div class="cap">Escena ${s.num} de ${SCENES.length} · Nivel ${s.lvl}: ${esc(LEVELS[s.lvl-1].t)}</div>
+     <div class="mini">${sceneHTML(s.place,"",true)}</div>
+     <h2>${esc(s.t)}</h2>
+     <div style="opacity:.8;font-size:.92rem">${esc(s.npcE)} ${esc(s.npcN)} te va a hablar. Tú le contestas: primero con ayuda y luego sin ayuda.</div>
+     <button class="btn" id="goNow" ${canRun()?"":"disabled"}>${I.mic}<span>${!capsReady?"Preparando…":done?"Seguir":"Empezar"}</span></button>
+   </section>`:`<section class="hero"><h2>¡Terminaste las ${SCENES.length} escenas! 🏆</h2><p>Ahora repasa tus tarjetas y platica con Emily.</p></section>`}
    ${blockers()}
-   <div class="sec-t"><h3>Tu semana</h3><span class="sub">en 7 días ya platicas</span></div>
-   <div class="week">${DAYS.map((d,i)=>{const n=d.u.filter(isDone).length;return `<div class="day ${i===cd?"now":n===d.u.length?"done":""}"><span>Día</span><b>${n===d.u.length?"✓":i+1}</b><i><u style="width:${n/d.u.length*100}%"></u></i></div>`}).join("")}</div>
+   <div class="stats">
+     <div class="stat"><b style="color:var(--ok)">${done}<span style="font-size:1rem;color:var(--sub)"> / ${SCENES.length}</span></b><span>escenas superadas</span></div>
+     <div class="stat"><b style="color:var(--flame)">${Math.min(tx,GOAL)}<span style="font-size:1rem;color:var(--sub)"> / ${GOAL}</span></b><span>XP de hoy</span></div></div>
    <div class="group">
-     <button class="cell" id="goFix"><span class="ico" style="background:var(--bad)">${I.target}</span><span class="grow"><strong>Refuerza tus fallas</strong>
-       <small>${wi.length?wi.length+" frases que se te atoran":"Aún no hay fallas. ¡Sigue así!"}</small></span><span class="chev">${I.chev}</span></button>
-     <button class="cell" id="goPila"><span class="ico" style="background:var(--ok)">${I.stack}</span><span class="grow"><strong>Pila de conversación</strong>
-       <small>Plática tras plática con todo lo que ya dominas</small></span><span class="chev">${I.chev}</span></button>
-     <button class="cell" id="goFree"><span class="ico" style="background:var(--emily)">${I.chat}</span><span class="grow"><strong>Sección libre con Emily</strong>
-       <small>Tú eliges el tema, ella te pregunta y te guía</small></span><span class="chev">${I.chev}</span></button>
-   </div>
-   ${ww.length?`<div class="card" style="display:grid;gap:10px"><div class="cap">Palabras donde más fallas</div><div class="chips">${ww.map(([w])=>`<span class="chip">${esc(w)}</span>`).join("")}</div>
-     <p class="sub" style="font-size:.9rem">Emily las vuelve a meter en tus repasos hasta que te salgan solas.</p></div>`:""}
+     <button class="cell" id="goRev"><span class="ico" style="background:var(--flame)">🃏</span><span class="grow"><strong>Repaso de hoy</strong><small>${due?due+" tarjetas listas para repasar":"Nada pendiente. ¡Vas al día!"}</small></span><span class="chev">${I.chev}</span></button>
+     <button class="cell" id="goFix"><span class="ico" style="background:var(--bad)">🎯</span><span class="grow"><strong>Lo que se te atora</strong><small>${weakItems(1).length?"Practica las frases que más fallas":"Aún no hay fallas"}</small></span><span class="chev">${I.chev}</span></button>
+     <button class="cell" id="goTalk"><span class="ico" style="background:var(--emily)">💬</span><span class="grow"><strong>Plática con Emily</strong><small>Tú eliges el tema y ella te pregunta</small></span><span class="chev">${I.chev}</span></button></div>
+   ${ww.length?`<div class="card" style="display:grid;gap:10px"><div class="cap">Palabras que más fallas</div><div class="chips">${ww.map(([w])=>`<span class="chip">${esc(w)}</span>`).join("")}</div></div>`:""}
   </div>`;
-  app.querySelectorAll(".hero .av").forEach(el=>el.onclick=()=>{if(!synth)return;unlockAudio();const w=el.dataset.av;speak(w==="A"?"Let's do this!":"Hey Stanley! Ready to talk?",w)});
-  $("#goNow").onclick=()=>start(u?t=>runFrom(nu,t):t=>pila(t));
-  $("#goFix").onclick=()=>{if(!wi.length&&!aiOn()){toast("Aún no tienes fallas guardadas");return}start(t=>refuerzo(t))};
-  $("#goPila").onclick=()=>{if(!ORDER.some(id=>UNIT[id].dlg&&isDone(id))){toast("Primero domina una plática de la ruta (día 4)");return}start(t=>pila(t))};
-  $("#goFree").onclick=()=>topicSheet();
+  bindKo();
+  const g=$("#goNow");if(g)g.onclick=()=>start(t=>runFrom(s,t));
+  $("#goRev").onclick=()=>{const L=dueItems(12);if(!L.length){toast("No tienes tarjetas pendientes");return}start(t=>cardDrill(L,"Repaso de hoy",t))};
+  $("#goFix").onclick=()=>{const L=weakItems(10);if(!L.length){toast("Aún no hay fallas guardadas");return}start(t=>cardDrill(L,"Lo que se te atora",t))};
+  $("#goTalk").onclick=()=>go("platica");
 }
 
-/* ---------- RUTA ---------- */
-function renderRuta(app){
-  const nu=nextUnit();
-  app.innerHTML=`<div class="page"><h1 class="large">Tu ruta</h1>
-   <p class="sub">Primero palabras, luego verbos, luego estructuras. Después juntamos todo y entras a la pila de conversación. Cada lección se domina <b>sin errores</b>.</p>
-   ${STAGES.map(S=>{const us=UNITS.filter(u=>u.stage===S.id),n=us.filter(u=>isDone(u.id)).length;
-    return `<div class="stagehead"><span class="ico" style="background:var(${S.c})">${n===us.length?I.check:S.n[0]}</span>
-      <div style="flex:1;min-width:0"><strong style="font-family:var(--round);font-weight:900;font-size:1.15rem">${S.n}</strong><div class="sub" style="font-size:.85rem">${S.d}</div>
-      <div class="bar" style="margin-top:6px"><u style="width:${n/us.length*100}%;background:var(${S.c})"></u></div></div>
-      <span class="sub" style="font-variant-numeric:tabular-nums;font-weight:700">${n}/${us.length}</span></div>
-     <div class="group">${us.map(u=>{const d=isDone(u.id),now=u.id===nu,lk=!unlocked(u.id);
-       return `<button class="cell ${lk?"lock":""}" data-u="${u.id}"><span class="unum ${d?"done":now?"now":""}">${d?"✓":ORDER.indexOf(u.id)+1}</span>
-        <span class="grow"><strong>${esc(u.s)}</strong><small>${esc(u.t)}</small></span><span class="tagday">Día ${dayOf(u.id)+1}</span><span class="chev">${I.chev}</span></button>`}).join("")}</div>`}).join("")}
+/* ---------- MAPA ---------- */
+function renderMapa(app){
+  const nx=nextScene();
+  app.innerHTML=`<div class="page"><h1 class="large">Mapa</h1>
+   <p class="sub">${SCENES.length} escenas en ${LEVELS.length} niveles. Cada una se hace dos veces: <b>con ayuda</b> (te digo qué decir) y <b>sin ayuda</b>. Tus estrellas salen de la segunda.</p>
+   ${LEVELS.map(L=>{const ss=SCENES.filter(s=>s.lvl===L.n);if(!ss.length)return "";const d=ss.filter(s=>scDone(s.id)).length;
+    return `<div class="lvl"><span class="ico" style="background:var(${L.c})">${L.em}</span><div style="flex:1;min-width:0"><strong style="font-family:var(--round);font-weight:900;font-size:1.15rem">Nivel ${L.n} · ${esc(L.t)}</strong>
+      <div class="sub" style="font-size:.85rem">${esc(L.d)}</div><div class="bar" style="margin-top:6px"><u style="width:${d/ss.length*100}%;background:var(${L.c})"></u></div></div><span class="sub" style="font-weight:700">${d}/${ss.length}</span></div>
+     <div class="group">${ss.map(s=>`<button class="cell ${scOpen(s)?"":"lock"}" data-s="${s.id}"><span class="scnum ${s===nx?"now":""}">${esc([...PLACES[s.place].p][0])}</span>
+       <span class="grow"><strong>${s.num}. ${esc(s.t)}</strong><small>${esc(PLACES[s.place].n)} · ${esc(s.npcN)}</small></span>${starStr(scStars(s.id))}</button>`).join("")}</div>`}).join("")}
   </div>`;
-  app.querySelectorAll("[data-u]").forEach(b=>b.onclick=()=>unitSheet(UNIT[b.dataset.u]));
+  app.querySelectorAll("[data-s]").forEach(b=>b.onclick=()=>sceneSheet(SC[b.dataset.s]));
 }
-function unitSheet(u){
-  const lk=!unlocked(u.id),f=u.l.map(l=>DB.items[l[1].toLowerCase()]).filter(Boolean).reduce((s,x)=>s+x.fail,0);
-  sheet(`<h3>${esc(u.s)}</h3><p class="sub">${esc(u.t)} · Día ${dayOf(u.id)+1}</p><p>${u.n}</p>
-   <div class="group">${u.l.map(l=>`<div class="phr"><span class="e" style="color:${l[0]==="A"?"var(--stan)":"var(--emily)"}">${esc(l[1])}</span><span class="s">${esc(l[2])}</span><span class="r">${esc(l[3])}</span></div>`).join("")}</div>
-   ${f?`<p class="sub">Te has equivocado ${f} ${f===1?"vez":"veces"} en esta lección.</p>`:""}
-   ${lk?`<p class="warn">Te recomiendo ir en orden, pero si ya lo sabes puedes empezar aquí.</p>`:""}
-   <button class="btn" id="su" ${canRun()?"":"disabled"}>${I.mic}<span>${isDone(u.id)?"Practicar otra vez":"Hablar esta lección"}</span></button>`,
-   s=>{s.querySelector("#su").onclick=()=>{closeSheet();start(t=>runFrom(u.id,t,true))}});
+function sceneSheet(s){const open=scOpen(s);
+  sheet(`<div class="mini" style="height:110px">${sceneHTML(s.place,"",true)}</div><h3>${s.num}. ${esc(s.t)}</h3>
+   <p class="sub">Nivel ${s.lvl} · ${esc(PLACES[s.place].n)} · con ${esc(s.npcE)} ${esc(s.npcN)}</p>${s.n?`<p>${esc(s.n)}</p>`:""}
+   <div class="group">${s.turns.map(t=>(t.npc?`<div class="phr npc"><span class="em">${esc(s.npcE)}</span><span class="e">${esc(t.npc.en)}</span><span class="s">${esc(t.npc.es)}</span></div>`:"")+
+     (t.you?`<div class="phr"><span class="em">${esc(t.you.em)}</span><span class="e" style="color:var(--stan)">${esc(t.you.en)}</span><span class="s">${esc(t.you.es)}</span><span class="r">${esc(t.you.pr)}</span></div>`:"")).join("")}</div>
+   ${open?"":`<p class="warn">Te recomiendo ir en orden, pero si ya la sabes, adelante.</p>`}
+   <button class="btn" id="ss" ${canRun()?"":"disabled"}>${I.mic}<span>${scDone(s.id)?"Practicar otra vez":"Entrar a la escena"}</span></button>`,
+   el=>{el.querySelector("#ss").onclick=()=>{closeSheet();start(t=>runScene(s,t))}})}
+
+/* ---------- TARJETAS ---------- */
+let cardFilter="todas";
+function renderTarjetas(app){
+  const now=Date.now(),all=Object.values(DB.items).sort((a,b)=>a.due-b.due);
+  const F={todas:all,hoy:all.filter(x=>x.due<=now),fallas:all.filter(x=>x.fail>0&&x.box<3),dominadas:all.filter(x=>x.box>=3)};
+  const L=F[cardFilter]||all;
+  app.innerHTML=`<div class="page"><h1 class="large">Tarjetas</h1>
+   <p class="sub">Cada frase que dices en las escenas se vuelve tarjeta con su dibujo. Regresan solas cuando toca: las que fallas, pronto; las que dominas, cada vez más espaciadas.</p>
+   <div class="chips">${[["todas","Todas"],["hoy","Para hoy"],["fallas","Fallas"],["dominadas","Dominadas"]].map(([k,n])=>`<button class="chip ${k===cardFilter?"":"p"}" style="${k===cardFilter?"background:var(--ink);color:var(--bg)":""}" data-f="${k}">${n} (${F[k].length})</button>`).join("")}</div>
+   ${L.length?`<button class="btn" id="cgo" ${canRun()?"":"disabled"}>${I.mic}<span>Repasar estas con voz</span></button>
+   <div class="cards">${L.slice(0,120).map(x=>`<div class="fc ${x.due<=now?"due":""} ${x.fail>0&&x.box<3?"weak":""}"><span class="em">${esc(x.y.em)}</span><span class="e">${esc(x.y.en)}</span><span class="r">${esc(x.y.pr)}</span><span class="s">${esc(x.y.es)}</span></div>`).join("")}</div>`
+   :`<div class="card sub">Aquí aparecen tus tarjetas cuando hagas tu primera escena.</div>`}</div>`;
+  app.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{cardFilter=b.dataset.f;render()});
+  const c=$("#cgo");if(c)c.onclick=()=>start(t=>cardDrill(L.slice(0,15).map(x=>x.y),"Tarjetas",t));
 }
 
-/* ---------- CEREBRO ---------- */
-let brainTab="mapa";
-function renderCerebro(app){
-  const N=DB.notes;
-  app.innerHTML=`<div class="page">
-   <div class="toprow"><h1 class="large">Tu cerebro</h1><button class="btn small purple" id="addN">+ Nota</button></div>
-   <p class="sub">Todo lo que aprendes queda conectado: etapas, lecciones, palabras y tus propias notas. Rojo = donde fallas. Verde = ya lo dominas.</p>
-   <div class="seg"><button data-s="mapa" class="${brainTab==="mapa"?"on":""}">Mapa</button><button data-s="notas" class="${brainTab==="notas"?"on":""}">Notas (${N.length})</button></div>
-   <div id="bz"></div></div>`;
-  app.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{brainTab=b.dataset.s;render()});
-  $("#addN").onclick=()=>noteEditor();
-  const bz=$("#bz");
-  if(brainTab==="mapa"){
-    bz.innerHTML=`<div style="display:grid;gap:12px"><div class="graphbox"><canvas id="gc"></canvas><div class="gtools"><button id="zi" aria-label="Acercar">+</button><button id="zo" aria-label="Alejar">−</button></div></div>
-     <div class="legend"><span><i style="background:var(--stan)"></i>Etapa</span><span><i style="background:var(--ok)"></i>Dominado</span><span><i style="background:var(--sub)"></i>Por aprender</span><span><i style="background:var(--bad)"></i>Fallas</span><span><i style="background:var(--brain)"></i>Tus notas</span></div>
-     <div id="gd" class="card detail"><p class="sub">Toca un punto del mapa para ver qué hay ahí y practicarlo.</p></div></div>`;
-    startGraph();
-  }else{
-    bz.innerHTML=N.length?`<div class="group">${N.map(n=>`<button class="cell" data-n="${esc(n.id)}"><span class="ico" style="background:var(--brain)">${I.note}</span><span class="grow"><strong>${esc(n.title)}</strong>
-      <small>${n.phrases.length} frases · ${esc(n.body.slice(0,60))}</small></span><span class="chev">${I.chev}</span></button>`).join("")}</div>`
-     :`<div class="card" style="display:grid;gap:10px"><strong>Tu cerebro en inglés empieza aquí</strong><p class="sub">Escribe o sube un archivo de texto con estructuras, frases o vocabulario. La app saca las frases y las practicas hablando.</p>
-       <p class="sub" style="font-size:.88rem">Formato fácil, una frase por línea:<br><code>I'm gonna call you | Te voy a llamar</code><br>Conecta ideas con <code>[[gonna]]</code> y aparecen unidas en el mapa.</p>
-       <button class="btn purple" id="firstN">Crear mi primera nota</button></div>`;
-    bz.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>noteView(DB.notes.find(n=>n.id===b.dataset.n)));
-    const f=$("#firstN");if(f)f.onclick=()=>noteEditor();
-  }
-}
-function parsePhrases(body){
-  const out=[];
-  body.split(/\n+/).forEach(raw=>{let s=raw.trim().replace(/^[-*•\d.)\s]+/,"").replace(/\[\[|\]\]/g,"");if(!s||s.startsWith("#"))return;
-    if(s.includes("|")){const p=s.split("|").map(x=>x.trim());if(/[a-z]/i.test(p[0]))out.push(["A",p[0],p[1]||"",p[2]||autoPron(p[0])]);return}
-    const m=s.match(/^(.+?)\s(?:=|—|–|->)\s(.+)$/);if(m&&/^[\x00-\x7F]+$/.test(m[1])){out.push(["A",m[1].trim(),m[2].trim(),autoPron(m[1])]);return}
-    if(/[áéíóúñ¿¡]/i.test(s))return;
-    s.split(/(?<=[.!?])\s+/).forEach(x=>{x=x.trim();const n=x.split(/\s+/).length;if(n<=16&&/[a-z]/i.test(x))out.push(["A",x,"",autoPron(x)])});
-  });
-  return out.slice(0,40);
-}
-const linksOf=body=>[...body.matchAll(/\[\[([^\]]+)\]\]/g)].map(m=>m[1].trim()).filter(Boolean);
-function noteEditor(n){
-  const ed=!!n;n=n||{title:"",body:""};
-  sheet(`<h3>${ed?"Editar nota":"Nueva nota"}</h3>
-   <input type="text" id="nt" placeholder="Título (ej. Frases del trabajo)" value="${esc(n.title)}">
-   <textarea id="nb" placeholder="Escribe frases, estructuras o vocabulario. Una por línea.&#10;&#10;I'm gonna call you | Te voy a llamar&#10;I gotta go = Me tengo que ir&#10;[[gonna]] [[trabajo]]">${esc(n.body)}</textarea>
-   <label class="btn ghost small" for="nf" style="width:100%">Subir archivo de texto (.txt o .md)</label><input type="file" id="nf" accept=".txt,.md,text/plain,text/markdown" hidden>
-   ${aiOn()?`<label style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="nai" checked style="width:22px;height:22px;flex:none"> Que la inteligencia saque frases, traducción y pronunciación</label>`
-     :`<p class="sub" style="font-size:.88rem">Sin inteligencia, la app toma tus frases tal cual. Con <b>Yo → Inteligencia</b>, Claude las traduce, les pone pronunciación y arma frases de práctica aunque escribas en español.</p>`}
-   <button class="btn purple" id="ns">Guardar en mi cerebro</button>`,s=>{
-    s.querySelector("#nf").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const b=s.querySelector("#nb");b.value=(b.value?b.value+"\n":"")+String(r.result).slice(0,20000);
-      const t=s.querySelector("#nt");if(!t.value)t.value=f.name.replace(/\.[^.]+$/,"")};r.readAsText(f)};
-    s.querySelector("#ns").onclick=async()=>{
-      const title=s.querySelector("#nt").value.trim()||"Nota sin título",body=s.querySelector("#nb").value.trim();
-      if(!body){toast("Escribe algo o sube un archivo");return}
-      const btn=s.querySelector("#ns");btn.disabled=true;
-      let phrases=parsePhrases(body),topics=n.topics||[];const useAI=s.querySelector("#nai")&&s.querySelector("#nai").checked;
-      if(useAI){btn.textContent="Emily está leyendo tu nota…";
-        try{const r=await aiJSON(`You help Stanley, a Mexican Spanish speaker, learn to SPEAK casual American English by voice.
-He saved this note in his "English brain" (it may be in Spanish, English or both; it may hold grammar structures, vocabulary or phrases):
-"""${body.slice(0,6000)}"""
-Turn it into 6 to 14 short spoken practice lines (max 12 words each) that a native American would really say, using contractions (I'm, you're, gonna, wanna, gotta, don't, can't). Keep the note's own phrases when they are already natural.
-Return JSON: {"phrases":[{"en":"...","es":"Mexican Spanish translation","pr":"pronunciation ${PRON_RULE}"}],"topics":["2 to 5 short keywords in English that this note is about"]}`);
-          if(r&&Array.isArray(r.phrases)&&r.phrases.length){phrases=r.phrases.filter(p=>p&&p.en).slice(0,20).map(p=>["A",String(p.en),String(p.es||""),String(p.pr||autoPron(String(p.en)))]);topics=(r.topics||[]).map(String).slice(0,6)}
-        }catch(e){toast(aiErr(e))}}
-      if(!phrases.length){btn.disabled=false;btn.textContent="Guardar en mi cerebro";toast("No encontré frases en inglés. Usa: inglés | español");return}
-      const rec={id:n.id||("n"+Date.now()),title,body,phrases:phrases.map(p=>{p[4]="nota:"+title;return p}),topics,created:n.created||Date.now(),updated:Date.now()};
-      if(ed)DB.notes=DB.notes.map(x=>x.id===rec.id?rec:x);else DB.notes.unshift(rec);
-      save();closeSheet();brainTab="notas";if(view==="cerebro")render();noteView(rec);
-    };
-  });
-}
-function noteView(n){if(!n)return;
-  const body=esc(n.body).replace(/\[\[([^\]]+)\]\]/g,'<span class="wl">$1</span>');
-  sheet(`<h3>${esc(n.title)}</h3>
-   ${n.topics&&n.topics.length?`<div class="chips">${n.topics.map(t=>`<span class="chip p">${esc(t)}</span>`).join("")}</div>`:""}
-   <div class="card notebody">${body}</div>
-   <div class="cap">Frases para hablar (${n.phrases.length})</div>
-   <div class="group">${n.phrases.map(p=>`<div class="phr"><span class="e">${esc(p[1])}</span>${p[2]?`<span class="s">${esc(p[2])}</span>`:""}<span class="r">${esc(p[3])}</span></div>`).join("")}</div>
-   <button class="btn purple" id="nh" ${canRun()?"":"disabled"}>${I.mic}<span>Hablar esta nota</span></button>
-   <div class="row"><button class="btn ghost small" id="ne">Editar</button><button class="btn ghost small" id="nd" style="color:var(--bad)">Borrar</button></div>`,s=>{
-    s.querySelector("#nh").onclick=()=>{closeSheet();start(t=>deck(n.phrases,"Nota: "+n.title,t))};
-    s.querySelector("#ne").onclick=()=>{closeSheet();noteEditor(n)};
-    s.querySelector("#nd").onclick=e=>{const b=e.currentTarget;if(!b.dataset.sure){b.dataset.sure=1;b.textContent="Toca otra vez para borrar";return}
-      DB.notes=DB.notes.filter(x=>x.id!==n.id);save();closeSheet();render()};
-  });
-}
-
-/* ---------- mapa del cerebro (grafo) ---------- */
-let G={nodes:[],edges:[],raf:0,cam:{x:0,y:0,k:1},sel:null,heat:1};
-function buildGraph(){
-  const old=Object.fromEntries(G.nodes.map(n=>[n.id,n])),nodes=[],edges=[],ix={};
-  const add=(id,type,label,color,r,data)=>{const o=old[id];const n={id,type,label,color,r,data,x:o?o.x:(Math.random()-.5)*300,y:o?o.y:(Math.random()-.5)*300,vx:0,vy:0};ix[id]=n;nodes.push(n);return n};
-  const link=(a,b,len)=>{if(ix[a]&&ix[b]&&a!==b)edges.push({a:ix[a],b:ix[b],len})};
-  STAGES.forEach((S,i)=>{const n=add("s:"+S.id,"stage",S.n,"--stan",17,S);if(!old[n.id]){const ang=i/STAGES.length*Math.PI*2;n.x=Math.cos(ang)*150;n.y=Math.sin(ang)*150}});
-  STAGES.forEach((S,i)=>{if(i)link("s:"+STAGES[i-1].id,"s:"+S.id,150)});
-  UNITS.forEach(u=>{const fails=u.l.map(l=>DB.items[l[1].toLowerCase()]).filter(Boolean).reduce((s,x)=>s+(x.box<3?x.fail:0),0);
-    add("u:"+u.id,"unit",u.stage==="j"||u.stage==="c"?u.t:u.s,isDone(u.id)?(fails?"--flame":"--ok"):fails?"--bad":"--sub",9,u);link("s:"+u.stage,"u:"+u.id,60)});
-  Object.entries(DB.words).filter(([w])=>w.length>2).sort((a,b)=>(b[1].miss*3+b[1].ok)-(a[1].miss*3+a[1].ok)).slice(0,36).forEach(([w,s])=>{
-    add("w:"+w,"word",w,s.miss>s.ok/3?"--bad":"--ok",4+Math.min(5,s.miss),s);
-    UNITS.filter(u=>u.l.some(l=>norm(l[1]).includes(w))).slice(0,3).forEach(u=>link("u:"+u.id,"w:"+w,48))});
-  DB.notes.forEach(n=>{add("n:"+n.id,"note",n.title,"--brain",11,n);
-    [...linksOf(n.body),...(n.topics||[])].map(x=>x.toLowerCase()).forEach(k=>{const hit=nodes.find(m=>m.id!=="n:"+n.id&&(m.label.toLowerCase()===k||(k.length>3&&m.label.toLowerCase().includes(k))));if(hit)link("n:"+n.id,hit.id,70)});
-    n.phrases.forEach(p=>norm(p[1]).forEach(w=>{if(ix["w:"+w])link("n:"+n.id,"w:"+w,55)}));
-    if(!edges.some(e=>e.a.id==="n:"+n.id||e.b.id==="n:"+n.id))link("n:"+n.id,"s:c",120)});
-  G.nodes=nodes;G.edges=edges;G.heat=1;G.sel=null;
-}
-function startGraph(){
-  const cv=$("#gc");if(!cv)return;buildGraph();
-  const dpr=window.devicePixelRatio||1,box=cv.getBoundingClientRect();cv.width=box.width*dpr;cv.height=box.height*dpr;
-  const ctx=cv.getContext("2d"),css=getComputedStyle(document.documentElement),col=v=>css.getPropertyValue(v).trim()||"#888";
-  const W=box.width,H=box.height;let drag=null,pan=null,moved=0,pinch=null;const pts=new Map();
-  const toWorld=(px,py)=>({x:(px-W/2-G.cam.x)/G.cam.k,y:(py-H/2-G.cam.y)/G.cam.k});
-  const hit=(px,py)=>{const p=toWorld(px,py);let best=null,bd=1e9;G.nodes.forEach(n=>{const d=Math.hypot(n.x-p.x,n.y-p.y);if(d<n.r+12/G.cam.k&&d<bd){bd=d;best=n}});return best};
-  const pos=e=>{const r=cv.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top]};
-  cv.onpointerdown=e=>{try{cv.setPointerCapture(e.pointerId)}catch(x){}const [px,py]=pos(e);pts.set(e.pointerId,{px,py});
-    if(pts.size===2){const [a,b]=[...pts.values()];pinch={d:Math.hypot(a.px-b.px,a.py-b.py)||1,k:G.cam.k};drag=null;pan=null;return}
-    moved=0;const n=hit(px,py);if(n){drag=n;G.heat=Math.max(G.heat,.5)}else pan={px,py,x:G.cam.x,y:G.cam.y}};
-  cv.onpointermove=e=>{const [px,py]=pos(e);if(pts.has(e.pointerId))pts.set(e.pointerId,{px,py});
-    if(pinch&&pts.size===2){const [a,b]=[...pts.values()];G.cam.k=Math.max(.35,Math.min(3,pinch.k*Math.hypot(a.px-b.px,a.py-b.py)/pinch.d));return}
-    if(drag){const p=toWorld(px,py);moved+=Math.abs(drag.x-p.x)+Math.abs(drag.y-p.y);drag.x=p.x;drag.y=p.y;drag.vx=drag.vy=0;G.heat=Math.max(G.heat,.4)}
-    else if(pan){moved+=Math.abs(px-pan.px-(G.cam.x-pan.x))+Math.abs(py-pan.py-(G.cam.y-pan.y));G.cam.x=pan.x+px-pan.px;G.cam.y=pan.y+py-pan.py}};
-  cv.onpointerup=cv.onpointercancel=e=>{const [px,py]=pos(e);pts.delete(e.pointerId);if(pinch){if(pts.size<2)pinch=null;drag=null;pan=null;return}
-    if(moved<8&&e.type==="pointerup"){const n=hit(px,py);G.sel=n;showNode(n)}drag=null;pan=null};
-  cv.onwheel=e=>{e.preventDefault();G.cam.k=Math.max(.35,Math.min(3,G.cam.k*(e.deltaY<0?1.1:.9)))};
-  $("#zi").onclick=()=>G.cam.k=Math.min(3,G.cam.k*1.25);$("#zo").onclick=()=>G.cam.k=Math.max(.35,G.cam.k/1.25);
-  const nb=new Set();
-  function physics(){
-    const N=G.nodes,h=G.heat;
-    if(h>.02){for(let i=0;i<N.length;i++){const a=N[i];for(let j=i+1;j<N.length;j++){const b=N[j];let dx=a.x-b.x,dy=a.y-b.y;const d2=dx*dx+dy*dy+.01;if(d2>90000)continue;const f=900/d2;dx*=f;dy*=f;a.vx+=dx;a.vy+=dy;b.vx-=dx;b.vy-=dy}}
-      G.edges.forEach(e=>{const dx=e.b.x-e.a.x,dy=e.b.y-e.a.y,d=Math.hypot(dx,dy)||1,f=(d-e.len)*.02,fx=dx/d*f,fy=dy/d*f;e.a.vx+=fx;e.a.vy+=fy;e.b.vx-=fx;e.b.vy-=fy});
-      N.forEach(n=>{n.vx-=n.x*.004;n.vy-=n.y*.004;if(n!==drag){n.x+=Math.max(-8,Math.min(8,n.vx*h));n.y+=Math.max(-8,Math.min(8,n.vy*h))}n.vx*=.82;n.vy*=.82});
-      G.heat*=.993}}
-  for(let i=0;i<260;i++){physics();G.heat=Math.max(G.heat,.6)}
-  {let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;G.nodes.forEach(n=>{x0=Math.min(x0,n.x);x1=Math.max(x1,n.x);y0=Math.min(y0,n.y);y1=Math.max(y1,n.y)});
-   G.cam.k=Math.max(.35,Math.min(1.4,Math.min((W-40)/((x1-x0)||1),(H-50)/((y1-y0)||1))));G.cam.x=-(x0+x1)/2*G.cam.k;G.cam.y=-(y0+y1)/2*G.cam.k;G.heat=.3}
-  function step(){
-    physics();
-    nb.clear();if(G.sel)G.edges.forEach(e=>{if(e.a===G.sel)nb.add(e.b);if(e.b===G.sel)nb.add(e.a)});
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);ctx.save();ctx.translate(W/2+G.cam.x,H/2+G.cam.y);ctx.scale(G.cam.k,G.cam.k);
-    G.edges.forEach(e=>{const on=G.sel&&(e.a===G.sel||e.b===G.sel);ctx.strokeStyle=on?col("--brain"):col("--sep");ctx.globalAlpha=G.sel&&!on?.35:.9;ctx.lineWidth=(on?2:1)/G.cam.k;ctx.beginPath();ctx.moveTo(e.a.x,e.a.y);ctx.lineTo(e.b.x,e.b.y);ctx.stroke()});
-    const t=performance.now()/1000,fs=1/Math.max(.8,G.cam.k);
-    G.nodes.forEach(n=>{ctx.globalAlpha=G.sel&&n!==G.sel&&!nb.has(n)?.3:1;ctx.fillStyle=col(n.color);
-      const r=n.r*(n===G.sel?1.35:1)+(n.type==="stage"?Math.sin(t*2+n.x)*1:0);ctx.beginPath();ctx.arc(n.x,n.y,r,0,7);ctx.fill();
-      if(n.type==="stage"||n===G.sel){ctx.strokeStyle=col("--card");ctx.lineWidth=3/G.cam.k;ctx.stroke()}
-      if(n.type!=="word"||G.cam.k>1.2||n===G.sel||nb.has(n)){ctx.fillStyle=col("--ink");ctx.font=`${n.type==="stage"?800:600} ${(n.type==="stage"?13:n.type==="word"?10:11)*fs}px -apple-system,Inter,system-ui,sans-serif`;
-        ctx.textAlign="center";ctx.fillText(n.label.length>22?n.label.slice(0,21)+"…":n.label,n.x,n.y+r+12*fs)}});
-    ctx.restore();G.raf=requestAnimationFrame(step)}
-  step();
-}
-function stopGraph(){cancelAnimationFrame(G.raf);G.raf=0}
-function nodeLines(n){
-  if(!n)return [];
-  if(n.type==="unit")return n.data.l;
-  if(n.type==="note")return n.data.phrases;
-  if(n.type==="word"){const w=n.label;return [...UNITS.flatMap(u=>u.l.filter(l=>l[0]==="A")),...DB.notes.flatMap(x=>x.phrases)].filter(l=>norm(l[1]).includes(w)).slice(0,8)}
-  if(n.type==="stage")return UNITS.filter(u=>u.stage===n.data.id&&isDone(u.id)).flatMap(u=>u.l.filter(l=>l[0]==="A")).sort(()=>Math.random()-.5).slice(0,8);
-  return [];
-}
-function showNode(n){const d=$("#gd");if(!d)return;
-  if(!n){d.innerHTML='<p class="sub">Toca un punto del mapa para ver qué hay ahí y practicarlo.</p>';return}
-  const L=nodeLines(n);let info="";
-  if(n.type==="unit")info=`${esc(n.data.t)} · ${isDone(n.data.id)?"Dominada":"Por dominar"}`;
-  if(n.type==="word")info=`La dijiste bien ${n.data.ok} ${n.data.ok===1?"vez":"veces"} · fallaste ${n.data.miss}`;
-  if(n.type==="note")info=`Tu nota · ${n.data.phrases.length} frases`;
-  if(n.type==="stage")info=esc(n.data.d)+(L.length?"":" · Domina una lección de esta etapa para practicarla aquí.");
-  d.innerHTML=`<div class="cap">${{unit:"Lección",word:"Palabra",note:"Nota",stage:"Etapa"}[n.type]}</div><h3 style="font-size:1.3rem;font-weight:900">${esc(n.label)}</h3><p class="sub">${info}</p>
-   ${L.length?`<div class="group">${L.slice(0,4).map(l=>`<div class="phr"><span class="e">${esc(l[1])}</span>${l[2]?`<span class="s">${esc(l[2])}</span>`:""}</div>`).join("")}</div>
-   <button class="btn purple" id="gh" ${canRun()?"":"disabled"}>${I.mic}<span>Hablar esto</span></button>`:""}`;
-  const b=$("#gh");if(b)b.onclick=()=>{if(n.type==="unit")start(t=>runFrom(n.data.id,t,true));else if(n.type==="note")start(t=>deck(n.data.phrases,"Nota: "+n.data.title,t));else start(t=>deck(L,(n.type==="word"?"Palabra: ":"Repaso: ")+n.label,t))};
+/* ---------- PLÁTICA ---------- */
+function renderPlatica(app){
+  app.innerHTML=`<div class="page"><h1 class="large">Plática</h1>
+   <p class="sub">Emily te hace preguntas del tema que tú quieras y tú le contestas con tu voz. Si no sabes qué decir, toca <b>💡 Ayuda</b>.${aiOn()?" Con la inteligencia activa, inventa preguntas nuevas y te corrige.":""}</p>
+   <input type="text" id="tp0" placeholder="Tema: comida, carros, viajes…" value="${esc(DB.settings.topic||"")}">
+   <div class="chips">${Object.values(FT).map(x=>`<button class="chip p" data-t="${esc(x.es)}">${esc(x.es)}</button>`).join("")}</div>
+   <button class="btn pink" id="tgo" ${canRun()?"":"disabled"}>💬<span>Empezar a platicar</span></button>
+   <div class="card sub" style="font-size:.9rem">Sin inteligencia, Emily usa sus pláticas preparadas de ${Object.keys(FT).length} temas. Para que invente preguntas de cualquier tema, abre la app dentro de Claude en una computadora con Chrome, o pon una llave en <b>Yo</b> (opcional).</div></div>`;
+  app.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{$("#tp0").value=b.dataset.t});
+  $("#tgo").onclick=()=>{const tp=$("#tp0").value.trim()||"tu día";DB.settings.topic=tp;save();start(t=>freeTalk(t,tp))};
 }
 
 /* ---------- YO ---------- */
 function renderYo(app){
   const its=Object.values(DB.items),tot=its.reduce((s,x)=>s+x.ok+x.fail,0),acc=tot?Math.round(its.reduce((s,x)=>s+x.ok,0)/tot*100):0;
-  const mast=its.filter(x=>x.box>=3).length,ww=weakWords(8),ws=weakStructs(6),maxM=Math.max(1,...ww.map(([,s])=>s.miss));
+  const ww=weakWords(8),maxM=Math.max(1,...ww.map(([,s])=>s.miss)),stars=SCENES.reduce((s,x)=>s+scStars(x.id),0);
   app.innerHTML=`<div class="page"><h1 class="large">Stanley</h1>
    <div class="stats">
      <div class="stat"><b style="color:var(--flame)">${streak()}</b><span>días de racha</span></div>
      <div class="stat"><b>${Math.max(DB.best,streak())}</b><span>mejor racha</span></div>
+     <div class="stat"><b style="color:var(--gold)">${stars}</b><span>estrellas de ${SCENES.length*3}</span></div>
      <div class="stat"><b style="color:var(--stan)">${DB.xp}</b><span>XP en total</span></div>
-     <div class="stat"><b style="color:var(--ok)">${ORDER.filter(isDone).length}<span style="font-size:1rem;color:var(--sub)"> / ${ORDER.length}</span></b><span>lecciones dominadas</span></div>
-     <div class="stat"><b>${mast}</b><span>frases que ya te salen solas</span></div>
-     <div class="stat"><b>${acc}%</b><span>de tus intentos salen bien</span></div>
-   </div>
+     <div class="stat"><b>${its.filter(x=>x.box>=3).length}</b><span>frases que ya te salen solas</span></div>
+     <div class="stat"><b>${acc}%</b><span>de tus intentos salen bien</span></div></div>
    <div class="sec-t"><h3>Dónde fallas</h3></div>
-   ${ww.length?`<div class="group">${ww.map(([w,s])=>`<div class="hbar"><span class="w">${esc(w)}</span><span class="t"><u style="width:${s.miss/maxM*100}%"></u></span><span class="n">${s.miss}</span></div>`).join("")}</div>`
-     :`<div class="card sub">Cuando falles una palabra aparece aquí, y Emily te la vuelve a poner hasta que te salga.</div>`}
-   ${ws.length?`<div class="group">${ws.map(([s,x])=>`<div class="cell"><span class="grow"><strong>${esc(s.replace(/^nota:/,"Nota: "))}</strong><small>${x.fail} fallas · ${x.ok} perfectas</small></span>
-     <span class="chip">${Math.round(x.fail/(x.ok+x.fail)*100)}%</span></div>`).join("")}</div>`:""}
-   ${DB.log.length?`<div class="cap">Lo último que se te atoró</div><div class="group">${DB.log.slice(0,6).map(m=>`<div class="phr"><span class="e">${esc(m.en)}</span><span class="s">Escuché: «${esc(m.heard||"nada")}»</span></div>`).join("")}</div>`:""}
-   <button class="btn" id="yfix" ${weakItems(1).length&&canRun()?"":"disabled"}>${I.target}<span>Practicar mis fallas</span></button>
-   <div class="sec-t"><h3>Voz</h3></div>
-   <div class="group"><label class="cell"><span class="grow"><strong>Emily habla despacio</strong><small>Para cuando estás empezando</small></span><input type="checkbox" id="slow" ${DB.settings.slow?"checked":""} style="width:24px;height:24px"></label>
-     ${[["B","Voz de Emily"],["A","Voz de Stanley"]].map(([w,n])=>`<div class="cell" style="flex-wrap:wrap"><span class="grow" style="min-width:100%"><strong>${n}</strong></span>
-       <select id="v${w}" style="flex:1;min-width:0">${enVoices().map(v=>`<option value="${esc(v.voiceURI)}" ${V[w.toLowerCase()==="a"?"a":"b"]===v?"selected":""}>${esc(v.name)}${vScore(v)>=70?" ★":""}</option>`).join("")||"<option>Sin voces en inglés</option>"}</select>
-       <button class="btn small ghost" data-test="${w}">Probar</button></div>`).join("")}</div>
-   <div class="card sub" style="font-size:.9rem">Para que no suene robótica, descarga una voz de mejor calidad en tu iPhone: <b>Ajustes → Accesibilidad → Contenido leído → Voces → Inglés</b>. Para Emily: <b>Ava (Premium)</b> o <b>Zoe (Premium)</b>. Para Stanley: <b>Evan (Mejorada)</b> o <b>Nathan (Mejorada)</b>. Después vuelve aquí y elígelas (las buenas tienen ★).</div>
-   <div class="sec-t" id="aiSec"><h3>Inteligencia</h3><span class="sub">opcional</span></div>
-   <div class="card" style="display:grid;gap:10px">
-     ${sample?`<p><b style="color:var(--ok)">Activa.</b> Estás usando la app dentro de Claude, así que Emily ya tiene inteligencia.</p>`
-     :`<p class="sub">Con la inteligencia, Emily platica libre contigo, lee tus notas, las traduce con pronunciación y crea práctica nueva con tus fallas. Pega una llave de la API de Claude (empieza con <code>sk-ant-</code>). Se guarda sólo en este teléfono y sólo se manda a Claude.</p>
-       <input type="password" id="key" placeholder="sk-ant-…" value="${esc(DB.settings.key)}" autocomplete="off">
-       <div class="row"><button class="btn small" id="ksave">Guardar llave</button>${DB.settings.key?`<button class="btn small ghost" id="ktest">Probar llave</button>`:""}${DB.settings.key?`<button class="btn small ghost" id="kdel">Quitar</button>`:""}</div>
-       <p class="sub" style="font-size:.85rem">${DB.settings.key?"Estado: <b>activa</b>.":"Estado: apagada."} La llave se saca en console.anthropic.com → API Keys. Cada plática gasta un poquito de tu saldo.</p>`}
-   </div>
-   <div class="sec-t"><h3>Respaldo de tu cerebro</h3></div>
-   <div class="card" style="display:grid;gap:10px"><p class="sub">Todo se guarda en este teléfono, dentro de Safari. Haz una copia para no perder tu progreso ni tus notas.</p>
+   ${ww.length?`<div class="group">${ww.map(([w,s])=>`<div class="hbar"><span class="w">${esc(w)}</span><span class="t"><u style="width:${s.miss/maxM*100}%"></u></span><span class="n">${s.miss}</span></div>`).join("")}</div>`:`<div class="card sub">Cuando falles una palabra aparece aquí, y te la vuelvo a poner hasta que salga sola.</div>`}
+   ${DB.log.length?`<div class="cap">Lo último que se te atoró</div><div class="group">${DB.log.slice(0,5).map(m=>`<div class="phr"><span class="em">❌</span><span class="e">${esc(m.en)}</span><span class="s">Escuché: «${esc(m.heard||"nada")}»</span></div>`).join("")}</div>`:""}
+   <div class="sec-t"><h3>Voz de Emily</h3></div>
+   ${voiceBannerHTML()}
+   <div class="group">
+     ${KO?`<div class="cell"><span class="grow"><strong>Voz humana</strong><small>Activa ✓</small></span></div>
+     <div class="cell" style="flex-wrap:wrap"><span class="grow" style="min-width:100%"><strong>Cómo suena Emily</strong></span>
+       <select id="ev" style="flex:1">${[["af_bella","Bella · cálida y coqueta"],["af_nicole","Nicole · suavecita, casi susurro"],["af_heart","Heart · dulce y clara"],["af_sky","Sky · juvenil"],["af_sarah","Sarah · natural"]].map(([v,n])=>`<option value="${v}" ${DB.settings.emily===v?"selected":""}>${n}</option>`).join("")}</select>
+       <button class="btn small ghost" id="evt">Probar</button></div>`:""}
+     <label class="cell"><span class="grow"><strong>Hablar más despacio</strong><small>Para cuando estás empezando</small></span><input type="checkbox" id="slow" ${DB.settings.slow?"checked":""} style="width:24px;height:24px"></label></div>
+   <div class="sec-t"><h3>Micrófono</h3></div>
+   <div class="card sub" style="display:grid;gap:6px;font-size:.92rem">
+     <p>• Toca el botón azul, habla normal y espera: se apaga solo cuando terminas. Si no, tócalo otra vez para terminar.</p>
+     <p>• En la ronda <b>sin ayuda</b> la app perdona palabritas chicas; las importantes sí tienen que estar.</p>
+     <p>• Si hablas bajito o lejos, lo que más ayuda son <b>audífonos con micrófono</b> (AirPods).</p>
+     <p>• En iPhone puede ayudar tener el teclado en inglés: <b>Ajustes → General → Teclado → Teclados → Agregar → English (US)</b>, con el dictado activado.</p></div>
+   <div class="sec-t"><h3>Inteligencia</h3><span class="sub">opcional</span></div>
+   <div class="card" style="display:grid;gap:10px">${sample?`<p><b style="color:var(--ok)">Activa</b> (estás dentro de Claude).</p>`:`<p class="sub">No hace falta. Si algún día quieres que Emily invente pláticas de cualquier tema, pega una llave de la API de Claude.</p>
+     <input type="password" id="key" placeholder="sk-ant-api…" value="${esc(DB.settings.key)}" autocomplete="off"><div class="row"><button class="btn small ghost" id="ksave">Guardar</button>${DB.settings.key?`<button class="btn small ghost" id="kdel">Quitar</button>`:""}</div>`}</div>
+   <div class="sec-t"><h3>Respaldo</h3></div>
+   <div class="card" style="display:grid;gap:10px"><p class="sub">Tu progreso se guarda en este teléfono, dentro de Safari (en pestaña normal, no privada). Haz una copia de vez en cuando.</p>
      <div class="row"><button class="btn small ghost" id="exp">Exportar copia</button><label class="btn small ghost" for="imp" style="flex:1">Importar copia</label><input type="file" id="imp" accept=".json,application/json" hidden></div></div>
-   <button class="link" id="reset">Borrar todo mi progreso</button>
-  </div>`;
-  $("#yfix").onclick=()=>start(t=>refuerzo(t));
+   <button class="link" id="reset">Borrar todo mi progreso</button></div>`;
+  bindKo();
+  const ev=$("#ev");if(ev)ev.onchange=()=>{DB.settings.emily=ev.value;save()};
+  const evt=$("#evt");if(evt)evt.onclick=()=>{unlockAudio();speak("Hey Stanley… I've been waiting for you. Wanna talk?","E")};
   $("#slow").onchange=e=>{DB.settings.slow=e.target.checked;save()};
-  ["A","B"].forEach(w=>{const sel=$("#v"+w);if(sel)sel.onchange=()=>{DB.settings["voice"+w]=sel.value;save();pickVoices()}});
-  app.querySelectorAll("[data-test]").forEach(b=>b.onclick=()=>{unlockAudio();const w=b.dataset.test;speak(w==="B"?"Hey Stanley! How's it going? I'm Emily.":"Hey Emily! I'm doing great, thanks.",w)});
-  const ks=$("#ksave");if(ks)ks.onclick=()=>{const k=$("#key").value.replace(/^\s*(bearer\s+)?["'“”]?|["'“”]?\s*$/gi,"").replace(/\s+/g,"");
-    if(k&&!/^sk-ant-/.test(k)){toast("Esa no parece una llave de la API. Debe empezar con sk-ant-api");return}
-    if(/^sk-ant-(oat|ort|sid)/.test(k)){toast("Esa llave es de tu sesión de Claude, no de la API. Crea una en console.anthropic.com → API Keys");return}
-    DB.settings.key=k;save();toast(k?"Llave guardada. Toca «Probar llave»":"Llave vacía");render()};
-  const kt=$("#ktest");if(kt)kt.onclick=async()=>{kt.disabled=true;kt.textContent="Probando…";
-    try{const r=await aiJSON('Reply with this JSON exactly: {"ok":true}');toast(r&&r.ok?"✅ La llave funciona. Ya puedes platicar con Emily":"La llave contestó raro, pero funciona")}
-    catch(e){sheet(`<h3>La llave no funcionó</h3><p>${esc(aiErr(e))}</p>`)}
-    kt.disabled=false;kt.textContent="Probar llave"};
+  const ks=$("#ksave");if(ks)ks.onclick=()=>{DB.settings.key=$("#key").value.replace(/\s+/g,"").replace(/^["'“”]|["'“”]$/g,"");save();toast(DB.settings.key?"Llave guardada":"Llave quitada");render()};
   const kd=$("#kdel");if(kd)kd.onclick=()=>{DB.settings.key="";save();render()};
   $("#exp").onclick=async()=>{const data=JSON.stringify(Object.assign({},DB,{settings:Object.assign({},DB.settings,{key:""})}));
-    try{const f=new File([data],"cerebro-habla-con-emily.json",{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Mi cerebro en inglés"});return}}catch(e){if(e&&e.name==="AbortError")return}
-    try{await navigator.clipboard.writeText(data);toast("Copia guardada en el portapapeles")}catch(e){sheet(`<h3>Tu copia</h3><p class="sub">Copia este texto y guárdalo en Notas.</p><textarea readonly>${esc(data)}</textarea>`)}};
-  $("#imp").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.v!==2)throw 0;const key=DB.settings.key;DB=Object.assign(blank(),d);DB.settings=Object.assign(blank().settings,d.settings||{});DB.settings.key=DB.settings.key||key;save();toast("Copia importada");render()}catch(x){toast("Ese archivo no es una copia válida")}};r.readAsText(f)};
-  $("#reset").onclick=e=>{const b=e.currentTarget;if(!b.dataset.sure){b.dataset.sure=1;b.textContent="Toca otra vez: se borra todo, también tus notas";return}const key=DB.settings.key;DB=blank();DB.settings.key=key;DB.migrated=true;save();render()};
+    try{const f=new File([data],"habla-con-emily.json",{type:"application/json"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f]});return}}catch(e){if(e&&e.name==="AbortError")return}
+    try{await navigator.clipboard.writeText(data);toast("Copia guardada en el portapapeles")}catch(e){toast("No se pudo copiar")}};
+  $("#imp").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.v!==3)throw 0;const k=DB.settings.key;DB=Object.assign(blank(),d);DB.settings=Object.assign(blank().settings,d.settings||{});DB.settings.key=DB.settings.key||k;save();toast("Copia importada");render()}catch(x){toast("Ese archivo no es una copia válida")}};r.readAsText(f)};
+  $("#reset").onclick=e=>{const b=e.currentTarget;if(!b.dataset.sure){b.dataset.sure=1;b.textContent="Toca otra vez: se borra todo";return}const s=DB.settings;DB=blank();DB.settings=s;save();render()};
 }
-
-/* ---------- hojas ---------- */
 function sheet(html,bind){closeSheet();const bg=document.createElement("div");bg.className="sheetbg";bg.innerHTML=`<div class="sheet"><div class="grab"></div>${html}</div>`;
   bg.onclick=e=>{if(e.target===bg)closeSheet()};document.body.appendChild(bg);if(bind)bind(bg.querySelector(".sheet"))}
 function closeSheet(){document.querySelectorAll(".sheetbg").forEach(e=>e.remove())}
 
 /* =====================================================================
-   9. SESIÓN DE PRÁCTICA (pantalla completa)
+   10. SESIÓN
    ===================================================================== */
-function start(flow){
-  if(!canRun())return;
-  unlockAudio();
-  running=true;const t=++token;openSess();
-  flow(t).catch(e=>{if(e!==CANCEL)console.error(e)}).finally(()=>{if(t===token)endSess()});
-}
-function openSess(){
-  closeSess();stopGraph();const s=document.createElement("div");s.className="sess";s.id="sess";
+function start(flow){if(!canRun())return;unlockAudio();running=true;const t=++token;flow(t).catch(e=>{if(e!==CANCEL)console.error(e)}).finally(()=>{if(t===token)endSess()})}
+let callTimer=0;
+function openSess(place,npc,title){
+  closeSess();const s=document.createElement("div");s.className="sess";s.id="sess";
   s.innerHTML=`<div class="in">
    <div class="shead"><button class="xbtn" id="sx" aria-label="Salir">${I.x}</button><div class="pbar"><u id="sbar"></u></div><span class="pill p-flame" style="padding:4px 10px">${I.flame}${streak()}</span></div>
-   <div class="sinfo"><span class="phase" id="sph">Listo</span><span class="sub" id="stt" style="font-size:.85rem;text-align:right"></span></div>
-   <div class="sstage">${avatar("B","sm")}${avatar("A","sm")}</div>
+   <div class="sinfo"><span class="phase" id="sph">${esc(title||"")}</span><span class="sub" id="stt" style="font-size:.85rem;text-align:right"></span></div>
+   ${sceneHTML(place,npc)}
    <p class="snote" id="snote" hidden></p>
-   <div class="schat" id="schat"></div>
-   <div class="scard" id="scard"></div>
+   <div class="scard" id="scard" hidden></div>
    <div class="spacer"></div>
    <p class="fb" id="sfb" hidden></p>
    <div class="dock"><button class="orb" id="sorb" aria-label="Hablar">${I.mic}</button><div class="t"><div class="st" id="sst">Listo</div><div class="heard" id="sheard"></div></div></div>
-   <div class="acts"><button data-cmd="repeat">${I.spk}Otra vez</button><button data-cmd="slow">🐢 Despacio</button><button data-cmd="help">💡 Ayuda</button></div></div>`;
+   <div class="acts"><button data-cmd="repeat">🔊 Repetir</button><button data-cmd="slow">🐢 Despacio</button><button data-cmd="help">💡 Ayuda</button></div></div>`;
   document.body.appendChild(s);document.body.style.overflow="hidden";
-  $("#sx").onclick=()=>{token++;if(synth)synth.cancel();endSess()};
+  $("#sx").onclick=()=>{token++;stopVoice();endSess()};
   $("#sorb").onclick=micTap;
   s.querySelectorAll("[data-cmd]").forEach(b=>b.onclick=()=>{unlockAudio();answer(b.dataset.cmd)});
+  clearInterval(callTimer);if($("#callt")){const t0=Date.now();callTimer=setInterval(()=>{const e=$("#callt");if(!e){clearInterval(callTimer);return}const s2=Math.floor((Date.now()-t0)/1000);e.textContent="📞 "+String(Math.floor(s2/60)).padStart(2,"0")+":"+String(s2%60).padStart(2,"0")},1000)}
 }
-function closeSess(){const s=$("#sess");if(s)s.remove();document.body.style.overflow=""}
-function endSess(){running=false;cancelPending();closeSess();render()}
+function closeSess(){const s=$("#sess");if(s)s.remove();document.body.style.overflow="";clearInterval(callTimer)}
+function endSess(){running=false;cancelPending();stopVoice();closeSess();render()}
 const guard=t=>{if(t!==token)throw CANCEL};
-function setPhase(name,note,title){const p=$("#sph");if(p)p.textContent=name;const n=$("#snote");if(n){n.hidden=!note;n.innerHTML=note||""}
-  if(title!==undefined){const x=$("#stt");if(x)x.textContent=title}const c=$("#schat");if(c)c.innerHTML=""}
+function setPhase(name,note,title){const p=$("#sph");if(p)p.textContent=name;const n=$("#snote");if(n){n.hidden=!note;n.innerHTML=note||""}if(title!==undefined){const x=$("#stt");if(x)x.textContent=title}}
 function setProg(f){const b=$("#sbar");if(b)b.style.width=Math.round(Math.min(1,f)*100)+"%"}
-function setOrb(kind,label){const o=$("#sorb");if(!o)return;o.className="orb "+kind;o.innerHTML=kind==="speak"?I.spk:kind==="think"?I.brain:I.mic;$("#sst").textContent=label;
-  const h=$("#sheard");if(h&&kind==="ready"&&!h.textContent)h.textContent="Cuando estés listo, toca el botón azul"}
+function setOrb(kind,label){const o=$("#sorb");if(!o)return;o.className="orb "+kind;o.innerHTML=kind==="speak"?I.spk:kind==="think"?I.think:I.mic;$("#sst").textContent=label;
+  const h=$("#sheard");if(h&&kind==="ready"&&!h.textContent)h.textContent="Toca el botón azul para contestar"}
 function showHeard(t,partial){const h=$("#sheard");if(h)h.textContent=t?(partial?t+"…":"«"+t+"»"):""}
-function showCard(line,mode){const c=$("#scard");if(!c)return;
-  const [who,en,es,pr]=line,hide=mode==="recall"&&es,isA=who==="A";
-  const task={repeat:"Repite",respond:"Tu turno",recall:"De memoria",listen:"Escucha",free:"Contesta como quieras"}[mode]||"";
-  c.innerHTML=`<div class="who" style="color:${isA?"var(--stan)":"var(--emily)"}"><i></i>${isA?"Stanley (tú)":"Emily"}<em>${task}</em></div>
-   <div class="en ${hide?"hide":""} ${en.length>40?"long":""}">${hide?"¿Cómo se dice en inglés?":esc(en)}</div>
-   <div class="kv">${es?`<span class="k">Significa</span><span class="es">${esc(es)}</span>`:""}${hide||!pr?"":`<span class="k">Se lee</span><span class="pr">${esc(pr)}</span>`}</div>`}
-function reveal(line){const e=$("#scard .en");if(e){e.className="en";e.textContent=line[1]}const kv=$("#scard .kv");if(kv&&!kv.querySelector(".pr")&&line[3])kv.insertAdjacentHTML("beforeend",`<span class="k">Se lee</span><span class="pr">${esc(line[3])}</span>`)}
-function addBubble(who,text){const ch=$("#schat");if(!ch)return;const b=document.createElement("div");b.className="bub "+(who==="A"?"a":"b");b.textContent=text;ch.appendChild(b);ch.scrollTop=ch.scrollHeight}
+function walk(on){const s=$("#scn");if(s)s.classList.toggle("walk",on)}
+function meet(on){const s=$("#scn");if(s)s.classList.toggle("meet",on)}
+function bubble(side,en,es){const b=$(side==="N"?"#sayN":"#sayY");if(!b)return;if(!en){b.classList.remove("on");return}b.innerHTML=esc(en)+(es?`<small>${esc(es)}</small>`:"");b.classList.add("on");
+  const o=$(side==="N"?"#sayY":"#sayN");if(o)o.classList.remove("on")}
+/* tarjeta de lo que dices: help (te digo qué decir) o recall (sólo la idea en español + el dibujo) */
+function showYou(y,mode,label){const c=$("#scard");if(!c)return;c.hidden=false;const hide=mode==="recall";
+  c.innerHTML=`<div class="who">● Tú (Stanley)<em>${label||(hide?"Dilo tú, sin ayuda":"Tú dices esto")}</em></div>
+   <div class="body">${hide?`<div class="en hide">Dile: «${esc(y.es)}»</div>`:`<div class="en ${y.en.length>38?"long":""}">${esc(y.en)}</div><div class="pr">${esc(y.pr)}</div><div class="es">${esc(y.es)}</div>`}</div>
+   <div class="draw" aria-hidden="true">${esc(y.em)}</div>`}
+function reveal(y){const b=$("#scard .body");if(b)b.innerHTML=`<div class="en ${y.en.length>38?"long":""}">${esc(y.en)}</div><div class="pr">${esc(y.pr)}</div><div class="es">${esc(y.es)}</div>`}
 function feedback(r,msg){const f=$("#sfb");if(!f)return;if(!r&&!msg){f.hidden=true;return}f.hidden=false;
   if(msg){f.className="fb "+(r&&r.ok?"ok":"bad");f.textContent=msg;return}
-  if(r.ok){f.className="fb ok";f.textContent=["¡Eso!","¡Perfecto!","¡Así se dice!","¡Muy bien!","¡Como nativo!"][Math.floor(Math.random()*5)];return}
-  f.className="fb bad";f.innerHTML=r.heardWords.length?"Casi. Revisa lo marcado: "+r.words.map((w,i)=>r.miss[i]?"<mark>"+esc(w)+"</mark>":esc(w)).join(" "):"No te escuché. Acerca el teléfono o usa audífonos con micrófono."}
-async function sayLine(l,t){guard(t);await speak(l[1],l[0]);guard(t)}
-async function sayEs(text,t){guard(t);if(V.es)await speak(text,"B","es");guard(t)}
+  if(r.ok){f.className="fb ok";f.textContent=pick(["¡Eso!","¡Perfecto!","¡Como gringo!","¡Muy bien!","¡Así mero!"]);return}
+  f.className="fb bad";f.innerHTML=r.heardWords.length?"Casi. Te faltó lo marcado: "+r.words.map((w,i)=>r.miss[i]?"<mark>"+esc(w)+"</mark>":esc(w)).join(" "):"No te escuché bien. Acerca el teléfono o usa audífonos."}
+async function sayEs(text,t){guard(t);if(SV.es||!synth)await speak(text,"es");guard(t)}
 
-/* un intento hasta que sale bien; devuelve true si salió a la primera */
-async function drill(line,mode,t){
-  if(mode==="recall"&&!line[2])mode="repeat";
-  let first=true,heard=mode==="repeat";
-  showCard(line,mode);feedback(null);
-  if(mode==="repeat")await sayLine(line,t);
-  while(true){
-    guard(t);const r=await listen(line[1]);guard(t);
-    if(r.cmd){if(r.cmd==="slow"||r.cmd==="help")slowNext=true;if(mode==="recall"){reveal(line);if(r.cmd==="help")first=false}
-      if(r.cmd==="help")feedback({ok:true},"Así se dice. Escúchala y dila tú.");showHeard("",false);await sayLine(line,t);heard=true;continue}
+/* un turno tuyo: devuelve true si salió a la primera */
+async function youSay(y,mode,t,npcLine,npcWho,opts){
+  opts=opts||{};let first=true,heard=false;showYou(y,mode,opts.label);feedback(null);
+  if(mode==="help"&&opts.model){slowNext=true;await speak(y.en,"S");guard(t);heard=true}
+  while(true){guard(t);const r=await listen(y.en,{lenient:mode==="recall"});guard(t);
+    if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;if(npcLine){bubble("N",npcLine.en,opts.npcEs?npcLine.es:"");await speak(npcLine.en,npcWho)}else await speak(y.en,"S");guard(t);continue}
+    if(r.cmd==="help"){if(mode==="recall"){reveal(y);first=false}feedback({ok:true},"Así se dice. Escúchalo y dilo tú.");slowNext=true;await speak(y.en,"S");guard(t);heard=true;continue}
     if(!r.text)continue;
-    const c=compare(line[1],r.text);feedback(c);record(line,c.ok,c,first);
-    if(c.ok){tone(true);setOrb("ok","¡Bien!");cheer(true);await wait(650);guard(t);return first}
-    tone(false);setOrb("bad","Otra vez");cheer(false);first=false;if(mode==="recall")reveal(line);
-    await wait(600);guard(t);slowNext=heard;await sayLine(line,t);heard=true;
-  }
+    const c=compare(y.en,r.text,mode==="recall");feedback(c);record(y,c.ok,c,first);
+    if(c.ok){bubble("Y",y.en);tone(true);setOrb("ok","¡Bien!");cheer(true);await wait(700);guard(t);return first}
+    tone(false);setOrb("bad","Otra vez");cheer(false);first=false;if(mode==="recall")reveal(y);
+    await wait(500);guard(t);slowNext=heard;await speak(y.en,"S");heard=true;guard(t)}
 }
-function reviewPick(exclude,n){const w=weakItems(n,exclude),d=dueItems(n,exclude.concat(w));return w.concat(d).slice(0,n)}
-async function win(title,xp,t){const s=$("#sess");if(!s)return;const w=document.createElement("div");w.className="win";
-  w.innerHTML=`<div>${avatar("B")}<b>${esc(title)}</b><span class="xp">+${xp} XP</span></div>`;s.appendChild(w);tone(true);setAv("B","happy");
-  await speak("Awesome, Stanley! You got it!","B");guard(t);await wait(900);w.remove()}
+async function npcSays(s,line,t,showEs){bubble("N",line.en,showEs?line.es:"");await speak(line.en,s.voice);guard(t)}
 
-async function runUnit(u,t){
-  const mine=u.l.filter(l=>l[0]==="A"),total=(u.dlg?3:2)*mine.length+3;let k=0;const tick=()=>setProg(++k/total);
-  setPhase("Repaso","",u.s+" · "+u.t);setProg(0);
-  const rv=reviewPick(u.l,3);
-  if(rv.length){setPhase("Repaso","Primero repasamos lo que <b>se te atora</b> o ya toca repasar.");await sayEs("Primero, repaso.",t);for(const l of rv){await drill(l,"recall",t);tick()}}
-  if(u.stage==="c"){
-    setPhase("Escucha",u.n);await sayEs("Escucha la plática completa.",t);
-    for(const l of u.l){showCard(l,"listen");feedback(null);await sayLine(l,t);addBubble(l[0],l[1]);await wait(250)}
-  }else{
-    setPhase("Aprende",u.n+(u.dlg?" <b>Emily dice lo suyo; tú repites sólo lo de Stanley.</b>":""));await sayEs(u.dlg?"Escucha a Emily y repite lo de Stanley.":"Repite después de mí.",t);
-    const again=[];for(const l of u.l){if(l[0]==="B"){showCard(l,"listen");feedback(null);await sayLine(l,t);await wait(250)}else{const ok=await drill(l,"repeat",t);if(!ok)again.push(l);tick()}addBubble(l[0],l[1])}
-    for(const l of again)await drill(l,"repeat",t);
-  }
-  if(u.dlg){
-    setPhase("Practica","Ahora platican. <b>Tú eres Stanley.</b>");await sayEs("Ahora platicamos. Tú eres Stanley.",t);
-    for(const l of u.l){if(l[0]==="B"){showCard(l,"listen");feedback(null);await sayLine(l,t);await wait(200)}else{await drill(l,"respond",t);tick()}addBubble(l[0],l[1])}
-  }
-  let round=0;
-  while(true){round++;
-    setPhase("Domina","<b>De memoria.</b> Sólo ves el español. Sin errores y la dominas.");
-    await sayEs(round===1?"Ahora de memoria. Sin errores y pasas.":"Casi. Otra vez, sin errores.",t);
-    let errs=0;
-    for(const l of u.l){if(l[0]==="B"){showCard(l,"listen");feedback(null);await sayLine(l,t);await wait(200)}else{if(!await drill(l,"recall",t))errs++;if(round===1)tick()}addBubble(l[0],l[1])}
-    if(!errs)break;
-  }
-  setProg(1);const was=isDone(u.id);DB.units[u.id]={done:true,at:Date.now(),rounds:round};const xp=was?15:50;addXP(xp);save();
-  await win(was?"¡Repasada!":"¡Dominaste "+u.s+"!",xp,t);
-}
-async function runFrom(id,t,single){
-  let k=ORDER.indexOf(id);
-  while(k<ORDER.length){await runUnit(UNIT[ORDER[k]],t);if(single)return;k++;
-    if(k<ORDER.length&&dayOf(ORDER[k])!==dayOf(ORDER[k-1])){
-      setPhase("¡Día "+(dayOf(ORDER[k-1])+1)+" completo!","Terminaste el día. Sigue: <b>"+esc(DAYS[dayOf(ORDER[k])].t)+"</b>. Puedes salir con la X o seguir ahorita.");
-      await speak("Great job today, Stanley!","B");guard(t);await wait(3000);guard(t)}}
-  await pila(t);
-}
-/* práctica de cualquier lista de frases (notas, palabras, fallas) */
-async function deck(lines,title,t){
-  lines=lines.filter(l=>l&&l[1]);if(!lines.length)return;
-  const n=lines.length;let k=0;
-  setPhase("Aprende","",title);await sayEs("Repite después de mí.",t);
-  for(const l of lines){await drill(l,"repeat",t);setProg(++k/(n*2))}
-  if(lines.some(l=>l[2])){setPhase("Domina","<b>De memoria.</b> Lo que falles vuelve al final.");await sayEs("Ahora de memoria.",t);
-    const q=lines.filter(l=>l[2]).sort(()=>Math.random()-.5);let done=0;
-    while(q.length){const l=q.shift();if(!await drill(l,"recall",t))q.push(l);else setProg((n+(++done))/(n*2))}}
-  setProg(1);addXP(10);save();await win("¡Listo!",10,t);
-}
-async function refuerzo(t){
-  let L=weakItems(8);
-  setPhase("Refuerzo","Emily junta lo que <b>se te atora</b> para que te salga solo.","Tus fallas");
-  if(aiOn()&&weakWords(1).length){setOrb("think","Emily arma tu práctica…");
-    try{const ww=weakWords(6).map(([w])=>w),ws=weakStructs(4).map(([s])=>s);
-      const r=await aiJSON(`Stanley, a Mexican Spanish speaker learning to SPEAK casual American English by voice, keeps failing these words: ${ww.join(", ")}${ws.length?" and these structures: "+ws.join(", "):""}.
-Write 5 NEW short spoken lines (max 10 words) that a native would say, each using one of those words or structures, with contractions.
-Return JSON: {"phrases":[{"en":"...","es":"Mexican Spanish translation","pr":"pronunciation ${PRON_RULE}"}]}`);guard(t);
-      if(r&&Array.isArray(r.phrases))L=L.concat(r.phrases.filter(p=>p&&p.en).slice(0,6).map(p=>["A",String(p.en),String(p.es||""),String(p.pr||autoPron(String(p.en))),"Refuerzo"]))}
-    catch(e){if(e===CANCEL)throw e;feedback({ok:false},aiErr(e));await wait(1500)}}
-  if(!L.length){setPhase("Sin fallas","Aún no tienes fallas guardadas. ¡Sigue con tu ruta!");await speak("No mistakes to fix yet. Nice!","B");await wait(1500);return}
-  await deck(L,"Refuerza tus fallas",t);
-}
-/* pila de conversación: plática tras plática */
-async function pila(t){
-  const pool=ORDER.filter(id=>UNIT[id].dlg&&isDone(id));
-  if(!pool.length){setPhase("Pila","Primero domina una plática de la ruta (día 4).");await wait(2500);return}
-  let n=0,lastId="";
-  while(true){let id;do{id=pool[Math.floor(Math.random()*pool.length)]}while(pool.length>1&&id===lastId);lastId=id;const u=UNIT[id];n++;
-    setPhase("Pila · plática "+n,"<b>"+esc(u.t)+".</b> Contesta de memoria. Si fallas, te la digo y la repites.",n+(n===1?" plática":" pláticas"));await sayEs("Plática "+n+".",t);
-    let k=0;for(const l of u.l){if(l[0]==="B"){showCard(l,"listen");feedback(null);await sayLine(l,t);await wait(200)}else await drill(l,"recall",t);addBubble(l[0],l[1]);setProg(++k/u.l.length)}
-    addXP(5);save();await wait(600);
-    const w=weakItems(1);if(n%3===0&&w.length){setPhase("Refuerzo rápido","Una frase que se te ha atorado.");await drill(w[0],"recall",t)}
-  }
-}
-/* ===== pláticas guiadas sin inteligencia: Emily pregunta, tú contestas ===== */
-const FT={};
-function T(id,keys,en,es,pr,txt){const qs=[];txt.trim().split("\n").forEach(r=>{const [k,a,b,c]=r.trim().split("|");if(k==="Q")qs.push({q:["B",a,b,c],h:[]});else qs[qs.length-1].h.push({en:a,es:b,pr:c})});FT[id]={id,keys,en,es,pr,qs}}
-T("comida",/comida|comer|pizza|taco|hamburgues|food|cena|desayun|restaurant|cocina/i,"food","comida","fúud",`
-Q|What's your favorite food?|¿Cuál es tu comida favorita?|uáts iór féivorit fúud
-H|I love tacos.|Me encantan los tacos.|ái láv tácos
-H|Pizza, for sure.|Pizza, seguro.|pítsa, for shúr
-Q|Do you like to cook?|¿Te gusta cocinar?|diú láik tu cúk
-H|Yeah, I cook every day.|Sí, cocino diario.|iéa, ái cúk évri déi
-H|Not really. I'm not good at it.|La verdad no. No soy bueno.|nát ríli. áim nát gud ærit
-Q|What did you eat today?|¿Qué comiste hoy?|uát díyu ít tudéi
-H|I had eggs for breakfast.|Desayuné huevos.|ái jád égs for brékfast
-H|I had a burger for lunch.|Comí una hamburguesa.|ái jád a bérguer for lánch
-Q|Do you like spicy food?|¿Te gusta lo picante?|diú láik spáisi fúud
-H|Yeah, I love spicy food!|¡Sí, me encanta lo picante!|iéa, ái láv spáisi fúud
-H|A little bit.|Un poquito.|a lírel bit
-Q|What's the best place to eat in your city?|¿Cuál es el mejor lugar para comer en tu ciudad?|uáts de bést pléis tu ít in iór síri
-H|There's a great taco place downtown.|Hay unos tacos buenísimos en el centro.|déars a gréit táco pléis dáuntaun
-H|I don't know, I usually eat at home.|No sé, casi siempre como en casa.|ái dóuno, ái iúshuali ít at jóum`);
-T("viajes",/viaj|avi[oó]n|aeropuerto|vuelo|vacacion|playa|travel|trip|plane/i,"travel","viajes","trável",`
-Q|Do you like to travel?|¿Te gusta viajar?|diú láik tu trável
-H|Yeah, I love it.|Sí, me encanta.|iéa, ái lávit
-H|Yeah, but flying makes me nervous.|Sí, pero volar me pone nervioso.|iéa, bat fláin méiks mi nérvos
-Q|Where was your last trip?|¿A dónde fue tu último viaje?|uér uás iór lást tríp
-H|I went to Mexico.|Fui a México.|ái uént tu méksicou
-H|I went to see my family.|Fui a ver a mi familia.|ái uént tu sí mái fámili
-Q|Do you like flying?|¿Te gusta volar en avión?|diú láik fláin
-H|I like the window seat.|Me gusta el asiento de la ventana.|ái láik de uíndou síit
-H|Not really. It's kinda scary.|No mucho. Da medio miedo.|nát ríli. its káinda skéri
-Q|Where do you wanna go next?|¿A dónde quieres ir después?|uér diú uána góu nékst
-H|I wanna go to New York.|Quiero ir a Nueva York.|ái uána góu tu núu iórk
-H|I wanna see the beach.|Quiero ver la playa.|ái uána síi de bíich
-Q|Do you travel alone or with family?|¿Viajas solo o con familia?|diú trável alóun or uíd fámili
-H|Usually with my family.|Casi siempre con mi familia.|iúshuali uíd mái fámili
-H|I like to travel alone.|Me gusta viajar solo.|ái láik tu trável alóun`);
-T("carros",/carro|coche|auto|troca|camioneta|manejar|car|truck/i,"cars","carros","cárs",`
-Q|Do you have a car?|¿Tienes carro?|diú jáv a cár
-H|Yeah, I've got a truck.|Sí, tengo una troca.|iéa, áiv gára trák
-H|No, I take the bus.|No, ando en camión.|nóu, ái téik de bás
-Q|What kind of car do you like?|¿Qué tipo de carro te gusta?|uát káind av cár diú láik
-H|I like fast cars.|Me gustan los carros rápidos.|ái láik fást cárs
-H|I like big trucks.|Me gustan las trocas grandes.|ái láik big tráks
-Q|What's your dream car?|¿Cuál es el carro de tus sueños?|uáts iór dríim cár
-H|A black Mustang.|Un Mustang negro.|a blák mástang
-H|A Tesla, for sure.|Un Tesla, seguro.|a tésla, for shúr
-Q|Do you like driving?|¿Te gusta manejar?|diú láik dráivin
-H|Yeah, I love driving at night.|Sí, me encanta manejar de noche.|iéa, ái láv dráivin at náit
-H|Not in traffic!|¡En el tráfico no!|nát in tráfik
-Q|How long is your drive to work?|¿Cuánto haces al trabajo?|jáu lóng is iór dráiv tu uérk
-H|About twenty minutes.|Como veinte minutos.|abáut tuéni mínits
-H|It's like an hour.|Como una hora.|its láik an áuer`);
-T("trabajo",/trabaj|chamba|jale|empleo|oficina|work|job|jefe/i,"work","el trabajo","uérk",`
-Q|What do you do for work?|¿En qué trabajas?|uádiu dú for uérk
-H|I work in construction.|Trabajo en construcción.|ái uérk in constrákshen
-H|I work at a restaurant.|Trabajo en un restaurante.|ái uérk at a réstorant
-Q|Do you like your job?|¿Te gusta tu trabajo?|diú láik iór yób
-H|Yeah, it's pretty good.|Sí, está bastante bien.|iéa, its príri gud
-H|It's okay, but it's tiring.|Está bien, pero cansa.|its oukéi, bat its táierin
-Q|What time do you start?|¿A qué hora entras?|uát táim diú stárt
-H|I start at seven.|Entro a las siete.|ái stárt at séven
-H|Super early, like six.|Bien temprano, como a las seis.|súper érli, láik síks
-Q|How are your coworkers?|¿Cómo son tus compañeros?|jáu ar iór cóuuerkers
-H|They're cool.|Son buena onda.|déir cúl
-H|Some are nice, some aren't.|Unos sí son buena onda y otros no.|sam ar náis, sam árnt
-Q|What do you do after work?|¿Qué haces después del trabajo?|uádiu dú áfter uérk
-H|I just go home and rest.|Nomás me voy a casa a descansar.|ái yást góu jóum an rést
-H|I go to the gym.|Voy al gym.|ái góu tu de yím`);
-T("futbol",/f[uú]tbol|soccer|deporte|partido|equipo|b[eé]isbol|basket|sport/i,"soccer","fútbol","sáker",`
-Q|Do you like soccer?|¿Te gusta el fútbol?|diú láik sáker
-H|Yeah, I love soccer.|Sí, me encanta el fútbol.|iéa, ái láv sáker
-H|I like it, but I don't play.|Me gusta, pero no juego.|ái láikit, bat ái dóun pléi
-Q|What's your favorite team?|¿Cuál es tu equipo favorito?|uáts iór féivorit tíim
-H|I'm a big America fan.|Le voy mucho al América.|áim a big amérika fán
-H|I like Real Madrid.|Me gusta el Real Madrid.|ái láik reál madríd
-Q|Do you play any sports?|¿Practicas algún deporte?|diú pléi éni spórts
-H|I play soccer on weekends.|Juego fútbol los fines.|ái pléi sáker an uíkends
-H|Not anymore.|Ya no.|nát énimor
-Q|Did you watch the game last night?|¿Viste el partido anoche?|díyu uách de guéim lást náit
-H|Yeah, it was crazy!|¡Sí, estuvo bien loco!|iéa, it uás créisi
-H|No, I missed it.|No, me lo perdí.|nóu, ái místit
-Q|Who's the best player right now?|¿Quién es el mejor jugador ahorita?|júus de bést pléier ráit náu
-H|Messi, for sure.|Messi, seguro.|mési, for shúr
-H|I don't know, there are a lot.|No sé, hay muchos.|ái dóuno, déar ar a lát`);
-T("familia",/famil|hij|esposa|esposo|mam[aá]|pap[aá]|herman|novia|family/i,"family","la familia","fámili",`
-Q|Do you have a big family?|¿Tienes una familia grande?|diú jáv a big fámili
-H|Yeah, I've got a big family.|Sí, tengo una familia grande.|iéa, áiv gára big fámili
-H|No, it's just me and my mom.|No, nomás mi mamá y yo.|nóu, its yást mí an mái mám
-Q|Do you have brothers or sisters?|¿Tienes hermanos?|diú jáv bráders or sísters
-H|I have two brothers.|Tengo dos hermanos.|ái jáv túu bráders
-H|I have one sister.|Tengo una hermana.|ái jáv uán síster
-Q|Do you have kids?|¿Tienes hijos?|diú jáv kíds
-H|Yeah, I have a son.|Sí, tengo un hijo.|iéa, ái jáv a sán
-H|Not yet.|Todavía no.|nát iét
-Q|Where does your family live?|¿Dónde vive tu familia?|uér dás iór fámili lív
-H|They live in Mexico.|Viven en México.|déi lív in méksicou
-H|They live close to me.|Viven cerca de mí.|déi lív clóus tu mí
-Q|What do you like to do with your family?|¿Qué te gusta hacer con tu familia?|uádiu láik tu dú uíd iór fámili
-H|We like to eat together.|Nos gusta comer juntos.|uí láik tu ít tuguéder
-H|We watch movies on Sundays.|Vemos películas los domingos.|uí uách múvis an sándeis`);
-T("musica",/m[uú]sica|canci[oó]n|cantante|banda|concierto|music|song/i,"music","música","miúsik",`
-Q|What kind of music do you like?|¿Qué música te gusta?|uát káind av miúsik diú láik
-H|I like reggaeton.|Me gusta el reguetón.|ái láik regueitón
-H|I like all kinds of music.|Me gusta de todo.|ái láik ól káinds av miúsik
-Q|Who's your favorite singer?|¿Quién es tu cantante favorito?|júus iór féivorit sínguer
-H|I really like Bad Bunny.|Me gusta mucho Bad Bunny.|ái ríli láik bad báni
-H|I don't have a favorite.|No tengo favorito.|ái dóun jáv a féivorit
-Q|Do you play an instrument?|¿Tocas algún instrumento?|diú pléi an ínstrument
-H|I play the guitar a little.|Toco un poco la guitarra.|ái pléi de guitár a lírel
-H|No, but I wanna learn.|No, pero quiero aprender.|nóu, bat ái uána lérn
-Q|Have you been to a concert?|¿Has ido a un concierto?|jáv iu bín tu a cánsert
-H|Yeah, it was awesome.|Sí, estuvo increíble.|iéa, it uás ósom
-H|Not yet, but I want to.|Todavía no, pero quiero.|nát iét, bat ái uánt tu
-Q|When do you listen to music?|¿Cuándo escuchas música?|uén diú lísen tu miúsik
-H|When I'm driving.|Cuando manejo.|uén áim dráivin
-H|All day at work.|Todo el día en el trabajo.|ól déi at uérk`);
-T("peliculas",/pel[ií]cula|peli|cine|serie|netflix|movie/i,"movies","películas","múvis",`
-Q|Do you like movies?|¿Te gustan las películas?|diú láik múvis
-H|Yeah, I watch movies every weekend.|Sí, veo películas cada fin.|iéa, ái uách múvis évri uíkend
-H|I like series more.|Me gustan más las series.|ái láik síris mór
-Q|What's the last movie you saw?|¿Cuál es la última película que viste?|uáts de lást múvi iú só
-H|I saw an action movie.|Vi una de acción.|ái só an ákshen múvi
-H|I don't remember.|No me acuerdo.|ái dóun rimémber
-Q|Do you like scary movies?|¿Te gustan las de miedo?|diú láik skéri múvis
-H|No way, they scare me.|Para nada, me dan miedo.|nóu uéi, déi skér mi
-H|Yeah, I love them.|Sí, me encantan.|iéa, ái lávem
-Q|Do you go to the movies or watch at home?|¿Vas al cine o ves en casa?|diú góu tu de múvis or uách at jóum
-H|I usually watch at home.|Casi siempre en casa.|ái iúshuali uách at jóum
-H|I like the movie theater.|Me gusta el cine.|ái láik de múvi zíater
-Q|What's your favorite movie?|¿Cuál es tu película favorita?|uáts iór féivorit múvi
-H|I love Fast and Furious.|Me encanta Rápido y Furioso.|ái láv fást an fiúrios
-H|That's hard. I have a lot.|Está difícil. Tengo muchas.|dáts járd. ái jáv a lát`);
-T("gym",/gym|gimnasio|ejercicio|pesas|correr|entrenar|workout/i,"the gym","el gym","de yím",`
-Q|Do you go to the gym?|¿Vas al gym?|diú góu tu de yím
-H|Yeah, almost every day.|Sí, casi diario.|iéa, ólmoust évri déi
-H|Not really, but I want to.|La verdad no, pero quiero.|nát ríli, bat ái uánt tu
-Q|What time do you work out?|¿A qué hora haces ejercicio?|uát táim diú uérk áut
-H|In the morning.|En la mañana.|in de mórnin
-H|After work.|Después del trabajo.|áfter uérk
-Q|What's your favorite exercise?|¿Cuál es tu ejercicio favorito?|uáts iór féivorit éksersais
-H|I like running.|Me gusta correr.|ái láik ránin
-H|Bench press, for sure.|Press de banca, seguro.|bénch prés, for shúr
-Q|Do you eat healthy?|¿Comes sano?|diú ít jélzi
-H|I try, but I love tacos.|Lo intento, pero amo los tacos.|ái trái, bat ái láv tácos
-H|Yeah, I eat a lot of chicken.|Sí, como mucho pollo.|iéa, ái ít a lára chíken
-Q|How do you feel after the gym?|¿Cómo te sientes después del gym?|jáu diú fíil áfter de yím
-H|I feel great.|Me siento súper bien.|ái fíil gréit
-H|Super tired!|¡Bien cansado!|súper táierd`);
-T("dinero",/dinero|lana|ahorr|compra|gast|money|shopping|tienda|ropa/i,"money","el dinero","máni",`
-Q|Do you like to save money?|¿Te gusta ahorrar dinero?|diú láik tu séiv máni
-H|Yeah, I'm trying to save.|Sí, estoy tratando de ahorrar.|iéa, áim tráin tu séiv
-H|It's hard to save.|Está difícil ahorrar.|its járd tu séiv
-Q|What do you spend the most money on?|¿En qué gastas más?|uádiu spénd de móust máni an
-H|Food, for sure.|En comida, seguro.|fúud, for shúr
-H|Gas for my car.|Gasolina para mi carro.|gás for mái cár
-Q|What would you buy with a lot of money?|¿Qué comprarías con mucho dinero?|uát uúdiu bái uíd a lára máni
-H|I'd buy a house.|Compraría una casa.|áid bái a jáus
-H|I'd travel the world.|Viajaría por el mundo.|áid trável de uérld
-Q|Do you like shopping?|¿Te gusta ir de compras?|diú láik shápin
-H|Not really.|No mucho.|nát ríli
-H|Yeah, I love buying shoes.|Sí, me encanta comprar tenis.|iéa, ái láv báin shúus
-Q|Is life expensive where you live?|¿Está cara la vida donde vives?|is láif ikspénsiv uér iú lív
-H|Yeah, everything's expensive.|Sí, todo está caro.|iéa, évrizins ikspénsiv
-H|It's not too bad.|No está tan mal.|its nát túu bád`);
-T("dia",/d[ií]a|hoy|lo que sea|cualquier|day/i,"your day","tu día","iór déi",`
-Q|How's your day going?|¿Cómo va tu día?|jáus iór déi góuin
-H|It's going good, thanks.|Va bien, gracias.|its góuin gud, zénks
-H|Kinda busy today.|Medio ocupado hoy.|káinda bísi tudéi
-Q|What did you do this morning?|¿Qué hiciste en la mañana?|uát díyu dú dis mórnin
-H|I went to work.|Fui al trabajo.|ái uént tu uérk
-H|I slept late.|Dormí hasta tarde.|ái slépt léit
-Q|What are you gonna do later?|¿Qué vas a hacer al rato?|uárar iú góna dú léirer
-H|I'm gonna rest.|Voy a descansar.|áim góna rést
-H|I'm gonna see my friends.|Voy a ver a mis amigos.|áim góna síi mái frénds
-Q|Are you tired?|¿Estás cansado?|ar iú táierd
-H|Yeah, a little bit.|Sí, un poquito.|iéa, a lírel bit
-H|No, I feel good.|No, me siento bien.|nóu, ái fíil gud
-Q|What's the best part of your day?|¿Qué es lo mejor de tu día?|uáts de bést párt av iór déi
-H|When I get home.|Cuando llego a casa.|uén ái guet jóum
-H|Talking to you!|¡Platicar contigo!|tókin tu iú`);
-const REACT_POS=[["Nice!","¡Qué bien!","náis"],["Oh, cool!","¡Qué padre!","óu, cúl"],["That's awesome!","¡Qué chido!","dáts ósom"],["I love that!","¡Me encanta!","ái láv dat"],["Sounds good!","¡Suena bien!","sáunds gud"]];
-const REACT_NEG=[["Oh, I see.","Ah, ya veo.","óu, ái síi"],["Really? Okay.","¿En serio? Va.","ríli? oukéi"],["No worries.","No pasa nada.","nóu uóris"]];
-const pick=a=>a[Math.floor(Math.random()*a.length)];
+/* una ronda completa de la escena */
+async function round(s,mode,t,showEs,p0,pN){let errs=0,k=0;const n=s.turns.length,model=mode==="help"&&s.lvl<=2;
+  for(let i=0;i<n;i++){const tr=s.turns[i],nx=s.turns[i+1];guard(t);
+    if(tr.npc){if(nx&&nx.npc)prefetch(nx.npc.en,s.voice);await npcSays(s,tr.npc,t,showEs)}
+    if(tr.you){if(nx&&nx.npc)prefetch(nx.npc.en,s.voice);const ok=await youSay(tr.you,mode,t,tr.npc,s.voice,{model,npcEs:showEs});if(!ok)errs++;await wait(250)}
+    setProg(p0+(pN-p0)*(++k/n))}
+  return errs}
+async function runScene(s,t){
+  const yours=s.turns.filter(x=>x.you).length;
+  openSess(s.place,npcHTML(s),`Escena ${s.num}`);setPhase(`Escena ${s.num}`,"",s.t);
+  walk(true);await sayEs(s.n?s.n:"Vamos.",t);await wait(900);guard(t);walk(false);meet(true);await wait(700);guard(t);
+  const own=s.turns.filter(x=>x.you).map(x=>x.you),warm=weakItems(2,own).concat(dueItems(2,own)).slice(0,3);
+  if(warm.length){setPhase("Calentamiento","Antes de empezar, unas frases de escenas pasadas.");for(const y of warm)await youSay(y,"recall",t,null,null,{label:"Repaso rápido"})}
+  const fast=(DB.streak3||0)>=3&&!DB.sc[s.id];let errs;
+  if(!fast){setPhase("Ronda 1 · con ayuda",`<b>${esc(s.npcN)}</b> te habla y abajo te digo qué contestar. Toca el micrófono y dilo.`);
+    await sayEs("Primero con ayuda.",t);await round(s,"help",t,true,0,.5)}
+  else{setPhase("Modo rápido","Vas muy bien: hoy saltamos la ronda con ayuda.");await sayEs("Vas muy bien. Directo sin ayuda.",t)}
+  setPhase("Ronda 2 · sin ayuda","Ahora tú solo. Sólo ves la idea en español y el dibujo.");walk(true);await wait(700);walk(false);
+  await sayEs("Ahora sin ayuda.",t);
+  errs=await round(s,"recall",t,s.lvl<5,fast?0:.5,1);
+  let stars=errs===0?3:errs<=Math.ceil(yours*.25)?2:errs<=Math.ceil(yours*.5)?1:0;
+  if(stars===0){setPhase("Otra pasadita","Se te atoró bastante. Te regreso un pasito: otra vez con ayuda y luego sin ayuda.");
+    await sayEs("Te regreso un pasito. Otra vez con ayuda.",t);await round(s,"help",t,true,0,.5);await sayEs("Ahora sin ayuda.",t);errs=await round(s,"recall",t,true,.5,1);
+    stars=errs===0?2:errs<=Math.ceil(yours*.5)?1:0}
+  const prev=DB.sc[s.id]||{};DB.sc[s.id]={stars:Math.max(prev.stars||0,stars),tries:(prev.tries||0)+1,last:Date.now()};
+  DB.streak3=stars===3?(DB.streak3||0)+1:0;const xp=stars*20+10;addXP(xp);save();
+  await finish(stars,xp,t);return stars}
+async function finish(stars,xp,t){const sess=$("#sess");if(!sess)return;const w=document.createElement("div");w.className="win";
+  const msg=stars===3?"¡Perfecta! Pasas a la siguiente.":stars===2?"¡Muy bien! Pasas.":stars===1?"Pasas, pero esta va a volver en tus repasos.":"Todavía no. Lo que fallaste se va a tus tarjetas y la repetimos.";
+  w.innerHTML=`<div>${avatar("B")}<span class="big">${"★".repeat(stars)}${"☆".repeat(3-stars)}</span><b>${stars?"¡Escena superada!":"Casi…"}</b><p class="sub">${msg}</p><span class="xp">+${xp} XP</span></div>`;
+  sess.appendChild(w);tone(stars>0);
+  await speak(stars===3?"Awesome, babe! You nailed it!":stars>0?"Nice job, Stanley!":"Don't worry. We'll try again.","E");guard(t);await wait(1400);guard(t);w.remove()}
+async function runFrom(s,t){let cur=s,fails=0;
+  while(cur){guard(t);const st=await runScene(cur,t);
+    if(st===0){fails++;if(fails>=2&&cur.i>0){await runScene(SCENES[cur.i-1],t);fails=0}continue}
+    fails=0;const nx=SCENES[cur.i+1];if(nx&&nx.lvl!==cur.lvl){setPhase("¡Subiste de nivel!","");await sayEs("¡Subiste de nivel!",t)}cur=nx}}
+/* tarjetas con voz */
+async function cardDrill(list,title,t){openSess("casa",avatar("B","sm"),title);meet(true);setPhase(title,"Ves la idea y el dibujo. Dilo en inglés como gringo.");
+  const q=list.slice();const n=q.length;let d=0;
+  while(q.length){const y=q.shift();const ok=await youSay(y,"recall",t,null,null,{label:"Tarjeta"});if(!ok)q.push(y);else setProg(++d/n)}
+  addXP(10);save();setPhase("¡Listo!","");await speak("Great job! See you tomorrow.","E")}
+
+/* =====================================================================
+   11. PLÁTICA CON EMILY (preguntas por tema; con inteligencia si hay)
+   ===================================================================== */
+const REACT_POS=[["Nice!","¡Qué bien!"],["Oh, cool!","¡Qué padre!"],["That's awesome!","¡Qué chido!"],["I love that!","¡Me encanta!"],["Sounds good!","¡Suena bien!"],["Ooh, I like that.","Mmm, eso me gusta."]];
+const REACT_NEG=[["Oh, I see.","Ah, ya veo."],["Really? Okay.","¿En serio? Va."],["No worries.","No pasa nada."]];
 function topicOf(txt){return Object.values(FT).find(x=>x.keys.test(txt))||null}
-async function freeTalkGuided(t,topic,note){
-  let T0=topicOf(topic),unknown=!T0;T0=T0||FT.dia;let newTopic=null,k=0;
-  setPhase("Sección libre","","Con Emily");
-  const n=$("#snote");n.hidden=false;$("#schat").style.display="none";
-  n.innerHTML=`<div class="tbar"><span style="font-weight:800;color:var(--ink)">Tema:</span><input type="text" id="tp" value="${esc(topic)}" aria-label="Tema"><button id="tpb">Cambiar</button></div>`+
-   `<div class="chips" style="margin-top:8px">${Object.values(FT).map(x=>`<button class="chip p" data-tt="${x.id}">${esc(x.es)}</button>`).join("")}</div>`;
-  const change=v=>{v=(v||"").trim();if(!v)return;newTopic=v;DB.settings.topic=v;save();$("#tp").value=v;answer("topic")};
-  $("#tpb").onclick=()=>change($("#tp").value);$("#tp").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();$("#tp").blur();change($("#tp").value)}};
-  n.querySelectorAll("[data-tt]").forEach(b=>b.onclick=()=>change(FT[b.dataset.tt].es));
-  if(note)feedback({ok:false},note);
-  let order=T0.qs.slice().sort(()=>Math.random()-.5),qi=0,prefix=["Okay! Let's talk about "+T0.en+".","¡Va! Hablemos de "+T0.es+".","oukéi! léts tók abáut "+T0.pr];
-  if(unknown)feedback({ok:false},"Ese tema todavía no lo tengo. Platicamos de tu día, o toca uno de los temas de arriba.");
-  while(true){guard(t);
-    if(qi>=order.length){order=T0.qs.slice().sort(()=>Math.random()-.5);qi=0;prefix=["I'm having fun! Let's keep going.","¡Me la estoy pasando bien! Sigamos.","áim jávin fán! léts kíip góuin"]}
-    const Q=order[qi++],line=["B",prefix[0]+" "+Q.q[1],prefix[1]+" "+Q.q[2],prefix[2]+". "+Q.q[3]];prefix=null;
-    showCard(line,"listen");addBubble("B",line[1]);await sayLine(line,t);showCard(line,"free");setProg((++k%10)/10||1);
-    let said="",helped=false;
-    while(!said){const r=await listen(null,2600);guard(t);
-      if(r.cmd==="topic")break;
-      if(r.cmd==="help"){const c=$("#scard");if(c&&!c.querySelector(".hints")){c.insertAdjacentHTML("beforeend",`<div class="cap">Puedes contestar algo así:</div><div class="hints">${Q.h.map(h=>`<div class="hint"><span class="e">${esc(h.en)}</span><span class="s">${esc(h.es)}</span><span class="r">${esc(h.pr)}</span></div>`).join("")}</div>`)}
-        helped=true;slowNext=true;await speak(Q.h[0].en,"A");guard(t);continue}
-      if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;await sayLine(line,t);continue}
-      const txt=(r.text||"").trim();
-      if(norm(txt).length<2){feedback({ok:false},"Contéstale con una frase completa. Si no sabes qué decir, toca 💡 Ayuda.");continue}
-      said=txt}
-    if(newTopic){const nt=topicOf(newTopic);T0=nt||FT.dia;newTopic=null;order=T0.qs.slice().sort(()=>Math.random()-.5);qi=0;
-      prefix=["Okay! Let's talk about "+T0.en+".","¡Va! Hablemos de "+T0.es+".","oukéi! léts tók abáut "+T0.pr];
-      const ch=$("#schat");if(ch)ch.innerHTML="";feedback(nt?null:{ok:false},nt?null:"Ese tema todavía no lo tengo. Platicamos de tu día, o toca uno de los temas de arriba.");continue}
-    addBubble("A",said);
-    const neg=/\b(no|not|nope|never|don't|dont|nah)\b/i.test(said),R=pick(neg?REACT_NEG:REACT_POS);
-    const close=Q.h.some(h=>compare(h.en,said).ok);
-    feedback({ok:true},close?(helped?"¡Bien dicho!":"¡Perfecto, como nativo!"):"¡Eso! Emily te entendió.");tone(true);cheer(true);addXP(helped?3:6);save();
-    prefix=R;await wait(500);guard(t);
-  }
-}
-
-/* ===== SECCIÓN LIBRE: tú eliges el tema, Emily te pregunta y tú contestas ===== */
-const TOPICS=["Comida","Viajes","Carros","Trabajo","Fútbol","Familia","Música","Películas","El gym","Dinero","Mi día"];
-function topicSheet(){
-  sheet(`<h3>Sección libre</h3><p class="sub">Escribe de qué quieres hablar. Emily te hace preguntas sobre eso y tú le contestas con tu voz. Si no sabes qué decir, toca <b>💡 Ayuda</b>.</p>
-   <input type="text" id="tp0" placeholder="Ej. comida, pizza, carros…" value="${esc(DB.settings.topic||"")}">
-   <div class="chips">${TOPICS.map(x=>`<button class="chip p" data-t="${esc(x)}">${esc(x)}</button>`).join("")}</div>
-   <button class="btn pink" id="tgo" style="background:var(--emily)">${I.chat}<span>Empezar a platicar</span></button>`,s=>{
-    s.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{s.querySelector("#tp0").value=b.dataset.t});
-    s.querySelector("#tgo").onclick=()=>{const tp=s.querySelector("#tp0").value.trim()||"lo que sea";DB.settings.topic=tp;save();closeSheet();start(t=>freeTalk(t,tp))};
-  });
-}
 async function freeTalk(t,topic){
-  topic=topic||DB.settings.topic||"lo que sea";
-  if(!aiOn())return freeTalkGuided(t,topic);
-  let newTopic=null,hints=[];const hist=[],ww=weakWords(6).map(([w])=>w);
-  setPhase("Sección libre","","Con Emily");
-  const n=$("#snote");n.hidden=false;$("#schat").style.display="none";
-  n.innerHTML=`<div class="tbar"><span style="font-weight:800;color:var(--ink)">Tema:</span><input type="text" id="tp" value="${esc(topic)}" aria-label="Tema"><button id="tpb">Cambiar</button></div>`;
-  const change=()=>{const v=$("#tp").value.trim();if(!v||v===topic)return;newTopic=v;DB.settings.topic=v;save();toast("Cambiamos a: "+v);answer("topic")};
-  $("#tpb").onclick=change;$("#tp").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();$("#tp").blur();change()}};
-  async function turn(said){
-    setOrb("think","Emily está pensando…");
-    const r=await aiJSON(`You are Emily, a friendly young American woman chatting BY VOICE with Stanley, a Mexican Spanish speaker who is learning to SPEAK casual American English. He is a beginner.
-The topic Stanley chose (he may write it in Spanish): "${topic}". Keep the chat about that topic. Lead the conversation: ask him simple questions about the topic so he has to answer, one question at a time, like a real friendly chat.
-${ww.length?"Words he struggles with (use them naturally sometimes): "+ww.join(", ")+".\n":""}Conversation so far:
-${hist.slice(-16).join("\n")||"(nothing yet; you start)"}
-${said===null?"Start the conversation about the topic with a short greeting and an easy question.":"Stanley's last line came from speech-to-text, so ignore punctuation, capitalization and small recognition glitches."}
-Return JSON with these keys:
-"ok": ${said===null?"true":"false only if what Stanley said has a real mistake a native would not say; true otherwise"}.
-"better": if not ok, the natural native way to say what he meant, with contractions. Empty if ok.
-"better_es": Mexican Spanish translation of "better" (empty if ok).
-"better_pr": pronunciation of "better" ${PRON_RULE}. Empty if ok.
-"reply": your next line: max two SHORT casual sentences, simple everyday words, contractions like a native (I'm, you're, gonna, wanna, gotta), ending with ONE easy question about the topic.
-"reply_es": Mexican Spanish translation of "reply".
-"reply_pr": pronunciation of "reply" ${PRON_RULE}.
-"hints": 3 different short answers Stanley could give to your question (max 10 words each), each as {"en":"...","es":"Mexican Spanish translation","pr":"pronunciation ${PRON_RULE}"}.`);
-    guard(t);return r;
-  }
-  const getTurn=async said=>{while(true){try{return await turn(said)}catch(e){if(e===CANCEL)throw e;if(e&&e.code==="not_granted"){sample=null;if(!aiOn())throw CANCEL}
-    if(e&&/bad_key|no_credit|forbidden|no_ai/.test(e.code))throw {fallback:aiErr(e)};
-    feedback({ok:false},aiErr(e)+" Reintento en un momento…");await wait(3000);guard(t)}}};
-  let out,k=0;
-  try{out=await getTurn(null)}catch(e){if(e&&e.fallback)return freeTalkGuided(t,topic,"Seguimos sin inteligencia. ("+e.fallback+")");throw e}
-  while(true){guard(t);
-    if(out&&out.ok===false&&out.better){const fix=["A",String(out.better),String(out.better_es||""),String(out.better_pr||autoPron(String(out.better))),"Sección libre"];
-      feedback({ok:false},"Un nativo lo diría así. Repítelo:");await drill(fix,"repeat",t);hist.push("(Emily corrected him; he repeated: "+fix[1]+")")}
-    const line=["B",String(out&&out.reply||"Cool! Tell me more."),String(out&&out.reply_es||""),String(out&&out.reply_pr||"")];
-    hints=Array.isArray(out&&out.hints)?out.hints.filter(h=>h&&h.en).slice(0,3):[];
-    showCard(line,"listen");feedback(null);addBubble("B",line[1]);hist.push("Emily: "+line[1]);await sayLine(line,t);
-    showCard(line,"free");setProg((++k%10)/10||1);
+  const S={voice:"E"};openSess("cafe",avatar("B","sm"),"Plática");meet(true);
+  const n=$("#snote");n.hidden=false;
+  const head=()=>{n.hidden=false;n.innerHTML=`<div class="tbar"><b style="color:var(--ink)">Tema:</b><input type="text" id="tp" value="${esc(topic)}"><button id="tpb">Cambiar</button></div><div class="chips">${Object.values(FT).map(x=>`<button class="chip p" data-tt="${x.id}">${esc(x.es)}</button>`).join("")}</div>`;
+    $("#tpb").onclick=()=>change($("#tp").value);n.querySelectorAll("[data-tt]").forEach(b=>b.onclick=()=>change(FT[b.dataset.tt].es))};
+  let newTopic=null;const change=v=>{v=(v||"").trim();if(!v)return;newTopic=v;DB.settings.topic=v;save();answer("topic")};head();
+  let useAI=aiOn(),hist=[],T0=topicOf(topic)||FT.dia,order=T0.qs.slice().sort(()=>Math.random()-.5),qi=0,pre=null,k=0,aiOut=null;
+  const ask=said=>{setOrb("think","Emily está pensando…");return aiJSON(`You are Emily, a warm, playful, slightly flirty young American woman chatting BY VOICE with Stanley, a Mexican guy learning to SPEAK casual American English (beginner). Topic he chose (maybe in Spanish): "${topic}". Lead the chat: ask him ONE easy question at a time about the topic.
+Conversation so far:\n${hist.slice(-16).join("\n")||"(you start)"}
+${said==null?"Start with a short greeting and an easy question about the topic.":"His last line came from speech-to-text; ignore small glitches."}
+Return JSON: {"ok":${said==null?"true":"false only if he said something a native would not say"},"better":"native way to say what he meant if not ok, else empty","better_es":"Mexican Spanish of better","better_pr":"pronunciation of better ${PRON_RULE}","reply":"your next line, max 2 short casual sentences with contractions, ending with ONE easy question","reply_es":"Mexican Spanish of reply","hints":[3 short answers he could give, each {"en":"","es":"","pr":"pronunciation ${PRON_RULE}"}]}`)};
+  if(useAI){try{aiOut=await ask(null);guard(t)}catch(e){if(e===CANCEL)throw e;useAI=false;feedback({ok:false},"Seguimos sin inteligencia ("+aiErr(e)+")")}}
+  if(!topicOf(topic)&&!useAI)feedback({ok:false},"Ese tema no lo tengo todavía. Platicamos de tu día, o toca uno de arriba.");
+  while(true){guard(t);let line,hints;
+    if(useAI&&aiOut){line={en:String(aiOut.reply||"Tell me more!"),es:String(aiOut.reply_es||"")};hints=(Array.isArray(aiOut.hints)?aiOut.hints:[]).filter(h=>h&&h.en)}
+    else{if(qi>=order.length){order=T0.qs.slice().sort(()=>Math.random()-.5);qi=0}const Q=order[qi++];
+      const open=k===0||pre==="new"?["Okay! Let's talk about "+T0.en+".","¡Va! Hablemos de "+T0.es+"."]:pre;
+      line={en:(open?open[0]+" ":"")+Q.q[1],es:(open?open[1]+" ":"")+Q.q[2]};hints=Q.h;pre=null}
+    setPhase("Plática con Emily","",`Tema: ${topic}`);head();
+    const c=$("#scard");c.hidden=false;c.innerHTML=`<div class="who" style="color:var(--emily)">● Emily te pregunta<em>Contesta como quieras</em></div><div class="body"><div class="en ${line.en.length>38?"long":""}">${esc(line.en)}</div><div class="es">${esc(line.es)}</div></div><div class="draw">💬</div>`;
+    hist.push("Emily: "+line.en);await npcSays(S,line,t,false);setProg((++k%10)/10||1);
     let said="";
-    while(!said){const r=await listen(null,2600);guard(t);
+    while(!said){const r=await listen(null,{wait:2600});guard(t);
       if(r.cmd==="topic")break;
-      if(r.cmd==="help"){const c=$("#scard");if(c&&!c.querySelector(".hints")){
-          const H=hints.length?hints:[{en:"Yeah, I like it a lot.",es:"Sí, me gusta mucho.",pr:"iéa, ái láikit a lát"},{en:"Not really. What about you?",es:"La verdad no. ¿Y tú?",pr:"nát ríli. uát abáut iú"}];
-          c.insertAdjacentHTML("beforeend",`<div class="cap">Puedes contestar algo así:</div><div class="hints">${H.map(h=>`<div class="hint"><span class="e">${esc(h.en)}</span><span class="s">${esc(h.es||"")}</span><span class="r">${esc(h.pr||"")}</span></div>`).join("")}</div>`);
-          slowNext=true;await speak(String(H[0].en),"A");guard(t)}continue}
-      if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;await sayLine(line,t);continue}
-      said=(r.text||"").trim()}
-    if(newTopic){topic=newTopic;newTopic=null;hist.push("(Stanley changed the topic to: "+topic+")");const ch=$("#schat");if(ch)ch.innerHTML="";
-      try{out=await getTurn(null)}catch(e){if(e&&e.fallback)return freeTalkGuided(t,topic,"Seguimos sin inteligencia. ("+e.fallback+")");throw e}continue}
-    addBubble("A",said);hist.push("Stanley: "+said);addXP(4);save();
-    try{out=await getTurn(said)}catch(e){if(e&&e.fallback)return freeTalkGuided(t,topic,"Seguimos sin inteligencia. ("+e.fallback+")");throw e}
-  }
+      if(r.cmd==="help"){if(!c.querySelector(".hints")){c.insertAdjacentHTML("beforeend",`<div class="hints"><div class="cap">Puedes contestar algo así:</div>${(hints.length?hints:[{en:"Yeah, I like it.",es:"Sí, me gusta.",pr:"iéa, ái láikit"}]).map(h=>`<div class="hint"><span class="e">${esc(h.en)}</span><span class="s">${esc(h.es||"")}</span><span class="r">${esc(h.pr||"")}</span></div>`).join("")}</div>`)}
+        slowNext=true;await speak(String((hints[0]||{en:"Yeah, I like it."}).en),"S");guard(t);continue}
+      if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;await npcSays(S,line,t,false);continue}
+      const tx=(r.text||"").trim();if(norm(tx).length<2){feedback({ok:false},"Contéstale con una frase completa. Si no sabes, toca 💡 Ayuda.");continue}said=tx}
+    if(newTopic){topic=newTopic;newTopic=null;T0=topicOf(topic)||FT.dia;order=T0.qs.slice().sort(()=>Math.random()-.5);qi=0;pre="new";hist.push("(Stanley changed the topic to: "+topic+")");
+      if(useAI){try{aiOut=await ask(null)}catch(e){if(e===CANCEL)throw e;useAI=false}}continue}
+    bubble("Y",said);hist.push("Stanley: "+said);addXP(5);save();
+    if(useAI){try{aiOut=await ask(said);guard(t);
+        if(aiOut&&aiOut.ok===false&&aiOut.better){const fix={en:String(aiOut.better),es:String(aiOut.better_es||""),pr:String(aiOut.better_pr||""),em:"✨",sc:"platica"};
+          feedback({ok:false},"Un nativo lo diría así. Dilo tú:");await youSay(fix,"help",t,null,null,{label:"Así suena más natural",model:true})}else{feedback({ok:true},"¡Eso! Emily te entendió.");tone(true);cheer(true)}}
+      catch(e){if(e===CANCEL)throw e;useAI=false;feedback({ok:false},"Seguimos sin inteligencia ("+aiErr(e)+")")}}
+    else{const neg=/\b(no|not|nope|never|don't|dont|nah)\b/i.test(said);pre=pick(neg?REACT_NEG:REACT_POS);feedback({ok:true},"¡Eso! Emily te entendió.");tone(true);cheer(true)}
+    await wait(400)}
 }
 
+/* arranque: si ya activó la voz humana antes, se carga sola desde la memoria del teléfono */
 render();
+if(DB.settings.human&&!(window.claude&&window.claude.use))setTimeout(()=>koLoad().catch(()=>{}),800);
 </script>
