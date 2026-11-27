@@ -617,6 +617,14 @@ const UI={subWho:null,
   ring(m){const r=$3('#w3ring');const who=m.cast.find(id=>!CH(id).dog)||m.cast[0];r.hidden=false;r.innerHTML=`<div class="rc"><span class="cap">📱 Llamada entrante</span><b>${escH(CH(who).name)}</b><small>${escH(m.t)}</small><div class="rr"><button class="no">✕</button><button class="yes">📞</button></div></div>`;
     try{for(let i=0;i<3;i++)setTimeout(()=>{if(!r.hidden&&typeof sfx==='function')sfx('combo')},i*900)}catch(e){}
     r.querySelector('.yes').onclick=()=>{unlock();r.hidden=true;S.target={m};startMission(m,[])};r.querySelector('.no').onclick=()=>{r.hidden=true;S.ringAt=S.t+20}},
+  voices(){const p=$3('#w3ph .scr');if(!p)return;const V=typeof STAN_VOICES!=='undefined'?STAN_VOICES:[],cur=(DB.settings&&DB.settings.stanVoice)||'am_michael';
+    const st=typeof koState!=='undefined'?koState:'off';if(st!=='ready'&&typeof koLoad==='function')koLoad().catch(()=>{});
+    p.innerHTML=`<div class="phbar"><button class="pback" data-b="1">‹ Inicio</button><span></span></div><div class="pt"><b>🎙️ Tu voz (Stanley)</b><small>${st==='ready'?'Voces humanas listas. Toca ▶ para oírla y ✓ para escogerla.':st==='loading'?'Bajando voces humanas… '+(typeof koPct!=='undefined'?koPct:0)+'%':'Las voces humanas no cargaron. Toca ▶ para reintentar.'}</small></div>
+      <div class="plist">${V.map(([id,n,d])=>`<div class="ct${id===cur?' on':''}"><i>${id===cur?'✓':'🎤'}</i><span><b>${escH(n)}</b><small>${escH(d)}</small></span><button data-play="${id}">▶</button><button data-pick="${id}">✓</button></div>`).join('')}</div>`;
+    p.querySelector('[data-b]').onclick=()=>UI.phone(true);
+    const demo=id=>{const old=STAN.voice;STAN.voice=id;try{say("Hey, what's up? I'm Stanley. Nice to meet you.","stanley","happy").finally(()=>{STAN.voice=old})}catch(e){STAN.voice=old}};
+    p.querySelectorAll('[data-play]').forEach(b=>b.onclick=()=>{unlock();if(typeof KO!=='undefined'&&!KO){toast3('Las voces humanas todavía se están bajando…');if(typeof koLoad==='function')koLoad().catch(()=>{})}demo(b.dataset.play)});
+    p.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{unlock();stanVoice(b.dataset.pick);try{save()}catch(e){}toast3('🎙️ Tu voz ahora es '+b.closest('.ct').querySelector('b').textContent);UI.voices();demo(b.dataset.pick)})},
   gtaList(){const p=$3('#w3ph .scr');if(!p)return;const L=W3D.GTA||[];
     p.innerHTML=`<div class="phbar"><button class="pback" data-b="1">‹ Inicio</button><span>💵 $${DB.money||0}</span></div><div class="pt"><b>🎯 Misiones</b><small>Ve, habla, maneja, compra. Cada una te paga.</small></div>
       <div class="plist">${L.map(m=>{const d=gtaDone(m.id),o=gtaOpen(m);return `<button data-g="${m.id}" class="${o?'':'lk'}"><i>${d?'✅':o?'🅼':'🔒'}</i><span><b>${escH(m.t)}</b><small>${escH(m.brief)}</small></span><em>$${m.pay}</em></button>`}).join('')||'<p>Pronto…</p>'}</div>`;
@@ -639,11 +647,11 @@ const UI={subWho:null,
     const ms=typeof MISSIONS!=='undefined'?MISSIONS:[];const nx=typeof nextMission==='function'?nextMission():null;
     p.innerHTML=`<div class="scr"><div class="pbar"><span>${new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span><span>📶 🔋</span></div>
      <div class="pt">${nx?`<b>Siguiente misión</b><small>${escH(nx.t)}</small>`:'<b>¡Ciudad libre!</b>'}</div>
-     <div class="apps">${[['miss','🎯','Misiones'],['taxi','🚕','Taxista'],['poli','🚓','Policía'],['night','🌙','Día/Noche'],['cam','👁','Cámara'],['voz','🔊','Voces'],['cur','📚','Curso'],['con','📇','Contactos'],['pil','🏛️','Pilares'],['gen','👥','Gente'],['yo','🙂','Yo']].map(([k,i,n])=>`<button data-p="${k}"><i>${i}</i><span>${n}</span></button>`).join('')}</div>
+     <div class="apps">${[['miss','🎯','Misiones'],['taxi','🚕','Taxista'],['poli','🚓','Policía'],['night','🌙','Día/Noche'],['cam','👁','Cámara'],['voz','🎙️','Tu voz'],['cur','📚','Curso'],['con','📇','Contactos'],['pil','🏛️','Pilares'],['gen','👥','Gente'],['yo','🙂','Yo']].map(([k,i,n])=>`<button data-p="${k}"><i>${i}</i><span>${n}</span></button>`).join('')}</div>
      <button class="home" data-p="close"></button></div>`;
     p.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{unlock();const k=b.dataset.p;
       if(k==='close')UI.phone(false);else if(k==='taxi')chamba('taxi');else if(k==='poli')chamba('police');else if(k==='night'){S.nightT=S.nightT>.5?0:1}else if(k==='cam'){toggleCam()}
-      else if(k==='voz'){if(typeof koLoad==='function')koLoad().then(()=>toast3('¡Voces humanas listas!')).catch(()=>toast3('No se pudieron bajar las voces'))}
+      else if(k==='voz')UI.voices()
       else if(k==='miss')UI.gtaList();else if(k==='cur')UI.curso();else if(k==='con')UI.contacts();else{UI.phone(false);const v={les:'mundos',pil:'pilares',gen:'gente',yo:'yo'}[k];W3D.leave();go(v)}})}};
 function sub(who,en,es){UI.sub(who,en,es)}
 const escH=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));

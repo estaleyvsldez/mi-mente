@@ -136,3 +136,4 @@
 .w3ban small{color:#fff;font:700 15px Inter,sans-serif;opacity:.92}
 .w3ban.on{animation:w3ban 3.6s ease forwards}
 @keyframes w3ban{0%{opacity:0;transform:scale(1.25)}10%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
+.w3ph .ct.on{outline:2px solid #ffd23a}
