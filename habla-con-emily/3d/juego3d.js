@@ -259,10 +259,10 @@ const EM={laugh:'😂',flirty:'😘',angry:'💢',sad:'💧',cry:'😭',surprise
 function showEmo(p,e){if(!p||!EM[e])return;p.emo.userData.set(EM[e]);p.emo.visible=true;p.emoT=2.4}
 
 /* ---------------- carros ---------------- */
-function makeCar(kind,color){const src=MODELS.car.scene.children[0]||MODELS.car.scene;const car=src.clone(true);const g=new THREE.Group();g.add(car);
-  const body=new THREE.MeshPhysicalMaterial({color:color||0xaa0000,metalness:.85,roughness:.32,clearcoat:1,clearcoatRoughness:.04});
-  const glass=new THREE.MeshPhysicalMaterial({color:0x111418,metalness:.2,roughness:.05,transparent:true,opacity:.55});
-  car.traverse(o=>{if(o.isMesh){o.castShadow=true;if(o.name==='body'||o.material&&o.material.name==='Body_Color')o.material=body;else if(o.name==='glass')o.material=glass}});
+function makeCar(kind,color){const src=MODELS.car.scene.children[0]||MODELS.car.scene;const car=src.clone(true);const g=new THREE.Group();g.add(car);car.rotation.y+=Math.PI;
+  const body=new THREE.MeshStandardMaterial({color:color||0xaa0000,metalness:.75,roughness:.22,envMapIntensity:1.4});
+  const glass=new THREE.MeshStandardMaterial({color:0x111418,metalness:.6,roughness:.05,transparent:true,opacity:.6});
+  car.traverse(o=>{if(o.isMesh){o.castShadow=true;if(o.material&&o.material.isMeshPhysicalMaterial){const m=o.material;o.material=new THREE.MeshStandardMaterial({color:m.color,map:m.map,metalness:m.metalness,roughness:m.roughness,transparent:m.transparent,opacity:m.opacity,emissive:m.emissive,emissiveMap:m.emissiveMap,name:m.name})}if(o.name==='body'||o.material&&o.material.name==='Body_Color')o.material=body;else if(o.name==='glass')o.material=glass}});
   const ao=new THREE.Mesh(new THREE.PlaneGeometry(.655*4,1.3*4),new THREE.MeshBasicMaterial({map:W3D.aoTex,blending:THREE.MultiplyBlending,toneMapped:false,transparent:true,premultipliedAlpha:true}));ao.rotation.x=-Math.PI/2;ao.renderOrder=2;ao.position.y=.02;g.add(ao);
   const wheels=['wheel_fl','wheel_fr','wheel_rl','wheel_rr'].map(n=>car.getObjectByName(n)).filter(Boolean);
   if(kind==='taxi'){const s=new THREE.Mesh(new THREE.BoxGeometry(.9,.28,.32),signMat('TAXI','#ffcc00',true));s.position.set(0,1.28,-.2);g.add(s)}
