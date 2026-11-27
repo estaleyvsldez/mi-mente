@@ -333,12 +333,13 @@ function driveCar(c,dt){const inp=W3D.input,k=S.keys;let t=inp.y+(k.KeyW||k.Arro
 function walkTo(n,x,z,dt,sp,stop){const p=n.g.position,dx=x-p.x,dz=z-p.z,d=Math.hypot(dx,dz);if(d<(stop||.3)){n.speed=lerp(n.speed,0,dt*8);return true}
   const v=Math.min(sp,d*3);p.x+=dx/d*v*dt;p.z+=dz/d*v*dt;const t=new THREE.Vector3(p.x,0,p.z);collide(t,.3);p.x=t.x;p.z=t.z;p.y=groundY(p.x,p.z);
   n.face=angLerp(n.face,Math.atan2(dx,dz),Math.min(1,dt*8));n.g.rotation.y=n.face;n.speed=lerp(n.speed,v,dt*8);return false}
-function npcAI(n,dt){if(n===S.grab)return;const p=n.g.position,dp=Math.hypot(p.x-PL.pos.x,p.z-PL.pos.z);
+function npcAI(n,dt){if(n===S.grab)return;if(n.mood&&!n.conv){fightAI(n,dt);return}const p=n.g.position,dp=Math.hypot(p.x-PL.pos.x,p.z-PL.pos.z);
   if(n.conv){n.speed=lerp(n.speed,0,dt*8);const a=Math.atan2(n.conv.x-p.x,n.conv.z-p.z);n.face=angLerp(n.face,a,dt*6);n.g.rotation.y=n.face;return}
   if(n.goTo){if(walkTo(n,n.goTo.x,n.goTo.z,dt,n.goTo.run?4.5:1.6)){const f=n.goTo.done;n.goTo=null;if(f)f()}return}
   if(dp<3.2&&!S.inCar){n.speed=lerp(n.speed,0,dt*8);n.face=angLerp(n.face,Math.atan2(PL.pos.x-p.x,PL.pos.z-p.z),dt*5);n.g.rotation.y=n.face;
-    if(!S.said[n.id]&&!S.locked&&!speakingNow()){S.said[n.id]=S.t;greet(n)}return}
-  if(n.ped){const L=n.ped;n.lt+=dt*1.25/L.len;const q=perim(L,n.lt%1);walkTo(n,q.x,q.z,dt,1.4,.05);return}
+    if(!S.said[n.id]&&!S.locked&&!speakingNow()&&n!==S.cop&&!S.wanted){S.said[n.id]=S.t;greet(n)}return}
+  if(n.ped){const L=n.ped;n.lt+=dt*(n.spd||1.25)/L.len;const q=perim(L,n.lt%1);walkTo(n,q.x,q.z,dt,(n.spd||1.4)+.1,.05);return}
+  if(n.stand){n.speed=lerp(n.speed,0,dt*6);if(Math.random()<dt*.15)gesture(n,Math.random()<.7?'agree':'headShake',1.2);return}
   n.wait-=dt;if(n.wait<=0){if(n.state==='idle'){const h=n.home||{x:p.x,z:p.z};n.tx=h.x+rnd(-5,5);n.tz=h.z+rnd(-1.2,1.2);n.state='walk'}else{n.state='idle';n.wait=rnd(3,9)}}
   if(n.state==='walk'){if(walkTo(n,n.tx,n.tz,dt,1.2)){n.state='idle';n.wait=rnd(3,9)}}else n.speed=lerp(n.speed,0,dt*6)}
 function perim(L,t){const w=L.x1-L.x0,d=L.z1-L.z0,per=2*(w+d);let s=t*per;if(s<w)return {x:L.x0+s,z:L.z0};s-=w;if(s<d)return {x:L.x1,z:L.z0+s};s-=d;if(s<w)return {x:L.x1-s,z:L.z1};s-=w;return {x:L.x0,z:L.z1-s}}
@@ -393,6 +394,53 @@ function meetUp(id){const n=NPCS.find(x=>x.id===id);UI.phone(false);if(!n){toast
   n.goTo={x:PL.pos.x+1,z:PL.pos.z+1,run:false,done:()=>{n.home={x:n.g.position.x,z:n.g.position.z};line(n,pick3([["Hey! Here I am. So what's the plan?","¡Hey! Aquí estoy. ¿Cuál es el plan?","happy"],["What's up? You called?","¿Qué onda? ¿Me llamaste?","happy"],["Okay, I'm here. This better be good!","Ya llegué. ¡Más te vale que valga la pena!","laugh"]]))}};
   const l=pick3([["On my way! Give me two minutes.","¡Voy para allá! Dame dos minutos.","happy"],["Okay, okay, I'm coming. Don't move!","Ok, ok, ya voy. ¡No te muevas!","laugh"]]);sub(id,l[0],l[1]);try{say(l[0],id,'happy')}catch(e){}
   setTimeout(()=>{if(UI.subWho===id)sub(null)},2600);toast3('📍 '+n.c.name+' viene para acá')}
+/* ---------------- pleitos (estilo juego de calle, sin sangre) ---------------- */
+const FIGHT={hit:{m:[["Ow! What the hell, man?!","¡Au! ¿Qué te pasa, güey?","angry"],["Oh, you wanna go? Let's go!","¿Quieres pleito? ¡Órale!","angry"],["You just made a big mistake, bro.","Acabas de cometer un gran error, bro.","angry"]],
+   f_hi:[["Ow! Are you serious right now?!","¡Au! ¿Es en serio?","cry"],["Don't you ever touch me again!","¡No me vuelvas a tocar!","angry"]],f_lo:[["Help! This guy's crazy!","¡Ayuda! ¡Este tipo está loco!","scared"],["Somebody call the cops!","¡Alguien llame a la policía!","scared"]],
+   old:[["Help! Police! He hit an old lady!","¡Auxilio! ¡Policía! ¡Le pegó a una viejita!","scared"],["You hoodlum! I'm calling 911!","¡Vándalo! ¡Voy a llamar al 911!","angry"]],karen:[["That's it! I'm suing you AND calling the police!","¡Ya estuvo! ¡Te voy a demandar Y llamar a la policía!","angry"]]},
+ taunt:[["Come on! Is that all you got?","¡Ándale! ¿Es todo lo que tienes?","angry"],["Take that!","¡Toma!","angry"],["You hit like my grandma!","¡Pegas como mi abuela!","laugh"],["Stay down, man!","¡Quédate abajo!","angry"],["You picked the wrong guy!","¡Te metiste con el equivocado!","angry"]],
+ give:[["Okay, okay! I give up! Chill!","¡Ya, ya! ¡Me rindo! ¡Tranquilo!","scared"],["Alright, you win, man. Damn.","Ya, tú ganas. Chale.","sad"],["I'm out! You're crazy, bro!","¡Me largo! ¡Estás loco, bro!","scared"]],
+ cop:[["Freeze! Hands where I can see 'em!","¡Alto! ¡Las manos donde las vea!","angry"]],copEnd:[["You're lucky I'm in a good mood. Here's your ticket. Keep your hands to yourself.","Tienes suerte de que ando de buenas. Ahí está tu multa. Las manos quietas.","angry"]]};
+function fighter(n){const w=who4(n);if(w==='m')return ['brad','marcus','carlos','mike','extrano','jake','tony','ray'].includes(n.id)||Math.random()<.6;return false}
+function punch(n){if(!n||S.locked||S.inCar||n.dog||n.c.age<13)return;if(S.t-(S.punchAt||-9)<.45)return;S.punchAt=S.t;PL.p.face=Math.atan2(n.g.position.x-PL.pos.x,n.g.position.z-PL.pos.z);
+  const d=Math.hypot(n.g.position.x-PL.pos.x,n.g.position.z-PL.pos.z);whoosh();if(d>1.9){PL.pos.x+=Math.sin(PL.p.face)*.4;PL.pos.z+=Math.cos(PL.p.face)*.4;return}
+  thump();UI.shake();n.hits=(n.hits||0)+1;showEmo(n,'angry');n.emo.userData.set('💥');const a=n.g.position,dx=a.x-PL.pos.x,dz=a.z-PL.pos.z,l=Math.hypot(dx,dz)||1;a.x+=dx/l*.7;a.z+=dz/l*.7;n.bounce=.35;
+  relAdd(n.id,-3);S.wanted=Math.min(3,(S.wanted||0)+1);S.wantedAt=S.t;n.ped=null;n.stand=false;n.state='idle';n.goTo=null;
+  if(n.hits>=3&&n.mood==='fight'){n.mood='flee';n.moodT=8;line(n,pick3(FIGHT.give));addXP&&addXP(2);return}
+  if(!n.mood){n.mood=fighter(n)?'fight':'flee';n.moodT=n.mood==='fight'?14:8;const w=who4(n);line(n,pick3(FIGHT.hit[w]||FIGHT.hit.m))}
+  else if(Math.random()<.4)line(n,pick3(n.mood==='fight'?FIGHT.taunt:(FIGHT.hit[who4(n)]||FIGHT.hit.f_lo)));
+  if(S.wanted>=2)callCops()}
+function fightAI(n,dt){const p=n.g.position,dx=PL.pos.x-p.x,dz=PL.pos.z-p.z,d=Math.hypot(dx,dz);n.moodT-=dt;
+  if(n.moodT<=0||d>30||S.locked){n.mood=null;n.hits=0;n.home={x:p.x,z:p.z};return}
+  if(n.mood==='flee'){const t=new THREE.Vector3(p.x-dx/(d||1)*6,0,p.z-dz/(d||1)*6);walkTo(n,t.x,t.z,dt,4.8,.1);return}
+  if(S.inCar){n.speed=lerp(n.speed,0,dt*6);return}
+  if(d>1.25){walkTo(n,PL.pos.x,PL.pos.z,dt,4.2,1.1);return}
+  n.speed=lerp(n.speed,0,dt*8);n.face=angLerp(n.face,Math.atan2(dx,dz),dt*8);n.g.rotation.y=n.face;
+  if(S.t-(n.atk||0)>1.35){n.atk=S.t;n.lunge=.25;whoosh();if(Math.random()<.75){thump();hurt(11);if(Math.random()<.35)line(n,pick3(FIGHT.taunt))}}}
+function hurt(k){S.hp=Math.max(0,(S.hp==null?100:S.hp)-k);S.hpAt=S.t;UI.shake();const f=$3('#w3hurt');if(f){f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
+  if(S.hp<=0)knockout()}
+function knockout(){if(S.ko)return;S.ko=true;S.locked=true;const o=$3('#w3ko2');if(o){o.hidden=false}
+  NPCS.forEach(n=>{if(n.mood){n.mood=null;n.hits=0;n.home={x:n.g.position.x,z:n.g.position.z}}});S.wanted=0;
+  setTimeout(()=>{const L=LOTS.hospital||LOTS.casa;PL.pos.set(L.door.x,0,L.door.z+(L.face===0?2.5:-2.5));S.y=0;S.hp=100;S.ko=false;S.locked=false;if(o)o.hidden=true;
+    if(typeof DB!=='undefined'){DB.xp=Math.max(0,DB.xp-25);try{save()}catch(e){}}const doc=["You're lucky, man. Just some bruises. That'll be twenty-five bucks.","Tuviste suerte. Sólo unos moretones. Son veinticinco dólares."];
+    sub('doctor',doc[0],doc[1]);try{say(doc[0],'doctor','neutral')}catch(e){}setTimeout(()=>{if(UI.subWho==='doctor')sub(null)},4500);toast3('🏥 Te noquearon. Amaneciste en el hospital (−25 ⭐)')},2600)}
+function callCops(){if(S.cop)return;const n=NPCS.find(x=>x.id==='davis');if(!n)return;S.cop=n;n.mood=null;n.ped=null;n.stand=false;n.hidden=false;
+  const q=new THREE.Vector3(PL.pos.x+20,0,PL.pos.z);collide(q,.4);n.g.position.set(q.x,0,q.z);toast3('🚨 ¡Alguien llamó a la policía!');
+  const go=()=>{n.goTo={x:PL.pos.x+1,z:PL.pos.z+1,run:true,done:()=>{if(Math.hypot(PL.pos.x-n.g.position.x,PL.pos.z-n.g.position.z)>3){go();return}
+    line(n,FIGHT.cop[0]);setTimeout(()=>{line(n,FIGHT.copEnd[0]);if(typeof DB!=='undefined'){DB.xp=Math.max(0,DB.xp-15);try{save()}catch(e){}}S.wanted=0;S.cop=null;
+      NPCS.forEach(x=>{if(x.mood){x.mood=null;x.hits=0;x.home={x:x.g.position.x,z:x.g.position.z}}});n.home={x:n.g.position.x,z:n.g.position.z};toast3('🚓 Multa por pleito (−15 ⭐)')},2600)}}};go()}
+function whoosh(){const a=ac3();if(!a)return;const t=a.currentTime,n=a.createBufferSource(),b=a.createBuffer(1,a.sampleRate*.18,a.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);
+  const f=a.createBiquadFilter();f.type='bandpass';f.frequency.setValueAtTime(600,t);f.frequency.exponentialRampToValueAtTime(2400,t+.15);const g=a.createGain();g.gain.value=.12;n.buffer=b;n.connect(f).connect(g).connect(a.destination);n.start(t)}
+function thump(){const a=ac3();if(!a)return;const t=a.currentTime,o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.setValueAtTime(160,t);o.frequency.exponentialRampToValueAtTime(50,t+.18);g.gain.setValueAtTime(.5,t);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.25)}
+/* la ciudad platica sola: la gente dice cosas al pasar (también es práctica de oído) */
+const AMB=[["I swear, this traffic is killing me.","Te juro que este tráfico me está matando."],["Yo, did you see the game last night? Crazy!","¿Viste el partido de anoche? ¡Una locura!"],["Girl, I'm not even playing, he ghosted me again.","Amiga, no es broma, me volvió a dejar en visto."],
+ ["I'm starving. You wanna grab some tacos?","Me muero de hambre. ¿Vamos por unos tacos?"],["Nah, I gotta work tomorrow. I'm beat.","Nel, mañana trabajo. Estoy muerto."],["Hold on, my mom's calling me.","Espérate, me está marcando mi mamá."],["Bro, that's so sus.","Bro, eso está bien sospechoso."],
+ ["Lemme call you back, I'm driving.","Te marco luego, voy manejando."],["It's gonna rain later, I'm telling you.","Va a llover al rato, te lo digo."],["Whatever, dude. It's up to you.","Lo que sea, güey. Tú decides."],["No way! Shut up! For real?","¡No manches! ¿En serio?"],
+ ["I'm so done with this week.","Ya no aguanto esta semana."],["Excuse me, do you know where the bank is?","Disculpa, ¿sabes dónde está el banco?"],["Hey, nice kicks, man!","¡Qué buenos tenis, hombre!"],["Ugh, I'm late again. My boss is gonna kill me.","Ay, otra vez llego tarde. Mi jefe me va a matar."],
+ ["You coming to the party tonight?","¿Vas a ir a la fiesta hoy en la noche?"],["I dunno, man. Maybe.","No sé, güey. A lo mejor."],["Dude, gimme a second.","Güey, dame un segundo."],["Whaddya mean you lost the keys?!","¿Cómo que perdiste las llaves?"],["Lowkey, I miss her.","La neta, la extraño tantito."]];
+function ambient(dt){if(S.locked||S.busy||speakingNow()||S.t<(S.ambAt||8))return;S.ambAt=S.t+rnd(9,16);
+  const c=NPCS.filter(n=>!n.dog&&!n.mood&&!n.conv&&n!==S.grab&&n.g.visible&&n.c.age>=13&&Math.hypot(n.g.position.x-PL.pos.x,n.g.position.z-PL.pos.z)<13);if(!c.length)return;
+  const n=pick3(c),l=pick3(AMB);sub(n.id,l[0],l[1]);showEmo(n,'happy');n.emo.userData.set('💬');gesture(n,'agree',1.4);try{say(l[0],n.id,'neutral')}catch(e){}setTimeout(()=>{if(UI.subWho===n.id)sub(null)},3200)}
 function nearMiss(n){if(S.t-(n.yell||0)<4)return;n.yell=S.t;showEmo(n,'angry');line(n,pick3(OFF.bump),-1)}
 function carYell(o){if(S.t-(o.yell||0)<4)return;o.yell=S.t;const l=pick3(OFF.car);sub('extrano',l[0],l[1]);try{say(l[0],'extrano','angry')}catch(e){}}
 
@@ -493,14 +541,14 @@ function toast3(t){if(typeof toast==='function')toast(t)}
 const UI={subWho:null,
   build(app){app.innerHTML=`<div class="w3d" id="w3d"><div class="w3load" id="w3load"><div class="lg"><b>HABLA</b><span>con Emily</span></div><div class="lbar"><u id="w3pct"></u></div><small id="w3msg">Cargando la ciudad…</small></div>
    <div class="w3hud" id="w3hud" hidden>
-    <div class="w3top"><canvas id="w3mini" width="220" height="220"></canvas><div class="w3obj" id="w3obj"></div><div class="w3stat" id="w3stat"></div></div>
+    <div class="w3top"><canvas id="w3mini" width="220" height="220"></canvas><div class="w3obj" id="w3obj"></div><div class="w3stat" id="w3stat"></div><div class="w3hp" id="w3hp"><u id="w3hpb"></u></div></div>
     <div class="w3arrow" id="w3arrow"><b>➤</b><span id="w3dist"></span></div>
     <div class="w3sub" id="w3sub" hidden></div><button class="w3ko" id="w3ko" hidden></button>
     <div class="w3joy" id="w3joy"><div class="w3knob" id="w3knob"></div></div>
     <div class="w3btns"><button id="b-jump" aria-label="Brincar">⤒<small>Brincar</small></button><button id="b-crouch" aria-label="Agacharse">⤓<small>Agachar</small></button><button id="b-run" aria-label="Correr">🏃<small>Correr</small></button><button id="b-cam" aria-label="Cámara">👁<small>1ª/3ª</small></button></div>
     <button class="w3phone" id="b-phone" aria-label="Teléfono">📱</button>
     <div class="w3ctx" id="w3ctx"></div>
-   </div><div class="w3ph" id="w3ph" hidden></div><div class="w3ring" id="w3ring" hidden></div></div>`;
+   </div><div class="w3hurt" id="w3hurt"></div><div class="w3ko2" id="w3ko2" hidden><b>😵 NOQUEADO</b><small>Te llevan al hospital…</small></div><div class="w3ph" id="w3ph" hidden></div><div class="w3ring" id="w3ring" hidden></div></div>`;
     const host=$3('#w3d');host.prepend(renderer.domElement);bindControls(host);const ko=$3('#w3ko');if(ko)ko.onclick=()=>{unlock();if(typeof koLoad==='function')koLoad().catch(()=>{})}},
   hud(on){const h=$3('#w3hud');if(h)h.hidden=!on;if(!on){W3D.input.x=W3D.input.y=0;const k=$3('#w3knob');if(k)k.style.transform=''}},
   obj(t){const o=$3('#w3obj');if(o)o.innerHTML=t},
@@ -515,7 +563,7 @@ const UI={subWho:null,
     if(S.inCar){h+=`<button data-a="exit">🚪 Bajar del carro</button>`;if(S.inCar.kind==='police')h+=`<button data-a="siren">🚨 Sirena</button>`}
     else{if(T&&T.x!==undefined&&!S.job&&Math.hypot(PL.pos.x-T.x,PL.pos.z-T.z)<3)h+=`<button class="big" data-a="start">🎬 Empezar: ${escH(T.m.t)}</button>`;
       const car=nearCar();if(car)h+=`<button data-a="enter">🚗 Subirte${car.kind==='taxi'?' al taxi':car.kind==='police'?' a la patrulla':''}</button>`;
-      const n=S.near;if(n){h+=`<div class="w3who">${escH(n.c.name)}</div><div class="w3row"><button data-a="talk">💬<small>Platicar</small></button><button data-a="grab">${S.grab===n?'✋<small>Soltar</small>':'🤝<small>Del brazo</small>'}</button><button data-a="hug">🤗<small>Abrazar</small></button><button data-a="push">😤<small>Empujar</small></button><button data-a="num">📱<small>${DB.contacts&&DB.contacts[n.id]?"Agendado":"Su número"}</small></button></div>`}
+      const n=S.near;if(n){h+=`<div class="w3who">${escH(n.c.name)}</div><div class="w3row"><button data-a="talk">💬<small>Platicar</small></button><button data-a="grab">${S.grab===n?'✋<small>Soltar</small>':'🤝<small>Del brazo</small>'}</button><button data-a="hug">🤗<small>Abrazar</small></button><button data-a="push">😤<small>Empujar</small></button>${n.dog||n.c.age<13?"":`<button data-a="hit">👊<small>Pegar</small></button>`}<button data-a="num">📱<small>${DB.contacts&&DB.contacts[n.id]?"Agendado":"Su número"}</small></button></div>`}
       else if(S.grab)h+=`<button data-a="grab">✋ Soltar a ${escH(S.grab.c.name)}</button>`}
     if(c._h!==h){c._h=h;c.innerHTML=h;c.querySelectorAll('[data-a]').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();unlock();c._h='';act(b.dataset.a)}))}},
   ctxMission(m){const c=$3('#w3ctx');c._h='';c.innerHTML=`<button class="big" data-a="startcar">🎬 Empezar: ${escH(m.t)}</button>`;c.querySelector('button').onclick=()=>{c.innerHTML='';startMission(m)}},
@@ -559,6 +607,7 @@ function act(a){if(a==='start'||a==='startcar'){const T=S.target;if(T&&T.m)start
   else if(a==='talk'){const n=S.near;if(!n||typeof freeChat!=='function')return;S.busy=true;n.conv=PL.pos.clone();PL.p.face=Math.atan2(n.g.position.x-PL.pos.x,n.g.position.z-PL.pos.z);frameConv([n.id]);S.locked=true;UI.hud(false);
     W3D.after=()=>{S.busy=false;S.locked=false;S.conv=null;n.conv=null;UI.hud(true)};freeChat(n.id)}
   else if(a==='num')askNumber(S.near);
+  else if(a==='hit')punch(S.near);
   else offScript(a)}
 function toggleCam(){S.fp=!S.fp;UI.btn('cam',S.fp)}
 function bindControls(host){const joy=$3('#w3joy'),knob=$3('#w3knob');let jid=null,jx=0,jy=0;const R=52;
@@ -578,7 +627,7 @@ function bindControls(host){const joy=$3('#w3joy'),knob=$3('#w3knob');let jid=nu
   const tap=(id,f)=>{const b=$3('#b-'+id);b.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();unlock();f()})};
   tap('jump',jump);tap('crouch',crouch);tap('run',()=>{S.run=!S.run;UI.btn('run',S.run)});tap('cam',toggleCam);tap('phone',()=>UI.phone());
   if(!W3D._keys){W3D._keys=true;
-    addEventListener('keydown',e=>{if(!W3D.on||/INPUT|TEXTAREA/.test(e.target.tagName))return;S.keys[e.code]=true;if(e.code==='Space'&&!S.inCar){e.preventDefault();jump()}if(e.code==='KeyC')crouch();if(e.code==='KeyV')toggleCam();if(e.code==='KeyF')act(S.inCar?'exit':nearCar()?'enter':'talk');if(e.code==='KeyE'){const b=$3('#w3ctx button');if(b)b.click()}});
+    addEventListener('keydown',e=>{if(!W3D.on||/INPUT|TEXTAREA/.test(e.target.tagName))return;S.keys[e.code]=true;if(e.code==='Space'&&!S.inCar){e.preventDefault();jump()}if(e.code==='KeyC')crouch();if(e.code==='KeyQ'&&S.near)punch(S.near);if(e.code==='KeyV')toggleCam();if(e.code==='KeyF')act(S.inCar?'exit':nearCar()?'enter':'talk');if(e.code==='KeyE'){const b=$3('#w3ctx button');if(b)b.click()}});
     addEventListener('keyup',e=>{S.keys[e.code]=false})}}
 function drawMini(){const c=$3('#w3mini');if(!c)return;const g=c.getContext('2d'),W=c.width,sc=W/110,cx=PL.pos.x,cz=PL.pos.z;g.clearRect(0,0,W,W);
   g.save();g.beginPath();g.arc(W/2,W/2,W/2,0,7);g.clip();g.fillStyle='rgba(30,36,46,.92)';g.fillRect(0,0,W,W);
@@ -594,7 +643,7 @@ function drawMini(){const c=$3('#w3mini');if(!c)return;const g=c.getContext('2d'
 function hudTick(){const kp=$3('#w3ko');if(kp&&typeof koState!=='undefined'){const st=koState;kp.hidden=st==='ready'&&!kp._show;kp.textContent=st==='loading'?`🎙️ Bajando voces humanas… ${koPct}%`:st==='error'?'🎙️ Voces humanas: toca para reintentar':'🎙️ Voces humanas listas';if(st==='ready'&&!kp._done){kp._done=1;kp._show=1;setTimeout(()=>{kp._show=0},3000)}}
 const T=S.target,a=$3('#w3arrow');if(a){if(T&&T.x!==undefined&&!S.locked){const dx=T.x-PL.pos.x,dz=T.z-PL.pos.z,d=Math.hypot(dx,dz);const fy=S.inCar?S.inCar.h:S.yaw+Math.PI;const ang=Math.atan2(dx,dz)-fy;
     a.hidden=false;a.querySelector('b').style.transform=`rotate(${-ang*180/Math.PI-90}deg)`;$3('#w3dist').textContent=d<1000?Math.round(d)+' m':''}else a.hidden=true}
-  const st=$3('#w3stat');if(st&&typeof DB!=='undefined'){const s=typeof streak==='function'?streak():0;const v=S.inCar?Math.round(Math.abs(S.inCar.v)*3.6)+' km/h':'';st.innerHTML=`<span>⭐ ${DB.xp}</span><span>🔥 ${s}</span>${v?`<span>${v}</span>`:''}`}}
+  const st=$3('#w3stat');if(st&&typeof DB!=='undefined'){const s=typeof streak==='function'?streak():0;const v=S.inCar?Math.round(Math.abs(S.inCar.v)*3.6)+' km/h':'';st.innerHTML=`<span>⭐ ${DB.xp}</span><span>🔥 ${s}</span>${S.wanted?`<span class="wan">${'🚨'.repeat(S.wanted)}</span>`:''}${v?`<span>${v}</span>`:''}`}const hb=$3('#w3hpb');if(hb){const h=S.hp==null?100:S.hp;hb.style.width=h+'%';hb.style.background=h>50?'#30d158':h>25?'#ffd23a':'#ff453a'}}
 
 /* ---------------- ciclo principal ---------------- */
 function nearestNPC(){let best=null,bd=2.4;for(const n of NPCS){if(!n.g.visible)continue;const d=Math.hypot(n.g.position.x-PL.pos.x,n.g.position.z-PL.pos.z);if(d<bd){bd=d;best=n}}return best}
@@ -603,15 +652,20 @@ function frame(dt){S.t+=dt;
   if(S.inCar)driveCar(S.inCar,dt);else movePlayer(dt);
   if(S.freeYaw&&S.t-(S.freeAt||0)>1.5)S.freeYaw=lerp(S.freeYaw,0,dt*3);
   for(const c of CARS)if(c.ai)aiCar(c,dt);
-  for(const n of NPCS){npcAI(n,dt);const d=n.g.position.distanceTo(PL.pos),dc=n.g.position.distanceTo(camera.position);n.g.visible=!n.hidden&&(d<(n.ped?62:95)||!!n.conv);const sh=d<30;if(n._sh!==sh){n._sh=sh;n.g.traverse(o=>{if(o.isMesh)o.castShadow=sh})}n.tag.visible=d<14&&dc>2.6&&!S.locked;if(dc<2.2)n.emo.visible=false;
+  for(const n of NPCS){npcAI(n,dt);const d=n.g.position.distanceTo(PL.pos),dc=n.g.position.distanceTo(camera.position);n.g.visible=!n.hidden&&(d<(n.ped||n.stand?58:95)||!!n.conv||!!n.mood);const sh=d<30;if(n._sh!==sh){n._sh=sh;n.g.traverse(o=>{if(o.isMesh)o.castShadow=sh})}n.tag.visible=d<14&&dc>2.6&&!S.locked;if(dc<2.2)n.emo.visible=false;
     if(n.bounce>0){n.bounce-=dt;n.g.position.y=groundY(n.g.position.x,n.g.position.z)+Math.abs(Math.sin(n.bounce*14))*.12}
     if(n.emoT>0){n.emoT-=dt;if(n.emoT<=0)n.emo.visible=false}
-    if(d<70)animate(n,dt)}
+    if(d<28||(d<55&&((S.fr|0)+n.id.length)%2===0))animate(n,d<28?dt:dt*2)}
+  S.fr=(S.fr|0)+1;
   animate(PL.p,dt);if(PL.p.emoT>0){PL.p.emoT-=dt;if(PL.p.emoT<=0)PL.p.emo.visible=false}PL.p.tag.visible=false;
   {const keep=S.near&&!S.inCar&&!S.locked&&S.near.g.visible&&Math.hypot(S.near.g.position.x-PL.pos.x,S.near.g.position.z-PL.pos.z)<3.3;S.near=S.inCar||S.locked?null:keep?S.near:nearestNPC()}
   if(S.t-S.routeAt>.5){S.routeAt=S.t;drawRoute();UI.ctx();hudTick()}
   if(W3D.marker.visible){W3D.marker.userData.ar.position.y=3.2+Math.sin(S.t*3)*.25;W3D.marker.userData.ar.rotation.y+=dt*2}
-  checkMission(dt);
+  checkMission(dt);ambient(dt);
+  if(!S.ko&&(S.hp==null||S.hp<100)&&S.t-(S.hpAt||0)>4)S.hp=Math.min(100,(S.hp==null?100:S.hp)+dt*6);
+  if(S.wanted&&S.t-(S.wantedAt||0)>40&&!S.cop)S.wanted=0;
+  if(S.punchAt&&S.t-S.punchAt<.3&&PL.p.arm){const k=Math.sin((S.t-S.punchAt)/.3*Math.PI);PL.p.arm.rotation.x-=k*1.1;PL.p.fore.rotation.x-=k*.2}
+  for(const n of NPCS)if(n.lunge>0){n.lunge-=dt;const f=n.face;n.g.position.x+=Math.sin(f)*Math.sin(n.lunge*12)*.02;n.g.position.z+=Math.cos(f)*Math.sin(n.lunge*12)*.02}
   updateCamera(dt);
   sun.position.set(PL.pos.x+SUNV.x*120,SUNV.y*120+10,PL.pos.z+SUNV.z*120);sun.target.position.copy(PL.pos);
   drawMini();renderer.render(scene,camera)}
@@ -634,12 +688,15 @@ async function boot(app,onp){initRenderer();await loadModels(onp);
   const NF=["Ashley","Brittany","Kayla","Jessica","Megan","Tiffany","Maria","Lupita","Keisha","Amber","Vanessa","Sarah","Daniela","Monique"],NM=["Tyler","Josh","Kevin","DeShawn","Luis","Ryan","Derek","Andre","Kyle","Mateo","Brandon","Chris","Jamal","Diego"];
   const FV=['af_bella','af_heart','af_nicole','af_heart','af_bella','af_nicole'],MV=['am_michael','am_fenrir','am_puck','am_echo','am_eric','am_liam','am_onyx'];
   const SH=['#E5484D','#3557FF','#12A150','#F5B400','#7C4DFF','#FF7EB3','#222','#eee','#0E7490','#9A3412'];
-  if(typeof EXTRAS!=='undefined')for(let i=0;i<24;i++){const f=i%2===0,nm=(f?NF:NM)[Math.floor(i/2)%14];EXTRAS['ped'+i]={name:nm,gender:f?'f':'m',age:20+(i*7)%26,skin:'moreno',voice:(f?FV:MV)[i%(f?6:7)],speed:1,shirt:SH[i%SH.length],fillers:f?["Like,","Oh my God,","Girl,"]:["Bro,","Dude,","Yo,"],es:'Vive en la ciudad'}}
-  const ex=Array.from({length:24},(_,i)=>typeof EXTRAS!=='undefined'?'ped'+i:'extrano');
-  for(let i=0;i<24;i++){const n=makePerson(ex[i]);const ci=i%NC,cj=Math.floor(i/4)%NC;const x0=ci*P+RH+1.6,z0=cj*P+RH+1.6,x1=(ci+1)*P-RH-1.6,z1=(cj+1)*P-RH-1.6;
-    n.ped={x0,z0,x1,z1,len:2*(x1-x0+z1-z0)/40};n.lt=Math.random();NPCS.push(n)}
+  const NPED=56;if(typeof EXTRAS!=='undefined')for(let i=0;i<NPED;i++){const f=i%2===0,nm=(f?NF:NM)[(Math.floor(i/2)*5)%14]+(i>=28?' '+'JMRTKDSLBC'[i%10]+'.':'');EXTRAS['ped'+i]={name:nm,gender:f?'f':'m',age:20+(i*7)%26,skin:'moreno',voice:(f?FV:MV)[i%(f?6:7)],speed:1,shirt:SH[i%SH.length],fillers:f?["Like,","Oh my God,","Girl,"]:["Bro,","Dude,","Yo,"],es:'Vive en la ciudad'}}
+  const ex=Array.from({length:NPED},(_,i)=>typeof EXTRAS!=='undefined'?'ped'+i:'extrano');
+  const lots=Object.values(LOTS).filter(L=>!L.open);
+  for(let i=0;i<NPED;i++){const n=makePerson(ex[i]);
+    if(i%4===3&&lots.length){/* grupitos platicando afuera de los lugares */const L=lots[(i>>2)%lots.length],a=(i%3)*2.1;const x=L.door.x+6+Math.cos(a)*1.1,z=L.door.z+(L.face===0?1.2:-1.2)+Math.sin(a)*.6;n.g.position.set(x,.16,z);n.home={x,z};n.stand=true;n.face=Math.atan2(L.door.x+6-x,L.door.z-z);NPCS.push(n);continue}
+    const ci=i%NC,cj=Math.floor(i/NC)%NC;const x0=ci*P+RH+1.6,z0=cj*P+RH+1.6,x1=(ci+1)*P-RH-1.6,z1=(cj+1)*P-RH-1.6;
+    n.ped={x0,z0,x1,z1,len:2*(x1-x0+z1-z0)/40};n.lt=Math.random();n.spd=rnd(1.1,1.6);NPCS.push(n)}
   // Stanley
-  PL.p=makePerson('stanley');const pos=DB.pos3,L=LOTS.casa;if(pos&&isFinite(pos.x)){PL.pos.set(pos.x,0,pos.z);S.yaw=pos.yaw||0}else{PL.pos.set(L.door.x-9,0,L.door.z-3.5);S.yaw=Math.PI*.75}
+  PL.p=makePerson('stanley');PL.p.g.traverse(o=>{if(o.isBone&&/RightArm$/.test(o.name))PL.p.arm=o;if(o.isBone&&/RightForeArm$/.test(o.name))PL.p.fore=o});const pos=DB.pos3,L=LOTS.casa;if(pos&&isFinite(pos.x)){PL.pos.set(pos.x,0,pos.z);S.yaw=pos.yaw||0}else{PL.pos.set(L.door.x-9,0,L.door.z-3.5);S.yaw=Math.PI*.75}
   // tu carro estacionado
   const mine=makeCar('normal',0x1d4ed8);CARS.push(mine);carAt(mine,L.door.x+8,Math.round(L.door.z/P)*P+3.2,Math.PI/2);
   W3D.CHAMBAS=typeof parseMissions==='function'?parseMissions(window.CHAMBA_TXT||[]):[];
