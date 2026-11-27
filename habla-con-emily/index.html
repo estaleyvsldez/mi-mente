@@ -472,6 +472,7 @@ const MAL=/evan|nathan|tom\b|alex|aaron|fred|guy|davis|tony|christopher|eric|rya
 function vScore(v){let s=0;if(/premium/i.test(v.name))s+=100;else if(/enhanced|mejorad|neural|natural|online/i.test(v.name))s+=70;else if(/google/i.test(v.name))s+=40;if(/^en[-_]US/i.test(v.lang))s+=15;return s}
 function pickVoices(){if(!synth)return;const vs=synth.getVoices();if(!vs.length)return;const en=vs.filter(v=>/^en/i.test(v.lang)&&!NOVELTY.test(v.name)).sort((a,b)=>vScore(b)-vScore(a));
   SV.f=en.find(v=>FEM.test(v.name))||en[0]||null;SV.m=en.find(v=>MAL.test(v.name)&&!/female/i.test(v.name))||en.find(v=>v!==SV.f)||SV.f;
+  const top=v=>vScore(v)>=vScore(en[0])-40;SV.fl=en.filter(v=>FEM.test(v.name)&&top(v)).slice(0,4);SV.ml=en.filter(v=>MAL.test(v.name)&&!/female/i.test(v.name)&&top(v)).slice(0,4);
   const es=vs.filter(v=>/^es/i.test(v.lang));SV.es=es.find(v=>/es[-_](MX|US|419)/i.test(v.lang))||es[0]||null}
 if(synth){pickVoices();synth.onvoiceschanged=pickVoices}
 function stanVoice(v){if(v)DB.settings.stanVoice=v;STAN.voice=DB.settings.stanVoice||"am_michael";STAN.speed=STAN.voice==="am_michael"?0.95:1}
@@ -510,7 +511,7 @@ async function say(text,who,emo){
         for(const g of gens){const b=await g;if(tk!==sayTok)break;await new Promise(res=>{ac.resume();const s=ac.createBufferSource();s.buffer=b;s.connect(ac.destination);curSrc=s;s.onended=res;s.start();setTimeout(res,b.duration*1000+600)})}return}catch(e){console.warn(e)}}
     await new Promise(res=>{if(!synth){res();return}synth.cancel();const u=new SpeechSynthesisUtterance(text);
       if(!c){u.voice=SV.es;u.lang=SV.es?SV.es.lang:"es-MX";u.rate=1.04}
-      else{u.voice=c.gender==="f"?SV.f:SV.m;u.lang="en-US";u.rate=((slowNext||DB.settings.slow)?0.74:0.98)*(c.age>70?.92:1);u.pitch=c.age<13?1.45:c.age>70?.85:c.gender==="f"?1.1:.86}
+      else{const L=c.gender==="f"?SV.fl:SV.ml,h=[...String(who)].reduce((a,ch)=>a+ch.charCodeAt(0),0);u.voice=(who!=="stanley"&&L&&L.length?L[h%L.length]:null)||(c.gender==="f"?SV.f:SV.m);u.lang="en-US";u.rate=((slowNext||DB.settings.slow)?0.74:0.98)*(c.age>70?.92:1);u.pitch=c.age<13?1.45:c.age>70?.85:c.gender==="f"?1.1:.86}
       slowNext=false;let done=false;const fin=()=>{if(!done){done=true;res()}};u.onend=fin;u.onerror=fin;setTimeout(fin,2500+text.length*110);synth.speak(u)});
   }finally{speaking=false;curSrc=null;if(av)setTalk(av,false)}}
 function unlockAudio(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){}try{if(synth&&!KO){const u=new SpeechSynthesisUtterance(" ");u.volume=0;synth.speak(u)}}catch(e){}}
@@ -858,7 +859,7 @@ function setOrb(kind,label){const o=$("#sorb");if(!o)return;o.className="orb "+k
 function showHeard(t,partial){const h=$("#sheard");if(h)h.textContent=t?(partial?t+"…":"«"+t+"»"):""}
 function feedback(kind,html){const f=$("#sfb");if(!f)return;if(!kind){f.hidden=true;return}f.hidden=false;f.className="fb "+kind;f.innerHTML=html}
 function showCombo(){const c=$("#cmb");if(!c)return;c.textContent=combo>=2?"🔥x"+combo:"";c.classList.remove("pop");void c.offsetWidth;if(combo>=2)c.classList.add("pop")}
-function showYou(y,mode,label){const c=$("#scard");if(!c)return;c.hidden=false;c.classList.remove("full");const hide=mode==="recall"||mode==="native"||mode==="natural";
+function showYou(y,mode,label){const c=$("#scard");if(!c)return;c.hidden=false;c.classList.remove("full");const hide=mode==="recall"||mode==="native";
   c.innerHTML=`<div class="who">● Tú (Stanley)<em>${label||(mode==="native"?"Dilo como nativo":mode==="natural"?"Tu turno":hide?"Dilo tú, sin ayuda":"Tú dices esto")}</em></div>
    <div class="body">${mode==="native"?`<div class="nvn"><div class="nb"><span>🙅 normal</span><b>${esc(y.norm)}</b></div><div class="arr">➜</div><div class="nb nat"><span>🗣️ nativo</span><b>¿…?</b></div></div><div class="es">${esc(y.es)}</div>`:hide?`<div class="en hide">${mode==="natural"?"Dile en inglés":"Dile"}: «${esc(y.es)}»</div>${mode==="natural"?`<div class="es" style="font-size:.78rem">💡 Si te atoras, espera tantito o toca Ayuda</div>`:""}`:threeForms(y)}</div><div class="draw">${esc(y.em)}</div>`}
 function reveal(y){const b=$("#scard .body");if(b)b.innerHTML=threeForms(y)}
@@ -879,7 +880,7 @@ const lastSpeaker=(m,idx)=>{for(let i=idx-1;i>=0;i--)if(m.steps[i].k==="N")retur
 
 /* tu turno: devuelve true si salió a la primera. Si dices otra cosa, el personaje te sigue la corriente */
 async function youSay(y,mode,t,ctx){
-  ctx=ctx||{};let first=true,heard=false;showYou(y,mode,ctx.label);feedback(null);if(mode==="natural")setTimeout(()=>{if(pending&&pending.y===y&&!cap)reveal(y)},6500);
+  ctx=ctx||{};let first=true,heard=false;showYou(y,mode,ctx.label);feedback(null);
   const who=ctx.npc?ctx.npc.who:(ctx.m&&ctx.m.cast[0])||"emily";
   if(mode==="help"&&ctx.model){slowNext=true;await say(y.en,"stanley");guard(t);heard=true}
   while(true){guard(t);const r=await listen(y,{lenient:mode==="recall"||mode==="natural"});guard(t);
