@@ -25,6 +25,7 @@
   --flame:#FF9F0A; --flame-soft:#3D2706; --ok:#30D158; --ok-soft:#0F3A1E; --bad:#FF6961; --bad-soft:#431615;
   --brain:#A585FF; --brain-soft:#2A1E52; --hero:#141833; --on-acc:#0B0B14; --gold:#FFD60A; color-scheme:dark}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.4;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
@@ -172,7 +173,7 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 .vbanner b{display:block}
 
 /* ---------- pestañas ---------- */
-.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(3,1fr);
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);
   background:color-mix(in srgb,var(--card) 82%,transparent);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
   border-top:1px solid var(--sep);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
 .tabs button{display:grid;justify-items:center;gap:2px;padding:8px 0 6px;font-size:.7rem;font-weight:700;color:var(--sub)}
@@ -204,7 +205,29 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 .en.hide{font-family:var(--text);font-weight:800;font-size:1.15rem}
 .pr{font-style:italic;font-size:1.05rem;color:var(--emily);font-weight:700}
 .es{color:var(--sub)}
+.tri{display:grid;grid-template-columns:1fr;gap:0}
+.tri .k{font-size:.6rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--sub);margin-top:4px}
+.tri .k:first-child{margin-top:0}
+.tri .fo{font-weight:700;color:var(--sub)}
+.tri .en{font-size:clamp(1.15rem,5vw,1.55rem)}
 .spacer{flex:1 1 0;min-height:0}
+/* ---------- la ciudad ---------- */
+#city{position:fixed;inset:0;overflow:hidden;touch-action:none;background:#7DBE6A}
+#city canvas#cv{position:absolute;inset:0}
+#city .hud.top{position:absolute;left:0;right:0;top:0;padding:max(10px,env(safe-area-inset-top,0px)) max(10px,env(safe-area-inset-right,0px)) 0 max(10px,env(safe-area-inset-left,0px));display:flex;gap:8px;align-items:flex-start;pointer-events:none}
+#city .obj{flex:1;min-width:0;background:rgba(10,12,30,.82);color:#fff;border-radius:16px;padding:8px 12px;display:grid;gap:1px;box-shadow:0 4px 16px rgba(0,0,0,.3)}
+#city .obj .cap{color:#FFD60A;font-size:.64rem}#city .obj b{font-family:var(--round);font-weight:900;font-size:1rem}#city .obj small{opacity:.75}
+#city .obj.pop{animation:pop .5s}
+#city .hstats{display:flex;flex-direction:column;gap:6px;align-items:flex-end;pointer-events:auto}
+#city .menub{width:42px;height:42px;border-radius:12px;background:rgba(10,12,30,.82);color:#fff;font-size:1.3rem;font-weight:900}
+#city #mini{position:absolute;right:max(10px,env(safe-area-inset-right,0px));bottom:calc(22px + env(safe-area-inset-bottom,0px));width:110px;height:110px;border-radius:14px;border:2px solid rgba(255,255,255,.6)}
+#city .joy{position:absolute;left:max(22px,env(safe-area-inset-left,0px));bottom:calc(26px + env(safe-area-inset-bottom,0px));width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.22);border:3px solid rgba(255,255,255,.5);touch-action:none}
+#city .knob{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;border-radius:50%;background:rgba(255,255,255,.9);box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#city .act{position:absolute;right:max(10px,env(safe-area-inset-right,0px));bottom:calc(146px + env(safe-area-inset-bottom,0px));background:#7C4DFF;color:#fff;font-family:var(--round);font-weight:900;padding:14px 16px;border-radius:18px;box-shadow:0 5px 0 #4a2bb0;animation:pop .3s}
+#city .call{position:absolute;left:12px;right:12px;top:calc(96px + env(safe-area-inset-top,0px));background:rgba(10,12,30,.92);color:#fff;border-radius:20px;padding:10px 12px;display:flex;gap:10px;align-items:center;animation:pop .4s}
+#city .call small{display:block;opacity:.75}#city .call .callp .p{--sz:54px}
+#city .cityv{position:absolute;left:max(10px,env(safe-area-inset-left,0px));top:calc(92px + env(safe-area-inset-top,0px))}
+#city .cityv .vbtn{background:rgba(255,61,127,.92);color:#fff;font-weight:900;font-family:var(--round);padding:8px 12px;border-radius:99px;font-size:.85rem}
 .fb{border-radius:14px;padding:8px 13px;font-weight:700;flex:none;animation:fade .2s}
 .fb.ok{background:var(--ok-soft);color:var(--ok)}
 .fb.bad{background:var(--bad-soft);color:var(--ink);font-weight:500}
@@ -655,14 +678,16 @@ function closeSheet(){document.querySelectorAll(".sheetbg").forEach(e=>e.remove(
 /* =====================================================================
    11. PANTALLAS
    ===================================================================== */
-const VIEWS=["mundos","gente","yo"];
-let view=(location.hash||"#mundos").slice(1);if(!VIEWS.includes(view))view="mundos";
+const VIEWS=["ciudad","mundos","gente","yo"];
+let view=(location.hash||"#ciudad").slice(1);if(!VIEWS.includes(view))view="ciudad";
 let running=false,token=0;
 window.addEventListener("hashchange",()=>{const v=location.hash.slice(1);if(VIEWS.includes(v)&&v!==view){view=v;render()}});
 function go(v){view=v;try{history.replaceState(null,"","#"+v)}catch(e){}render();window.scrollTo(0,0)}
 function canRun(){return !!(capsReady&&(dict||SR))}
-function render(){if(running)return;const app=$("#app");({mundos:renderMundos,gente:renderGente,yo:renderYo})[view](app);
-  $("#tabs").innerHTML=[["mundos","Mundos","🗺️"],["gente","Gente","👥"],["yo","Yo","🙂"]].map(([k,n,ic])=>`<button class="${k===view?"on":""}" data-tab="${k}"><span class="i">${ic}</span><span>${n}</span></button>`).join("");
+function render(){if(running)return;const app=$("#app");if(view!=="ciudad"&&typeof stopCity==="function"&&CITY.on)stopCity();
+  if(view==="ciudad"){renderCiudad(app);return}$("#tabs").style.display="";
+  ({mundos:renderMundos,gente:renderGente,yo:renderYo})[view](app);
+  $("#tabs").innerHTML=[["ciudad","Jugar","🎮"],["mundos","Misiones","🗺️"],["gente","Gente","👥"],["yo","Yo","🙂"]].map(([k,n,ic])=>`<button class="${k===view?"on":""}" data-tab="${k}"><span class="i">${ic}</span><span>${n}</span></button>`).join("");
   $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>go(b.dataset.tab));startFx(app)}
 function koBannerHTML(){if(KO)return "";const st=koState==="loading"?`<small class="sub">Descargando voces… ${koPct}% (sólo esta vez)</small>`:koState==="error"?`<small class="sub">No se pudo cargar aquí. Se usa la voz del teléfono.</small>`:`<small class="sub">Cada personaje con su propia voz, como de persona real. ~90 MB una sola vez (mejor con WiFi).</small>`;
   return `<div class="vbanner" id="vban"><span style="font-size:2rem">🎙️</span><div style="flex:1;min-width:0"><b>Voces humanas</b>${st}</div>${koState==="loading"?"":`<button class="btn small pink" id="kogo">${koState==="error"?"Reintentar":"Activar"}</button>`}</div>`}
@@ -678,7 +703,7 @@ function renderMundos(app){
    ${koBannerHTML()}
    ${m?`<section class="hero">${sceneHTML(m.place,m.cast,{cast:true,sz:62,h:150})}
      <div class="cap">Mundo ${m.w} · Misión ${m.o} · ${done}/${MISSIONS.length} superadas</div><h2>${esc(m.t)}</h2>
-     <button class="btn" id="goNow" ${canRun()?"":"disabled"}>${MIC}<span>${!capsReady?"Preparando…":done?"Jugar":"¡Empezar el juego!"}</span></button></section>`
+     <button class="btn" id="goNow" ${canRun()?"":"disabled"}>${MIC}<span>${!capsReady?"Preparando…":"🎮 Ir a la ciudad"}</span></button></section>`
    :`<section class="hero"><h2>¡Terminaste el juego! 🏆</h2><p>Eres gringo honorario. Vuelve a jugar tus misiones favoritas para subir estrellas.</p></section>`}
    ${!capsReady||SR||dict?"":`<p class="warn">Este navegador no puede escucharte. En iPhone ábrelo en <b>Safari</b>; en Android o computadora, en <b>Chrome</b>.</p>`}
    ${WORLDS.map(W=>{const ms=MISSIONS.filter(x=>x.w===W.n),d=ms.filter(x=>msDone(x.id)).length,open=worldOpen(W.n),P=PLACES[W.place];
@@ -686,7 +711,7 @@ function renderMundos(app){
       <span class="cap" style="color:rgba(255,255,255,.85)">${W.em} Mundo ${W.n}${ms.length?` · ${d}/${ms.length}`:" · muy pronto"}</span><h2>${esc(W.t)}</h2><span style="font-size:.9rem;text-shadow:0 1px 4px rgba(0,0,0,.5)">${esc(W.d)}</span>
       <div class="wbar"><u style="width:${ms.length?d/ms.length*100:0}%"></u></div></button>`}).join("")}
   </div>`;
-  bindKo();const g=$("#goNow");if(g)g.onclick=()=>playFrom(m);
+  bindKo();const g=$("#goNow");if(g)g.onclick=()=>go("ciudad");
   app.querySelectorAll("[data-w]").forEach(b=>b.onclick=()=>{const w=+b.dataset.w;if(!MISSIONS.some(x=>x.w===w)){toast("Este mundo viene muy pronto");return}openWorld(w)});
   app.querySelectorAll(".world .scene").forEach(sc=>sc.classList.add("walk"));
   const hs=app.querySelector(".hero .scene");if(hs){hs.classList.add("meet","walk");hs.id=""}
@@ -774,8 +799,20 @@ function feedback(kind,html){const f=$("#sfb");if(!f)return;if(!kind){f.hidden=t
 function showCombo(){const c=$("#cmb");if(!c)return;c.textContent=combo>=2?"🔥x"+combo:"";c.classList.remove("pop");void c.offsetWidth;if(combo>=2)c.classList.add("pop")}
 function showYou(y,mode,label){const c=$("#scard");if(!c)return;c.hidden=false;const hide=mode==="recall";
   c.innerHTML=`<div class="who">● Tú (Stanley)<em>${label||(hide?"Dilo tú, sin ayuda":"Tú dices esto")}</em></div>
-   <div class="body">${hide?`<div class="en hide">Dile: «${esc(y.es)}»</div>`:`<div class="en ${y.en.length>38?"long":""}">${esc(y.en)}</div><div class="pr">${esc(y.pr)}</div><div class="es">${esc(y.es)}</div>`}</div><div class="draw">${esc(y.em)}</div>`}
-function reveal(y){const b=$("#scard .body");if(b)b.innerHTML=`<div class="en ${y.en.length>38?"long":""}">${esc(y.en)}</div><div class="pr">${esc(y.pr)}</div><div class="es">${esc(y.es)}</div>`}
+   <div class="body">${hide?`<div class="en hide">Dile: «${esc(y.es)}»</div>`:threeForms(y)}</div><div class="draw">${esc(y.em)}</div>`}
+function reveal(y){const b=$("#scard .body");if(b)b.innerHTML=threeForms(y)}
+/* cómo se escribe "correcto" (sin contracciones ni jerga) */
+const FORMAL=[[/\bI'm\b/g,"I am"],[/\b(\w+)'re\b/gi,"$1 are"],[/\b(he|she|it|that|what|where|how|who|there|here|everything|nothing|something|everybody|nobody)'s\b/gi,"$1 is"],[/\blet's\b/gi,"let us"],
+ [/\bcan't\b/gi,"cannot"],[/\bwon't\b/gi,"will not"],[/\bain't\b/gi,"is not"],[/\b(\w+)n't\b/gi,"$1 not"],[/\b(\w+)'ve\b/gi,"$1 have"],[/\b(\w+)'ll\b/gi,"$1 will"],[/\b(I|you|he|she|we|they)'d\b/gi,"$1 would"],
+ [/\bgonna\b/gi,"going to"],[/\bwanna\b/gi,"want to"],[/\bgotta\b/gi,"have got to"],[/\bhafta\b/gi,"have to"],[/\bkinda\b/gi,"kind of"],[/\bsorta\b/gi,"sort of"],[/\blemme\b/gi,"let me"],[/\bgimme\b/gi,"give me"],
+ [/\bgotcha\b/gi,"got you"],[/\bwhatcha\b/gi,"what are you"],[/\bdunno\b/gi,"do not know"],[/\boutta\b/gi,"out of"],[/\blotta\b/gi,"lot of"],[/\btryna\b/gi,"trying to"],[/\bfinna\b/gi,"about to"],
+ [/\by'all\b/gi,"you all"],[/\bya\b/gi,"you"],[/'cause\b/gi,"because"],[/\bcuz\b/gi,"because"],[/\b'em\b/gi,"them"],[/\bc'mon\b/gi,"come on"],[/\b(\w+)in'(?=\W|$)/g,"$1ing"],
+ [/\byeah\b/gi,"yes"],[/\byep\b/gi,"yes"],[/\bnope\b/gi,"no"],[/\bnah\b/gi,"no"]];
+function formal(en){let s=en.replace(/[’]/g,"'");FORMAL.forEach(([re,r])=>{s=s.replace(re,(...a)=>{const m=a[0];let out=r.replace(/\$(\d)/g,(_,i)=>a[+i]);if(/^[A-Z]/.test(m)&&/^[a-z]/.test(out))out=out[0].toUpperCase()+out.slice(1);return out})});return s}
+function threeForms(y){const f=formal(y.en),same=f.replace(/\W/g,"").toLowerCase()===y.en.replace(/\W/g,"").toLowerCase();
+  return `<div class="tri"><span class="k">✍️ Se escribe</span><span class="v fo">${same?"<i>igual</i>":esc(f)}</span>
+   <span class="k">🗣️ Los nativos dicen</span><span class="v en ${y.en.length>38?"long":""}">${esc(y.en)}</span>
+   <span class="k">👄 Se lee</span><span class="v pr">${esc(y.pr)}</span><span class="k">🇲🇽 Significa</span><span class="v es">${esc(y.es)}</span></div>`}
 const lastSpeaker=(m,idx)=>{for(let i=idx-1;i>=0;i--)if(m.steps[i].k==="N")return m.steps[i];return null};
 
 /* tu turno: devuelve true si salió a la primera. Si dices otra cosa, el personaje te sigue la corriente */
@@ -836,7 +873,7 @@ async function win(m,stars,xp,newRank,t){const sess=$("#sess");if(!sess)return;c
   o.innerHTML=`<div class="box">${personHTML(star,110)}<span class="big">${starStr(stars)}</span><b class="t">${stars?"¡Misión superada!":"Casi…"}</b><p class="sub">${msg}</p>
    <span class="xp">+${xp} XP ${DB.bestCombo?"· mejor combo x"+DB.bestCombo:""}</span>${newRank?`<p style="font-weight:900">🎖️ ¡Subiste de rango: ${esc(newRank)}!</p>`:""}
    ${m.mems.length&&stars?`<p class="sub">🧠 ${m.mems.map(x=>esc(CH(x.who).name)).join(", ")} se va a acordar de esto.</p>`:""}
-   <button class="btn" id="nx1">${stars?"Siguiente misión ▶":"Intentar otra vez ↻"}</button><button class="link" id="nx0">Salir al mapa</button></div>`;
+   <button class="btn" id="nx1">${stars?(view==="ciudad"?"Seguir jugando ▶":"Siguiente misión ▶"):"Intentar otra vez ↻"}</button><button class="link" id="nx0">Salir</button></div>`;
   sess.appendChild(o);o.querySelector(".p").classList.add(stars?(CH(star).gender==="f"&&m.w>=5?"e-flirty":"e-laugh"):"e-sad");
   sfx(stars?"win":"bad");if(stars)confetti();
   say(stars===3?pick(["Awesome! You nailed it!","Yo, that was fire!","Look at you, talking like a local!"]):stars?"Nice job, Stanley!":"Don't worry, we'll try again.",star);
@@ -844,9 +881,12 @@ async function win(m,stars,xp,newRank,t){const sess=$("#sess");if(!sess)return;c
 function playFrom(m,single){if(!canRun()||!m)return;unlockAudio();running=true;const t=++token;
   (async()=>{let cur=m,fails=0;while(cur){guard(t);const st=await runMission(cur,t);guard(t);
       if(st===0){fails++;if(fails>=2&&cur.i>0){const prev=MISSIONS[cur.i-1];toast("Un paso atrás: repasamos la anterior");await runMission(prev,t);fails=0}continue}
-      fails=0;cur=MISSIONS[cur.i+1]||null}})()
+      fails=0;if(single)break;cur=MISSIONS[cur.i+1]||null}})()
   .catch(e=>{if(e!==CANCEL)console.error(e)}).finally(()=>{if(t===token)endSess()})}
 
+</script>
+<script src="ciudad.js"></script>
+<script>
 render();
 if(DB.settings.human&&!(window.claude&&window.claude.use))setTimeout(()=>koLoad().catch(()=>{}),800);
 </script>

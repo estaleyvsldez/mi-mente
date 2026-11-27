@@ -40,7 +40,7 @@ M|karen|karen_tienda|You're the guy who embarrassed me at the store!|¡Tú eres 
 Y|Hey, man. I think you charged me twice.|Oye, carnal. Creo que me cobraste dos veces.|jéi, mán. ái zínk iú chárchd mí tuáis|💳💳😠
 A|Excuse me, I think you charged me twice.
 N|cajero|bored|Nah, the system doesn't make mistakes, bro.|Nah, el sistema no se equivoca, bro.
-Y|Look at the receipt. Two pizzas. I bought one.|Mira el recibo. Dos pizzas. Yo compré una.|lúk at de risít. tu pítsas. ái bot uán|🧾🍕🍕
+Y|Look at the receipt. Two pizzas. I bought one.|Mira el recibo. Dos pizzas. Yo compré una.|lúk at de risít. tu pítsas. ái bót uán|🧾🍕🍕
 N|cajero|surprised|Oh. Huh. Okay, maybe the system makes mistakes.|Ah. Mmm. Okey, a lo mejor el sistema sí se equivoca.
 Y|Yeah, no kidding. So can I get my money back?|Sí, no me digas. ¿Entonces me devuelves mi dinero?|iéa, nóu kírin. sóu kan ái guét mái máni bák?|💸🔙🙏
 N|cajero|neutral|I can give you store credit.|Te puedo dar crédito de la tienda.

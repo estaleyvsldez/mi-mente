@@ -15,7 +15,7 @@ N|cajero|happy|Corn or flour?|¿De maíz o de harina?
 Y|Corn, please. And like ten limes.|De maíz, por favor. Y como diez limones.|kórn, plís. and láik tén láims|🌽🍋🍋
 A|Corn, please. And ten limes.
 N|cajero|surprised|Ten limes? Somebody's having a party, huh?|¿Diez limones? Alguien va a hacer fiesta, ¿eh?
-Y|Nah, my cousin just loves limes.|No, mi primo nomás ama los limones.|ná, mái kásin yást lóvs láims|🍋😍🤪
+Y|Nah, my cousin just loves limes.|No, mi primo nomás ama los limones.|ná, mái kásin yást lávs láims|🍋😍🤪
 A|No, my cousin's just weird.
 N|cajero|neutral|Ha! Alright. That's six fifty.|¡Ja! Va. Son seis cincuenta.
 Y|How much? Six fifty? Cool, here you go.|¿Cuánto? ¿Seis cincuenta? Va, aquí tiene.|jáu mách? síks fífti? kúl, jíer iú góu|💵🤝
