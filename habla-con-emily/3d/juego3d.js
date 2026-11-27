@@ -543,6 +543,7 @@ function startMission(m,cast,runner){if(S.busy)return;if(typeof canRun==='functi
   frameConv(ids);S.locked=true;UI.hud(false);
   W3D.after=()=>{S.busy=false;S.locked=false;S.conv=null;NPCS.forEach(n=>{n.conv=null;if(n._back){n.g.position.copy(n._back);n._back=null}});
     for(let i=NPCS.length-1;i>=0;i--)if(NPCS[i].temp&&!NPCS[i].keep){scene.remove(NPCS[i].g);NPCS.splice(i,1)}UI.hud(true);setTarget()};
+  if(typeof prefetch==='function')(m.steps||[]).slice(0,6).forEach(st=>{if(st.k==='N')prefetch(st.en,st.who);else if(st.k==='Y')prefetch(st.en,'stanley')});
   if(typeof koGen==='function'&&typeof KO!=='undefined'&&KO)(async()=>{for(const st of m.steps.slice(0,8)){if(st.k==='N'){const c=CH(st.who);if(c.voice&&c.voice!=='dog')for(const t of (typeof splitSay==='function'?splitSay(st.en):[st.en]))await koGen(t,c).catch(()=>{})}}})();
   if(runner)runner(m);else if(typeof playFrom==='function')playFrom(m,true)}
 function frameConv(ids){const ns=ids.map(id=>NPCS.find(n=>n.id===id)).filter(Boolean);const c=new THREE.Vector3();ns.forEach(n=>c.add(n.g.position));if(ns.length)c.divideScalar(ns.length);else c.set(PL.pos.x-Math.sin(S.yaw)*2,0,PL.pos.z-Math.cos(S.yaw)*2);
@@ -699,7 +700,7 @@ function drawMini(){const c=$3('#w3mini');if(!c)return;const g=c.getContext('2d'
   const T=S.target;if(T&&T.x!==undefined){g.fillStyle='#ffd23a';g.beginPath();g.arc(T.x,T.z,3.4,0,7);g.fill()}
   g.restore();g.fillStyle='#fff';g.beginPath();g.moveTo(W/2,W/2-9);g.lineTo(W/2+6,W/2+7);g.lineTo(W/2,W/2+3);g.lineTo(W/2-6,W/2+7);g.closePath();g.fill();
   g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=3;g.beginPath();g.arc(W/2,W/2,W/2-2,0,7);g.stroke()}
-function hudTick(){const kp=$3('#w3ko');if(kp&&typeof koState!=='undefined'){const st=koState;kp.hidden=st==='ready'&&!kp._show;kp.textContent=st==='loading'?`🎙️ Bajando voces humanas… ${koPct}%`:st==='error'?'🎙️ Voces humanas: toca para reintentar':'🎙️ Voces humanas listas';if(st==='ready'&&!kp._done){kp._done=1;kp._show=1;setTimeout(()=>{kp._show=0},3000)}}
+function hudTick(){const kp=$3('#w3ko');if(kp&&typeof koState!=='undefined'){const st=koState;kp.hidden=(st==='ready'&&!kp._show)||st==='off';kp.textContent=st==='loading'?`🎙️ Bajando voces humanas… ${koPct}%`:st==='error'?'🎙️ Voces humanas: toca para reintentar':'🎙️ Voces humanas listas';if(st==='ready'&&!kp._done){kp._done=1;kp._show=1;setTimeout(()=>{kp._show=0},3000)}}
 const T=S.target,a=$3('#w3arrow');if(a){if(T&&T.x!==undefined&&!S.locked){const dx=T.x-PL.pos.x,dz=T.z-PL.pos.z,d=Math.hypot(dx,dz);const fy=S.inCar?S.inCar.h:S.yaw+Math.PI;const ang=Math.atan2(dx,dz)-fy;
     a.hidden=false;a.querySelector('b').style.transform=`rotate(${-ang*180/Math.PI-90}deg)`;$3('#w3dist').textContent=d<1000?Math.round(d)+' m':''}else a.hidden=true}
   const st=$3('#w3stat');if(st&&typeof DB!=='undefined'){const s=typeof streak==='function'?streak():0;const v=S.inCar?Math.round(Math.abs(S.inCar.v)*3.6)+' km/h':'';st.innerHTML=`<span>💵 $${DB.money||0}</span><span>⭐ ${DB.xp}</span><span>🔥 ${s}</span>${S.wanted?`<span class="wan">${'🚨'.repeat(S.wanted)}</span>`:''}${v?`<span>${v}</span>`:''}`}const hb=$3('#w3hpb');if(hb){const h=S.hp==null?100:S.hp;hb.style.width=h+'%';hb.style.background=h>50?'#30d158':h>25?'#ffd23a':'#ff453a'}}
@@ -773,7 +774,7 @@ W3D.resume=function(){const h=$3('#w3d');if(!h)return;if(!renderer.domElement.is
 W3D.leave=function(){W3D.on=false;if(typeof CITY!=='undefined')CITY.on=false;cancelAnimationFrame(S.raf);if(typeof DB!=='undefined'){DB.pos3={x:PL.pos.x,z:PL.pos.z,yaw:S.yaw};try{save()}catch(e){}}};
 W3D.emo=(id,emo)=>{const p=id==='stanley'?PL.p:NPCS.find(n=>n.id===id);if(!p)return;showEmo(p,emo);if(emo==='angry')gesture(p,'headShake');else if(emo==='laugh'||emo==='happy'||emo==='flirty')gesture(p,'agree',1.2);else if(emo==='sad'||emo==='cry')gesture(p,'sad_pose',3);else if(emo==='surprised'||emo==='scared')p.bounce=.4};
 W3D.talk=(id,on)=>{const p=id==='stanley'?PL.p:NPCS.find(n=>n.id===id);if(p)p.talk=on?1:0;if(on&&S.conv&&p&&p!==PL.p&&!S.fp){/* mira a quien habla */const ns=NPCS.filter(n=>n.conv);if(ns.length>1){S.conv.look.set(p.g.position.x,.15,p.g.position.z)}}};
-W3D.S=S;W3D.PL=PL;W3D.NPCS=NPCS;W3D.CARS=CARS;W3D.LOTS=LOTS;W3D.act=act;W3D.chamba=chamba;W3D.cam=toggleCam;W3D.jump=jump;W3D.crouch=crouch;W3D.offScript=offScript;W3D.setTarget=setTarget;W3D.startMission=startMission;
+W3D.LINES={OFF,NUM,FIGHT,AMB};W3D.S=S;W3D.PL=PL;W3D.NPCS=NPCS;W3D.CARS=CARS;W3D.LOTS=LOTS;W3D.act=act;W3D.chamba=chamba;W3D.cam=toggleCam;W3D.jump=jump;W3D.crouch=crouch;W3D.offScript=offScript;W3D.setTarget=setTarget;W3D.startMission=startMission;
 
 /* se conecta con el juego: la vista «ciudad» ahora es 3D */
 function webglOK(){try{const c=document.createElement('canvas');return !!(c.getContext('webgl2')||c.getContext('webgl'))}catch(e){return false}}

@@ -320,6 +320,7 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 <script src="mundos/pilares.js"></script>
 <script src="mundos/nativo.js"></script>
 <script src="mundos/conectado.js"></script>
+<script src="voz/lista.js"></script>
 <script>
 /* =====================================================================
    1. MUNDOS, LUGARES Y MISIONES
@@ -421,6 +422,8 @@ function compare1(target,heard,lenient){
   const keys=T0.map((w,k)=>!STOP.has(w)?k:-1).filter(k=>k>=0),keyMissN=keys.filter(k=>miss[k]).length;
   const allowed=lenient?Math.max(1,Math.round(m*.3)):(m<=4?0:m<=9?1:2),keyOk=lenient?keyMissN<=Math.floor(keys.length/5):keyMissN===0;
   const hit=m?miss.filter(x=>!x).length/m:0;
+  /* modo plática (2): pasa si dijiste la mayoría de la frase y casi todas las palabras clave, aunque el micrófono agregue palabras */
+  if(lenient===2){const ok2=n>0&&hit>=(m<=3?.66:.6)&&keyMissN<=Math.max(m<=3?0:1,Math.floor(keys.length*.34));return {ok:ok2||(n>0&&keyOk&&d[m][n]<=allowed),dist:d[m][n],words:T0,miss,heardWords:H,hit}}
   return {ok:n>0&&keyOk&&d[m][n]<=allowed,dist:d[m][n],words:T0,miss,heardWords:H,hit}}
 function compareY(y,heard,lenient){let best=null;[y.en,...(y.alts||[])].forEach(t=>{const r=compare1(t,heard,lenient);if(!best||(r.ok&&!best.ok)||(r.ok===best.ok&&r.dist<best.dist))best=r});return best}
 function command(heard){const w=norm(heard).join(" ");
@@ -493,11 +496,19 @@ function koLoad(){if(KO)return Promise.resolve(KO);if(koP)return koP;koState="lo
 function koGen(text,c){const v=c.voice,sp=((slowNext||DB.settings.slow)?0.8:1)*(c.speed||1);const k=v+"|"+sp+"|"+text;if(koCache.has(k))return koCache.get(k);
   const p=KO.generate(text,{voice:v,speed:sp}).then(a=>{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const b=ac.createBuffer(1,a.audio.length,a.sampling_rate);b.copyToChannel(a.audio,0);return b});
   p.catch(()=>koCache.delete(k));koCache.set(k,p);if(koCache.size>90)koCache.delete(koCache.keys().next().value);return p}
-function prefetch(text,who){const c=CH(who);if(KO&&c.voice&&c.voice!=="dog")splitSay(text).forEach(t=>koGen(t,c).catch(()=>{}))}
+function prefetch(text,who){const c=CH(who);const vh=vozFind(c,text);if(vh){vozBuf(vh).catch(()=>{});return}if(KO&&c.voice&&c.voice!=="dog")splitSay(text).forEach(t=>koGen(t,c).catch(()=>{}))}
 let sayTok=0;function stopVoice(){sayTok++;try{if(curSrc)curSrc.stop()}catch(e){}curSrc=null;if(synth)synth.cancel()}
 function bark(n){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();const t0=ac.currentTime;for(let i=0;i<(n||2);i++){const t=t0+i*.28,o=ac.createOscillator(),g=ac.createGain();o.type="sawtooth";
   o.frequency.setValueAtTime(520,t);o.frequency.exponentialRampToValueAtTime(180,t+.16);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.35,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.2);o.connect(g).connect(ac.destination);o.start(t);o.stop(t+.22)}}catch(e){}
   return wait(300*(n||2)+200)}
+/* VOCES YA GRABADAS: cada frase del juego viene en mp3 con voz humana (Kokoro, open source), generada antes.
+   El iPhone sólo la reproduce: suena humana, sin esperar y sin trabar el juego. */
+function fnv(s){let h=0x811c9dc5;for(const b of new TextEncoder().encode(s)){h^=b;h=Math.imul(h,0x01000193)>>>0}return h.toString(16).padStart(8,"0")}
+const vozBufs=new Map();
+function vozFind(c,text){if(!window.VOZ||!c||!c.voice||c.voice==="dog")return null;let h=fnv(c.voice+"|"+(c.speed||1)+"|"+text);if(VOZ.has(h))return h;h=fnv(c.voice+"|1|"+text);return VOZ.has(h)?h:null}
+function vozBuf(h){if(vozBufs.has(h))return vozBufs.get(h);const p=fetch("voz/"+h+".mp3").then(r=>{if(!r.ok)throw new Error("voz "+r.status);return r.arrayBuffer()})
+    .then(ab=>new Promise((res,rej)=>{ac=ac||new (window.AudioContext||window.webkitAudioContext)();ac.decodeAudioData(ab,res,rej)}));
+  p.catch(()=>vozBufs.delete(h));vozBufs.set(h,p);if(vozBufs.size>150)vozBufs.delete(vozBufs.keys().next().value);return p}
 /* parte en oraciones para que la voz humana empiece rápido */
 function splitSay(t){const m=String(t).match(/[^.!?]+[.!?]+["')]*\s*|[^.!?]+$/g)||[t];const out=[];m.forEach(x=>{x=x.trim();if(!x)return;if(out.length&&(out[out.length-1].length<14||x.length<6))out[out.length-1]+=" "+x;else out.push(x)});return out.length?out:[t]}
 /* habla un personaje (id) — "es" = guía en español */
@@ -507,6 +518,7 @@ async function say(text,who,emo){
   setOrb("speak",who==="stanley"?"Así se dice":who==="es"?"Escucha":"Escucha…");
   try{
     if(c&&c.voice==="dog"){await bark(2);return}
+    {const vh=vozFind(c,text);if(vh){try{const b=await vozBuf(vh),slow=slowNext||DB.settings.slow,tk=sayTok;slowNext=false;if(tk===sayTok)await new Promise(res=>{ac.resume();const s=ac.createBufferSource();s.buffer=b;if(slow)s.playbackRate.value=.84;s.connect(ac.destination);curSrc=s;s.onended=res;s.start();setTimeout(res,b.duration*1000/(slow?.84:1)+600)});return}catch(e){console.warn(e)}}}
     if(KO&&c&&c.voice){try{const parts=splitSay(text),gens=parts.map(t=>koGen(t,c)),tk=sayTok;slowNext=false;
         for(const g of gens){const b=await g;if(tk!==sayTok)break;await new Promise(res=>{ac.resume();const s=ac.createBufferSource();s.buffer=b;s.connect(ac.destination);curSrc=s;s.onended=res;s.start();setTimeout(res,b.duration*1000+600)})}return}catch(e){console.warn(e)}}
     await new Promise(res=>{if(!synth){res();return}synth.cancel();const u=new SpeechSynthesisUtterance(text);
@@ -555,7 +567,7 @@ function micTap(){if(!pending)return;unlockAudio();if(cap)capStop(cap);else{capS
 function abortCap(){if(cap){const c=cap;cap=null;clr(c);setListen(false);try{c.rec?c.rec.abort():dict&&dict.stop()}catch(e){}}}
 let handsOff=false;
 function autoMic(p){if(DB.settings.hands===false||handsOff)return;setTimeout(()=>{if(pending===p&&!cap&&!speaking)capStart()},280)}
-function listen(y,opt){opt=opt||{};return new Promise((resolve,reject)=>{const p={y,resolve,wait:opt.wait||1500,lenient:!!opt.lenient,auto:0};pending=p;
+function listen(y,opt){opt=opt||{};return new Promise((resolve,reject)=>{const p={y,resolve,wait:opt.wait||1500,lenient:opt.lenient||false,auto:0};pending=p;
   cancelPending=()=>{if(pending===p){pending=null;abortCap();reject(CANCEL)}};showHeard("",false);setOrb("ready",DB.settings.hands===false||handsOff?"Toca el micrófono y habla":"Habla cuando quieras");autoMic(p)})}
 function answer(cmd){const p=pending;if(!p)return;abortCap();pending=null;p.resolve({cmd})}
 
@@ -883,7 +895,7 @@ async function youSay(y,mode,t,ctx){
   ctx=ctx||{};let first=true,heard=false;showYou(y,mode,ctx.label);feedback(null);
   const who=ctx.npc?ctx.npc.who:(ctx.m&&ctx.m.cast[0])||"emily";
   if(mode==="help"&&ctx.model){slowNext=true;await say(y.en,"stanley");guard(t);heard=true}
-  while(true){guard(t);const r=await listen(y,{lenient:mode==="recall"||mode==="natural"});guard(t);
+  while(true){guard(t);const r=await listen(y,{lenient:mode==="natural"?2:mode==="recall"});guard(t);
     if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;if(ctx.npc){bubble(ctx.npc.who,ctx.npc.en,ctx.showEs?ctx.npc.es:"");await say(ctx.npc.en,ctx.npc.who,ctx.npc.emo)}else await say(y.en,"stanley");guard(t);continue}
     if(r.cmd==="help"){if(mode==="recall"||mode==="native"||mode==="natural"){reveal(y);first=false}feedback("ok","Así se dice. Escúchalo y dilo tú.");slowNext=true;await say(y.en,"stanley");guard(t);heard=true;continue}
     if(!r.text)continue;
@@ -891,13 +903,13 @@ async function youSay(y,mode,t,ctx){
     if(y.norm&&!compareY(y,r.text,true).ok&&compare1(y.norm,r.text,true).ok){first=false;sfx("fun");bubble("stanley",r.text);await wait(400);guard(t);
       const tb=pick([["Ha! You sound like a textbook. Say it like us!","¡Ja! Suenas a libro. ¡Dilo como nosotros!"],["Okay, professor! Now say it like a normal person.","¡Ok, profe! Ahora dilo como persona normal."],["Bro, nobody talks like that. Try again!","Nadie habla así. ¡Otra vez!"]]);
       bubble(who,tb[0],tb[1]);await say(tb[0],who,"laugh");guard(t);reveal(y);feedback("fun",`📚 Eso es de libro. Un nativo dice: <b>${esc(y.en)}</b>`);continue}
-    const c=compareY(y,r.text,mode==="recall"||mode==="native"||mode==="natural");
+    const c=compareY(y,r.text,mode==="natural"?2:(mode==="recall"||mode==="native"));
     if(c.ok){record(y,true,c,first);bubble("stanley",y.en);combo=first?combo+1:0;DB.bestCombo=Math.max(DB.bestCombo||0,combo);addXP(first?10+Math.min(combo,10)*2:4);showCombo();
       sfx(combo>=3?"combo":"ok");setEmo("stanley","happy");setOrb("ok",combo>=3?"¡Combo x"+combo+"!":"¡Bien!");feedback("ok",pick(["¡Eso!","¡Así mero!","¡Como gringo!","¡Perfecto!","¡Qué nivel!"]));
       if(ctx.npc&&ctx.npc.who)relAdd(ctx.npc.who,1);await wait(380);guard(t);setEmo("stanley","neutral");return first}
     /* ¿dijo otra cosa (no un intento)? -> el personaje reacciona */
     const it=intentOf(r.text);
-    if(c.hit<0.35||(it!=="other"&&c.hit<0.6)){
+    if(mode==="natural"?(it!=="other"&&it!=="greet"&&c.hit<0.3):(c.hit<0.35||(it!=="other"&&c.hit<0.6))){
       let rx=await aiReaction(who,r.text,y,ctx.m);guard(t);if(!rx)rx=reaction(who,it,ctx.m);
       if(it==="compliment"||it==="flirt"||it==="love")relAdd(who,2);if(it==="insult"&&!(ctx.m&&ctx.m.w===FIGHT_W))relAdd(who,-2);
       sfx("fun");bubble("stanley",r.text);await wait(500);guard(t);bubble(who,rx.en,rx.es);await say(rx.en,who,rx.emo);guard(t);
@@ -968,5 +980,5 @@ function playFrom(m,single){if(!canRun()||!m)return;unlockAudio();running=true;c
 <script type="module" src="3d/juego3d.js"></script>
 <script>
 render();
-if(DB.settings.human!==false&&!(window.claude&&window.claude.use))setTimeout(()=>koLoad().catch(()=>{}),600);
+if(DB.settings.stanVoice&&DB.settings.stanVoice!=="am_michael"&&!(window.claude&&window.claude.use))setTimeout(()=>koLoad().catch(()=>{}),4000);
 </script>
