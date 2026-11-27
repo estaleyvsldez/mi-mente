@@ -24,15 +24,15 @@ const S={yaw:Math.PI,pitch:-.12,fp:false,crouch:false,run:false,vy:0,y:0,onGroun
 let renderer,scene,camera,sun,hemi,sky,pmrem,envRT,clock;
 const SOLIDS=[],NPCS=[],CARS=[],LOTS={},MAT={};
 function initRenderer(){
-  renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance',preserveDrawingBuffer:false});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.4));
+  renderer=new THREE.WebGLRenderer({antialias:(window.devicePixelRatio||1)<2,powerPreference:'high-performance',preserveDrawingBuffer:false});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.25));
   renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.82;
   renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   renderer.domElement.className='c3d';renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();try{W3D.leave()}catch(_){}toast3('El 3D se reinició');setTimeout(()=>location.reload(),900)});
   scene=new THREE.Scene();scene.fog=new THREE.Fog(0xbfd2e6,60,330);
   camera=new THREE.PerspectiveCamera(62,1,.1,1200);
   hemi=new THREE.HemisphereLight(0xdfeeff,0x6b5a48,.55);scene.add(hemi);
-  sun=new THREE.DirectionalLight(0xfff1dc,2.6);sun.castShadow=true;sun.shadow.mapSize.set(1536,1536);
+  sun=new THREE.DirectionalLight(0xfff1dc,2.6);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);
   const sc=sun.shadow.camera;sc.left=-45;sc.right=45;sc.top=45;sc.bottom=-45;sc.near=1;sc.far=260;sun.shadow.bias=-.0004;sun.shadow.normalBias=.04;
   scene.add(sun,sun.target);
   sky=new Sky();sky.scale.setScalar(4000);scene.add(sky);
@@ -470,7 +470,54 @@ function updateCamera(dt){const sm=Math.min(1,dt*10);
 
 /* ---------------- misiones, GPS, chambas ---------------- */
 const placeLot=p=>{const b=typeof placeBld==='function'?placeBld(p):null;return b?LOTS[b.id]:null};
+/* ================= MISIONES DE LA CIUDAD (estilo GTA) ================= */
+function parseGTA(txt){const L=[];let cur=null,sc=null,lastY=null;(txt||[]).join("\n").split("\n").forEach(raw=>{const r=raw.trim();if(!r||r.startsWith("//"))return;const f=r.split("|").map(x=>x.trim());
+  if(f[0].startsWith("#")){cur={id:f[0].slice(1),t:f[1],pay:+f[2]||0,giver:f[3],brief:f[4]||"",obj:[]};L.push(cur);sc=null;return}
+  if(!cur)return;
+  if(f[0]==="O"){const o={k:f[1]};if(o.k==="talk"){o.place=f[2];o.cast=(f[3]||"").split(",").map(x=>x.trim()).filter(Boolean);o.txt=f[4]||"Platica";o.steps=[];sc=o}
+    else{sc=null;if(o.k==="goto"||o.k==="drop"){o.place=f[2];o.txt=f[3]}else if(o.k==="pickup"){o.who=f[2];o.txt=f[3]}else if(o.k==="money"){o.amt=+f[2]||0;o.txt=f[3]}else o.txt=f[2]||""}cur.obj.push(o);return}
+  if(!sc)return;
+  if(f[0]==="N")sc.steps.push({k:"N",who:f[1],emo:f[2]||"neutral",en:f[3],es:f[4]||""});
+  else if(f[0]==="Y"){lastY={k:"Y",en:f[1],es:f[2]||"",pr:f[3]||"",em:f[4]||"💬",alts:[],m:cur.id};sc.steps.push(lastY)}
+  else if(f[0]==="A"&&lastY)lastY.alts.push(f[1]);else if(f[0]==="L"&&lastY)lastY.norm=f[1]});return L.filter(m=>m.obj.length)}
+const gtaDone=id=>!!(DB.gta&&DB.gta.done&&DB.gta.done[id]);
+function gtaNext(){const L=W3D.GTA||[];return L.find(m=>!gtaDone(m.id))||null}
+function gtaOpen(m){const L=W3D.GTA||[],i=L.indexOf(m);return i<=0||gtaDone(L[i-1].id)||gtaDone(m.id)}
+function lotFor(pl){return LOTS[pl]||placeLot(pl)||LOTS.casa}
+function banner(big,small,color){const b=$3('#w3ban');if(!b)return;b.innerHTML=`<b style="color:${color||'#ffd23a'}">${escH(big)}</b>${small?`<small>${escH(small)}</small>`:''}`;b.hidden=false;b.classList.remove('on');void b.offsetWidth;b.classList.add('on');clearTimeout(banner.t);banner.t=setTimeout(()=>b.hidden=true,3600)}
+function gtaStart(m){if(!m)return;cancelJob();S.forced=null;S.gm={m,i:-1,giverStage:true};setTarget()}
+function gtaBegin(){const G=S.gm;G.giverStage=false;G.i=0;banner(G.m.t.toUpperCase(),G.m.brief);gtaObj()}
+function gtaObj(){const G=S.gm;if(!G)return;const o=G.m.obj[G.i];if(!o){gtaEnd();return}
+  if(o.k==="money"){DB.money=(DB.money||0)+o.amt;try{save()}catch(e){}toast3((o.amt<0?'💸 ':'💵 ')+(o.txt||((o.amt<0?'-':'+')+'$'+Math.abs(o.amt))));G.i++;gtaObj();return}
+  if(o.k==="end"){gtaEnd(o.txt);return}
+  if(o.k==="pickup"){let n=NPCS.find(x=>x.id===o.who&&!x.ped);if(!n){n=makePerson(o.who);n.temp=true;n.keep=true;NPCS.push(n);const L=lotFor((typeof HOME!=='undefined'&&HOME[o.who])||'casa');n.g.position.set(L.door.x+1.5,.16,L.door.z);n.home={x:L.door.x+1.5,z:L.door.z}}
+    n.hidden=false;G.n=n}
+  setTarget()}
+function gtaTarget(){const G=S.gm,o=G.m.obj[G.i];
+  if(G.giverStage){const L=lotFor((typeof HOME!=='undefined'&&HOME[G.m.giver])||'casa');S.target={gta:true,giver:true,x:L.door.x,z:L.door.z,L};UI.obj(`🅼 <b>${escH(G.m.t)}</b> · ve con ${escH(CH(G.m.giver).name||G.m.giver)} (marca amarilla)`);return}
+  if(!o){S.target=null;return}
+  const pre=`🎯 <b>${escH(G.m.t)}</b> · `;
+  if(o.k==="talk"||o.k==="goto"||o.k==="drop"){const L=lotFor(o.place);S.target={gta:true,o,x:L.door.x,z:L.door.z,L};UI.obj(pre+escH(o.txt||'Ve a '+L.b.name));return}
+  if(o.k==="pickup"&&G.n){const p=G.n.g.position;S.target={gta:true,o,x:p.x,z:p.z,follow:G.n};UI.obj(pre+escH(o.txt||'Recoge a '+G.n.c.name));return}
+  if(o.k==="car"){S.target={gta:true,o};UI.obj(pre+escH(o.txt||'Súbete a un carro'));return}
+  S.target=null}
+function gtaTick(dt){const G=S.gm;if(!G||S.busy)return;const T=S.target;if(!T)return;if(T.follow){T.x=T.follow.g.position.x;T.z=T.follow.g.position.z}
+  const d=T.x!==undefined?Math.hypot(PL.pos.x-T.x,PL.pos.z-T.z):999,carStop=S.inCar&&Math.abs(S.inCar.v)<2.5,here=S.inCar?(d<10&&carStop):d<3;
+  if(G.giverStage){if(here){if(S.inCar)act('exit');gtaBegin()}return}
+  const o=G.m.obj[G.i];if(!o)return;
+  if(o.k==="car"){if(S.inCar){G.i++;gtaObj()}return}
+  if(!here)return;
+  if(o.k==="goto"){G.i++;gtaObj();return}
+  if(o.k==="pickup"){const n=G.n;if(S.inCar){n.hidden=true;S.grabCar=n}else{S.grab=n}line(n,pick3([["Hey! Let's go!","¡Hey! ¡Vámonos!","happy"],["Finally! What took you so long?","¡Por fin! ¿Por qué tardaste tanto?","laugh"],["Alright, I'm ready. Let's roll.","Listo, ya estoy. Vámonos.","happy"]]));G.i++;gtaObj();return}
+  if(o.k==="drop"){const n=G.n;if(n){S.grab=null;if(S.grabCar===n)S.grabCar=null;n.hidden=false;n.g.position.set(T.x+1.4,.16,T.z);n.home={x:T.x+1.4,z:T.z};line(n,["Thanks for the ride!","¡Gracias por el aventón!","happy"])}G.n=null;G.i++;gtaObj();return}
+  if(o.k==="talk"){if(G.talking)return;if(S.inCar){act('exit')}G.talking=true;const sc={id:G.m.id+'_'+G.i,t:G.m.t,place:o.place,cast:o.cast,steps:o.steps,label:o.txt};
+    if(typeof playScene!=='function')return;
+    startMission(sc,o.cast,()=>playScene(sc).then(ok=>{setTimeout(()=>{G.talking=false;if(!S.gm)return;if(ok){G.i++;gtaObj()}else{toast3('Regresa a la marca para intentarlo otra vez');setTarget()}},50)}));if(!S.busy)G.talking=false}}
+function gtaEnd(txt){const G=S.gm;S.gm=null;DB.gta=DB.gta||{done:{}};DB.gta.done=DB.gta.done||{};DB.gta.done[G.m.id]=1;DB.money=(DB.money||0)+G.m.pay;if(typeof addXP==='function')addXP(60);try{save()}catch(e){}
+  banner('MISIÓN SUPERADA',`+$${G.m.pay}${txt?' · '+txt:''}`,'#ffd23a');if(typeof confetti==='function')confetti();if(typeof sfx==='function')sfx('win');if(G.n){S.grab=null;G.n.hidden=false}setTimeout(setTarget,2500)}
 function setTarget(){if(S.job){S.target=S.job.target;UI.obj(S.job.label);return}
+  if(!S.gm&&!S.forced&&W3D.GTA&&W3D.GTA.length){const nx=gtaNext();if(nx)S.gm={m:nx,i:-1,giverStage:true}}
+  if(S.gm){gtaTarget();return}
   if(S.forced&&(DB.ms[S.forced.id]||{}).stars>0)S.forced=null;const m=S.forced||(typeof nextMission==='function'?nextMission():null);if(!m){S.target=null;UI.obj('🏆 ¡Terminaste todas las misiones! Pasea por la ciudad.');return}
   if(m.place==='telefono'){S.target={m,phone:true};UI.obj(`📱 Espera la llamada: «${m.t}»`);S.ringAt=S.t+5;return}
   if(m.place==='coche'){S.target={m,car:true};UI.obj(`🚗 Súbete a un carro: «${m.t}»`);return}
@@ -479,13 +526,13 @@ function setTarget(){if(S.job){S.target=S.job.target;UI.obj(S.job.label);return}
 function routePts(ax,az,bx,bz){const sn=v=>Math.round(v/P)*P;const pts=[[ax,az]];const onX=Math.abs(az-sn(az))<Math.abs(ax-sn(ax));
   if(onX){pts.push([ax,sn(az)]);pts.push([sn(bx),sn(az)])}else{pts.push([sn(ax),az]);pts.push([sn(ax),sn(bz)])}
   pts.push([sn(bx),sn(bz)]);const bOnX=Math.abs(bz-sn(bz))<Math.abs(bx-sn(bx));pts.push(bOnX?[bx,sn(bz)]:[sn(bx),bz]);pts.push([bx,bz]);return pts}
-function drawRoute(){const r=W3D.ribbon,T=S.target;if(!T||T.x===undefined){r.visible=false;W3D.marker.visible=false;return}
+function drawRoute(){const r=W3D.ribbon,T=S.target;if(!T||T.x===undefined||S.locked){r.visible=false;W3D.marker.visible=false;return}
   W3D.marker.visible=true;W3D.marker.position.set(T.x,groundY(T.x,T.z),T.z);
   const pts=routePts(PL.pos.x,PL.pos.z,T.x,T.z),pos=[],idx=[];let k=0;
   for(let i=0;i<pts.length-1;i++){const [x0,z0]=pts[i],[x1,z1]=pts[i+1],dx=x1-x0,dz=z1-z0,l=Math.hypot(dx,dz);if(l<.1)continue;const nx=-dz/l*.55,nz=dx/l*.55,y=.24;
     pos.push(x0+nx,y,z0+nz,x0-nx,y,z0-nz,x1+nx,y,z1+nz,x1-nx,y,z1-nz);idx.push(k,k+1,k+2,k+1,k+3,k+2);k+=4}
   const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setIndex(idx);r.geometry.dispose();r.geometry=g;r.visible=true;W3D.route=pts}
-function startMission(m,cast){if(S.busy)return;if(typeof canRun==='function'&&!canRun()){toast3('El micrófono todavía no está listo. Intenta otra vez en un momento.');return}S.busy=true;const T=S.target;S.grab=null;if(S.grabCar){S.grabCar.hidden=false;S.grabCar=null}
+function startMission(m,cast,runner){if(S.busy)return;if(typeof canRun==='function'&&!canRun()){toast3('El micrófono todavía no está listo. Intenta otra vez en un momento.');return}S.busy=true;const T=S.target;S.grab=null;if(S.grabCar){S.grabCar.hidden=false;S.grabCar=null}
   const L=T&&T.L;const cx=L?L.door.x:PL.pos.x,cz=L?L.door.z:PL.pos.z;
   if(L){PL.pos.set(cx,groundY(cx,cz),cz)}
   const fwd=L?(L.face===0?1:-1):1;const ids=(cast||m.cast).filter(id=>id!=='stanley');
@@ -497,14 +544,14 @@ function startMission(m,cast){if(S.busy)return;if(typeof canRun==='function'&&!c
   W3D.after=()=>{S.busy=false;S.locked=false;S.conv=null;NPCS.forEach(n=>{n.conv=null;if(n._back){n.g.position.copy(n._back);n._back=null}});
     for(let i=NPCS.length-1;i>=0;i--)if(NPCS[i].temp&&!NPCS[i].keep){scene.remove(NPCS[i].g);NPCS.splice(i,1)}UI.hud(true);setTarget()};
   if(typeof koGen==='function'&&typeof KO!=='undefined'&&KO)(async()=>{for(const st of m.steps.slice(0,8)){if(st.k==='N'){const c=CH(st.who);if(c.voice&&c.voice!=='dog')for(const t of (typeof splitSay==='function'?splitSay(st.en):[st.en]))await koGen(t,c).catch(()=>{})}}})();
-  if(typeof playFrom==='function')playFrom(m,true)}
+  if(runner)runner(m);else if(typeof playFrom==='function')playFrom(m,true)}
 function frameConv(ids){const ns=ids.map(id=>NPCS.find(n=>n.id===id)).filter(Boolean);const c=new THREE.Vector3();ns.forEach(n=>c.add(n.g.position));if(ns.length)c.divideScalar(ns.length);else c.set(PL.pos.x-Math.sin(S.yaw)*2,0,PL.pos.z-Math.cos(S.yaw)*2);
   const dx=c.x-PL.pos.x,dz=c.z-PL.pos.z,l=Math.hypot(dx,dz)||1,ux=dx/l,uz=dz/l;
   /* la tarjeta y el micrófono tapan la mitad de abajo: la cámara mira un poco abajo para que la persona quede arriba */
   const D=S.fp?2.4:3.3;const pos=new THREE.Vector3(c.x-ux*D+(S.fp?0:-uz*.7),S.fp?PL.pos.y+1.5:1.55,c.z-uz*D+(S.fp?0:ux*.7));
-  const look=new THREE.Vector3(c.x,ns[0]&&ns[0].dog?-.2:.15,c.z);
+  const look=new THREE.Vector3(c.x,ns[0]&&ns[0].dog?-.1:.45,c.z);
   S.conv={pos,look};if(!S.convInit){CAMP.copy(camera.position);CAMT.copy(look)}PL.p.g.visible=!S.fp&&!S.inCar}
-function checkMission(dt){const T=S.target;if(!T||S.busy||S.locked)return;
+function checkMission(dt){const T=S.target;if(!T||S.busy||S.locked)return;if(T.gta){gtaTick(dt);return}
   if(T.phone&&S.t>S.ringAt&&S.ringAt>0){S.ringAt=0;UI.ring(T.m)}
   
   if(S.job&&S.job.tick)S.job.tick(dt)}
@@ -548,7 +595,7 @@ const UI={subWho:null,
     <div class="w3btns"><button id="b-jump" aria-label="Brincar">⤒<small>Brincar</small></button><button id="b-crouch" aria-label="Agacharse">⤓<small>Agachar</small></button><button id="b-run" aria-label="Correr">🏃<small>Correr</small></button><button id="b-cam" aria-label="Cámara">👁<small>1ª/3ª</small></button></div>
     <button class="w3phone" id="b-phone" aria-label="Teléfono">📱</button>
     <div class="w3ctx" id="w3ctx"></div>
-   </div><div class="w3hurt" id="w3hurt"></div><div class="w3ko2" id="w3ko2" hidden><b>😵 NOQUEADO</b><small>Te llevan al hospital…</small></div><div class="w3ph" id="w3ph" hidden></div><div class="w3ring" id="w3ring" hidden></div></div>`;
+   </div><div class="w3hurt" id="w3hurt"></div><div class="w3ban" id="w3ban" hidden></div><div class="w3ko2" id="w3ko2" hidden><b>😵 NOQUEADO</b><small>Te llevan al hospital…</small></div><div class="w3ph" id="w3ph" hidden></div><div class="w3ring" id="w3ring" hidden></div></div>`;
     const host=$3('#w3d');host.prepend(renderer.domElement);bindControls(host);const ko=$3('#w3ko');if(ko)ko.onclick=()=>{unlock();if(typeof koLoad==='function')koLoad().catch(()=>{})}},
   hud(on){const h=$3('#w3hud');if(h)h.hidden=!on;if(!on){W3D.input.x=W3D.input.y=0;const k=$3('#w3knob');if(k)k.style.transform=''}},
   obj(t){const o=$3('#w3obj');if(o)o.innerHTML=t},
@@ -561,7 +608,7 @@ const UI={subWho:null,
     const T=S.target;
     if(S.inCar&&T&&T.car&&!S.job&&Math.abs(S.inCar.v)<1)h+=`<button class="big" data-a="startcar">🎬 Empezar: ${escH(T.m.t)}</button>`;
     if(S.inCar){h+=`<button data-a="exit">🚪 Bajar del carro</button>`;if(S.inCar.kind==='police')h+=`<button data-a="siren">🚨 Sirena</button>`}
-    else{if(T&&T.x!==undefined&&!S.job&&Math.hypot(PL.pos.x-T.x,PL.pos.z-T.z)<3)h+=`<button class="big" data-a="start">🎬 Empezar: ${escH(T.m.t)}</button>`;
+    else{if(T&&T.x!==undefined&&!S.job&&!T.gta&&Math.hypot(PL.pos.x-T.x,PL.pos.z-T.z)<3)h+=`<button class="big" data-a="start">🎬 Empezar: ${escH(T.m.t)}</button>`;
       const car=nearCar();if(car)h+=`<button data-a="enter">🚗 Subirte${car.kind==='taxi'?' al taxi':car.kind==='police'?' a la patrulla':''}</button>`;
       const n=S.near;if(n){h+=`<div class="w3who">${escH(n.c.name)}</div><div class="w3row"><button data-a="talk">💬<small>Platicar</small></button><button data-a="grab">${S.grab===n?'✋<small>Soltar</small>':'🤝<small>Del brazo</small>'}</button><button data-a="hug">🤗<small>Abrazar</small></button><button data-a="push">😤<small>Empujar</small></button>${n.dog||n.c.age<13?"":`<button data-a="hit">👊<small>Pegar</small></button>`}<button data-a="num">📱<small>${DB.contacts&&DB.contacts[n.id]?"Agendado":"Su número"}</small></button></div>`}
       else if(S.grab)h+=`<button data-a="grab">✋ Soltar a ${escH(S.grab.c.name)}</button>`}
@@ -570,6 +617,10 @@ const UI={subWho:null,
   ring(m){const r=$3('#w3ring');const who=m.cast.find(id=>!CH(id).dog)||m.cast[0];r.hidden=false;r.innerHTML=`<div class="rc"><span class="cap">📱 Llamada entrante</span><b>${escH(CH(who).name)}</b><small>${escH(m.t)}</small><div class="rr"><button class="no">✕</button><button class="yes">📞</button></div></div>`;
     try{for(let i=0;i<3;i++)setTimeout(()=>{if(!r.hidden&&typeof sfx==='function')sfx('combo')},i*900)}catch(e){}
     r.querySelector('.yes').onclick=()=>{unlock();r.hidden=true;S.target={m};startMission(m,[])};r.querySelector('.no').onclick=()=>{r.hidden=true;S.ringAt=S.t+20}},
+  gtaList(){const p=$3('#w3ph .scr');if(!p)return;const L=W3D.GTA||[];
+    p.innerHTML=`<div class="phbar"><button class="pback" data-b="1">‹ Inicio</button><span>💵 $${DB.money||0}</span></div><div class="pt"><b>🎯 Misiones</b><small>Ve, habla, maneja, compra. Cada una te paga.</small></div>
+      <div class="plist">${L.map(m=>{const d=gtaDone(m.id),o=gtaOpen(m);return `<button data-g="${m.id}" class="${o?'':'lk'}"><i>${d?'✅':o?'🅼':'🔒'}</i><span><b>${escH(m.t)}</b><small>${escH(m.brief)}</small></span><em>$${m.pay}</em></button>`}).join('')||'<p>Pronto…</p>'}</div>`;
+    p.querySelector('[data-b]').onclick=()=>UI.phone(true);p.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{const m=L.find(x=>x.id===b.dataset.g);if(!gtaOpen(m)){toast3('🔒 Primero termina la anterior');return}gtaStart(m);UI.phone(false);toast3('🅼 '+m.t)})},
   curso(w){const p=$3('#w3ph .scr');if(!p)return;const ms=typeof MISSIONS!=='undefined'?MISSIONS:[];const W=typeof WORLDS!=='undefined'?WORLDS:[];
     const st=id=>(DB.ms[id]||{}).stars||0,open=m=>typeof msOpen==='function'?msOpen(m):true;
     if(!w){p.innerHTML=`<div class="phbar"><button class="pback" data-b="1">‹ Inicio</button><span></span></div><div class="pt"><b>📚 Tu curso</b><small>8 niveles, de fácil a difícil. Cada nivel repasa lo de antes.</small></div>
@@ -579,7 +630,7 @@ const UI={subWho:null,
     p.innerHTML=`<div class="phbar"><button class="pback" data-b="1">‹ Curso</button><span></span></div><div class="pt"><b>${escH(X.em||'')} Nivel ${w}</b><small>${escH(X.t)}</small></div>
       <div class="plist">${L.map(m=>{const o=open(m),s=st(m.id);return `<button data-m="${m.id}" class="${o?'':'lk'}"><i>${o?(s?'⭐'.repeat(s):'▶️'):'🔒'}</i><span><b>${m.o}. ${escH(m.t)}</b><small>${escH(m.n||'')}</small></span></button>`}).join('')}</div>`;
     p.querySelector('[data-b]').onclick=()=>UI.curso();p.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{const m=ms.find(x=>x.id===b.dataset.m);if(!m)return;if(!open(m)){toast3('🔒 Primero pasa la misión anterior');return}
-      cancelJob();S.forced=m;setTarget();UI.phone(false);toast3('🎯 GPS puesto: '+m.t)})},
+      cancelJob();S.gm=null;S.forced=m;setTarget();UI.phone(false);toast3('🎯 GPS puesto: '+m.t)})},
   contacts(){const p=$3('#w3ph .scr');if(!p)return;const C=Object.entries(DB.contacts||{});
     p.innerHTML=`<div class="phbar"><button class="pback" data-b="1">‹ Inicio</button><span></span></div><div class="pt"><b>📇 Contactos</b><small>${C.length?'Llámales o queda de verte con ellos.':'Acércate a la gente y toca «📱 Su número».'}</small></div>
       <div class="plist">${C.map(([id])=>{const c=CH(id),r=(DB.rel&&DB.rel[id])||0;return `<div class="ct"><i>${escH((c.name||id)[0])}</i><span><b>${escH(c.name||id)}</b><small>${r>0?'❤️'.repeat(Math.min(5,Math.ceil(r/4))):'🤍'} ${r}</small></span><button data-call="${id}">📞</button><button data-meet="${id}">📍</button></div>`}).join('')}</div>`;
@@ -593,7 +644,7 @@ const UI={subWho:null,
     p.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{unlock();const k=b.dataset.p;
       if(k==='close')UI.phone(false);else if(k==='taxi')chamba('taxi');else if(k==='poli')chamba('police');else if(k==='night'){S.nightT=S.nightT>.5?0:1}else if(k==='cam'){toggleCam()}
       else if(k==='voz'){if(typeof koLoad==='function')koLoad().then(()=>toast3('¡Voces humanas listas!')).catch(()=>toast3('No se pudieron bajar las voces'))}
-      else if(k==='miss'){cancelJob();S.forced=null;setTarget();UI.phone(false)}else if(k==='cur')UI.curso();else if(k==='con')UI.contacts();else{UI.phone(false);const v={les:'mundos',pil:'pilares',gen:'gente',yo:'yo'}[k];W3D.leave();go(v)}})}};
+      else if(k==='miss')UI.gtaList();else if(k==='cur')UI.curso();else if(k==='con')UI.contacts();else{UI.phone(false);const v={les:'mundos',pil:'pilares',gen:'gente',yo:'yo'}[k];W3D.leave();go(v)}})}};
 function sub(who,en,es){UI.sub(who,en,es)}
 const escH=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function wordsHTML(en,who){return String(en).split(/(\s+)/).map(w=>/\S/.test(w)?`<span class="tw" data-who="${who}" data-w="${escH(w.replace(/[^\w'’-]/g,''))}">${escH(w)}</span>`:w).join('')}
@@ -643,7 +694,7 @@ function drawMini(){const c=$3('#w3mini');if(!c)return;const g=c.getContext('2d'
 function hudTick(){const kp=$3('#w3ko');if(kp&&typeof koState!=='undefined'){const st=koState;kp.hidden=st==='ready'&&!kp._show;kp.textContent=st==='loading'?`🎙️ Bajando voces humanas… ${koPct}%`:st==='error'?'🎙️ Voces humanas: toca para reintentar':'🎙️ Voces humanas listas';if(st==='ready'&&!kp._done){kp._done=1;kp._show=1;setTimeout(()=>{kp._show=0},3000)}}
 const T=S.target,a=$3('#w3arrow');if(a){if(T&&T.x!==undefined&&!S.locked){const dx=T.x-PL.pos.x,dz=T.z-PL.pos.z,d=Math.hypot(dx,dz);const fy=S.inCar?S.inCar.h:S.yaw+Math.PI;const ang=Math.atan2(dx,dz)-fy;
     a.hidden=false;a.querySelector('b').style.transform=`rotate(${-ang*180/Math.PI-90}deg)`;$3('#w3dist').textContent=d<1000?Math.round(d)+' m':''}else a.hidden=true}
-  const st=$3('#w3stat');if(st&&typeof DB!=='undefined'){const s=typeof streak==='function'?streak():0;const v=S.inCar?Math.round(Math.abs(S.inCar.v)*3.6)+' km/h':'';st.innerHTML=`<span>⭐ ${DB.xp}</span><span>🔥 ${s}</span>${S.wanted?`<span class="wan">${'🚨'.repeat(S.wanted)}</span>`:''}${v?`<span>${v}</span>`:''}`}const hb=$3('#w3hpb');if(hb){const h=S.hp==null?100:S.hp;hb.style.width=h+'%';hb.style.background=h>50?'#30d158':h>25?'#ffd23a':'#ff453a'}}
+  const st=$3('#w3stat');if(st&&typeof DB!=='undefined'){const s=typeof streak==='function'?streak():0;const v=S.inCar?Math.round(Math.abs(S.inCar.v)*3.6)+' km/h':'';st.innerHTML=`<span>💵 $${DB.money||0}</span><span>⭐ ${DB.xp}</span><span>🔥 ${s}</span>${S.wanted?`<span class="wan">${'🚨'.repeat(S.wanted)}</span>`:''}${v?`<span>${v}</span>`:''}`}const hb=$3('#w3hpb');if(hb){const h=S.hp==null?100:S.hp;hb.style.width=h+'%';hb.style.background=h>50?'#30d158':h>25?'#ffd23a':'#ff453a'}}
 
 /* ---------------- ciclo principal ---------------- */
 function nearestNPC(){let best=null,bd=2.4;for(const n of NPCS){if(!n.g.visible)continue;const d=Math.hypot(n.g.position.x-PL.pos.x,n.g.position.z-PL.pos.z);if(d<bd){bd=d;best=n}}return best}
@@ -652,10 +703,10 @@ function frame(dt){S.t+=dt;
   if(S.inCar)driveCar(S.inCar,dt);else movePlayer(dt);
   if(S.freeYaw&&S.t-(S.freeAt||0)>1.5)S.freeYaw=lerp(S.freeYaw,0,dt*3);
   for(const c of CARS)if(c.ai)aiCar(c,dt);
-  for(const n of NPCS){npcAI(n,dt);const d=n.g.position.distanceTo(PL.pos),dc=n.g.position.distanceTo(camera.position);n.g.visible=!n.hidden&&(d<(n.ped||n.stand?58:95)||!!n.conv||!!n.mood);const sh=d<30;if(n._sh!==sh){n._sh=sh;n.g.traverse(o=>{if(o.isMesh)o.castShadow=sh})}n.tag.visible=d<14&&dc>2.6&&!S.locked;if(dc<2.2)n.emo.visible=false;
+  for(const n of NPCS){npcAI(n,dt);const d=n.g.position.distanceTo(PL.pos),dc=n.g.position.distanceTo(camera.position);n.g.visible=!n.hidden&&(d<(n.ped||n.stand?46:80)||!!n.conv||!!n.mood);const sh=d<30;if(n._sh!==sh){n._sh=sh;n.g.traverse(o=>{if(o.isMesh)o.castShadow=sh})}n.tag.visible=d<14&&dc>2.6&&!S.locked;if(dc<2.2)n.emo.visible=false;
     if(n.bounce>0){n.bounce-=dt;n.g.position.y=groundY(n.g.position.x,n.g.position.z)+Math.abs(Math.sin(n.bounce*14))*.12}
     if(n.emoT>0){n.emoT-=dt;if(n.emoT<=0)n.emo.visible=false}
-    if(d<28||(d<55&&((S.fr|0)+n.id.length)%2===0))animate(n,d<28?dt:dt*2)}
+    if(n.g.visible&&(d<24||(d<46&&((S.fr|0)+n.id.length)%3===0)))animate(n,d<24?dt:dt*3)}
   S.fr=(S.fr|0)+1;
   animate(PL.p,dt);if(PL.p.emoT>0){PL.p.emoT-=dt;if(PL.p.emoT<=0)PL.p.emo.visible=false}PL.p.tag.visible=false;
   {const keep=S.near&&!S.inCar&&!S.locked&&S.near.g.visible&&Math.hypot(S.near.g.position.x-PL.pos.x,S.near.g.position.z-PL.pos.z)<3.3;S.near=S.inCar||S.locked?null:keep?S.near:nearestNPC()}
@@ -699,7 +750,7 @@ async function boot(app,onp){initRenderer();await loadModels(onp);
   PL.p=makePerson('stanley');PL.p.g.traverse(o=>{if(o.isBone&&/RightArm$/.test(o.name))PL.p.arm=o;if(o.isBone&&/RightForeArm$/.test(o.name))PL.p.fore=o});const pos=DB.pos3,L=LOTS.casa;if(pos&&isFinite(pos.x)){PL.pos.set(pos.x,0,pos.z);S.yaw=pos.yaw||0}else{PL.pos.set(L.door.x-9,0,L.door.z-3.5);S.yaw=Math.PI*.75}
   // tu carro estacionado
   const mine=makeCar('normal',0x1d4ed8);CARS.push(mine);carAt(mine,L.door.x+8,Math.round(L.door.z/P)*P+3.2,Math.PI/2);
-  W3D.CHAMBAS=typeof parseMissions==='function'?parseMissions(window.CHAMBA_TXT||[]):[];
+  W3D.CHAMBAS=typeof parseMissions==='function'?parseMissions(window.CHAMBA_TXT||[]):[];W3D.GTA=parseGTA(window.GTA_TXT||[]);
   W3D.ready=true}
 W3D.mount=function(app){if(typeof stopCity2D==='function'&&typeof CITY!=='undefined'&&CITY.raf)cancelAnimationFrame(CITY.raf);
   if(W3D.ready&&$3('#w3d')){W3D.resume();return}

@@ -316,6 +316,7 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 <script src="mundos/w7.js"></script>
 <script src="mundos/w8.js"></script>
 <script src="3d/chambas.js"></script>
+<script src="3d/misiones-gta.js"></script>
 <script src="mundos/pilares.js"></script>
 <script src="mundos/nativo.js"></script>
 <script src="mundos/conectado.js"></script>
@@ -473,9 +474,16 @@ function pickVoices(){if(!synth)return;const vs=synth.getVoices();if(!vs.length)
   const es=vs.filter(v=>/^es/i.test(v.lang));SV.es=es.find(v=>/es[-_](MX|US|419)/i.test(v.lang))||es[0]||null}
 if(synth){pickVoices();synth.onvoiceschanged=pickVoices}
 let KO=null,koP=null,koState="off",koPct=0;const koCache=new Map();
+/* la voz se genera en un hilo aparte (worker) para que el juego no se trabe; si no se puede, en el hilo principal */
+function koWorker(){return new Promise((res,rej)=>{let w;try{w=new Worker("voz-worker.js",{type:"module"})}catch(e){rej(e);return}
+  const pend=new Map();let n=0,ok=false;const to=setTimeout(()=>{if(!ok&&koPct===0){try{w.terminate()}catch(e){}rej(new Error("worker timeout"))}},45000);
+  w.onmessage=e=>{const d=e.data;if(d.type==="progress"){koPct=d.pct;koBanner()}else if(d.type==="ready"){ok=true;clearTimeout(to);
+      res({generate:(text,o)=>new Promise((ok2,ko2)=>{const id=++n;pend.set(id,[ok2,ko2]);w.postMessage({type:"gen",id,text,voice:o.voice,speed:o.speed})})})}
+    else if(d.type==="error"){clearTimeout(to);rej(new Error(d.msg))}else if(d.type==="audio"){const p=pend.get(d.id);if(!p)return;pend.delete(d.id);d.error?p[1](new Error(d.error)):p[0]({audio:d.audio,sampling_rate:d.sr})}};
+  w.onerror=e=>{clearTimeout(to);rej(e)};w.postMessage({type:"load"})})}
 function koLoad(){if(KO)return Promise.resolve(KO);if(koP)return koP;koState="loading";koBanner();
-  koP=import("https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/dist/kokoro.web.js").then(m=>m.KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX",{dtype:"q8",device:"wasm",
-      progress_callback:p=>{if(p&&p.status==="progress"&&p.total>1e6){koPct=Math.round(p.progress||0);koBanner()}}}))
+  koP=koWorker().catch(e=>{console.warn("voz en worker no disponible",e);return null}).then(w=>w||import("https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/dist/kokoro.web.js").then(m=>m.KokoroTTS.from_pretrained("onnx-community/Kokoro-82M-v1.0-ONNX",{dtype:"q8",device:"wasm",
+      progress_callback:p=>{if(p&&p.status==="progress"&&p.total>1e6){koPct=Math.round(p.progress||0);koBanner()}}})))
     .then(t=>{KO=t;koState="ready";DB.settings.human=true;save();koBanner();return t}).catch(e=>{console.warn(e);koState="error";koP=null;koBanner();throw e});
   return koP}
 function koGen(text,c){const v=c.voice,sp=((slowNext||DB.settings.slow)?0.8:1)*(c.speed||1);const k=v+"|"+sp+"|"+text;if(koCache.has(k))return koCache.get(k);
@@ -835,7 +843,7 @@ function openSess(m){closeSess();clearInterval(fxTimer);running=true;const s=doc
    <div class="dock"><button class="orb" id="sorb" aria-label="Hablar">${MIC}</button><div class="t"><div class="st" id="sst">Listo</div><div class="heard" id="sheard"></div></div></div>
    <div class="acts"><button data-cmd="repeat">🔊 Repetir</button><button data-cmd="slow">🐢 Despacio</button><button data-cmd="help">💡 Ayuda</button></div></div>`;
   document.body.appendChild(s);document.body.style.overflow="hidden";if(!hud)startFx(s);
-  $("#sx").onclick=()=>{token++;stopVoice();endSess()};$("#sorb").onclick=micTap;
+  $("#sx").onclick=()=>{token++;stopVoice();endSess()};if(hud){const sc=$("#scard");if(sc)sc.addEventListener("click",e=>{if(e.target.closest(".tw,.pw,.oye"))return;sc.classList.toggle("full")})}$("#sorb").onclick=micTap;
   s.querySelectorAll("[data-cmd]").forEach(b=>b.onclick=()=>{unlockAudio();answer(b.dataset.cmd)})}
 function closeSess(){const s=$("#sess");if(s)s.remove();document.body.style.overflow=""}
 function endSess(){running=false;cancelPending();stopVoice();closeSess();render()}
@@ -847,9 +855,9 @@ function setOrb(kind,label){const o=$("#sorb");if(!o)return;o.className="orb "+k
 function showHeard(t,partial){const h=$("#sheard");if(h)h.textContent=t?(partial?t+"…":"«"+t+"»"):""}
 function feedback(kind,html){const f=$("#sfb");if(!f)return;if(!kind){f.hidden=true;return}f.hidden=false;f.className="fb "+kind;f.innerHTML=html}
 function showCombo(){const c=$("#cmb");if(!c)return;c.textContent=combo>=2?"🔥x"+combo:"";c.classList.remove("pop");void c.offsetWidth;if(combo>=2)c.classList.add("pop")}
-function showYou(y,mode,label){const c=$("#scard");if(!c)return;c.hidden=false;const hide=mode==="recall"||mode==="native";
-  c.innerHTML=`<div class="who">● Tú (Stanley)<em>${label||(mode==="native"?"Dilo como nativo":hide?"Dilo tú, sin ayuda":"Tú dices esto")}</em></div>
-   <div class="body">${mode==="native"?`<div class="nvn"><div class="nb"><span>🙅 normal</span><b>${esc(y.norm)}</b></div><div class="arr">➜</div><div class="nb nat"><span>🗣️ nativo</span><b>¿…?</b></div></div><div class="es">${esc(y.es)}</div>`:hide?`<div class="en hide">Dile: «${esc(y.es)}»</div>`:threeForms(y)}</div><div class="draw">${esc(y.em)}</div>`}
+function showYou(y,mode,label){const c=$("#scard");if(!c)return;c.hidden=false;c.classList.remove("full");const hide=mode==="recall"||mode==="native"||mode==="natural";
+  c.innerHTML=`<div class="who">● Tú (Stanley)<em>${label||(mode==="native"?"Dilo como nativo":mode==="natural"?"Tu turno":hide?"Dilo tú, sin ayuda":"Tú dices esto")}</em></div>
+   <div class="body">${mode==="native"?`<div class="nvn"><div class="nb"><span>🙅 normal</span><b>${esc(y.norm)}</b></div><div class="arr">➜</div><div class="nb nat"><span>🗣️ nativo</span><b>¿…?</b></div></div><div class="es">${esc(y.es)}</div>`:hide?`<div class="en hide">${mode==="natural"?"Dile en inglés":"Dile"}: «${esc(y.es)}»</div>${mode==="natural"?`<div class="es" style="font-size:.78rem">💡 Si te atoras, espera tantito o toca Ayuda</div>`:""}`:threeForms(y)}</div><div class="draw">${esc(y.em)}</div>`}
 function reveal(y){const b=$("#scard .body");if(b)b.innerHTML=threeForms(y)}
 /* cómo se escribe "correcto" (sin contracciones ni jerga) */
 const FORMAL=[[/\bI'm\b/g,"I am"],[/\b(\w+)'re\b/gi,"$1 are"],[/\b(he|she|it|that|what|where|how|who|there|here|everything|nothing|something|everybody|nobody)'s\b/gi,"$1 is"],[/\blet's\b/gi,"let us"],
@@ -868,18 +876,18 @@ const lastSpeaker=(m,idx)=>{for(let i=idx-1;i>=0;i--)if(m.steps[i].k==="N")retur
 
 /* tu turno: devuelve true si salió a la primera. Si dices otra cosa, el personaje te sigue la corriente */
 async function youSay(y,mode,t,ctx){
-  ctx=ctx||{};let first=true,heard=false;showYou(y,mode,ctx.label);feedback(null);
+  ctx=ctx||{};let first=true,heard=false;showYou(y,mode,ctx.label);feedback(null);if(mode==="natural")setTimeout(()=>{if(pending&&pending.y===y&&!cap)reveal(y)},6500);
   const who=ctx.npc?ctx.npc.who:(ctx.m&&ctx.m.cast[0])||"emily";
   if(mode==="help"&&ctx.model){slowNext=true;await say(y.en,"stanley");guard(t);heard=true}
-  while(true){guard(t);const r=await listen(y,{lenient:mode==="recall"});guard(t);
+  while(true){guard(t);const r=await listen(y,{lenient:mode==="recall"||mode==="natural"});guard(t);
     if(r.cmd==="repeat"||r.cmd==="slow"){if(r.cmd==="slow")slowNext=true;if(ctx.npc){bubble(ctx.npc.who,ctx.npc.en,ctx.showEs?ctx.npc.es:"");await say(ctx.npc.en,ctx.npc.who,ctx.npc.emo)}else await say(y.en,"stanley");guard(t);continue}
-    if(r.cmd==="help"){if(mode==="recall"||mode==="native"){reveal(y);first=false}feedback("ok","Así se dice. Escúchalo y dilo tú.");slowNext=true;await say(y.en,"stanley");guard(t);heard=true;continue}
+    if(r.cmd==="help"){if(mode==="recall"||mode==="native"||mode==="natural"){reveal(y);first=false}feedback("ok","Así se dice. Escúchalo y dilo tú.");slowNext=true;await say(y.en,"stanley");guard(t);heard=true;continue}
     if(!r.text)continue;
     /* dijo la versión de libro: el personaje se burla tantito y no pasa */
     if(y.norm&&!compareY(y,r.text,true).ok&&compare1(y.norm,r.text,true).ok){first=false;sfx("fun");bubble("stanley",r.text);await wait(400);guard(t);
       const tb=pick([["Ha! You sound like a textbook. Say it like us!","¡Ja! Suenas a libro. ¡Dilo como nosotros!"],["Okay, professor! Now say it like a normal person.","¡Ok, profe! Ahora dilo como persona normal."],["Bro, nobody talks like that. Try again!","Nadie habla así. ¡Otra vez!"]]);
       bubble(who,tb[0],tb[1]);await say(tb[0],who,"laugh");guard(t);reveal(y);feedback("fun",`📚 Eso es de libro. Un nativo dice: <b>${esc(y.en)}</b>`);continue}
-    const c=compareY(y,r.text,mode==="recall"||mode==="native");
+    const c=compareY(y,r.text,mode==="recall"||mode==="native"||mode==="natural");
     if(c.ok){record(y,true,c,first);bubble("stanley",y.en);combo=first?combo+1:0;DB.bestCombo=Math.max(DB.bestCombo||0,combo);addXP(first?10+Math.min(combo,10)*2:4);showCombo();
       sfx(combo>=3?"combo":"ok");setEmo("stanley","happy");setOrb("ok",combo>=3?"¡Combo x"+combo+"!":"¡Bien!");feedback("ok",pick(["¡Eso!","¡Así mero!","¡Como gringo!","¡Perfecto!","¡Qué nivel!"]));
       if(ctx.npc&&ctx.npc.who)relAdd(ctx.npc.who,1);await wait(380);guard(t);setEmo("stanley","neutral");return first}
@@ -892,7 +900,7 @@ async function youSay(y,mode,t,ctx){
       feedback("fun",`😏 ${esc(CH(who).name)} te siguió la corriente. Ahora sí, di tu línea.`);setEmo(who,"neutral");continue}
     record(y,false,c,first);combo=0;showCombo();sfx("bad");setEmo("stanley","sad");setOrb("bad","Otra vez");first=false;
     feedback("bad",c.heardWords.length?"Casi. Te faltó lo marcado: "+c.words.map((w,i)=>c.miss[i]?"<mark>"+esc(w)+"</mark>":esc(w)).join(" "):"No te escuché bien. Acerca el teléfono o usa audífonos.");
-    if(mode==="recall")reveal(y);await wait(500);guard(t);slowNext=heard;await say(y.en,"stanley");heard=true;guard(t);setEmo("stanley","neutral")}}
+    if(mode==="recall"||mode==="natural")reveal(y);await wait(500);guard(t);slowNext=heard;await say(y.en,"stanley");heard=true;guard(t);setEmo("stanley","neutral")}}
 
 async function round(m,mode,t,showEs,p0,pN){let errs=0,k=0;const n=m.steps.length,model=mode==="help"&&m.w<=2;
   for(let i=0;i<n;i++){const s=m.steps[i],nx=m.steps[i+1];guard(t);
@@ -933,6 +941,16 @@ async function win(m,stars,xp,newRank,t){const sess=$("#sess");if(!sess)return;c
   sfx(stars?"win":"bad");if(stars)confetti();
   say(stars===3?pick(["Awesome! You nailed it!","Yo, that was fire!","Look at you, talking like a local!"]):stars?"Nice job, Stanley!":"Don't worry, we'll try again.",star);
   return new Promise(res=>{o.querySelector("#nx1").onclick=()=>{unlockAudio();o.remove();res("next")};o.querySelector("#nx0").onclick=()=>{token++;o.remove();endSess();res("exit")}})}
+/* una escena de plática de una sola pasada (misiones de la ciudad). Devuelve true si la terminaste */
+function playScene(sc){return new Promise(resolve=>{if(!canRun()){resolve(false);return}unlockAudio();running=true;const t=++token;let ok=false;
+  const m={id:sc.id,w:0,o:0,t:sc.t,place:sc.place||"barrio",cast:sc.cast,steps:sc.steps,mems:[],n:"",ys:sc.steps.filter(s=>s.k==="Y").length};
+  (async()=>{openSess(m);$("#stt").textContent=sc.label||"Misión";setPhase("🎯 "+sc.t);combo=0;showCombo();const n=m.steps.length;let k=0;
+    for(let i=0;i<n;i++){const st=m.steps[i],nx=m.steps[i+1];guard(t);if(nx&&nx.k==="N")prefetch(nx.en,nx.who);
+      if(st.k==="N"){bubble(st.who,st.en,st.es);setEmo(st.who,st.emo);await say(st.en,st.who,st.emo);guard(t);await wait(120)}
+      else await youSay(st,"natural",t,{npc:lastSpeaker(m,i),m,showEs:true,label:"Tu turno"});
+      setProg(++k/n)}
+    addXP(4*m.ys+5);save();ok=true;sfx("ok");await wait(450)})()
+  .catch(e=>{if(e!==CANCEL)console.error(e)}).finally(()=>{if(t===token)endSess();resolve(ok)})})}
 function playFrom(m,single){if(!canRun()||!m)return;unlockAudio();running=true;const t=++token;
   (async()=>{let cur=m,fails=0;while(cur){guard(t);const st=await runMission(cur,t);guard(t);
       if(st===0){fails++;if(fails>=2&&cur.i>0){const prev=MISSIONS[cur.i-1];toast("Un paso atrás: repasamos la anterior");await runMission(prev,t);fails=0}continue}

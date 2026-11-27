@@ -110,3 +110,29 @@
 @keyframes w3hurt{0%{box-shadow:inset 0 0 140px 50px rgba(255,0,0,.75)}100%{box-shadow:inset 0 0 120px 30px rgba(255,0,0,0)}}
 .w3ko2{position:absolute;inset:0;z-index:7;display:grid;place-content:center;text-align:center;gap:8px;background:rgba(80,0,0,.55);color:#fff}
 .w3ko2 b{font:900 48px Nunito,sans-serif;letter-spacing:.04em;text-shadow:0 4px 14px #000}.w3ko2 small{font-size:16px;opacity:.9}
+/* plática compacta: arriba lo que te dicen, en medio la persona, abajo tu línea corta */
+.sess.hud .in{gap:6px!important}
+.sess.hud .hudscn{order:0}
+.sess.hud .hudscn .say{top:2px!important;bottom:auto!important;font-size:16px;padding:7px 12px;max-width:96%}
+.sess.hud .hudscn .say small{font-size:12px}
+.sess.hud .scard{max-height:30vh;padding:9px 12px;border-radius:18px;cursor:pointer}
+.sess.hud .scard .nvn,.sess.hud .scard .tri>.k,.sess.hud .scard .tri .fo,.sess.hud .scard .tri .oye,.sess.hud .scard .plegend{display:none}
+.sess.hud .scard .tri{gap:1px}
+.sess.hud .scard .tri .en{font-size:1.15rem}
+.sess.hud .scard .tri .pr,.sess.hud .scard .tri .es{font-size:.85rem}
+.sess.hud .scard .draw{font-size:1.7rem;max-width:70px}
+.sess.hud .scard .who{font-size:.74rem}
+.sess.hud .scard.full{max-height:62vh}
+.sess.hud .scard.full .nvn{display:grid}.sess.hud .scard.full .tri>.k,.sess.hud .scard.full .tri .fo,.sess.hud .scard.full .tri .oye{display:block}.sess.hud .scard.full .plegend{display:flex}
+.sess.hud .scard .who::after{content:"toca para ver más ▾";font-size:.62rem;color:var(--sub);margin-left:6px;font-weight:700}
+.sess.hud .scard.full .who::after{content:"▴"}
+.sess.hud .dock{padding:7px 10px;border-radius:18px}
+.sess.hud .dock .orb{width:54px;height:54px}
+.sess.hud .acts button{padding:7px 4px;font-size:.8rem}
+.sess.hud .fb{padding:6px 10px;font-size:.85rem}
+.sess.hud .sinfo{margin-top:-2px}
+.w3ban{position:absolute;left:0;right:0;top:34%;z-index:6;text-align:center;pointer-events:none;display:grid;gap:6px;padding:14px 18px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.72) 20%,rgba(0,0,0,.72) 80%,transparent)}
+.w3ban b{font:900 34px/1 Nunito,sans-serif;letter-spacing:.03em;text-shadow:0 3px 10px #000}
+.w3ban small{color:#fff;font:700 15px Inter,sans-serif;opacity:.92}
+.w3ban.on{animation:w3ban 3.6s ease forwards}
+@keyframes w3ban{0%{opacity:0;transform:scale(1.25)}10%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
