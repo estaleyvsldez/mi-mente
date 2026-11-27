@@ -244,6 +244,8 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 .ncard .nhead span{background:rgba(255,255,255,.88);color:#111;font-weight:900;font-family:var(--round);font-size:1.3rem;text-align:center;border-radius:14px;padding:4px 0}
 .ncard .nrow span{text-align:right;font-size:1.05rem;opacity:.85}.ncard .nrow b{font-size:1.05rem}
 .ncard .nfoot{display:grid;gap:2px;margin-top:4px}.ncard .nfoot b{font-family:var(--round);font-size:1.15rem}.ncard .nfoot small{opacity:.8}
+.tri .oye{color:#7C4DFF;font-weight:900;font-family:var(--round);cursor:pointer}.tri .oye small{display:block;font-weight:600;font-size:.72rem;color:var(--sub);font-family:inherit}
+.ocard{background:linear-gradient(160deg,#2a1f5c,#120f2b)}.ocard .orow{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:baseline}.ocard .orow span{opacity:.85}.ocard .orow b{color:#c9b6ff;font-family:var(--round)}
 .spacer{flex:1 1 0;min-height:0}
 /* ---------- la ciudad ---------- */
 #city{position:fixed;inset:0;overflow:hidden;touch-action:none;background:#7DBE6A}
@@ -316,6 +318,7 @@ select{font:inherit;color:var(--ink);background:var(--card2);border:1px solid va
 <script src="3d/chambas.js"></script>
 <script src="mundos/pilares.js"></script>
 <script src="mundos/nativo.js"></script>
+<script src="mundos/conectado.js"></script>
 <script>
 /* =====================================================================
    1. MUNDOS, LUGARES Y MISIONES
@@ -860,7 +863,7 @@ function nvn(y){return y.norm?`<div class="nvn"><div class="nb"><span>🙅 norma
 function threeForms(y){const f=formal(y.en),same=f.replace(/\W/g,"").toLowerCase()===y.en.replace(/\W/g,"").toLowerCase();
   return `${nvn(y)}<div class="tri"><span class="k">✍️ Se escribe</span><span class="v fo">${same?"<i>igual</i>":esc(f)}</span>
    <span class="k">🗣️ Los nativos dicen <small style="text-transform:none;letter-spacing:0">(toca una palabra)</small></span><span class="v en ${y.en.length>38?"long":""}">${colorize(y.en)}</span>
-   <span class="k">👄 Se lee</span><span class="v pr">${esc(y.pr)}</span><span class="k">🇲🇽 Significa</span><span class="v es">${esc(y.es)}</span>${legendOf(y.en)}</div>`}
+   ${typeof oyeHTML==="function"?oyeHTML(y):""}<span class="k">👄 Se lee</span><span class="v pr">${esc(y.pr)}</span><span class="k">🇲🇽 Significa</span><span class="v es">${esc(y.es)}</span>${legendOf(y.en)}</div>`}
 const lastSpeaker=(m,idx)=>{for(let i=idx-1;i>=0;i--)if(m.steps[i].k==="N")return m.steps[i];return null};
 
 /* tu turno: devuelve true si salió a la primera. Si dices otra cosa, el personaje te sigue la corriente */
