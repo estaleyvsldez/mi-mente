@@ -388,10 +388,10 @@ const FIGHT_W=4;
    ===================================================================== */
 const ONES="zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split(" "),TENS=",,twenty,thirty,forty,fifty,sixty,seventy,eighty,ninety".split(",");
 function n2w(n){if(n<20)return ONES[n];if(n<100)return TENS[Math.floor(n/10)]+(n%10?" "+ONES[n%10]:"");if(n<1000)return ONES[Math.floor(n/100)]+" hundred"+(n%100?" "+n2w(n%100):"");if(n<10000)return n2w(Math.floor(n/1000))+" thousand"+(n%1000?" "+n2w(n%1000):"");return String(n)}
-const SAME=[["yeah","yes","yep","yea","yah","ya"],["hey","hi","hay","hai","hello","hallo"],["okay","ok","k","kay"],["nope","nah","naw"],["stanley","stan","standley","stanly","stanely"],["emily","emilie","emmy","emely","emilee"],
+const SAME=[["them","em"],["yeah","yes","yep","yea","yah","ya"],["hey","hi","hay","hai","hello","hallo"],["okay","ok","k","kay"],["nope","nah","naw"],["stanley","stan","standley","stanly","stanely"],["emily","emilie","emmy","emely","emilee"],
   ["thanks","thank"],["sure","shore"],["babe","baby","bae"],["cuz","cause","because","coz"],["dude","bro","man","bruh","brah"],["mom","mum"],["cool","coo"],["gotcha","gotya"],["y'all","yall","you all"],["ain't","aint"]];
 const CANON={};SAME.forEach(g=>g.forEach(w=>CANON[w.replace(/'/g,"")]=g[0].replace(/'/g,"")));
-const FILL=new Set(["oh","ah","um","uh","hmm","aw","awe","erm","like","well","so","yo","ha","haha","whoa","wow","ooh"]);
+const FILL=new Set(["ugh","oh","ah","um","uh","hmm","aw","awe","erm","like","well","so","yo","ha","haha","whoa","wow","ooh"]);
 const STOP=new Set("a an the to i you is am are it of and in on at for my me we he she they be do not so this that with your".split(" "));
 function norm(s){
   s=(" "+s+" ").toLowerCase().replace(/[’‘`´]/g,"'").replace(/o\.k\./g,"okay").replace(/(\d),(\d{3})/g,"$1$2").replace(/\$(\d+)/g,"$1 dollars").replace(/(\d+):00/g,"$1").replace(/(\d+):(\d+)/g,"$1 $2");

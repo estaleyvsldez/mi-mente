@@ -21,6 +21,7 @@ Y|Whoa, whoa! Don't throw up in my car! Roll the window down!|¡Épale, épale! 
 L|Please do not vomit in my car. Open the window.
 N|jake|happy|Okay, okay. False alarm. I'm good. I'm totally good.|Okey, okey. Falsa alarma. Estoy bien. Estoy perfecto.
 Y|Here we are, man. That'll be twelve bucks.|Ya llegamos, carnal. Son doce dólares.|jír uí ár, mán. dárel bi tuélv báks|🏠💵🚕
+A|Here we are, man. That'll be twelve dollars.
 L|We have arrived. The price is twelve dollars.
 N|jake|surprised|Twelve? Bro, I only got ten. Can I pay you in nachos?|¿Doce? Bro, nomás traigo diez. ¿Te puedo pagar en nachos?
 Y|Nah, keep your nachos. Ten's fine. Drink some water, dude.|Nel, quédate tus nachos. Con diez está bien. Tómate un agua, güey.|ná, kíp iór náchos. tens fáin. dríngk sam uárer, dúd|🧀🙅‍♂️💧
@@ -42,6 +43,7 @@ Y|It's Stanley. It's right there on the dashboard. Knock yourself out.|Es Stanle
 L|My name is Stanley. It is written on the dashboard. You may report me.
 N|karen|surprised|Oh. We're here already? That was... actually fast.|Ah. ¿Ya llegamos? Eso fue... la verdad rápido.
 Y|Told you. That'll be fifteen bucks.|Se lo dije. Son quince dólares.|tóuld iú. dárel bi fiftín báks|😏💵⏱️
+A|Told you. That'll be fifteen dollars.
 L|I told you. The price is fifteen dollars.
 N|karen|neutral|Fine. Here's fifteen. Don't expect a tip.|Bueno. Aquí tienes quince. No esperes propina.
 Y|No worries. Have a good one, ma'am. Happy shopping.|No pasa nada. Que le vaya bien, señora. Feliz compra.|nóu uóris. jáv a gúd uán, mám. jápi shápin|🛍️👋😇
@@ -64,17 +66,19 @@ A|Pretty much. Night shift life.
 L|Yes, almost every night. I work at night and drink coffee.
 N|chloe|laugh|Bad music? Turn it up, let's see how bad it is!|¿Música mala? ¡Súbele, a ver qué tan mala es!
 Y|Alright, but no judging. This one's lowkey a banger.|Va, pero no me juzgues. Ésta está bien chida, la neta.|ólráit, bat nóu yáyin. dis uáns lóukei a bánguer|🔊🕺😏
+A|Alright, but no judging. This one's low-key a banger.
 L|Okay, but please do not judge me. This song is very good.
 N|chloe|flirty|Eyes on the road, cutie. You keep looking in the mirror.|Ojos en el camino, guapo. No dejas de mirar el espejo.
-Y|My bad. You're kinda distracting, not gonna lie.|Perdón. Eres medio distraente, no te voy a mentir.|mái bád. iór káinda distráktin, nát góna lái|🪞😳🚗
+Y|My bad. You're kinda distracting, not gonna lie.|Perdón. Me distraes un poco, no te voy a mentir.|mái bád. iór káinda distráktin, nát góna lái|🪞😳🚗
 L|I am sorry. To be honest, you distract me.
 N|chloe|happy|Aw, stop! Okay, we're here. How much do I owe you?|¡Ay, ya! Okey, ya llegamos. ¿Cuánto te debo?
 Y|That'll be eighteen bucks.|Son dieciocho dólares.|dárel bi eitín báks|💵🎟️🚕
+A|That'll be eighteen dollars.
 L|The price is eighteen dollars.
 N|chloe|flirty|Here's twenty-five. Keep the change. And maybe come inside later?|Aquí tienes veinticinco. Quédate el cambio. ¿Y a lo mejor entras al rato?
 Y|Damn, thanks! You're trouble, you know that? Have fun in there.|¡Órale, gracias! Eres un peligro, ¿sabías? Diviértete allá adentro.|dám, zénks! iór tróbel, iú nóu dát? jáv fán in dér|💸😏🎉
 A|Thanks! You're trouble. Have fun tonight.
-L|Thank you very much. You are a dangerous girl. Enjoy the party.
+L|Thank you very much. You are a lot of trouble. Have a good time.
 
 #taxi04|0|4|Las historias de Grandpa Joe|coche|joe|Con un viejito: paciencia y cariño. «Take your time», «No way, really?» y ayúdale a bajar.
 N|joe|bored|Took you long enough. In my day, taxis came in two minutes flat.|Ya era hora. En mis tiempos los taxis llegaban en dos minutos exactos.
@@ -88,12 +92,15 @@ Y|No way! Elvis? For real?|¡No manches! ¿Elvis? ¿En serio?|nóu uéi! élvis?
 L|That is incredible. Elvis? Is that true?
 N|joe|laugh|Well, a guy who looked like Elvis. Tipped me a dollar. A whole dollar!|Bueno, un tipo que se parecía a Elvis. Me dio un dólar de propina. ¡Un dólar entero!
 Y|Ha! A dollar back then was like fifty bucks now, right?|¡Ja! Un dólar en ese entonces era como cincuenta ahora, ¿no?|já! a dáler bák dén uás láik fífti báks náu, ráit?|💵👴😂
+A|Ha! A dollar back then was like fifty dollars now, right?
 L|One dollar in that time was like fifty dollars today, correct?
 N|joe|angry|Not fifty, kid. Don't exaggerate. Kids today exaggerate everything.|Cincuenta no, chamaco. No exageres. Los jóvenes de hoy exageran todo.
 Y|Okay, okay. Like five bucks. My bad, Joe.|Okey, okey. Como cinco dólares. Perdón, Joe.|óukéi, óukéi. láik fáiv báks. mái bád, yóu|🙏😅💵
+A|Okay, okay. Like five dollars. My bad, Joe.
 L|Okay. Maybe five dollars. I am sorry, Joe.
 N|joe|neutral|Here we are. What do I owe you, son?|Aquí es. ¿Cuánto te debo, hijo?
-Y|That'll be nine bucks. Lemme help you out.|Son nueve dólares. Déjeme ayudarle a bajar.|dárel bi náin báks. lémi jélp iú áut|💵🤝👴
+Y|That'll be nine bucks. Lemme get the door for you.|Son nueve dólares. Déjeme ayudarle a bajar.|dárel bi náin báks. lémi guét de dór for iú|💵🤝👴
+A|That'll be nine dollars. Lemme get the door for you.
 L|The price is nine dollars. Let me help you get out.
 N|joe|happy|Here's ten. Keep the change. And get yourself a slice of pie, you look skinny.|Aquí tienes diez. Quédate el cambio. Y cómprate una rebanada de pay, te ves flaco.
 Y|Thanks, Joe. You're the best. Enjoy your pie.|Gracias, Joe. Es usted el mejor. Disfrute su pay.|zénks, yóu. iór de bést. enyói iór pái|🥧❤️👋
@@ -112,9 +119,11 @@ A|You gotta see the pier, and try the taco truck on Third.
 L|You should visit the pier. Also, eat a taco from the truck on Third Street.
 N|extrano|laugh|Taco! Yes! I love taco. In my country, taco is very expensive.|¡Taco! ¡Sí! Me encanta el taco. En mi país el taco es muy caro.
 Y|Here they're like two bucks. You're gonna love it, trust me.|Aquí cuestan como dos dólares. Le van a encantar, créame.|jír dér láik tú báks. iór góna láv it, trást mí|🌮💵😋
+A|Here they're like two dollars. You're gonna love it, trust me.
 L|Here they cost two dollars. You will like them very much.
 N|extrano|neutral|Okay, we arrive? How much money?|¿Okey, llegamos? ¿Cuánto dinero?
 Y|Yep, this is it. That'll be eleven bucks.|Sí, aquí es. Son once dólares.|iép, dís is ít. dárel bi iléven báks|🏨💵✅
+A|Yep, this is it. That'll be eleven dollars.
 L|Yes, we are here. The price is eleven dollars.
 N|extrano|surprised|Bucks? What is bucks? I have only dollars.|¿Bucks? ¿Qué es bucks? Yo sólo tengo dólares.
 Y|Ha, bucks means dollars, man. Same thing.|Ja, bucks quiere decir dólares, señor. Es lo mismo.|já, báks míns dálers, mán. séim zíng|💵🦌😂
@@ -138,6 +147,7 @@ Y|I'm not running a red light, Tony. Not today.|No me voy a pasar el rojo, Tony.
 L|I will not drive through the red light, Tony.
 N|tony|happy|Terminal B! Look at that! Thirty minutes! You're a genius, kid!|¡Terminal B! ¡Mira nada más! ¡Treinta minutos! ¡Eres un genio, chamaco!
 Y|Told you. That'll be thirty-five bucks.|Te dije. Son treinta y cinco dólares.|tóuld iú. dárel bi zérti fáiv báks|✈️💵🏁
+A|Told you. That'll be thirty-five dollars.
 L|I told you. The price is thirty-five dollars.
 N|tony|happy|Here, fifty. Keep it! And next time, free pizza. On the house!|Toma, cincuenta. ¡Quédatelo! Y la próxima, pizza gratis. ¡Invita la casa!
 Y|Deal! Tell your mom happy birthday from me.|¡Trato hecho! Dile a tu mamá feliz cumpleaños de mi parte.|díl! tél iór mám jápi bérzdei fróm mí|🍕🎂❤️
@@ -204,6 +214,7 @@ Y|Okay, ma'am. What's going on?|Okey, señora. ¿Qué está pasando?|óukéi, m�
 L|Okay, madam. What is happening?
 N|karen|angry|That kid. Right there. Selling lemonade. Without a permit!|Ese niño. Ahí mero. Vendiendo limonada. ¡Sin permiso!
 Y|Lemme get this straight. You called 911 over lemonade?|A ver si entendí. ¿Llamó al 911 por una limonada?|lémi guét dis stréit. iú kóld náin uán uán óuver lémoneid?|🍋📞🤨
+A|Lemme get this straight. You called nine one one over lemonade?
 L|Let me understand. You called the emergency number because of lemonade?
 N|tommy|scared|Am I going to jail? I only made four dollars!|¿Me van a meter a la cárcel? ¡Nomás gané cuatro dólares!
 Y|Nah, little man. Nobody's going to jail. Relax.|Nel, campeón. Nadie va a la cárcel. Tranquilo.|ná, lírel mán. nóubaris góuin tu yéil. riláks|🧒🍋😌
@@ -236,13 +247,16 @@ Y|Your jacket's crinkling, bro. Muscles don't crinkle.|Tu chamarra está crujien
 L|Your jacket is making noise. Muscles do not make that noise.
 N|extrano|sad|Okay, okay. I was hungry, man. I lost my job last week.|Okey, okey. Tenía hambre, man. Perdí mi chamba la semana pasada.
 Y|I hear you. Put 'em on the counter and let's not make this a thing.|Te entiendo. Ponlas en el mostrador y no hagamos un problema de esto.|ái jír iú. pút em on de káunter an léts nát méik dis a zíng|🥔🥔🥔🧾
+A|I hear you. Put them on the counter and let's not make this a thing.
 L|I understand. Please put them on the counter. Let us not make a big problem.
 N|davis|neutral|First time? Store wanna press charges?|¿Primera vez? ¿La tienda quiere levantar cargos?
 N|destiny|bored|Honestly? I don't get paid enough to care.|¿La neta? No me pagan lo suficiente como para que me importe.
-Y|Alright, man. No charges this time. Don't come back and do it again.|Bueno, carnal. Sin cargos esta vez. No vuelvas a hacerlo.|ólráit, mán. nóu chárchez dis táim. dóunt kám bák an dú it agén|☝️🙅‍♂️👮‍♂️
+Y|Alright, man. No charges this time. Just don't let me catch you doing it again.|Bueno, carnal. Sin cargos esta vez. Que no te vuelva a cachar haciéndolo.|ólráit, mán. nóu chárchez dis táim. dóunt kám bák an dú it agén|☝️🙅‍♂️👮‍♂️
+A|Alright, man. No charges this time. Don't come back and do it again.
 L|Okay. You will not be charged this time. Please do not steal again.
 N|extrano|cry|Thank you, officer. For real. I'm sorry.|Gracias, oficial. En serio. Lo siento.
 Y|There's a food bank on Fifth. Tell 'em Stanley sent you.|Hay un banco de comida en la Quinta. Diles que te mandó Stanley.|dérs a fúd bánk on fífz. tél em stánli sént iú|🥫🏢🤝
+A|There's a food bank on Fifth. Tell them Stanley sent you.
 L|There is a food bank on Fifth Street. Tell them that Stanley sent you.
 N|destiny|surprised|Wow. That was lowkey nice. Are cops allowed to be nice?|Guau. Eso estuvo medio bonito. ¿Los polis pueden ser buena onda?
 Y|Only on Tuesdays. Don't tell anybody.|Nomás los martes. No le digas a nadie.|óunli on tiúsdeis. dóunt tél énibari|🤫📅😏
@@ -251,6 +265,7 @@ L|Only on Tuesday. Please keep it a secret.
 #poli05|0|11|El borracho cantante|policia|davis,extrano|Con un borracho: paciencia, nada de gritos. «You can't sleep here, buddy», «Let's get you home».
 N|davis|bored|Two a.m. Guy singing on the bench again. Your turn, rookie.|Las dos de la mañana. Otra vez el tipo cantando en la banca. Te toca, novato.
 Y|Ugh, again? Okay, I got this.|Ay, ¿otra vez? Bueno, yo me encargo.|ág, agén? óukéi, ái gát dís|😩🎤🌙
+A|Again? Okay, I got this.
 L|Again? Okay, I will take care of it.
 N|extrano|happy|I will always love youuuu! Officer! Sing with me, officer!|¡Siempre te amaréééé! ¡Oficial! ¡Cante conmigo, oficial!
 Y|Hey, buddy. You can't sleep here, man.|Oye, amigo. No te puedes dormir aquí, carnal.|jéi, bári. iú kánt slíp jír, mán|🛏️🚫🪑
