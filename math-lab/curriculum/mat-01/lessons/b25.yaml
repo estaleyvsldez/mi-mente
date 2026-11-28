@@ -1,0 +1,1036 @@
+block: b25
+intro: >-
+  En la vida real casi nunca necesitamos todas las cifras de un número: basta
+  con un valor cercano que sea fácil de manejar. En este bloque aprenderás a
+  aproximar, estimar, redondear y truncar, a contar cifras significativas y a
+  medir cuánto te equivocas al aproximar (error absoluto y error relativo).
+  Retomamos el redondeo de decimales del bloque 17 y lo ampliamos.
+topics:
+  t01:
+    intro:
+      what: >-
+        Aproximar es sustituir un número por otro cercano a él, más sencillo de
+        escribir, de recordar o de usar en cálculos.
+      purpose: >-
+        Sirve para trabajar cómodamente con números largos o infinitos (como
+        $\pi$), para expresar medidas y para dar respuestas prácticas.
+      importance: >-
+        Toda medida real es una aproximación y muchos resultados (como
+        $10 \div 3$) no se pueden escribir con un número finito de cifras.
+        Saber aproximar bien, y saber hacia qué lado, evita errores costosos.
+      foundations: >-
+        Se apoya en el valor posicional (bloques 2 y 16), en la comparación y
+        orden de números (bloques 3 y 16) y en la recta numérica.
+      prerequisites:
+        - 'Valor posicional decimal: décimas, centésimas y milésimas (bloque 16)'
+        - 'Comparación y orden de decimales (bloque 16)'
+        - 'Redondeo y aproximación de decimales (bloque 17)'
+      outcomes:
+        - 'Explicar qué es una aproximación y cuándo se usa el símbolo ≈'
+        - 'Aproximar un número por defecto y por exceso a una posición dada'
+        - 'Decidir qué tipo de aproximación conviene en una situación real'
+      everyday_example: >-
+        Si un viaje cuesta 1 987 pesos, decimos que cuesta "unos 2 000 pesos".
+        Y si la nevera mide 1,83 m, para saber si cabe bajo un hueco de 1,85 m
+        conviene no "redondear hacia abajo" su altura.
+    sections:
+      - title: Qué es aproximar
+        concept: >-
+          Una aproximación es un valor cercano al número exacto que lo
+          sustituye por comodidad.
+        explanation: |-
+          Muchas veces el número exacto es incómodo. Por ejemplo, $10 \div 3 = 3{,}333\ldots$ tiene infinitas cifras decimales, y $\pi = 3{,}14159\ldots$ también. Para trabajar con ellos escogemos un valor cercano y lo indicamos con el símbolo $\approx$, que se lee "es aproximadamente igual a":
+
+          $$\pi \approx 3{,}14 \qquad 10 \div 3 \approx 3{,}33$$
+
+          Para aproximar hay que decidir **a qué posición** (unidades, décimas, centésimas…) queremos llegar. Cuanto más a la derecha está esa posición, más cifras conservamos y más cerca quedamos del valor exacto, pero el número es menos cómodo.
+
+          En la recta numérica, aproximar a las décimas es elegir una de las dos marcas de décimas entre las que está el número: la de la izquierda (menor) o la de la derecha (mayor).
+        definition: >-
+          Una aproximación de un número $x$ a una posición dada es un número que
+          sólo tiene cifras hasta esa posición y que está cerca de $x$. Se
+          escribe $x \approx a$.
+        rules:
+          - 'El signo $=$ sólo se usa para valores exactos; para aproximaciones se usa $\approx$.'
+          - 'Hay que indicar siempre a qué posición se aproxima (unidades, décimas, centésimas...).'
+          - 'Un número exacto con pocas cifras no necesita aproximarse.'
+        examples:
+          - problem: 'Entre qué dos décimas está $4{,}37$ y cuáles son sus aproximaciones a las décimas'
+            solution: |-
+              **Paso 1.** Miramos la cifra de las décimas: en $4{,}37$ es $3$, así que el número está después de $4{,}3$.
+
+              **Paso 2.** La décima siguiente es $4{,}4$. Entonces $4{,}3 < 4{,}37 < 4{,}4$.
+
+              **Paso 3.** Las dos aproximaciones posibles a las décimas son $4{,}3$ (menor) y $4{,}4$ (mayor).
+
+              Resultado: $4{,}37$ está entre $4{,}3$ y $4{,}4$.
+        common_errors:
+          - 'Escribir $\pi = 3{,}14$: lo correcto es $\pi \approx 3{,}14$, porque $3{,}14$ no es el valor exacto.'
+          - 'No indicar a qué posición se aproxima: "aproximadamente 4" y "aproximadamente 4,4" no dicen lo mismo.'
+        summary: >-
+          Aproximar es cambiar un número por otro cercano y más cómodo, hasta una
+          posición elegida, y se indica con $\approx$.
+        check:
+          question: '¿Qué expresión está escrita correctamente?'
+          options:
+            - '$\pi = 3{,}14$'
+            - '$\pi \approx 3{,}14$'
+            - '$10 \div 3 = 3{,}33$'
+          answer: 1
+          explanation: >-
+            $3{,}14$ es sólo un valor cercano a $\pi$, por eso se usa $\approx$.
+            Tampoco $10 \div 3$ es exactamente $3{,}33$ (es $3{,}333\ldots$).
+      - title: Aproximación por defecto y por exceso
+        concept: >-
+          Por defecto se elige el valor menor más cercano; por exceso, el mayor
+          más cercano.
+        explanation: |-
+          Como el número queda entre dos valores posibles, tenemos dos aproximaciones:
+
+          * **Por defecto**: el valor de la izquierda, que es **menor o igual** que el número. Se obtiene quitando las cifras que sobran.
+          * **Por exceso**: el valor de la derecha, que es **mayor o igual** que el número. Se obtiene quitando las cifras que sobran y sumando 1 a la última cifra conservada (si había alguna cifra distinta de cero eliminada).
+
+          ¿Cuál conviene? Depende de la situación. Si calculas cuánta pintura comprar, aproximas **por exceso** para no quedarte corto. Si calculas cuántas cajas completas puedes llenar, aproximas **por defecto**.
+
+          El **redondeo** (tema 3) es una regla que elige automáticamente la más cercana de las dos.
+        definition: >-
+          Dado $x$ y una posición, la aproximación por defecto es el mayor número
+          con cifras hasta esa posición que es $\le x$; la aproximación por exceso
+          es el menor número con cifras hasta esa posición que es $\ge x$.
+        rules:
+          - 'Por defecto: aproximación $\le$ número. Por exceso: aproximación $\ge$ número.'
+          - 'Si el número ya tiene cifras sólo hasta esa posición, ambas aproximaciones coinciden con él.'
+          - 'Para cantidades que no deben faltar (material, dinero necesario), suele convenir aproximar por exceso.'
+        examples:
+          - problem: 'Aproxima $12{,}648$ a las centésimas por defecto y por exceso'
+            solution: |-
+              **Paso 1.** Conservamos hasta las centésimas: $12{,}64|8$.
+
+              **Paso 2.** Por defecto quitamos lo que sobra: $12{,}64$.
+
+              **Paso 3.** Por exceso sumamos una centésima: $12{,}64 + 0{,}01 = 12{,}65$.
+
+              **Comprobación.** $12{,}64 < 12{,}648 < 12{,}65$.
+
+              Resultado: por defecto $12{,}64$; por exceso $12{,}65$.
+          - problem: 'Una receta necesita 2,3 kg de harina y sólo venden bolsas de 1 kg. ¿Cuántas bolsas compras?'
+            solution: |-
+              **Paso 1.** Necesitamos $2{,}3$ kg, que está entre $2$ y $3$.
+
+              **Paso 2.** Si compramos $2$ bolsas (por defecto) faltan $0{,}3$ kg.
+
+              **Paso 3.** Hay que aproximar por exceso: $3$ bolsas.
+
+              Resultado: $3$ bolsas.
+        common_errors:
+          - 'Creer que "por exceso" significa sumar 1 a la cifra eliminada: se suma 1 a la última cifra que se conserva.'
+          - 'Aproximar por defecto cuando no debe faltar nada (pintura, asientos, dinero).'
+        summary: >-
+          Todo número tiene una aproximación por defecto (menor) y otra por
+          exceso (mayor) a cada posición; la situación decide cuál usar.
+        check:
+          question: '¿Cuál es la aproximación por exceso de $7{,}21$ a las décimas?'
+          options:
+            - '$7{,}2$'
+            - '$7{,}3$'
+            - '$7{,}22$'
+          answer: 1
+          explanation: >-
+            $7{,}21$ está entre $7{,}2$ y $7{,}3$. Por exceso tomamos el mayor,
+            $7{,}3$. $7{,}2$ es la aproximación por defecto y $7{,}22$ no está
+            expresado en décimas.
+    glossary:
+      - {term: Aproximación, definition: 'Valor cercano a un número que lo sustituye por comodidad.'}
+      - {term: Por defecto, definition: 'Aproximación menor o igual que el número.'}
+      - {term: Por exceso, definition: 'Aproximación mayor o igual que el número.'}
+      - {term: Símbolo ≈, definition: 'Se lee "es aproximadamente igual a".'}
+  t02:
+    intro:
+      what: >-
+        Estimar es calcular de forma rápida un resultado aproximado, operando
+        con números redondos en lugar de los números exactos.
+      purpose: >-
+        Sirve para saber "más o menos" cuánto dará una operación antes de
+        hacerla, para hacer cuentas mentales y para detectar errores.
+      importance: >-
+        Una estimación permite descubrir al instante un resultado absurdo, por
+        ejemplo una coma mal puesta o una tecla mal pulsada en la calculadora.
+      foundations: >-
+        Se basa en la aproximación (tema 1), en el cálculo mental con decenas y
+        centenas (bloques 4 a 7) y en las propiedades de las operaciones.
+      prerequisites:
+        - 'Aproximación (tema 1 de este bloque)'
+        - 'Suma, resta, multiplicación y división mental (bloques 4 a 7)'
+        - 'Multiplicación por múltiplos de 10, 100 y 1000 (bloque 6)'
+      outcomes:
+        - 'Estimar sumas y restas redondeando a decenas o centenas'
+        - 'Estimar productos y cocientes con números redondos o compatibles'
+        - 'Usar la estimación para comprobar si un resultado es razonable'
+      everyday_example: >-
+        En la caja del supermercado, al sumar mentalmente "unos 300 más unos 500"
+        sabes que el total rondará los 800 pesos y puedes notar si te cobran de
+        más.
+    sections:
+      - title: Estimar sumas y restas
+        concept: >-
+          Se sustituye cada número por un número redondo cercano y se opera con
+          ellos.
+        explanation: |-
+          Para estimar una suma o una resta:
+
+          1. Cambiamos cada número por el número redondo más cercano (decenas, centenas, millares…). Por ejemplo, $487$ está muy cerca de $500$ y $312$ muy cerca de $300$. Para elegirlo miramos la cifra siguiente: si es 5 o más, subimos; si es menor que 5, nos quedamos. Esta regla, el **redondeo**, se estudia con detalle en el tema 3.
+          2. Operamos con los números redondos, lo que se puede hacer mentalmente.
+
+          El resultado no es exacto, pero está **cerca** del verdadero. Si después haces la cuenta exacta y te da algo muy lejano de la estimación, seguramente hay un error.
+
+          Cuanto más fina sea la posición elegida (decenas en vez de centenas), mejor será la estimación, pero más trabajo costará.
+        definition: >-
+          Una estimación es un valor aproximado del resultado de una operación,
+          obtenido operando con aproximaciones de los números.
+        rules:
+          - 'Se redondean todos los números a la misma posición (todos a centenas, por ejemplo).'
+          - 'La estimación se escribe con $\approx$, nunca con $=$.'
+          - 'Si el resultado exacto se aleja mucho de la estimación, hay que revisar la cuenta.'
+        examples:
+          - problem: 'Estima $487 + 312$ redondeando a las centenas'
+            solution: |-
+              **Paso 1.** $487 \approx 500$ (la cifra de las decenas, 8, es mayor que 5).
+
+              **Paso 2.** $312 \approx 300$ (la cifra de las decenas, 1, es menor que 5).
+
+              **Paso 3.** $500 + 300 = 800$.
+
+              **Comprobación.** El valor exacto es $799$, muy cerca de $800$.
+
+              Resultado: $487 + 312 \approx 800$.
+        common_errors:
+          - 'Redondear un número a centenas y otro a decenas: la estimación pierde sentido.'
+          - 'Dar la estimación como si fuera exacta.'
+        summary: >-
+          Para estimar sumas y restas se redondean los números a una misma
+          posición y se opera mentalmente.
+        check:
+          question: 'Redondeando a las centenas, ¿cuál es la mejor estimación de $618 + 279$?'
+          options:
+            - '$800$'
+            - '$900$'
+            - '$1000$'
+          answer: 1
+          explanation: >-
+            $618 \approx 600$ y $279 \approx 300$, así que $600 + 300 = 900$. El
+            valor exacto, $897$, confirma la estimación.
+      - title: Estimar productos y cocientes
+        concept: >-
+          En productos se redondean los factores; en divisiones se buscan
+          números compatibles que se dividan exactamente.
+        explanation: |-
+          **Productos.** Redondeamos cada factor y multiplicamos. Multiplicar números terminados en ceros es fácil: se multiplican las cifras y se añaden los ceros. Por ejemplo, $40 \times 50 = 2000$.
+
+          **Cocientes.** En una división conviene usar **números compatibles**: cambiamos el dividendo por un número cercano que se divida exactamente entre el divisor. Para estimar $2437 \div 60$, buscamos un múltiplo de $60$ cercano a $2437$: $2400 = 60 \times 40$. Así, $2437 \div 60 \approx 40$.
+
+          En las multiplicaciones el error de la estimación puede crecer, porque cada redondeo se multiplica por el otro factor; aun así la estimación indica el **orden de magnitud** del resultado (si son decenas, centenas, miles…).
+        definition: >-
+          Dos números son compatibles para una división cuando uno es múltiplo
+          del otro, de modo que la división es exacta y fácil de hacer
+          mentalmente.
+        rules:
+          - 'Para multiplicar números redondos se multiplican las cifras no nulas y se añaden todos los ceros.'
+          - 'Para estimar un cociente se cambia el dividendo por un múltiplo cercano del divisor.'
+          - 'La estimación de un producto puede alejarse más del valor exacto que la de una suma.'
+        examples:
+          - problem: 'Estima $38 \times 52$ redondeando a las decenas'
+            solution: |-
+              **Paso 1.** $38 \approx 40$ y $52 \approx 50$.
+
+              **Paso 2.** $40 \times 50 = 2000$ (se multiplica $4 \times 5 = 20$ y se añaden dos ceros).
+
+              **Comprobación.** El valor exacto es $38 \times 52 = 1976$.
+
+              Resultado: $38 \times 52 \approx 2000$.
+          - problem: 'Estima $2437 \div 60$ con números compatibles'
+            solution: |-
+              **Paso 1.** Buscamos un múltiplo de $60$ cercano a $2437$: $60 \times 40 = 2400$.
+
+              **Paso 2.** $2400 \div 60 = 40$.
+
+              **Comprobación.** El valor exacto es $40{,}61\ldots$
+
+              Resultado: $2437 \div 60 \approx 40$.
+        common_errors:
+          - 'Olvidar ceros al multiplicar números redondos: $40 \times 50$ es $2000$, no $200$.'
+          - 'Redondear también el divisor de forma que ya no sea compatible con el dividendo.'
+        summary: >-
+          Los productos se estiman con factores redondeados y los cocientes con
+          números compatibles.
+        check:
+          question: '¿Qué estimación de $3580 \div 90$ con números compatibles es adecuada?'
+          options:
+            - '$3600 \div 90 = 40$'
+            - '$3500 \div 100 = 35$'
+            - '$3580 \div 90 \approx 39{,}8$'
+          answer: 0
+          explanation: >-
+            $3600$ es múltiplo de $90$ y está cerca de $3580$, así que la
+            división es exacta: $40$. La segunda opción cambia también el
+            divisor sin necesidad, y la tercera no usa números compatibles: es el
+            resultado de hacer la división completa.
+    glossary:
+      - {term: Estimación, definition: 'Resultado aproximado de una operación obtenido con números redondos.'}
+      - {term: Números compatibles, definition: 'Números que se dividen exactamente uno entre otro y facilitan el cálculo mental.'}
+      - {term: Orden de magnitud, definition: 'Tamaño aproximado de un número: unidades, decenas, centenas, miles...'}
+  t03:
+    intro:
+      what: >-
+        Redondear es aproximar un número a una posición elegida tomando, de las
+        dos aproximaciones posibles, la más cercana.
+      purpose: >-
+        Sirve para simplificar números naturales y decimales de forma
+        automática y siempre igual, de modo que todos obtengamos el mismo
+        resultado.
+      importance: >-
+        Es la forma de aproximar más usada: en precios, estadísticas, medidas,
+        notas y resultados de calculadora.
+      foundations: >-
+        Retoma el redondeo de decimales del bloque 17 y lo extiende a los
+        números naturales (decenas, centenas, millares), apoyándose en el valor
+        posicional del bloque 2.
+      prerequisites:
+        - 'Valor posicional: unidades, decenas, centenas y millares (bloque 2)'
+        - 'Redondeo de decimales (bloque 17)'
+        - 'Aproximación por defecto y por exceso (tema 1 de este bloque)'
+      outcomes:
+        - 'Redondear números naturales a decenas, centenas y millares'
+        - 'Redondear decimales a décimas y centésimas'
+        - 'Resolver correctamente los casos en que el redondeo "arrastra" cifras'
+      everyday_example: >-
+        Un periódico dice que a un concierto asistieron "unas 14 000 personas"
+        cuando se contaron 13 762: ha redondeado a los millares.
+    sections:
+      - title: Redondeo de números naturales
+        concept: >-
+          Se mira la cifra inmediatamente a la derecha de la posición: si es 5 o
+          más se sube; si es menor que 5 se queda igual.
+        explanation: |-
+          Recuerda la idea del bloque 17: redondear es elegir la aproximación **más cercana**. Con los números naturales se hace igual.
+
+          Para redondear $4368$:
+
+          * **A las decenas**: miramos la cifra de las unidades, $8$. Como $8 \ge 5$, subimos: $4370$.
+          * **A las centenas**: miramos la cifra de las decenas, $6$. Como $6 \ge 5$, subimos: $4400$.
+          * **A los millares**: miramos la cifra de las centenas, $3$. Como $3 < 5$, se queda: $4000$.
+
+          Las cifras que están a la derecha de la posición se sustituyen por **ceros**, para que el número conserve su tamaño. ¡$4368$ no se redondea a $44$, sino a $4400$!
+
+          ¿Por qué el 5 sube? Porque $4350$ está justo a mitad de camino entre $4300$ y $4400$; por convenio escolar, en ese empate se sube.
+        definition: >-
+          Redondear un número natural a una posición es sustituirlo por el
+          múltiplo de esa posición (10, 100, 1000...) más cercano; en caso de
+          empate se toma el mayor.
+        rules:
+          - 'Cifra siguiente 0, 1, 2, 3 o 4: la cifra de la posición se mantiene.'
+          - 'Cifra siguiente 5, 6, 7, 8 o 9: la cifra de la posición aumenta en 1.'
+          - 'Las cifras a la derecha de la posición se convierten en ceros.'
+          - 'Sólo se mira la cifra inmediatamente a la derecha, no las demás.'
+        examples:
+          - problem: 'Redondea $13 762$ a las decenas, a las centenas y a los millares'
+            solution: |-
+              **Decenas.** La cifra de las unidades es $2 < 5$: se queda. $13\,760$.
+
+              **Centenas.** La cifra de las decenas es $6 \ge 5$: sube. $13\,800$.
+
+              **Millares.** La cifra de las centenas es $7 \ge 5$: sube. $14\,000$.
+
+              Resultado: $13\,760$; $13\,800$; $14\,000$.
+        common_errors:
+          - 'Quitar las cifras en lugar de poner ceros: $4368$ a centenas es $4400$, no $44$.'
+          - 'Mirar la última cifra del número en lugar de la inmediatamente a la derecha de la posición.'
+          - 'Redondear "en cadena" (primero a decenas, luego a centenas): puede dar un resultado distinto. Siempre se redondea desde el número original.'
+        summary: >-
+          Para redondear naturales se mira la cifra de la derecha de la posición:
+          5 o más sube, menos de 5 se queda, y lo de la derecha pasa a ceros.
+        check:
+          question: '¿Cuánto es $6 449$ redondeado a las centenas?'
+          options:
+            - '$6400$'
+            - '$6500$'
+            - '$6450$'
+          answer: 0
+          explanation: >-
+            La cifra de las decenas es $4 < 5$, así que las centenas se quedan
+            en $4$: $6400$. Llegar a $6500$ es el error de redondear primero a
+            decenas ($6450$) y luego a centenas.
+      - title: Decimales y casos con arrastre
+        concept: >-
+          Cuando la cifra que sube es un 9, se convierte en 0 y se suma 1 a la
+          cifra de su izquierda.
+        explanation: |-
+          Con los decimales el procedimiento es el mismo que en el bloque 17, pero las cifras de la derecha **se eliminan** (no se ponen ceros, porque están después de la coma). Por ejemplo, $7{,}846$ redondeado a las centésimas: la milésima es $6 \ge 5$, sube: $7{,}85$.
+
+          Hay un caso delicado: cuando la cifra que debe subir es un **9**. Un 9 que aumenta en 1 se convierte en 10: se escribe 0 y se "lleva" 1 a la posición de la izquierda, igual que en la suma con reagrupación (bloque 4).
+
+          * $2961$ a las centenas: la cifra de las decenas es $6$, sube el $9$ → $3000$.
+          * $2{,}995$ a las centésimas: la milésima es $5$, sube el $9$ de las centésimas → $3{,}00$.
+
+          En el último caso conviene escribir $3{,}00$ y no $3$, porque así se ve que el número está redondeado a las centésimas.
+        definition: >-
+          El arrastre en el redondeo es la reagrupación que ocurre cuando la
+          cifra que debe aumentar es 9: pasa a 0 y se suma 1 a la cifra de la
+          posición anterior.
+        rules:
+          - 'En decimales, las cifras a la derecha de la posición se eliminan.'
+          - 'Si la cifra que sube es 9, se escribe 0 y se suma 1 a la izquierda (puede repetirse).'
+          - 'Al redondear a una posición decimal se conservan todas sus cifras, incluso los ceros finales: $3{,}00$.'
+        examples:
+          - problem: 'Redondea $19{,}97$ a las décimas'
+            solution: |-
+              **Paso 1.** Posición de las décimas: $19{,}9|7$.
+
+              **Paso 2.** La cifra siguiente es $7 \ge 5$: la décima ($9$) debe subir.
+
+              **Paso 3.** $9 + 1 = 10$: escribimos $0$ en las décimas y llevamos $1$ a las unidades: $19 + 1 = 20$.
+
+              Resultado: $20{,}0$.
+        common_errors:
+          - 'Escribir $19{,}10$ al redondear $19{,}97$: el 9 no puede convertirse en 10 dentro de una sola posición.'
+          - 'Poner ceros a la derecha de la coma en lugar de eliminar cifras: $7{,}846 \approx 7{,}850$ no indica bien la posición.'
+        summary: >-
+          En decimales se eliminan las cifras sobrantes; cuando sube un 9 se
+          reagrupa hacia la izquierda.
+        check:
+          question: '¿Cuánto es $0{,}398$ redondeado a las centésimas?'
+          options:
+            - '$0{,}39$'
+            - '$0{,}310$'
+            - '$0{,}40$'
+          answer: 2
+          explanation: >-
+            La milésima es $8 \ge 5$, así que la centésima $9$ sube: se convierte
+            en $0$ y la décima pasa de $3$ a $4$. Resultado: $0{,}40$.
+    glossary:
+      - {term: Redondeo, definition: 'Aproximación a la posición elegida que toma el valor más cercano; con 5 o más se sube.'}
+      - {term: Cifra de decisión, definition: 'Cifra inmediatamente a la derecha de la posición a la que se redondea.'}
+      - {term: Arrastre, definition: 'Reagrupación cuando sube un 9: pasa a 0 y se suma 1 a la izquierda.'}
+  t04:
+    intro:
+      what: >-
+        Truncar es cortar un número en una posición y eliminar todas las cifras
+        que siguen, sin mirar cuáles son.
+      purpose: >-
+        Sirve para obtener rápidamente una aproximación por defecto y para
+        situaciones en las que no se puede "pasar" de una cantidad.
+      importance: >-
+        Muchas máquinas y programas truncan en lugar de redondear; conocer la
+        diferencia evita interpretar mal resultados.
+      foundations: >-
+        Se basa en el valor posicional y en la aproximación por defecto (tema 1).
+      prerequisites:
+        - 'Valor posicional decimal (bloque 16)'
+        - 'Aproximación por defecto y por exceso (tema 1 de este bloque)'
+        - 'Redondeo (tema 3 de este bloque)'
+      outcomes:
+        - 'Truncar números naturales y decimales a una posición'
+        - 'Comparar el truncamiento con el redondeo'
+        - 'Elegir el procedimiento adecuado según la situación'
+      everyday_example: >-
+        Una persona de 34 años y 11 meses dice que tiene 34 años: trunca su edad,
+        no la redondea.
+    sections:
+      - title: Truncar un número
+        concept: >-
+          Se conservan las cifras hasta la posición elegida y se eliminan las
+          demás, sean cuales sean.
+        explanation: |-
+          Truncar es como cortar con unas tijeras: elegimos la posición y lo que está a la derecha desaparece. **No se mira** la cifra siguiente.
+
+          * $7{,}869$ truncado a las décimas: $7{,}8$.
+          * $7{,}869$ truncado a las centésimas: $7{,}86$.
+          * $7{,}869$ truncado a las unidades: $7$.
+
+          En los números naturales, las cifras de la derecha se sustituyen por ceros (para conservar el tamaño): $4368$ truncado a las centenas es $4300$.
+
+          Para números positivos, el número truncado siempre es **menor o igual** que el original: el truncamiento es una aproximación **por defecto** (tema 1).
+        definition: >-
+          Truncar un número positivo a una posición es eliminar todas las cifras
+          situadas a la derecha de esa posición (o cambiarlas por ceros si son
+          cifras enteras).
+        rules:
+          - 'No se mira la cifra siguiente: simplemente se corta.'
+          - 'En decimales las cifras sobrantes se eliminan; en la parte entera se cambian por ceros.'
+          - 'Para números positivos, truncar equivale a aproximar por defecto.'
+        examples:
+          - problem: 'Trunca $15{,}4782$ a las centésimas'
+            solution: |-
+              **Paso 1.** Localizamos las centésimas: $15{,}47|82$.
+
+              **Paso 2.** Eliminamos todo lo que hay a la derecha, sin mirarlo.
+
+              Resultado: $15{,}47$.
+        common_errors:
+          - 'Redondear en lugar de truncar: $15{,}4782$ truncado a centésimas es $15{,}47$, no $15{,}48$.'
+          - 'Eliminar cifras de la parte entera sin poner ceros: $4368$ truncado a centenas es $4300$.'
+        summary: >-
+          Truncar es cortar en una posición sin mirar las cifras siguientes; da
+          una aproximación por defecto.
+        check:
+          question: '¿Cuánto es $9{,}996$ truncado a las décimas?'
+          options:
+            - '$10{,}0$'
+            - '$9{,}9$'
+            - '$9{,}99$'
+          answer: 1
+          explanation: >-
+            Se corta después de las décimas y se eliminan las demás cifras:
+            $9{,}9$. $10{,}0$ sería el redondeo y $9{,}99$ está en centésimas.
+      - title: Truncar o redondear
+        concept: >-
+          Truncar y redondear dan lo mismo cuando la cifra siguiente es menor
+          que 5, y distinto cuando es 5 o más.
+        explanation: |-
+          Compara los dos procedimientos en la misma posición:
+
+          | Número | Truncado (décimas) | Redondeado (décimas) |
+          |---|---|---|
+          | $3{,}42$ | $3{,}4$ | $3{,}4$ |
+          | $3{,}47$ | $3{,}4$ | $3{,}5$ |
+
+          Si la cifra siguiente es 0, 1, 2, 3 o 4, el redondeo también "se queda", así que coincide con el truncamiento. Si es 5 o más, el redondeo sube y ya no coinciden.
+
+          **¿Cuándo usar cada uno?** El redondeo da, en general, un valor más cercano. El truncamiento se usa cuando hay que contar sólo lo **completo**: años cumplidos, cajas llenas, billetes enteros que puedes pagar.
+        definition: >-
+          El truncamiento y el redondeo a una misma posición coinciden si y sólo
+          si la cifra inmediatamente a la derecha de esa posición es menor que 5.
+        rules:
+          - 'Cifra siguiente menor que 5: truncar = redondear.'
+          - 'Cifra siguiente 5 o mayor: el redondeo supera en una unidad de esa posición al truncamiento.'
+          - 'El redondeo suele quedar más cerca del valor exacto.'
+        examples:
+          - problem: 'Trunca y redondea $28{,}365$ a las centésimas. ¿Coinciden?'
+            solution: |-
+              **Truncamiento.** Cortamos tras las centésimas: $28{,}36$.
+
+              **Redondeo.** La milésima es $5 \ge 5$, sube: $28{,}37$.
+
+              **Comparación.** Difieren en una centésima, porque la cifra siguiente era $5$.
+
+              Resultado: truncado $28{,}36$; redondeado $28{,}37$; no coinciden.
+        common_errors:
+          - 'Pensar que truncar y redondear siempre dan lo mismo.'
+          - 'Truncar cuando lo que se pide es la aproximación más cercana.'
+        summary: >-
+          Si la cifra siguiente es menor que 5, truncar y redondear coinciden;
+          si es 5 o más, no.
+        check:
+          question: '¿En cuál de estos números coinciden el truncamiento y el redondeo a las décimas?'
+          options:
+            - '$5{,}38$'
+            - '$5{,}35$'
+            - '$5{,}34$'
+          answer: 2
+          explanation: >-
+            En $5{,}34$ la cifra siguiente es $4 < 5$: ambos dan $5{,}3$. En
+            $5{,}38$ y $5{,}35$ el redondeo es $5{,}4$ y el truncamiento $5{,}3$.
+    glossary:
+      - {term: Truncamiento, definition: 'Aproximación que elimina las cifras a partir de una posición sin mirarlas.'}
+      - {term: Cifras eliminadas, definition: 'Cifras situadas a la derecha de la posición de corte.'}
+  t05:
+    intro:
+      what: >-
+        Las cifras significativas de un número son las que aportan información
+        real sobre su valor o sobre la precisión de una medida.
+      purpose: >-
+        Sirven para expresar con cuánta precisión se conoce una cantidad y para
+        redondear números de tamaños muy distintos con un mismo criterio.
+      importance: >-
+        En ciencia, ingeniería y estadística no basta con dar un número: hay que
+        indicar cuántas de sus cifras son fiables. Además, preparan la notación
+        científica del bloque 26.
+      foundations: >-
+        Se apoyan en el valor posicional y en el redondeo (tema 3).
+      prerequisites:
+        - 'Valor posicional en naturales y decimales (bloques 2 y 16)'
+        - 'Redondeo (tema 3 de este bloque)'
+      outcomes:
+        - 'Contar las cifras significativas de un número'
+        - 'Reconocer qué ceros son significativos y cuáles no'
+        - 'Redondear un número a una cantidad dada de cifras significativas'
+      everyday_example: >-
+        Si una báscula marca 2,50 kg, nos dice que la masa se midió hasta las
+        centésimas de kilogramo: tiene 3 cifras significativas.
+    sections:
+      - title: Contar cifras significativas
+        concept: >-
+          Se cuentan las cifras desde la primera distinta de cero, con algunas
+          reglas para los ceros.
+        explanation: |-
+          Las cifras distintas de cero **siempre** son significativas. La dificultad está en los ceros, que pueden tener dos papeles: indicar un valor medido o simplemente "colocar la coma".
+
+          1. **Ceros entre cifras no nulas**: sí son significativos. $305$ tiene $3$.
+          2. **Ceros a la izquierda** (antes de la primera cifra no nula): **no** son significativos; sólo sitúan la coma. $0{,}0052$ tiene $2$ ($5$ y $2$).
+          3. **Ceros al final de la parte decimal**: sí son significativos, porque si se escriben es que se midieron. $2{,}50$ tiene $3$.
+          4. **Ceros al final de un número entero** (como $1200$): son **ambiguos**, pueden ser medidos o de relleno. En este curso, si no se indica otra cosa, los consideraremos **no significativos**. La notación científica (bloque 26) resolverá esta ambigüedad.
+
+          Truco: empieza a contar en la primera cifra que no sea cero y cuenta hasta el final.
+        definition: >-
+          Las cifras significativas de un número son todas sus cifras a partir de
+          la primera distinta de cero, incluidos los ceros intermedios y los
+          ceros finales de la parte decimal.
+        rules:
+          - 'Toda cifra distinta de cero es significativa.'
+          - 'Los ceros entre cifras significativas son significativos: $4{,}03$ tiene 3.'
+          - 'Los ceros a la izquierda no son significativos: $0{,}007$ tiene 1.'
+          - 'Los ceros finales tras la coma sí son significativos: $6{,}10$ tiene 3.'
+        examples:
+          - problem: '¿Cuántas cifras significativas tienen $0{,}00502$ y $40{,}10$?'
+            solution: |-
+              **$0{,}00502$.** Los ceros $0{,}00$ de la izquierda no cuentan. Empezamos en el $5$: $5$, $0$, $2$. El $0$ está entre cifras no nulas, así que cuenta. Total: $3$.
+
+              **$40{,}10$.** Empezamos en el $4$: $4$, $0$, $1$, $0$. El primer cero está entre cifras no nulas y el último es un cero final tras la coma: ambos cuentan. Total: $4$.
+
+              Resultado: $3$ y $4$ cifras significativas.
+        common_errors:
+          - 'Contar los ceros de la izquierda: $0{,}045$ tiene 2 cifras significativas, no 4.'
+          - 'Ignorar los ceros finales tras la coma: $3{,}20$ tiene 3, no 2.'
+        summary: >-
+          Se cuenta desde la primera cifra no nula; los ceros de la izquierda no
+          cuentan y los ceros finales decimales sí.
+        check:
+          question: '¿Cuántas cifras significativas tiene $0{,}0409$?'
+          options:
+            - '$3$'
+            - '$5$'
+            - '$2$'
+          answer: 0
+          explanation: >-
+            Los ceros iniciales $0{,}0$ no cuentan. Desde el $4$: $4$, $0$, $9$.
+            El cero está entre cifras no nulas y sí cuenta: $3$.
+      - title: Redondear a cifras significativas
+        concept: >-
+          Se conservan las primeras cifras significativas pedidas y se redondea
+          en la siguiente.
+        explanation: |-
+          Redondear a $k$ cifras significativas es redondear en la posición de la $k$-ésima cifra significativa, contando desde la primera cifra no nula. La ventaja es que el criterio sirve igual para números grandes y pequeños.
+
+          * $48\,372$ a $2$ cifras significativas: conservamos $4$ y $8$; la siguiente cifra es $3 < 5$ → $48\,000$.
+          * $48\,372$ a $3$ cifras significativas: conservamos $4$, $8$, $3$; la siguiente es $7 \ge 5$ → $48\,400$.
+          * $0{,}004567$ a $2$ cifras significativas: las primeras son $4$ y $5$; la siguiente es $6 \ge 5$ → $0{,}0046$.
+
+          En los números enteros hay que poner ceros para que el número conserve su tamaño; en los decimales pequeños se mantienen los ceros de la izquierda, que sitúan la coma.
+        definition: >-
+          Redondear un número a $k$ cifras significativas es redondearlo a la
+          posición que ocupa su $k$-ésima cifra significativa.
+        rules:
+          - 'Se localiza la primera cifra no nula y se cuentan $k$ cifras desde ella.'
+          - 'Se aplica la regla de redondeo con la cifra siguiente (5 o más sube).'
+          - 'En la parte entera se rellenan con ceros las posiciones eliminadas.'
+        examples:
+          - problem: 'Redondea $0{,}08916$ a $2$ cifras significativas'
+            solution: |-
+              **Paso 1.** La primera cifra no nula es el $8$ (centésimas). Las dos primeras significativas son $8$ y $9$.
+
+              **Paso 2.** La siguiente cifra es $1 < 5$: se quedan.
+
+              Resultado: $0{,}089$.
+        common_errors:
+          - 'Contar las cifras desde la coma y no desde la primera cifra no nula.'
+          - 'Olvidar los ceros de relleno: $48\,372$ a 2 cifras significativas es $48\,000$, no $48$.'
+        summary: >-
+          Para redondear a $k$ cifras significativas se cuentan $k$ cifras desde
+          la primera no nula y se redondea en esa posición.
+        check:
+          question: '¿Cuánto es $7\,649$ redondeado a $2$ cifras significativas?'
+          options:
+            - '$7600$'
+            - '$7700$'
+            - '$76$'
+          answer: 0
+          explanation: >-
+            Las dos primeras cifras son $7$ y $6$; la siguiente es $4 < 5$, así que
+            se quedan: $7600$. $76$ olvida los ceros que conservan el tamaño.
+    glossary:
+      - {term: Cifra significativa, definition: 'Cifra que aporta información sobre el valor o la precisión de un número.'}
+      - {term: Cero de posición, definition: 'Cero que sólo sirve para situar la coma o el tamaño del número; no es significativo.'}
+      - {term: Precisión, definition: 'Grado de detalle con que se expresa o se mide una cantidad.'}
+  t06:
+    intro:
+      what: >-
+        El error absoluto es la diferencia, sin signo, entre el valor real y el
+        valor aproximado o medido.
+      purpose: >-
+        Sirve para saber cuánto nos hemos alejado del valor verdadero al
+        aproximar, redondear o medir.
+      importance: >-
+        Permite decidir si una aproximación es aceptable y comparar la calidad
+        de distintas aproximaciones del mismo número.
+      foundations: >-
+        Se basa en la resta y en el valor absoluto como distancia entre dos
+        números (bloque 24).
+      prerequisites:
+        - 'Valor absoluto y distancia entre números (bloque 24)'
+        - 'Resta de decimales (bloque 17)'
+        - 'Redondeo y truncamiento (temas 3 y 4 de este bloque)'
+      outcomes:
+        - 'Calcular el error absoluto de una aproximación o medida'
+        - 'Comparar dos aproximaciones de un mismo valor'
+        - 'Conocer el error máximo al redondear a una posición'
+      everyday_example: >-
+        Si una pieza debe medir 12,7 cm y el carpintero la corta de 12,4 cm, se
+        ha equivocado en 0,3 cm: ese es el error absoluto.
+    sections:
+      - title: Cálculo del error absoluto
+        concept: >-
+          Es la distancia entre el valor real y el aproximado:
+          $E_a = |\text{valor real} - \text{aproximación}|$.
+        explanation: |-
+          Cuando aproximamos o medimos, cometemos un error. Nos interesa **cuánto** nos hemos alejado, no si nos hemos pasado o quedado cortos, por eso usamos el **valor absoluto** del bloque 24: el error absoluto es la distancia entre los dos números en la recta numérica y nunca es negativo.
+
+          $$E_a = |\text{valor real} - \text{valor aproximado}|$$
+
+          El error absoluto se expresa **en las mismas unidades** que la medida: si medimos en centímetros, el error está en centímetros.
+
+          Entre dos aproximaciones del mismo número, es mejor la que tiene **menor error absoluto**.
+        definition: >-
+          Si $x$ es el valor real y $a$ una aproximación de $x$, el error
+          absoluto es $E_a = |x - a|$.
+        rules:
+          - 'El error absoluto nunca es negativo.'
+          - 'Da igual restar en un orden u otro: $|x - a| = |a - x|$.'
+          - 'Tiene las mismas unidades que la cantidad medida.'
+        examples:
+          - problem: 'Una pieza mide en realidad $12{,}7$ cm y se mide $12{,}4$ cm. Calcula el error absoluto.'
+            solution: |-
+              **Paso 1.** Restamos: $12{,}7 - 12{,}4 = 0{,}3$.
+
+              **Paso 2.** Tomamos el valor absoluto: $|0{,}3| = 0{,}3$.
+
+              Resultado: $E_a = 0{,}3$ cm.
+          - problem: '¿Qué aproximación de $\pi = 3{,}14159\ldots$ es mejor, $3{,}14$ o $3{,}15$?'
+            solution: |-
+              **Paso 1.** Con $3{,}14$: $E_a = |3{,}14159\ldots - 3{,}14| \approx 0{,}0016$.
+
+              **Paso 2.** Con $3{,}15$: $E_a = |3{,}14159\ldots - 3{,}15| \approx 0{,}0084$.
+
+              **Paso 3.** El menor error es el de $3{,}14$.
+
+              Resultado: $3{,}14$ es mejor aproximación.
+        common_errors:
+          - 'Dar un error negativo, como $-0{,}3$: el error absoluto siempre es positivo o cero.'
+          - 'Olvidar las unidades del error.'
+        summary: >-
+          El error absoluto es $|\text{real} - \text{aproximado}|$, se expresa
+          en las unidades de la medida y nunca es negativo.
+        check:
+          question: 'El valor real es $50$ y la aproximación $52{,}5$. ¿Cuál es el error absoluto?'
+          options:
+            - '$-2{,}5$'
+            - '$2{,}5$'
+            - '$102{,}5$'
+          answer: 1
+          explanation: >-
+            $|50 - 52{,}5| = |-2{,}5| = 2{,}5$. El error absoluto no puede ser
+            negativo y no se obtiene sumando.
+      - title: Error máximo al redondear
+        concept: >-
+          Al redondear a una posición, el error absoluto es como mucho la mitad
+          de una unidad de esa posición.
+        explanation: |-
+          A veces no conocemos el valor exacto, pero sí sabemos cómo se aproximó. Si un número se redondeó a las décimas, el valor real estaba más cerca de esa décima que de cualquier otra, así que el error no supera **media décima**, es decir, $0{,}05$.
+
+          | Redondeo a… | Error máximo |
+          |---|---|
+          | unidades | $0{,}5$ |
+          | décimas | $0{,}05$ |
+          | centésimas | $0{,}005$ |
+          | centenas | $50$ |
+
+          Con el **truncamiento** el error máximo es mayor: casi una unidad entera de la posición, porque podemos haber eliminado, por ejemplo, un $0{,}099$.
+
+          Por eso se dice que el redondeo es, en general, más preciso que el truncamiento.
+        definition: >-
+          Una cota del error absoluto es un número que el error absoluto no
+          puede superar. Al redondear a una posición de valor $u$, la cota es
+          $\frac{u}{2}$.
+        rules:
+          - 'Redondear a una posición: error $\le$ mitad de una unidad de esa posición.'
+          - 'Truncar a una posición: error menor que una unidad de esa posición.'
+        examples:
+          - problem: 'Una longitud redondeada a las décimas es $4{,}3$ m. ¿Entre qué valores estaba la longitud real?'
+            solution: |-
+              **Paso 1.** El error máximo al redondear a décimas es $0{,}05$.
+
+              **Paso 2.** $4{,}3 - 0{,}05 = 4{,}25$ y $4{,}3 + 0{,}05 = 4{,}35$.
+
+              **Paso 3.** Por la regla del 5, $4{,}25$ se redondea a $4{,}3$, pero $4{,}35$ se redondearía a $4{,}4$.
+
+              Resultado: la longitud real cumple $4{,}25 \le x < 4{,}35$ metros.
+        common_errors:
+          - 'Creer que redondear a décimas puede producir un error de una décima entera.'
+          - 'Confundir la cota de error del redondeo con la del truncamiento.'
+        summary: >-
+          Redondear produce un error de, como mucho, media unidad de la posición
+          elegida; truncar, de casi una unidad.
+        check:
+          question: 'Si un precio se redondeó a las unidades y quedó en $38$ pesos, ¿cuál es el error máximo?'
+          options:
+            - '$1$ peso'
+            - '$0{,}5$ pesos'
+            - '$0{,}05$ pesos'
+          answer: 1
+          explanation: >-
+            Al redondear a las unidades el error es como mucho media unidad:
+            $0{,}5$ pesos. El precio real estaba entre $37{,}5$ y $38{,}5$ pesos
+            (sin incluir este último).
+    glossary:
+      - {term: Error absoluto, definition: 'Distancia entre el valor real y el aproximado: $|x - a|$.'}
+      - {term: Valor real, definition: 'Valor exacto de una cantidad, el que se intenta aproximar o medir.'}
+      - {term: Cota de error, definition: 'Valor que el error no puede superar.'}
+  t07:
+    intro:
+      what: >-
+        El error relativo compara el error absoluto con el tamaño del valor
+        real; expresado en tanto por ciento se llama error relativo porcentual.
+      purpose: >-
+        Sirve para saber si un error es grande o pequeño en proporción a lo que
+        se mide y para comparar la calidad de medidas de tamaños muy distintos.
+      importance: >-
+        Un error de 1 cm es enorme al medir un lápiz y despreciable al medir una
+        carretera. Sólo el error relativo permite verlo.
+      foundations: >-
+        Se basa en el error absoluto (tema 6), en la división de decimales
+        (bloque 17), en las razones (bloque 20) y en los porcentajes (bloque 22).
+      prerequisites:
+        - 'Error absoluto (tema 6 de este bloque)'
+        - 'División de decimales (bloque 17)'
+        - 'Relación entre porcentaje, fracción y decimal (bloque 22)'
+      outcomes:
+        - 'Calcular el error relativo de una medida'
+        - 'Expresar el error relativo en porcentaje'
+        - 'Comparar la precisión de medidas de distinto tamaño'
+      everyday_example: >-
+        Equivocarse en 1 kg al pesar a una persona de 80 kg es aceptable;
+        equivocarse en 1 kg al pesar 2 kg de fruta, no. El error relativo
+        expresa esa diferencia.
+    sections:
+      - title: Cálculo del error relativo
+        concept: >-
+          Es el cociente entre el error absoluto y el valor real:
+          $E_r = \frac{E_a}{|\text{valor real}|}$.
+        explanation: |-
+          El error absoluto dice **cuánto** nos equivocamos; el error relativo dice cuánto nos equivocamos **por cada unidad** del valor real. Es una razón (bloque 20) entre el error y la cantidad medida:
+
+          $$E_r = \frac{E_a}{|\text{valor real}|}$$
+
+          Como el error y el valor real tienen las mismas unidades, éstas se simplifican y el error relativo **no tiene unidades**. Es un número que normalmente es pequeño, como $0{,}02$.
+
+          Si no conocemos el valor real (lo habitual en las medidas), se divide entre el valor medido, que está muy cerca.
+        definition: >-
+          Si $x \neq 0$ es el valor real y $a$ su aproximación, el error relativo
+          es $E_r = \frac{|x - a|}{|x|}$.
+        rules:
+          - 'Primero se calcula el error absoluto y después se divide entre el valor real.'
+          - 'El error relativo no tiene unidades.'
+          - 'A menor error relativo, medida más precisa.'
+        examples:
+          - problem: 'El valor real es $80$ y la medida $78$. Calcula el error relativo.'
+            solution: |-
+              **Paso 1.** Error absoluto: $E_a = |80 - 78| = 2$.
+
+              **Paso 2.** Error relativo: $E_r = \frac{2}{80} = 0{,}025$.
+
+              Resultado: $E_r = 0{,}025$.
+        common_errors:
+          - 'Dividir entre la aproximación habiendo dado el valor real (o al revés): se divide entre el valor real.'
+          - 'Dividir el valor real entre el error, invirtiendo la fracción.'
+          - 'Ponerle unidades al error relativo.'
+        summary: >-
+          El error relativo es el error absoluto dividido entre el valor real; no
+          tiene unidades.
+        check:
+          question: 'Valor real $12{,}5$; medida $12{,}2$. ¿Cuál es el error relativo?'
+          options:
+            - '$0{,}3$'
+            - '$0{,}024$'
+            - '$41{,}67$'
+          answer: 1
+          explanation: >-
+            $E_a = |12{,}5 - 12{,}2| = 0{,}3$ y $E_r = \frac{0{,}3}{12{,}5} =
+            0{,}024$. $0{,}3$ es el error absoluto y $41{,}67$ sale de dividir al
+            revés.
+      - title: Error relativo porcentual
+        concept: >-
+          Es el error relativo multiplicado por 100 y expresado con el signo %.
+        explanation: |-
+          Como el error relativo es un número decimal, es cómodo expresarlo como **porcentaje** (bloque 22): basta multiplicar por $100$.
+
+          $$E_{\%} = E_r \times 100\,\%$$
+
+          Así, $E_r = 0{,}025$ significa un error del $2{,}5\,\%$: por cada 100 unidades medidas nos equivocamos en $2{,}5$.
+
+          Ahora podemos comparar medidas muy distintas. Equivocarse en $1$ cm al medir:
+
+          * un lápiz de $10$ cm: $E_r = \frac{1}{10} = 0{,}1 = 10\,\%$;
+          * una pista de $100$ m $= 10\,000$ cm: $E_r = \frac{1}{10\,000} = 0{,}0001 = 0{,}01\,\%$.
+
+          El error absoluto es el mismo ($1$ cm), pero la segunda medida es mil veces más precisa.
+        definition: >-
+          El error relativo porcentual es $E_r \times 100$, expresado en tanto
+          por ciento.
+        rules:
+          - 'Para pasar de error relativo a porcentaje se multiplica por 100.'
+          - 'Para comparar precisiones de medidas distintas se comparan sus errores relativos, no los absolutos.'
+          - 'Para calcularlo, las dos cantidades deben estar en la misma unidad.'
+        examples:
+          - problem: 'Se estima que un viaje dura $45$ min y dura en realidad $50$ min. ¿Cuál es el error relativo porcentual?'
+            solution: |-
+              **Paso 1.** $E_a = |50 - 45| = 5$ min.
+
+              **Paso 2.** $E_r = \frac{5}{50} = 0{,}1$.
+
+              **Paso 3.** $0{,}1 \times 100 = 10\,\%$.
+
+              Resultado: el error es del $10\,\%$.
+        common_errors:
+          - 'Olvidar multiplicar por 100 y decir que el error es del $0{,}1\,\%$ cuando es del $10\,\%$.'
+          - 'Comparar medidas en unidades distintas sin convertirlas antes.'
+        summary: >-
+          Multiplicando el error relativo por 100 obtenemos el error en
+          porcentaje, que permite comparar la precisión de cualquier medida.
+        check:
+          question: 'Medida A: error de $2$ g al pesar $50$ g. Medida B: error de $5$ g al pesar $500$ g. ¿Cuál es más precisa?'
+          options:
+            - 'La A, porque su error absoluto es menor'
+            - 'La B, porque su error relativo es del 1 % frente al 4 % de la A'
+            - 'Son igual de precisas'
+          answer: 1
+          explanation: >-
+            A: $\frac{2}{50} = 0{,}04 = 4\,\%$. B: $\frac{5}{500} = 0{,}01 =
+            1\,\%$. La precisión se compara con el error relativo, y el de B es
+            menor.
+    glossary:
+      - {term: Error relativo, definition: 'Error absoluto dividido entre el valor real; no tiene unidades.'}
+      - {term: Error relativo porcentual, definition: 'Error relativo multiplicado por 100 y expresado en %.'}
+  t08:
+    intro:
+      what: >-
+        Es el uso de aproximaciones, estimaciones y redondeos para resolver
+        situaciones reales: compras, presupuestos, materiales y medidas.
+      purpose: >-
+        Sirve para tomar decisiones rápidas y sensatas sin necesidad de hacer
+        cuentas exactas, y para elegir bien hacia qué lado aproximar.
+      importance: >-
+        En la vida diaria rara vez se dispone de calculadora o de tiempo; una
+        buena estimación evita quedarse sin dinero o sin material.
+      foundations: >-
+        Reúne todo el bloque: aproximación por defecto y por exceso, estimación,
+        redondeo, truncamiento y errores.
+      prerequisites:
+        - 'Aproximación, estimación, redondeo y truncamiento (temas 1 a 4 de este bloque)'
+        - 'Operaciones con decimales (bloque 17)'
+      outcomes:
+        - 'Estimar el total de una compra'
+        - 'Decidir si conviene aproximar por exceso o por defecto'
+        - 'Valorar si una estimación es suficientemente buena'
+      everyday_example: >-
+        Al llenar el carrito vas sumando precios redondeados para no pasarte de
+        los 500 pesos que llevas.
+    sections:
+      - title: Estimar compras y gastos
+        concept: >-
+          Se redondea cada precio a pesos enteros (o a decenas) y se suman los
+          valores redondeados.
+        explanation: |-
+          Para estimar una compra, redondeamos cada precio a una posición cómoda (normalmente a pesos enteros) y sumamos mentalmente. Los redondeos hacia arriba y hacia abajo tienden a compensarse, así que la estimación suele quedar cerca del total real.
+
+          Si lo importante es **no pasarse** de un presupuesto, es más prudente redondear cada precio **por exceso**: así la estimación será mayor que el gasto real y nunca nos faltará dinero.
+
+          Después, con el ticket en la mano, la estimación sirve para **comprobar** el cobro: si el total del ticket se aleja mucho, conviene revisarlo.
+        definition: >-
+          Estimar una compra es calcular un total aproximado a partir de los
+          precios redondeados de cada artículo.
+        rules:
+          - 'Redondear todos los precios a la misma posición.'
+          - 'Para asegurarse de tener dinero suficiente, aproximar por exceso.'
+          - 'Comparar la estimación con el total real para detectar errores.'
+        examples:
+          - problem: 'Estima el total de una compra de $3{,}75$; $12{,}40$; $5{,}99$ y $8{,}25$ pesos, redondeando a pesos enteros'
+            solution: |-
+              **Paso 1.** Redondeamos: $3{,}75 \approx 4$; $12{,}40 \approx 12$; $5{,}99 \approx 6$; $8{,}25 \approx 8$.
+
+              **Paso 2.** Sumamos: $4 + 12 + 6 + 8 = 30$.
+
+              **Comprobación.** El total exacto es $30{,}39$ pesos, muy cerca de la estimación.
+
+              Resultado: unos $30$ pesos.
+        common_errors:
+          - 'Truncar todos los precios: la estimación queda siempre por debajo del gasto real.'
+          - 'Olvidar algún artículo al estimar.'
+        summary: >-
+          Redondear cada precio y sumar da una estimación rápida de una compra;
+          redondear por exceso protege el presupuesto.
+        check:
+          question: 'Llevas $20$ pesos y quieres comprar productos de $4{,}20$; $6{,}90$ y $8{,}60$ pesos. Redondeando cada precio por exceso a pesos enteros, ¿qué concluyes?'
+          options:
+            - 'La estimación es $21$ pesos: quizá no alcance y conviene sumar con exactitud'
+            - 'La estimación es $19$ pesos: seguro que alcanza'
+            - 'La estimación es $18$ pesos: sobran 2 pesos'
+          answer: 0
+          explanation: >-
+            Por exceso: $5 + 7 + 9 = 21$, que supera los $20$ pesos, así que hay
+            que comprobar. El total exacto es $19{,}70$: alcanza, pero por poco.
+      - title: Elegir hacia dónde aproximar
+        concept: >-
+          La situación decide si el resultado se aproxima por exceso, por
+          defecto o por redondeo.
+        explanation: |-
+          Cuando un cálculo da un resultado decimal pero la respuesta debe ser un número entero de objetos, hay que pensar qué significa:
+
+          * **Por exceso** cuando no puede faltar nada: autobuses para transportar a todos, latas de pintura para cubrir una pared, cajas para guardar todos los libros.
+          * **Por defecto** cuando sólo cuenta lo completo: cuántas camisetas puedes comprar con tu dinero, cuántas bolsas llenas puedes formar.
+          * **Redondeo** cuando sólo se quiere comunicar un valor cercano: "unas 300 personas".
+
+          Antes de dar la respuesta, pregúntate: ¿qué pasaría si me quedo corto? ¿y si me paso?
+        definition: >-
+          En un problema contextualizado, la aproximación adecuada es la que
+          produce una respuesta válida para la situación real.
+        rules:
+          - 'Si no debe faltar nada, se aproxima por exceso.'
+          - 'Si sólo cuentan las unidades completas, se aproxima por defecto.'
+          - 'Si sólo se informa de un valor cercano, se redondea.'
+        examples:
+          - problem: 'Hay que trasladar a $130$ personas en autobuses de $45$ plazas. ¿Cuántos autobuses hacen falta?'
+            solution: |-
+              **Paso 1.** $130 \div 45 \approx 2{,}89$.
+
+              **Paso 2.** Con $2$ autobuses caben $90$ personas: no alcanza.
+
+              **Paso 3.** Aproximamos por exceso: $3$ autobuses ($135$ plazas).
+
+              Resultado: $3$ autobuses.
+          - problem: 'Con $100$ pesos, ¿cuántos cuadernos de $15$ pesos puedes comprar?'
+            solution: |-
+              **Paso 1.** $100 \div 15 \approx 6{,}67$.
+
+              **Paso 2.** $7$ cuadernos costarían $105$ pesos: no alcanza.
+
+              **Paso 3.** Aproximamos por defecto: $6$ cuadernos ($90$ pesos).
+
+              Resultado: $6$ cuadernos.
+        common_errors:
+          - 'Redondear mecánicamente $2{,}89$ a $3$ o $6{,}67$ a $7$ sin pensar en la situación: en el segundo caso no alcanzaría el dinero.'
+          - 'Dar respuestas decimales para objetos que no se pueden partir (2,89 autobuses).'
+        summary: >-
+          El contexto decide: por exceso si no puede faltar, por defecto si sólo
+          cuenta lo completo, redondeo para informar.
+        check:
+          question: 'Cada lata de pintura cubre $12$ m² y hay que pintar $50$ m². ¿Cuántas latas compras?'
+          options:
+            - '$4$ latas'
+            - '$5$ latas'
+            - '$4{,}17$ latas'
+          answer: 1
+          explanation: >-
+            $50 \div 12 \approx 4{,}17$. Con $4$ latas sólo cubres $48$ m², así que
+            hay que aproximar por exceso: $5$ latas. No se pueden comprar
+            fracciones de lata.
+    glossary:
+      - {term: Presupuesto, definition: 'Cantidad de dinero de la que se dispone para un gasto.'}
+      - {term: Aproximación según el contexto, definition: 'Elección de redondeo, exceso o defecto según lo que exige la situación real.'}

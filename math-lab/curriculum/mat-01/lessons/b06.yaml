@@ -1,0 +1,801 @@
+block: b06
+intro: >-
+  La multiplicación es una forma rápida de sumar varias veces la misma cantidad. En
+  este bloque verás qué significa multiplicar, cómo se llaman sus elementos, las
+  tablas, los algoritmos para multiplicar por una y varias cifras, la
+  multiplicación por 10, 100 y 1000, la regla de los signos, las propiedades y el
+  cálculo mental.
+
+topics:
+  t01:
+    intro:
+      what: 'Multiplicar es calcular el total de varios grupos que tienen la misma cantidad de elementos.'
+      purpose: 'Sirve para contar rápidamente objetos organizados en grupos iguales o en filas y columnas.'
+      importance: 'Es una de las cuatro operaciones básicas y la base de la división, las fracciones, las áreas y los porcentajes.'
+      foundations: 'La suma de sumandos iguales.'
+      prerequisites:
+        - 'Concepto de suma (bloque 4, tema 1).'
+        - 'Suma de varios números (bloque 4, tema 9).'
+      outcomes:
+        - Reconocer situaciones de grupos iguales.
+        - Representar una multiplicación como arreglo rectangular.
+        - Escribir la multiplicación correspondiente a una situación.
+      everyday_example: >-
+        Un cartón tiene 6 filas de 5 huevos: hay $6 \times 5 = 30$ huevos sin necesidad
+        de contarlos uno a uno.
+    sections:
+      - title: 'Grupos iguales y arreglos'
+        concept: 'La multiplicación cuenta cuántos elementos hay en total cuando se tienen varios grupos del mismo tamaño.'
+        explanation: |-
+          Cuando las cosas vienen en **grupos iguales**, no hace falta contarlas una por una. «4 cajas con 6 botellas cada una» son
+          $$6 + 6 + 6 + 6 = 24 \text{ botellas},$$
+          y eso se escribe de forma abreviada como una **multiplicación**: $6 \times 4 = 24$ («seis por cuatro»).
+
+          Hay dos situaciones típicas:
+
+          * **Grupos iguales:** cajas, paquetes, equipos… con la misma cantidad cada uno.
+          * **Arreglo rectangular:** objetos en **filas y columnas**, como butacas de un cine o baldosas de un piso. Si hay 3 filas de 5 butacas:
+
+          ```
+          ● ● ● ● ●
+          ● ● ● ● ●
+          ● ● ● ● ●
+          ```
+          hay $5 \times 3 = 15$ butacas. Si giras el dibujo, tienes 5 filas de 3: también 15. Por eso el orden de los números no cambia el resultado (lo verás en el tema 9 como propiedad conmutativa).
+
+          La multiplicación sólo sirve cuando **todos los grupos son iguales**. Si una caja tiene 6 y otra 4, hay que sumar.
+        definition: >-
+          Multiplicar dos naturales $a$ y $b$ es calcular el total de elementos que hay en
+          $b$ grupos de $a$ elementos (o en un arreglo de $b$ filas y $a$ columnas).
+        rules:
+          - 'Se usa cuando hay grupos del mismo tamaño.'
+          - 'Un arreglo de filas × columnas tiene filas × columnas elementos.'
+          - 'Se escribe con $\times$ y se lee «por».'
+        examples:
+          - problem: 'Un estacionamiento tiene 7 filas con 8 lugares cada una. ¿Cuántos lugares hay?'
+            solution: |-
+              **Paso 1.** Todas las filas tienen la misma cantidad: multiplicación.
+              **Paso 2.** 7 grupos de 8: $8 \times 7$.
+              **Paso 3.** $8 + 8 + 8 + 8 + 8 + 8 + 8 = 56$.
+              Resultado: hay $56$ lugares.
+        common_errors:
+          - 'Sumar los dos números (7 + 8 = 15) en lugar de multiplicarlos.'
+          - 'Multiplicar cuando los grupos no son iguales.'
+        summary: >-
+          Multiplicar es contar el total de grupos iguales o de un arreglo de filas y
+          columnas.
+        check:
+          question: 'Hay 5 bolsas con 4 naranjas cada una. ¿Cuántas naranjas hay?'
+          options: ['20', '9', '45']
+          answer: 0
+          explanation: '5 grupos de 4: $4 + 4 + 4 + 4 + 4 = 20$. Sumar 5 y 4 (9) no tiene en cuenta que hay cinco bolsas.'
+    glossary:
+      - term: 'Multiplicación'
+        definition: 'Operación que calcula el total de varios grupos iguales.'
+      - term: 'Arreglo rectangular'
+        definition: 'Disposición de objetos en filas y columnas.'
+    practice: []
+
+  t02:
+    intro:
+      what: 'Son los nombres de las partes de una multiplicación: factores (multiplicando y multiplicador) y producto.'
+      purpose: 'Permiten describir una multiplicación y comprender sus propiedades y su relación con la división.'
+      importance: 'Términos como «factor» y «producto» aparecen en todo el curso (múltiplos, divisores, factorización).'
+      foundations: 'El concepto de multiplicación.'
+      prerequisites:
+        - 'Concepto de multiplicación (bloque 6, tema 1).'
+      outcomes:
+        - Identificar factores y producto.
+        - Distinguir multiplicando y multiplicador.
+        - Conocer los signos de la multiplicación.
+      everyday_example: >-
+        En «3 entradas a 120 pesos cuestan 360 pesos», 120 y 3 son los factores y 360 es
+        el producto.
+    sections:
+      - title: 'Factores y producto'
+        concept: 'En $a \times b = c$, los números $a$ y $b$ son los factores y $c$ es el producto.'
+        explanation: |-
+          $$\underbrace{6}_{\text{factor}} \times \underbrace{4}_{\text{factor}} = \underbrace{24}_{\text{producto}}$$
+
+          * **Factores:** los números que se multiplican.
+          * **Producto:** el resultado.
+
+          Los dos factores tienen además nombres propios:
+
+          * **Multiplicando** (el primero, 6): la cantidad que se repite.
+          * **Multiplicador** (el segundo, 4): cuántas veces se repite.
+
+          Así, $6 \times 4$ se lee «6 repetido 4 veces»: $6 + 6 + 6 + 6$. Como el producto no cambia al intercambiar los factores, en la práctica se suele hablar simplemente de «factores».
+
+          **Signos.** La multiplicación se indica con $\times$, con un punto $\cdot$ (por ejemplo $6 \cdot 4$) o, más adelante en álgebra, poniendo los símbolos juntos. En la calculadora y en el ordenador se usa el asterisco $*$.
+
+          **Factor desconocido.** En $6 \times \square = 24$ buscamos cuántas veces hay que repetir el 6 para llegar a 24: recorriendo la tabla del 6 (6, 12, 18, 24) vemos que son 4. En el bloque 7 verás que esto se resuelve con una división.
+        definition: >-
+          En la igualdad $a \times b = c$, $a$ y $b$ se llaman factores ($a$ multiplicando y
+          $b$ multiplicador) y $c$ se llama producto.
+        rules:
+          - 'Factores: los números que se multiplican. Producto: el resultado.'
+          - 'Multiplicando: lo que se repite; multiplicador: cuántas veces.'
+          - 'Signos: $\times$, $\cdot$ y, en máquinas, $*$.'
+        examples:
+          - problem: 'En $15 \times 3 = 45$, identifica los elementos.'
+            solution: |-
+              **Paso 1.** Factores: $15$ y $3$.
+              **Paso 2.** Multiplicando $15$ (se repite) y multiplicador $3$ (veces).
+              **Paso 3.** Producto: $45$. Comprobación: $15 + 15 + 15 = 45$.
+        common_errors:
+          - 'Llamar «factor» al resultado.'
+          - 'Confundir el punto de multiplicación $\cdot$ con la coma decimal.'
+        summary: >-
+          Factor × factor = producto; el multiplicando se repite tantas veces como indica
+          el multiplicador.
+        check:
+          question: 'En $9 \times 7 = 63$, ¿cuál es el producto?'
+          options: ['63', '9', '7']
+          answer: 0
+          explanation: 'El producto es el resultado, 63; 9 y 7 son los factores.'
+    glossary:
+      - term: 'Factor'
+        definition: 'Cada uno de los números que se multiplican.'
+      - term: 'Producto'
+        definition: 'Resultado de una multiplicación.'
+      - term: 'Multiplicando'
+        definition: 'Factor que se repite.'
+      - term: 'Multiplicador'
+        definition: 'Factor que indica cuántas veces se repite el multiplicando.'
+    practice: []
+
+  t03:
+    intro:
+      what: 'Es la interpretación de la multiplicación como una suma de sumandos iguales.'
+      purpose: 'Permite calcular cualquier producto aunque no se sepa de memoria, y entender qué significa multiplicar.'
+      importance: 'Conecta la multiplicación con la suma y explica de dónde salen las tablas.'
+      foundations: 'La suma de varios números y los elementos de la multiplicación.'
+      prerequisites:
+        - 'Suma de varios números (bloque 4, tema 9).'
+        - 'Elementos de la multiplicación (bloque 6, tema 2).'
+      outcomes:
+        - Escribir una multiplicación como suma repetida.
+        - Escribir una suma de sumandos iguales como multiplicación.
+        - Reconocer cuándo una suma no puede escribirse como multiplicación.
+      everyday_example: >-
+        Si ahorras 50 pesos cada semana durante 4 semanas, tienes
+        $50 + 50 + 50 + 50 = 50 \times 4 = 200$ pesos.
+    sections:
+      - title: 'Sumar muchas veces lo mismo'
+        concept: '$a \times b$ es la suma de $b$ sumandos iguales a $a$: $a \times b = a + a + \dots + a$.'
+        explanation: |-
+          Multiplicar es una **suma abreviada**:
+          $$7 \times 3 = 7 + 7 + 7 = 21$$
+          El multiplicando (7) es el sumando que se repite y el multiplicador (3) dice cuántas veces aparece.
+
+          **De suma a multiplicación.** Si todos los sumandos son iguales, cuenta cuántos hay:
+          $$12 + 12 + 12 + 12 + 12 = 12 \times 5 = 60$$
+
+          **Cuándo no se puede.** $5 + 5 + 6$ no es una multiplicación directa porque los sumandos no son todos iguales. (Sí podemos escribirla como $5 \times 2 + 6$.)
+
+          **Casos especiales:**
+
+          * $a \times 1 = a$: un solo sumando.
+          * $a \times 0 = 0$: ningún sumando, no hay nada.
+
+          Escribir las sumas repetidas es lento con números grandes; por eso aprendemos las tablas (tema 4) y algoritmos (temas 5 y 6). Pero siempre puedes volver a la suma repetida para entender o comprobar un resultado.
+        definition: >-
+          Para un número $a$ y un natural $b$: $a \times b = \underbrace{a + a + \dots + a}_{b \text{ veces}}$.
+        rules:
+          - 'El multiplicando es el sumando que se repite; el multiplicador, el número de sumandos.'
+          - 'Sólo se convierte en multiplicación una suma de sumandos iguales.'
+          - '$a \times 1 = a$ y $a \times 0 = 0$.'
+        examples:
+          - problem: 'Escribe $9 \times 4$ como suma repetida y calcula.'
+            solution: |-
+              **Paso 1.** El 9 se repite 4 veces: $9 + 9 + 9 + 9$.
+              **Paso 2.** $9 + 9 = 18$; $18 + 9 = 27$; $27 + 9 = 36$.
+              Resultado: $36$.
+          - problem: 'Escribe $25 + 25 + 25$ como multiplicación.'
+            solution: |-
+              **Paso 1.** Hay 3 sumandos iguales a 25.
+              **Paso 2.** $25 \times 3 = 75$.
+              Resultado: $25 \times 3 = 75$.
+        common_errors:
+          - 'Escribir $9 \times 4$ como $9 + 4$.'
+          - 'Contar mal el número de sumandos.'
+        summary: >-
+          Multiplicar es sumar el multiplicando tantas veces como indica el multiplicador.
+        check:
+          question: '¿Qué multiplicación equivale a $8 + 8 + 8 + 8 + 8 + 8$?'
+          options: ['$8 \times 6$', '$8 \times 8$', '$6 + 8$']
+          answer: 0
+          explanation: 'Hay 6 sumandos iguales a 8: $8 \times 6 = 48$.'
+    glossary:
+      - term: 'Suma repetida'
+        definition: 'Suma cuyos sumandos son todos iguales.'
+    practice: []
+
+  t04:
+    intro:
+      what: 'Las tablas de multiplicar son los productos de los números del 1 al 10 entre sí.'
+      purpose: 'Saberlas de memoria permite multiplicar números grandes con rapidez.'
+      importance: 'Todos los algoritmos de multiplicación y división se apoyan en las tablas.'
+      foundations: 'La multiplicación como suma repetida y el orden indiferente de los factores.'
+      prerequisites:
+        - 'Multiplicación como suma repetida (bloque 6, tema 3).'
+      outcomes:
+        - Recordar los productos de las tablas del 1 al 10.
+        - Usar estrategias para reconstruir un producto olvidado.
+        - Encontrar un factor desconocido con las tablas.
+      everyday_example: >-
+        Para saber cuánto cuestan 7 cafés de 8 pesos no sumas siete veces: recuerdas que
+        $8 \times 7 = 56$.
+    sections:
+      - title: 'Aprender las tablas con estrategia'
+        concept: 'Cada tabla se obtiene sumando repetidamente el mismo número, y varias estrategias reducen mucho lo que hay que memorizar.'
+        explanation: |-
+          La **tabla del 7** es $7, 14, 21, 28, 35, 42, 49, 56, 63, 70$: cada resultado es el anterior más 7.
+
+          **Estrategias que ahorran memoria:**
+
+          * **El orden no importa:** $3 \times 8 = 8 \times 3$. Si sabes uno, sabes el otro. Esto reduce las tablas casi a la mitad.
+          * **×1:** el mismo número. **×10:** se añade un 0 ($7 \times 10 = 70$).
+          * **×2:** el doble ($8 \times 2 = 8 + 8 = 16$).
+          * **×4:** el doble del doble ($6 \times 4$: $12$, luego $24$).
+          * **×5:** la mitad de ×10 ($8 \times 5$ es la mitad de 80: 40). Los resultados terminan en 0 o 5.
+          * **×9:** ×10 menos el número ($7 \times 9 = 70 - 7 = 63$). Además, las cifras del resultado suman 9: $6 + 3 = 9$.
+          * **Partir:** si olvidas $7 \times 8$, piensa $7 \times 4 = 28$ y dóblalo: $56$.
+
+          | × | 6 | 7 | 8 | 9 |
+          |---|---|---|---|---|
+          | 6 | 36 | 42 | 48 | 54 |
+          | 7 | 42 | 49 | 56 | 63 |
+          | 8 | 48 | 56 | 64 | 72 |
+          | 9 | 54 | 63 | 72 | 81 |
+
+          Estos son los productos más difíciles; repásalos a menudo.
+
+          **Tabla al revés:** para $6 \times \square = 42$, recorre la tabla del 6 hasta 42: es el séptimo, así que el factor es 7.
+        definition: >-
+          La tabla del número $n$ es la lista de productos $n \times 1, n \times 2, \dots, n \times 10$;
+          cada término es el anterior más $n$.
+        rules:
+          - '$a \times b = b \times a$: el orden no cambia el producto.'
+          - '×2 es el doble; ×4, el doble del doble; ×5, la mitad de ×10.'
+          - '×9 es ×10 menos el número; ×10 añade un cero.'
+        examples:
+          - problem: 'Si no recuerdas $8 \times 6$, ¿cómo lo reconstruyes?'
+            solution: |-
+              **Paso 1.** $8 \times 5$ es la mitad de $8 \times 10 = 80$: $40$.
+              **Paso 2.** $8 \times 6$ es una vez 8 más: $40 + 8 = 48$.
+              Resultado: $8 \times 6 = 48$.
+        common_errors:
+          - 'Confundir productos vecinos: $7 \times 8 = 56$, no 54 ni 63.'
+          - 'Sumar en lugar de multiplicar: $6 \times 7$ no es 13.'
+        summary: >-
+          Las tablas se construyen sumando; el orden de los factores, los dobles, el ×5 y el
+          ×9 reducen la memorización.
+        check:
+          question: '¿Cuánto es $9 \times 8$?'
+          options: ['72', '81', '64']
+          answer: 0
+          explanation: '$8 \times 10 = 80$ y $80 - 8 = 72$. Además $7 + 2 = 9$.'
+    glossary:
+      - term: 'Tabla de multiplicar'
+        definition: 'Lista de los productos de un número por 1 a 10.'
+      - term: 'Doble'
+        definition: 'Resultado de multiplicar por 2: sumar un número consigo mismo.'
+    practice: []
+
+  t05:
+    intro:
+      what: 'Es el algoritmo para multiplicar un número de varias cifras por un número de una cifra.'
+      purpose: 'Calcular productos como $476 \times 6$ sin hacer sumas repetidas largas.'
+      importance: 'Es el paso básico de la multiplicación por varias cifras y de la división larga.'
+      foundations: 'Las tablas, el valor posicional y la reagrupación.'
+      prerequisites:
+        - 'Tablas de multiplicar (bloque 6, tema 4).'
+        - 'Suma con reagrupación (bloque 4, tema 5).'
+      outcomes:
+        - Multiplicar por una cifra sin llevadas.
+        - Multiplicar por una cifra con llevadas.
+        - Estimar el producto para comprobarlo.
+      everyday_example: >-
+        Si un abono mensual cuesta 345 pesos, en 4 meses pagas $345 \times 4 = 1\,380$ pesos.
+    sections:
+      - title: 'Multiplicar cifra a cifra'
+        concept: 'Se multiplica la cifra de una sola cifra por cada cifra del otro número, de derecha a izquierda, sumando en cada paso lo que se lleva.'
+        explanation: |-
+          Multiplicar $243 \times 3$ es multiplicar por 3 cada parte de $243 = 200 + 40 + 3$:
+          $$3 \times 3 = 9, \quad 40 \times 3 = 120, \quad 200 \times 3 = 600; \quad 600 + 120 + 9 = 729$$
+
+          El algoritmo hace lo mismo de forma compacta: **multiplica cada cifra empezando por las unidades**.
+
+          **Con llevadas:** $476 \times 6$
+          $$\begin{array}{r} 476 \\ \times\,\phantom{0}6 \\ \hline 2\,856 \end{array}$$
+
+          * Unidades: $6 \times 6 = 36$ → escribimos 6, **llevamos 3**.
+          * Decenas: $7 \times 6 = 42$; más lo que llevamos: $42 + 3 = 45$ → escribimos 5, llevamos 4.
+          * Centenas: $4 \times 6 = 24$; $24 + 4 = 28$ → escribimos 28.
+
+          Resultado: $2\,856$.
+
+          **Orden importante:** primero se multiplica y **después** se suma la llevada. Nunca se suma la llevada antes de multiplicar.
+
+          **Estimación:** $476$ es casi $500$, y $500 \times 6 = 3\,000$. El resultado debe estar algo por debajo de 3 000. ✓
+        definition: >-
+          Para multiplicar $N$ por una cifra $d$ se multiplica $d$ por cada cifra de $N$ de
+          derecha a izquierda; en cada paso se suma la llevada anterior, se escribe la
+          cifra de las unidades y se lleva el resto.
+        rules:
+          - 'Empieza por las unidades.'
+          - 'Multiplica primero y suma la llevada después.'
+          - 'En la última cifra se escribe el resultado completo.'
+        examples:
+          - problem: 'Calcula $837 \times 4$.'
+            solution: |-
+              **Paso 1.** Unidades: $7 \times 4 = 28$ → 8, llevo 2.
+              **Paso 2.** Decenas: $3 \times 4 = 12$; $12 + 2 = 14$ → 4, llevo 1.
+              **Paso 3.** Centenas: $8 \times 4 = 32$; $32 + 1 = 33$.
+              **Estimación.** $800 \times 4 = 3\,200$. ✓
+              Resultado: $3\,348$.
+        common_errors:
+          - 'Olvidar sumar la llevada.'
+          - 'Sumar la llevada antes de multiplicar: $(3 + 2) \times 4$ en lugar de $3 \times 4 + 2$.'
+        summary: >-
+          Multiplica cada cifra desde las unidades, suma la llevada después de multiplicar
+          y estima para comprobar.
+        check:
+          question: '¿Cuánto es $258 \times 3$?'
+          options: ['774', '654', '764']
+          answer: 0
+          explanation: 'Unidades $8 \times 3 = 24$ → 4, llevo 2; decenas $5 \times 3 + 2 = 17$ → 7, llevo 1; centenas $2 \times 3 + 1 = 7$: 774.'
+    glossary:
+      - term: 'Llevada'
+        definition: 'Cifra de las decenas de un producto parcial que se suma en la posición siguiente.'
+    practice: []
+
+  t06:
+    intro:
+      what: 'Es el algoritmo para multiplicar dos números cuando ambos tienen varias cifras.'
+      purpose: 'Calcular productos como $34 \times 27$ o $215 \times 132$ por escrito.'
+      importance: 'Es el algoritmo de multiplicación completo; organiza el trabajo en productos parciales.'
+      foundations: 'La multiplicación por una cifra, la multiplicación por 10 y la suma vertical.'
+      prerequisites:
+        - 'Multiplicación por una cifra (bloque 6, tema 5).'
+        - 'Suma vertical (bloque 4, tema 8).'
+      outcomes:
+        - Calcular productos parciales por cada cifra del multiplicador.
+        - Desplazar correctamente cada producto parcial.
+        - Sumar los productos parciales y comprobar con una estimación.
+      everyday_example: >-
+        Un salón con 24 filas de 35 sillas tiene $35 \times 24 = 840$ sillas.
+    sections:
+      - title: 'Productos parciales'
+        concept: 'Se multiplica el primer factor por cada cifra del segundo; cada producto parcial se corre un lugar a la izquierda según la posición de la cifra, y al final se suman.'
+        explanation: |-
+          Para $34 \times 27$ pensamos $27 = 20 + 7$. Entonces $34 \times 27$ es «34 por 7» más «34 por 20»:
+
+          * $34 \times 7 = 238$
+          * $34 \times 20 = 680$ (es $34 \times 2 = 68$ y por 10, un cero más)
+          * $238 + 680 = 918$
+
+          En columna:
+          $$\begin{array}{r} 34 \\ \times\,27 \\ \hline 238 \\ 680 \\ \hline 918 \end{array}$$
+
+          **Pasos del algoritmo:**
+
+          1. Multiplica el primer factor por la cifra de las **unidades** del segundo: primer producto parcial.
+          2. Multiplícalo por la cifra de las **decenas**: el resultado vale 10 veces más, así que se escribe **corrido un lugar a la izquierda** (o con un 0 al final).
+          3. Si hay centenas, el tercer producto parcial se corre **dos lugares** (dos ceros).
+          4. **Suma** los productos parciales.
+
+          **¿Por qué se corre?** Porque el 2 de 27 son 2 decenas: multiplicar por 20 es multiplicar por 2 y por 10. (Esto es la propiedad distributiva, que verás en el tema 9.)
+
+          **Estimación:** $34 \times 27 \approx 30 \times 30 = 900$. ✓
+        definition: >-
+          Si $b = b_0 + 10 b_1 + 100 b_2 + \dots$ (cifras de $b$), entonces
+          $a \times b = a \times b_0 + a \times b_1 \times 10 + a \times b_2 \times 100 + \dots$;
+          cada sumando es un producto parcial.
+        rules:
+          - 'Un producto parcial por cada cifra del multiplicador.'
+          - 'Cada producto parcial se corre un lugar más a la izquierda que el anterior.'
+          - 'El resultado es la suma de los productos parciales.'
+        examples:
+          - problem: 'Calcula $215 \times 132$.'
+            solution: |-
+              **Paso 1.** $215 \times 2 = 430$.
+              **Paso 2.** $215 \times 3 = 645$, corrido un lugar: $6\,450$.
+              **Paso 3.** $215 \times 1 = 215$, corrido dos lugares: $21\,500$.
+              **Paso 4.** $430 + 6\,450 + 21\,500 = 28\,380$.
+              **Estimación.** $200 \times 130 = 26\,000$. ✓
+              Resultado: $28\,380$.
+        common_errors:
+          - 'No correr los productos parciales: en $34 \times 27$ sumar $238 + 68 = 306$.'
+          - 'Mezclar las llevadas de un producto parcial con las del siguiente.'
+        summary: >-
+          Multiplica por cada cifra, corre cada producto parcial según su posición y suma.
+        check:
+          question: '¿Cuánto es $46 \times 23$?'
+          options: ['1 058', '230', '1 048']
+          answer: 0
+          explanation: '$46 \times 3 = 138$; $46 \times 2 = 92$, corrido: 920; $138 + 920 = 1\,058$. 230 sale de no correr el segundo producto ($138 + 92$).'
+    glossary:
+      - term: 'Producto parcial'
+        definition: 'Producto del primer factor por una sola cifra del segundo.'
+    practice: []
+
+  t07:
+    intro:
+      what: 'Es la forma rápida de multiplicar por 10, 100, 1000 y por números terminados en ceros, como 30 o 400.'
+      purpose: 'Calcular mentalmente productos con ceros y convertir unidades (metros a centímetros, por ejemplo).'
+      importance: 'Simplifica muchos cálculos y es la base de las estimaciones y del sistema métrico.'
+      foundations: 'El valor posicional: multiplicar por 10 corre cada cifra un lugar a la izquierda.'
+      prerequisites:
+        - 'Valor posicional (bloque 2, tema 6).'
+        - 'Tablas de multiplicar (bloque 6, tema 4).'
+      outcomes:
+        - Multiplicar por 10, 100 y 1000.
+        - Multiplicar números terminados en ceros.
+      everyday_example: >-
+        Si un paquete cuesta 25 pesos, 100 paquetes cuestan $25 \times 100 = 2\,500$ pesos.
+    sections:
+      - title: 'Añadir ceros con fundamento'
+        concept: 'Multiplicar por 10, 100 o 1000 corre todas las cifras 1, 2 o 3 lugares a la izquierda, lo que equivale a añadir 1, 2 o 3 ceros a la derecha.'
+        explanation: |-
+          Al multiplicar por 10, cada unidad se convierte en una decena, cada decena en una centena, y así sucesivamente. Todas las cifras **suben un lugar**:
+          $$47 \times 10 = 470$$
+          (4 decenas pasan a ser 4 centenas; 7 unidades pasan a ser 7 decenas; el lugar de las unidades queda vacío: 0.)
+
+          * **×10:** se añade un cero. $47 \times 10 = 470$.
+          * **×100:** se añaden dos ceros. $47 \times 100 = 4\,700$.
+          * **×1000:** se añaden tres ceros. $47 \times 1000 = 47\,000$.
+
+          **Números terminados en ceros.** Para $30 \times 400$:
+
+          1. Separa los ceros: $3 \times 4$ y, aparte, $1 + 2 = 3$ ceros.
+          2. Multiplica sin ceros: $3 \times 4 = 12$.
+          3. Añade todos los ceros: $12\,000$.
+
+          Funciona porque $30 \times 400 = 3 \times 10 \times 4 \times 100$, y podemos reordenar y agrupar los factores (lo justificarás en el tema 9).
+
+          **Cuidado:** si el producto sin ceros ya termina en 0, ese cero se suma a los demás: $50 \times 40$: $5 \times 4 = 20$, más 2 ceros → $2\,000$.
+        definition: >-
+          Para todo natural $a$: $a \times 10$, $a \times 100$ y $a \times 1000$ se obtienen
+          escribiendo 1, 2 o 3 ceros a la derecha de $a$.
+        rules:
+          - '×10, ×100, ×1000: añade 1, 2 o 3 ceros.'
+          - 'Con factores terminados en ceros: multiplica sin ceros y añade todos los ceros juntos.'
+          - 'Los ceros propios del producto sin ceros se conservan.'
+        examples:
+          - problem: 'Calcula $60 \times 700$.'
+            solution: |-
+              **Paso 1.** Sin ceros: $6 \times 7 = 42$.
+              **Paso 2.** Ceros: uno en 60 y dos en 700: tres ceros.
+              **Paso 3.** $42$ con tres ceros: $42\,000$.
+              Resultado: $42\,000$.
+        common_errors:
+          - 'Añadir sólo los ceros de un factor.'
+          - 'En $50 \times 40$, perder el cero del 20 y escribir 200.'
+        summary: >-
+          Multiplicar por 10, 100, 1000 añade 1, 2, 3 ceros; con números terminados en
+          ceros, multiplica lo demás y añade todos los ceros.
+        check:
+          question: '¿Cuánto es $25 \times 300$?'
+          options: ['7 500', '750', '75 000']
+          answer: 0
+          explanation: '$25 \times 3 = 75$ y se añaden dos ceros: $7\,500$.'
+    glossary:
+      - term: 'Múltiplo de 10'
+        definition: 'Número que termina en 0: 10, 20, 30…'
+    practice: []
+
+  t08:
+    intro:
+      what: 'Es la multiplicación cuando los factores pueden ser positivos o negativos.'
+      purpose: 'Calcular pérdidas repetidas, variaciones de temperatura acumuladas y operaciones algebraicas.'
+      importance: 'La regla de los signos de la multiplicación es imprescindible en álgebra.'
+      foundations: 'La multiplicación como suma repetida y la suma de enteros.'
+      prerequisites:
+        - 'Suma de números enteros (bloque 4, tema 4).'
+        - 'Tablas de multiplicar (bloque 6, tema 4).'
+      outcomes:
+        - Aplicar la regla de los signos de la multiplicación.
+        - Multiplicar dos o más enteros.
+      everyday_example: >-
+        Si pierdes 20 pesos cada día durante 3 días, tu cambio de saldo es
+        $(-20) \times 3 = -60$ pesos.
+    sections:
+      - title: 'La regla de los signos'
+        concept: 'El producto de dos enteros con el mismo signo es positivo, y con signos distintos es negativo; el valor absoluto es el producto de los valores absolutos.'
+        explanation: |-
+          **Negativo por positivo.** $(-4) \times 3$ es sumar $-4$ tres veces:
+          $$(-4) + (-4) + (-4) = -12$$
+          El resultado es negativo.
+
+          **Negativo por negativo.** Observa el patrón al bajar el segundo factor de uno en uno:
+
+          | Operación | Resultado |
+          |---|---|
+          | $(-3) \times 2$ | $-6$ |
+          | $(-3) \times 1$ | $-3$ |
+          | $(-3) \times 0$ | $0$ |
+          | $(-3) \times (-1)$ | $3$ |
+          | $(-3) \times (-2)$ | $6$ |
+
+          Cada vez el resultado **sube 3**. Para que el patrón continúe, $(-3) \times (-1)$ debe ser $3$. Por eso **negativo por negativo da positivo**.
+
+          **Regla de los signos:**
+
+          | × | + | − |
+          |---|---|---|
+          | **+** | + | − |
+          | **−** | − | + |
+
+          **Procedimiento:** 1) decide el signo; 2) multiplica los valores absolutos.
+
+          **Varios factores:** cuenta los negativos. Si hay una cantidad **par**, el producto es positivo; si es **impar**, negativo. $(-2) \times (-3) \times (-5) = -30$ (tres negativos).
+        definition: >-
+          Para enteros $a$ y $b$: $|a \times b| = |a| \times |b|$, y $a \times b$ es positivo si
+          $a$ y $b$ tienen el mismo signo y negativo si tienen signos distintos (si uno es 0,
+          el producto es 0).
+        rules:
+          - '$(+) \times (+) = (+)$ y $(-) \times (-) = (+)$.'
+          - '$(+) \times (-) = (-)$ y $(-) \times (+) = (-)$.'
+          - 'Número par de factores negativos: positivo; impar: negativo.'
+        examples:
+          - problem: 'Calcula $(-7) \times (-8)$.'
+            solution: |-
+              **Paso 1.** Signos iguales: positivo.
+              **Paso 2.** $7 \times 8 = 56$.
+              Resultado: $56$.
+          - problem: 'Calcula $(-2) \times 5 \times (-3) \times (-1)$.'
+            solution: |-
+              **Paso 1.** Factores negativos: $-2$, $-3$, $-1$: tres (impar) → negativo.
+              **Paso 2.** $2 \times 5 \times 3 \times 1 = 30$.
+              Resultado: $-30$.
+        common_errors:
+          - 'Aplicar la regla de la suma: en la suma, $(-7) + (-8) = -15$; en la multiplicación, $(-7) \times (-8) = +56$.'
+          - 'Con varios factores, contar mal los negativos.'
+        summary: >-
+          Signos iguales → positivo; distintos → negativo; luego multiplica valores absolutos.
+        check:
+          question: '¿Cuánto es $(-6) \times 4$?'
+          options: ['$-24$', '$24$', '$-10$']
+          answer: 0
+          explanation: 'Signos distintos → negativo; $6 \times 4 = 24$. Resultado $-24$.'
+    glossary:
+      - term: 'Regla de los signos (multiplicación)'
+        definition: 'Signos iguales dan producto positivo; signos distintos, negativo.'
+    practice: []
+
+  t09:
+    intro:
+      what: 'Son las reglas que cumple siempre la multiplicación: conmutativa, asociativa, elemento neutro, elemento absorbente y distributiva respecto de la suma.'
+      purpose: 'Permiten reordenar, agrupar y descomponer factores para calcular más fácilmente.'
+      importance: 'Justifican los algoritmos de multiplicación y el cálculo mental, y son esenciales en álgebra.'
+      foundations: 'El arreglo rectangular y la multiplicación como suma repetida.'
+      prerequisites:
+        - 'Propiedades de la suma (bloque 4, tema 6).'
+        - 'Multiplicación por varias cifras (bloque 6, tema 6).'
+      outcomes:
+        - Reconocer cada propiedad en una igualdad.
+        - Aplicar la propiedad distributiva para calcular.
+        - Usar el 1 y el 0 correctamente.
+      everyday_example: >-
+        3 cajas de 4 paquetes de 5 galletas: da igual calcular $(3 \times 4) \times 5$ o
+        $3 \times (4 \times 5)$; siempre son 60 galletas.
+    sections:
+      - title: 'Conmutativa, asociativa, neutro y absorbente'
+        concept: 'En la multiplicación, el orden y la agrupación de los factores no cambian el producto; multiplicar por 1 deja el número igual y por 0 da 0.'
+        explanation: |-
+          **Conmutativa:** $a \times b = b \times a$. Un arreglo de 3 filas de 5 girado es uno de 5 filas de 3: $3 \times 5 = 5 \times 3 = 15$.
+
+          **Asociativa:** $(a \times b) \times c = a \times (b \times c)$. Por ejemplo:
+          $$(2 \times 5) \times 7 = 10 \times 7 = 70 \qquad 2 \times (5 \times 7) = 2 \times 35 = 70$$
+          Elegir bien la agrupación facilita el cálculo: buscar parejas que den 10 o 100, como $2 \times 5$ o $4 \times 25$.
+
+          **Elemento neutro: el 1.** $a \times 1 = a$.
+
+          **Elemento absorbente: el 0.** $a \times 0 = 0$. Ningún grupo, o grupos vacíos, no dan nada.
+
+          Ojo con la diferencia con la suma: en la suma el neutro es 0; en la multiplicación, el neutro es 1 y el 0 «absorbe».
+        definition: >-
+          Para todos los números $a$, $b$, $c$: $a \times b = b \times a$;
+          $(a \times b) \times c = a \times (b \times c)$; $a \times 1 = a$; $a \times 0 = 0$.
+        rules:
+          - 'Conmutativa: $a \times b = b \times a$.'
+          - 'Asociativa: $(a \times b) \times c = a \times (b \times c)$.'
+          - 'Neutro: $a \times 1 = a$. Absorbente: $a \times 0 = 0$.'
+        examples:
+          - problem: 'Calcula de la forma más cómoda $4 \times 17 \times 25$.'
+            solution: |-
+              **Paso 1.** Conmutativa: $4 \times 25 \times 17$.
+              **Paso 2.** Asociativa: $(4 \times 25) \times 17 = 100 \times 17$.
+              **Paso 3.** $100 \times 17 = 1\,700$.
+              Resultado: $1\,700$.
+        common_errors:
+          - 'Creer que $a \times 0 = a$ (eso pasa en la suma: $a + 0 = a$).'
+          - 'Confundir neutro (1) y absorbente (0).'
+        summary: >-
+          Orden y agrupación no cambian el producto; 1 es el neutro y 0 el absorbente.
+        check:
+          question: '¿Qué propiedad se aplica en $9 \times 1 = 9$?'
+          options: ['Elemento neutro', 'Elemento absorbente', 'Conmutativa']
+          answer: 0
+          explanation: 'Multiplicar por 1 no cambia el número; el 1 es el elemento neutro. El absorbente es el 0.'
+      - title: 'Propiedad distributiva'
+        concept: 'Multiplicar un número por una suma es lo mismo que multiplicarlo por cada sumando y sumar los resultados.'
+        explanation: |-
+          $$a \times (b + c) = a \times b + a \times c$$
+
+          **Por qué es cierta.** Imagina un arreglo de 4 filas y $(10 + 3)$ columnas. Puedes contarlo de una vez, $4 \times 13 = 52$, o partirlo en dos bloques: uno de $4 \times 10 = 40$ y otro de $4 \times 3 = 12$. En total, $40 + 12 = 52$. El total no cambia.
+
+          **Cómo leer la expresión.** En $a \times b + a \times c$ se hacen **primero las multiplicaciones** y después la suma. (Esta regla del orden de las operaciones se estudia en el bloque 9; por ahora recuérdala así.)
+
+          **Usos:**
+
+          * **Descomponer para calcular:** $7 \times 23 = 7 \times (20 + 3) = 140 + 21 = 161$. ¡Es exactamente lo que hace el algoritmo de la multiplicación!
+          * **Funciona también con la resta:** $a \times (b - c) = a \times b - a \times c$. Por ejemplo, $6 \times 19 = 6 \times (20 - 1) = 120 - 6 = 114$.
+
+          El factor de fuera multiplica a **cada** sumando del paréntesis, no sólo al primero.
+        definition: >-
+          Para todos los números $a$, $b$, $c$: $a \times (b + c) = a \times b + a \times c$ y
+          $a \times (b - c) = a \times b - a \times c$.
+        rules:
+          - 'El factor multiplica a cada término del paréntesis.'
+          - 'Primero las multiplicaciones, después las sumas o restas.'
+          - 'Sirve para descomponer un factor en partes cómodas.'
+        examples:
+          - problem: 'Calcula $8 \times 54$ usando la propiedad distributiva.'
+            solution: |-
+              **Paso 1.** Descomponemos: $54 = 50 + 4$.
+              **Paso 2.** $8 \times 50 = 400$ y $8 \times 4 = 32$.
+              **Paso 3.** $400 + 32 = 432$.
+              Resultado: $432$.
+        common_errors:
+          - 'Multiplicar sólo el primer sumando: $8 \times (50 + 4) \neq 400 + 4$.'
+          - 'Sumar antes de multiplicar en $a \times b + a \times c$.'
+        summary: >-
+          $a \times (b + c) = a \times b + a \times c$: el factor se reparte sobre cada sumando.
+        check:
+          question: '¿Cuánto es $5 \times (10 + 6)$ aplicando la distributiva?'
+          options: ['$50 + 30 = 80$', '$50 + 6 = 56$', '$15 + 6 = 21$']
+          answer: 0
+          explanation: '$5 \times 10 = 50$ y $5 \times 6 = 30$; $50 + 30 = 80$. Comprobación: $5 \times 16 = 80$.'
+    glossary:
+      - term: 'Elemento absorbente'
+        definition: 'Número que al multiplicar da siempre él mismo: el 0.'
+      - term: 'Propiedad distributiva'
+        definition: 'Multiplicar por una suma es multiplicar por cada sumando y sumar: $a(b + c) = ab + ac$.'
+    practice: []
+
+  t10:
+    intro:
+      what: 'Son estrategias para multiplicar de cabeza usando las propiedades de la multiplicación.'
+      purpose: 'Calcular rápidamente precios, cantidades y estimaciones sin papel.'
+      importance: 'Da agilidad numérica y ayuda a revisar resultados escritos.'
+      foundations: 'Las propiedades distributiva, conmutativa y asociativa, y la multiplicación por 10.'
+      prerequisites:
+        - 'Multiplicación por múltiplos de 10 (bloque 6, tema 7).'
+        - 'Propiedades de la multiplicación (bloque 6, tema 9).'
+      outcomes:
+        - Multiplicar por 5 usando ×10 y la mitad.
+        - Multiplicar descomponiendo un factor.
+        - Multiplicar por 9 y por 11 usando ×10.
+      everyday_example: >-
+        12 refrescos a 9 pesos: $12 \times 10 = 120$, menos 12: 108 pesos.
+    sections:
+      - title: 'Estrategias de multiplicación mental'
+        concept: 'Las propiedades de la multiplicación permiten transformar un producto difícil en otros más fáciles.'
+        explanation: |-
+          **1. Por 5: multiplica por 10 y toma la mitad.** Como 5 es la mitad de 10:
+          $$48 \times 5: \quad 48 \times 10 = 480, \quad \text{mitad de } 480 = 240$$
+          (La mitad es repartir en 2 partes iguales; con números pares es sencillo: la mitad de 48 es 24.)
+
+          **2. Descomponer (distributiva).** Parte un factor en decenas y unidades:
+          $$23 \times 6 = 20 \times 6 + 3 \times 6 = 120 + 18 = 138$$
+
+          **3. Por 9 y por 11.** Usa el 10 y corrige:
+          $$34 \times 9 = 34 \times 10 - 34 = 340 - 34 = 306$$
+          $$34 \times 11 = 34 \times 10 + 34 = 340 + 34 = 374$$
+
+          **4. Doblar y dividir a la mitad.** Si un factor es par, puedes tomar su mitad y doblar el otro; el producto no cambia:
+          $$16 \times 25 = 8 \times 50 = 4 \times 100 = 400$$
+
+          Elige la estrategia según los números. Con práctica, las reconocerás de inmediato.
+        definition: >-
+          Las estrategias de cálculo mental reescriben un producto mediante propiedades:
+          $a \times 5 = (a \times 10)$ a la mitad; $a \times 9 = a \times 10 - a$;
+          $a \times 11 = a \times 10 + a$.
+        rules:
+          - '×5: ×10 y la mitad.'
+          - '×9: ×10 menos el número. ×11: ×10 más el número.'
+          - 'Mitad de un factor y doble del otro: mismo producto.'
+        examples:
+          - problem: 'Calcula mentalmente $27 \times 4$.'
+            solution: |-
+              **Paso 1.** ×4 es doblar dos veces.
+              **Paso 2.** Doble de 27: $54$. Doble de 54: $108$.
+              Resultado: $108$.
+          - problem: 'Calcula mentalmente $45 \times 9$.'
+            solution: |-
+              **Paso 1.** $45 \times 10 = 450$.
+              **Paso 2.** $450 - 45 = 405$.
+              Resultado: $405$.
+        common_errors:
+          - 'En ×9, restar 9 en lugar del número: $45 \times 9 \neq 450 - 9$.'
+          - 'Al descomponer, olvidar multiplicar las unidades.'
+        summary: >-
+          ×5 = ×10 y mitad; ×9 y ×11 a partir de ×10; descompón o dobla y divide a la mitad.
+        check:
+          question: 'Calcula mentalmente $62 \times 5$.'
+          options: ['310', '620', '305']
+          answer: 0
+          explanation: '$62 \times 10 = 620$ y la mitad es 310.'
+    glossary:
+      - term: 'Mitad'
+        definition: 'Cada una de las dos partes iguales en que se reparte un número.'
+    practice: []
+
+  t11:
+    intro:
+      what: 'Es la aplicación de la multiplicación para resolver problemas expresados con palabras.'
+      purpose: 'Resolver situaciones de grupos iguales, precios por unidad, arreglos y problemas de varios pasos.'
+      importance: 'Gran parte de los cálculos cotidianos (compras, sueldos, consumos) son multiplicaciones.'
+      foundations: 'El concepto de multiplicación y el método de resolución de problemas.'
+      prerequisites:
+        - 'Concepto de multiplicación (bloque 6, tema 1).'
+        - 'Resolución de problemas mediante suma y resta (bloques 4 y 5).'
+      outcomes:
+        - Reconocer problemas de multiplicación.
+        - Resolver problemas de precio total y de varios pasos.
+        - Comprobar con una estimación.
+      everyday_example: >-
+        Si trabajas 8 horas diarias durante 22 días, trabajas $8 \times 22 = 176$ horas al mes.
+    sections:
+      - title: 'Cuándo multiplicar'
+        concept: 'Un problema se resuelve multiplicando cuando una misma cantidad se repite varias veces.'
+        explanation: |-
+          Se usa el método de siempre: **comprender, plantear, calcular, comprobar**. Las situaciones típicas de multiplicación son:
+
+          | Situación | Ejemplo | Operación |
+          |---|---|---|
+          | Grupos iguales | 6 cajas de 12 lápices | $12 \times 6$ |
+          | Precio por unidad | 4 kg a 35 pesos el kg | $35 \times 4$ |
+          | Filas y columnas | 15 filas de 20 sillas | $20 \times 15$ |
+          | Ritmo constante | 60 km cada hora, durante 3 horas | $60 \times 3$ |
+          | «Veces más» | Gana el triple de 900 | $900 \times 3$ |
+
+          La clave es identificar **la cantidad que se repite** y **cuántas veces** se repite.
+
+          **Varios pasos.** Muchos problemas combinan multiplicación con suma o resta. Por ejemplo, el costo de una compra con varios productos: se multiplica el precio de cada tipo por su cantidad y luego se suman los resultados.
+
+          **Comprobación.** Estima con números redondos: $35 \times 4 \approx 40 \times 4 = 160$; el resultado exacto (140) debe estar cerca.
+        definition: >-
+          Un problema de multiplicación tiene una cantidad $a$ que se repite $b$ veces; su
+          solución es $a \times b$, interpretado con las unidades del problema.
+        rules:
+          - 'Identifica la cantidad que se repite y el número de veces.'
+          - 'Precio total = precio unitario × cantidad.'
+          - 'En problemas de varios pasos, nombra cada resultado parcial.'
+        examples:
+          - problem: 'Compras 3 cuadernos de 45 pesos y 5 bolígrafos de 12 pesos. ¿Cuánto pagas?'
+            solution: |-
+              **Paso 1.** Cuadernos: $45 \times 3 = 135$ pesos.
+              **Paso 2.** Bolígrafos: $12 \times 5 = 60$ pesos.
+              **Paso 3.** Total: $135 + 60 = 195$ pesos.
+              **Estimación.** $50 \times 3 + 10 \times 5 = 150 + 50 = 200$. ✓
+              Resultado: pagas $195$ pesos.
+        common_errors:
+          - 'Sumar el precio y la cantidad en lugar de multiplicarlos.'
+          - 'Olvidar uno de los productos en un problema de varios pasos.'
+        summary: >-
+          Multiplica cuando una cantidad se repite; en problemas de varios pasos, calcula
+          cada producto y combínalos.
+        check:
+          question: 'Un pasaje cuesta 85 pesos. ¿Cuánto cuestan 6 pasajes?'
+          options: ['510 pesos', '91 pesos', '480 pesos']
+          answer: 0
+          explanation: '$85 \times 6$: $5 \times 6 = 30$ → 0, llevo 3; $8 \times 6 + 3 = 51$: 510 pesos.'
+    glossary:
+      - term: 'Precio unitario'
+        definition: 'Precio de una sola unidad de un producto.'
+    practice: []

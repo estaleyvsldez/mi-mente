@@ -1,0 +1,639 @@
+block: b11
+intro: |-
+  Los números primos son los "ladrillos" con los que se construyen todos los demás números mediante la multiplicación. En este bloque aprenderás a distinguir primos y compuestos, el caso especial de los números 0 y 1, cómo identificar primos con eficacia (incluida la criba de Eratóstenes) y cómo descomponer cualquier número en factores primos. Esta descomposición es la herramienta central del MCD y del MCM (bloques 12 y 13).
+
+topics:
+  t01:
+    intro:
+      what: |-
+        Un número primo es un número natural mayor que 1 que tiene exactamente dos divisores: el 1 y él mismo. Por ejemplo, 2, 3, 5, 7, 11 y 13.
+      purpose: |-
+        Sirve para descomponer los números en sus piezas más básicas, que ya no se pueden partir en productos más pequeños.
+      importance: |-
+        Todo número mayor que 1 es primo o se construye multiplicando primos. Por eso los primos son la base de la factorización, del MCD, del MCM y de la simplificación de fracciones. También se usan en la seguridad informática.
+      foundations: |-
+        Se basa en el concepto de divisor y en la forma de listar los divisores de un número (bloque 10).
+      prerequisites:
+        - 'Concepto de divisor y divisores de un número (bloque 10, temas 2 y 4)'
+        - 'Criterios de divisibilidad (bloque 10, temas 5 y 6)'
+      outcomes:
+        - 'Decidir si un número pequeño es primo contando sus divisores'
+        - 'Recordar los primos menores que 30'
+      everyday_example: |-
+        Si tienes 13 fichas, sólo puedes ordenarlas en un rectángulo de una fila de 13 (o 13 filas de 1). Con 12 fichas puedes formar rectángulos de $2 \times 6$, $3 \times 4$… El 13 es primo; el 12 no.
+    sections:
+      - title: Exactamente dos divisores
+        concept: Un número primo sólo se puede dividir exactamente entre 1 y entre sí mismo.
+        explanation: |-
+          Listemos los divisores de algunos números:
+
+          - $D(13) = \{1, 13\}$: dos divisores.
+          - $D(7) = \{1, 7\}$: dos divisores.
+          - $D(15) = \{1, 3, 5, 15\}$: cuatro divisores.
+
+          El 13 y el 7 son **primos**: sus únicos divisores son el 1 y ellos mismos. El 15 no lo es, porque también se divide entre 3 y entre 5.
+
+          Los primos menores que 30 son:
+
+          $2, 3, 5, 7, 11, 13, 17, 19, 23, 29$
+
+          Observa que **el 2 es el único primo par**: cualquier otro número par es divisible entre 2, así que tiene al menos tres divisores (1, 2 y él mismo).
+
+          Hay **infinitos** números primos. Esto lo demostró Euclides hace más de 2000 años: por muchos primos que conozcas, siempre existe otro mayor.
+        definition: |-
+          Un **número primo** es un número natural mayor que 1 cuyos únicos divisores son 1 y él mismo; es decir, tiene exactamente dos divisores.
+        rules:
+          - 'Un primo tiene exactamente dos divisores: 1 y él mismo.'
+          - 'El 2 es el único primo par.'
+          - 'Hay infinitos números primos.'
+        examples:
+          - problem: '¿Es 17 un número primo?'
+            solution: |-
+              **Paso 1.** Probamos divisores entre 2 y 4 (pues $5 \times 5 = 25 > 17$): 17 es impar, $1 + 7 = 8$ no es múltiplo de 3, y no es divisible entre 4.
+
+              **Paso 2.** Sus únicos divisores son 1 y 17.
+
+              Resultado: 17 es primo.
+          - problem: '¿Es 21 un número primo?'
+            solution: |-
+              **Paso 1.** $2 + 1 = 3$: es divisible entre 3. $21 = 3 \times 7$.
+
+              **Paso 2.** $D(21) = \{1, 3, 7, 21\}$: tiene cuatro divisores.
+
+              Resultado: 21 no es primo.
+        common_errors:
+          - 'Creer que todos los impares son primos: 9, 15, 21 o 27 son impares y no son primos.'
+          - 'Creer que el 2 no es primo por ser par.'
+          - 'Considerar primo al 1 (lo verás en el tema 3).'
+        summary: |-
+          Un primo es un natural mayor que 1 con exactamente dos divisores. El 2 es el único primo par, y hay infinitos primos.
+        check:
+          question: '¿Cuál de estos números es primo?'
+          options: ['$21$', '$27$', '$23$']
+          answer: 2
+          explanation: |-
+            23 sólo es divisible entre 1 y 23. En cambio, $21 = 3 \times 7$ y $27 = 3 \times 9$.
+    glossary:
+      - {term: Número primo, definition: 'Natural mayor que 1 con exactamente dos divisores: 1 y él mismo.'}
+      - {term: Euclides, definition: 'Matemático griego que demostró que hay infinitos números primos.'}
+
+  t02:
+    intro:
+      what: |-
+        Un número compuesto es un número natural mayor que 1 que tiene más de dos divisores, como 4, 6, 8, 9 o 12.
+      purpose: |-
+        Sirve para reconocer los números que se pueden "partir" en un producto de números más pequeños.
+      importance: |-
+        Todo número compuesto se puede descomponer en factores primos (tema 7). Reconocerlos es el primer paso para factorizar y simplificar.
+      foundations: |-
+        Es la idea complementaria de número primo: un natural mayor que 1 que no es primo es compuesto.
+      prerequisites:
+        - 'Números primos (bloque 11, tema 1)'
+        - 'Divisores de un número (bloque 10, tema 4)'
+      outcomes:
+        - 'Reconocer números compuestos'
+        - 'Escribir un número compuesto como producto de dos números menores'
+      everyday_example: |-
+        Con 12 sillas puedes formar filas de 2, 3, 4 o 6 sillas: el 12 es compuesto. Con 11 sillas sólo puedes poner una fila de 11: el 11 es primo.
+    sections:
+      - title: Más de dos divisores
+        concept: Un número compuesto tiene algún divisor distinto de 1 y de sí mismo.
+        explanation: |-
+          Un número es **compuesto** si, además de 1 y de sí mismo, tiene algún otro divisor. Por ejemplo:
+
+          - $12 = 3 \times 4$: divisores $1, 2, 3, 4, 6, 12$.
+          - $49 = 7 \times 7$: divisores $1, 7, 49$.
+          - $51 = 3 \times 17$: divisores $1, 3, 17, 51$.
+
+          Dicho de otra forma: un número compuesto **se puede escribir como producto de dos números naturales menores que él y mayores que 1**. Para demostrar que un número es compuesto basta encontrar **un solo** divisor distinto de 1 y de él mismo.
+
+          Algunas pistas rápidas:
+
+          - Todo número par mayor que 2 es compuesto (es divisible entre 2).
+          - Todo número mayor que 5 que termina en 0 o 5 es compuesto (es divisible entre 5).
+          - Si la suma de cifras es múltiplo de 3 y el número es mayor que 3, es compuesto.
+        definition: |-
+          Un **número compuesto** es un número natural mayor que 1 que tiene más de dos divisores. Equivalentemente, es un número $n$ que puede escribirse como $n = a \times b$ con $1 < a, b < n$.
+        rules:
+          - 'Basta encontrar un divisor distinto de 1 y de $n$ para saber que $n$ es compuesto.'
+          - 'Todo natural mayor que 1 es primo o compuesto, nunca ambas cosas.'
+        examples:
+          - problem: '¿Es 91 primo o compuesto?'
+            solution: |-
+              **Paso 1.** No es par, no termina en 0 ni 5 y $9 + 1 = 10$ no es múltiplo de 3.
+
+              **Paso 2.** Probamos 7: $91 \div 7 = 13$, exacta.
+
+              Resultado: $91 = 7 \times 13$; es compuesto.
+        common_errors:
+          - 'Pensar que un número de aspecto "raro", como 51 o 91, es primo sin comprobarlo.'
+          - 'Creer que un compuesto debe tener muchos divisores: 49 sólo tiene tres.'
+        summary: |-
+          Un compuesto tiene más de dos divisores; basta encontrar uno distinto de 1 y de él mismo.
+        check:
+          question: '¿Cuál de estos números es compuesto?'
+          options: ['$17$', '$31$', '$51$']
+          answer: 2
+          explanation: |-
+            $5 + 1 = 6$ es múltiplo de 3, así que $51 = 3 \times 17$ es compuesto. 17 y 31 son primos.
+    glossary:
+      - {term: Número compuesto, definition: 'Natural mayor que 1 con más de dos divisores.'}
+
+  t03:
+    intro:
+      what: |-
+        El número 1 es un caso especial: tiene un único divisor (él mismo), por lo que no es primo ni compuesto.
+      purpose: |-
+        Sirve para entender bien las definiciones y no cometer errores al clasificar números o al factorizar.
+      importance: |-
+        Excluir el 1 de los primos hace que la factorización en primos de cada número sea única. Es un detalle que aparece en muchas preguntas.
+      foundations: |-
+        La definición de primo (exactamente dos divisores) y el papel del 1 como elemento neutro de la multiplicación (bloque 08).
+      prerequisites:
+        - 'Números primos y compuestos (bloque 11, temas 1 y 2)'
+        - 'Elemento neutro (bloque 08)'
+      outcomes:
+        - 'Clasificar correctamente el número 1'
+        - 'Explicar por qué el 1 no es primo'
+      everyday_example: |-
+        Con una sola ficha no puedes formar ningún rectángulo distinto de "una fila de una": el 1 no se descompone en nada más sencillo, pero tampoco se considera primo.
+    sections:
+      - title: Ni primo ni compuesto
+        concept: El 1 sólo tiene un divisor, así que no cumple la definición de primo ni la de compuesto.
+        explanation: |-
+          Los divisores de 1 son: $D(1) = \{1\}$. Sólo **uno**.
+
+          - Un primo debe tener **exactamente dos** divisores: el 1 no lo cumple.
+          - Un compuesto debe tener **más de dos**: tampoco.
+
+          Por tanto, **el 1 no es primo ni compuesto**.
+
+          ¿Por qué se decidió así? Si el 1 fuera primo, la descomposición en primos dejaría de ser única: $6 = 2 \times 3 = 1 \times 2 \times 3 = 1 \times 1 \times 2 \times 3 \ldots$ Excluyéndolo, cada número tiene una sola factorización prima (tema 7).
+
+          Otras propiedades del 1:
+
+          - Es **divisor de todos** los números: $n = 1 \times n$.
+          - Es el **elemento neutro** de la multiplicación (bloque 08): multiplicar por 1 no cambia nada, por eso no aporta nada en una factorización.
+        definition: |-
+          El número 1 tiene un único divisor; por definición **no es primo ni compuesto**. Es divisor de todo número natural.
+        rules:
+          - 'El 1 no es primo.'
+          - 'El 1 no es compuesto.'
+          - 'El 1 divide a todos los números.'
+        examples:
+          - problem: 'Clasifica los números 1, 2 y 4.'
+            solution: |-
+              **Paso 1.** $D(1) = \{1\}$: ni primo ni compuesto.
+
+              **Paso 2.** $D(2) = \{1, 2\}$: primo.
+
+              **Paso 3.** $D(4) = \{1, 2, 4\}$: compuesto.
+
+              Resultado: 1, ninguno; 2, primo; 4, compuesto.
+        common_errors:
+          - 'Decir que el 1 es primo "porque sólo se divide entre 1 y él mismo": esos dos divisores son el mismo número.'
+          - 'Incluir el 1 en la factorización prima de un número.'
+        summary: |-
+          El 1 tiene un solo divisor: no es primo ni compuesto. Excluirlo garantiza que la factorización prima sea única.
+        check:
+          question: '¿Qué es el número 1?'
+          options: ['Primo', 'Compuesto', 'Ni primo ni compuesto']
+          answer: 2
+          explanation: |-
+            El 1 sólo tiene un divisor. No llega a los dos divisores exactos que exige un primo, ni a los más de dos de un compuesto.
+    glossary:
+      - {term: Elemento neutro de la multiplicación, definition: 'El número 1, porque $a \times 1 = a$.'}
+
+  t04:
+    intro:
+      what: |-
+        El número 0 es otro caso especial: es múltiplo de todos los números, cualquier número distinto de 0 lo divide, y no es primo ni compuesto.
+      purpose: |-
+        Sirve para manejar con seguridad las preguntas sobre el 0 y evitar el error de dividir entre 0.
+      importance: |-
+        El 0 se comporta de forma distinta a los demás naturales en divisibilidad. Entenderlo evita errores conceptuales que reaparecen en fracciones y en álgebra.
+      foundations: |-
+        La propiedad $n \times 0 = 0$ (bloque 06) y la imposibilidad de dividir entre 0 (bloque 07).
+      prerequisites:
+        - 'Concepto de múltiplo y de divisor (bloque 10)'
+        - 'Números primos y compuestos (bloque 11, temas 1 y 2)'
+      outcomes:
+        - 'Responder correctamente sobre múltiplos y divisores del 0'
+        - 'Explicar por qué el 0 no es primo'
+      everyday_example: |-
+        Si tienes 0 caramelos, puedes "repartirlos" entre 5 personas y cada una recibe 0: el reparto es exacto. Pero no tiene sentido repartir 5 caramelos entre 0 personas.
+    sections:
+      - title: El 0 en la divisibilidad
+        concept: El 0 es múltiplo de todos los números, pero no puede ser divisor de ninguno.
+        explanation: |-
+          **El 0 es múltiplo de todos.** Para cualquier número $n$, $n \times 0 = 0$. Por eso el 0 aparece en la lista de múltiplos de cualquier número.
+
+          **Todo número distinto de 0 divide al 0.** $0 \div 5 = 0$, $0 \div 17 = 0$: divisiones exactas. Por tanto, el 0 tiene infinitos divisores.
+
+          **El 0 no puede ser divisor.** $5 \div 0$ no tiene sentido: no hay ningún número que multiplicado por 0 dé 5. Por eso nunca se dice que 0 divide a un número (bloque 07).
+
+          **El 0 no es primo ni compuesto.** Las palabras "primo" y "compuesto" sólo se aplican a naturales mayores que 1.
+
+          Resumen de los dos casos especiales:
+
+          - **1**: un único divisor; divide a todos.
+          - **0**: infinitos divisores; múltiplo de todos.
+        definition: |-
+          El 0 es múltiplo de todo número natural ($0 = n \times 0$), es divisible entre cualquier natural distinto de 0, no puede actuar como divisor y **no es primo ni compuesto**.
+        rules:
+          - '$0 = n \times 0$: el 0 es múltiplo de todos.'
+          - '$0 \div n = 0$ para $n \neq 0$.'
+          - 'Nunca se divide entre 0.'
+          - 'El 0 no es primo ni compuesto.'
+        examples:
+          - problem: '¿Verdadero o falso? "El 0 es múltiplo de 9" y "El 9 es múltiplo de 0".'
+            solution: |-
+              **Paso 1.** $9 \times 0 = 0$: el 0 es múltiplo de 9. Verdadero.
+
+              **Paso 2.** Los múltiplos de 0 son $0 \times k = 0$, siempre 0. El 9 no está. Falso.
+
+              Resultado: la primera es verdadera; la segunda, falsa.
+        common_errors:
+          - 'Decir que $7 \div 0 = 0$: la división entre 0 no está definida.'
+          - 'Confundir "0 es múltiplo de todos" con "0 es divisor de todos".'
+          - 'Pensar que el 0 es primo porque "no se puede dividir".'
+        summary: |-
+          El 0 es múltiplo de todos y cualquier número distinto de 0 lo divide, pero no se puede dividir entre 0. No es primo ni compuesto.
+        check:
+          question: '¿Cuál de estas afirmaciones es VERDADERA?'
+          options: ['El 0 es primo', 'El 0 es múltiplo de 7', '$7 \div 0 = 0$']
+          answer: 1
+          explanation: |-
+            $7 \times 0 = 0$, así que el 0 es múltiplo de 7. El 0 no es primo, y $7 \div 0$ no está definido.
+    glossary:
+      - {term: Casos especiales, definition: 'Los números 0 y 1, que no son primos ni compuestos.'}
+
+  t05:
+    intro:
+      what: |-
+        Identificar números primos es decidir, de forma eficiente, si un número es primo sin tener que probar todos los posibles divisores.
+      purpose: |-
+        Sirve para clasificar números grandes con pocas divisiones.
+      importance: |-
+        Al factorizar o simplificar, hay que saber cuándo un número ya es primo y no se puede descomponer más. Un método eficiente ahorra mucho trabajo.
+      foundations: |-
+        Si un número es compuesto, $n = a \times b$, el menor de los dos factores cumple $a \times a \le n$. Por eso basta probar divisores pequeños. También se usan los criterios de divisibilidad (bloque 10).
+      prerequisites:
+        - 'Números primos y compuestos (bloque 11, temas 1 y 2)'
+        - 'Criterios de divisibilidad (bloque 10, temas 5 y 6)'
+        - 'Idea de cuadrado y raíz cuadrada (bloque 09, temas 5 y 6)'
+      outcomes:
+        - 'Decidir si un número de hasta tres cifras es primo'
+        - 'Saber hasta qué número hay que probar'
+      everyday_example: |-
+        Para comprobar si 97 es primo no hace falta probar 96 divisores: bastan 2, 3, 5 y 7.
+    sections:
+      - title: Probar primos hasta donde haga falta
+        concept: Para saber si $n$ es primo basta probar los primos $p$ con $p \times p \le n$.
+        explanation: |-
+          Si $n$ es compuesto, se escribe $n = a \times b$ con $a \le b$. Entonces $a \times a \le a \times b = n$. Es decir, **todo compuesto tiene un divisor pequeño**, cuyo cuadrado no pasa de $n$.
+
+          Además, basta probar **números primos**: si 4 dividiera a $n$, también lo haría 2, que ya se probó.
+
+          **Método**
+
+          1. Prueba los primos $2, 3, 5, 7, 11, 13, \ldots$ usando los criterios o dividiendo.
+          2. Si alguno divide a $n$, el número es **compuesto**.
+          3. Detente cuando el primo siguiente, multiplicado por sí mismo, supere a $n$. Si ninguno lo dividió, $n$ es **primo**.
+
+          Con lo visto en el bloque 09: la condición $p \times p \le n$ equivale a $p \le \sqrt{n}$. Por ejemplo, para $n = 97$, como $10 \times 10 = 100 > 97$, basta llegar a los primos menores que 10: 2, 3, 5 y 7.
+        definition: |-
+          **Prueba de primalidad por división**: un natural $n > 1$ es primo si ningún primo $p$ con $p^2 \le n$ lo divide.
+        rules:
+          - 'Sólo hace falta probar divisores primos.'
+          - 'Se para cuando $p \times p > n$.'
+          - 'Si un primo divide a $n$ (y $p \ne n$), $n$ es compuesto.'
+        examples:
+          - problem: '¿Es 97 primo?'
+            solution: |-
+              **Paso 1.** Primos a probar: aquellos con $p \times p \le 97$: 2, 3, 5 y 7 ($11 \times 11 = 121 > 97$).
+
+              **Paso 2.** 97 es impar; $9 + 7 = 16$ no es múltiplo de 3; no termina en 0 ni 5; $97 = 7 \times 13 + 6$, residuo 6.
+
+              Resultado: ninguno lo divide; 97 es primo.
+          - problem: '¿Es 143 primo?'
+            solution: |-
+              **Paso 1.** $12 \times 12 = 144 > 143$: probamos 2, 3, 5, 7 y 11.
+
+              **Paso 2.** No es par; $1 + 4 + 3 = 8$; no termina en 0 ni 5; $143 = 7 \times 20 + 3$. Criterio del 11: $3 - 4 + 1 = 0$, sí es divisible.
+
+              Resultado: $143 = 11 \times 13$; es compuesto.
+        common_errors:
+          - 'Probar todos los números hasta $n - 1$: es correcto pero muy lento.'
+          - 'Detenerse demasiado pronto, antes de llegar al último primo con $p \times p \le n$.'
+          - 'Declarar primo un número sólo porque no es par ni múltiplo de 3 o 5 (por ejemplo, 49 o 91).'
+        summary: |-
+          Para saber si $n$ es primo, prueba los primos cuyo cuadrado no pase de $n$. Si ninguno lo divide, es primo.
+        check:
+          question: 'Para saber si 113 es primo, ¿cuál es la lista más corta de divisores que hay que probar?'
+          options: ['$2$, $3$, $5$ y $7$', 'Todos los números del 2 al 112', '$2$, $3$, $5$, $7$, $11$ y $13$']
+          answer: 0
+          explanation: |-
+            $11 \times 11 = 121 > 113$, así que basta llegar al 7. Probar todos hasta 112, o añadir 11 y 13, también funcionaría, pero es trabajo innecesario. Ninguno de 2, 3, 5 y 7 lo divide: 113 es primo.
+    glossary:
+      - {term: Prueba de primalidad, definition: 'Procedimiento para decidir si un número es primo.'}
+
+  t06:
+    intro:
+      what: |-
+        La criba de Eratóstenes es un método antiguo y sencillo para encontrar todos los números primos hasta un límite, tachando los múltiplos de cada primo.
+      purpose: |-
+        Sirve para obtener de una vez la lista completa de primos menores que un número, por ejemplo 100.
+      importance: |-
+        Es un método eficaz y visual que muestra por qué los primos son "lo que queda" cuando se eliminan todos los múltiplos. Tener a mano la lista de primos facilita factorizar.
+      foundations: |-
+        Un número compuesto es múltiplo de algún primo menor que él. Si se tachan todos esos múltiplos, sólo quedan los primos.
+      prerequisites:
+        - 'Múltiplos de un número (bloque 10, tema 3)'
+        - 'Identificación de números primos (bloque 11, tema 5)'
+      outcomes:
+        - 'Aplicar la criba hasta 50 o hasta 100'
+        - 'Explicar cuándo se puede terminar la criba'
+      everyday_example: |-
+        Es como un colador: los múltiplos "se quedan" en la red y los primos "pasan". Eratóstenes, sabio griego del siglo III a. C., lo usaba con tablillas.
+    sections:
+      - title: Tachar múltiplos
+        concept: Se escriben los números y se tachan los múltiplos de cada primo; los que quedan sin tachar son primos.
+        explanation: |-
+          **Procedimiento** (hasta 50):
+
+          1. Escribe los números del 2 al 50. (El 1 no es primo y se deja fuera o se tacha.)
+          2. El 2 es primo. Tacha sus múltiplos a partir de $2 \times 2 = 4$: $4, 6, 8, \ldots, 50$.
+          3. El siguiente número sin tachar, el 3, es primo. Tacha sus múltiplos a partir de $3 \times 3 = 9$: $9, 12, 15, \ldots$
+          4. El siguiente sin tachar, el 5, es primo. Tacha desde $5 \times 5 = 25$: $25, 30, 35, 40, 45, 50$.
+          5. El 7 es primo. Tacha desde $7 \times 7 = 49$: sólo el 49.
+          6. El siguiente primo es 11, pero $11 \times 11 = 121 > 50$: ya no hay nada nuevo que tachar. **Fin.**
+
+          **¿Por qué se empieza en $p \times p$?** Los múltiplos menores, como $2 \times 7$ o $3 \times 7$, ya fueron tachados por el 2 o el 3.
+
+          Primos hasta 50 (15 en total): $2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47$.
+
+          Hasta 100 se hace lo mismo, y también basta llegar al 7, porque $11 \times 11 = 121 > 100$. Se obtienen 25 primos.
+        definition: |-
+          La **criba de Eratóstenes** hasta $N$ consiste en tachar, para cada primo $p$ con $p^2 \le N$, todos sus múltiplos desde $p^2$ hasta $N$. Los números que quedan sin tachar (a partir del 2) son los primos menores o iguales que $N$.
+        rules:
+          - 'Cada número no tachado que encuentras es primo.'
+          - 'Los múltiplos de $p$ se tachan a partir de $p \times p$.'
+          - 'Se termina cuando $p \times p$ supera el límite.'
+        examples:
+          - problem: 'Usa la criba para hallar los primos hasta 30.'
+            solution: |-
+              **Paso 1.** Tachamos los múltiplos de 2 desde 4: quedan $2, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29$.
+
+              **Paso 2.** Tachamos los múltiplos de 3 desde 9: caen $9, 15, 21, 27$.
+
+              **Paso 3.** Tachamos los múltiplos de 5 desde 25: cae el $25$.
+
+              **Paso 4.** El siguiente primo es 7 y $7 \times 7 = 49 > 30$: terminamos.
+
+              Resultado: $2, 3, 5, 7, 11, 13, 17, 19, 23, 29$ (10 primos).
+        common_errors:
+          - 'Tachar el propio primo junto con sus múltiplos.'
+          - 'Dejar el 1 sin tachar como si fuera primo.'
+          - 'Seguir tachando con primos cuyo cuadrado ya supera el límite (no es un error de resultado, pero es trabajo inútil).'
+        summary: |-
+          En la criba se tachan los múltiplos de cada primo empezando por su cuadrado; lo que queda son primos. Se termina cuando el cuadrado del primo supera el límite.
+        check:
+          question: 'En la criba hasta 100, ¿cuál es el último primo cuyos múltiplos hace falta tachar?'
+          options: ['$5$', '$7$', '$11$']
+          answer: 1
+          explanation: |-
+            $7 \times 7 = 49 \le 100$, pero $11 \times 11 = 121 > 100$. Todos los múltiplos de 11 menores que 100 ya fueron tachados por primos menores.
+    glossary:
+      - {term: Criba de Eratóstenes, definition: 'Método para hallar todos los primos hasta un límite tachando múltiplos.'}
+
+  t07:
+    intro:
+      what: |-
+        Descomponer un número en factores primos es escribirlo como un producto en el que todos los factores son números primos, por ejemplo $60 = 2 \times 2 \times 3 \times 5$.
+      purpose: |-
+        Sirve para conocer la "receta" exacta de un número: de qué primos está hecho y cuántas veces aparece cada uno.
+      importance: |-
+        Es la herramienta principal para calcular MCD y MCM (bloques 12 y 13), simplificar fracciones (bloque 14) y contar divisores.
+      foundations: |-
+        El **teorema fundamental de la aritmética**: todo número natural mayor que 1 es primo o se puede escribir como producto de primos, y esa descomposición es única salvo el orden. Usa la notación de potencias vista en el bloque 09 (tema 5).
+      prerequisites:
+        - 'Números primos e identificación de primos (bloque 11, temas 1 y 5)'
+        - 'Criterios de divisibilidad (bloque 10)'
+        - 'Notación de potencias (bloque 09, tema 5)'
+      outcomes:
+        - 'Factorizar números con el método de divisiones sucesivas'
+        - 'Factorizar con un árbol de factores'
+        - 'Escribir la factorización con potencias'
+      everyday_example: |-
+        Igual que una receta indica cuántos huevos, tazas de harina y cucharadas de azúcar lleva un pastel, la factorización $360 = 2^3 \times 3^2 \times 5$ indica cuántos "doses", "treses" y "cincos" forman el 360.
+    sections:
+      - title: El método de divisiones sucesivas
+        concept: Se divide el número entre el menor primo posible una y otra vez hasta llegar a 1.
+        explanation: |-
+          **Procedimiento**
+
+          1. Divide el número entre el **menor primo** que lo divida (usa los criterios: 2, 3, 5…).
+          2. Repite con el cociente.
+          3. Continúa hasta que el cociente sea 1.
+          4. La factorización es el producto de todos los primos que usaste.
+
+          Suele escribirse en dos columnas: a la izquierda los cocientes y a la derecha los primos.
+
+          | Número | Primo |
+          |---|---|
+          | 360 | 2 |
+          | 180 | 2 |
+          | 90 | 2 |
+          | 45 | 3 |
+          | 15 | 3 |
+          | 5 | 5 |
+          | 1 | |
+
+          Así, $360 = 2 \times 2 \times 2 \times 3 \times 3 \times 5$. Con potencias (recuerda: $2^3 = 2 \times 2 \times 2$) se escribe de forma compacta:
+
+          $$360 = 2^3 \times 3^2 \times 5$$
+
+          Puedes comprobarlo multiplicando: $8 \times 9 \times 5 = 72 \times 5 = 360$.
+
+          El **teorema fundamental de la aritmética** asegura que, se haga como se haga, siempre se obtienen los mismos primos con las mismas repeticiones.
+        definition: |-
+          La **factorización prima** de un natural $n > 1$ es su expresión como producto de números primos, $n = p_1^{a_1} \times p_2^{a_2} \times \cdots$, que es única salvo el orden de los factores.
+        rules:
+          - 'Divide siempre entre el menor primo posible.'
+          - 'Termina cuando el cociente sea 1.'
+          - 'Agrupa los primos repetidos con potencias.'
+          - 'Comprueba multiplicando los factores.'
+        examples:
+          - problem: 'Descompón 60 en factores primos.'
+            solution: |-
+              **Paso 1.** $60 \div 2 = 30$.
+
+              **Paso 2.** $30 \div 2 = 15$.
+
+              **Paso 3.** $15 \div 3 = 5$.
+
+              **Paso 4.** $5 \div 5 = 1$.
+
+              Resultado: $60 = 2 \times 2 \times 3 \times 5 = 2^2 \times 3 \times 5$. Comprobación: $4 \times 3 \times 5 = 60$.
+        common_errors:
+          - 'Dejar factores que no son primos, como $60 = 4 \times 15$.'
+          - 'Incluir el 1 como factor.'
+          - 'Escribir $2^3$ cuando el 2 apareció sólo dos veces.'
+        summary: |-
+          Divide entre el menor primo una y otra vez hasta llegar a 1; agrupa con potencias y comprueba multiplicando.
+        check:
+          question: '¿Cuál es la factorización prima de 72?'
+          options: ['$2^3 \times 3^2$', '$2^2 \times 3^3$', '$8 \times 9$']
+          answer: 0
+          explanation: |-
+            $72 \div 2 = 36$, $\div 2 = 18$, $\div 2 = 9$, $\div 3 = 3$, $\div 3 = 1$: $72 = 2^3 \times 3^2$. La segunda opción vale 108, y $8 \times 9$ no usa factores primos.
+      - title: El árbol de factores
+        concept: Se parte el número en dos factores cualesquiera y se sigue partiendo cada uno hasta que todas las ramas terminen en primos.
+        explanation: |-
+          Otra forma de factorizar es el **árbol de factores**:
+
+          1. Escribe el número arriba.
+          2. Divídelo en dos factores cuyo producto sea ese número (los que veas más fáciles).
+          3. Si un factor es primo, esa rama termina. Si no, vuelve a dividirlo.
+          4. Al final, multiplica todos los primos de las "hojas".
+
+          Ejemplo con 84:
+
+          - $84 = 4 \times 21$
+          - $4 = 2 \times 2$ y $21 = 3 \times 7$
+
+          Hojas: $2, 2, 3, 7$. Por tanto, $84 = 2^2 \times 3 \times 7$.
+
+          Si hubieras empezado con $84 = 2 \times 42$, luego $42 = 6 \times 7$ y $6 = 2 \times 3$, obtendrías las mismas hojas. Esto ilustra que la factorización prima es **única**.
+        definition: |-
+          Un **árbol de factores** es un esquema en el que cada número compuesto se divide en dos factores, hasta que todos los extremos son primos; el producto de los extremos es la factorización prima.
+        rules:
+          - 'Cualquier primera partición sirve: el resultado final es el mismo.'
+          - 'Una rama termina cuando llega a un primo.'
+        examples:
+          - problem: 'Factoriza 150 con un árbol.'
+            solution: |-
+              **Paso 1.** $150 = 10 \times 15$.
+
+              **Paso 2.** $10 = 2 \times 5$ y $15 = 3 \times 5$.
+
+              **Paso 3.** Hojas: $2, 5, 3, 5$.
+
+              Resultado: $150 = 2 \times 3 \times 5^2$. Comprobación: $2 \times 3 \times 25 = 150$.
+        common_errors:
+          - 'Detener una rama en un número compuesto.'
+          - 'Olvidar alguna hoja al escribir el resultado.'
+        summary: |-
+          En el árbol de factores se parte el número hasta llegar a primos. Se empiece como se empiece, la factorización es la misma.
+        check:
+          question: 'Un árbol empieza con $90 = 9 \times 10$. ¿Cuál es la factorización final?'
+          options: ['$2 \times 3^2 \times 5$', '$9 \times 2 \times 5$', '$2 \times 3 \times 5$']
+          answer: 0
+          explanation: |-
+            $9 = 3 \times 3$ y $10 = 2 \times 5$: $90 = 2 \times 3^2 \times 5$. La segunda opción deja el 9 sin descomponer y la tercera pierde un 3 (vale 30).
+    glossary:
+      - {term: Factorización prima, definition: 'Expresión de un número como producto de primos.'}
+      - {term: Teorema fundamental de la aritmética, definition: 'Todo natural mayor que 1 se escribe de forma única (salvo el orden) como producto de primos.'}
+      - {term: Árbol de factores, definition: 'Esquema que descompone un número rama por rama hasta llegar a primos.'}
+
+  t08:
+    intro:
+      what: |-
+        La factorización prima no es sólo un ejercicio: permite reconstruir números, decidir divisibilidades, contar divisores y preparar el cálculo del MCD y del MCM.
+      purpose: |-
+        Sirve para responder preguntas sobre un número leyendo su "receta" de primos, sin hacer divisiones largas.
+      importance: |-
+        Es el puente hacia los bloques 12 (MCD), 13 (MCM) y 14 (simplificación de fracciones), donde la factorización es la técnica más potente.
+      foundations: |-
+        Un número $d$ divide a $n$ exactamente cuando cada primo de $d$ aparece en $n$ al menos tantas veces como en $d$.
+      prerequisites:
+        - 'Descomposición en factores primos (bloque 11, tema 7)'
+        - 'Divisores de un número (bloque 10, tema 4)'
+      outcomes:
+        - 'Obtener un número a partir de su factorización'
+        - 'Decidir si un número divide a otro usando sus factorizaciones'
+        - 'Contar los divisores de un número'
+      everyday_example: |-
+        Si sabes que $360 = 2^3 \times 3^2 \times 5$, puedes saber de inmediato que 360 se puede repartir en 18 grupos iguales ($18 = 2 \times 3^2$) pero no en 27 ($27 = 3^3$).
+    sections:
+      - title: Reconstruir y comprobar divisibilidad
+        concept: Con la factorización se recupera el número y se decide si otro número lo divide comparando los primos.
+        explanation: |-
+          **Reconstruir el número.** Basta multiplicar: $2^2 \times 3 \times 5 = 4 \times 3 \times 5 = 60$.
+
+          **Comprobar divisibilidad.** Para que $d$ divida a $n$, cada primo de $d$ debe aparecer en $n$ **al menos tantas veces** como en $d$. Así, todo lo que "pide" $d$ está disponible en $n$.
+
+          Con $360 = 2^3 \times 3^2 \times 5$:
+
+          - $18 = 2 \times 3^2$: pide un 2 (hay tres) y dos treses (hay dos). **Sí divide**: $360 \div 18 = 20$.
+          - $27 = 3^3$: pide tres treses, pero 360 sólo tiene dos. **No divide**.
+          - $14 = 2 \times 7$: pide un 7, y 360 no tiene ninguno. **No divide**.
+
+          El cociente se obtiene "quitando" los primos de $d$: $360 \div 18 = 2^2 \times 5 = 20$.
+        definition: |-
+          Si $n = p_1^{a_1} \times p_2^{a_2} \times \cdots$, un número $d$ divide a $n$ si y sólo si $d$ sólo contiene primos de $n$ y cada uno con un exponente menor o igual que el que tiene en $n$.
+        rules:
+          - 'Para reconstruir, multiplica los factores.'
+          - '$d$ divide a $n$ si cada primo de $d$ aparece en $n$ al menos las mismas veces.'
+        examples:
+          - problem: '¿Qué número es $2^3 \times 7$? ¿Es divisible entre 4? ¿Y entre 3?'
+            solution: |-
+              **Paso 1.** $2^3 \times 7 = 8 \times 7 = 56$.
+
+              **Paso 2.** $4 = 2^2$: el 56 tiene tres doses. Sí divide ($56 \div 4 = 14$).
+
+              **Paso 3.** El 56 no tiene ningún 3. No es divisible entre 3.
+
+              Resultado: es el 56, divisible entre 4 y no entre 3.
+        common_errors:
+          - 'Pensar que basta con que $d$ tenga los mismos primos, sin mirar cuántas veces aparecen.'
+          - 'Sumar los factores en lugar de multiplicarlos al reconstruir.'
+        summary: |-
+          La factorización permite reconstruir el número y decidir divisibilidades comparando cuántas veces aparece cada primo.
+        check:
+          question: 'Si $n = 2^2 \times 3^3$, ¿cuál de estos números divide a $n$?'
+          options: ['$8$', '$5$', '$18$']
+          answer: 2
+          explanation: |-
+            $18 = 2 \times 3^2$: $n$ tiene dos doses y tres treses, suficientes. $8 = 2^3$ necesita tres doses y $5$ no aparece en $n$.
+      - title: Contar divisores
+        concept: El número de divisores se obtiene multiplicando cada exponente más uno.
+        explanation: |-
+          Cada divisor de $72 = 2^3 \times 3^2$ se forma eligiendo:
+
+          - cuántos doses usar: ninguno, uno, dos o tres (**4 opciones**, es decir, $3 + 1$);
+          - cuántos treses usar: ninguno, uno o dos (**3 opciones**, es decir, $2 + 1$).
+
+          Cada combinación da un divisor distinto, así que hay $4 \times 3 = 12$ divisores:
+
+          $1, 2, 3, 4, 6, 8, 9, 12, 18, 24, 36, 72$
+
+          **Regla**: suma 1 a cada exponente de la factorización y multiplica los resultados. Si un primo aparece sin exponente escrito, su exponente es 1.
+        definition: |-
+          Si $n = p_1^{a_1} \times p_2^{a_2} \times \cdots \times p_k^{a_k}$, el número de divisores de $n$ es $(a_1 + 1) \times (a_2 + 1) \times \cdots \times (a_k + 1)$.
+        rules:
+          - 'Número de divisores = producto de (exponente + 1).'
+          - 'Un primo sin exponente escrito tiene exponente 1.'
+        examples:
+          - problem: '¿Cuántos divisores tiene $360 = 2^3 \times 3^2 \times 5$?'
+            solution: |-
+              **Paso 1.** Exponentes: 3, 2 y 1.
+
+              **Paso 2.** $(3 + 1) \times (2 + 1) \times (1 + 1) = 4 \times 3 \times 2 = 24$.
+
+              Resultado: 360 tiene 24 divisores.
+        common_errors:
+          - 'Multiplicar los exponentes sin sumarles 1.'
+          - 'Sumar en lugar de multiplicar: $(3 + 1) + (2 + 1)$ no da el número de divisores.'
+        summary: |-
+          Para contar divisores, suma 1 a cada exponente y multiplica. Funciona porque cada divisor es una elección de cuántas veces usar cada primo.
+        check:
+          question: '¿Cuántos divisores tiene $2^2 \times 5$?'
+          options: ['$6$', '$3$', '$4$']
+          answer: 0
+          explanation: |-
+            $(2 + 1) \times (1 + 1) = 6$. El número es 20 y sus divisores son $1, 2, 4, 5, 10, 20$.
+    glossary:
+      - {term: Exponente, definition: 'En una factorización, cuántas veces aparece cada primo.'}
+      - {term: Número de divisores, definition: 'Cantidad total de divisores de un número; se obtiene con la regla de "exponente más uno".'}

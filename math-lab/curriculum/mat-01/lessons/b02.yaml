@@ -1,0 +1,775 @@
+block: b02
+intro: >-
+  En este bloque aprenderás cómo se escriben los números. Verás qué es un sistema de
+  numeración, por qué el nuestro es decimal y posicional, cómo funcionan los
+  sistemas binario, octal y hexadecimal que usan las computadoras, y cómo leer,
+  escribir y descomponer números grandes.
+
+topics:
+  t01:
+    intro:
+      what: 'Un sistema de numeración es un conjunto de símbolos y reglas para escribir y nombrar números.'
+      purpose: 'Sirve para representar cualquier cantidad con pocos símbolos y de forma que todos la entiendan igual.'
+      importance: 'Entender cómo está construido un sistema permite leer números en otras bases y comprender por qué las cuentas funcionan.'
+      foundations: 'La idea de agrupar unidades (de 10 en 10, de 2 en 2…) y de dar valor a los símbolos según su posición.'
+      prerequisites:
+        - 'Historia y evolución de la aritmética (bloque 1, tema 2).'
+        - 'Número y cifra (bloque 1, tema 6).'
+      outcomes:
+        - Identificar la base de un sistema por el número de cifras que usa.
+        - Decidir si un número está bien escrito en una base dada.
+        - Distinguir sistemas aditivos y posicionales.
+      everyday_example: >-
+        Los huevos se venden por docenas (grupos de 12) y el tiempo se cuenta de 60 en
+        60: son formas de agrupar, igual que nuestro sistema agrupa de 10 en 10.
+    sections:
+      - title: 'Símbolos, reglas y base'
+        concept: 'Un sistema de numeración posicional queda determinado por su base, que es la cantidad de cifras distintas que usa.'
+        explanation: |-
+          Para escribir números necesitamos **símbolos** (cifras) y **reglas** para combinarlos. Hay dos grandes tipos de sistemas:
+
+          * **Aditivos:** cada símbolo tiene un valor fijo y se suman. En el sistema romano, $\text{XXI} = 10 + 10 + 1 = 21$.
+          * **Posicionales:** el valor de cada cifra depende del **lugar** que ocupa. En $21$, el 2 vale 20 y el 1 vale 1; en $12$, el 1 vale 10 y el 2 vale 2.
+
+          En un sistema posicional, la **base** dice cuántas unidades de un lugar forman una unidad del lugar siguiente. También es la **cantidad de cifras** que se usan, contando el 0:
+
+          | Sistema | Base | Cifras |
+          |---|---|---|
+          | Binario | 2 | 0, 1 |
+          | Octal | 8 | 0 a 7 |
+          | Decimal | 10 | 0 a 9 |
+          | Hexadecimal | 16 | 0 a 9 y A a F |
+
+          Observa que **la cifra más grande es una menos que la base**. En base 8 no existe la cifra 8: ocho unidades ya forman un grupo y se escribe «10». Para indicar la base se usa un subíndice: $(17)_8$ es el número «uno siete» escrito en base 8.
+        definition: >-
+          Un sistema de numeración posicional de base $b$ usa $b$ cifras, de $0$ a $b - 1$,
+          y cada posición vale $b$ veces la posición situada a su derecha.
+        rules:
+          - 'La base es igual a la cantidad de cifras distintas.'
+          - 'La cifra mayor de la base $b$ es $b - 1$.'
+          - 'Un número es válido en una base sólo si todas sus cifras son menores que la base.'
+        examples:
+          - problem: '¿Es $(3482)_8$ un número válido en base 8?'
+            solution: |-
+              **Paso 1.** En base 8 sólo existen las cifras 0, 1, 2, 3, 4, 5, 6 y 7.
+              **Paso 2.** Revisamos las cifras: 3 sí, 4 sí, 8 no, 2 sí.
+              **Paso 3.** La cifra 8 no existe en base 8.
+              Resultado: no es válido.
+        common_errors:
+          - 'Creer que la base 8 usa las cifras 1 a 8: usa 0 a 7.'
+          - 'Pensar que el valor de una cifra es siempre el mismo: en un sistema posicional depende del lugar.'
+        summary: >-
+          Un sistema posicional de base $b$ usa $b$ cifras (de 0 a $b - 1$) y el valor de
+          cada cifra depende de su posición.
+        check:
+          question: '¿Cuántas cifras distintas usa el sistema de base 16?'
+          options: ['16', '15', '10']
+          answer: 0
+          explanation: 'La base es la cantidad de cifras. Base 16 usa 0–9 y A–F, es decir, 16 cifras; la mayor (F) vale 15.'
+    glossary:
+      - term: 'Base'
+        definition: 'Cantidad de cifras de un sistema posicional y número de unidades que forman un grupo del orden siguiente.'
+      - term: 'Sistema posicional'
+        definition: 'Sistema en que el valor de una cifra depende del lugar que ocupa.'
+      - term: 'Sistema aditivo'
+        definition: 'Sistema en que cada símbolo tiene un valor fijo y los valores se suman.'
+    practice: []
+
+  t02:
+    intro:
+      what: 'El sistema decimal es el sistema de numeración posicional de base 10 que usamos a diario.'
+      purpose: 'Permite escribir cualquier número con sólo diez cifras y hacer cuentas por columnas.'
+      importance: 'Es el sistema de todas las cuentas del curso y de la vida diaria; entenderlo es entender cómo funcionan la suma, la resta y las demás operaciones.'
+      foundations: 'Agrupar de 10 en 10, la idea de base y el uso del cero.'
+      prerequisites:
+        - 'Qué es un sistema de numeración (bloque 2, tema 1).'
+      outcomes:
+        - Explicar por qué el sistema decimal es posicional y de base 10.
+        - Reconocer el valor de cada cifra en un número.
+        - Agrupar unidades en decenas y centenas.
+      everyday_example: >-
+        Con monedas de 1, billetes de 10 y billetes de 100 puedes pagar cualquier
+        cantidad: '10 monedas equivalen a un billete de 10 y 10 billetes de 10, a uno de 100.'
+    sections:
+      - title: 'Agrupar de diez en diez'
+        concept: 'En el sistema decimal, cada diez unidades de un orden forman una unidad del orden siguiente.'
+        explanation: |-
+          El sistema decimal usa diez cifras: $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$. Probablemente es de base 10 porque tenemos diez dedos.
+
+          Cuando contamos y llegamos a nueve, ya no hay más cifras. Entonces **agrupamos**: diez unidades forman **una decena**, y escribimos $10$ («una decena y cero unidades»). Del mismo modo:
+
+          * 10 unidades = 1 decena
+          * 10 decenas = 1 centena (100 unidades)
+          * 10 centenas = 1 unidad de millar (1000 unidades)
+
+          Así, en $347$ hay **3 centenas, 4 decenas y 7 unidades**. Cada lugar vale **diez veces** lo que vale el lugar de su derecha:
+
+          | Centenas | Decenas | Unidades |
+          |---|---|---|
+          | 3 | 4 | 7 |
+          | $300$ | $40$ | $7$ |
+
+          y por eso $347 = 300 + 40 + 7$.
+
+          El **cero** es indispensable: en $307$ indica que no hay decenas. Sin él no podríamos distinguir $37$ de $307$.
+        definition: >-
+          El sistema decimal es el sistema posicional de base 10: usa las cifras 0 a 9 y
+          cada posición vale diez veces la posición de su derecha.
+        rules:
+          - '10 unidades de un orden forman 1 unidad del orden siguiente.'
+          - 'El valor de una cifra es la cifra por el valor de su lugar (1, 10, 100, 1000…).'
+          - 'El cero indica que un lugar está vacío.'
+        examples:
+          - problem: '¿Cuánto vale cada cifra del número $2\,054$?'
+            solution: |-
+              **Paso 1.** Colocamos las cifras desde la derecha: 4 unidades, 5 decenas, 0 centenas, 2 unidades de millar.
+              **Paso 2.** Valores: el 4 vale $4$; el 5 vale $50$; el 0 vale $0$; el 2 vale $2000$.
+              **Paso 3.** Comprobamos: $2000 + 0 + 50 + 4 = 2054$.
+              Resultado: $2000$, $0$, $50$ y $4$.
+        common_errors:
+          - 'Leer las posiciones desde la izquierda: siempre se empieza a contar por las unidades, a la derecha.'
+          - 'Ignorar el cero: en 2 054 hay 0 centenas, y eso cambia el valor de las demás cifras.'
+        summary: >-
+          El sistema decimal agrupa de 10 en 10; cada cifra vale según su lugar y el cero
+          marca los lugares vacíos.
+        check:
+          question: '¿Cuánto vale la cifra 6 en el número $3\,620$?'
+          options: ['600', '60', '6']
+          answer: 0
+          explanation: 'Desde la derecha, 0 está en las unidades, 2 en las decenas y 6 en las centenas; vale $600$.'
+    glossary:
+      - term: 'Decena'
+        definition: 'Grupo de 10 unidades.'
+      - term: 'Centena'
+        definition: 'Grupo de 10 decenas, es decir, 100 unidades.'
+      - term: 'Cifra'
+        definition: 'Cada uno de los símbolos 0 a 9 con que se escriben los números.'
+    practice: []
+
+  t03:
+    intro:
+      what: 'El sistema binario es el sistema posicional de base 2, que sólo usa las cifras 0 y 1.'
+      purpose: 'Es el lenguaje interno de las computadoras, que trabajan con dos estados (apagado y encendido).'
+      importance: 'Ayuda a entender que la forma de escribir un número no cambia el número, y refuerza la idea de valor posicional.'
+      foundations: 'Agrupar de 2 en 2; cada posición vale el doble de la de su derecha.'
+      prerequisites:
+        - 'Qué es un sistema de numeración (bloque 2, tema 1).'
+        - 'Sistema decimal (bloque 2, tema 2).'
+      outcomes:
+        - Escribir los valores de las posiciones en binario.
+        - Convertir un número binario a decimal.
+        - Convertir un número decimal pequeño a binario.
+      everyday_example: >-
+        Una fila de interruptores, cada uno encendido (1) o apagado (0), puede
+        representar un número: así guardan los datos las computadoras.
+    sections:
+      - title: 'De binario a decimal'
+        concept: 'En binario cada posición vale el doble de la anterior (1, 2, 4, 8, 16…), y el número es la suma de los valores de las posiciones que tienen un 1.'
+        explanation: |-
+          En base 2 sólo hay dos cifras, 0 y 1. Dos unidades forman un grupo del orden siguiente, así que cada lugar vale **el doble** del lugar de su derecha:
+
+          | … | 5.º | 4.º | 3.º | 2.º | 1.º |
+          |---|---|---|---|---|---|
+          | … | 16 | 8 | 4 | 2 | 1 |
+
+          (Duplicar es sumar un número consigo mismo: $1 + 1 = 2$, $2 + 2 = 4$, $4 + 4 = 8$, $8 + 8 = 16$.)
+
+          Para pasar de binario a decimal:
+
+          1. Escribe debajo de cada cifra el valor de su posición, empezando por la **derecha** con 1.
+          2. Suma los valores de las posiciones donde hay un **1** (las que tienen 0 no aportan nada).
+
+          Por ejemplo, $(101)_2$ tiene un 1 en la posición que vale 4 y otro en la que vale 1: $4 + 1 = 5$. Es decir, $(101)_2 = 5$.
+
+          En el bloque 6 verás que estos valores son **potencias de 2**: $2 \times 2 = 4$, $2 \times 2 \times 2 = 8$, etc. Por ahora basta con duplicar.
+        definition: >-
+          En base 2 la posición $k$-ésima desde la derecha (empezando en la primera)
+          vale el doble de la anterior: $1, 2, 4, 8, 16, 32, 64, 128, \dots$
+        rules:
+          - 'Sólo existen las cifras 0 y 1.'
+          - 'Los valores de las posiciones son 1, 2, 4, 8, 16, 32… de derecha a izquierda.'
+          - 'El valor decimal es la suma de los valores de las posiciones con cifra 1.'
+        examples:
+          - problem: 'Convierte $(1011)_2$ a decimal.'
+            solution: |-
+              **Paso 1.** Valores de las posiciones de derecha a izquierda: 1, 2, 4, 8.
+              **Paso 2.** Cifras de derecha a izquierda: 1, 1, 0, 1. Hay un 1 en las posiciones de 1, 2 y 8.
+              **Paso 3.** Sumamos: $8 + 2 + 1 = 11$.
+              Resultado: $(1011)_2 = 11$.
+          - problem: 'Convierte $(11010)_2$ a decimal.'
+            solution: |-
+              **Paso 1.** Posiciones de derecha a izquierda: 1, 2, 4, 8, 16.
+              **Paso 2.** Cifras de derecha a izquierda: 0, 1, 0, 1, 1. Hay 1 en las posiciones de 2, 8 y 16.
+              **Paso 3.** $16 + 8 + 2 = 26$.
+              Resultado: $(11010)_2 = 26$.
+        common_errors:
+          - 'Empezar a asignar valores por la izquierda: el valor 1 corresponde siempre a la cifra de la derecha.'
+          - 'Leer $(10)_2$ como «diez»: vale 2 (una vez el 2 y cero unos).'
+        summary: >-
+          En binario las posiciones valen 1, 2, 4, 8, 16…; para pasar a decimal se suman
+          los valores de las posiciones con un 1.
+        check:
+          question: '¿Cuánto vale $(110)_2$ en decimal?'
+          options: ['6', '3', '110']
+          answer: 0
+          explanation: 'Posiciones 4, 2, 1 con cifras 1, 1, 0: $4 + 2 = 6$. El 3 sale de leer las cifras al revés.'
+      - title: 'De decimal a binario'
+        concept: 'Para pasar un número a binario se divide entre 2 repetidamente y se leen los restos de abajo hacia arriba.'
+        explanation: |-
+          Aún no hemos estudiado la división (llega en el bloque 7), pero sólo necesitamos una idea sencilla: **dividir entre 2** es formar parejas. El **cociente** es cuántas parejas salen y el **resto** es lo que sobra, que sólo puede ser 0 o 1. Por ejemplo, con 13 objetos se forman 6 parejas (12 objetos) y sobra 1: «13 entre 2 da 6, resto 1».
+
+          Método de las **divisiones sucesivas**:
+
+          1. Divide el número entre 2 y anota el resto.
+          2. Divide el cociente otra vez entre 2 y anota el resto.
+          3. Repite hasta que el cociente sea 0.
+          4. Escribe los restos **del último al primero**: ese es el número en binario.
+
+          ¿Por qué funciona? Cada división entre 2 forma grupos del siguiente orden binario; el resto es lo que no llegó a formar grupo en ese lugar. El primer resto corresponde a las unidades (la cifra de la derecha); por eso se lee al revés.
+
+          Comprueba siempre volviendo a decimal con el método de la sección anterior.
+        definition: >-
+          La representación binaria de un número se obtiene con los restos de dividirlo
+          sucesivamente entre 2, leídos desde el último hasta el primero.
+        rules:
+          - 'Cada resto es 0 o 1.'
+          - 'Se para cuando el cociente es 0.'
+          - 'Los restos se leen de abajo hacia arriba (del último al primero).'
+        examples:
+          - problem: 'Convierte $13$ a binario.'
+            solution: |-
+              **Paso 1.** $13$ entre 2: cociente 6, resto 1.
+              **Paso 2.** $6$ entre 2: cociente 3, resto 0.
+              **Paso 3.** $3$ entre 2: cociente 1, resto 1.
+              **Paso 4.** $1$ entre 2: cociente 0, resto 1.
+              **Paso 5.** Restos del último al primero: 1, 1, 0, 1.
+              **Comprobación.** $(1101)_2 = 8 + 4 + 1 = 13$.
+              Resultado: $13 = (1101)_2$.
+        common_errors:
+          - 'Leer los restos de arriba hacia abajo: daría $(1011)_2 = 11$, no 13.'
+          - 'Detenerse antes de que el cociente sea 0 y perder la última cifra.'
+        summary: >-
+          Divide entre 2 hasta llegar a cociente 0 y lee los restos al revés; comprueba
+          volviendo a decimal.
+        check:
+          question: '¿Cuál es la escritura binaria de $6$?'
+          options: ['$(110)_2$', '$(011)_2$', '$(111)_2$']
+          answer: 0
+          explanation: '6 entre 2 = 3 resto 0; 3 entre 2 = 1 resto 1; 1 entre 2 = 0 resto 1. Al revés: 110. Comprobación: $4 + 2 = 6$.'
+    glossary:
+      - term: 'Binario'
+        definition: 'Sistema de numeración de base 2 (cifras 0 y 1).'
+      - term: 'Bit'
+        definition: 'Cada cifra de un número binario.'
+      - term: 'Divisiones sucesivas'
+        definition: 'Método para cambiar de base dividiendo repetidamente entre la base.'
+    practice: []
+
+  t04:
+    intro:
+      what: 'El sistema octal es el sistema posicional de base 8, con las cifras 0 a 7.'
+      purpose: 'Se usa en informática como forma abreviada de escribir números binarios.'
+      importance: 'Practicar con otra base consolida el valor posicional y la conversión entre sistemas.'
+      foundations: 'Agrupar de 8 en 8; cada posición vale 8 veces la anterior.'
+      prerequisites:
+        - 'Qué es un sistema de numeración (bloque 2, tema 1).'
+        - 'Sistema binario (bloque 2, tema 3).'
+      outcomes:
+        - Reconocer las cifras válidas en octal.
+        - Convertir de octal a decimal y de decimal a octal.
+        - Relacionar octal y binario mediante grupos de tres cifras.
+      everyday_example: >-
+        En los sistemas Linux, los permisos de un archivo se escriben en octal, como
+        755: cada cifra resume tres interruptores binarios (leer, escribir, ejecutar).
+    sections:
+      - title: 'Base 8 y conversiones'
+        concept: 'En octal las posiciones valen 1, 8, 64, 512…, y se convierte igual que en binario pero usando 8.'
+        explanation: |-
+          El sistema octal usa ocho cifras, de 0 a 7. Ocho unidades de un lugar forman una del siguiente, así que las posiciones valen:
+
+          | 4.º | 3.º | 2.º | 1.º |
+          |---|---|---|---|
+          | 512 | 64 | 8 | 1 |
+
+          ($8$ veces 8 es $64$; $8$ veces 64 es $512$. La multiplicación se estudia en el bloque 6; aquí la usamos como «tantas veces».)
+
+          **De octal a decimal:** multiplica cada cifra por el valor de su posición y suma. Por ejemplo, en $(25)_8$ hay 2 grupos de 8 y 5 unidades: $8 + 8 + 5 = 21$.
+
+          **De decimal a octal:** divisiones sucesivas entre 8 (¿cuántos grupos de 8 caben y cuánto sobra?), leyendo los restos del último al primero. Los restos van de 0 a 7.
+
+          **Atajo con binario:** como $8 = 2 \times 2 \times 2$, cada cifra octal equivale exactamente a **tres** cifras binarias: $0 = 000$, $1 = 001$, …, $5 = 101$, $7 = 111$. Para pasar de binario a octal se agrupan las cifras binarias de tres en tres **desde la derecha**.
+        definition: >-
+          El sistema octal es el sistema posicional de base 8; cada posición vale 8 veces
+          la de su derecha.
+        rules:
+          - 'Cifras válidas: 0, 1, 2, 3, 4, 5, 6, 7.'
+          - 'Posiciones: 1, 8, 64, 512… de derecha a izquierda.'
+          - 'Una cifra octal equivale a tres cifras binarias.'
+        examples:
+          - problem: 'Convierte $(157)_8$ a decimal.'
+            solution: |-
+              **Paso 1.** Posiciones de derecha a izquierda: 1, 8, 64.
+              **Paso 2.** $7 \times 1 = 7$; $5 \times 8 = 40$; $1 \times 64 = 64$.
+              **Paso 3.** $64 + 40 + 7 = 111$.
+              Resultado: $(157)_8 = 111$.
+          - problem: 'Convierte $100$ a octal.'
+            solution: |-
+              **Paso 1.** $100$ entre 8: caben 12 grupos ($12 \times 8 = 96$) y sobran 4.
+              **Paso 2.** $12$ entre 8: cabe 1 grupo y sobran 4.
+              **Paso 3.** $1$ entre 8: cociente 0, sobra 1.
+              **Paso 4.** Restos al revés: 1, 4, 4.
+              **Comprobación.** $(144)_8 = 64 + 32 + 4 = 100$.
+              Resultado: $100 = (144)_8$.
+        common_errors:
+          - 'Usar la cifra 8 o 9 en octal: no existen.'
+          - 'Agrupar las cifras binarias de tres en tres desde la izquierda: se agrupa desde la derecha.'
+        summary: >-
+          En octal las posiciones valen 1, 8, 64…; se convierte con valores posicionales
+          (a decimal) o divisiones sucesivas entre 8 (desde decimal).
+        check:
+          question: '¿Cuánto vale $(23)_8$ en decimal?'
+          options: ['19', '23', '16']
+          answer: 0
+          explanation: '2 grupos de 8 y 3 unidades: $16 + 3 = 19$.'
+    glossary:
+      - term: 'Octal'
+        definition: 'Sistema de numeración de base 8 (cifras 0 a 7).'
+    practice: []
+
+  t05:
+    intro:
+      what: 'El sistema hexadecimal es el sistema posicional de base 16, con las cifras 0 a 9 y las letras A a F.'
+      purpose: 'Se usa en informática para escribir de forma corta números binarios largos, como colores o direcciones de memoria.'
+      importance: 'Muestra que se pueden usar letras como cifras y que la idea de base funciona para cualquier número de símbolos.'
+      foundations: 'Agrupar de 16 en 16; las letras A–F representan los valores 10 a 15.'
+      prerequisites:
+        - 'Qué es un sistema de numeración (bloque 2, tema 1).'
+        - 'Sistema binario (bloque 2, tema 3).'
+      outcomes:
+        - Conocer el valor de las cifras A a F.
+        - Convertir entre hexadecimal y decimal.
+        - Relacionar hexadecimal y binario mediante grupos de cuatro cifras.
+      everyday_example: >-
+        En diseño web, el color blanco se escribe #FFFFFF: tres pares de cifras
+        hexadecimales que indican la cantidad de rojo, verde y azul (FF = 255).
+    sections:
+      - title: 'Base 16 y sus letras'
+        concept: 'En hexadecimal se necesitan 16 cifras, así que después del 9 se usan A = 10, B = 11, C = 12, D = 13, E = 14 y F = 15.'
+        explanation: |-
+          Con base 16 hacen falta dieciséis símbolos. Como sólo tenemos diez cifras, se añaden letras:
+
+          | A | B | C | D | E | F |
+          |---|---|---|---|---|---|
+          | 10 | 11 | 12 | 13 | 14 | 15 |
+
+          Cada **letra es una sola cifra**: «C» ocupa una posición y vale 12 unidades de ese lugar.
+
+          Las posiciones valen $1$, $16$, $256$ ($16$ veces 16), $4096$…
+
+          **De hexadecimal a decimal:** multiplica el valor de cada cifra por el de su posición y suma.
+
+          **De decimal a hexadecimal:** divisiones sucesivas entre 16; los restos van de 0 a 15 y los restos de 10 a 15 se escriben con letra.
+
+          **Atajo con binario:** $16 = 2 \times 2 \times 2 \times 2$, así que cada cifra hexadecimal equivale a **cuatro** cifras binarias. Por ejemplo, $\text{A} = 1010$ y $\text{F} = 1111$.
+        definition: >-
+          El sistema hexadecimal es el sistema posicional de base 16, cuyas cifras son
+          0–9 y A–F (A = 10, …, F = 15).
+        rules:
+          - 'A = 10, B = 11, C = 12, D = 13, E = 14, F = 15.'
+          - 'Posiciones: 1, 16, 256, 4096… de derecha a izquierda.'
+          - 'Una cifra hexadecimal equivale a cuatro cifras binarias.'
+        examples:
+          - problem: 'Convierte $(2\text{F})_{16}$ a decimal.'
+            solution: |-
+              **Paso 1.** F vale 15 y está en la posición de las unidades: aporta $15$.
+              **Paso 2.** El 2 está en la posición que vale 16: aporta $2 \times 16 = 32$.
+              **Paso 3.** $32 + 15 = 47$.
+              Resultado: $(2\text{F})_{16} = 47$.
+          - problem: 'Convierte $200$ a hexadecimal.'
+            solution: |-
+              **Paso 1.** $200$ entre 16: caben 12 grupos ($12 \times 16 = 192$) y sobran 8.
+              **Paso 2.** $12$ entre 16: cociente 0, sobran 12, que se escribe C.
+              **Paso 3.** Restos al revés: C, 8.
+              **Comprobación.** $(\text{C}8)_{16} = 12 \times 16 + 8 = 192 + 8 = 200$.
+              Resultado: $200 = (\text{C}8)_{16}$.
+        common_errors:
+          - 'Escribir el resto 12 como «12» (dos cifras) en lugar de la letra C.'
+          - 'Leer $(10)_{16}$ como diez: vale 16.'
+        summary: >-
+          El hexadecimal usa 0–9 y A–F; sus posiciones valen 1, 16, 256…, y cada cifra
+          resume cuatro cifras binarias.
+        check:
+          question: '¿Cuánto vale $(1\text{A})_{16}$ en decimal?'
+          options: ['26', '11', '110']
+          answer: 0
+          explanation: 'El 1 vale 16 y A vale 10: $16 + 10 = 26$.'
+    glossary:
+      - term: 'Hexadecimal'
+        definition: 'Sistema de numeración de base 16 (cifras 0–9 y A–F).'
+    practice: []
+
+  t06:
+    intro:
+      what: 'El valor posicional es el valor que toma una cifra según el lugar que ocupa en un número.'
+      purpose: 'Permite saber cuánto representa realmente cada cifra y es la base de todas las cuentas en columna.'
+      importance: 'Casi todos los errores al sumar, restar, multiplicar o dividir por escrito vienen de confundir posiciones.'
+      foundations: 'El sistema decimal agrupa de 10 en 10; cada lugar vale 10 veces el de su derecha.'
+      prerequisites:
+        - 'Sistema decimal (bloque 2, tema 2).'
+      outcomes:
+        - Identificar la posición de cada cifra.
+        - Calcular el valor posicional de una cifra.
+        - Comparar el valor de una misma cifra en posiciones distintas.
+      everyday_example: >-
+        En un precio de 5 500 pesos, el primer 5 son cinco mil pesos y el segundo,
+        quinientos: 'misma cifra, distinto valor.'
+    sections:
+      - title: 'La cifra y su lugar'
+        concept: 'Cada cifra tiene un valor propio (la cifra misma) y un valor posicional, que es la cifra multiplicada por el valor de su lugar.'
+        explanation: |-
+          Mira el número $5\,555$. Las cuatro cifras son iguales, pero no valen lo mismo:
+
+          | Unidades de millar | Centenas | Decenas | Unidades |
+          |---|---|---|---|
+          | 5 | 5 | 5 | 5 |
+          | $5000$ | $500$ | $50$ | $5$ |
+
+          Por eso distinguimos dos valores:
+
+          * **Valor propio** de la cifra (también llamado valor absoluto de la cifra): lo que vale el símbolo, aquí 5.
+          * **Valor posicional** (o relativo): lo que vale según su lugar. Se obtiene multiplicando la cifra por el valor del lugar: 1, 10, 100, 1000… Por ejemplo, 5 centenas son $5 \times 100 = 500$, es decir, 5 veces 100.
+
+          Cuidado con los nombres: en el bloque 3 verás el «valor absoluto de un número entero», que es otra idea distinta. Para no confundirnos, aquí hablaremos de **valor propio**.
+
+          Para encontrar la posición, cuenta **desde la derecha**: la primera cifra son las unidades, la segunda las decenas, la tercera las centenas, y así sucesivamente.
+
+          Mover una cifra un lugar a la izquierda multiplica su valor por 10.
+        definition: >-
+          El valor posicional de una cifra $c$ situada en el lugar que vale $10^k$
+          (1, 10, 100, …) es $c$ veces ese valor. El número es la suma de los valores
+          posicionales de sus cifras.
+        rules:
+          - 'Las posiciones se cuentan desde la derecha: unidades, decenas, centenas, unidades de millar…'
+          - 'Valor posicional = cifra × valor del lugar.'
+          - 'Un lugar a la izquierda vale 10 veces más.'
+        examples:
+          - problem: '¿Cuál es el valor posicional del 7 en $47\,302$?'
+            solution: |-
+              **Paso 1.** Desde la derecha: 2 unidades, 0 decenas, 3 centenas, 7 unidades de millar, 4 decenas de millar.
+              **Paso 2.** El 7 está en las unidades de millar, que valen 1000.
+              **Paso 3.** $7 \times 1000 = 7000$.
+              Resultado: el 7 vale $7000$.
+        common_errors:
+          - 'Contar las posiciones desde la izquierda.'
+          - 'Dar el valor propio (7) cuando se pide el valor posicional (7000).'
+        summary: >-
+          Una cifra vale según su lugar: cifra por 1, 10, 100, 1000…, contando desde la
+          derecha.
+        check:
+          question: '¿Cuál es el valor posicional del 3 en $8\,316$?'
+          options: ['300', '3', '3000']
+          answer: 0
+          explanation: 'Desde la derecha: 6 unidades, 1 decena, 3 centenas. El 3 vale $300$.'
+    glossary:
+      - term: 'Valor posicional'
+        definition: 'Valor de una cifra según el lugar que ocupa en el número.'
+      - term: 'Valor propio'
+        definition: 'Valor de la cifra por sí misma, sin tener en cuenta su lugar.'
+    practice: []
+
+  t07:
+    intro:
+      what: 'Son los nombres de los órdenes del sistema decimal (unidades, decenas, centenas, unidades de millar, decenas de millar…) y sus equivalencias.'
+      purpose: 'Sirven para nombrar cada posición y para cambiar unidades de un orden a otro.'
+      importance: 'Las cuentas en columna se basan en cambiar, por ejemplo, 1 decena por 10 unidades; hay que dominar estas equivalencias.'
+      foundations: 'Cada orden vale 10 unidades del orden anterior.'
+      prerequisites:
+        - 'Valor posicional (bloque 2, tema 6).'
+      outcomes:
+        - Nombrar los órdenes hasta las unidades de millón.
+        - Pasar de un orden a otro (por ejemplo, centenas a unidades).
+        - Distinguir «la cifra de las decenas» del «total de decenas».
+      everyday_example: >-
+        Un cajero que cambia un billete de 1000 por diez de 100 está cambiando una
+        unidad de millar por diez centenas.
+    sections:
+      - title: 'Los órdenes de unidades'
+        concept: 'Los órdenes del sistema decimal se nombran en grupos de tres (unidades, decenas, centenas) que se repiten para los millares y los millones.'
+        explanation: |-
+          Los nombres siguen un patrón de tres en tres:
+
+          | Orden | Abreviatura | Valor en unidades |
+          |---|---|---|
+          | Unidad | U | $1$ |
+          | Decena | D | $10$ |
+          | Centena | C | $100$ |
+          | Unidad de millar | UM | $1\,000$ |
+          | Decena de millar | DM | $10\,000$ |
+          | Centena de millar | CM | $100\,000$ |
+          | Unidad de millón | U. millón | $1\,000\,000$ |
+
+          Cada orden equivale a **10 del orden anterior**: 1 C = 10 D; 1 UM = 10 C. Y saltando dos lugares, a 100: 1 UM = 100 D.
+
+          Hay una diferencia importante:
+
+          * **La cifra de las decenas** de $2\,345$ es **4**.
+          * **El total de decenas** que contiene $2\,345$ es **234** (porque $2\,345$ son 234 grupos completos de 10 y sobran 5 unidades). Se obtiene tapando la cifra de las unidades.
+
+          Del mismo modo, $2\,345$ contiene 23 centenas completas (tapando las dos últimas cifras).
+        definition: >-
+          Los órdenes de unidades del sistema decimal son las posiciones de valor 1, 10,
+          100, 1000…; cada orden equivale a 10 unidades del orden inmediatamente inferior.
+        rules:
+          - '1 D = 10 U; 1 C = 10 D = 100 U; 1 UM = 10 C = 1000 U.'
+          - 'Los nombres se repiten en grupos de tres: unidades, decenas y centenas de cada clase.'
+          - 'Total de decenas = el número sin su última cifra; total de centenas = sin sus dos últimas cifras.'
+        examples:
+          - problem: '¿Cuántas unidades son 4 UM, 3 C y 5 D?'
+            solution: |-
+              **Paso 1.** 4 UM = $4000$ unidades.
+              **Paso 2.** 3 C = $300$ unidades.
+              **Paso 3.** 5 D = $50$ unidades.
+              **Paso 4.** $4000 + 300 + 50 = 4350$.
+              Resultado: $4\,350$ unidades.
+          - problem: '¿Cuántas decenas completas hay en $680$?'
+            solution: |-
+              **Paso 1.** Tapamos la cifra de las unidades: queda $68$.
+              **Paso 2.** Comprobación: 68 decenas son $680$ unidades.
+              Resultado: $68$ decenas.
+        common_errors:
+          - 'Responder 8 a «¿cuántas decenas hay en 680?»: 8 es la cifra de las decenas; el total es 68.'
+          - 'Pensar que después de las centenas vienen los «miles de decenas»: vienen las unidades de millar.'
+        summary: >-
+          U, D, C, UM, DM, CM, U. millón: cada orden vale 10 del anterior; no confundas la
+          cifra de un orden con el total de ese orden.
+        check:
+          question: '¿Cuántas centenas completas hay en $5\,276$?'
+          options: ['52', '2', '527']
+          answer: 0
+          explanation: 'Tapando las dos últimas cifras queda 52. El 2 es sólo la cifra de las centenas; 527 es el total de decenas.'
+    glossary:
+      - term: 'Orden de unidades'
+        definition: 'Cada posición del sistema decimal: unidad, decena, centena, etc.'
+      - term: 'Unidad de millar'
+        definition: 'Grupo de 1000 unidades (10 centenas).'
+      - term: 'Unidad de millón'
+        definition: 'Grupo de 1 000 000 de unidades (mil millares).'
+    practice: []
+
+  t08:
+    intro:
+      what: 'Es el conjunto de métodos para escribir un mismo número en otra base.'
+      purpose: 'Permite traducir números entre el sistema decimal y los sistemas binario, octal y hexadecimal.'
+      importance: 'Reúne todo el bloque y muestra que un número es una cantidad, independientemente de cómo se escriba.'
+      foundations: 'El valor posicional (para pasar a decimal) y las divisiones sucesivas (para pasar desde decimal).'
+      prerequisites:
+        - 'Sistemas binario, octal y hexadecimal (bloque 2, temas 3–5).'
+      outcomes:
+        - Convertir de cualquier base a decimal.
+        - Convertir de decimal a cualquier base.
+        - Convertir entre dos bases no decimales pasando por decimal o por binario.
+      everyday_example: >-
+        Un programador que lee el color #1E en hexadecimal y quiere saber cuánto es en
+        decimal hace una conversión: $16 + 14 = 30$.
+    sections:
+      - title: 'El método general'
+        concept: 'Para cambiar de base se pasa a decimal con los valores posicionales y desde decimal con divisiones sucesivas.'
+        explanation: |-
+          Todas las conversiones se reducen a dos herramientas:
+
+          **A. De base $b$ a decimal (valor posicional).** Las posiciones valen $1, b, b \times b, \dots$ de derecha a izquierda. Multiplica cada cifra por el valor de su posición y suma.
+
+          **B. De decimal a base $b$ (divisiones sucesivas).** Divide entre $b$; anota el resto; divide el cociente; repite hasta cociente 0; lee los restos del último al primero.
+
+          **C. Entre dos bases no decimales.** Pasa primero a decimal (A) y luego a la base pedida (B). Es el camino universal.
+
+          **Atajos con binario:**
+
+          * Binario → octal: agrupa de **3** en 3 cifras desde la derecha.
+          * Binario → hexadecimal: agrupa de **4** en 4 cifras desde la derecha.
+          * Al revés, cada cifra octal se convierte en 3 cifras binarias, y cada cifra hexadecimal en 4.
+
+          Si al agrupar el grupo de la izquierda queda incompleto, se completa con ceros a la izquierda (no cambian el valor).
+
+          **Comprueba siempre** deshaciendo la conversión.
+        definition: >-
+          Convertir un número de una base a otra es encontrar las cifras que representan
+          la misma cantidad en la nueva base.
+        rules:
+          - 'Hacia decimal: suma de cifra × valor de la posición.'
+          - 'Desde decimal: divisiones sucesivas entre la nueva base; restos al revés.'
+          - 'Binario ↔ octal: grupos de 3. Binario ↔ hexadecimal: grupos de 4.'
+        examples:
+          - problem: 'Convierte $(101110)_2$ a octal.'
+            solution: |-
+              **Paso 1.** Agrupamos de 3 en 3 desde la derecha: $101 \mid 110$.
+              **Paso 2.** $(101)_2 = 4 + 1 = 5$; $(110)_2 = 4 + 2 = 6$.
+              **Paso 3.** Juntamos: $(56)_8$.
+              **Comprobación.** $(56)_8 = 5 \times 8 + 6 = 46$ y $(101110)_2 = 32 + 8 + 4 + 2 = 46$.
+              Resultado: $(56)_8$.
+          - problem: 'Convierte $(10101111)_2$ a hexadecimal.'
+            solution: |-
+              **Paso 1.** Grupos de 4 desde la derecha: $1010 \mid 1111$.
+              **Paso 2.** $(1010)_2 = 8 + 2 = 10 = \text{A}$; $(1111)_2 = 8 + 4 + 2 + 1 = 15 = \text{F}$.
+              Resultado: $(\text{AF})_{16}$ (que vale $10 \times 16 + 15 = 175$).
+        common_errors:
+          - 'Agrupar desde la izquierda: los grupos se forman desde la derecha.'
+          - 'Convertir entre octal y hexadecimal cifra a cifra directamente: no funciona; pasa por binario o por decimal.'
+        summary: >-
+          A decimal con valores posicionales; desde decimal con divisiones sucesivas;
+          entre otras bases, pasando por decimal o por binario.
+        check:
+          question: '¿Cuánto es $(17)_8$ en binario?'
+          options: ['$(1111)_2$', '$(10001)_2$', '$(111)_2$']
+          answer: 0
+          explanation: '1 = 001 y 7 = 111, así que $(17)_8 = (001\,111)_2 = (1111)_2$. Comprobación: $(17)_8 = 8 + 7 = 15$ y $(1111)_2 = 8 + 4 + 2 + 1 = 15$.'
+    glossary:
+      - term: 'Conversión de base'
+        definition: 'Cambio de la escritura de un número de una base a otra sin cambiar su valor.'
+    practice: []
+
+  t09:
+    intro:
+      what: 'Descomponer un número es escribirlo como suma de los valores de sus cifras.'
+      purpose: 'Ayuda a entender la estructura de un número y facilita el cálculo mental.'
+      importance: 'Las técnicas de suma, resta y multiplicación mental se basan en descomponer números.'
+      foundations: 'El valor posicional.'
+      prerequisites:
+        - 'Valor posicional (bloque 2, tema 6).'
+        - 'Unidades, decenas, centenas… (bloque 2, tema 7).'
+      outcomes:
+        - Descomponer un número en forma aditiva.
+        - Descomponer un número en forma de cifra por valor del lugar.
+        - Reconstruir un número a partir de su descomposición.
+      everyday_example: >-
+        Para pagar 3 250 pesos entregas 3 billetes de 1000, 2 de 100 y 5 monedas de 10:
+        estás descomponiendo el número.
+    sections:
+      - title: 'Descomposición aditiva y por órdenes'
+        concept: 'Todo número es la suma de los valores posicionales de sus cifras.'
+        explanation: |-
+          Hay dos formas habituales de descomponer un número:
+
+          **1. Descomposición aditiva:** se escribe el valor de cada cifra y se suman.
+          $$4\,305 = 4000 + 300 + 5$$
+          Los ceros no aportan nada, así que pueden omitirse.
+
+          **2. Descomposición por órdenes (o polinómica):** cada cifra multiplicada por el valor de su lugar.
+          $$4\,305 = 4 \times 1000 + 3 \times 100 + 0 \times 10 + 5 \times 1$$
+          Aquí $4 \times 1000$ se lee «4 veces 1000». La multiplicación se estudia en el bloque 6; por ahora piensa en ella como una repetición: 4 veces 1000 son 4000.
+
+          También se puede descomponer en órdenes: $4\,305 = 4\text{ UM} + 3\text{ C} + 5\text{ U}$.
+
+          **Reconstruir** un número es el camino inverso: colocar cada cifra en su lugar y poner **0 en los lugares que faltan**. Por ejemplo, $6000 + 20 + 3$: hay unidades de millar (6), no hay centenas (0), hay 2 decenas y 3 unidades, así que el número es $6\,023$.
+
+          No hay una única descomposición: $45 = 40 + 5$, pero también $45 = 30 + 15$. La descomposición por valor posicional es la estándar.
+        definition: >-
+          La descomposición aditiva de un número es su escritura como suma de los
+          valores posicionales de sus cifras distintas de cero.
+        rules:
+          - 'Cada sumando corresponde a una cifra en su lugar.'
+          - 'Al reconstruir, escribe 0 en los órdenes que no aparecen.'
+          - 'La suma de la descomposición debe dar el número original.'
+        examples:
+          - problem: 'Descompón $70\,816$.'
+            solution: |-
+              **Paso 1.** Desde la derecha: 6 U, 1 D, 8 C, 0 UM, 7 DM.
+              **Paso 2.** Valores: $6$, $10$, $800$, $0$, $70\,000$.
+              **Paso 3.** Omitimos el cero y ordenamos: $70\,000 + 800 + 10 + 6$.
+              Resultado: $70\,816 = 70\,000 + 800 + 10 + 6$.
+          - problem: '¿Qué número es $5000 + 400 + 7$?'
+            solution: |-
+              **Paso 1.** UM: 5. C: 4. D: no aparece, escribimos 0. U: 7.
+              Resultado: $5\,407$.
+        common_errors:
+          - 'Unir las cifras sin respetar los ceros: $5000 + 400 + 7$ no es 547.'
+          - 'Escribir $300$ como «3» en la descomposición: hay que escribir su valor posicional.'
+        summary: >-
+          Un número es la suma de los valores de sus cifras; al reconstruir, los órdenes
+          que faltan se rellenan con 0.
+        check:
+          question: '¿Qué número es $20\,000 + 300 + 9$?'
+          options: ['20 309', '2 309', '239']
+          answer: 0
+          explanation: 'DM: 2; UM: 0; C: 3; D: 0; U: 9. El número es 20 309. Las otras opciones olvidan ceros.'
+    glossary:
+      - term: 'Descomposición aditiva'
+        definition: 'Escritura de un número como suma de los valores de sus cifras.'
+    practice: []
+
+  t10:
+    intro:
+      what: 'Es la forma de leer en palabras un número escrito con cifras, y de escribir con cifras un número dictado en palabras.'
+      purpose: 'Sirve para comunicar cantidades sin ambigüedad, por ejemplo en cheques, contratos o facturas.'
+      importance: 'Un error al leer o escribir un número grande (un cero de más o de menos) puede cambiar una cantidad mil veces.'
+      foundations: 'Los órdenes de unidades y su agrupación en clases de tres cifras (unidades, miles, millones).'
+      prerequisites:
+        - 'Unidades, decenas, centenas… (bloque 2, tema 7).'
+      outcomes:
+        - Separar un número en grupos de tres cifras.
+        - Leer números de hasta diez cifras.
+        - Escribir con cifras un número dado en palabras, incluidos los ceros.
+      everyday_example: >-
+        En un cheque se escribe la cantidad con cifras y en letras («dos mil quince
+        pesos») para evitar falsificaciones.
+    sections:
+      - title: 'Leer y escribir por grupos de tres'
+        concept: 'Para leer un número se separa en grupos de tres cifras desde la derecha y cada grupo se lee seguido de su nombre (mil, millones…).'
+        explanation: |-
+          **Leer.** Separa el número en grupos de tres cifras **empezando por la derecha**. Cada grupo se lee como un número de hasta tres cifras y se le añade el nombre de su clase:
+
+          | Millones | Miles | Unidades |
+          |---|---|---|
+          | 3 | 405 | 027 |
+          | tres millones | cuatrocientos cinco mil | veintisiete |
+
+          Se lee: **tres millones cuatrocientos cinco mil veintisiete**.
+
+          Detalles del español:
+
+          * «Mil» no lleva «un» delante: $1\,200$ es «mil doscientos».
+          * «Millón» sí: $1\,000\,000$ es «un millón»; en plural, «dos millones».
+          * $1\,000\,000\,000$ es «mil millones». Un **billón** en español es un millón de millones ($1\,000\,000\,000\,000$); no lo confundas con el *billion* inglés.
+          * Del 16 al 29 se escribe en una palabra: dieciséis, veintiuno, veintidós.
+
+          **Escribir.** Escucha cada clase y escribe sus tres cifras. Si una clase tiene menos de tres cifras (salvo la primera), complétala con **ceros**. «Ochenta mil cuatro»: miles = 80, unidades = 4 → 004. Resultado: $80\,004$.
+
+          Al escribir números grandes se separan los grupos con un espacio: $3\,405\,027$.
+        definition: >-
+          Un número decimal se lee por clases de tres cifras (unidades, miles, millones,
+          miles de millones…), nombrando cada clase después de su grupo.
+        rules:
+          - 'Agrupa de tres en tres desde la derecha.'
+          - 'Cada clase intermedia debe tener exactamente tres cifras; completa con ceros.'
+          - '«Mil» sin «un»; «un millón», «dos millones».'
+        examples:
+          - problem: 'Lee el número $205\,060$.'
+            solution: |-
+              **Paso 1.** Grupos desde la derecha: $205 \mid 060$.
+              **Paso 2.** Clase de los miles: 205 → «doscientos cinco mil».
+              **Paso 3.** Clase de las unidades: 060 → «sesenta».
+              Resultado: doscientos cinco mil sesenta.
+          - problem: 'Escribe con cifras: «dos millones treinta mil quinientos».'
+            solution: |-
+              **Paso 1.** Millones: 2.
+              **Paso 2.** Miles: treinta → $030$ (tres cifras).
+              **Paso 3.** Unidades: quinientos → $500$.
+              Resultado: $2\,030\,500$.
+        common_errors:
+          - 'Agrupar desde la izquierda: $12\,345$ no se separa como «123 45».'
+          - 'Olvidar los ceros de relleno: «dos millones treinta mil quinientos» no es 230 500.'
+          - 'Traducir «billion» por «billón»: en español es «mil millones».'
+        summary: >-
+          Separa en grupos de tres desde la derecha y lee cada grupo con su nombre; al
+          escribir, completa cada clase con ceros hasta tener tres cifras.
+        check:
+          question: '¿Cómo se escribe con cifras «quince mil ocho»?'
+          options: ['15 008', '15 800', '1 508']
+          answer: 0
+          explanation: 'Miles: 15; unidades: ocho → 008. Resultado: 15 008. «Quince mil ochocientos» sería 15 800.'
+    glossary:
+      - term: 'Clase'
+        definition: 'Grupo de tres cifras: unidades, miles, millones…'
+      - term: 'Billón'
+        definition: 'En español, un millón de millones (1 seguido de 12 ceros).'
+    practice: []

@@ -1,0 +1,565 @@
+block: b21
+intro: >-
+  La regla de tres es un método ordenado para resolver problemas de
+  proporcionalidad: conocidos tres valores, se calcula el cuarto. En este
+  bloque aprenderás la regla de tres simple directa e inversa, la compuesta
+  (con más de dos magnitudes), a identificar el tipo de relación entre
+  magnitudes y a resolver problemas paso a paso. Se apoya en las razones y
+  proporciones del bloque b20.
+topics:
+  t01:
+    intro:
+      what: >-
+        La regla de tres es un procedimiento para calcular un valor desconocido
+        cuando dos magnitudes son proporcionales y se conocen otros tres
+        valores.
+      purpose: >-
+        Sirve para resolver de forma ordenada problemas como "si 5 entradas
+        cuestan 60 pesos, ¿cuánto cuestan 8?".
+      importance: >-
+        Es uno de los métodos más usados en la vida diaria, el comercio, la
+        cocina, la construcción y las ciencias.
+      foundations: >-
+        Se basa en la proporcionalidad directa e inversa (b20) y en la
+        reducción a la unidad: calcular cuánto corresponde a 1 y luego
+        multiplicar.
+      prerequisites:
+        - 'Concepto de proporción y propiedad fundamental (b20)'
+        - 'Magnitudes directa e inversamente proporcionales (b20)'
+      outcomes:
+        - 'Explicar en qué consiste la regla de tres'
+        - 'Resolver problemas sencillos por reducción a la unidad'
+      everyday_example: >-
+        Si 5 entradas de cine cuestan 60 pesos, una cuesta 12, y 8 entradas
+        cuestan $8 \times 12 = 96$ pesos.
+    sections:
+      - title: Tres datos conocidos, uno desconocido
+        concept: Con dos magnitudes proporcionales y tres valores conocidos, la regla de tres calcula el cuarto valor.
+        explanation: |-
+          En muchos problemas aparecen **dos magnitudes** relacionadas (entradas y precio, kilos y costo, obreros y días) y **cuatro valores**: dos de cada magnitud. Si conocemos tres, la **regla de tres** permite calcular el cuarto, siempre que las magnitudes sean **proporcionales**.
+
+          Se suele organizar así, con cada magnitud en una columna:
+
+          | Entradas | Pesos |
+          |---|---|
+          | 5 | 60 |
+          | 8 | $x$ |
+
+          **La idea de fondo: reducción a la unidad.** Si 5 entradas cuestan 60 pesos, **1 entrada** cuesta $60 \div 5 = 12$ pesos. Entonces 8 entradas cuestan $8 \times 12 = 96$ pesos.
+
+          Este razonamiento es seguro y fácil de explicar. La regla de tres resume esos dos pasos en una sola operación ($x = \frac{60 \times 8}{5}$), como verás en los temas siguientes.
+
+          Hay dos tipos de **regla de tres simple** (dos magnitudes): **directa** e **inversa**, según el tipo de proporcionalidad. Y existe la **compuesta**, con tres o más magnitudes.
+        definition: >-
+          La regla de tres es un método para hallar el cuarto término de una
+          proporción formada por valores de dos (o más) magnitudes
+          proporcionales, a partir de los otros tres.
+        rules:
+          - 'Sólo se aplica si las magnitudes son proporcionales (directa o inversamente).'
+          - 'Se colocan los datos en una tabla, cada magnitud en su columna.'
+          - 'Reducción a la unidad: primero cuánto corresponde a 1, luego a la cantidad pedida.'
+        examples:
+          - problem: 'Si 4 kg de naranjas cuestan 20 pesos, ¿cuánto cuestan 7 kg?'
+            solution: |-
+              **Paso 1.** Tabla: $4$ kg → $20$ pesos; $7$ kg → $x$.
+              **Paso 2.** A 1 kg: $20 \div 4 = 5$ pesos.
+              **Paso 3.** A 7 kg: $7 \times 5 = 35$ pesos.
+              Resultado: $35$ pesos.
+        common_errors:
+          - 'Aplicar la regla de tres a magnitudes no proporcionales (por ejemplo, edad y estatura).'
+          - 'Mezclar las columnas: cada magnitud debe estar en su propia columna.'
+        summary: >-
+          La regla de tres calcula un valor desconocido entre magnitudes
+          proporcionales. La reducción a la unidad muestra por qué funciona.
+        check:
+          question: 'Si 6 cuadernos cuestan 30 pesos, ¿cuánto cuesta un cuaderno?'
+          options: ['$5$ pesos', '$180$ pesos', '$24$ pesos', '$36$ pesos']
+          answer: 0
+          explanation: >-
+            Reducción a la unidad: $30 \div 6 = 5$ pesos. $180$ sale de
+            multiplicar en lugar de dividir.
+    glossary:
+      - {term: Regla de tres, definition: 'Método para calcular el cuarto valor de una proporción conocidos los otros tres.'}
+      - {term: Reducción a la unidad, definition: 'Calcular primero cuánto corresponde a una unidad y luego a la cantidad pedida.'}
+  t02:
+    intro:
+      what: >-
+        Es la regla de tres que se aplica a dos magnitudes directamente
+        proporcionales: si una aumenta, la otra aumenta en la misma proporción.
+      purpose: >-
+        Sirve para calcular precios, cantidades de ingredientes, consumos,
+        distancias y cualquier valor en una relación "a más, más" proporcional.
+      importance: >-
+        Es la regla de tres más frecuente y la base del cálculo de porcentajes
+        (b22).
+      foundations: >-
+        Si las magnitudes son directamente proporcionales, sus valores forman
+        una proporción $\frac{a}{b} = \frac{c}{x}$, y la propiedad fundamental
+        (b20) da $x = \frac{b \times c}{a}$.
+      prerequisites:
+        - 'Concepto de regla de tres (b21)'
+        - 'Magnitudes directamente proporcionales (b20)'
+        - 'Propiedad fundamental de las proporciones (b20)'
+        - 'Operaciones con decimales (b17)'
+      outcomes:
+        - 'Plantear una regla de tres simple directa'
+        - 'Calcular el valor desconocido multiplicando en cruz'
+        - 'Resolver problemas con decimales'
+      everyday_example: >-
+        Si un auto gasta 16 litros en 240 km, ¿cuánto gasta en 300 km? A más
+        kilómetros, más litros: es directa.
+    sections:
+      - title: Multiplicar en cruz y dividir
+        concept: En la regla de tres directa, $x$ es el producto de los valores en diagonal dividido entre el que queda frente a $x$.
+        explanation: |-
+          Supongamos $a \to b$ y $c \to x$, con magnitudes **directamente proporcionales**. Entonces las razones son iguales:
+          $$\frac{a}{c} = \frac{b}{x}$$
+          (el cociente entre valores de la misma magnitud se mantiene). Por la propiedad fundamental, $a \times x = b \times c$, así que
+          $$x = \frac{b \times c}{a}.$$
+
+          **Disposición práctica:**
+
+          | Magnitud 1 | Magnitud 2 |
+          |---|---|
+          | $a$ | $b$ |
+          | $c$ | $x$ |
+
+          Se **multiplica en cruz** ($b \times c$, la diagonal sin $x$) y se **divide** entre el número que está en la otra diagonal, junto a $x$ ($a$).
+
+          Antes de calcular, comprueba que la relación es directa: "si una magnitud se duplica, ¿la otra también?". Y al final, pregúntate si el resultado tiene sentido: si $c > a$, debe salir $x > b$.
+        definition: >-
+          En una regla de tres simple directa con datos $a \to b$ y $c \to x$,
+          el valor desconocido es $x = \frac{b \times c}{a}$.
+        rules:
+          - 'Comprueba que la relación es directa ("a más, más" en la misma proporción).'
+          - 'Coloca los datos con las mismas unidades en la misma columna.'
+          - '$x = \frac{b \times c}{a}$: producto en cruz dividido entre el número frente a $x$.'
+          - 'Revisa que el resultado sea razonable.'
+        examples:
+          - problem: 'Si 3 kg de queso cuestan $7{,}50$ pesos, ¿cuánto cuestan 5 kg?'
+            solution: |-
+              **Paso 1.** Kilos y precio: a más kilos, más precio → directa.
+              **Paso 2.** $3 \to 7{,}50$; $5 \to x$.
+              **Paso 3.** $x = \frac{7{,}50 \times 5}{3} = \frac{37{,}50}{3} = 12{,}50$.
+              **Comprobación:** $7{,}50 \div 3 = 2{,}50$ por kilo; $2{,}50 \times 5 = 12{,}50$ ✓.
+              Resultado: $12{,}50$ pesos.
+          - problem: 'Un auto gasta 16 litros en 240 km. ¿Cuántos litros gasta en 300 km?'
+            solution: |-
+              **Paso 1.** Más kilómetros → más litros: directa.
+              **Paso 2.** $240$ km $\to 16$ L; $300$ km $\to x$.
+              **Paso 3.** $x = \frac{16 \times 300}{240} = \frac{4800}{240} = 20$.
+              Resultado: $20$ litros.
+        common_errors:
+          - 'Multiplicar los números de la misma fila ($a \times b$) en lugar de en cruz.'
+          - 'Dividir entre el número equivocado.'
+          - 'Aplicar la directa a una relación inversa.'
+        summary: >-
+          Regla de tres directa: $a \to b$, $c \to x$ da
+          $x = \frac{b \times c}{a}$.
+        check:
+          question: 'Si 6 bolígrafos cuestan 9 pesos, ¿cuánto cuestan 10 bolígrafos?'
+          options: ['$15$ pesos', '$13$ pesos', '$5{,}4$ pesos', '$60$ pesos']
+          answer: 0
+          explanation: >-
+            Directa: $x = \frac{9 \times 10}{6} = \frac{90}{6} = 15$ pesos.
+            $5{,}4 = \frac{6 \times 9}{10}$ divide entre el número equivocado.
+    glossary:
+      - {term: Regla de tres simple directa, definition: 'Regla de tres entre dos magnitudes directamente proporcionales.'}
+  t03:
+    intro:
+      what: >-
+        Es la regla de tres que se aplica a dos magnitudes inversamente
+        proporcionales: si una aumenta, la otra disminuye en la misma
+        proporción.
+      purpose: >-
+        Sirve para problemas de trabajadores y tiempo, velocidad y duración,
+        grifos y tiempo de llenado o raciones y días.
+      importance: >-
+        Confundir una situación inversa con una directa da resultados
+        absurdos; saber resolverla completa el dominio de la regla de tres
+        simple.
+      foundations: >-
+        Si las magnitudes son inversamente proporcionales, el producto de los
+        valores correspondientes es constante (b20): $a \times b = c \times x$.
+      prerequisites:
+        - 'Magnitudes inversamente proporcionales (b20)'
+        - 'Regla de tres simple directa (b21)'
+      outcomes:
+        - 'Plantear una regla de tres simple inversa'
+        - 'Calcular el valor desconocido con el producto constante'
+      everyday_example: >-
+        Si 6 obreros hacen una obra en 10 días, 4 obreros (al mismo ritmo)
+        tardarán más: 15 días.
+    sections:
+      - title: El producto se mantiene
+        concept: En la regla de tres inversa, $x$ es el producto de la fila conocida dividido entre el otro valor.
+        explanation: |-
+          Supongamos $a \to b$ y $c \to x$, con magnitudes **inversamente proporcionales**. Entonces el producto es constante:
+          $$a \times b = c \times x \quad\Longrightarrow\quad x = \frac{a \times b}{c}.$$
+
+          Fíjate en la diferencia con la directa: ahora se multiplican los números **de la misma fila** (la que está completa) y se divide entre el valor que acompaña a $x$.
+
+          **Por qué tiene sentido.** Si 6 obreros tardan 10 días, la obra equivale a $6 \times 10 = 60$ "días-obrero" de trabajo. Con 4 obreros, esos 60 días-obrero se reparten entre 4: $60 \div 4 = 15$ días.
+
+          **Control del resultado.** En la inversa, si una magnitud aumenta, la otra **disminuye**. Si $c < a$ (menos obreros), debe salir $x > b$ (más días). Si sale lo contrario, probablemente se aplicó la directa por error.
+
+          Se supone siempre que las condiciones son iguales: mismo ritmo de trabajo, misma obra, misma distancia.
+        definition: >-
+          En una regla de tres simple inversa con datos $a \to b$ y $c \to x$,
+          el valor desconocido es $x = \frac{a \times b}{c}$.
+        rules:
+          - 'Comprueba que la relación es inversa ("a doble, mitad").'
+          - '$x = \frac{a \times b}{c}$: producto de la fila completa dividido entre el valor junto a $x$.'
+          - 'Si una magnitud aumenta, la otra debe disminuir.'
+        examples:
+          - problem: '6 obreros hacen una obra en 10 días. ¿Cuánto tardarán 4 obreros al mismo ritmo?'
+            solution: |-
+              **Paso 1.** Menos obreros → más días: inversa.
+              **Paso 2.** $6 \to 10$; $4 \to x$.
+              **Paso 3.** $x = \frac{6 \times 10}{4} = \frac{60}{4} = 15$.
+              Resultado: $15$ días.
+          - problem: 'A 80 km/h un viaje dura 3 horas. ¿Cuánto dura a 120 km/h?'
+            solution: |-
+              **Paso 1.** Más velocidad → menos tiempo: inversa.
+              **Paso 2.** $x = \frac{80 \times 3}{120} = \frac{240}{120} = 2$.
+              **Comprobación:** la distancia es $80 \times 3 = 240$ km $= 120 \times 2$ ✓.
+              Resultado: $2$ horas.
+        common_errors:
+          - 'Usar la fórmula de la directa: $\frac{10 \times 4}{6} \approx 6{,}67$ días con menos obreros es absurdo.'
+          - 'No comprobar que el resultado va en el sentido correcto.'
+        summary: >-
+          Regla de tres inversa: $a \times b = c \times x$, así que
+          $x = \frac{a \times b}{c}$.
+        check:
+          question: '3 grifos iguales llenan un tanque en 12 horas. ¿Cuánto tardan 4 grifos iguales?'
+          options: ['$16$ horas', '$9$ horas', '$4$ horas', '$36$ horas']
+          answer: 1
+          explanation: >-
+            Inversa: $x = \frac{3 \times 12}{4} = \frac{36}{4} = 9$ horas. $16$
+            horas sale de usar la directa: más grifos no pueden tardar más.
+    glossary:
+      - {term: Regla de tres simple inversa, definition: 'Regla de tres entre dos magnitudes inversamente proporcionales.'}
+  t04:
+    intro:
+      what: >-
+        Es la regla de tres que relaciona tres o más magnitudes, por ejemplo
+        máquinas, horas y piezas fabricadas.
+      purpose: >-
+        Sirve para problemas en los que varias condiciones cambian a la vez:
+        más trabajadores y más metros, más máquinas y menos horas…
+      importance: >-
+        Muchas situaciones reales dependen de varios factores; la regla de
+        tres compuesta permite tenerlos todos en cuenta de forma ordenada.
+      foundations: >-
+        Se descompone en varias reglas de tres simples: cada magnitud se
+        compara con la incógnita manteniendo fijas las demás, y su razón se
+        usa tal cual (directa) o invertida (inversa).
+      prerequisites:
+        - 'Regla de tres simple directa e inversa (b21)'
+        - 'Multiplicación de fracciones (b15)'
+      outcomes:
+        - 'Analizar cada magnitud frente a la incógnita'
+        - 'Plantear y resolver una regla de tres compuesta'
+        - 'Comprobar el resultado por reducción a la unidad'
+      everyday_example: >-
+        Si 4 máquinas fabrican 200 piezas en 5 horas, ¿cuántas piezas
+        fabricarán 6 máquinas en 8 horas?
+    sections:
+      - title: Una magnitud cada vez
+        concept: Se multiplica el dato conocido de la incógnita por una razón de cada magnitud, directa o invertida según su relación con la incógnita.
+        explanation: |-
+          **Método:**
+          1. Identifica la **incógnita** (la magnitud cuyo valor buscas) y ponla en la última columna.
+          2. Compara **cada una** de las otras magnitudes con la incógnita, **suponiendo que las demás no cambian**: ¿es directa o inversa?
+          3. Parte del valor conocido de la incógnita y multiplícalo por una razón de cada magnitud:
+             * si es **directa**, la razón es $\frac{\text{nuevo}}{\text{antiguo}}$;
+             * si es **inversa**, se invierte: $\frac{\text{antiguo}}{\text{nuevo}}$.
+
+          **Ejemplo:** 4 máquinas en 5 horas hacen 200 piezas; ¿cuántas hacen 6 máquinas en 8 horas?
+          * Máquinas y piezas (horas fijas): más máquinas, más piezas → directa: $\frac{6}{4}$.
+          * Horas y piezas (máquinas fijas): más horas, más piezas → directa: $\frac{8}{5}$.
+
+          $x = 200 \times \frac{6}{4} \times \frac{8}{5} = \frac{200 \times 6 \times 8}{4 \times 5} = \frac{9600}{20} = 480$ piezas.
+
+          **Comprobación por reducción a la unidad:** 1 máquina en 1 hora hace $200 \div (4 \times 5) = 10$ piezas; 6 máquinas en 8 horas hacen $10 \times 6 \times 8 = 480$ ✓.
+        definition: >-
+          En una regla de tres compuesta, el valor desconocido se obtiene
+          multiplicando el valor conocido de esa magnitud por la razón
+          $\frac{\text{nuevo}}{\text{antiguo}}$ de cada magnitud directamente
+          proporcional y por $\frac{\text{antiguo}}{\text{nuevo}}$ de cada
+          magnitud inversamente proporcional a ella.
+        rules:
+          - 'Compara cada magnitud con la incógnita, dejando fijas las demás.'
+          - 'Directa: razón nuevo/antiguo. Inversa: razón antiguo/nuevo.'
+          - 'Multiplica todas las razones por el valor conocido de la incógnita.'
+          - 'Comprueba por reducción a la unidad.'
+        examples:
+          - problem: '5 obreros construyen 100 m de muro en 8 días. ¿Cuántos días tardarán 10 obreros en construir 150 m?'
+            solution: |-
+              **Paso 1.** Incógnita: días.
+              **Paso 2.** Metros y días (obreros fijos): más metros, más días → directa: $\frac{150}{100}$.
+              **Paso 3.** Obreros y días (metros fijos): más obreros, menos días → inversa: $\frac{5}{10}$.
+              **Paso 4.** $x = 8 \times \frac{150}{100} \times \frac{5}{10} = 8 \times 1{,}5 \times 0{,}5 = 6$.
+              **Comprobación:** cada obrero hace $100 \div (5 \times 8) = 2{,}5$ m por día; 10 obreros hacen $25$ m por día; $150 \div 25 = 6$ días ✓.
+              Resultado: $6$ días.
+        common_errors:
+          - 'Comparar las magnitudes entre sí en lugar de con la incógnita.'
+          - 'Olvidar invertir la razón de una magnitud inversa.'
+          - 'Analizar una magnitud sin dejar fijas las demás.'
+        summary: >-
+          En la compuesta, cada magnitud aporta una razón (directa tal cual,
+          inversa invertida) que multiplica al dato conocido de la incógnita.
+        check:
+          question: '3 personas gastan 12 litros de agua en 2 días. ¿Cuántos litros gastarán 6 personas en 5 días?'
+          options: ['$24$ litros', '$30$ litros', '$60$ litros', '$14{,}4$ litros']
+          answer: 2
+          explanation: >-
+            Ambas son directas: $x = 12 \times \frac{6}{3} \times \frac{5}{2} = 12
+            \times 2 \times 2{,}5 = 60$ litros. Por unidad: 1 persona gasta 2
+            litros al día; $2 \times 6 \times 5 = 60$.
+    glossary:
+      - {term: Regla de tres compuesta, definition: 'Regla de tres con tres o más magnitudes proporcionales.'}
+      - {term: Incógnita, definition: 'Valor desconocido que se quiere calcular, representado por $x$.'}
+  t05:
+    intro:
+      what: >-
+        Es el paso de decidir, antes de calcular, si dos magnitudes son
+        directamente proporcionales, inversamente proporcionales o no son
+        proporcionales.
+      purpose: >-
+        Sirve para elegir correctamente entre regla de tres directa, inversa o
+        ninguna.
+      importance: >-
+        Es el paso donde se cometen más errores; un buen análisis de las
+        magnitudes evita resultados absurdos.
+      foundations: >-
+        Se basa en la definición de proporcionalidad (b20): a doble, doble
+        (directa); a doble, mitad (inversa).
+      prerequisites:
+        - 'Magnitudes directa e inversamente proporcionales (b20)'
+        - 'Regla de tres simple directa e inversa (b21)'
+      outcomes:
+        - 'Clasificar pares de magnitudes como directas, inversas o no proporcionales'
+        - 'Justificar la clasificación con la pregunta de la duplicación'
+      everyday_example: >-
+        Para un mismo viaje, ¿la velocidad y el tiempo son directas o
+        inversas? Al ir el doble de rápido se tarda la mitad: inversas.
+    sections:
+      - title: La pregunta de la duplicación
+        concept: Si una magnitud se duplica y la otra también, es directa; si la otra se reduce a la mitad, es inversa; si no ocurre ninguna, no es proporcional.
+        explanation: |-
+          Para identificar el tipo de relación, imagina que **una magnitud se duplica** (mientras todo lo demás queda igual) y pregúntate qué le pasa a la otra:
+
+          * **Se duplica** → directamente proporcionales.
+          * **Se reduce a la mitad** → inversamente proporcionales.
+          * **Otra cosa** → no son proporcionales, y la regla de tres **no** sirve.
+
+          Ejemplos frecuentes:
+
+          | Magnitudes | Tipo |
+          |---|---|
+          | Cantidad de artículos y precio total | Directa |
+          | Distancia recorrida y combustible (misma velocidad) | Directa |
+          | Velocidad y tiempo (misma distancia) | Inversa |
+          | Trabajadores y tiempo (mismo trabajo) | Inversa |
+          | Trabajadores y trabajo hecho (mismo tiempo) | Directa |
+          | Edad y estatura de una persona | No proporcional |
+
+          Observa que **trabajadores** puede ser directa o inversa según con qué se compare y qué se mantenga fijo. Por eso la frase "lo demás queda igual" es esencial.
+
+          Las palabras "más" y "menos" ayudan, pero no bastan: además de ir en el mismo sentido o en sentido contrario, debe cumplirse la proporción.
+        definition: >-
+          Dos magnitudes son directamente proporcionales si al multiplicar una
+          por $k$ la otra se multiplica por $k$; inversamente proporcionales si
+          la otra se divide por $k$; en otro caso no son proporcionales.
+        rules:
+          - 'Duplica una magnitud mentalmente, dejando fijas las demás.'
+          - 'Doble → doble: directa. Doble → mitad: inversa.'
+          - 'Si no se cumple ninguna, no se usa la regla de tres.'
+          - 'La misma magnitud puede ser directa con una e inversa con otra.'
+        examples:
+          - problem: '¿Qué tipo de relación hay entre el número de vacas y los días que dura una cantidad fija de pasto?'
+            solution: |-
+              **Paso 1.** Si hay el doble de vacas, el pasto se come el doble de rápido.
+              **Paso 2.** Dura la mitad de días.
+              Resultado: inversamente proporcionales.
+          - problem: '¿Qué tipo de relación hay entre los litros de pintura y los metros cuadrados pintados?'
+            solution: |-
+              **Paso 1.** Con el doble de pintura se pinta el doble de superficie (misma capa).
+              Resultado: directamente proporcionales.
+        common_errors:
+          - 'Decidir el tipo sólo por las palabras del enunciado, sin razonar.'
+          - 'Olvidar qué se mantiene fijo.'
+          - 'Usar la regla de tres con magnitudes no proporcionales.'
+        summary: >-
+          Pregunta: "si una se duplica, ¿la otra se duplica o se reduce a la
+          mitad?". Directa, inversa o ninguna.
+        check:
+          question: 'Para recorrer una misma distancia, ¿qué relación hay entre la velocidad y el tiempo?'
+          options: ['Directamente proporcionales', 'Inversamente proporcionales', 'No son proporcionales']
+          answer: 1
+          explanation: >-
+            Al doble de velocidad se tarda la mitad de tiempo: su producto (la
+            distancia) es constante, así que son inversamente proporcionales.
+    glossary:
+      - {term: Magnitudes no proporcionales, definition: 'Magnitudes relacionadas cuyo cociente y cuyo producto no son constantes.'}
+  t06:
+    intro:
+      what: >-
+        Es un procedimiento completo, en pasos fijos, para resolver cualquier
+        problema de regla de tres sin olvidar nada.
+      purpose: >-
+        Sirve para organizar el razonamiento, evitar errores de planteamiento y
+        de unidades, y verificar la respuesta.
+      importance: >-
+        Seguir siempre los mismos pasos da seguridad y permite revisar el
+        trabajo con facilidad.
+      foundations: >-
+        Integra todo lo visto: identificación de magnitudes, tipo de
+        proporcionalidad, planteamiento, cálculo y comprobación.
+      prerequisites:
+        - 'Regla de tres simple directa e inversa (b21)'
+        - 'Identificación de magnitudes (b21)'
+      outcomes:
+        - 'Resolver problemas de regla de tres en cinco pasos'
+        - 'Igualar unidades antes de calcular'
+        - 'Comprobar la respuesta'
+      everyday_example: >-
+        Un grifo llena 120 litros en 15 minutos. ¿Cuántos litros llena en una
+        hora? Antes de calcular hay que pasar la hora a minutos.
+    sections:
+      - title: Cinco pasos
+        concept: Datos, unidades, tipo, cálculo y comprobación.
+        explanation: |-
+          **Paso 1. Identificar magnitudes y datos.** ¿Qué magnitudes intervienen? ¿Qué valores se conocen y cuál se busca? Llama $x$ a la incógnita.
+
+          **Paso 2. Organizar en una tabla con las mismas unidades.** Cada magnitud en una columna. Si un valor está en horas y otro en minutos, conviértelos a la misma unidad ($1$ h $= 60$ min).
+
+          **Paso 3. Decidir si es directa o inversa** con la pregunta de la duplicación.
+
+          **Paso 4. Plantear y calcular.**
+          * Directa: $x = \frac{b \times c}{a}$ (en cruz).
+          * Inversa: $x = \frac{a \times b}{c}$ (en línea).
+
+          **Paso 5. Comprobar y responder.** ¿El resultado va en el sentido esperado (más o menos)? Una reducción a la unidad confirma el valor. Escribe la respuesta con sus unidades.
+        definition: >-
+          Resolver una regla de tres paso a paso es aplicar en orden:
+          identificación, organización con unidades homogéneas, clasificación,
+          cálculo y comprobación.
+        rules:
+          - 'Las cantidades de una misma magnitud deben estar en la misma unidad.'
+          - 'Decide el tipo antes de calcular.'
+          - 'Comprueba el sentido del resultado y responde con unidades.'
+        examples:
+          - problem: 'Un grifo llena 120 litros en 15 minutos. ¿Cuántos litros llena en 1 hora?'
+            solution: |-
+              **Paso 1.** Magnitudes: tiempo y litros. Se busca los litros en 1 hora.
+              **Paso 2.** Unidades: $1$ h $= 60$ min. Tabla: $15$ min → $120$ L; $60$ min → $x$.
+              **Paso 3.** Más tiempo, más litros: directa.
+              **Paso 4.** $x = \frac{120 \times 60}{15} = \frac{7200}{15} = 480$.
+              **Paso 5.** Por unidad: $120 \div 15 = 8$ L por minuto; $8 \times 60 = 480$ ✓.
+              Resultado: $480$ litros.
+          - problem: 'Una carga se reparte en 8 bolsas de 15 kg. ¿Cuántas bolsas de 20 kg harían falta para la misma carga?'
+            solution: |-
+              **Paso 1.** Magnitudes: número de bolsas y kilos por bolsa.
+              **Paso 2.** Tabla: $15$ kg → $8$ bolsas; $20$ kg → $x$.
+              **Paso 3.** Bolsas más grandes → menos bolsas: inversa.
+              **Paso 4.** $x = \frac{15 \times 8}{20} = \frac{120}{20} = 6$.
+              **Paso 5.** $6 \times 20 = 120$ kg $= 8 \times 15$ ✓.
+              Resultado: $6$ bolsas.
+        common_errors:
+          - 'Mezclar unidades (minutos con horas) en la misma columna.'
+          - 'Calcular antes de decidir el tipo de proporcionalidad.'
+          - 'Dar el número sin unidades.'
+        summary: >-
+          Identifica, organiza con las mismas unidades, clasifica, calcula y
+          comprueba.
+        check:
+          question: 'Un auto a 90 km/h tarda 4 horas en un viaje. ¿Cuánto tarda a 120 km/h?'
+          options: ['$5{,}33$ horas', '$3$ horas', '$2{,}7$ horas', '$4{,}5$ horas']
+          answer: 1
+          explanation: >-
+            Inversa (más velocidad, menos tiempo): $x = \frac{90 \times 4}{120} =
+            \frac{360}{120} = 3$ horas. $5{,}33$ horas sale de aplicar la directa.
+    glossary:
+      - {term: Unidades homogéneas, definition: 'Cantidades de una misma magnitud expresadas en la misma unidad.'}
+  t07:
+    intro:
+      what: >-
+        Son problemas reales (compras, consumo, pintura, provisiones,
+        producción) que se resuelven con reglas de tres simples o compuestas.
+      purpose: >-
+        Sirven para practicar la elección del método adecuado en contextos
+        variados.
+      importance: >-
+        En la vida real nadie dice "es una regla de tres inversa"; hay que
+        reconocerlo en la situación.
+      foundations: >-
+        Se aplican los cinco pasos de resolución y los tres tipos de regla de
+        tres.
+      prerequisites:
+        - 'Resolución paso a paso (b21)'
+        - 'Regla de tres compuesta (b21)'
+      outcomes:
+        - 'Resolver problemas cotidianos con regla de tres directa'
+        - 'Resolver problemas cotidianos con regla de tres inversa'
+        - 'Resolver problemas de producción con regla de tres compuesta'
+      everyday_example: >-
+        Calcular cuánta pintura comprar para pintar 7 paredes si 3 paredes
+        necesitaron $4{,}5$ litros.
+    sections:
+      - title: Problemas de la vida diaria
+        concept: Cada situación se analiza para elegir regla de tres directa, inversa o compuesta.
+        explanation: |-
+          Algunas situaciones típicas y su tipo:
+
+          * **Compras, recetas, consumos, pintura:** directas.
+          * **Provisiones y número de personas** (para una cantidad fija de comida): inversa, porque con más personas la comida dura menos días.
+          * **Producción** con varias condiciones (máquinas, horas, días): compuesta.
+
+          Ante un problema nuevo, sigue los cinco pasos del tema anterior. Si aparecen **tres o más magnitudes**, usa la compuesta, analizando cada una frente a la incógnita.
+
+          Los resultados pueden ser decimales (litros, pesos); exprésalos con la precisión adecuada, redondeando si hace falta (b17). Si el resultado debe ser un número entero de objetos o personas, piensa qué significa en la situación (por ejemplo, si salen $6{,}3$ latas, habrá que comprar $7$).
+        definition: >-
+          Aplicar la regla de tres es modelar una situación con magnitudes
+          proporcionales, elegir el tipo de regla y calcular e interpretar el
+          resultado en el contexto.
+        rules:
+          - 'Recetas, compras y consumos suelen ser directas.'
+          - 'Personas y duración de provisiones suelen ser inversas.'
+          - 'Con tres o más magnitudes, regla de tres compuesta.'
+          - 'Interpreta el resultado: a veces hay que redondear hacia arriba.'
+        examples:
+          - problem: 'Para pintar 3 paredes se usaron $4{,}5$ litros. ¿Cuántos litros se necesitan para 7 paredes iguales?'
+            solution: |-
+              **Paso 1.** Más paredes, más pintura: directa.
+              **Paso 2.** $x = \frac{4{,}5 \times 7}{3} = \frac{31{,}5}{3} = 10{,}5$.
+              Resultado: $10{,}5$ litros.
+          - problem: 'Hay provisiones para 20 personas durante 15 días. Si llegan 5 personas más, ¿cuántos días durarán?'
+            solution: |-
+              **Paso 1.** Ahora son $25$ personas. Más personas, menos días: inversa.
+              **Paso 2.** $x = \frac{20 \times 15}{25} = \frac{300}{25} = 12$.
+              Resultado: $12$ días.
+          - problem: '8 impresoras imprimen 2400 páginas en 3 horas. ¿Cuántas páginas imprimen 6 impresoras en 5 horas?'
+            solution: |-
+              **Paso 1.** Incógnita: páginas. Impresoras y páginas: directa ($\frac{6}{8}$). Horas y páginas: directa ($\frac{5}{3}$).
+              **Paso 2.** $x = 2400 \times \frac{6}{8} \times \frac{5}{3} = \frac{2400 \times 6 \times 5}{8 \times 3} = \frac{72\,000}{24} = 3000$.
+              **Comprobación:** 1 impresora en 1 hora: $2400 \div 24 = 100$ páginas; $100 \times 6 \times 5 = 3000$ ✓.
+              Resultado: $3000$ páginas.
+        common_errors:
+          - 'Olvidar sumar las personas que llegan (usar 5 en lugar de 25).'
+          - 'Tratar el problema de provisiones como directo.'
+          - 'Ignorar una de las magnitudes en un problema compuesto.'
+        summary: >-
+          Reconoce el tipo de relación en cada situación y aplica la regla de
+          tres correspondiente, comprobando siempre.
+        check:
+          question: '12 m de tela cuestan 180 pesos. ¿Cuánto cuestan 7 m de la misma tela?'
+          options: ['$105$ pesos', '$308{,}57$ pesos', '$15$ pesos', '$84$ pesos']
+          answer: 0
+          explanation: >-
+            Directa: $x = \frac{180 \times 7}{12} = \frac{1260}{12} = 105$ pesos
+            (cada metro cuesta $15$). $308{,}57$ sale de dividir entre $7$ en
+            lugar de entre $12$.
+    glossary:
+      - {term: Provisiones, definition: 'Cantidad de alimentos o recursos reservados para un periodo.'}

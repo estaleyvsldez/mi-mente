@@ -1,0 +1,756 @@
+block: b23
+intro: >-
+  Cuando se presta, se ahorra o se compra a plazos, el dinero "tiene un
+  precio": el interés. En este bloque aprenderás los conceptos básicos de las
+  matemáticas financieras: capital, tasa de interés y tiempo; el interés
+  simple y el compuesto; los descuentos comerciales; las ganancias y pérdidas
+  de una compraventa, y aplicaciones como el pago en cuotas o la comparación de
+  ofertas. Todo se apoya en los porcentajes (b22) y en las potencias (b18).
+topics:
+  t01:
+    intro:
+      what: >-
+        El interés es la cantidad de dinero que se paga (o se cobra) por usar
+        dinero ajeno durante un tiempo.
+      purpose: >-
+        Sirve para entender cuánto cuesta un préstamo y cuánto rinde un
+        ahorro.
+      importance: >-
+        Préstamos, tarjetas de crédito, cuentas de ahorro y compras a plazos
+        funcionan con intereses; entenderlos protege la economía personal.
+      foundations: >-
+        El interés se calcula como un porcentaje (b22) del dinero prestado
+        por cada periodo de tiempo.
+      prerequisites:
+        - 'Porcentaje de una cantidad (b22)'
+        - 'Resta y suma con decimales (b17)'
+      outcomes:
+        - 'Explicar qué es el interés y quién lo paga o lo recibe'
+        - 'Calcular el interés como diferencia entre monto y capital'
+        - 'Calcular el monto como capital más interés'
+      everyday_example: >-
+        Depositas 5000 pesos en una cuenta y al cabo de un año tienes 5300: el
+        banco te pagó 300 pesos de interés por usar tu dinero.
+    sections:
+      - title: El precio del dinero
+        concept: El interés es lo que se paga por usar dinero ajeno durante un tiempo; monto = capital + interés.
+        explanation: |-
+          Cuando alguien **presta** dinero, deja de poder usarlo durante un tiempo y corre el riesgo de no recuperarlo. A cambio, quien lo **recibe** devuelve más de lo que le prestaron. Esa diferencia es el **interés**.
+
+          * Si **pides** un préstamo, **pagas** interés.
+          * Si **ahorras** en un banco, el banco usa tu dinero y **te paga** interés.
+
+          Tres palabras básicas:
+          * **Capital** ($C$): el dinero inicial prestado o depositado.
+          * **Interés** ($I$): lo que se gana o se paga por él.
+          * **Monto** o capital final ($M$): lo que hay al final, $M = C + I$.
+
+          Por tanto, el interés también se obtiene restando: $I = M - C$.
+
+          ¿De qué depende el interés? De **cuánto** dinero se presta (capital), de **qué porcentaje** se cobra por periodo (tasa) y de **cuánto tiempo** dura el préstamo. Los estudiarás uno por uno en los temas siguientes.
+        definition: >-
+          El interés $I$ es la cantidad que se paga por el uso de un capital $C$
+          durante un tiempo. El monto es $M = C + I$.
+        rules:
+          - '$M = C + I$.'
+          - '$I = M - C$.'
+          - 'Quien recibe el préstamo paga el interés; quien presta, lo cobra.'
+        examples:
+          - problem: 'Depositas 5000 pesos y al cabo de un año retiras 5300. ¿Cuánto interés ganaste?'
+            solution: |-
+              **Paso 1.** Capital: $5000$; monto: $5300$.
+              **Paso 2.** $I = M - C = 5300 - 5000 = 300$.
+              Resultado: $300$ pesos de interés.
+          - problem: 'Pides prestados 1200 pesos y debes pagar 150 de interés. ¿Cuánto devuelves en total?'
+            solution: |-
+              **Paso 1.** $M = C + I = 1200 + 150$.
+              Resultado: $1350$ pesos.
+        common_errors:
+          - 'Confundir el monto con el interés: el interés es sólo la diferencia.'
+          - 'Pensar que el interés siempre lo paga el banco.'
+        summary: >-
+          El interés es el precio de usar dinero ajeno. Monto = capital +
+          interés.
+        check:
+          question: 'Pides prestados 2000 pesos y devuelves 2240. ¿Cuánto pagaste de interés?'
+          options: ['$2240$ pesos', '$240$ pesos', '$4240$ pesos', '$2000$ pesos']
+          answer: 1
+          explanation: >-
+            $I = M - C = 2240 - 2000 = 240$ pesos. $2240$ es el monto.
+    glossary:
+      - {term: Interés, definition: 'Dinero que se paga por usar un capital ajeno durante un tiempo.'}
+      - {term: Monto, definition: 'Capital más interés; dinero total al final del periodo.'}
+  t02:
+    intro:
+      what: >-
+        El capital es la cantidad de dinero inicial que se presta, se invierte
+        o se deposita.
+      purpose: >-
+        Sirve como base sobre la que se calcula el interés.
+      importance: >-
+        Saber identificar el capital, y calcularlo cuando se desconoce, permite
+        planificar cuánto hay que ahorrar o invertir para obtener un interés
+        deseado.
+      foundations: >-
+        El interés de cada periodo es un porcentaje del capital; por eso,
+        conocido el interés y el porcentaje, el capital se halla como "el total
+        a partir de una parte" (b22).
+      prerequisites:
+        - 'Concepto de interés (b23)'
+        - 'Cálculo del total a partir de una parte y su porcentaje (b22)'
+      outcomes:
+        - 'Identificar el capital en un enunciado'
+        - 'Calcular el capital conociendo el interés, la tasa y el tiempo'
+      everyday_example: >-
+        "Se prestan 3000 pesos al 4 % anual durante 2 años": el capital son
+        los 3000 pesos.
+    sections:
+      - title: El dinero de partida
+        concept: El capital es el dinero inicial; si se conocen el interés, la tasa y el tiempo, se puede calcular.
+        explanation: |-
+          En un enunciado como "se prestan **3000 pesos** al 4 % anual durante 2 años", el **capital** ($C$) es la cantidad inicial: $3000$ pesos. El $4\,\%$ es la tasa y los 2 años, el tiempo.
+
+          **El interés de un periodo.** En la forma más sencilla de interés (el **simple**, que estudiarás a fondo en el tema 5), cada año se gana el mismo interés: el **porcentaje de la tasa aplicado al capital**. Con $3000$ pesos al $4\,\%$ anual, cada año se ganan $3000 \times 0{,}04 = 120$ pesos; en 2 años, $240$.
+
+          **Calcular el capital.** A veces se conoce el interés y se busca el capital. Por ejemplo: "¿qué capital, al 4 % anual, produce 360 pesos en 3 años?".
+          1. Interés de un año: $360 \div 3 = 120$ pesos.
+          2. Esos $120$ pesos son el $4\,\%$ del capital: total a partir de una parte (b22), $C = \frac{120 \times 100}{4} = 3000$ pesos.
+
+          Resumiendo ambos pasos: $C = \frac{100 \times I}{r \times t}$, donde $r$ es la tasa en porcentaje y $t$ el tiempo.
+        definition: >-
+          El capital $C$ es la cantidad inicial de dinero sobre la que se
+          calcula el interés. En interés simple, $C = \frac{100 \times I}{r \times t}$.
+        rules:
+          - 'El capital es la cantidad inicial, no la final.'
+          - 'Interés de un periodo = $r\,\%$ del capital.'
+          - '$C = \frac{100 \times I}{r \times t}$ (interés simple).'
+        examples:
+          - problem: '¿Qué capital produce 360 pesos de interés simple al 4 % anual en 3 años?'
+            solution: |-
+              **Paso 1.** Interés anual: $360 \div 3 = 120$.
+              **Paso 2.** $120$ es el $4\,\%$ de $C$: $C = 120 \times 100 \div 4 = 3000$.
+              **Comprobación:** $3000 \times 0{,}04 \times 3 = 360$ ✓.
+              Resultado: $3000$ pesos.
+        common_errors:
+          - 'Tomar el monto como capital.'
+          - 'Olvidar dividir entre el número de años.'
+        summary: >-
+          El capital es el dinero inicial. Si se desconoce, se halla con
+          $C = \frac{100 \times I}{r \times t}$.
+        check:
+          question: '¿Qué capital produce 90 pesos de interés en un año al 6 % anual?'
+          options: ['$540$ pesos', '$1500$ pesos', '$5{,}4$ pesos', '$15$ pesos']
+          answer: 1
+          explanation: >-
+            $90$ es el $6\,\%$ del capital: $C = 90 \times 100 \div 6 = 1500$.
+            Comprobación: $1500 \times 0{,}06 = 90$.
+    glossary:
+      - {term: Capital, definition: 'Cantidad inicial de dinero prestada, depositada o invertida.'}
+  t03:
+    intro:
+      what: >-
+        La tasa de interés es el porcentaje del capital que se paga como
+        interés en cada periodo de tiempo, por ejemplo "5 % anual".
+      purpose: >-
+        Sirve para comparar préstamos y ahorros: a igualdad de condiciones,
+        una tasa mayor significa más interés.
+      importance: >-
+        Es el dato que más conviene mirar antes de pedir un préstamo o elegir
+        un ahorro, y siempre hay que fijarse en su periodo (anual, mensual).
+      foundations: >-
+        Es un porcentaje (b22) asociado a un periodo; conocidos el interés, el
+        capital y el tiempo, se calcula como "qué porcentaje es".
+      prerequisites:
+        - 'Capital (b23)'
+        - 'Qué porcentaje es una parte de un total (b22)'
+      outcomes:
+        - 'Identificar la tasa y su periodo'
+        - 'Calcular la tasa conociendo capital, interés y tiempo'
+        - 'Relacionar tasas mensuales y anuales en interés simple'
+      everyday_example: >-
+        Un banco ofrece un 6 % anual: por cada 100 pesos depositados, paga 6
+        pesos de interés al año.
+    sections:
+      - title: Porcentaje por periodo
+        concept: La tasa indica qué porcentaje del capital se paga de interés en cada periodo.
+        explanation: |-
+          Una **tasa de interés** $r$ del $6\,\%$ **anual** significa que, por cada $100$ pesos de capital, se pagan $6$ pesos de interés **cada año**.
+
+          Siempre tiene un **periodo**: anual, mensual, semestral… Un $2\,\%$ mensual no es lo mismo que un $2\,\%$ anual. En interés simple, un $1\,\%$ mensual equivale a un $12\,\%$ anual (hay 12 meses).
+
+          **Calcular la tasa.** "2000 pesos producen 240 pesos de interés simple en 2 años. ¿A qué tasa anual?".
+          1. Interés de un año: $240 \div 2 = 120$.
+          2. ¿Qué porcentaje de $2000$ es $120$? (b22): $\frac{120}{2000} \times 100 = 6$.
+
+          La tasa es del $6\,\%$ anual. En una sola fórmula: $r = \frac{100 \times I}{C \times t}$.
+        definition: >-
+          La tasa de interés $r$ es el porcentaje del capital que se paga como
+          interés por unidad de tiempo. En interés simple,
+          $r = \frac{100 \times I}{C \times t}$.
+        rules:
+          - 'La tasa siempre va con su periodo (anual, mensual…).'
+          - 'En interés simple, tasa anual = 12 × tasa mensual.'
+          - '$r = \frac{100 \times I}{C \times t}$.'
+        examples:
+          - problem: '2000 pesos producen 240 pesos de interés simple en 2 años. ¿Cuál es la tasa anual?'
+            solution: |-
+              **Paso 1.** Interés anual: $240 \div 2 = 120$.
+              **Paso 2.** $r = \frac{120}{2000} \times 100 = 6$.
+              **Comprobación:** $2000 \times 0{,}06 \times 2 = 240$ ✓.
+              Resultado: $6\,\%$ anual.
+        common_errors:
+          - 'No dividir entre el tiempo: $\frac{240}{2000} \times 100 = 12\,\%$ es la tasa de 2 años, no la anual.'
+          - 'Comparar tasas de periodos distintos sin convertirlas.'
+        summary: >-
+          La tasa es el porcentaje del capital que se paga por periodo:
+          $r = \frac{100 \times I}{C \times t}$.
+        check:
+          question: '5000 pesos producen 400 pesos de interés en 1 año. ¿Cuál es la tasa anual?'
+          options: ['$4\,\%$', '$8\,\%$', '$12{,}5\,\%$', '$80\,\%$']
+          answer: 1
+          explanation: >-
+            $\frac{400}{5000} \times 100 = 8$: tasa del $8\,\%$ anual.
+            Comprobación: $5000 \times 0{,}08 = 400$.
+    glossary:
+      - {term: Tasa de interés, definition: 'Porcentaje del capital que se paga como interés en cada periodo.'}
+      - {term: Tasa anual, definition: 'Tasa de interés cuyo periodo es un año.'}
+  t04:
+    intro:
+      what: >-
+        El tiempo es la duración del préstamo o depósito, medida en el mismo
+        periodo que la tasa (años, meses…).
+      purpose: >-
+        Sirve para saber cuántas veces se aplica la tasa y, en consecuencia,
+        cuánto interés se genera.
+      importance: >-
+        Un error de unidades en el tiempo (meses tratados como años) cambia el
+        resultado drásticamente.
+      foundations: >-
+        En interés simple el interés es directamente proporcional al tiempo
+        (b20): el doble de tiempo, el doble de interés.
+      prerequisites:
+        - 'Tasa de interés (b23)'
+        - 'Fracciones y división de decimales (b14, b17)'
+        - 'Magnitudes directamente proporcionales (b20)'
+      outcomes:
+        - 'Expresar el tiempo en la unidad de la tasa'
+        - 'Pasar meses a años'
+        - 'Calcular el tiempo necesario para producir cierto interés'
+      everyday_example: >-
+        Un depósito de 9 meses con una tasa anual dura $\frac{9}{12} = 0{,}75$
+        años.
+    sections:
+      - title: Tiempo en la unidad de la tasa
+        concept: El tiempo debe expresarse en el mismo periodo que la tasa; meses a años se pasan dividiendo entre 12.
+        explanation: |-
+          Si la tasa es **anual**, el tiempo $t$ debe estar en **años**. Si está en meses, se divide entre 12:
+          * $6$ meses $= \frac{6}{12} = 0{,}5$ años.
+          * $9$ meses $= \frac{9}{12} = 0{,}75$ años.
+          * $18$ meses $= \frac{18}{12} = 1{,}5$ años.
+
+          (Si la tasa fuera mensual, habría que expresar el tiempo en meses.)
+
+          **Calcular el tiempo.** "¿Cuántos años tarda un capital de 4000 pesos al 5 % anual en producir 600 pesos de interés simple?".
+          1. Interés de un año: $4000 \times 0{,}05 = 200$.
+          2. ¿Cuántos años hacen falta para juntar $600$? $600 \div 200 = 3$ años.
+
+          En una fórmula: $t = \frac{100 \times I}{C \times r}$.
+        definition: >-
+          El tiempo $t$ es el número de periodos (de la misma unidad que la
+          tasa) que dura la operación. En interés simple,
+          $t = \frac{100 \times I}{C \times r}$.
+        rules:
+          - 'Tiempo y tasa en la misma unidad.'
+          - 'Meses → años: dividir entre 12.'
+          - '$t = \frac{100 \times I}{C \times r}$.'
+        examples:
+          - problem: '¿Cuántos años tarda un capital de 4000 pesos al 5 % anual en producir 600 pesos de interés simple?'
+            solution: |-
+              **Paso 1.** Interés anual: $4000 \times 0{,}05 = 200$.
+              **Paso 2.** $t = 600 \div 200 = 3$.
+              Resultado: $3$ años.
+          - problem: 'Expresa 8 meses en años.'
+            solution: |-
+              **Paso 1.** $\frac{8}{12} = \frac{2}{3}$ de año.
+              Resultado: $\frac{2}{3}$ de año ($\approx 0{,}67$ años).
+        common_errors:
+          - 'Usar los meses como si fueran años con una tasa anual.'
+          - 'Dividir meses entre 10 en lugar de entre 12.'
+        summary: >-
+          El tiempo va en la unidad de la tasa; meses ÷ 12 = años.
+        check:
+          question: '¿Cuántos años tarda un capital de 1500 pesos al 10 % anual en producir 450 pesos de interés simple?'
+          options: ['$3$ años', '$4{,}5$ años', '$30$ años', '$1$ año']
+          answer: 0
+          explanation: >-
+            Interés anual: $1500 \times 0{,}1 = 150$; $450 \div 150 = 3$ años.
+    glossary:
+      - {term: Tiempo, definition: 'Duración de la operación financiera, expresada en periodos de la tasa.'}
+      - {term: Periodo, definition: 'Unidad de tiempo en la que se aplica la tasa (año, mes…).'}
+  t05:
+    intro:
+      what: >-
+        El interés simple es aquel que se calcula siempre sobre el capital
+        inicial: cada periodo se gana el mismo interés.
+      purpose: >-
+        Sirve para calcular el interés de préstamos y depósitos a corto plazo y
+        de muchos créditos sencillos.
+      importance: >-
+        Es el modelo de interés más simple y la referencia para entender el
+        interés compuesto.
+      foundations: >-
+        El interés de un periodo es el $r\,\%$ del capital; en $t$ periodos se
+        multiplica por $t$: $I = C \times \frac{r}{100} \times t$.
+      prerequisites:
+        - 'Capital, tasa y tiempo (b23)'
+        - 'Porcentaje de una cantidad (b22)'
+        - 'Multiplicación de fracciones y decimales (b15, b17)'
+      outcomes:
+        - 'Calcular el interés simple'
+        - 'Calcular el monto final'
+        - 'Calcular el interés para periodos en meses'
+      everyday_example: >-
+        3000 pesos al 5 % anual durante 4 años producen 150 pesos cada año: 600
+        pesos en total.
+    sections:
+      - title: La fórmula del interés simple
+        concept: $I = \frac{C \times r \times t}{100}$ y $M = C + I$.
+        explanation: |-
+          En el **interés simple**, el interés se calcula **siempre sobre el capital inicial**. Los intereses ganados no se suman al capital para calcular los siguientes.
+
+          Si cada año se gana el $r\,\%$ del capital, en $t$ años se gana $t$ veces esa cantidad:
+          $$I = C \times \frac{r}{100} \times t = \frac{C \times r \times t}{100}.$$
+          Y el monto final es $M = C + I$.
+
+          Por ejemplo, $3000$ pesos al $5\,\%$ anual durante $4$ años:
+          * Interés anual: $3000 \times 0{,}05 = 150$.
+          * Interés total: $150 \times 4 = 600$.
+          * Monto: $3000 + 600 = 3600$.
+
+          De esta fórmula salen las de los temas anteriores para $C$, $r$ y $t$: basta "despejar" el dato desconocido.
+
+          **Recuerda:** $t$ y $r$ en la misma unidad. Con tasa anual y tiempo en meses, $t = \frac{\text{meses}}{12}$.
+        definition: >-
+          El interés simple producido por un capital $C$ a una tasa del $r\,\%$
+          por periodo durante $t$ periodos es $I = \frac{C \times r \times t}{100}$;
+          el monto es $M = C + I$.
+        rules:
+          - '$I = \frac{C \times r \times t}{100}$.'
+          - '$M = C + I$.'
+          - 'El interés es el mismo en cada periodo.'
+          - 'Tasa anual con tiempo en meses: $t = \frac{\text{meses}}{12}$.'
+        examples:
+          - problem: 'Calcula el interés simple y el monto de 3000 pesos al 5 % anual durante 4 años.'
+            solution: |-
+              **Paso 1.** $I = \frac{3000 \times 5 \times 4}{100} = \frac{60\,000}{100} = 600$.
+              **Paso 2.** $M = 3000 + 600 = 3600$.
+              Resultado: interés $600$ pesos; monto $3600$ pesos.
+          - problem: '¿Qué interés simple producen 2400 pesos al 6 % anual durante 8 meses?'
+            solution: |-
+              **Paso 1.** Tiempo en años: $t = \frac{8}{12} = \frac{2}{3}$.
+              **Paso 2.** Interés anual: $2400 \times 0{,}06 = 144$.
+              **Paso 3.** $I = 144 \times \frac{2}{3} = 96$.
+              Resultado: $96$ pesos.
+        common_errors:
+          - 'Olvidar dividir entre 100 la tasa.'
+          - 'Usar meses como años.'
+          - 'Dar el interés cuando se pregunta el monto, o al revés.'
+        summary: >-
+          Interés simple: $I = \frac{C \times r \times t}{100}$, siempre sobre
+          el capital inicial. Monto: $M = C + I$.
+        check:
+          question: '¿Qué interés simple producen 1000 pesos al 7 % anual durante 3 años?'
+          options: ['$21$ pesos', '$70$ pesos', '$210$ pesos', '$1210$ pesos']
+          answer: 2
+          explanation: >-
+            $I = \frac{1000 \times 7 \times 3}{100} = 210$ pesos. $70$ es el
+            interés de un solo año y $1210$ el monto.
+    glossary:
+      - {term: Interés simple, definition: 'Interés calculado siempre sobre el capital inicial.'}
+  t06:
+    intro:
+      what: >-
+        El interés compuesto es aquel en el que los intereses de cada periodo
+        se suman al capital y producen, a su vez, nuevos intereses.
+      purpose: >-
+        Sirve para calcular el crecimiento de ahorros e inversiones a largo
+        plazo y el costo de deudas que acumulan intereses.
+      importance: >-
+        Es el modelo que usan la mayoría de los bancos; a largo plazo produce
+        mucho más que el interés simple, para bien (ahorros) o para mal
+        (deudas).
+      foundations: >-
+        Cada periodo el capital se multiplica por el factor de aumento
+        $1 + \frac{r}{100}$ (b22); al repetirlo $t$ veces aparece una potencia
+        (b18).
+      prerequisites:
+        - 'Interés simple (b23)'
+        - 'Aumentos porcentuales y factor de aumento (b22)'
+        - 'Potencias (b18)'
+      outcomes:
+        - 'Calcular el monto con interés compuesto año a año'
+        - 'Usar la fórmula $M = C \times (1 + \frac{r}{100})^t$'
+        - 'Comparar interés simple y compuesto'
+      everyday_example: >-
+        1000 pesos al 10 % anual compuesto se convierten en 1100 el primer
+        año, 1210 el segundo y 1331 el tercero.
+    sections:
+      - title: Interés sobre interés
+        concept: Cada periodo el interés se calcula sobre el capital acumulado, que incluye los intereses anteriores.
+        explanation: |-
+          Depositamos $1000$ pesos al $10\,\%$ anual de **interés compuesto** durante 3 años. Cada año, el interés se **suma al capital** y el año siguiente se calcula sobre el total:
+
+          | Año | Capital al inicio | Interés (10 %) | Capital al final |
+          |---|---|---|---|
+          | 1 | 1000 | 100 | 1100 |
+          | 2 | 1100 | 110 | 1210 |
+          | 3 | 1210 | 121 | 1331 |
+
+          El monto final es $1331$ pesos. Con interés simple habrían sido $1000 + 3 \times 100 = 1300$: el compuesto da $31$ pesos más, porque cada año se gana interés **también sobre los intereses anteriores**.
+
+          Fíjate en que cada año se multiplica por el factor de aumento $1{,}1$ (b22). Por eso el cálculo año a año es: $1000 \times 1{,}1 = 1100$; $1100 \times 1{,}1 = 1210$; $1210 \times 1{,}1 = 1331$.
+        definition: >-
+          En el interés compuesto, al final de cada periodo el interés se
+          añade al capital, y el interés del periodo siguiente se calcula sobre
+          ese nuevo capital.
+        rules:
+          - 'Cada periodo: capital nuevo = capital anterior × $(1 + \frac{r}{100})$.'
+          - 'El interés de cada periodo es mayor que el del anterior.'
+          - 'Para el mismo capital, tasa y tiempo (más de un periodo), el compuesto supera al simple.'
+        examples:
+          - problem: 'Se invierten 5000 pesos al 4 % anual compuesto durante 2 años. ¿Cuál es el monto?'
+            solution: |-
+              **Paso 1.** Año 1: $5000 \times 1{,}04 = 5200$.
+              **Paso 2.** Año 2: $5200 \times 1{,}04 = 5408$.
+              **Comprobación:** interés del año 2 $= 5200 \times 0{,}04 = 208$; $5200 + 208 = 5408$ ✓.
+              Resultado: $5408$ pesos.
+        common_errors:
+          - 'Calcular cada año el interés sobre el capital inicial (eso es interés simple).'
+          - 'Sumar las tasas: 2 años al 4 % no es un 8 % compuesto.'
+        summary: >-
+          En el compuesto, el interés se suma al capital cada periodo y genera
+          nuevos intereses: se multiplica por $1 + \frac{r}{100}$ cada vez.
+        check:
+          question: 'Se invierten 2000 pesos al 5 % anual compuesto durante 2 años. ¿Cuál es el monto?'
+          options: ['$2200$ pesos', '$2205$ pesos', '$2100$ pesos', '$2210$ pesos']
+          answer: 1
+          explanation: >-
+            Año 1: $2000 \times 1{,}05 = 2100$. Año 2: $2100 \times 1{,}05 =
+            2205$. $2200$ es el resultado con interés simple.
+      - title: La fórmula del interés compuesto
+        concept: $M = C \times \left(1 + \frac{r}{100}\right)^t$.
+        explanation: |-
+          Multiplicar $t$ veces por el mismo factor es elevarlo a $t$ (b18). Por eso:
+          $$M = C \times \left(1 + \frac{r}{100}\right)^t.$$
+
+          Con el ejemplo anterior: $1000 \times 1{,}1^3 = 1000 \times 1{,}331 = 1331$ ✓ (pues $1{,}1^2 = 1{,}21$ y $1{,}21 \times 1{,}1 = 1{,}331$).
+
+          El **interés compuesto** total es $I = M - C$.
+
+          **Comparación con el simple** ($10\,000$ pesos al $20\,\%$ anual, 2 años):
+          * Simple: $I = 10\,000 \times 0{,}2 \times 2 = 4000$, $M = 14\,000$.
+          * Compuesto: $M = 10\,000 \times 1{,}2^2 = 10\,000 \times 1{,}44 = 14\,400$.
+          El compuesto da $400$ pesos más. La diferencia crece con el tiempo, porque la potencia crece más rápido que la multiplicación (b18).
+
+          Tasa y tiempo deben estar en la misma unidad, como siempre.
+        definition: >-
+          El monto de un capital $C$ a interés compuesto con tasa del $r\,\%$
+          por periodo durante $t$ periodos es
+          $M = C \times \left(1 + \frac{r}{100}\right)^t$, y el interés es
+          $I = M - C$.
+        rules:
+          - '$M = C \times (1 + \frac{r}{100})^t$.'
+          - '$I = M - C$.'
+          - 'El exponente es el número de periodos.'
+        examples:
+          - problem: 'Calcula el monto de 8000 pesos al 5 % anual compuesto durante 3 años.'
+            solution: |-
+              **Paso 1.** Factor: $1{,}05$; $1{,}05^2 = 1{,}1025$; $1{,}05^3 = 1{,}1025 \times 1{,}05 = 1{,}157625$.
+              **Paso 2.** $M = 8000 \times 1{,}157625 = 9261$.
+              **Año a año:** $8400$, $8820$, $9261$ ✓.
+              Resultado: $9261$ pesos (interés: $1261$ pesos).
+        common_errors:
+          - 'Multiplicar el factor por $t$ en lugar de elevarlo a $t$.'
+          - 'Elevar sólo la tasa: $C \times (1 + 0{,}05^3)$ es incorrecto.'
+          - 'Usar $1{,}5$ como factor para el $5\,\%$: es $1{,}05$.'
+        summary: >-
+          Interés compuesto: $M = C(1 + \frac{r}{100})^t$. Con más de un
+          periodo supera siempre al simple.
+        check:
+          question: 'Con 10 000 pesos al 20 % anual durante 2 años, ¿cuántos pesos más da el interés compuesto que el simple?'
+          options: ['$0$ pesos', '$400$ pesos', '$4000$ pesos', '$4400$ pesos']
+          answer: 1
+          explanation: >-
+            Compuesto: $10\,000 \times 1{,}44 = 14\,400$. Simple:
+            $10\,000 + 4000 = 14\,000$. Diferencia: $400$ pesos.
+    glossary:
+      - {term: Interés compuesto, definition: 'Interés que se suma al capital en cada periodo y genera nuevos intereses.'}
+      - {term: Capitalización, definition: 'Acción de sumar los intereses al capital al final de cada periodo.'}
+  t07:
+    intro:
+      what: >-
+        Un descuento es una reducción del importe que se paga: por pago al
+        contado, por promoción o por adelantar el cobro de una deuda.
+      purpose: >-
+        Sirve para calcular cuánto se paga con un descuento comercial y para
+        reconstruir el precio original a partir del precio rebajado.
+      importance: >-
+        En comercios y facturas son habituales los descuentos por pronto pago;
+        en el ámbito financiero, el descuento de documentos es el "interés al
+        revés".
+      foundations: >-
+        Se basa en los descuentos porcentuales y el factor de descuento (b22)
+        y, para el descuento de documentos, en la fórmula del interés simple.
+      prerequisites:
+        - 'Descuentos porcentuales (b22)'
+        - 'Interés simple (b23)'
+      outcomes:
+        - 'Calcular el importe con descuento por pronto pago'
+        - 'Calcular el precio original a partir del precio rebajado'
+        - 'Calcular el descuento simple de un documento'
+      everyday_example: >-
+        Una factura de 4500 pesos tiene un 4 % de descuento si se paga al
+        contado: se pagan 4320 pesos.
+    sections:
+      - title: Descuento comercial y precio original
+        concept: El importe con descuento es el original por $1 - \frac{p}{100}$; el original es el importe rebajado dividido entre ese factor.
+        explanation: |-
+          Un **descuento comercial** es una rebaja porcentual sobre el precio o el importe de una factura. Un caso común es el **descuento por pronto pago**: si se paga al contado o antes de una fecha, se rebaja un porcentaje.
+
+          Factura de $4500$ pesos con un $4\,\%$ por pronto pago:
+          * Descuento: $4500 \times 0{,}04 = 180$.
+          * A pagar: $4500 - 180 = 4320$ pesos (o $4500 \times 0{,}96 = 4320$).
+
+          **Precio original.** Si tras un descuento del $15\,\%$ se pagaron $680$ pesos, se pagó el $85\,\%$ del original. Entonces:
+          $$\text{original} = 680 \div 0{,}85 = 800 \text{ pesos}.$$
+          Comprobación: $800 \times 0{,}85 = 680$ ✓.
+
+          Es un error frecuente "sumar el 15 % a 680": $680 \times 1{,}15 = 782$, que no es el precio original, porque el $15\,\%$ se calculó sobre $800$, no sobre $680$.
+        definition: >-
+          Un descuento del $p\,\%$ sobre un importe $N$ da un importe a pagar
+          $N \times \left(1 - \frac{p}{100}\right)$. Si se conoce el importe
+          rebajado $F$, el original es $N = F \div \left(1 - \frac{p}{100}\right)$.
+        rules:
+          - 'A pagar = importe × $(1 - \frac{p}{100})$.'
+          - 'Original = importe rebajado ÷ $(1 - \frac{p}{100})$.'
+          - 'No se recupera el original sumando el porcentaje al precio rebajado.'
+        examples:
+          - problem: 'Tras un descuento del 20 % se pagaron 360 pesos. ¿Cuál era el precio original?'
+            solution: |-
+              **Paso 1.** Se pagó el $80\,\%$: factor $0{,}8$.
+              **Paso 2.** Original: $360 \div 0{,}8 = 3600 \div 8 = 450$.
+              **Comprobación:** $450 \times 0{,}8 = 360$ ✓.
+              Resultado: $450$ pesos.
+        common_errors:
+          - 'Sumar el porcentaje al precio rebajado: $360 \times 1{,}2 = 432$ no es el original.'
+          - 'Confundir el descuento con el importe a pagar.'
+        summary: >-
+          Con descuento se paga el $(100 - p)\,\%$. Para volver al precio
+          original, divide entre ese factor.
+        check:
+          question: 'Una factura de 4500 pesos tiene un 4 % de descuento por pronto pago. ¿Cuánto se paga?'
+          options: ['$180$ pesos', '$4320$ pesos', '$4496$ pesos', '$4680$ pesos']
+          answer: 1
+          explanation: >-
+            $4500 \times 0{,}96 = 4320$ pesos. $180$ es el descuento y $4680$
+            sería un recargo.
+      - title: Descuento de un documento
+        concept: Cobrar antes de tiempo una deuda documentada cuesta un descuento que se calcula como un interés simple sobre su valor.
+        explanation: |-
+          Un **pagaré** es un documento en el que alguien se compromete a pagar una cantidad (el **valor nominal**, $N$) en una fecha futura. Si quien debe cobrarlo necesita el dinero **antes**, puede llevarlo a un banco, que le adelanta el dinero a cambio de un **descuento**.
+
+          En el **descuento comercial simple**, ese descuento se calcula como un interés simple sobre el valor nominal:
+          $$D = \frac{N \times d \times t}{100},$$
+          donde $d$ es la tasa de descuento y $t$ el tiempo que falta hasta el vencimiento (en la unidad de la tasa). Lo que se recibe es el **valor efectivo**: $N - D$.
+
+          Ejemplo: un pagaré de $10\,000$ pesos vence dentro de 2 meses; el banco aplica un $12\,\%$ anual.
+          * $t = \frac{2}{12}$ de año.
+          * $D = 10\,000 \times 0{,}12 \times \frac{2}{12} = 1200 \times \frac{2}{12} = 200$.
+          * Se reciben $10\,000 - 200 = 9800$ pesos.
+        definition: >-
+          El descuento comercial simple de un documento de valor nominal $N$,
+          a una tasa del $d\,\%$ por periodo y faltando $t$ periodos para su
+          vencimiento, es $D = \frac{N \times d \times t}{100}$; el valor
+          efectivo es $N - D$.
+        rules:
+          - '$D = \frac{N \times d \times t}{100}$.'
+          - 'Valor efectivo = $N - D$.'
+          - 'Cuanto más falte para el vencimiento, mayor es el descuento.'
+        examples:
+          - problem: 'Un pagaré de 6000 pesos vence en 3 meses y se descuenta al 10 % anual. ¿Cuánto se recibe?'
+            solution: |-
+              **Paso 1.** $t = \frac{3}{12} = 0{,}25$ años.
+              **Paso 2.** $D = 6000 \times 0{,}10 \times 0{,}25 = 150$.
+              **Paso 3.** Valor efectivo: $6000 - 150 = 5850$.
+              Resultado: $5850$ pesos.
+        common_errors:
+          - 'Usar los meses como años con una tasa anual.'
+          - 'Confundir el descuento con el valor efectivo.'
+        summary: >-
+          Descontar un documento: $D = \frac{N \times d \times t}{100}$ y se
+          recibe $N - D$.
+        check:
+          question: 'Un pagaré de 10 000 pesos que vence en 2 meses se descuenta al 12 % anual. ¿Cuánto se recibe?'
+          options: ['$8800$ pesos', '$9800$ pesos', '$9976$ pesos', '$10\,200$ pesos']
+          answer: 1
+          explanation: >-
+            $D = 10\,000 \times 0{,}12 \times \frac{2}{12} = 200$; se reciben
+            $9800$ pesos. $8800$ sale de tratar 1 año como si fuera el plazo.
+    glossary:
+      - {term: Descuento por pronto pago, definition: 'Rebaja que se concede por pagar al contado o antes de un plazo.'}
+      - {term: Valor nominal, definition: 'Cantidad escrita en un documento, que se pagará a su vencimiento.'}
+      - {term: Valor efectivo, definition: 'Lo que se recibe al descontar un documento: valor nominal menos descuento.'}
+  t08:
+    intro:
+      what: >-
+        En una compraventa, la ganancia (o pérdida) es la diferencia entre el
+        precio de venta y el precio de costo.
+      purpose: >-
+        Sirve para saber si un negocio es rentable, fijar precios de venta y
+        expresar la ganancia en porcentaje.
+      importance: >-
+        Cualquier actividad comercial, desde un pequeño puesto hasta una
+        empresa, necesita calcular ganancias, pérdidas y márgenes.
+      foundations: >-
+        Se basa en la resta de enteros (resultado negativo = pérdida, b05) y en
+        el cálculo de qué porcentaje es una parte (b22).
+      prerequisites:
+        - 'Resta de números enteros (b05)'
+        - 'Cálculo de porcentajes y aumentos porcentuales (b22)'
+      outcomes:
+        - 'Calcular ganancias y pérdidas'
+        - 'Expresar la ganancia o pérdida como porcentaje del costo'
+        - 'Calcular el precio de venta para obtener cierto porcentaje de ganancia'
+      everyday_example: >-
+        Un comerciante compra camisas a 400 pesos y las vende a 500: gana 100
+        pesos por camisa, un 25 % sobre el costo.
+    sections:
+      - title: Venta menos costo
+        concept: Ganancia = precio de venta − precio de costo; si es negativa, hay pérdida.
+        explanation: |-
+          * **Precio de costo** (o de compra): lo que le cuesta al comerciante el producto.
+          * **Precio de venta:** lo que cobra al venderlo.
+
+          $$\text{resultado} = \text{venta} - \text{costo}.$$
+          Si es **positivo**, hay **ganancia**; si es **negativo**, hay **pérdida**.
+
+          **Porcentaje de ganancia o pérdida.** Salvo que se indique otra cosa, se calcula **sobre el costo**:
+          $$\frac{\text{ganancia}}{\text{costo}} \times 100.$$
+          * Compra a $400$, venta a $500$: ganancia $100$; $\frac{100}{400} \times 100 = 25\,\%$.
+          * Compra a $800$, venta a $680$: resultado $-120$; pérdida del $\frac{120}{800} \times 100 = 15\,\%$.
+
+          **Fijar el precio de venta.** Para ganar un $20\,\%$ sobre un costo de $250$: es un aumento porcentual (b22), $250 \times 1{,}2 = 300$ pesos.
+
+          En algunos negocios se habla del margen **sobre el precio de venta**; da otro número ($\frac{100}{500} = 20\,\%$ en el primer ejemplo). Por eso conviene aclarar siempre sobre qué se calcula el porcentaje.
+        definition: >-
+          Si un artículo se compra a $C$ y se vende a $V$, el resultado es
+          $V - C$ (ganancia si es positivo, pérdida si es negativo), y su
+          porcentaje sobre el costo es $\frac{V - C}{C} \times 100$.
+        rules:
+          - 'Resultado = venta − costo.'
+          - 'Positivo: ganancia. Negativo: pérdida.'
+          - 'El porcentaje de ganancia se calcula sobre el costo, salvo indicación contraria.'
+          - 'Precio de venta para ganar un $p\,\%$: costo × $(1 + \frac{p}{100})$.'
+        examples:
+          - problem: 'Se compra un artículo a 800 pesos y se vende a 680. ¿Hay ganancia o pérdida? ¿De qué porcentaje?'
+            solution: |-
+              **Paso 1.** $680 - 800 = -120$: pérdida de $120$ pesos.
+              **Paso 2.** $\frac{120}{800} \times 100 = 15$.
+              Resultado: pérdida del $15\,\%$ sobre el costo.
+          - problem: 'Un producto cuesta 250 pesos. ¿A cuánto hay que venderlo para ganar un 20 %?'
+            solution: |-
+              **Paso 1.** Ganancia: $250 \times 0{,}2 = 50$.
+              **Paso 2.** Venta: $250 + 50 = 300$ (o $250 \times 1{,}2$).
+              Resultado: $300$ pesos.
+        common_errors:
+          - 'Calcular el porcentaje sobre el precio de venta cuando se pide sobre el costo.'
+          - 'Restar al revés (costo − venta) y confundir ganancia con pérdida.'
+        summary: >-
+          Ganancia = venta − costo. En porcentaje: ganancia ÷ costo × 100.
+        check:
+          question: 'Un comerciante compra a 60 pesos y vende a 75. ¿Qué porcentaje gana sobre el costo?'
+          options: ['$15\,\%$', '$20\,\%$', '$25\,\%$', '$125\,\%$']
+          answer: 2
+          explanation: >-
+            Ganancia: $75 - 60 = 15$; $\frac{15}{60} \times 100 = 25\,\%$.
+            $20\,\%$ sería sobre el precio de venta ($\frac{15}{75}$).
+    glossary:
+      - {term: Precio de costo, definition: 'Lo que cuesta adquirir o producir un artículo.'}
+      - {term: Ganancia, definition: 'Diferencia positiva entre precio de venta y precio de costo.'}
+      - {term: Pérdida, definition: 'Diferencia negativa entre precio de venta y precio de costo.'}
+  t09:
+    intro:
+      what: >-
+        Son situaciones financieras de la vida diaria: compras en cuotas con
+        recargo, comparación de ofertas y deudas que generan interés.
+      purpose: >-
+        Sirven para decidir con números si conviene pagar al contado o en
+        cuotas, qué oferta es mejor o cuánto crece una deuda.
+      importance: >-
+        Las decisiones financieras cotidianas afectan directamente a la
+        economía personal y familiar.
+      foundations: >-
+        Se combinan porcentajes, aumentos y descuentos (b22), interés simple y
+        compuesto y precio unitario (b17).
+      prerequisites:
+        - 'Interés simple y compuesto (b23)'
+        - 'Aumentos y descuentos porcentuales (b22)'
+        - 'Problemas con decimales y precio unitario (b17)'
+      outcomes:
+        - 'Calcular cuotas con recargo'
+        - 'Comparar ofertas por precio unitario'
+        - 'Estimar el crecimiento de una deuda con interés compuesto'
+      everyday_example: >-
+        Un televisor de 6000 pesos se puede pagar en 12 cuotas con un 10 % de
+        recargo: cada cuota es de 550 pesos y en total se pagan 600 pesos más.
+    sections:
+      - title: Cuotas, ofertas y deudas
+        concept: Para decidir, se calcula el costo total de cada opción y se comparan en las mismas condiciones.
+        explanation: |-
+          **Compras en cuotas con recargo.** Si un televisor de $6000$ pesos se paga en $12$ cuotas con un recargo del $10\,\%$:
+          * Total: $6000 \times 1{,}10 = 6600$ pesos.
+          * Cuota: $6600 \div 12 = 550$ pesos.
+          Pagar en cuotas cuesta $600$ pesos más que al contado.
+
+          **Comparar ofertas.** Un producto cuesta $90$ pesos y necesitas 3 unidades.
+          * Oferta A: $20\,\%$ de descuento → $90 \times 0{,}8 = 72$ por unidad; 3 unidades: $216$ pesos.
+          * Oferta B: "lleva 3, paga 2" → $2 \times 90 = 180$ pesos (precio unitario $60$).
+          La oferta B es más barata. "Lleva 3 y paga 2" equivale a un descuento de un tercio, $\approx 33{,}3\,\%$, pero sólo si realmente necesitas las 3 unidades.
+
+          **Deudas con interés compuesto.** Una tarjeta que cobra un $3\,\%$ mensual sobre una deuda de $1000$ pesos que no se paga: tras un mes, $1030$; tras dos, $1030 \times 1{,}03 = 1060{,}90$. Los intereses mensuales pequeños, acumulados, crecen rápido.
+        definition: >-
+          Comparar opciones financieras es calcular, para cada una, el costo
+          (o beneficio) total en condiciones equivalentes y elegir la más
+          conveniente.
+        rules:
+          - 'Total en cuotas = precio × $(1 + \frac{\text{recargo}}{100})$; cuota = total ÷ número de cuotas.'
+          - 'Compara ofertas por el precio total o por unidad para la misma cantidad.'
+          - 'Las deudas con interés mensual crecen como interés compuesto.'
+        examples:
+          - problem: 'Una nevera de 2400 pesos se paga en 6 cuotas con un 5 % de recargo. ¿Cuánto vale cada cuota?'
+            solution: |-
+              **Paso 1.** Total: $2400 \times 1{,}05 = 2520$.
+              **Paso 2.** Cuota: $2520 \div 6 = 420$.
+              Resultado: $420$ pesos por cuota.
+          - problem: 'Una deuda de 1000 pesos genera un 3 % mensual compuesto. ¿Cuánto se debe tras 2 meses sin pagar?'
+            solution: |-
+              **Paso 1.** Mes 1: $1000 \times 1{,}03 = 1030$.
+              **Paso 2.** Mes 2: $1030 \times 1{,}03 = 1060{,}90$.
+              Resultado: $1060{,}90$ pesos.
+        common_errors:
+          - 'Dividir el precio entre las cuotas sin aplicar el recargo.'
+          - 'Comparar ofertas para cantidades distintas.'
+          - 'Calcular el interés de una deuda como simple cuando se acumula mes a mes.'
+        summary: >-
+          Antes de decidir, calcula el costo total de cada opción en las mismas
+          condiciones.
+        check:
+          question: 'Un artículo de 2400 pesos se paga en 6 cuotas con un 5 % de recargo. ¿Cuánto es cada cuota?'
+          options: ['$400$ pesos', '$420$ pesos', '$520$ pesos', '$380$ pesos']
+          answer: 1
+          explanation: >-
+            Total: $2400 \times 1{,}05 = 2520$; cuota: $2520 \div 6 = 420$ pesos.
+            $400$ olvida el recargo.
+    glossary:
+      - {term: Cuota, definition: 'Cada uno de los pagos parciales en que se divide un importe.'}
+      - {term: Recargo, definition: 'Aumento porcentual que se cobra, por ejemplo, por pagar a plazos.'}

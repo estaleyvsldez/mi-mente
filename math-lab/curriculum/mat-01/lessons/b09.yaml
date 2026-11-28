@@ -1,0 +1,954 @@
+block: b09
+intro: |-
+  Cuando una expresión mezcla varias operaciones, todas las personas deben obtener el mismo resultado. Para eso existe un acuerdo universal: la **jerarquía de operaciones**, que dice qué se calcula primero. En este bloque aprenderás ese orden, el uso de paréntesis, corchetes y llaves, y una primera idea de cómo encajan las potencias y las raíces (que estudiarás a fondo en los bloques 18 y 19).
+
+topics:
+  t01:
+    intro:
+      what: |-
+        El orden de las operaciones es la regla que indica qué operación se resuelve primero cuando en una misma expresión aparecen sumas, restas, multiplicaciones y divisiones.
+      purpose: |-
+        Sirve para que una expresión como $5 + 3 \times 4$ tenga un único resultado, el mismo para cualquier persona, calculadora u hoja de cálculo.
+      importance: |-
+        Sin un orden acordado, la misma cuenta daría resultados distintos según quién la haga. Es la base de todo el cálculo posterior: fracciones, decimales, álgebra y fórmulas de la vida diaria.
+      foundations: |-
+        Se apoya en el significado de cada operación (bloques 04 a 07): la multiplicación es una suma repetida "abreviada", por eso se agrupa antes que las sumas sueltas. También en las propiedades del bloque 08: la resta y la división no son conmutativas ni asociativas, de modo que el orden importa.
+      prerequisites:
+        - 'Suma y resta de números naturales y enteros (bloques 04 y 05)'
+        - 'Multiplicación y división (bloques 06 y 07)'
+        - 'Propiedades de las operaciones (bloque 08)'
+      outcomes:
+        - 'Decidir qué operación va primero en una expresión sin signos de agrupación'
+        - 'Resolver expresiones con sumas, restas, multiplicaciones y divisiones'
+        - 'Detectar resultados erróneos por operar en desorden'
+      everyday_example: |-
+        Compras 3 panes de 4 pesos y una leche de 15 pesos. El total es $3 \times 4 + 15$: primero calculas lo que cuestan los panes ($12$) y luego sumas la leche: $27$ pesos. Nadie suma primero $4 + 15$ y luego multiplica por 3, porque eso no tiene sentido en la tienda.
+    sections:
+      - title: Multiplicar y dividir antes que sumar y restar
+        concept: En una expresión sin paréntesis, primero se resuelven las multiplicaciones y divisiones, y después las sumas y restas.
+        explanation: |-
+          Mira la expresión $5 + 3 \times 4$. Si operas de izquierda a derecha obtienes $8 \times 4 = 32$. Si haces primero la multiplicación obtienes $5 + 12 = 17$. Las dos no pueden ser correctas, así que la matemática adoptó un acuerdo: **la multiplicación y la división tienen prioridad sobre la suma y la resta**.
+
+          ¿Por qué ese acuerdo y no otro? Porque $3 \times 4$ es una forma corta de escribir $4 + 4 + 4$. La expresión $5 + 3 \times 4$ significa en realidad $5 + 4 + 4 + 4 = 17$. La multiplicación "empaqueta" una suma, y ese paquete debe abrirse completo antes de mezclarlo con lo demás.
+
+          Una buena técnica es **separar la expresión en términos**: los trozos que quedan entre los signos $+$ y $-$. En $20 - 12 \div 4 + 2$ los términos son $20$, $12 \div 4$ y $2$. Primero calculas cada término por dentro y después sumas y restas los resultados.
+        definition: |-
+          En una expresión sin signos de agrupación, las operaciones de **segundo nivel** (multiplicación $\times$ y división $\div$) se efectúan antes que las de **primer nivel** (suma $+$ y resta $-$).
+        rules:
+          - 'Primero: multiplicaciones y divisiones.'
+          - 'Después: sumas y restas.'
+          - 'Los signos $+$ y $-$ separan la expresión en términos; cada término se calcula por separado.'
+        examples:
+          - problem: 'Calcula $5 + 3 \times 4$'
+            solution: |-
+              **Paso 1.** Localizamos la multiplicación: $3 \times 4 = 12$.
+
+              **Paso 2.** Reescribimos la expresión: $5 + 12$.
+
+              **Paso 3.** Sumamos: $5 + 12 = 17$.
+
+              Resultado: $17$.
+          - problem: 'Calcula $20 - 12 \div 4 + 2$'
+            solution: |-
+              **Paso 1.** Términos: $20$, $12 \div 4$ y $2$. Sólo el segundo tiene una operación de segundo nivel: $12 \div 4 = 3$.
+
+              **Paso 2.** Queda $20 - 3 + 2$.
+
+              **Paso 3.** Sumas y restas de izquierda a derecha: $20 - 3 = 17$; $17 + 2 = 19$.
+
+              Resultado: $19$.
+        common_errors:
+          - 'Operar de izquierda a derecha sin mirar el tipo de operación: $5 + 3 \times 4$ no es $32$.'
+          - 'Sumar los números que están junto a un signo $\times$: en $2 + 6 \times 3$ no se calcula $2 + 6$ primero.'
+          - 'Olvidar copiar el resto de la expresión al reescribirla después de cada paso.'
+        summary: |-
+          Sin paréntesis, primero se hacen las multiplicaciones y divisiones y después las sumas y restas. Separar la expresión en términos ayuda a no equivocarse.
+        check:
+          question: '¿Cuánto vale $6 + 4 \times 5$?'
+          options: ['$50$', '$26$', '$30$']
+          answer: 1
+          explanation: |-
+            Primero la multiplicación: $4 \times 5 = 20$; después $6 + 20 = 26$. El $50$ sale de sumar primero ($10 \times 5$), lo cual no respeta la jerarquía.
+      - title: Operaciones del mismo nivel, de izquierda a derecha
+        concept: Cuando las operaciones son del mismo nivel, se resuelven en el orden en que aparecen, de izquierda a derecha.
+        explanation: |-
+          ¿Qué pasa en $24 \div 4 \times 2$? Multiplicación y división tienen **la misma prioridad**: ninguna va antes que la otra. En ese caso se avanza de izquierda a derecha: $24 \div 4 = 6$ y luego $6 \times 2 = 12$.
+
+          Si alguien hiciera primero $4 \times 2 = 8$ obtendría $24 \div 8 = 3$, un resultado distinto. Recuerda del bloque 08 que la división **no es asociativa**: cambiar cómo se agrupan los números cambia el resultado. Lo mismo ocurre con la resta: $10 - 4 + 3$ es $6 + 3 = 9$, no $10 - 7 = 3$.
+
+          Por tanto, la jerarquía completa (sin agrupaciones) es: primero multiplicaciones y divisiones **de izquierda a derecha**; después sumas y restas **de izquierda a derecha**. Más adelante en este bloque añadirás dos niveles más: los signos de agrupación y las potencias y raíces.
+        definition: |-
+          Si en una expresión aparecen varias operaciones del mismo nivel seguidas, se efectúan en el orden de lectura, de izquierda a derecha.
+        rules:
+          - '$\times$ y $\div$ tienen la misma prioridad entre sí.'
+          - '$+$ y $-$ tienen la misma prioridad entre sí.'
+          - 'Dentro de un mismo nivel se opera de izquierda a derecha.'
+        examples:
+          - problem: 'Calcula $24 \div 4 \times 2$'
+            solution: |-
+              **Paso 1.** Ambas operaciones son de segundo nivel: vamos de izquierda a derecha. $24 \div 4 = 6$.
+
+              **Paso 2.** Queda $6 \times 2 = 12$.
+
+              Resultado: $12$.
+          - problem: 'Calcula $10 - 4 + 3 \times 2$'
+            solution: |-
+              **Paso 1.** Primero la multiplicación: $3 \times 2 = 6$. Queda $10 - 4 + 6$.
+
+              **Paso 2.** Suma y resta, de izquierda a derecha: $10 - 4 = 6$; $6 + 6 = 12$.
+
+              Resultado: $12$.
+        common_errors:
+          - 'Creer que la multiplicación siempre va antes que la división: tienen la misma prioridad.'
+          - 'Creer que la suma va antes que la resta: en $10 - 4 + 3$ se resta primero porque está a la izquierda.'
+        summary: |-
+          Las operaciones del mismo nivel se resuelven de izquierda a derecha. Así se evitan ambigüedades con la resta y la división, que no son asociativas.
+        check:
+          question: '¿Cuánto vale $18 \div 3 \times 2$?'
+          options: ['$3$', '$12$', '$36$']
+          answer: 1
+          explanation: |-
+            De izquierda a derecha: $18 \div 3 = 6$ y $6 \times 2 = 12$. El $3$ sale de multiplicar primero ($18 \div 6$), algo incorrecto porque $\times$ y $\div$ tienen la misma prioridad.
+    glossary:
+      - {term: Jerarquía de operaciones, definition: 'Acuerdo que fija el orden en que se resuelven las operaciones de una expresión.'}
+      - {term: Término, definition: 'Cada parte de una expresión separada de las demás por signos de suma o resta.'}
+      - {term: Expresión numérica, definition: 'Combinación de números y signos de operación que representa un único valor.'}
+
+  t02:
+    intro:
+      what: |-
+        Los paréntesis $(\ )$ son signos de agrupación que indican que lo que está dentro se calcula antes que todo lo demás.
+      purpose: |-
+        Sirven para cambiar el orden habitual de las operaciones cuando el problema lo exige, por ejemplo para sumar antes de multiplicar.
+      importance: |-
+        Muchas situaciones reales necesitan sumar primero y multiplicar después (el precio de varios lotes iguales, el área de un terreno ampliado). Sin paréntesis no se podrían escribir correctamente.
+      foundations: |-
+        Se basan en la jerarquía del tema anterior y en la idea de que un grupo de números entre paréntesis representa un solo valor. También conectan con la propiedad distributiva del bloque 08.
+      prerequisites:
+        - 'Orden de las operaciones (bloque 09, tema 1)'
+        - 'Propiedad distributiva (bloque 08)'
+        - 'Operaciones con números enteros (bloques 04 a 07)'
+      outcomes:
+        - 'Resolver expresiones con uno o varios paréntesis'
+        - 'Distinguir cuándo un paréntesis cambia el resultado y cuándo no'
+        - 'Escribir con paréntesis la expresión que corresponde a una situación'
+      everyday_example: |-
+        Compras 3 bolsas, y cada una contiene 2 manzanas y 5 naranjas. El total de frutas es $3 \times (2 + 5) = 3 \times 7 = 21$. Sin paréntesis, $3 \times 2 + 5 = 11$, que contaría las naranjas de una sola bolsa.
+    sections:
+      - title: Los paréntesis van primero
+        concept: Lo que está entre paréntesis se calcula antes que cualquier otra operación.
+        explanation: |-
+          Compara estas dos expresiones:
+
+          - $5 + 3 \times 4 = 5 + 12 = 17$
+          - $(5 + 3) \times 4 = 8 \times 4 = 32$
+
+          Los números y las operaciones son los mismos; sólo cambia el paréntesis. El paréntesis dice: "trata $5 + 3$ como un único número". Por eso, **antes de mirar multiplicaciones o sumas exteriores, se resuelve el interior del paréntesis**.
+
+          Dentro del paréntesis se sigue la jerarquía normal: en $(2 + 3 \times 4)$ se multiplica primero y queda $(2 + 12) = 14$.
+
+          Una notación frecuente: un número pegado a un paréntesis indica multiplicación. $3(2 + 5)$ significa $3 \times (2 + 5)$. Además, los paréntesis también se usan para escribir números negativos sin confundir signos, como en $5 \times (-2)$ (bloque 06).
+
+          Relación con la propiedad distributiva: $3 \times (2 + 5) = 3 \times 2 + 3 \times 5 = 6 + 15 = 21$, el mismo resultado que $3 \times 7$. Es otra forma de "abrir" el paréntesis.
+        definition: |-
+          Los **paréntesis** son signos de agrupación: la expresión encerrada entre ellos se evalúa primero y su resultado se usa como un solo número en el resto del cálculo.
+        rules:
+          - 'Primero se resuelve el interior de cada paréntesis.'
+          - 'Dentro del paréntesis se respeta la jerarquía: $\times$ y $\div$ antes que $+$ y $-$.'
+          - 'Un número junto a un paréntesis, como $3(2+5)$, indica multiplicación.'
+        examples:
+          - problem: 'Calcula $(12 - 4) \div 2$'
+            solution: |-
+              **Paso 1.** Paréntesis: $12 - 4 = 8$. Queda $8 \div 2$.
+
+              **Paso 2.** Dividimos: $8 \div 2 = 4$.
+
+              Resultado: $4$. (Sin paréntesis, $12 - 4 \div 2 = 12 - 2 = 10$.)
+          - problem: 'Calcula $3 \times (2 + 5) - 6$'
+            solution: |-
+              **Paso 1.** Paréntesis: $2 + 5 = 7$. Queda $3 \times 7 - 6$.
+
+              **Paso 2.** Multiplicación: $3 \times 7 = 21$. Queda $21 - 6$.
+
+              **Paso 3.** Resta: $21 - 6 = 15$.
+
+              Resultado: $15$.
+        common_errors:
+          - 'Ignorar el paréntesis y aplicar sólo la regla de "multiplicar primero".'
+          - 'Interpretar $3(2+5)$ como $32 + 5$ o como $3 + 7$: significa $3 \times 7$.'
+          - 'Al usar la distributiva, multiplicar sólo el primer sumando: $3 \times (2 + 5) \neq 3 \times 2 + 5$.'
+        summary: |-
+          Los paréntesis tienen la máxima prioridad: su interior se calcula primero, respetando dentro la jerarquía normal.
+        check:
+          question: '¿Cuánto vale $2 \times (6 + 4)$?'
+          options: ['$16$', '$20$', '$24$']
+          answer: 1
+          explanation: |-
+            Paréntesis primero: $6 + 4 = 10$; luego $2 \times 10 = 20$. El $16$ resulta de ignorar el paréntesis ($2 \times 6 + 4$).
+      - title: Varios paréntesis en una expresión
+        concept: Si hay varios paréntesis separados, se resuelve cada uno y después se sigue la jerarquía con los resultados.
+        explanation: |-
+          Una expresión puede tener varios paréntesis que **no están uno dentro de otro**, por ejemplo $(8 - 3) \times (2 + 4)$. Cada paréntesis es independiente: puedes calcularlos en cualquier orden, porque uno no afecta al otro. Lo habitual es hacerlo de izquierda a derecha.
+
+          Cuando ya no quedan paréntesis, la expresión se ha convertido en una más sencilla y aplicas lo aprendido en el tema 1: multiplicaciones y divisiones, y después sumas y restas.
+
+          Consejo práctico: en cada línea, reescribe la expresión completa sustituyendo cada paréntesis por su resultado. Así no se pierde ningún número por el camino.
+        definition: |-
+          Paréntesis **independientes** son los que no se contienen entre sí; sus contenidos se evalúan por separado antes de continuar con las operaciones exteriores.
+        rules:
+          - 'Cada paréntesis independiente se calcula por separado.'
+          - 'Con todos los paréntesis resueltos, se aplica la jerarquía habitual.'
+        examples:
+          - problem: 'Calcula $(8 - 3) \times (2 + 4)$'
+            solution: |-
+              **Paso 1.** Primer paréntesis: $8 - 3 = 5$. Segundo: $2 + 4 = 6$.
+
+              **Paso 2.** Queda $5 \times 6 = 30$.
+
+              Resultado: $30$.
+          - problem: 'Calcula $40 \div (6 + 2) + (9 - 4) \times 3$'
+            solution: |-
+              **Paso 1.** Paréntesis: $6 + 2 = 8$ y $9 - 4 = 5$. Queda $40 \div 8 + 5 \times 3$.
+
+              **Paso 2.** Segundo nivel: $40 \div 8 = 5$ y $5 \times 3 = 15$. Queda $5 + 15$.
+
+              **Paso 3.** Suma: $5 + 15 = 20$.
+
+              Resultado: $20$.
+        common_errors:
+          - 'Después de resolver los paréntesis, operar de izquierda a derecha olvidando la jerarquía.'
+          - 'Mezclar números de dos paréntesis distintos, como si fueran uno solo.'
+        summary: |-
+          Con varios paréntesis, se resuelve cada uno, se reescribe la expresión y se termina con la jerarquía normal.
+        check:
+          question: '¿Cuánto vale $(7 - 2) \times (1 + 3)$?'
+          options: ['$20$', '$8$', '$14$']
+          answer: 0
+          explanation: |-
+            $7 - 2 = 5$ y $1 + 3 = 4$, luego $5 \times 4 = 20$. El $8$ sale de quitar los paréntesis: $7 - 2 \times 1 + 3 = 8$.
+    glossary:
+      - {term: Paréntesis, definition: 'Signo de agrupación $(\ )$ cuyo contenido se calcula antes que el resto.'}
+      - {term: Signo de agrupación, definition: 'Símbolo que encierra una parte de la expresión para indicar que se resuelve primero: paréntesis, corchetes o llaves.'}
+
+  t03:
+    intro:
+      what: |-
+        Los corchetes $[\ ]$ son un segundo tipo de signo de agrupación que se usa para encerrar expresiones que ya contienen paréntesis.
+      purpose: |-
+        Permiten escribir agrupaciones dentro de otras agrupaciones sin confundir dónde empieza y dónde termina cada una.
+      importance: |-
+        Los problemas con varias etapas (calcular algo, usarlo en otra cuenta y luego en otra) producen expresiones anidadas. Los corchetes hacen que se lean con claridad.
+      foundations: |-
+        Se basan en el uso de paréntesis (tema 2) y en un principio sencillo: se trabaja **de dentro hacia fuera**, como al abrir cajas que están unas dentro de otras.
+      prerequisites:
+        - 'Orden de las operaciones (bloque 09, tema 1)'
+        - 'Uso de paréntesis (bloque 09, tema 2)'
+      outcomes:
+        - 'Resolver expresiones con paréntesis dentro de corchetes'
+        - 'Identificar el orden correcto de resolución en agrupaciones anidadas'
+      everyday_example: |-
+        Un grupo de 4 amigos compra 8 refrescos y $(6 - 2)$ paquetes de 3 galletas, y reparten todo a partes iguales: cada uno recibe $[8 + (6 - 2) \times 3] \div 4 = 5$ productos.
+    sections:
+      - title: De dentro hacia fuera
+        concept: Cuando hay paréntesis dentro de corchetes, primero se resuelven los paréntesis interiores y después el corchete.
+        explanation: |-
+          Si una expresión necesita una agrupación dentro de otra, escribir $((\ ))$ se vuelve confuso. Por eso se usan símbolos distintos: los **paréntesis** $(\ )$ para el nivel interior y los **corchetes** $[\ ]$ para el que los rodea.
+
+          El método es como abrir cajas: primero la más interior.
+
+          1. Resuelve los paréntesis que están dentro del corchete.
+          2. Con esos resultados, resuelve el interior del corchete **respetando la jerarquía** (multiplicar y dividir antes que sumar y restar).
+          3. Usa el resultado del corchete en las operaciones de fuera.
+
+          Fíjate en que el corchete no "obliga" a hacer las operaciones de izquierda a derecha: dentro de él siguen valiendo todas las reglas del tema 1. En $[8 + 4 \times 3]$ se multiplica primero: $8 + 12 = 20$.
+        definition: |-
+          Los **corchetes** son signos de agrupación de segundo nivel: encierran expresiones que pueden contener paréntesis. Se evalúan después de los paréntesis que contienen y antes que las operaciones exteriores.
+        rules:
+          - 'Orden de resolución: paréntesis, después corchetes, después lo de fuera.'
+          - 'Dentro de cada agrupación se respeta la jerarquía de operaciones.'
+          - 'Un número pegado a un corchete, como $5[\ldots]$, indica multiplicación.'
+        examples:
+          - problem: 'Calcula $[8 + (6 - 2) \times 3] \div 4$'
+            solution: |-
+              **Paso 1.** Paréntesis: $6 - 2 = 4$. Queda $[8 + 4 \times 3] \div 4$.
+
+              **Paso 2.** Dentro del corchete, primero la multiplicación: $4 \times 3 = 12$. Queda $[8 + 12] \div 4$.
+
+              **Paso 3.** Termina el corchete: $8 + 12 = 20$. Queda $20 \div 4$.
+
+              **Paso 4.** $20 \div 4 = 5$.
+
+              Resultado: $5$.
+          - problem: 'Calcula $2 \times [3 + 4 \times (5 - 3)]$'
+            solution: |-
+              **Paso 1.** Paréntesis: $5 - 3 = 2$. Queda $2 \times [3 + 4 \times 2]$.
+
+              **Paso 2.** Dentro del corchete: $4 \times 2 = 8$; luego $3 + 8 = 11$. Queda $2 \times 11$.
+
+              **Paso 3.** $2 \times 11 = 22$.
+
+              Resultado: $22$.
+        common_errors:
+          - 'Resolver el corchete de izquierda a derecha antes de resolver el paréntesis interior.'
+          - 'Dentro del corchete, sumar antes de multiplicar: en $[8 + 4 \times 3]$ el resultado es $20$, no $36$.'
+          - 'Quitar el corchete antes de terminar de calcular todo lo que contiene.'
+        summary: |-
+          Los corchetes agrupan expresiones que contienen paréntesis. Se trabaja de dentro hacia fuera y, en cada nivel, con la jerarquía habitual.
+        check:
+          question: '¿Cuánto vale $[12 - (2 + 4)] \times 2$?'
+          options: ['$6$', '$12$', '$2$']
+          answer: 1
+          explanation: |-
+            Paréntesis: $2 + 4 = 6$. Corchete: $12 - 6 = 6$. Fuera: $6 \times 2 = 12$. El $6$ sale de olvidar la multiplicación final; el $2$, de calcular $12 - (2 + 4 \times 2)$.
+    glossary:
+      - {term: Corchetes, definition: 'Signos de agrupación $[\ ]$ que encierran expresiones que ya contienen paréntesis.'}
+      - {term: Agrupaciones anidadas, definition: 'Signos de agrupación colocados unos dentro de otros.'}
+
+  t04:
+    intro:
+      what: |-
+        Las llaves $\{\ \}$ son el tercer signo de agrupación: encierran expresiones que contienen corchetes (y éstos, a su vez, paréntesis).
+      purpose: |-
+        Sirven para escribir con claridad cálculos de tres niveles de agrupación, típicos de problemas con varias etapas.
+      importance: |-
+        Dominar las llaves completa el sistema de agrupación de la aritmética. Con paréntesis, corchetes y llaves se puede escribir cualquier cálculo encadenado sin ambigüedad.
+      foundations: |-
+        El principio es el mismo que con los corchetes: de dentro hacia fuera. Orden: paréntesis, corchetes, llaves y, por último, las operaciones exteriores.
+      prerequisites:
+        - 'Uso de paréntesis (bloque 09, tema 2)'
+        - 'Uso de corchetes (bloque 09, tema 3)'
+      outcomes:
+        - 'Resolver expresiones con tres niveles de agrupación'
+        - 'Reconocer el nivel de cada signo de agrupación'
+      everyday_example: |-
+        Una tienda calcula el precio por persona de un pedido en varias etapas: suma productos (paréntesis), aplica una cantidad de lotes (corchetes), resta un descuento y reparte entre los compradores (llaves). Cada etapa queda encerrada en su signo.
+    sections:
+      - title: Tres niveles de agrupación
+        concept: Las llaves agrupan expresiones que contienen corchetes; se resuelven en último lugar entre las agrupaciones.
+        explanation: |-
+          La convención habitual de escritura es:
+
+          $$\{\ \ [\ \ (\ \ )\ \ ]\ \ \}$$
+
+          paréntesis por dentro, corchetes alrededor y llaves por fuera. El orden de resolución sigue siendo **de dentro hacia fuera**:
+
+          1. Paréntesis.
+          2. Corchetes.
+          3. Llaves.
+          4. Lo que queda fuera.
+
+          En cada paso, el contenido se calcula con la jerarquía de siempre. Conviene reescribir la expresión entera tras cada paso: así ves cómo los signos van desapareciendo y la expresión se hace cada vez más corta.
+
+          Nota: no todas las expresiones usan los tres signos. A veces verás corchetes sin paréntesis dentro, o llaves que contienen directamente un corchete. La regla es la misma: lo más interior primero.
+        definition: |-
+          Las **llaves** son signos de agrupación de tercer nivel. En una expresión con paréntesis, corchetes y llaves, se evalúa primero el interior de los paréntesis, después el de los corchetes y finalmente el de las llaves.
+        rules:
+          - 'Orden: $(\ )$, después $[\ ]$, después $\{\ \}$, después el exterior.'
+          - 'En cada nivel se aplica la jerarquía: $\times$ y $\div$ antes que $+$ y $-$.'
+          - 'Si en un mismo nivel hay varias agrupaciones independientes, se resuelve cada una por separado.'
+        examples:
+          - problem: 'Calcula $\{20 - [3 \times (4 + 1)]\} \div 5$'
+            solution: |-
+              **Paso 1.** Paréntesis: $4 + 1 = 5$. Queda $\{20 - [3 \times 5]\} \div 5$.
+
+              **Paso 2.** Corchete: $3 \times 5 = 15$. Queda $\{20 - 15\} \div 5$.
+
+              **Paso 3.** Llaves: $20 - 15 = 5$. Queda $5 \div 5$.
+
+              **Paso 4.** $5 \div 5 = 1$.
+
+              Resultado: $1$.
+          - problem: 'Calcula $2 + \{3 \times [10 - (2 + 4)] - 5\}$'
+            solution: |-
+              **Paso 1.** Paréntesis: $2 + 4 = 6$. Queda $2 + \{3 \times [10 - 6] - 5\}$.
+
+              **Paso 2.** Corchete: $10 - 6 = 4$. Queda $2 + \{3 \times 4 - 5\}$.
+
+              **Paso 3.** Llaves, con jerarquía: $3 \times 4 = 12$; $12 - 5 = 7$. Queda $2 + 7$.
+
+              **Paso 4.** $2 + 7 = 9$.
+
+              Resultado: $9$.
+        common_errors:
+          - 'Empezar por las llaves porque están "por fuera" o porque aparecen primero al leer.'
+          - 'Dentro de las llaves, restar antes de multiplicar: en $\{3 \times 4 - 5\}$ se multiplica primero.'
+          - 'Perder un signo o un número al reescribir la expresión.'
+        summary: |-
+          Paréntesis, corchetes y llaves se resuelven de dentro hacia fuera; en cada nivel rige la jerarquía de operaciones.
+        check:
+          question: '¿Cuánto vale $\{10 - [2 \times (1 + 3)]\} + 6$?'
+          options: ['$8$', '$2$', '$14$']
+          answer: 0
+          explanation: |-
+            Paréntesis: $1 + 3 = 4$. Corchete: $2 \times 4 = 8$. Llaves: $10 - 8 = 2$. Fuera: $2 + 6 = 8$. El $2$ olvida sumar el $6$ final.
+    glossary:
+      - {term: Llaves, definition: 'Signos de agrupación $\{\ \}$ de tercer nivel; suelen encerrar corchetes.'}
+      - {term: De dentro hacia fuera, definition: 'Orden de resolución de las agrupaciones: primero la más interior.'}
+
+  t05:
+    intro:
+      what: |-
+        Una potencia es una multiplicación abreviada de un número por sí mismo. En este tema verás lo mínimo necesario sobre potencias y dónde se colocan dentro de la jerarquía de operaciones.
+      purpose: |-
+        Sirve para resolver correctamente expresiones como $5 + 2^3 \times 3$, que aparecen en fórmulas de áreas, volúmenes, interés y ciencia.
+      importance: |-
+        Las potencias aparecen muy pronto: en la factorización en números primos (bloque 11), en el MCD y MCM (bloques 12 y 13) y en las áreas. Saber su lugar en la jerarquía evita errores graves.
+      foundations: |-
+        Una potencia es a la multiplicación lo que la multiplicación es a la suma: una repetición abreviada. Por eso tiene **más prioridad** que la multiplicación. El estudio completo de las potencias (propiedades, exponente cero, exponentes negativos) se hace en el **bloque 18**.
+      prerequisites:
+        - 'Multiplicación y tablas de multiplicar (bloque 06)'
+        - 'Orden de las operaciones y signos de agrupación (bloque 09, temas 1 a 4)'
+      outcomes:
+        - 'Calcular potencias sencillas como $2^3$, $5^2$ o $10^3$'
+        - 'Resolver expresiones combinadas que incluyen potencias'
+        - 'Distinguir entre $2 + 3^2$ y $(2 + 3)^2$'
+      everyday_example: |-
+        Una baldosa cuadrada de 3 dm de lado tiene un área de $3 \times 3 = 3^2 = 9$ decímetros cuadrados. Si colocas 5 baldosas y añades una pieza de 2 dm², el total es $5 \times 3^2 + 2 = 47$ dm².
+    sections:
+      - title: 'Mini-introducción: qué es una potencia'
+        concept: Una potencia indica cuántas veces se multiplica un número por sí mismo.
+        explanation: |-
+          Escribir $2 \times 2 \times 2$ es largo; la matemática lo abrevia como $2^3$, que se lee "dos elevado a tres" o "dos al cubo".
+
+          - El número de abajo, $2$, es la **base**: el número que se multiplica.
+          - El número pequeño de arriba, $3$, es el **exponente**: cuántas veces aparece la base como factor.
+
+          Así, $2^3 = 2 \times 2 \times 2 = 8$. Otros ejemplos:
+
+          - $5^2 = 5 \times 5 = 25$ ("cinco al cuadrado").
+          - $3^4 = 3 \times 3 \times 3 \times 3 = 81$.
+          - $10^3 = 10 \times 10 \times 10 = 1000$.
+
+          Atención: $2^3$ **no** es $2 \times 3$. El exponente no multiplica a la base; dice cuántas veces se repite la base como factor.
+
+          Esto es sólo lo mínimo para este bloque. En el **bloque 18 (Potenciación)** estudiarás las potencias con detalle: sus propiedades, qué significa un exponente $0$ o negativo y las potencias de números negativos.
+        definition: |-
+          Si $a$ es un número y $n$ un número natural mayor que 1, la **potencia** $a^n$ es el producto de $n$ factores iguales a $a$: $a^n = a \times a \times \cdots \times a$. Además, $a^1 = a$.
+        rules:
+          - 'Base: el número que se multiplica. Exponente: cuántas veces aparece como factor.'
+          - '$a^2$ se lee "$a$ al cuadrado" y $a^3$, "$a$ al cubo".'
+          - '$a^n$ no es $a \times n$.'
+        examples:
+          - problem: 'Calcula $2^4$ y $4^2$'
+            solution: |-
+              **Paso 1.** $2^4 = 2 \times 2 \times 2 \times 2$. Vamos multiplicando: $2 \times 2 = 4$, $4 \times 2 = 8$, $8 \times 2 = 16$.
+
+              **Paso 2.** $4^2 = 4 \times 4 = 16$.
+
+              Resultado: ambas valen $16$ (es una coincidencia: en general $a^b$ y $b^a$ son distintos, por ejemplo $2^3 = 8$ y $3^2 = 9$).
+        common_errors:
+          - 'Multiplicar base por exponente: $2^3 = 6$ es incorrecto; $2^3 = 8$.'
+          - 'Contar mal los factores: $3^4$ tiene cuatro treses, no tres.'
+        summary: |-
+          $a^n$ es $a$ multiplicado por sí mismo $n$ veces. La base se repite; el exponente cuenta las repeticiones. Se profundiza en el bloque 18.
+        check:
+          question: '¿Cuánto vale $4^3$?'
+          options: ['$12$', '$64$', '$7$']
+          answer: 1
+          explanation: |-
+            $4^3 = 4 \times 4 \times 4 = 16 \times 4 = 64$. El $12$ resulta de multiplicar base por exponente, y el $7$ de sumarlos.
+      - title: Las potencias en la jerarquía
+        concept: Las potencias se calculan después de los signos de agrupación y antes que las multiplicaciones y divisiones.
+        explanation: |-
+          Con las potencias, la jerarquía queda así:
+
+          1. Signos de agrupación (de dentro hacia fuera).
+          2. **Potencias** (y raíces, que verás en el tema siguiente).
+          3. Multiplicaciones y divisiones, de izquierda a derecha.
+          4. Sumas y restas, de izquierda a derecha.
+
+          ¿Por qué la potencia va antes que la multiplicación? Porque $3 \times 2^2$ significa "3 veces el número $2^2$", es decir, $3 \times 4 = 12$. Si multiplicáramos primero, $(3 \times 2)^2 = 36$, estaríamos elevando algo distinto.
+
+          **El exponente sólo afecta a lo que tiene inmediatamente debajo.** En $2 + 3^2$ el exponente afecta sólo al $3$: $2 + 9 = 11$. Si queremos elevar la suma completa, debemos usar paréntesis: $(2 + 3)^2 = 5^2 = 25$.
+        definition: |-
+          En una expresión combinada, cada potencia se evalúa después de resolver las agrupaciones que contienen su base, y antes de efectuar las multiplicaciones, divisiones, sumas y restas que la rodean.
+        rules:
+          - 'Orden: agrupaciones, potencias, $\times$ y $\div$, $+$ y $-$.'
+          - 'El exponente afecta sólo al número (o paréntesis) que tiene justo debajo.'
+          - 'Para elevar una operación completa, se encierra entre paréntesis.'
+        examples:
+          - problem: 'Calcula $5 + 2^3 \times 3$'
+            solution: |-
+              **Paso 1.** Potencia: $2^3 = 8$. Queda $5 + 8 \times 3$.
+
+              **Paso 2.** Multiplicación: $8 \times 3 = 24$. Queda $5 + 24$.
+
+              **Paso 3.** Suma: $5 + 24 = 29$.
+
+              Resultado: $29$.
+          - problem: 'Calcula $(2 + 3)^2 - 4$ y compáralo con $2 + 3^2 - 4$'
+            solution: |-
+              **Paso 1.** En $(2 + 3)^2 - 4$, primero el paréntesis: $2 + 3 = 5$. Luego la potencia: $5^2 = 25$. Por último, $25 - 4 = 21$.
+
+              **Paso 2.** En $2 + 3^2 - 4$, la potencia afecta sólo al 3: $3^2 = 9$. Queda $2 + 9 - 4 = 7$.
+
+              Resultado: $21$ y $7$. El paréntesis cambia por completo el valor.
+          - problem: 'Calcula $6^2 \div 4 - 2 \times 3$'
+            solution: |-
+              **Paso 1.** Potencia: $6^2 = 36$. Queda $36 \div 4 - 2 \times 3$.
+
+              **Paso 2.** Segundo nivel: $36 \div 4 = 9$ y $2 \times 3 = 6$. Queda $9 - 6$.
+
+              **Paso 3.** $9 - 6 = 3$.
+
+              Resultado: $3$.
+        common_errors:
+          - 'Multiplicar antes de elevar: $3 \times 2^2$ es $12$, no $36$.'
+          - 'Elevar toda una suma sin que haya paréntesis: $2 + 3^2$ es $11$, no $25$.'
+          - 'Calcular la potencia como producto de base y exponente.'
+        summary: |-
+          Las potencias van justo después de las agrupaciones y antes de $\times$ y $\div$. El exponente sólo afecta a lo que tiene debajo; para elevar una operación se usan paréntesis.
+        check:
+          question: '¿Cuánto vale $3 \times 2^2$?'
+          options: ['$36$', '$12$', '$18$']
+          answer: 1
+          explanation: |-
+            Primero la potencia: $2^2 = 4$; luego $3 \times 4 = 12$. El $36$ sale de calcular $(3 \times 2)^2$, que es otra expresión.
+    glossary:
+      - {term: Potencia, definition: 'Multiplicación de un número por sí mismo varias veces, escrita como $a^n$.'}
+      - {term: Base, definition: 'En $a^n$, el número $a$ que se multiplica.'}
+      - {term: Exponente, definition: 'En $a^n$, el número $n$ que indica cuántas veces aparece la base como factor.'}
+
+  t06:
+    intro:
+      what: |-
+        La raíz cuadrada de un número es otro número que, multiplicado por sí mismo, da el primero. En este tema verás lo mínimo sobre raíces y su lugar en la jerarquía de operaciones.
+      purpose: |-
+        Sirve para resolver expresiones como $\sqrt{49} + 3 \times 2$ o $\sqrt{9 + 16} \times 2$, que aparecen en geometría (lados de cuadrados, distancias) y en fórmulas.
+      importance: |-
+        La raíz es la operación que "deshace" una potencia. Conocer su lugar en la jerarquía, y que su barra funciona como un paréntesis, evita errores muy comunes.
+      foundations: |-
+        Se apoya en la potencia del tema anterior: $\sqrt{49} = 7$ porque $7^2 = 49$. El estudio completo de las raíces (raíces aproximadas, propiedades, simplificación) se hace en el **bloque 19 (Radicación)**.
+      prerequisites:
+        - 'Tablas de multiplicar (bloque 06)'
+        - 'Potencias en operaciones combinadas (bloque 09, tema 5)'
+      outcomes:
+        - 'Calcular raíces cuadradas exactas de cuadrados conocidos (hasta $144$) y raíces cúbicas sencillas'
+        - 'Resolver expresiones combinadas con raíces'
+        - 'Saber que $\sqrt{9 + 16}$ no es $\sqrt{9} + \sqrt{16}$'
+      everyday_example: |-
+        Un terreno cuadrado mide 49 m² de superficie. ¿Cuánto mide cada lado? Buscamos un número que multiplicado por sí mismo dé 49: es 7, porque $7 \times 7 = 49$. Es decir, $\sqrt{49} = 7$ metros.
+    sections:
+      - title: 'Mini-introducción: qué es una raíz'
+        concept: La raíz cuadrada de un número es el número que, elevado al cuadrado, da ese número.
+        explanation: |-
+          Ya sabes que $7^2 = 7 \times 7 = 49$. La pregunta inversa es: **¿qué número multiplicado por sí mismo da 49?** La respuesta, $7$, se llama **raíz cuadrada** de 49 y se escribe $\sqrt{49} = 7$.
+
+          Para calcular raíces cuadradas exactas basta con conocer los cuadrados de la tabla:
+
+          $1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144$
+
+          son los cuadrados de $1, 2, 3, \ldots, 12$. Así, $\sqrt{81} = 9$, $\sqrt{100} = 10$, $\sqrt{144} = 12$.
+
+          De la misma manera, la **raíz cúbica** busca un número que multiplicado por sí mismo **tres** veces dé el número dado: $\sqrt[3]{8} = 2$ porque $2 \times 2 \times 2 = 8$, y $\sqrt[3]{27} = 3$ porque $3^3 = 27$.
+
+          En este bloque sólo usaremos raíces **exactas** de números naturales. Las raíces que no dan un número entero (como $\sqrt{2}$), sus propiedades y su simplificación se estudian en el **bloque 19**.
+        definition: |-
+          La **raíz cuadrada** de un número natural $a$, escrita $\sqrt{a}$, es el número natural $b$ tal que $b^2 = a$ (cuando existe). La **raíz cúbica** $\sqrt[3]{a}$ es el número $b$ tal que $b^3 = a$.
+        rules:
+          - '$\sqrt{a} = b$ significa que $b \times b = a$.'
+          - '$\sqrt[3]{a} = b$ significa que $b \times b \times b = a$.'
+          - 'Para comprobar una raíz, se eleva el resultado: si $\sqrt{64} = 8$, entonces $8^2 = 64$.'
+        examples:
+          - problem: 'Calcula $\sqrt{81}$ y $\sqrt[3]{64}$'
+            solution: |-
+              **Paso 1.** Buscamos un número que por sí mismo dé 81: $9 \times 9 = 81$, así que $\sqrt{81} = 9$.
+
+              **Paso 2.** Buscamos un número que multiplicado tres veces dé 64: $4 \times 4 \times 4 = 16 \times 4 = 64$, así que $\sqrt[3]{64} = 4$.
+
+              Resultado: $\sqrt{81} = 9$ y $\sqrt[3]{64} = 4$.
+        common_errors:
+          - 'Dividir entre 2 en lugar de sacar la raíz: $\sqrt{16}$ es $4$, no $8$.'
+          - 'Confundir raíz cuadrada y cúbica: $\sqrt[3]{8} = 2$, pero $\sqrt{8}$ no es un número entero.'
+        summary: |-
+          La raíz cuadrada deshace el cuadrado: $\sqrt{49} = 7$ porque $7^2 = 49$. La raíz cúbica deshace el cubo. Se profundiza en el bloque 19.
+        check:
+          question: '¿Cuánto vale $\sqrt{36}$?'
+          options: ['$18$', '$6$', '$12$']
+          answer: 1
+          explanation: |-
+            $6 \times 6 = 36$, luego $\sqrt{36} = 6$. El $18$ sale de dividir entre 2, que no es lo que hace la raíz.
+      - title: Las raíces en la jerarquía
+        concept: Las raíces tienen la misma prioridad que las potencias, y su barra agrupa como un paréntesis.
+        explanation: |-
+          Las raíces ocupan el **mismo nivel que las potencias** en la jerarquía:
+
+          1. Agrupaciones.
+          2. Potencias y raíces.
+          3. Multiplicaciones y divisiones.
+          4. Sumas y restas.
+
+          Hay un detalle importante: la **barra horizontal** de la raíz actúa como un paréntesis. Todo lo que está debajo de ella se calcula primero, y sólo después se saca la raíz.
+
+          Por ejemplo, $\sqrt{9 + 16}$: primero $9 + 16 = 25$, y luego $\sqrt{25} = 5$. En cambio, $\sqrt{9} + \sqrt{16} = 3 + 4 = 7$. Como $5 \neq 7$, **la raíz de una suma no es la suma de las raíces**.
+        definition: |-
+          En una expresión combinada, cada raíz se evalúa después de calcular completamente la expresión que está bajo su barra (el radicando), y antes que las multiplicaciones, divisiones, sumas y restas que la rodean.
+        rules:
+          - 'Potencias y raíces comparten el segundo puesto de la jerarquía.'
+          - 'Lo que está bajo la barra de la raíz se calcula primero.'
+          - '$\sqrt{a + b}$ no es, en general, $\sqrt{a} + \sqrt{b}$.'
+        examples:
+          - problem: 'Calcula $\sqrt{49} + 3 \times 2$'
+            solution: |-
+              **Paso 1.** Raíz: $\sqrt{49} = 7$. Queda $7 + 3 \times 2$.
+
+              **Paso 2.** Multiplicación: $3 \times 2 = 6$. Queda $7 + 6$.
+
+              **Paso 3.** $7 + 6 = 13$.
+
+              Resultado: $13$.
+          - problem: 'Calcula $4 \times \sqrt{25} - 2^3$'
+            solution: |-
+              **Paso 1.** Raíz y potencia: $\sqrt{25} = 5$ y $2^3 = 8$. Queda $4 \times 5 - 8$.
+
+              **Paso 2.** Multiplicación: $4 \times 5 = 20$. Queda $20 - 8$.
+
+              **Paso 3.** $20 - 8 = 12$.
+
+              Resultado: $12$.
+          - problem: 'Calcula $\sqrt{9 + 16} \times 2$'
+            solution: |-
+              **Paso 1.** Bajo la barra: $9 + 16 = 25$. Queda $\sqrt{25} \times 2$.
+
+              **Paso 2.** Raíz: $\sqrt{25} = 5$. Queda $5 \times 2$.
+
+              **Paso 3.** $5 \times 2 = 10$.
+
+              Resultado: $10$.
+        common_errors:
+          - 'Separar la raíz de una suma: $\sqrt{9 + 16} \neq 3 + 4$.'
+          - 'Multiplicar antes de sacar la raíz: en $4 \times \sqrt{25}$ primero se hace $\sqrt{25} = 5$.'
+        summary: |-
+          Las raíces van al mismo nivel que las potencias. Su barra agrupa: primero se calcula lo que hay debajo y después se saca la raíz.
+        check:
+          question: '¿Cuánto vale $\sqrt{64} \div 2 + 1$?'
+          options: ['$5$', '$33$', '$9$']
+          answer: 0
+          explanation: |-
+            Raíz: $\sqrt{64} = 8$. División: $8 \div 2 = 4$. Suma: $4 + 1 = 5$. El $33$ olvida la raíz ($64 \div 2 + 1$) y el $9$ olvida la división.
+    glossary:
+      - {term: Raíz cuadrada, definition: 'Número que, multiplicado por sí mismo, da el número dado: $\sqrt{49} = 7$.'}
+      - {term: Raíz cúbica, definition: 'Número que, multiplicado tres veces por sí mismo, da el número dado: $\sqrt[3]{27} = 3$.'}
+      - {term: Radicando, definition: 'Número o expresión que está bajo la barra de la raíz.'}
+
+  t07:
+    intro:
+      what: |-
+        Las operaciones combinadas son expresiones que reúnen varias operaciones distintas (sumas, restas, multiplicaciones, divisiones, potencias y raíces) y signos de agrupación.
+      purpose: |-
+        Sirven para escribir en una sola línea cálculos de varias etapas y resolverlos sin ambigüedad, aplicando toda la jerarquía aprendida.
+      importance: |-
+        Son la síntesis del bloque. Fórmulas de dinero, de medidas o de ciencia son operaciones combinadas; también lo serán las de fracciones (bloque 15) y decimales (bloque 17).
+      foundations: |-
+        La jerarquía completa en cuatro niveles: agrupaciones (de dentro hacia fuera), potencias y raíces, multiplicaciones y divisiones, sumas y restas; dentro de cada nivel, de izquierda a derecha. También las reglas de los signos con enteros (bloques 04 a 07).
+      prerequisites:
+        - 'Temas 1 a 6 de este bloque'
+        - 'Operaciones con números enteros y regla de los signos (bloques 04 a 07)'
+      outcomes:
+        - 'Resolver expresiones con agrupaciones, potencias y raíces'
+        - 'Resolver operaciones combinadas con números enteros negativos'
+      everyday_example: |-
+        Para saber cuánto paga cada uno de 3 amigos que compran una pizza de 18 pesos y 3 refrescos de 4 pesos, y que tienen un cupón de 6 pesos, se calcula $(18 + 3 \times 4 - 6) \div 3 = 24 \div 3 = 8$ pesos por persona.
+    sections:
+      - title: La jerarquía completa
+        concept: Toda operación combinada se resuelve aplicando la jerarquía de cuatro niveles.
+        explanation: |-
+          Ya tienes todas las piezas. La **jerarquía completa** es:
+
+          1. **Agrupaciones**: paréntesis, corchetes y llaves, de dentro hacia fuera (y lo que hay bajo la barra de una raíz).
+          2. **Potencias y raíces**.
+          3. **Multiplicaciones y divisiones**, de izquierda a derecha.
+          4. **Sumas y restas**, de izquierda a derecha.
+
+          Dentro de cada agrupación se vuelve a aplicar la misma lista, como si fuera una expresión pequeña.
+
+          Un método fiable: en cada línea, haz **sólo** las operaciones que ya están listas (las de mayor prioridad que no dependen de otras) y copia todo lo demás sin cambiar. Repite hasta que quede un único número.
+        definition: |-
+          Una **operación combinada** es una expresión numérica con dos o más tipos de operaciones. Su valor se obtiene aplicando la jerarquía: agrupaciones; potencias y raíces; multiplicaciones y divisiones; sumas y restas; y, en un mismo nivel, de izquierda a derecha.
+        rules:
+          - '1º agrupaciones; 2º potencias y raíces; 3º $\times$ y $\div$; 4º $+$ y $-$.'
+          - 'Mismo nivel: de izquierda a derecha.'
+          - 'Cada agrupación es una expresión pequeña con su propia jerarquía.'
+        examples:
+          - problem: 'Calcula $\{18 \div [2 + (5 - 4)]\} + 3^2$'
+            solution: |-
+              **Paso 1.** Paréntesis: $5 - 4 = 1$. Queda $\{18 \div [2 + 1]\} + 3^2$.
+
+              **Paso 2.** Corchete: $2 + 1 = 3$. Queda $\{18 \div 3\} + 3^2$.
+
+              **Paso 3.** Llaves: $18 \div 3 = 6$. Queda $6 + 3^2$.
+
+              **Paso 4.** Potencia: $3^2 = 9$. Queda $6 + 9 = 15$.
+
+              Resultado: $15$.
+          - problem: 'Calcula $[\sqrt{36} + 2 \times (7 - 4)] - 2^2$'
+            solution: |-
+              **Paso 1.** Paréntesis: $7 - 4 = 3$. Queda $[\sqrt{36} + 2 \times 3] - 2^2$.
+
+              **Paso 2.** Dentro del corchete: raíz $\sqrt{36} = 6$; multiplicación $2 \times 3 = 6$; suma $6 + 6 = 12$. Queda $12 - 2^2$.
+
+              **Paso 3.** Potencia: $2^2 = 4$. Queda $12 - 4 = 8$.
+
+              Resultado: $8$.
+        common_errors:
+          - 'Saltarse un nivel: hacer una suma mientras aún quedan multiplicaciones o potencias.'
+          - 'Calcular una potencia que está fuera de un paréntesis antes de resolver el paréntesis que forma su base.'
+          - 'Hacer varias operaciones "de cabeza" a la vez y perder un número.'
+        summary: |-
+          Las operaciones combinadas se resuelven con la jerarquía de cuatro niveles, de dentro hacia fuera y de izquierda a derecha en cada nivel.
+        check:
+          question: '¿Cuánto vale $2 \times [3 + (8 - 6)^2]$?'
+          options: ['$14$', '$50$', '$20$']
+          answer: 0
+          explanation: |-
+            Paréntesis: $8 - 6 = 2$. Potencia: $2^2 = 4$. Corchete: $3 + 4 = 7$. Fuera: $2 \times 7 = 14$. El $50$ sale de elevar al cuadrado $(3 + 2)$ en vez de sólo el paréntesis.
+      - title: Operaciones combinadas con números negativos
+        concept: Con números enteros se aplica la misma jerarquía, junto con la regla de los signos.
+        explanation: |-
+          Si aparecen números negativos, **la jerarquía no cambia**. Lo único nuevo es que, al hacer cada operación, aplicas las reglas de los signos que aprendiste en los bloques 04 a 07:
+
+          - Al multiplicar o dividir: signos iguales dan positivo; signos distintos dan negativo.
+          - Al sumar números de distinto signo, se restan sus valores absolutos y se pone el signo del de mayor valor absoluto.
+
+          Los números negativos suelen escribirse entre paréntesis, como $(-3)$, para no juntar dos signos. Ese paréntesis sólo protege el signo; no hay nada que calcular dentro.
+        definition: |-
+          Una operación combinada con números enteros se evalúa con la misma jerarquía que con naturales; cada operación individual se efectúa con las reglas de los signos.
+        rules:
+          - 'La jerarquía es la misma con negativos.'
+          - '$(+) \times (-) = (-)$; $(-) \times (-) = (+)$; igual para la división.'
+          - 'Un paréntesis como $(-3)$ sólo encierra un número con su signo.'
+        examples:
+          - problem: 'Calcula $(-2) \times 3 + 10 \div (-5)$'
+            solution: |-
+              **Paso 1.** Segundo nivel: $(-2) \times 3 = -6$ y $10 \div (-5) = -2$. Queda $-6 + (-2)$.
+
+              **Paso 2.** Suma de dos negativos: $-6 + (-2) = -8$.
+
+              Resultado: $-8$.
+          - problem: 'Calcula $-3 + 4 \times (1 - 3)$'
+            solution: |-
+              **Paso 1.** Paréntesis: $1 - 3 = -2$. Queda $-3 + 4 \times (-2)$.
+
+              **Paso 2.** Multiplicación: $4 \times (-2) = -8$. Queda $-3 + (-8)$.
+
+              **Paso 3.** $-3 + (-8) = -11$.
+
+              Resultado: $-11$.
+        common_errors:
+          - 'Aplicar la regla de los signos de la multiplicación a una suma: $-6 + (-2)$ no es $+8$.'
+          - 'Perder el signo negativo al reescribir la expresión.'
+        summary: |-
+          Con enteros, la jerarquía no cambia; sólo hay que aplicar con cuidado la regla de los signos en cada operación.
+        check:
+          question: '¿Cuánto vale $12 \div (-3) + (-2) \times 5$?'
+          options: ['$-14$', '$6$', '$-6$']
+          answer: 0
+          explanation: |-
+            $12 \div (-3) = -4$ y $(-2) \times 5 = -10$; luego $-4 + (-10) = -14$. El $6$ resulta de cambiar el signo de $-10$.
+    glossary:
+      - {term: Operación combinada, definition: 'Expresión con dos o más tipos de operaciones que se resuelve con la jerarquía.'}
+      - {term: Regla de los signos, definition: 'Al multiplicar o dividir, signos iguales dan positivo y signos distintos dan negativo.'}
+
+  t08:
+    intro:
+      what: |-
+        La resolución paso a paso es una forma ordenada de escribir el cálculo de una operación combinada, línea a línea, para que cada paso se pueda revisar.
+      purpose: |-
+        Sirve para no cometer errores, para encontrarlos si los hay, y para traducir problemas de la vida real a una expresión y resolverla.
+      importance: |-
+        En expresiones largas, el cálculo "de cabeza" falla con facilidad. Escribir cada paso convierte un problema difícil en varios fáciles y permite comprobar el trabajo.
+      foundations: |-
+        La jerarquía completa del tema anterior y la idea de igualdad: cada línea debe valer exactamente lo mismo que la anterior.
+      prerequisites:
+        - 'Operaciones combinadas (bloque 09, tema 7)'
+        - 'Resolución de problemas con las cuatro operaciones (bloques 04 a 07)'
+      outcomes:
+        - 'Escribir de forma ordenada la resolución de una operación combinada'
+        - 'Traducir un enunciado a una expresión con paréntesis y resolverla'
+      everyday_example: |-
+        Al revisar una factura con varios productos, descuentos y un reparto entre personas, ir línea por línea permite ver en qué punto exacto hay un error de cobro.
+    sections:
+      - title: Un método escrito y ordenado
+        concept: Cada línea reescribe la expresión completa, con una o varias operaciones de máxima prioridad ya resueltas.
+        explanation: |-
+          El método tiene cuatro hábitos:
+
+          1. **Observa** la expresión entera y localiza las agrupaciones más interiores.
+          2. **Resuelve** en cada línea las operaciones de mayor prioridad que estén listas. Si hay varias independientes (por ejemplo, dos paréntesis separados), puedes hacerlas en la misma línea.
+          3. **Copia** sin cambios todo lo que no has operado: números, signos y agrupaciones.
+          4. **Comprueba** al final repasando cada línea o estimando si el resultado es razonable.
+
+          Cada nueva línea empieza con $=$, porque vale lo mismo que la anterior. Esto también ayuda a no escribir igualdades falsas.
+        definition: |-
+          **Resolver paso a paso** es transformar una expresión en una cadena de expresiones equivalentes, cada una más sencilla que la anterior, hasta llegar a un único número.
+        rules:
+          - 'Una línea por paso; cada línea es igual a la anterior.'
+          - 'Copiar sin cambios lo que no se opera.'
+          - 'Dentro de un mismo nivel, de izquierda a derecha.'
+        examples:
+          - problem: 'Resuelve paso a paso $3 + 4 \times [10 - (2 + 3)] \div 2$'
+            solution: |-
+              **Paso 1.** Paréntesis: $= 3 + 4 \times [10 - 5] \div 2$.
+
+              **Paso 2.** Corchete: $= 3 + 4 \times 5 \div 2$.
+
+              **Paso 3.** Segundo nivel, de izquierda a derecha: $4 \times 5 = 20$, luego $= 3 + 20 \div 2$; y $20 \div 2 = 10$, luego $= 3 + 10$.
+
+              **Paso 4.** $= 13$.
+
+              Resultado: $13$.
+        common_errors:
+          - 'Encadenar igualdades falsas, como escribir $2 + 3 = 5 \times 4 = 20$ (porque $2 + 3$ no es igual a $20$).'
+          - 'Olvidar copiar un término y perderlo en la línea siguiente.'
+          - 'Hacer demasiadas operaciones en una sola línea.'
+        summary: |-
+          Escribe una línea por paso, empezando por $=$, copiando todo lo que no operas. Así cada línea es verdadera y los errores se ven fácilmente.
+        check:
+          question: '¿Cuánto vale $7 + 6 \times (5 - 2) \div 9$?'
+          options: ['$9$', '$13$', '$3$']
+          answer: 0
+          explanation: |-
+            $= 7 + 6 \times 3 \div 9 = 7 + 18 \div 9 = 7 + 2 = 9$. Las otras opciones no respetan el orden de izquierda a derecha en el segundo nivel o la prioridad sobre la suma.
+      - title: Del enunciado a la expresión
+        concept: Un problema de varios pasos se puede escribir como una sola expresión con paréntesis.
+        explanation: |-
+          Para traducir un problema:
+
+          1. Identifica las cantidades y qué se hace con ellas (juntar, quitar, repetir, repartir).
+          2. Escribe cada parte con su operación. Si una cantidad debe calcularse completa antes de usarla, **enciérrala entre paréntesis**.
+          3. Resuelve la expresión paso a paso.
+          4. Responde con una frase y con las unidades.
+
+          Por ejemplo, "pagué con 50 pesos 3 cuadernos de 4 pesos y 2 bolígrafos de 5 pesos" se traduce como $50 - (3 \times 4 + 2 \times 5)$: lo gastado se calcula primero y luego se resta.
+        definition: |-
+          **Modelar** un problema es expresar su situación mediante una expresión numérica cuyo valor responde a la pregunta.
+        rules:
+          - 'Lo que debe calcularse primero, entre paréntesis.'
+          - 'Siempre responder con una frase y unidades.'
+        examples:
+          - problem: 'Pago con 50 pesos 3 cuadernos de 4 pesos y 2 bolígrafos de 5 pesos. ¿Cuánto me devuelven?'
+            solution: |-
+              **Paso 1.** Expresión: $50 - (3 \times 4 + 2 \times 5)$.
+
+              **Paso 2.** Dentro del paréntesis: $3 \times 4 = 12$ y $2 \times 5 = 10$; $= 50 - (12 + 10) = 50 - 22$.
+
+              **Paso 3.** $50 - 22 = 28$.
+
+              Respuesta: me devuelven $28$ pesos.
+        common_errors:
+          - 'Escribir $50 - 3 \times 4 + 2 \times 5$ sin paréntesis: eso suma los bolígrafos en lugar de restarlos.'
+          - 'No responder a la pregunta (dar lo gastado en vez del cambio).'
+        summary: |-
+          Para modelar un problema, escribe una expresión con paréntesis donde haga falta, resuélvela paso a paso y responde con unidades.
+        check:
+          question: 'Ana compra 4 cajas de 6 huevos y se le rompen 5. ¿Qué expresión da los huevos sanos?'
+          options: ['$4 \times 6 - 5$', '$4 \times (6 - 5)$', '$(4 + 6) - 5$']
+          answer: 0
+          explanation: |-
+            Primero se cuentan todos los huevos ($4 \times 6 = 24$) y luego se quitan los rotos: $24 - 5 = 19$. $4 \times (6 - 5)$ supondría que se rompen 5 en cada caja.
+    glossary:
+      - {term: Expresiones equivalentes, definition: 'Expresiones que tienen el mismo valor numérico.'}
+      - {term: Modelar, definition: 'Traducir una situación a una expresión matemática.'}
+
+  t09:
+    intro:
+      what: |-
+        Este tema reúne los errores más frecuentes al resolver operaciones combinadas y enseña a detectarlos y evitarlos.
+      purpose: |-
+        Sirve para revisar tu propio trabajo con criterio: saber qué buscar cuando un resultado parece raro.
+      importance: |-
+        La mayoría de los errores en jerarquía no son por no saber sumar o multiplicar, sino por el orden o la escritura. Conocerlos de antemano reduce mucho los fallos.
+      foundations: |-
+        Todas las reglas del bloque: niveles de prioridad, izquierda a derecha, agrupaciones de dentro hacia fuera, significado de potencias y raíces y escritura correcta de igualdades.
+      prerequisites:
+        - 'Temas 1 a 8 de este bloque'
+      outcomes:
+        - 'Encontrar el error en una resolución incorrecta'
+        - 'Explicar por qué un paso no es válido'
+      everyday_example: |-
+        Una hoja de cálculo aplica la jerarquía de forma estricta. Si escribes =10-2*3 esperando 24, obtendrás 4. Conocer los errores típicos te ayuda a escribir bien las fórmulas.
+    sections:
+      - title: Errores de orden
+        concept: La mayoría de los errores consisten en hacer una operación antes de tiempo.
+        explanation: |-
+          Estos son los errores de orden más comunes:
+
+          1. **Operar de izquierda a derecha sin jerarquía**: $10 - 2 \times 3 = 8 \times 3 = 24$. Correcto: $10 - 6 = 4$.
+          2. **Creer que la multiplicación va antes que la división**: $24 \div 4 \times 2$ no es $24 \div 8$. Correcto: $6 \times 2 = 12$.
+          3. **Multiplicar antes de elevar**: $2 \times 3^2$ no es $6^2 = 36$. Correcto: $2 \times 9 = 18$.
+          4. **Elevar una suma sin paréntesis**: $1 + 4^2$ no es $5^2$. Correcto: $1 + 16 = 17$.
+          5. **Separar la raíz de una suma**: $\sqrt{36 + 64}$ no es $6 + 8 = 14$. Correcto: $\sqrt{100} = 10$.
+          6. **Empezar por la agrupación exterior**: en $\{\ldots[\ldots(\ldots)]\}$ siempre se empieza por el paréntesis interior.
+
+          Una pregunta útil antes de cada paso: **"¿Hay algo de mayor prioridad que todavía no he hecho?"**
+        definition: |-
+          Un **error de orden** es efectuar una operación antes que otra que, según la jerarquía, tenía prioridad sobre ella.
+        rules:
+          - 'Antes de cada paso, comprueba que no queda nada de mayor prioridad.'
+          - 'Mismo nivel: siempre de izquierda a derecha.'
+        examples:
+          - problem: 'Encuentra el error: $8 + 2 \times 5 = 10 \times 5 = 50$'
+            solution: |-
+              **Paso 1.** El error está en sumar $8 + 2$ antes de multiplicar.
+
+              **Paso 2.** Correcto: $2 \times 5 = 10$; $8 + 10 = 18$.
+
+              Resultado correcto: $18$.
+          - problem: 'Encuentra el error: $2 \times 3^2 = 6^2 = 36$'
+            solution: |-
+              **Paso 1.** Se multiplicó antes de elevar. La potencia tiene prioridad y afecta sólo al 3.
+
+              **Paso 2.** Correcto: $3^2 = 9$; $2 \times 9 = 18$.
+
+              Resultado correcto: $18$.
+        common_errors:
+          - 'Repasar los cálculos aritméticos pero no el orden en que se hicieron.'
+          - 'Confiar en el resultado sin estimar si es razonable.'
+        summary: |-
+          Los errores de orden se evitan preguntándose en cada paso si queda algo de mayor prioridad por resolver.
+        check:
+          question: '¿Cuál de estas igualdades es correcta?'
+          options: ['$10 - 2 \times 3 = 24$', '$10 - 2 \times 3 = 4$', '$2 \times 3^2 = 36$']
+          answer: 1
+          explanation: |-
+            $10 - 2 \times 3 = 10 - 6 = 4$. La primera opera de izquierda a derecha sin jerarquía, y la tercera multiplica antes de elevar ($2 \times 3^2 = 18$).
+      - title: Errores de escritura y de significado
+        concept: Escribir mal una cuenta o malinterpretar un símbolo también produce resultados falsos.
+        explanation: |-
+          Otros errores no son de orden, sino de escritura o de significado:
+
+          1. **Igualdades encadenadas falsas**: escribir $4 + 5 = 9 \times 2 = 18$. Cada signo $=$ debe unir dos cosas de igual valor, y $4 + 5$ no vale 18. Correcto: $(4 + 5) \times 2 = 9 \times 2 = 18$.
+          2. **Potencia como producto**: $2^5 = 10$. Correcto: $2^5 = 32$.
+          3. **Raíz como mitad**: $\sqrt{16} = 8$. Correcto: $4$.
+          4. **Olvidar la multiplicación implícita**: $5(2 + 3)$ significa $5 \times 5 = 25$, no $5 + 5 = 10$.
+          5. **Perder términos o signos** al reescribir, sobre todo los negativos.
+
+          Para evitarlos: escribe una línea por paso, empieza cada línea con $=$, y al terminar haz una comprobación rápida, por ejemplo con una estimación.
+        definition: |-
+          Un **error de escritura** es una notación que no expresa lo que se quería calcular, o que afirma una igualdad falsa.
+        rules:
+          - 'Cada $=$ une dos expresiones del mismo valor.'
+          - '$a^n$ es producto de factores iguales; $\sqrt{a}$ es el número cuyo cuadrado es $a$.'
+          - 'Un número junto a un paréntesis significa multiplicación.'
+        examples:
+          - problem: 'Encuentra el error: $5(2 + 3) = 5 + 5 = 10$'
+            solution: |-
+              **Paso 1.** $5(2 + 3)$ indica multiplicación, no suma.
+
+              **Paso 2.** Correcto: $5 \times (2 + 3) = 5 \times 5 = 25$.
+
+              Resultado correcto: $25$.
+        common_errors:
+          - 'Escribir cálculos parciales encadenados con $=$ aunque no sean iguales.'
+          - 'Confundir $2^5$ con $2 \times 5$.'
+        summary: |-
+          Escribe igualdades verdaderas, respeta el significado de potencias, raíces y paréntesis, y revisa cada línea.
+        check:
+          question: '¿Cuál de estas igualdades es correcta?'
+          options: ['$\sqrt{9 + 16} = 7$', '$(2 + 3)^2 = 25$', '$2^3 = 6$']
+          answer: 1
+          explanation: |-
+            $(2 + 3)^2 = 5^2 = 25$. En cambio, $\sqrt{9 + 16} = \sqrt{25} = 5$ (no 7) y $2^3 = 8$ (no 6).
+    glossary:
+      - {term: Error de orden, definition: 'Efectuar una operación antes que otra de mayor prioridad.'}
+      - {term: Estimación, definition: 'Cálculo aproximado y rápido que sirve para ver si un resultado es razonable.'}

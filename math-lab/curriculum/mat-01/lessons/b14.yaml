@@ -1,0 +1,916 @@
+block: b14
+intro: |-
+  Las fracciones permiten expresar partes de un todo y cantidades que no son enteras. En este bloque aprenderás qué es una fracción, sus términos, cómo representarla, cómo se clasifican (propias, impropias y aparentes), qué son los números mixtos, cuándo dos fracciones son equivalentes, cómo simplificarlas y amplificarlas, y cómo compararlas. Todo ello prepara las operaciones con fracciones del bloque 15.
+
+topics:
+  t01:
+    intro:
+      what: |-
+        Una fracción es un número que expresa una o varias partes iguales de un todo, como $\frac{3}{4}$ ("tres cuartos"). También expresa una división: $\frac{3}{4} = 3 \div 4$.
+      purpose: |-
+        Sirve para expresar cantidades que no son enteras (media hora, tres cuartos de litro) y para calcular partes de una cantidad.
+      importance: |-
+        Las fracciones están en recetas, medidas, dinero, porcentajes y probabilidades. Son la puerta de entrada a los números racionales (bloque 03), los decimales (bloque 16) y las proporciones.
+      foundations: |-
+        Se basan en la división (bloque 07): repartir un todo en partes **iguales**. Una fracción es un número racional, como se vio en el bloque 03.
+      prerequisites:
+        - 'División exacta e inexacta (bloque 07)'
+        - 'Números racionales (bloque 03, tema 3)'
+      outcomes:
+        - 'Expresar con una fracción una parte de un todo'
+        - 'Interpretar una fracción como una división'
+        - 'Calcular una fracción de una cantidad'
+      everyday_example: |-
+        Una pizza se corta en 8 porciones iguales y te comes 3. Te has comido $\frac{3}{8}$ de la pizza.
+    sections:
+      - title: Partes iguales de un todo
+        concept: Una fracción indica en cuántas partes iguales se divide un todo y cuántas de esas partes se toman.
+        explanation: |-
+          Imagina una barra de chocolate dividida en 5 trozos **iguales**. Si tomas 2 trozos, has tomado "dos quintos" de la barra, que se escribe:
+
+          $$\frac{2}{5}$$
+
+          - El número de abajo (5) dice en cuántas partes iguales se dividió el todo.
+          - El número de arriba (2) dice cuántas de esas partes se toman.
+
+          La palabra clave es **iguales**. Si la barra se partiera en trozos de distinto tamaño, "2 de 5 trozos" no indicaría una cantidad precisa.
+
+          **Una fracción también es una división.** $\frac{3}{4}$ es el resultado de repartir 3 unidades entre 4: cada parte recibe $\frac{3}{4}$. Por eso $\frac{3}{4} = 3 \div 4$, y la raya de la fracción se puede leer como "dividido entre". Esto explica por qué el número de abajo nunca puede ser 0: no se puede dividir entre 0 (bloque 07).
+        definition: |-
+          Una **fracción** es una expresión $\frac{a}{b}$, con $a$ y $b$ números enteros y $b \neq 0$, que representa $a$ partes de un todo dividido en $b$ partes iguales; equivale al cociente $a \div b$.
+        rules:
+          - 'El todo debe estar dividido en partes iguales.'
+          - '$\frac{a}{b} = a \div b$.'
+          - 'El número de abajo nunca es 0.'
+        examples:
+          - problem: 'Un pastel se corta en 6 porciones iguales y se comen 5. ¿Qué fracción se comió? ¿Qué fracción queda?'
+            solution: |-
+              **Paso 1.** El todo tiene 6 partes iguales; se toman 5: $\frac{5}{6}$.
+
+              **Paso 2.** Queda 1 porción de 6: $\frac{1}{6}$.
+
+              Resultado: se comió $\frac{5}{6}$ y queda $\frac{1}{6}$.
+        common_errors:
+          - 'Usar partes de distinto tamaño.'
+          - 'Escribir al revés: comer 3 de 8 porciones es $\frac{3}{8}$, no $\frac{8}{3}$.'
+          - 'Contar las partes que quedan en lugar de las que se toman.'
+        summary: |-
+          Una fracción cuenta partes iguales de un todo: abajo, en cuántas se divide; arriba, cuántas se toman. También es una división.
+        check:
+          question: 'Una pizza se corta en 8 porciones iguales y se comen 3. ¿Qué fracción de la pizza se comió?'
+          options: ['$\frac{3}{8}$', '$\frac{8}{3}$', '$\frac{5}{8}$']
+          answer: 0
+          explanation: |-
+            Hay 8 partes iguales y se toman 3: $\frac{3}{8}$. $\frac{5}{8}$ es lo que queda y $\frac{8}{3}$ está escrita al revés.
+      - title: Fracción de una cantidad
+        concept: Para calcular una fracción de una cantidad, se divide entre el número de abajo y se multiplica por el de arriba.
+        explanation: |-
+          ¿Cuánto es $\frac{2}{5}$ de 30 pesos?
+
+          1. Primero, **una** de las 5 partes iguales: $30 \div 5 = 6$. Es decir, $\frac{1}{5}$ de 30 es 6.
+          2. Luego, **dos** de esas partes: $6 \times 2 = 12$.
+
+          Así, $\frac{2}{5}$ de 30 es 12.
+
+          El orden "primero dividir, luego multiplicar" es cómodo porque trabaja con números pequeños. También se puede multiplicar primero ($30 \times 2 = 60$) y dividir después ($60 \div 5 = 12$): el resultado es el mismo.
+        definition: |-
+          La fracción $\frac{a}{b}$ de una cantidad $C$ es $(C \div b) \times a$.
+        rules:
+          - 'Divide la cantidad entre el número de abajo: obtienes una parte.'
+          - 'Multiplica por el número de arriba: obtienes las partes tomadas.'
+        examples:
+          - problem: 'Calcula $\frac{3}{4}$ de 20.'
+            solution: |-
+              **Paso 1.** Una parte: $20 \div 4 = 5$.
+
+              **Paso 2.** Tres partes: $5 \times 3 = 15$.
+
+              Resultado: $\frac{3}{4}$ de 20 es 15.
+        common_errors:
+          - 'Dividir entre el número de arriba y multiplicar por el de abajo.'
+          - 'Calcular sólo $\frac{1}{b}$ de la cantidad y olvidar multiplicar.'
+        summary: |-
+          Para hallar $\frac{a}{b}$ de una cantidad: divide entre $b$ y multiplica por $a$.
+        check:
+          question: '¿Cuánto es $\frac{3}{4}$ de 20?'
+          options: ['$15$', '$5$', '$12$']
+          answer: 0
+          explanation: |-
+            $20 \div 4 = 5$ y $5 \times 3 = 15$. El 5 es sólo $\frac{1}{4}$ de 20.
+    glossary:
+      - {term: Fracción, definition: 'Número que expresa partes iguales de un todo; equivale a una división.'}
+      - {term: Todo (unidad), definition: 'Objeto o cantidad completa que se divide en partes iguales.'}
+
+  t02:
+    intro:
+      what: |-
+        El numerador y el denominador son los dos términos de una fracción: el numerador está arriba y el denominador abajo.
+      purpose: |-
+        Sirven para nombrar con precisión qué indica cada número de una fracción y para leerla correctamente.
+      importance: |-
+        Todas las reglas de las fracciones (simplificar, comparar, operar) se expresan en términos de numerador y denominador. Hay que dominarlos sin dudar.
+      foundations: |-
+        El significado de fracción como partes iguales de un todo (tema 1).
+      prerequisites:
+        - 'Qué es una fracción (bloque 14, tema 1)'
+        - 'Lectura y escritura de números (bloque 02)'
+      outcomes:
+        - 'Identificar numerador y denominador'
+        - 'Leer y escribir fracciones con palabras'
+      everyday_example: |-
+        En una receta que pide "$\frac{3}{4}$ de taza de leche", el 4 (denominador) indica que la taza se imagina dividida en cuartos, y el 3 (numerador) que se usan tres de ellos.
+    sections:
+      - title: Los términos de la fracción
+        concept: El denominador indica en cuántas partes iguales se divide el todo; el numerador, cuántas se toman.
+        explanation: |-
+          En la fracción
+
+          $$\frac{3}{8}$$
+
+          - **Numerador**: 3. Está arriba y **numera** (cuenta) cuántas partes se toman.
+          - **Denominador**: 8. Está abajo y **denomina** (da nombre) al tipo de parte: "octavos".
+          - La **raya de fracción** separa ambos términos y significa "dividido entre".
+
+          Una forma de recordarlo: el denominador da el **nombre** del tamaño de la parte (medios, tercios, cuartos…), y el numerador es el **número** de partes de ese tamaño.
+
+          Cuanto mayor es el denominador, **más pequeña** es cada parte: un octavo de pizza es más pequeño que un cuarto, porque la pizza se reparte entre más porciones.
+
+          El denominador nunca puede ser 0; el numerador sí: $\frac{0}{5} = 0$ (no se toma ninguna parte).
+        definition: |-
+          En la fracción $\frac{a}{b}$, $a$ es el **numerador** y $b$ (distinto de 0) es el **denominador**.
+        rules:
+          - 'Numerador arriba: cuántas partes se toman.'
+          - 'Denominador abajo: en cuántas partes iguales se divide el todo.'
+          - 'A mayor denominador, partes más pequeñas.'
+        examples:
+          - problem: 'En $\frac{5}{9}$, ¿cuál es el numerador y cuál el denominador? ¿Qué significan?'
+            solution: |-
+              **Paso 1.** Numerador: 5 (arriba). Denominador: 9 (abajo).
+
+              **Paso 2.** El todo se divide en 9 partes iguales (novenos) y se toman 5.
+
+              Resultado: numerador 5, denominador 9.
+        common_errors:
+          - 'Confundir los nombres: el numerador está arriba.'
+          - 'Pensar que $\frac{1}{8}$ es mayor que $\frac{1}{4}$ porque 8 es mayor que 4.'
+        summary: |-
+          Numerador (arriba): partes que se toman. Denominador (abajo): partes iguales del todo, y nombre de esas partes.
+        check:
+          question: 'En la fracción $\frac{5}{9}$, ¿cuál es el numerador?'
+          options: ['$5$', '$9$', '$14$']
+          answer: 0
+          explanation: |-
+            El numerador es el término de arriba, 5. El 9 es el denominador.
+      - title: Lectura de fracciones
+        concept: Se lee el numerador como número y el denominador con un nombre especial.
+        explanation: |-
+          Para leer una fracción se dice el **numerador** como un número normal y el **denominador** con su nombre:
+
+          | Denominador | Nombre |
+          |---|---|
+          | 2 | medios |
+          | 3 | tercios |
+          | 4 | cuartos |
+          | 5 | quintos |
+          | 6 | sextos |
+          | 7 | séptimos |
+          | 8 | octavos |
+          | 9 | novenos |
+          | 10 | décimos |
+
+          A partir de 11, se añade la terminación **-avos** al número: onceavos, doceavos, treceavos, veinteavos… Hay excepciones habituales: 100 es **centésimos** y 1000 es **milésimos**.
+
+          Si el numerador es 1, el nombre va en singular: $\frac{1}{4}$ es "un cuarto"; $\frac{3}{4}$ es "tres cuartos".
+        definition: |-
+          La **lectura** de $\frac{a}{b}$ es: el número $a$ seguido del nombre del denominador ("medios", "tercios", …, "-avos"), en singular si $a = 1$.
+        rules:
+          - 'Denominadores del 2 al 10: nombres especiales (medios, tercios…).'
+          - 'Desde 11: número + "-avos" (doceavos).'
+          - '100: centésimos; 1000: milésimos.'
+        examples:
+          - problem: 'Lee $\frac{7}{12}$ y $\frac{1}{3}$; escribe con cifras "cuatro quintos".'
+            solution: |-
+              **Paso 1.** $\frac{7}{12}$: "siete doceavos".
+
+              **Paso 2.** $\frac{1}{3}$: "un tercio".
+
+              **Paso 3.** "Cuatro quintos": numerador 4, denominador 5: $\frac{4}{5}$.
+        common_errors:
+          - 'Leer "siete doce" o "siete entre doce" en lugar de "siete doceavos".'
+          - 'Invertir los términos al escribir: "dos tercios" es $\frac{2}{3}$, no $\frac{3}{2}$.'
+        summary: |-
+          Se lee el numerador y luego el nombre del denominador: medios, tercios, cuartos…; desde 11, con "-avos".
+        check:
+          question: '¿Cómo se lee $\frac{7}{12}$?'
+          options: ['siete doceavos', 'siete doce', 'doce séptimos']
+          answer: 0
+          explanation: |-
+            Se dice el numerador (siete) y el nombre del denominador 12 (doceavos). "Doce séptimos" sería $\frac{12}{7}$.
+    glossary:
+      - {term: Numerador, definition: 'Término de arriba de una fracción: cuántas partes se toman.'}
+      - {term: Denominador, definition: 'Término de abajo de una fracción: en cuántas partes iguales se divide el todo.'}
+      - {term: Raya de fracción, definition: 'Línea que separa numerador y denominador; significa "dividido entre".'}
+
+  t03:
+    intro:
+      what: |-
+        La representación gráfica de una fracción es un dibujo (una barra, un círculo, un conjunto de objetos o un punto en la recta numérica) que muestra qué parte del todo representa.
+      purpose: |-
+        Sirve para "ver" una fracción, comprender su tamaño y comparar fracciones de forma intuitiva.
+      importance: |-
+        Dibujar ayuda a razonar y a detectar errores, por ejemplo al comprobar si dos fracciones son equivalentes o cuál es mayor.
+      foundations: |-
+        El significado de numerador y denominador (tema 2) y la recta numérica (bloque 03).
+      prerequisites:
+        - 'Numerador y denominador (bloque 14, tema 2)'
+        - 'Recta numérica (bloque 03, tema 7)'
+      outcomes:
+        - 'Leer la fracción que representa un dibujo'
+        - 'Representar una fracción en una barra, un círculo o la recta numérica'
+      everyday_example: |-
+        El indicador de gasolina de un coche muestra una barra dividida en partes iguales: si marca 3 de 4 rayas, al depósito le quedan $\frac{3}{4}$.
+    sections:
+      - title: Barras, círculos y la recta numérica
+        concept: Se divide la figura (o el segmento de 0 a 1) en tantas partes iguales como indica el denominador y se marcan tantas como indica el numerador.
+        explanation: |-
+          **En una barra o un círculo**
+
+          1. Divide la figura en tantas partes **iguales** como indica el denominador.
+          2. Sombrea tantas partes como indica el numerador.
+
+          Por ejemplo, $\frac{2}{5}$ en una barra: ■■□□□ (5 partes, 2 sombreadas).
+
+          Para **leer** un dibujo se hace al revés: cuenta las partes iguales totales (denominador) y las sombreadas (numerador).
+
+          **En la recta numérica**
+
+          1. Divide el segmento entre 0 y 1 en tantas partes iguales como indica el denominador.
+          2. Desde el 0, avanza tantas partes como indica el numerador y marca el punto.
+
+          Así, $\frac{3}{4}$ está a tres cuartos del camino entre 0 y 1. Si el numerador es mayor que el denominador, se sigue avanzando más allá del 1: $\frac{5}{4}$ está un cuarto después del 1.
+
+          **También con conjuntos**: si de 10 personas 3 llevan gafas, la fracción de personas con gafas es $\frac{3}{10}$.
+        definition: |-
+          **Representar** $\frac{a}{b}$ es dividir una unidad (figura o segmento de 0 a 1) en $b$ partes iguales y señalar $a$ de ellas, o el punto situado a $a$ partes del 0.
+        rules:
+          - 'Las partes deben ser iguales.'
+          - 'Denominador: número de partes del todo. Numerador: partes señaladas.'
+          - 'En la recta, cada unidad se divide en $b$ partes; si $a > b$, se pasa del 1.'
+        examples:
+          - problem: 'Una barra está dividida en 6 partes iguales con 4 sombreadas: ■■■■□□. ¿Qué fracción está sombreada y cuál no?'
+            solution: |-
+              **Paso 1.** Partes totales: 6 (denominador). Sombreadas: 4.
+
+              **Paso 2.** Sombreado: $\frac{4}{6}$. Sin sombrear: $\frac{2}{6}$.
+
+              Resultado: $\frac{4}{6}$ sombreado y $\frac{2}{6}$ sin sombrear.
+          - problem: 'Sitúa $\frac{3}{5}$ en la recta numérica.'
+            solution: |-
+              **Paso 1.** Divide el segmento de 0 a 1 en 5 partes iguales.
+
+              **Paso 2.** Avanza 3 partes desde el 0.
+
+              Resultado: el punto está entre 0 y 1, más cerca del 1 que del 0 (pues $\frac{3}{5}$ es más que la mitad).
+        common_errors:
+          - 'Dibujar partes desiguales.'
+          - 'En la recta, contar las marcas (rayitas) en lugar de los espacios entre ellas.'
+          - 'Usar como denominador el número de partes sin sombrear.'
+        summary: |-
+          Divide en tantas partes iguales como indique el denominador y señala tantas como el numerador. En la recta, cuenta espacios desde el 0.
+        check:
+          question: 'Un rectángulo dividido en 6 partes iguales tiene 4 sombreadas. ¿Qué fracción NO está sombreada?'
+          options: ['$\frac{2}{6}$', '$\frac{4}{6}$', '$\frac{6}{2}$']
+          answer: 0
+          explanation: |-
+            Quedan 2 de las 6 partes sin sombrear: $\frac{2}{6}$. $\frac{4}{6}$ es lo sombreado y $\frac{6}{2}$ invierte los términos.
+    glossary:
+      - {term: Representación gráfica, definition: 'Dibujo que muestra la parte del todo que indica una fracción.'}
+
+  t04:
+    intro:
+      what: |-
+        Una fracción propia es aquella cuyo numerador es menor que el denominador, como $\frac{3}{5}$. Su valor es menor que 1.
+      purpose: |-
+        Sirve para reconocer las fracciones que representan menos de un todo completo.
+      importance: |-
+        Saber si una fracción es menor, igual o mayor que 1 ayuda a estimar resultados y a comparar fracciones.
+      foundations: |-
+        Si se toman menos partes de las que tiene el todo, no se llega a completarlo.
+      prerequisites:
+        - 'Numerador y denominador (bloque 14, tema 2)'
+        - 'Representación gráfica (bloque 14, tema 3)'
+      outcomes:
+        - 'Reconocer fracciones propias'
+        - 'Saber que una fracción propia está entre 0 y 1'
+      everyday_example: |-
+        Si de una hora (60 minutos) han pasado 45 minutos, ha pasado $\frac{45}{60}$ de hora: menos de una hora completa.
+    sections:
+      - title: Menos que un entero
+        concept: Una fracción es propia si su numerador es menor que su denominador; entonces vale menos que 1.
+        explanation: |-
+          En $\frac{3}{5}$ el todo se divide en 5 partes y se toman sólo 3. No se llega a tomar el todo completo, así que $\frac{3}{5}$ es **menor que 1**.
+
+          Siempre que el **numerador sea menor que el denominador**, ocurre lo mismo: la fracción se llama **propia** y su valor está **entre 0 y 1**. En la recta numérica, las fracciones propias (con numerador positivo) se sitúan entre el 0 y el 1.
+
+          Ejemplos de fracciones propias: $\frac{1}{2}$, $\frac{2}{3}$, $\frac{7}{10}$, $\frac{99}{100}$.
+
+          Este tipo se compara con los de los temas siguientes:
+
+          - **Propia**: numerador menor que el denominador (menor que 1).
+          - **Impropia**: numerador mayor que el denominador (tema 5).
+          - **Aparente**: el numerador es múltiplo del denominador; representa un entero (tema 6).
+        definition: |-
+          Una fracción $\frac{a}{b}$ con $a$ y $b$ naturales es **propia** si $a < b$. En ese caso, $0 \le \frac{a}{b} < 1$.
+        rules:
+          - 'Propia: numerador menor que denominador.'
+          - 'Toda fracción propia es menor que 1.'
+        examples:
+          - problem: '¿Cuáles son propias? $\frac{4}{7}$, $\frac{9}{8}$, $\frac{5}{5}$, $\frac{11}{12}$.'
+            solution: |-
+              **Paso 1.** Comparamos numerador y denominador: $4 < 7$ sí; $9 < 8$ no; $5 < 5$ no; $11 < 12$ sí.
+
+              Resultado: son propias $\frac{4}{7}$ y $\frac{11}{12}$.
+        common_errors:
+          - 'Pensar que una fracción con números grandes, como $\frac{99}{100}$, es mayor que 1.'
+          - 'Considerar propia $\frac{5}{5}$: vale exactamente 1.'
+        summary: |-
+          Propia: numerador menor que denominador. Su valor está entre 0 y 1.
+        check:
+          question: '¿Cuál de estas fracciones es propia?'
+          options: ['$\frac{7}{5}$', '$\frac{3}{8}$', '$\frac{4}{4}$']
+          answer: 1
+          explanation: |-
+            En $\frac{3}{8}$, $3 < 8$. En $\frac{7}{5}$ el numerador es mayor, y $\frac{4}{4} = 1$.
+    glossary:
+      - {term: Fracción propia, definition: 'Fracción con numerador menor que el denominador; vale menos que 1.'}
+
+  t05:
+    intro:
+      what: |-
+        Una fracción impropia es aquella cuyo numerador es mayor que el denominador, como $\frac{7}{4}$. Su valor es mayor que 1.
+      purpose: |-
+        Sirve para expresar cantidades mayores que un todo usando una sola fracción.
+      importance: |-
+        Las fracciones impropias aparecen constantemente al operar (por ejemplo, $\frac{3}{4} + \frac{3}{4} = \frac{6}{4}$) y son la forma más cómoda de calcular con cantidades mayores que 1.
+      foundations: |-
+        Si se toman más partes de las que tiene un todo, hacen falta varios todos: se supera la unidad.
+      prerequisites:
+        - 'Fracciones propias (bloque 14, tema 4)'
+        - 'Multiplicación y división con residuo (bloques 06 y 07)'
+      outcomes:
+        - 'Reconocer fracciones impropias'
+        - 'Saber entre qué dos enteros está una fracción impropia'
+      everyday_example: |-
+        Si una receta pide 7 cuartos de taza de harina, necesitas más de una taza: $\frac{7}{4}$ son una taza completa (4 cuartos) y 3 cuartos más.
+    sections:
+      - title: Más que un entero
+        concept: Una fracción es impropia si su numerador es mayor que su denominador; entonces vale más que 1.
+        explanation: |-
+          En $\frac{7}{4}$ se toman 7 cuartos, pero un entero sólo tiene 4. Hacen falta **dos** enteros divididos en cuartos: del primero se toman los 4 cuartos y del segundo, 3. Por eso $\frac{7}{4}$ es **mayor que 1**.
+
+          **Entre qué enteros está.** Recuerda que $\frac{7}{4} = 7 \div 4$. La división da cociente 1 y residuo 3: $\frac{7}{4}$ es "1 entero y 3 cuartos", así que está entre 1 y 2.
+
+          En este curso usamos esta clasificación:
+
+          - **Impropia**: el numerador es mayor que el denominador **y no es múltiplo** de él. Su valor está entre dos enteros, sin ser entero (por ejemplo, $\frac{7}{4}$, $\frac{11}{3}$).
+          - Si el numerador es múltiplo del denominador, como $\frac{8}{4} = 2$, la fracción representa un entero y la llamamos **aparente** (tema 6). Algunos libros incluyen las aparentes dentro de las impropias; aquí las estudiamos aparte.
+        definition: |-
+          Una fracción $\frac{a}{b}$ con $a, b$ naturales es **impropia** si $a > b$ y $a$ no es múltiplo de $b$. Su valor es mayor que 1 y no es un número entero.
+        rules:
+          - 'Impropia: numerador mayor que denominador (y no múltiplo de él).'
+          - 'Toda fracción impropia es mayor que 1.'
+          - 'El cociente de $a \div b$ indica los enteros completos que contiene.'
+        examples:
+          - problem: '¿Entre qué dos números enteros está $\frac{17}{5}$?'
+            solution: |-
+              **Paso 1.** $17 \div 5 = 3$, residuo 2 (porque $5 \times 3 = 15$).
+
+              **Paso 2.** $\frac{17}{5}$ contiene 3 enteros completos y $\frac{2}{5}$ más.
+
+              Resultado: está entre 3 y 4.
+        common_errors:
+          - 'Pensar que una fracción siempre es menor que 1.'
+          - 'Leer el cociente como numerador: en $\frac{17}{5}$ hay 3 enteros, no 17.'
+        summary: |-
+          Impropia: numerador mayor que denominador, sin ser múltiplo. Vale más que 1 y está entre dos enteros consecutivos.
+        check:
+          question: '¿Cuál de estas fracciones es impropia?'
+          options: ['$\frac{2}{9}$', '$\frac{9}{2}$', '$\frac{9}{9}$']
+          answer: 1
+          explanation: |-
+            En $\frac{9}{2}$, $9 > 2$ y 9 no es múltiplo de 2: vale 4 enteros y medio. $\frac{2}{9}$ es propia y $\frac{9}{9} = 1$ es aparente.
+    glossary:
+      - {term: Fracción impropia, definition: 'Fracción cuyo numerador es mayor que el denominador sin ser múltiplo de él; vale más que 1.'}
+
+  t06:
+    intro:
+      what: |-
+        Una fracción aparente es aquella cuyo numerador es múltiplo del denominador, como $\frac{8}{4}$ o $\frac{6}{6}$. Aunque tiene forma de fracción, representa un número entero.
+      purpose: |-
+        Sirve para reconocer fracciones que en realidad son números enteros y para escribir cualquier entero en forma de fracción.
+      importance: |-
+        Escribir un entero como fracción (por ejemplo, $3 = \frac{3}{1}$ o $2 = \frac{10}{5}$) es imprescindible para operar enteros con fracciones en el bloque 15.
+      foundations: |-
+        Una fracción es una división; si la división es exacta (bloque 07), el resultado es un entero.
+      prerequisites:
+        - 'Fracciones propias e impropias (bloque 14, temas 4 y 5)'
+        - 'Concepto de múltiplo (bloque 10, tema 1)'
+      outcomes:
+        - 'Reconocer fracciones aparentes y calcular su valor'
+        - 'Escribir un número entero como fracción'
+      everyday_example: |-
+        Si tienes 12 cuartos de pizza, tienes exactamente 3 pizzas: $\frac{12}{4} = 3$.
+    sections:
+      - title: Fracciones que son enteros
+        concept: Si el numerador es múltiplo del denominador, la fracción vale un número entero.
+        explanation: |-
+          Piensa en $\frac{12}{4}$: 12 cuartos. Cada entero tiene 4 cuartos, así que 12 cuartos forman exactamente $12 \div 4 = 3$ enteros. Ni sobra ni falta nada.
+
+          Por eso, cuando **el numerador es múltiplo del denominador**, la división es exacta y la fracción es un **número entero**. Se llama **aparente** porque sólo "aparenta" ser una fracción.
+
+          Casos importantes:
+
+          - **Numerador igual al denominador**: vale 1. $\frac{5}{5} = 1$, $\frac{100}{100} = 1$.
+          - **Denominador 1**: vale el numerador. $\frac{7}{1} = 7$.
+          - **Numerador 0**: vale 0. $\frac{0}{3} = 0$ (el 0 es múltiplo de todos).
+
+          **Escribir un entero como fracción.** Cualquier entero se puede escribir como fracción aparente con el denominador que quieras: $2 = \frac{2}{1} = \frac{4}{2} = \frac{10}{5}$. Basta multiplicar el entero por el denominador elegido para obtener el numerador.
+        definition: |-
+          Una fracción $\frac{a}{b}$ es **aparente** si $a$ es múltiplo de $b$; entonces $\frac{a}{b} = a \div b$ es un número entero.
+        rules:
+          - 'Aparente: numerador múltiplo del denominador.'
+          - '$\frac{b}{b} = 1$ y $\frac{a}{1} = a$.'
+          - 'Un entero $n$ se escribe con denominador $b$ como $\frac{n \times b}{b}$.'
+        examples:
+          - problem: '¿Cuáles son aparentes y cuánto valen? $\frac{15}{3}$, $\frac{15}{4}$, $\frac{8}{8}$.'
+            solution: |-
+              **Paso 1.** $15$ es múltiplo de 3: $\frac{15}{3} = 5$. Aparente.
+
+              **Paso 2.** $15$ no es múltiplo de 4 ($15 = 4 \times 3 + 3$): $\frac{15}{4}$ es impropia.
+
+              **Paso 3.** $\frac{8}{8} = 1$. Aparente.
+
+              Resultado: son aparentes $\frac{15}{3} = 5$ y $\frac{8}{8} = 1$.
+          - problem: 'Escribe 4 como fracción con denominador 3.'
+            solution: |-
+              **Paso 1.** Numerador: $4 \times 3 = 12$.
+
+              Resultado: $4 = \frac{12}{3}$.
+        common_errors:
+          - 'Clasificar $\frac{6}{6}$ como propia o impropia: vale 1 y es aparente.'
+          - 'Al escribir un entero como fracción, poner el entero como numerador sin multiplicar: $4 \neq \frac{4}{3}$.'
+        summary: |-
+          Si el numerador es múltiplo del denominador, la fracción es aparente y vale un entero. Todo entero puede escribirse como fracción aparente.
+        check:
+          question: '¿Cuál de estas fracciones es aparente?'
+          options: ['$\frac{12}{5}$', '$\frac{12}{4}$', '$\frac{4}{12}$']
+          answer: 1
+          explanation: |-
+            12 es múltiplo de 4: $\frac{12}{4} = 3$. $\frac{12}{5}$ es impropia (12 no es múltiplo de 5) y $\frac{4}{12}$ es propia.
+    glossary:
+      - {term: Fracción aparente, definition: 'Fracción cuyo numerador es múltiplo del denominador; representa un número entero.'}
+
+  t07:
+    intro:
+      what: |-
+        Un número mixto es la escritura de una cantidad mayor que 1 como un entero seguido de una fracción propia, por ejemplo $2\,\frac{3}{4}$ ("dos enteros y tres cuartos").
+      purpose: |-
+        Sirve para expresar de forma intuitiva cantidades como "dos tazas y tres cuartos" y para pasar de esa forma a una fracción impropia y al revés.
+      importance: |-
+        En la vida diaria se habla en números mixtos (una hora y media, dos kilos y cuarto), pero para calcular conviene usar fracciones impropias. Hay que saber pasar de una forma a otra.
+      foundations: |-
+        La división con residuo (bloque 07): el cociente da los enteros y el residuo, las partes sobrantes.
+      prerequisites:
+        - 'Fracciones impropias (bloque 14, tema 5)'
+        - 'División con residuo (bloque 07)'
+      outcomes:
+        - 'Convertir un número mixto en fracción impropia'
+        - 'Convertir una fracción impropia en número mixto'
+      everyday_example: |-
+        "Dos horas y cuarto" es el número mixto $2\,\frac{1}{4}$ horas, que equivale a $\frac{9}{4}$ de hora (9 cuartos de hora).
+    sections:
+      - title: De número mixto a fracción impropia
+        concept: Se multiplica el entero por el denominador, se suma el numerador y se conserva el denominador.
+        explanation: |-
+          El número mixto $2\,\frac{3}{4}$ significa **2 enteros y 3 cuartos más**. ¿Cuántos cuartos son en total?
+
+          - Cada entero tiene 4 cuartos, así que 2 enteros son $2 \times 4 = 8$ cuartos.
+          - Más los 3 cuartos: $8 + 3 = 11$ cuartos.
+
+          Por tanto, $2\,\frac{3}{4} = \frac{11}{4}$.
+
+          **Regla**: nuevo numerador $=$ entero $\times$ denominador $+$ numerador; el denominador no cambia.
+
+          $$a\,\frac{b}{c} = \frac{a \times c + b}{c}$$
+
+          El denominador se mantiene porque seguimos contando partes del mismo tamaño (cuartos).
+        definition: |-
+          Un **número mixto** $a\,\frac{b}{c}$ (con $a$ entero positivo y $\frac{b}{c}$ fracción propia) representa la cantidad "$a$ enteros más $\frac{b}{c}$" y equivale a la fracción impropia $\frac{a \times c + b}{c}$.
+        rules:
+          - 'Numerador nuevo: entero por denominador, más numerador.'
+          - 'El denominador se conserva.'
+        examples:
+          - problem: 'Convierte $3\,\frac{2}{5}$ en fracción impropia.'
+            solution: |-
+              **Paso 1.** Entero por denominador: $3 \times 5 = 15$.
+
+              **Paso 2.** Más el numerador: $15 + 2 = 17$.
+
+              **Paso 3.** Se conserva el denominador 5.
+
+              Resultado: $3\,\frac{2}{5} = \frac{17}{5}$.
+        common_errors:
+          - 'Sumar el entero sin multiplicarlo: $3\,\frac{2}{5} \neq \frac{5}{5}$.'
+          - 'Multiplicar también el denominador o cambiarlo.'
+          - 'Leer $3\,\frac{2}{5}$ como "3 por $\frac{2}{5}$": significa 3 más $\frac{2}{5}$.'
+        summary: |-
+          $a\,\frac{b}{c} = \frac{a \times c + b}{c}$: los enteros se convierten en partes y se suman las partes que ya había.
+        check:
+          question: '¿Cuál es la fracción impropia equivalente a $3\,\frac{1}{2}$?'
+          options: ['$\frac{7}{2}$', '$\frac{4}{2}$', '$\frac{5}{2}$']
+          answer: 0
+          explanation: |-
+            $3 \times 2 + 1 = 7$, así que $3\,\frac{1}{2} = \frac{7}{2}$. $\frac{4}{2}$ sale de sumar el entero sin multiplicarlo.
+      - title: De fracción impropia a número mixto
+        concept: Se divide el numerador entre el denominador; el cociente es el entero y el residuo, el nuevo numerador.
+        explanation: |-
+          ¿Cuántos enteros completos hay en $\frac{23}{6}$?
+
+          Dividimos $23 \div 6$: cociente 3 y residuo 5, porque $6 \times 3 = 18$ y $23 - 18 = 5$.
+
+          - El **cociente** (3) son los enteros completos.
+          - El **residuo** (5) son los sextos que sobran.
+          - El **denominador** sigue siendo 6.
+
+          Por tanto, $\frac{23}{6} = 3\,\frac{5}{6}$.
+
+          **Comprobación**: vuelve a convertir: $3 \times 6 + 5 = 23$. Coincide.
+
+          Si el residuo es 0, la fracción era aparente y el resultado es un entero: $\frac{18}{6} = 3$.
+        definition: |-
+          Si $a = c \times q + r$ con $0 \le r < c$, entonces $\frac{a}{c} = q\,\frac{r}{c}$ (y si $r = 0$, $\frac{a}{c} = q$).
+        rules:
+          - 'Cociente: parte entera.'
+          - 'Residuo: numerador de la parte fraccionaria.'
+          - 'El denominador se conserva.'
+        examples:
+          - problem: 'Escribe $\frac{17}{5}$ como número mixto.'
+            solution: |-
+              **Paso 1.** $17 \div 5 = 3$, residuo 2.
+
+              **Paso 2.** Entero 3; fracción $\frac{2}{5}$.
+
+              Resultado: $\frac{17}{5} = 3\,\frac{2}{5}$. Comprobación: $3 \times 5 + 2 = 17$.
+        common_errors:
+          - 'Poner el cociente como numerador y el residuo como entero.'
+          - 'Cambiar el denominador por el cociente.'
+        summary: |-
+          Divide: el cociente es el entero, el residuo es el numerador y el denominador no cambia. Comprueba volviendo a convertir.
+        check:
+          question: '¿Cómo se escribe $\frac{23}{6}$ como número mixto?'
+          options: ['$3\,\frac{5}{6}$', '$5\,\frac{3}{6}$', '$3\,\frac{6}{5}$']
+          answer: 0
+          explanation: |-
+            $23 \div 6 = 3$, residuo 5: $3\,\frac{5}{6}$. Las otras opciones intercambian cociente, residuo o denominador.
+    glossary:
+      - {term: Número mixto, definition: 'Número formado por un entero y una fracción propia, como $2\,\frac{3}{4}$.'}
+      - {term: Parte entera, definition: 'En un número mixto, el número de enteros completos.'}
+
+  t08:
+    intro:
+      what: |-
+        Las fracciones equivalentes son fracciones distintas en su escritura que representan la misma cantidad, como $\frac{1}{2}$, $\frac{2}{4}$ y $\frac{3}{6}$.
+      purpose: |-
+        Sirven para cambiar la forma de una fracción sin cambiar su valor: simplificarla, darle un denominador conveniente o compararla con otras.
+      importance: |-
+        Es la idea central de todo el trabajo con fracciones: para simplificar (tema 9), amplificar (tema 10), comparar (tema 11) y sumar (bloque 15) se usan fracciones equivalentes.
+      foundations: |-
+        Si se divide cada parte en más trozos iguales, hay más trozos pero más pequeños, y la cantidad total no cambia. Matemáticamente: multiplicar o dividir numerador y denominador por el mismo número no altera el valor.
+      prerequisites:
+        - 'Qué es una fracción y su representación gráfica (bloque 14, temas 1 a 3)'
+        - 'Multiplicación y división (bloques 06 y 07)'
+      outcomes:
+        - 'Obtener fracciones equivalentes a una dada'
+        - 'Comprobar si dos fracciones son equivalentes'
+        - 'Completar igualdades de fracciones'
+      everyday_example: |-
+        Media pizza es lo mismo que 2 porciones de una pizza cortada en 4, o que 4 porciones de una pizza cortada en 8: $\frac{1}{2} = \frac{2}{4} = \frac{4}{8}$.
+    sections:
+      - title: La misma cantidad escrita de otra forma
+        concept: Multiplicando o dividiendo numerador y denominador por el mismo número (distinto de 0) se obtiene una fracción equivalente.
+        explanation: |-
+          Toma una barra y sombrea la mitad: $\frac{1}{2}$. Ahora corta cada mitad en 2 trozos iguales: la barra tiene 4 trozos y hay 2 sombreados, es decir, $\frac{2}{4}$. **La parte sombreada no ha cambiado**; sólo la has dividido en más trozos.
+
+          Lo que hiciste fue multiplicar por 2 **ambos** términos:
+
+          $$\frac{1}{2} = \frac{1 \times 2}{2 \times 2} = \frac{2}{4}$$
+
+          Si cortas cada mitad en 3 trozos, multiplicas por 3: $\frac{1}{2} = \frac{3}{6}$.
+
+          También se puede ir al revés, **dividiendo** ambos términos por un divisor común: $\frac{6}{8} = \frac{6 \div 2}{8 \div 2} = \frac{3}{4}$.
+
+          Lo importante es hacer **la misma operación arriba y abajo**. Si sólo cambias uno de los términos, cambias la cantidad.
+        definition: |-
+          Dos fracciones son **equivalentes** si representan el mismo número. Para todo $k \neq 0$: $\frac{a}{b} = \frac{a \times k}{b \times k}$; y si $k$ divide a $a$ y a $b$, $\frac{a}{b} = \frac{a \div k}{b \div k}$.
+        rules:
+          - 'Multiplicar o dividir ambos términos por el mismo número (no 0) da una fracción equivalente.'
+          - 'Sumar o restar el mismo número a ambos términos NO da una fracción equivalente.'
+        examples:
+          - problem: 'Escribe tres fracciones equivalentes a $\frac{2}{3}$.'
+            solution: |-
+              **Paso 1.** Por 2: $\frac{4}{6}$. Por 3: $\frac{6}{9}$. Por 5: $\frac{10}{15}$.
+
+              Resultado: $\frac{2}{3} = \frac{4}{6} = \frac{6}{9} = \frac{10}{15}$.
+          - problem: 'Completa: $\frac{3}{4} = \frac{\square}{20}$.'
+            solution: |-
+              **Paso 1.** El denominador pasó de 4 a 20: se multiplicó por $20 \div 4 = 5$.
+
+              **Paso 2.** Multiplicamos también el numerador: $3 \times 5 = 15$.
+
+              Resultado: $\frac{3}{4} = \frac{15}{20}$.
+        common_errors:
+          - 'Multiplicar sólo el numerador o sólo el denominador.'
+          - 'Sumar el mismo número arriba y abajo: $\frac{1}{2}$ y $\frac{1 + 1}{2 + 1} = \frac{2}{3}$ no son equivalentes.'
+        summary: |-
+          Multiplica o divide ambos términos por el mismo número y obtendrás una fracción equivalente: misma cantidad, otra escritura.
+        check:
+          question: '¿Cuál de estas fracciones es equivalente a $\frac{3}{5}$?'
+          options: ['$\frac{6}{8}$', '$\frac{6}{10}$', '$\frac{5}{3}$']
+          answer: 1
+          explanation: |-
+            $\frac{3 \times 2}{5 \times 2} = \frac{6}{10}$. En $\frac{6}{8}$ se sumó 3 a ambos términos, lo cual no conserva el valor; $\frac{5}{3}$ invierte la fracción.
+      - title: Comprobar con productos cruzados
+        concept: Dos fracciones son equivalentes si el producto del numerador de una por el denominador de la otra coincide en ambos sentidos.
+        explanation: |-
+          ¿Son equivalentes $\frac{2}{3}$ y $\frac{8}{12}$? Una forma rápida de saberlo son los **productos cruzados**:
+
+          $$\frac{2}{3} \;\text{y}\; \frac{8}{12}: \quad 2 \times 12 = 24, \quad 3 \times 8 = 24$$
+
+          Como los dos productos son iguales, **sí son equivalentes**.
+
+          Con $\frac{3}{4}$ y $\frac{9}{16}$: $3 \times 16 = 48$ y $4 \times 9 = 36$. Son distintos: **no** son equivalentes.
+
+          ¿Por qué funciona? Si escribimos ambas fracciones con el denominador común $3 \times 12$, sus numeradores son precisamente $2 \times 12$ y $8 \times 3$. Dos fracciones con el mismo denominador son iguales si y sólo si tienen el mismo numerador.
+        definition: |-
+          Para $b, d \neq 0$: $\frac{a}{b} = \frac{c}{d}$ si y sólo si $a \times d = b \times c$.
+        rules:
+          - 'Productos cruzados iguales: fracciones equivalentes.'
+          - 'Productos cruzados distintos: no equivalentes.'
+        examples:
+          - problem: '¿Son equivalentes $\frac{4}{6}$ y $\frac{10}{15}$?'
+            solution: |-
+              **Paso 1.** $4 \times 15 = 60$.
+
+              **Paso 2.** $6 \times 10 = 60$.
+
+              Resultado: los productos coinciden; sí son equivalentes (ambas valen $\frac{2}{3}$).
+        common_errors:
+          - 'Multiplicar numerador por numerador y denominador por denominador en lugar de cruzar.'
+          - 'Concluir que no son equivalentes porque los números "no se parecen".'
+        summary: |-
+          Para comprobar si $\frac{a}{b}$ y $\frac{c}{d}$ son equivalentes, compara $a \times d$ con $b \times c$.
+        check:
+          question: '¿Son equivalentes $\frac{3}{4}$ y $\frac{9}{16}$?'
+          options: ['Sí, porque $3 \times 3 = 9$', 'No, porque $3 \times 16 \neq 4 \times 9$', 'Sí, porque ambas son propias']
+          answer: 1
+          explanation: |-
+            $3 \times 16 = 48$ y $4 \times 9 = 36$: los productos cruzados son distintos. El numerador se multiplicó por 3, pero el denominador por 4.
+    glossary:
+      - {term: Fracciones equivalentes, definition: 'Fracciones que representan la misma cantidad.'}
+      - {term: Productos cruzados, definition: 'En $\frac{a}{b}$ y $\frac{c}{d}$, los productos $a \times d$ y $b \times c$.'}
+
+  t09:
+    intro:
+      what: |-
+        Simplificar una fracción es obtener una fracción equivalente con términos más pequeños, dividiendo numerador y denominador por un divisor común.
+      purpose: |-
+        Sirve para expresar las fracciones de la forma más sencilla posible, lo que facilita entenderlas, compararlas y operar con ellas.
+      importance: |-
+        Los resultados de las operaciones con fracciones se dan siempre simplificados. Simplificar bien evita trabajar con números innecesariamente grandes.
+      foundations: |-
+        Las fracciones equivalentes (tema 8) y el MCD (bloque 12): dividir entre el MCD lleva directamente a la fracción más simple.
+      prerequisites:
+        - 'Fracciones equivalentes (bloque 14, tema 8)'
+        - 'Criterios de divisibilidad (bloque 10)'
+        - 'Máximo común divisor (bloque 12)'
+      outcomes:
+        - 'Simplificar una fracción paso a paso'
+        - 'Simplificar en un solo paso dividiendo entre el MCD'
+        - 'Reconocer una fracción irreducible'
+      everyday_example: |-
+        Si 18 de 24 personas de un grupo prefieren café, decir "$\frac{3}{4}$ del grupo" es más claro que "$\frac{18}{24}$". Es la misma cantidad, simplificada.
+    sections:
+      - title: Dividir arriba y abajo hasta no poder más
+        concept: Se divide numerador y denominador por un divisor común hasta que sólo compartan el 1.
+        explanation: |-
+          **Paso a paso.** Para simplificar $\frac{18}{24}$:
+
+          - Ambos son pares: dividimos entre 2 y queda $\frac{9}{12}$.
+          - Ambos son múltiplos de 3: dividimos entre 3 y queda $\frac{3}{4}$.
+          - 3 y 4 sólo comparten el divisor 1: ya no se puede simplificar más.
+
+          Una fracción cuyos términos sólo tienen el 1 como divisor común se llama **irreducible**.
+
+          **En un solo paso.** Como $\text{MCD}(18, 24) = 6$, dividimos directamente:
+
+          $$\frac{18}{24} = \frac{18 \div 6}{24 \div 6} = \frac{3}{4}$$
+
+          Dividir entre el MCD lleva **siempre** a la fracción irreducible de una vez (bloque 12).
+
+          **Con factorización**: $\frac{36}{60} = \frac{2^2 \times 3^2}{2^2 \times 3 \times 5}$. Se "tachan" los factores comunes ($2^2 \times 3$) y queda $\frac{3}{5}$.
+        definition: |-
+          **Simplificar** $\frac{a}{b}$ es dividir ambos términos por un divisor común. La fracción es **irreducible** si $\text{MCD}(a, b) = 1$, y se obtiene dividiendo ambos términos por $\text{MCD}(a, b)$.
+        rules:
+          - 'Divide ambos términos por el mismo divisor común.'
+          - 'Para terminar de una vez, divide entre el MCD.'
+          - 'La fracción es irreducible cuando el MCD de sus términos es 1.'
+        examples:
+          - problem: 'Simplifica $\frac{36}{60}$ hasta la fracción irreducible.'
+            solution: |-
+              **Paso 1.** $\text{MCD}(36, 60)$: $36 = 2^2 \times 3^2$, $60 = 2^2 \times 3 \times 5$, $\text{MCD} = 2^2 \times 3 = 12$.
+
+              **Paso 2.** $\frac{36 \div 12}{60 \div 12} = \frac{3}{5}$.
+
+              Resultado: $\frac{36}{60} = \frac{3}{5}$.
+        common_errors:
+          - 'Dividir sólo uno de los términos.'
+          - 'Restar en lugar de dividir: $\frac{18}{24}$ no es $\frac{18 - 6}{24 - 6}$.'
+          - '"Tachar cifras" iguales arriba y abajo no es simplificar: en $\frac{12}{24}$ tachar los 2 daría $\frac{1}{4}$, pero $\frac{12}{24} = \frac{1}{2}$.'
+          - 'Detenerse antes de llegar a la irreducible.'
+        summary: |-
+          Simplificar es dividir ambos términos por divisores comunes. Dividiendo entre el MCD se llega de una vez a la fracción irreducible.
+        check:
+          question: '¿Cuál es la fracción irreducible equivalente a $\frac{24}{36}$?'
+          options: ['$\frac{2}{3}$', '$\frac{4}{6}$', '$\frac{12}{18}$']
+          answer: 0
+          explanation: |-
+            $\text{MCD}(24, 36) = 12$, así que $\frac{24}{36} = \frac{2}{3}$. $\frac{4}{6}$ y $\frac{12}{18}$ son equivalentes, pero todavía se pueden simplificar.
+    glossary:
+      - {term: Simplificar, definition: 'Dividir numerador y denominador por un divisor común.'}
+      - {term: Fracción irreducible, definition: 'Fracción cuyos términos tienen MCD igual a 1.'}
+
+  t10:
+    intro:
+      what: |-
+        Amplificar una fracción es obtener una fracción equivalente con términos mayores, multiplicando numerador y denominador por el mismo número.
+      purpose: |-
+        Sirve para dar a una fracción el denominador que nos conviene, por ejemplo para compararla o sumarla con otra.
+      importance: |-
+        Es el paso clave para sumar y restar fracciones con distinto denominador (bloque 15) y para comparar fracciones (tema 11).
+      foundations: |-
+        Las fracciones equivalentes (tema 8): multiplicar ambos términos por el mismo número no cambia el valor.
+      prerequisites:
+        - 'Fracciones equivalentes (bloque 14, tema 8)'
+        - 'Múltiplos de un número (bloque 10, tema 3)'
+      outcomes:
+        - 'Amplificar una fracción por un número dado'
+        - 'Escribir una fracción con un denominador dado'
+      everyday_example: |-
+        Si quieres expresar $\frac{3}{4}$ de hora en minutos, conviene escribirla con denominador 60: $\frac{3}{4} = \frac{45}{60}$, es decir, 45 minutos.
+    sections:
+      - title: Multiplicar arriba y abajo
+        concept: Se multiplican numerador y denominador por el mismo número; para llegar a un denominador dado, se busca el factor que lo produce.
+        explanation: |-
+          **Amplificar por un número.** Para amplificar $\frac{3}{7}$ por 4:
+
+          $$\frac{3}{7} = \frac{3 \times 4}{7 \times 4} = \frac{12}{28}$$
+
+          **Llevar a un denominador dado.** ¿Cómo escribir $\frac{2}{3}$ con denominador 15?
+
+          1. ¿Por cuánto hay que multiplicar el 3 para obtener 15? $15 \div 3 = 5$.
+          2. Multiplica también el numerador por 5: $2 \times 5 = 10$.
+          3. Resultado: $\frac{2}{3} = \frac{10}{15}$.
+
+          Esto sólo es posible si el nuevo denominador es **múltiplo** del original. Por ejemplo, $\frac{2}{3}$ no se puede escribir con denominador 10 usando números naturales, porque 10 no es múltiplo de 3.
+
+          Amplificar es lo contrario de simplificar: simplificar divide, amplificar multiplica. Ambas operaciones producen fracciones equivalentes.
+        definition: |-
+          **Amplificar** $\frac{a}{b}$ por $k$ (natural, $k \ge 2$) es obtener $\frac{a \times k}{b \times k}$, que es equivalente a $\frac{a}{b}$.
+        rules:
+          - 'Multiplica ambos términos por el mismo número.'
+          - 'Para llegar al denominador $D$: el factor es $D \div b$.'
+          - 'El nuevo denominador debe ser múltiplo del original.'
+        examples:
+          - problem: 'Escribe $\frac{5}{6}$ con denominador 24.'
+            solution: |-
+              **Paso 1.** Factor: $24 \div 6 = 4$.
+
+              **Paso 2.** Numerador: $5 \times 4 = 20$.
+
+              Resultado: $\frac{5}{6} = \frac{20}{24}$.
+        common_errors:
+          - 'Multiplicar sólo el denominador.'
+          - 'Sumar en lugar de multiplicar: para pasar de 6 a 24 no se suma 18 al numerador.'
+          - 'Intentar llegar a un denominador que no es múltiplo del original.'
+        summary: |-
+          Amplificar es multiplicar ambos términos por el mismo número. Para un denominador dado, divide el nuevo entre el viejo y usa ese factor.
+        check:
+          question: 'Si amplificas $\frac{3}{7}$ por 4, ¿qué fracción obtienes?'
+          options: ['$\frac{12}{28}$', '$\frac{12}{7}$', '$\frac{7}{28}$']
+          answer: 0
+          explanation: |-
+            $\frac{3 \times 4}{7 \times 4} = \frac{12}{28}$. En $\frac{12}{7}$ sólo se multiplicó el numerador.
+    glossary:
+      - {term: Amplificar, definition: 'Multiplicar numerador y denominador por el mismo número.'}
+
+  t11:
+    intro:
+      what: |-
+        Comparar fracciones es decidir cuál es mayor, cuál es menor o si son iguales; ordenarlas es colocarlas de menor a mayor (o al revés).
+      purpose: |-
+        Sirve para decidir, por ejemplo, qué oferta es mejor, qué parte es más grande o qué cantidad es suficiente.
+      importance: |-
+        Comparar fracciones obliga a entender su valor real, no sólo sus números, y usa casi todo lo aprendido en el bloque: equivalentes, amplificación y MCM.
+      foundations: |-
+        Con el mismo denominador, las partes son del mismo tamaño y basta comparar cuántas hay. Con distinto denominador, se convierten en fracciones equivalentes con un denominador común (MCM, bloque 13).
+      prerequisites:
+        - 'Fracciones equivalentes y amplificación (bloque 14, temas 8 y 10)'
+        - 'Mínimo común múltiplo (bloque 13)'
+        - 'Comparación y orden de números (bloque 03)'
+      outcomes:
+        - 'Comparar fracciones con igual denominador o igual numerador'
+        - 'Comparar fracciones con distinto denominador'
+        - 'Ordenar varias fracciones'
+      everyday_example: |-
+        ¿Qué es más, $\frac{3}{4}$ o $\frac{5}{6}$ de un depósito? Llevándolas a doceavos: $\frac{9}{12}$ y $\frac{10}{12}$. Es más $\frac{5}{6}$.
+    sections:
+      - title: Casos sencillos
+        concept: Con igual denominador gana el mayor numerador; con igual numerador gana el menor denominador.
+        explanation: |-
+          **Igual denominador.** Las partes son del mismo tamaño, así que tiene más quien tiene más partes:
+
+          $$\frac{5}{8} > \frac{3}{8}$$
+
+          **Igual numerador.** Se toman las mismas partes, pero ¿de qué tamaño? Cuanto **menor es el denominador**, **más grande** es cada parte (un tercio es más grande que un quinto):
+
+          $$\frac{2}{3} > \frac{2}{5}$$
+
+          **Comparación con 1.** Una fracción propia es menor que 1 y una impropia es mayor que 1. Así, $\frac{4}{5} < \frac{7}{6}$ sin hacer cálculos, porque $\frac{4}{5} < 1 < \frac{7}{6}$.
+        definition: |-
+          Para $b > 0$: $\frac{a}{b} < \frac{c}{b}$ si y sólo si $a < c$. Para $a > 0$ y $b, d > 0$: $\frac{a}{b} < \frac{a}{d}$ si y sólo si $b > d$.
+        rules:
+          - 'Igual denominador: es mayor la de mayor numerador.'
+          - 'Igual numerador: es mayor la de menor denominador.'
+          - 'Las propias son menores que 1 y las impropias, mayores.'
+        examples:
+          - problem: 'Compara $\frac{3}{10}$ y $\frac{3}{7}$.'
+            solution: |-
+              **Paso 1.** Mismo numerador (3).
+
+              **Paso 2.** Los séptimos son más grandes que los décimos, porque $7 < 10$.
+
+              Resultado: $\frac{3}{10} < \frac{3}{7}$.
+        common_errors:
+          - 'Pensar que $\frac{2}{5} > \frac{2}{3}$ porque 5 es mayor que 3.'
+          - 'Comparar sólo los numeradores cuando los denominadores son distintos.'
+        summary: |-
+          Mismo denominador: más partes, más cantidad. Mismo numerador: partes más grandes (denominador menor), más cantidad.
+        check:
+          question: '¿Qué fracción es mayor, $\frac{2}{7}$ o $\frac{2}{9}$?'
+          options: ['$\frac{2}{7}$', '$\frac{2}{9}$', 'Son iguales']
+          answer: 0
+          explanation: |-
+            Ambas toman 2 partes, pero los séptimos son más grandes que los novenos. Por tanto, $\frac{2}{7} > \frac{2}{9}$.
+      - title: Distinto denominador y ordenación
+        concept: Se llevan las fracciones a un denominador común (el MCM) y se comparan los numeradores.
+        explanation: |-
+          Para comparar $\frac{3}{4}$ y $\frac{5}{6}$:
+
+          1. Denominador común: $\text{MCM}(4, 6) = 12$.
+          2. Amplifica: $\frac{3}{4} = \frac{9}{12}$ y $\frac{5}{6} = \frac{10}{12}$.
+          3. Compara numeradores: $9 < 10$, luego $\frac{3}{4} < \frac{5}{6}$.
+
+          **Atajo para dos fracciones: productos cruzados.** Compara $3 \times 6 = 18$ con $4 \times 5 = 20$. Como $18 < 20$, $\frac{3}{4} < \frac{5}{6}$. (Funciona porque, con denominador común $4 \times 6$, los numeradores son justamente 18 y 20.)
+
+          **Ordenar varias fracciones**: pásalas todas al mismo denominador (el MCM de todos) y ordénalas por el numerador.
+        definition: |-
+          Para comparar $\frac{a}{b}$ y $\frac{c}{d}$ (con $b, d > 0$) se escriben con un denominador común $m$ y se comparan los numeradores; equivalentemente, $\frac{a}{b} < \frac{c}{d}$ si y sólo si $a \times d < b \times c$.
+        rules:
+          - 'Denominador común (MCM), amplificar y comparar numeradores.'
+          - 'Para dos fracciones: comparar productos cruzados.'
+          - 'Para ordenar varias: todas al mismo denominador.'
+        examples:
+          - problem: 'Ordena de menor a mayor: $\frac{1}{2}$, $\frac{2}{3}$, $\frac{3}{5}$.'
+            solution: |-
+              **Paso 1.** $\text{MCM}(2, 3, 5) = 30$.
+
+              **Paso 2.** $\frac{1}{2} = \frac{15}{30}$, $\frac{2}{3} = \frac{20}{30}$, $\frac{3}{5} = \frac{18}{30}$.
+
+              **Paso 3.** Ordenamos los numeradores: $15 < 18 < 20$.
+
+              Resultado: $\frac{1}{2} < \frac{3}{5} < \frac{2}{3}$.
+        common_errors:
+          - 'Comparar numeradores sin igualar antes los denominadores.'
+          - 'Amplificar sólo el denominador.'
+          - 'Al ordenar, olvidar volver a escribir las fracciones originales.'
+        summary: |-
+          Con distinto denominador, lleva todas las fracciones al MCM de los denominadores y compara numeradores; para dos, también sirven los productos cruzados.
+        check:
+          question: '¿Cuál es el orden de menor a mayor de $\frac{3}{4}$, $\frac{2}{3}$ y $\frac{5}{8}$?'
+          options: ['$\frac{5}{8} < \frac{2}{3} < \frac{3}{4}$', '$\frac{2}{3} < \frac{3}{4} < \frac{5}{8}$', '$\frac{3}{4} < \frac{2}{3} < \frac{5}{8}$']
+          answer: 0
+          explanation: |-
+            Con denominador 24: $\frac{3}{4} = \frac{18}{24}$, $\frac{2}{3} = \frac{16}{24}$, $\frac{5}{8} = \frac{15}{24}$. Ordenando: $15 < 16 < 18$.
+    glossary:
+      - {term: Denominador común, definition: 'Denominador igual para varias fracciones; suele elegirse el MCM de los denominadores.'}
+      - {term: Ordenar, definition: 'Colocar números de menor a mayor o de mayor a menor.'}

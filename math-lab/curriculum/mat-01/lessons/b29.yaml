@@ -1,0 +1,1002 @@
+block: b29
+intro: >-
+  Cuando el reloj marca las 11 y pasan 3 horas, no son las 14 sino las 2: las
+  horas "dan la vuelta". La aritmética modular estudia los números que dan la
+  vuelta al llegar a un valor fijo, el módulo. Se basa por completo en el resto
+  de la división (bloque 7) y tiene aplicaciones muy actuales en informática y
+  criptografía.
+topics:
+  t01:
+    intro:
+      what: >-
+        Dos números son congruentes respecto a un número $m$ cuando, al
+        dividirlos entre $m$, dejan el mismo resto.
+      purpose: >-
+        Sirve para agrupar los números según su resto y trabajar sólo con lo que
+        importa en situaciones cíclicas: horas, días de la semana, pares e
+        impares.
+      importance: >-
+        Es la idea central de todo el bloque: a partir de ella se definen las
+        operaciones modulares y sus aplicaciones.
+      foundations: >-
+        Se basa en la división con residuo (bloque 7) y en el concepto de
+        múltiplo (bloque 10).
+      prerequisites:
+        - 'División con residuo (bloque 7)'
+        - 'Concepto de múltiplo (bloque 10)'
+      outcomes:
+        - 'Explicar qué significa que dos números sean congruentes'
+        - 'Comprobar si dos números son congruentes comparando sus restos'
+        - 'Comprobar la congruencia mediante la diferencia de los números'
+      everyday_example: >-
+        Las 17:00 y las 5:00 se marcan igual en un reloj de agujas de 12 horas:
+        17 y 5 son congruentes respecto a 12.
+    sections:
+      - title: Mismo resto
+        concept: >-
+          Dos números son congruentes respecto a $m$ si dejan el mismo resto al
+          dividirlos entre $m$.
+        explanation: |-
+          Recuerda la división con residuo (bloque 7): dividir $17$ entre $12$ da cociente $1$ y resto $5$, porque $17 = 12 \cdot 1 + 5$. El resto siempre está entre $0$ y el divisor menos 1.
+
+          Ahora dividimos $5$ entre $12$: cociente $0$ y resto $5$. **Mismo resto.** Decimos que $17$ y $5$ son **congruentes respecto a 12** (o "módulo 12").
+
+          Es exactamente lo que pasa en un reloj de agujas: las $17$ h y las $5$ h se marcan en el mismo lugar, porque al dar vueltas de $12$ en $12$ queda lo mismo.
+
+          Otro ejemplo, con $m = 2$: todos los números pares dejan resto $0$ y todos los impares, resto $1$. Así, $8$ y $14$ son congruentes respecto a $2$ (ambos pares), y también lo son $3$ y $11$ (ambos impares).
+        definition: >-
+          Dados un número natural $m \ge 2$ y dos números enteros $a$ y $b$, se
+          dice que $a$ y $b$ son congruentes respecto a $m$ si al dividirlos entre
+          $m$ dejan el mismo resto.
+        rules:
+          - 'Para comprobar la congruencia se calculan los dos restos y se comparan.'
+          - 'El resto de dividir entre $m$ siempre está entre $0$ y $m - 1$.'
+          - 'Dos números pares (o dos impares) son congruentes respecto a 2.'
+        examples:
+          - problem: '¿Son congruentes $38$ y $14$ respecto a $6$?'
+            solution: |-
+              **Paso 1.** $38 = 6 \cdot 6 + 2$: resto $2$.
+
+              **Paso 2.** $14 = 6 \cdot 2 + 2$: resto $2$.
+
+              **Paso 3.** Los restos son iguales.
+
+              Resultado: sí, $38$ y $14$ son congruentes respecto a $6$.
+        common_errors:
+          - 'Comparar los cocientes en lugar de los restos.'
+          - 'Pensar que dos números congruentes tienen que ser iguales: 38 y 14 son distintos pero congruentes respecto a 6.'
+        summary: >-
+          Dos números son congruentes respecto a $m$ cuando dejan el mismo resto
+          al dividirlos entre $m$.
+        check:
+          question: '¿Son congruentes $23$ y $8$ respecto a $5$?'
+          options:
+            - 'Sí, ambos dejan resto 3'
+            - 'No, porque 23 y 8 son distintos'
+            - 'No, porque sus cocientes son distintos'
+          answer: 0
+          explanation: >-
+            $23 = 5 \cdot 4 + 3$ y $8 = 5 \cdot 1 + 3$: ambos dejan resto $3$, así
+            que son congruentes. Los cocientes no importan.
+      - title: La diferencia es múltiplo del módulo
+        concept: >-
+          Dos números son congruentes respecto a $m$ exactamente cuando su
+          diferencia es un múltiplo de $m$.
+        explanation: |-
+          Hay una forma más rápida de comprobarlo. Si dos números dejan el mismo resto al dividir entre $m$, se diferencian en un número exacto de "vueltas" de tamaño $m$. Es decir, su **diferencia es un múltiplo de $m$** (bloque 10).
+
+          * $17 - 5 = 12$, múltiplo de $12$: congruentes respecto a 12.
+          * $38 - 14 = 24 = 6 \cdot 4$, múltiplo de $6$: congruentes respecto a 6.
+          * $20 - 9 = 11$, que no es múltiplo de $4$: no son congruentes respecto a 4 (en efecto, $20$ deja resto $0$ y $9$ deja resto $1$).
+
+          Este criterio es útil con números grandes, porque basta una resta y una comprobación de divisibilidad (bloque 10).
+        definition: >-
+          $a$ y $b$ son congruentes respecto a $m$ si y sólo si $a - b$ es
+          múltiplo de $m$.
+        rules:
+          - 'Se restan los números y se comprueba si el resultado es divisible entre $m$.'
+          - 'El orden de la resta no importa: si $a - b$ es múltiplo de $m$, también lo es $b - a$.'
+          - 'El 0 es múltiplo de cualquier número, así que todo número es congruente consigo mismo.'
+        examples:
+          - problem: '¿Son congruentes $1000$ y $13$ respecto a $7$?'
+            solution: |-
+              **Paso 1.** $1000 - 13 = 987$.
+
+              **Paso 2.** $987 \div 7 = 141$ exacto ($7 \cdot 141 = 987$).
+
+              Resultado: sí son congruentes respecto a $7$.
+        common_errors:
+          - 'Sumar los números en lugar de restarlos.'
+          - 'Comprobar la divisibilidad entre uno de los números en lugar de entre el módulo.'
+        summary: >-
+          Para saber si dos números son congruentes respecto a $m$ basta ver si
+          su diferencia es múltiplo de $m$.
+        check:
+          question: '¿Qué pareja de números es congruente respecto a $9$?'
+          options:
+            - '$50$ y $5$'
+            - '$50$ y $9$'
+            - '$40$ y $10$'
+          answer: 0
+          explanation: >-
+            $50 - 5 = 45 = 9 \cdot 5$, múltiplo de 9. En cambio, $50 - 9 = 41$ y
+            $40 - 10 = 30$ no son múltiplos de 9.
+    glossary:
+      - {term: Congruencia, definition: 'Relación entre dos números que dejan el mismo resto al dividirlos entre $m$.'}
+      - {term: Resto, definition: 'Lo que sobra en una división entera; está entre 0 y el divisor menos 1.'}
+  t02:
+    intro:
+      what: >-
+        El módulo es el número fijo $m$ entre el que se divide en la aritmética
+        modular; indica cada cuánto "dan la vuelta" los números.
+      purpose: >-
+        Sirve para fijar el ciclo con el que se trabaja: 12 o 24 para las horas,
+        7 para los días de la semana, 2 para pares e impares.
+      importance: >-
+        Elegir bien el módulo es el primer paso para modelar cualquier situación
+        cíclica.
+      foundations: >-
+        Se basa en la división con residuo (bloque 7) y en el concepto de
+        congruencia (tema 1).
+      prerequisites:
+        - 'Concepto de congruencia (tema 1 de este bloque)'
+        - 'División con residuo (bloque 7)'
+      outcomes:
+        - 'Identificar el módulo de una situación cíclica'
+        - 'Saber cuántos restos distintos hay para un módulo'
+        - 'Agrupar los números en clases según su resto'
+      everyday_example: >-
+        Los días de la semana se repiten cada 7: el módulo es 7 y hay 7 restos
+        posibles, uno por cada día.
+    sections:
+      - title: El módulo y los restos posibles
+        concept: >-
+          Al dividir entre $m$ hay exactamente $m$ restos posibles:
+          $0, 1, \ldots, m - 1$.
+        explanation: |-
+          El **módulo** es el tamaño de la vuelta. En la aritmética modular sólo trabajaremos con módulos naturales $m \ge 2$.
+
+          Al dividir cualquier número natural entre $m$, el resto sólo puede ser $0, 1, 2, \ldots, m-1$. Por ejemplo, con $m = 5$ los restos posibles son $0, 1, 2, 3, 4$: **cinco** restos. Nunca puede salir resto $5$, porque entonces cabría una vez más el divisor.
+
+          Así, todos los números quedan repartidos en $m$ grupos, llamados **clases de restos**. Con $m = 3$:
+
+          | Resto 0 | Resto 1 | Resto 2 |
+          |---|---|---|
+          | 0, 3, 6, 9, … | 1, 4, 7, 10, … | 2, 5, 8, 11, … |
+
+          Todos los números de un mismo grupo son congruentes entre sí.
+        definition: >-
+          El módulo es el número natural $m \ge 2$ respecto al cual se calculan
+          los restos; hay exactamente $m$ restos posibles, de $0$ a $m - 1$.
+        rules:
+          - 'Con módulo $m$ hay $m$ restos posibles: $0, 1, \ldots, m - 1$.'
+          - 'El resto nunca puede ser igual o mayor que $m$.'
+          - 'Cada clase de restos agrupa números congruentes entre sí.'
+        examples:
+          - problem: '¿Cuál es el módulo adecuado para los meses del año y cuántos restos posibles hay?'
+            solution: |-
+              **Paso 1.** Los meses se repiten cada $12$: el módulo es $12$.
+
+              **Paso 2.** Hay $12$ restos posibles: $0, 1, \ldots, 11$.
+
+              Resultado: módulo $12$, con $12$ restos.
+        common_errors:
+          - 'Creer que con módulo 5 los restos van de 1 a 5: van de 0 a 4.'
+        summary: >-
+          El módulo $m$ es el tamaño del ciclo; reparte los números en $m$ clases
+          según su resto, de $0$ a $m - 1$.
+        check:
+          question: '¿Cuántos restos distintos pueden salir al dividir un número natural entre $8$?'
+          options:
+            - '$7$'
+            - '$8$'
+            - '$9$'
+          answer: 1
+          explanation: >-
+            Los restos posibles son $0, 1, 2, 3, 4, 5, 6, 7$: ocho restos.
+    glossary:
+      - {term: Módulo, definition: 'Número fijo $m$ entre el que se divide en aritmética modular.'}
+      - {term: Clase de restos, definition: 'Grupo de todos los números que dejan el mismo resto al dividirlos entre $m$.'}
+  t03:
+    intro:
+      what: >-
+        La operación módulo, que se escribe $a \bmod m$, da el resto de dividir
+        $a$ entre $m$.
+      purpose: >-
+        Sirve para reducir cualquier número, por grande que sea, a un valor
+        entre 0 y $m - 1$.
+      importance: >-
+        Es una de las operaciones más usadas en programación (el operador %) y
+        la herramienta básica para calcular en aritmética modular.
+      foundations: >-
+        Se basa en la división con residuo (bloque 7) y en la división de números
+        enteros (bloques 7 y 24).
+      prerequisites:
+        - 'División con residuo y división larga (bloque 7)'
+        - 'Números enteros (bloque 24)'
+        - 'Módulo (tema 2 de este bloque)'
+      outcomes:
+        - 'Calcular $a \bmod m$ para números naturales'
+        - 'Calcular $a \bmod m$ para números negativos'
+        - 'Reconocer el operador módulo en contextos informáticos'
+      everyday_example: >-
+        Si tienes 47 fotos y las colocas en páginas de 5, la última página tiene
+        $47 \bmod 5 = 2$ fotos.
+    sections:
+      - title: El resto como resultado
+        concept: >-
+          $a \bmod m$ es el resto $r$ de la división $a = m \cdot q + r$, con
+          $0 \le r < m$.
+        explanation: |-
+          La operación módulo toma un número y se queda **sólo con el resto** de dividirlo entre $m$:
+
+          * $47 \bmod 5 = 2$, porque $47 = 5 \cdot 9 + 2$.
+          * $30 \bmod 6 = 0$, porque $30 = 6 \cdot 5$ (división exacta).
+          * $3 \bmod 7 = 3$, porque $3 = 7 \cdot 0 + 3$ (si el número es menor que el módulo, queda igual).
+
+          Con números grandes se hace la división larga (bloque 7), o se busca el mayor múltiplo de $m$ que no supere al número. Para $1000 \bmod 7$: $7 \cdot 142 = 994$ y $1000 - 994 = 6$, así que $1000 \bmod 7 = 6$.
+
+          Relación con el tema 1: $a$ es congruente con $a \bmod m$, y $a \bmod m$ es el **representante más pequeño** (entre $0$ y $m - 1$) de su clase.
+        definition: >-
+          Para un entero $a$ y un natural $m \ge 2$, $a \bmod m$ es el único
+          número $r$ con $0 \le r < m$ tal que $a = m \cdot q + r$ para algún
+          entero $q$.
+        rules:
+          - 'El resultado de $a \bmod m$ siempre está entre $0$ y $m - 1$.'
+          - 'Si $a$ es múltiplo de $m$, entonces $a \bmod m = 0$.'
+          - 'Si $0 \le a < m$, entonces $a \bmod m = a$.'
+        examples:
+          - problem: 'Calcula $2026 \bmod 9$'
+            solution: |-
+              **Paso 1.** Dividimos: $2026 \div 9$ da cociente $225$, porque $9 \cdot 225 = 2025$.
+
+              **Paso 2.** Resto: $2026 - 2025 = 1$.
+
+              Resultado: $2026 \bmod 9 = 1$.
+        common_errors:
+          - 'Dar el cociente en lugar del resto: $47 \bmod 5$ es 2, no 9.'
+          - 'Dar un resto mayor o igual que el módulo.'
+        summary: >-
+          $a \bmod m$ es el resto de dividir $a$ entre $m$ y siempre queda entre
+          $0$ y $m - 1$.
+        check:
+          question: '¿Cuánto es $58 \bmod 6$?'
+          options:
+            - '$9$'
+            - '$4$'
+            - '$2$'
+          answer: 1
+          explanation: >-
+            $58 = 6 \cdot 9 + 4$: el resto es $4$. $9$ es el cociente.
+      - title: Módulo de un número negativo
+        concept: >-
+          Con números negativos el resto también debe quedar entre $0$ y
+          $m - 1$; se usa un cociente negativo.
+        explanation: |-
+          ¿Cuánto es $-13 \bmod 5$? La condición es la misma: buscamos $-13 = 5 \cdot q + r$ con $0 \le r < 5$.
+
+          Si probamos $q = -2$: $5 \cdot (-2) = -10$ y quedaría $r = -3$, que es negativo: **no vale**.
+
+          Probamos con el múltiplo de $5$ inmediatamente **menor** que $-13$, que es $-15 = 5 \cdot (-3)$: $-13 = -15 + 2$, así que $r = 2$.
+
+          $$-13 \bmod 5 = 2$$
+
+          **Atajo:** calcula el resto como si el número fuera positivo ($13 \bmod 5 = 3$) y, si no es $0$, réstalo del módulo: $5 - 3 = 2$.
+
+          Piensa en un reloj: retroceder 13 posiciones en un ciclo de 5 es lo mismo que avanzar 2.
+        definition: >-
+          Para $a < 0$, $a \bmod m$ es el número $r$ con $0 \le r < m$ tal que
+          $a - r$ es múltiplo de $m$.
+        rules:
+          - 'El resto nunca es negativo.'
+          - 'Se toma el múltiplo de $m$ menor o igual que $a$ más cercano.'
+          - 'Atajo: si $(-a) \bmod m = s \neq 0$, entonces $a \bmod m = m - s$.'
+        examples:
+          - problem: 'Calcula $-20 \bmod 7$'
+            solution: |-
+              **Paso 1.** Múltiplo de $7$ menor o igual que $-20$ más cercano: $-21 = 7 \cdot (-3)$.
+
+              **Paso 2.** $-20 - (-21) = 1$.
+
+              **Comprobación con el atajo.** $20 \bmod 7 = 6$; $7 - 6 = 1$.
+
+              Resultado: $-20 \bmod 7 = 1$.
+        common_errors:
+          - 'Dar un resto negativo, como $-3$: en aritmética modular el resto está entre 0 y $m - 1$.'
+          - 'Usar el atajo cuando el resto positivo es 0: si $a$ es múltiplo de $m$, el resultado es 0, no $m$.'
+        summary: >-
+          Para números negativos se usa el múltiplo de $m$ inmediatamente menor;
+          el resto sigue estando entre $0$ y $m - 1$.
+        check:
+          question: '¿Cuánto es $-8 \bmod 3$?'
+          options:
+            - '$-2$'
+            - '$2$'
+            - '$1$'
+          answer: 2
+          explanation: >-
+            $-8 = 3 \cdot (-3) + 1$, con resto $1$. Con el atajo: $8 \bmod 3 = 2$
+            y $3 - 2 = 1$. $-2$ no vale porque es negativo.
+    glossary:
+      - {term: Operación módulo, definition: '$a \bmod m$: resto de dividir $a$ entre $m$, entre 0 y $m - 1$.'}
+      - {term: Operador %, definition: 'Símbolo usado en muchos lenguajes de programación para la operación módulo.'}
+  t04:
+    intro:
+      what: >-
+        Una congruencia es una afirmación de la forma
+        $a \equiv b \pmod{m}$, que dice que $a$ y $b$ dejan el mismo resto al
+        dividirlos entre $m$.
+      purpose: >-
+        Sirve para escribir y razonar de forma breve con números que se
+        comportan igual en un ciclo.
+      importance: >-
+        La notación y las propiedades de las congruencias permiten simplificar
+        cálculos con números enormes.
+      foundations: >-
+        Formaliza el concepto de congruencia (tema 1) con la operación módulo
+        (tema 3).
+      prerequisites:
+        - 'Concepto de congruencia (tema 1 de este bloque)'
+        - 'Operación módulo (tema 3 de este bloque)'
+      outcomes:
+        - 'Leer y escribir congruencias con la notación $\equiv$'
+        - 'Verificar si una congruencia es verdadera'
+        - 'Encontrar el representante entre $0$ y $m - 1$ de un número'
+      everyday_example: >-
+        $100 \equiv 2 \pmod{7}$: dentro de 100 días será el mismo día de la
+        semana que dentro de 2 días.
+    sections:
+      - title: Notación y comprobación
+        concept: >-
+          $a \equiv b \pmod{m}$ se lee "$a$ es congruente con $b$ módulo $m$".
+        explanation: |-
+          Para escribir que $17$ y $5$ son congruentes respecto a $12$ usamos el símbolo $\equiv$ (tres rayas):
+
+          $$17 \equiv 5 \pmod{12}$$
+
+          Se lee "17 es congruente con 5 módulo 12". Para comprobar si una congruencia es verdadera tienes dos caminos (tema 1):
+
+          1. Calcular $a \bmod m$ y $b \bmod m$ y ver si coinciden.
+          2. Ver si $a - b$ es múltiplo de $m$.
+
+          Si no son congruentes se escribe $\not\equiv$: $20 \not\equiv 9 \pmod{4}$.
+
+          Cuidado: $\equiv$ no es lo mismo que $=$. $17 \equiv 5 \pmod{12}$ es verdadero, pero $17 = 5$ es falso.
+        definition: >-
+          $a \equiv b \pmod{m}$ significa que $a - b$ es múltiplo de $m$, o lo
+          que es lo mismo, que $a \bmod m = b \bmod m$.
+        rules:
+          - 'Siempre hay que indicar el módulo: $17 \equiv 5$ sin módulo no tiene sentido.'
+          - '$a \equiv b \pmod{m}$ si y sólo si $m$ divide a $a - b$.'
+        examples:
+          - problem: '¿Es verdadera $45 \equiv 17 \pmod{4}$?'
+            solution: |-
+              **Paso 1.** $45 - 17 = 28$.
+
+              **Paso 2.** $28 = 4 \cdot 7$: es múltiplo de $4$.
+
+              **Comprobación.** $45 \bmod 4 = 1$ y $17 \bmod 4 = 1$.
+
+              Resultado: es verdadera.
+        common_errors:
+          - 'Leer $\equiv$ como "igual".'
+          - 'Omitir el módulo.'
+        summary: >-
+          $a \equiv b \pmod{m}$ afirma que $a$ y $b$ tienen el mismo resto módulo
+          $m$; se comprueba con los restos o con la diferencia.
+        check:
+          question: '¿Cuál de estas congruencias es verdadera?'
+          options:
+            - '$29 \equiv 4 \pmod{5}$'
+            - '$29 \equiv 3 \pmod{5}$'
+            - '$29 \equiv 5 \pmod{5}$'
+          answer: 0
+          explanation: >-
+            $29 - 4 = 25$, múltiplo de 5. En cambio $29 - 3 = 26$ y $29 - 5 = 24$
+            no lo son.
+      - title: Propiedades y representante
+        concept: >-
+          La congruencia cumple las propiedades reflexiva, simétrica y
+          transitiva, y cada número tiene un representante entre $0$ y $m - 1$.
+        explanation: |-
+          Las congruencias se comportan de forma parecida a la igualdad:
+
+          * **Reflexiva**: $a \equiv a \pmod{m}$ (la diferencia es $0$, múltiplo de todo).
+          * **Simétrica**: si $a \equiv b$, entonces $b \equiv a \pmod{m}$.
+          * **Transitiva**: si $a \equiv b$ y $b \equiv c$, entonces $a \equiv c \pmod{m}$.
+
+          Gracias a esto, todos los números de una clase de restos (tema 2) son "intercambiables" módulo $m$. Lo más cómodo es usar el **representante** de la clase: el número entre $0$ y $m - 1$, que es justo $a \bmod m$ (tema 3).
+
+          Por ejemplo, $100 \equiv 2 \pmod{7}$, porque $100 = 7 \cdot 14 + 2$. Para cualquier cálculo módulo $7$ podemos cambiar $100$ por $2$.
+        definition: >-
+          El representante de $a$ módulo $m$ es el único $r$ con $0 \le r < m$
+          tal que $a \equiv r \pmod{m}$; es $r = a \bmod m$.
+        rules:
+          - 'Reflexiva, simétrica y transitiva.'
+          - 'Todo número es congruente con su resto: $a \equiv a \bmod m \pmod{m}$.'
+        examples:
+          - problem: 'Halla $x$, con $0 \le x < 11$, tal que $90 \equiv x \pmod{11}$'
+            solution: |-
+              **Paso 1.** $11 \cdot 8 = 88$ y $90 - 88 = 2$.
+
+              **Paso 2.** $90 \bmod 11 = 2$.
+
+              Resultado: $x = 2$.
+        common_errors:
+          - 'Dar como representante un número fuera del intervalo $0$ a $m - 1$, como 13 módulo 11.'
+        summary: >-
+          La congruencia es reflexiva, simétrica y transitiva; el representante
+          de un número es su resto módulo $m$.
+        check:
+          question: '¿Qué número $x$ entre $0$ y $5$ cumple $47 \equiv x \pmod{6}$?'
+          options:
+            - '$7$'
+            - '$5$'
+            - '$1$'
+          answer: 1
+          explanation: >-
+            $47 = 6 \cdot 7 + 5$, así que $x = 5$. $7$ es el cociente.
+    glossary:
+      - {term: Símbolo ≡, definition: 'Se lee "es congruente con"; siempre va acompañado del módulo.'}
+      - {term: Representante, definition: 'Número entre 0 y $m - 1$ congruente con uno dado.'}
+  t05:
+    intro:
+      what: >-
+        La aritmética del reloj es el uso de la aritmética modular para calcular
+        horas y días: módulo 12 o 24 para las horas y módulo 7 para los días.
+      purpose: >-
+        Sirve para saber qué hora será dentro de muchas horas o qué día de la
+        semana caerá una fecha lejana.
+      importance: >-
+        Es el ejemplo más natural de aritmética modular y ayuda a entender todas
+        sus reglas.
+      foundations: >-
+        Se basa en la operación módulo (tema 3) y en las unidades de tiempo
+        (bloque 27).
+      prerequisites:
+        - 'Operación módulo (tema 3 de este bloque)'
+        - 'Unidades de tiempo (bloque 27)'
+      outcomes:
+        - 'Calcular la hora futura en formato de 24 horas y de 12 horas'
+        - 'Calcular el día de la semana dentro de muchos días'
+        - 'Calcular horas pasadas'
+      everyday_example: >-
+        Si sales a las 20:00 en un viaje de 9 horas, llegas a las 5:00 del día
+        siguiente.
+    sections:
+      - title: Horas
+        concept: >-
+          Para saber la hora futura se suma y se calcula el resultado módulo 24
+          (o módulo 12).
+        explanation: |-
+          Un reloj digital de 24 horas va de $0$ a $23$. Al llegar a $24$ vuelve a $0$: es aritmética **módulo 24**.
+
+          Son las $20$:00 y faltan $9$ horas para llegar: $20 + 9 = 29$, y $29 \bmod 24 = 5$. Llegamos a las $5$:00 (del día siguiente).
+
+          Si sumamos muchas horas, el módulo se encarga de quitar los días completos: $15 + 50 = 65$ y $65 \bmod 24 = 17$ (porque $65 = 24 \cdot 2 + 17$): serán las $17$:00, dos días después.
+
+          En un reloj de agujas de **12 horas** se usa módulo 12, con un detalle: el resto $0$ se lee como las $12$. Las $9$ más $5$ horas: $14 \bmod 12 = 2$, las $2$.
+
+          Para horas **pasadas** se resta y, si sale negativo, se calcula el módulo como en el tema 3.
+        definition: >-
+          La hora $h$ (de 0 a 23) más $k$ horas es $(h + k) \bmod 24$; menos $k$
+          horas es $(h - k) \bmod 24$.
+        rules:
+          - 'Reloj de 24 horas: módulo 24, horas de 0 a 23.'
+          - 'Reloj de 12 horas: módulo 12, y el resto 0 se lee como 12.'
+          - 'El cociente indica cuántos días completos han pasado.'
+        examples:
+          - problem: 'Son las 7:00. ¿Qué hora era hace 10 horas (reloj de 24 horas)?'
+            solution: |-
+              **Paso 1.** $7 - 10 = -3$.
+
+              **Paso 2.** $-3 \bmod 24 = 21$, porque $-3 = 24 \cdot (-1) + 21$.
+
+              Resultado: eran las $21$:00 del día anterior.
+        common_errors:
+          - 'Responder 29:00: las horas no pasan de 23.'
+          - 'Dar una hora negativa en lugar de calcular el módulo.'
+        summary: >-
+          Sumar o restar horas y reducir módulo 24 (o 12) da la hora del reloj;
+          el cociente cuenta los días.
+        check:
+          question: 'Son las 18:00. ¿Qué hora será dentro de 30 horas?'
+          options:
+            - '$48$:00'
+            - '$0$:00'
+            - '$12$:00'
+          answer: 1
+          explanation: >-
+            $18 + 30 = 48$ y $48 = 24 \cdot 2 + 0$, así que $48 \bmod 24 = 0$:
+            serán las $0$:00 (medianoche), dos días después. Las horas nunca
+            llegan a 48.
+      - title: Días de la semana
+        concept: >-
+          Los días de la semana se repiten cada 7: se calcula el número de días
+          módulo 7 y se avanza ese resto.
+        explanation: |-
+          Cada 7 días se repite el mismo día de la semana. Para saber qué día será dentro de $k$ días:
+
+          1. Calculamos $k \bmod 7$: las semanas completas no cambian el día.
+          2. Avanzamos ese número de días desde hoy.
+
+          Hoy es martes. ¿Qué día será dentro de $100$ días? $100 = 7 \cdot 14 + 2$, así que $100 \bmod 7 = 2$. Dentro de 100 días será el mismo día que dentro de 2: **jueves**.
+
+          También se puede numerar los días (lunes $= 0$, martes $= 1$, …, domingo $= 6$) y calcular $(\text{día de hoy} + k) \bmod 7$. Martes $= 1$: $(1 + 100) \bmod 7 = 101 \bmod 7 = 3$, que es jueves.
+        definition: >-
+          Si los días se numeran de 0 (lunes) a 6 (domingo), el día que será
+          dentro de $k$ días a partir del día $d$ es $(d + k) \bmod 7$.
+        rules:
+          - 'Las semanas completas no cambian el día: sólo importa $k \bmod 7$.'
+          - 'Numerando los días de 0 a 6 se puede calcular con una sola operación módulo 7.'
+        examples:
+          - problem: 'Hoy es viernes. ¿Qué día será dentro de 45 días?'
+            solution: |-
+              **Paso 1.** $45 = 7 \cdot 6 + 3$, así que $45 \bmod 7 = 3$.
+
+              **Paso 2.** Avanzamos 3 días desde el viernes: sábado, domingo, lunes.
+
+              Resultado: lunes.
+        common_errors:
+          - 'Avanzar el cociente (6) en lugar del resto (3).'
+          - 'Contar el día de hoy como el primer día que se avanza.'
+        summary: >-
+          Para los días de la semana se trabaja módulo 7: sólo cuenta el resto de
+          dividir los días entre 7.
+        check:
+          question: 'Hoy es lunes. ¿Qué día será dentro de 22 días?'
+          options:
+            - 'Martes'
+            - 'Lunes'
+            - 'Jueves'
+          answer: 0
+          explanation: >-
+            $22 = 7 \cdot 3 + 1$: avanzamos 1 día desde el lunes, así que será
+            martes.
+    glossary:
+      - {term: Aritmética del reloj, definition: 'Cálculo de horas y días mediante aritmética modular.'}
+      - {term: Formato de 24 horas, definition: 'Forma de dar la hora de 0 a 23; corresponde al módulo 24.'}
+  t06:
+    intro:
+      what: >-
+        La suma modular consiste en sumar dos números y quedarse con el resto
+        del resultado al dividir entre el módulo.
+      purpose: >-
+        Sirve para calcular en ciclos (horas, días, posiciones circulares) y
+        para simplificar sumas de números grandes cuando sólo interesa el resto.
+      importance: >-
+        Es la base del cifrado César, de los dígitos de control y de muchas
+        operaciones informáticas.
+      foundations: >-
+        Se basa en la suma (bloque 4), en la operación módulo (tema 3) y en las
+        congruencias (tema 4).
+      prerequisites:
+        - 'Operación módulo (tema 3 de este bloque)'
+        - 'Congruencias (tema 4 de este bloque)'
+      outcomes:
+        - 'Calcular $(a + b) \bmod m$'
+        - 'Reducir los sumandos antes de sumar'
+        - 'Construir una tabla de sumar modular'
+      everyday_example: >-
+        Si un semáforo tiene un ciclo de 90 segundos y han pasado 50 + 70
+        segundos desde que empezó, está en el segundo 30 de su ciclo.
+    sections:
+      - title: Sumar y reducir
+        concept: >-
+          $(a + b) \bmod m$ se puede calcular reduciendo primero cada sumando:
+          el resultado es el mismo.
+        explanation: |-
+          Para calcular $(38 + 27) \bmod 5$ hay dos caminos:
+
+          * **Sumar y después reducir**: $38 + 27 = 65$ y $65 \bmod 5 = 0$.
+          * **Reducir, sumar y volver a reducir**: $38 \bmod 5 = 3$ y $27 \bmod 5 = 2$; $3 + 2 = 5$ y $5 \bmod 5 = 0$.
+
+          ¿Por qué coinciden? Porque $38 = 5 \cdot 7 + 3$ y $27 = 5 \cdot 5 + 2$; al sumar, las partes múltiplo de $5$ dan otro múltiplo de $5$, que no afecta al resto. Sólo importan los restos $3 + 2$.
+
+          La segunda forma es muy útil con números grandes: nunca hace falta trabajar con números mayores que $2(m - 1)$.
+
+          Observa que tras sumar los restos puede hacer falta **reducir otra vez**: $3 + 2 = 5$ no es un resto válido módulo 5.
+        definition: >-
+          La suma módulo $m$ de $a$ y $b$ es $(a + b) \bmod m$, y se cumple
+          $(a + b) \bmod m = \big((a \bmod m) + (b \bmod m)\big) \bmod m$.
+        rules:
+          - 'Se puede reducir cada sumando antes de sumar.'
+          - 'Después de sumar los restos, se reduce de nuevo si el resultado es $\ge m$.'
+          - 'La suma modular es conmutativa y asociativa; el 0 es el elemento neutro.'
+        examples:
+          - problem: 'Calcula $(1234 + 5678) \bmod 10$'
+            solution: |-
+              **Paso 1.** $1234 \bmod 10 = 4$ y $5678 \bmod 10 = 8$ (módulo 10 es la última cifra).
+
+              **Paso 2.** $4 + 8 = 12$ y $12 \bmod 10 = 2$.
+
+              **Comprobación.** $1234 + 5678 = 6912$, que termina en 2.
+
+              Resultado: $2$.
+        common_errors:
+          - 'Olvidar la reducción final: dar 12 como resultado módulo 10.'
+        summary: >-
+          En la suma modular se pueden reducir los sumandos, sumarlos y reducir
+          otra vez: el resultado no cambia.
+        check:
+          question: '¿Cuánto es $(45 + 38) \bmod 7$?'
+          options:
+            - '$6$'
+            - '$13$'
+            - '$83$'
+          answer: 0
+          explanation: >-
+            $45 \bmod 7 = 3$ y $38 \bmod 7 = 3$; $3 + 3 = 6$. Comprobación:
+            $83 = 7 \cdot 11 + 6$.
+      - title: Tabla de sumar modular
+        concept: >-
+          Con un módulo pequeño se pueden escribir todas las sumas posibles en
+          una tabla.
+        explanation: |-
+          Como sólo hay $m$ restos, todas las sumas módulo $m$ caben en una tabla. Esta es la tabla **módulo 4**:
+
+          | + | 0 | 1 | 2 | 3 |
+          |---|---|---|---|---|
+          | **0** | 0 | 1 | 2 | 3 |
+          | **1** | 1 | 2 | 3 | 0 |
+          | **2** | 2 | 3 | 0 | 1 |
+          | **3** | 3 | 0 | 1 | 2 |
+
+          Observa que:
+
+          * Cada fila es la anterior "desplazada" un lugar: los números dan la vuelta.
+          * En cada fila aparece un $0$: para cada número hay otro que, sumado a él, da $0$. Por ejemplo $1 + 3 \equiv 0 \pmod 4$. Es el **opuesto modular**, que usaremos en la resta (tema 7).
+          * La tabla es simétrica respecto a la diagonal: la suma modular es conmutativa.
+        definition: >-
+          La tabla de sumar módulo $m$ muestra $(a + b) \bmod m$ para todos los
+          restos $a$ y $b$ entre $0$ y $m - 1$.
+        rules:
+          - 'Toda suma de la tabla es un número entre 0 y $m - 1$.'
+          - 'El opuesto de $a$ módulo $m$ es $m - a$ (y el de 0 es 0).'
+        examples:
+          - problem: '¿Cuál es el opuesto de $2$ módulo $5$?'
+            solution: |-
+              **Paso 1.** Buscamos $x$ con $(2 + x) \bmod 5 = 0$.
+
+              **Paso 2.** $5 - 2 = 3$: $2 + 3 = 5 \equiv 0 \pmod 5$.
+
+              Resultado: el opuesto de $2$ módulo $5$ es $3$.
+        common_errors:
+          - 'Pensar que el opuesto modular de 2 es $-2$: en aritmética modular se usa su representante, $m - 2$.'
+        summary: >-
+          La tabla de sumar modular recoge todas las sumas; en cada fila aparece
+          el 0, lo que muestra que todo número tiene opuesto modular.
+        check:
+          question: 'En la tabla de sumar módulo $4$, ¿cuánto vale $3 + 2$?'
+          options:
+            - '$5$'
+            - '$1$'
+            - '$2$'
+          answer: 1
+          explanation: >-
+            $3 + 2 = 5$ y $5 \bmod 4 = 1$.
+    glossary:
+      - {term: Suma modular, definition: 'Suma seguida de la operación módulo: $(a + b) \bmod m$.'}
+      - {term: Opuesto modular, definition: 'Número que sumado a $a$ da 0 módulo $m$; es $m - a$ si $a \neq 0$.'}
+  t07:
+    intro:
+      what: >-
+        La resta modular consiste en restar dos números y quedarse con el resto
+        del resultado al dividir entre el módulo, que siempre queda entre $0$ y
+        $m - 1$.
+      purpose: >-
+        Sirve para retroceder en un ciclo: horas pasadas, días anteriores,
+        descifrar mensajes.
+      importance: >-
+        Completa las operaciones básicas modulares y obliga a manejar bien los
+        restos de números negativos.
+      foundations: >-
+        Se basa en la resta de enteros (bloque 24), en el módulo de números
+        negativos (tema 3) y en el opuesto modular (tema 6).
+      prerequisites:
+        - 'Resta de números enteros (bloque 24)'
+        - 'Módulo de un número negativo (tema 3 de este bloque)'
+        - 'Suma modular (tema 6 de este bloque)'
+      outcomes:
+        - 'Calcular $(a - b) \bmod m$'
+        - 'Resolver restas modulares que dan resultados negativos'
+        - 'Usar la resta modular para retroceder en un ciclo'
+      everyday_example: >-
+        Son las 3 en un reloj de agujas; hace 5 horas eran las 10.
+    sections:
+      - title: Restar y reducir
+        concept: >-
+          $(a - b) \bmod m$ se calcula restando y reduciendo; si el resultado es
+          negativo, se le suma el módulo.
+        explanation: |-
+          La resta modular funciona como la suma: se pueden reducir primero los números, restar y después reducir.
+
+          $(15 - 23) \bmod 7$:
+
+          * Reducimos: $15 \bmod 7 = 1$ y $23 \bmod 7 = 2$.
+          * Restamos: $1 - 2 = -1$.
+          * Como es negativo, sumamos el módulo: $-1 + 7 = 6$.
+
+          Así, $(15 - 23) \bmod 7 = 6$. Comprobación: $15 - 23 = -8$ y $-8 = 7 \cdot (-2) + 6$.
+
+          ¿Por qué sumar $m$ funciona? Porque sumar $m$ no cambia el resto ($a + m \equiv a \pmod m$): es dar una vuelta completa al reloj.
+
+          Otra forma de verlo: restar $b$ es sumar su **opuesto modular** (tema 6). Restar $2$ módulo $7$ es sumar $5$: $1 + 5 = 6$.
+        definition: >-
+          La resta módulo $m$ es $(a - b) \bmod m$; se cumple
+          $(a - b) \bmod m = \big((a \bmod m) - (b \bmod m)\big) \bmod m$.
+        rules:
+          - 'Si la resta de los restos es negativa, se le suma $m$.'
+          - 'Restar $b$ módulo $m$ equivale a sumar el opuesto modular de $b$.'
+          - 'El resultado final siempre está entre 0 y $m - 1$.'
+        examples:
+          - problem: 'Son las 3 en un reloj de 12 horas. ¿Qué hora era hace 5 horas?'
+            solution: |-
+              **Paso 1.** $3 - 5 = -2$.
+
+              **Paso 2.** $-2 + 12 = 10$.
+
+              Resultado: eran las $10$.
+        common_errors:
+          - 'Dejar el resultado negativo: $-1$ no es un resto válido.'
+          - 'Restar en orden contrario ($b - a$): la resta modular no es conmutativa.'
+        summary: >-
+          Para restar módulo $m$ se restan los restos y, si sale negativo, se suma
+          $m$.
+        check:
+          question: '¿Cuánto es $(20 - 34) \bmod 6$?'
+          options:
+            - '$-2$'
+            - '$4$'
+            - '$2$'
+          answer: 1
+          explanation: >-
+            $20 \bmod 6 = 2$ y $34 \bmod 6 = 4$; $2 - 4 = -2$ y $-2 + 6 = 4$.
+            Comprobación: $20 - 34 = -14 = 6 \cdot (-3) + 4$.
+    glossary:
+      - {term: Resta modular, definition: 'Resta seguida de la operación módulo: $(a - b) \bmod m$.'}
+  t08:
+    intro:
+      what: >-
+        La multiplicación modular consiste en multiplicar dos números y quedarse
+        con el resto del producto al dividir entre el módulo.
+      purpose: >-
+        Sirve para calcular restos de productos y potencias muy grandes sin
+        hacer las operaciones completas.
+      importance: >-
+        Es la operación clave de la criptografía moderna y permite, por ejemplo,
+        conocer la última cifra de una potencia enorme.
+      foundations: >-
+        Se basa en la multiplicación (bloque 6), las potencias (bloque 18) y la
+        suma modular (tema 6).
+      prerequisites:
+        - 'Multiplicación y propiedades (bloques 6 y 8)'
+        - 'Potencias (bloque 18)'
+        - 'Suma modular (tema 6 de este bloque)'
+      outcomes:
+        - 'Calcular $(a \cdot b) \bmod m$ reduciendo antes los factores'
+        - 'Calcular restos de potencias'
+        - 'Hallar la última cifra de una potencia grande'
+      everyday_example: >-
+        Si hoy es lunes y una tarea se repite 4 veces cada 10 días, pasan
+        40 días: como $(4 \cdot 10) \bmod 7 = 5$, terminará en sábado.
+    sections:
+      - title: Multiplicar y reducir
+        concept: >-
+          $(a \cdot b) \bmod m$ se puede calcular multiplicando los restos de los
+          factores y reduciendo el resultado.
+        explanation: |-
+          Igual que en la suma, se pueden reducir los factores antes de multiplicar:
+
+          $$(a \cdot b) \bmod m = \big((a \bmod m) \cdot (b \bmod m)\big) \bmod m$$
+
+          Ejemplo: $(47 \cdot 36) \bmod 5$.
+
+          * $47 \bmod 5 = 2$ y $36 \bmod 5 = 1$.
+          * $2 \cdot 1 = 2$.
+
+          Resultado: $2$. Comprobación: $47 \cdot 36 = 1692$ y $1692 = 5 \cdot 338 + 2$.
+
+          ¿Por qué funciona? Al multiplicar $(5 \cdot 9 + 2)(5 \cdot 7 + 1)$ con la propiedad distributiva (bloque 8), todos los productos tienen un factor $5$ excepto $2 \cdot 1$. Así que sólo el producto de los restos influye en el resto final.
+        definition: >-
+          La multiplicación módulo $m$ es $(a \cdot b) \bmod m$, y se cumple
+          $(a \cdot b) \bmod m = \big((a \bmod m)(b \bmod m)\big) \bmod m$.
+        rules:
+          - 'Se puede reducir cada factor antes de multiplicar.'
+          - 'Después se reduce el producto de los restos.'
+          - 'Si un factor es múltiplo de $m$, el producto es 0 módulo $m$.'
+        examples:
+          - problem: 'Calcula $(23 \cdot 19) \bmod 6$'
+            solution: |-
+              **Paso 1.** $23 \bmod 6 = 5$ y $19 \bmod 6 = 1$.
+
+              **Paso 2.** $5 \cdot 1 = 5$.
+
+              **Comprobación.** $23 \cdot 19 = 437 = 6 \cdot 72 + 5$.
+
+              Resultado: $5$.
+        common_errors:
+          - 'Olvidar reducir el producto de los restos cuando es mayor o igual que $m$.'
+          - 'Reducir sólo uno de los factores y luego no reducir el resultado.'
+        summary: >-
+          En la multiplicación modular sólo importan los restos de los factores;
+          al final se reduce el producto.
+        check:
+          question: '¿Cuánto es $(14 \cdot 9) \bmod 4$?'
+          options:
+            - '$2$'
+            - '$6$'
+            - '$0$'
+          answer: 0
+          explanation: >-
+            $14 \bmod 4 = 2$ y $9 \bmod 4 = 1$; $2 \cdot 1 = 2$. Comprobación:
+            $126 = 4 \cdot 31 + 2$.
+      - title: Potencias modulares
+        concept: >-
+          Para calcular una potencia módulo $m$ se multiplica paso a paso,
+          reduciendo después de cada multiplicación.
+        explanation: |-
+          Una potencia es una multiplicación repetida (bloque 18), así que se puede reducir en cada paso y los números nunca crecen.
+
+          ¿Cuál es la **última cifra** de $7^4$? La última cifra es el resto módulo 10.
+
+          * $7^1 \equiv 7$
+          * $7^2 = 49 \equiv 9$
+          * $7^3 \equiv 9 \cdot 7 = 63 \equiv 3$
+          * $7^4 \equiv 3 \cdot 7 = 21 \equiv 1 \pmod{10}$
+
+          Así, $7^4$ termina en $1$ (en efecto, $7^4 = 2401$). Como $7^4 \equiv 1$, las últimas cifras se repiten cada 4: $7, 9, 3, 1, 7, 9, 3, 1, \ldots$ Con esto podríamos saber la última cifra de $7^{100}$ sin calcularla: $100 = 4 \cdot 25$, así que termina en $1$.
+        definition: >-
+          Para calcular $a^n \bmod m$ se multiplica por $a$ sucesivamente,
+          reduciendo módulo $m$ tras cada producto.
+        rules:
+          - 'Se reduce después de cada multiplicación.'
+          - 'Si en algún paso aparece 1, las potencias siguientes se repiten.'
+          - 'La última cifra de un número es su resto módulo 10.'
+        examples:
+          - problem: 'Calcula $3^4 \bmod 5$'
+            solution: |-
+              **Paso 1.** $3^2 = 9 \equiv 4 \pmod 5$.
+
+              **Paso 2.** $3^3 \equiv 4 \cdot 3 = 12 \equiv 2$.
+
+              **Paso 3.** $3^4 \equiv 2 \cdot 3 = 6 \equiv 1$.
+
+              **Comprobación.** $3^4 = 81 = 5 \cdot 16 + 1$.
+
+              Resultado: $3^4 \bmod 5 = 1$.
+        common_errors:
+          - 'Reducir el exponente módulo $m$: el exponente no se reduce así.'
+        summary: >-
+          Las potencias modulares se calculan multiplicando y reduciendo paso a
+          paso; los resultados acaban repitiéndose.
+        check:
+          question: '¿En qué cifra termina $2^5$, calculado módulo 10?'
+          options:
+            - '$2$'
+            - '$5$'
+            - '$6$'
+          answer: 0
+          explanation: >-
+            $2, 4, 8, 16 \equiv 6, 6 \cdot 2 = 12 \equiv 2$. Así que $2^5$ termina
+            en $2$ (en efecto, $2^5 = 32$).
+    glossary:
+      - {term: Multiplicación modular, definition: 'Producto seguido de la operación módulo: $(a \cdot b) \bmod m$.'}
+      - {term: Potencia modular, definition: 'Resto de una potencia al dividir entre $m$.'}
+  t09:
+    intro:
+      what: >-
+        Son los usos de la aritmética modular en informática (paridad,
+        posiciones circulares, códigos) y en criptografía (cifrado de mensajes).
+      purpose: >-
+        Muestra cómo una idea tan sencilla como el resto de una división está
+        detrás de la tecnología que usamos a diario.
+      importance: >-
+        Los dígitos de control evitan errores en cuentas bancarias y códigos de
+        barras, y la criptografía protege las comunicaciones.
+      foundations: >-
+        Reúne todo el bloque: operación módulo, suma y multiplicación modular.
+      prerequisites:
+        - 'Operación módulo (tema 3 de este bloque)'
+        - 'Suma, resta y multiplicación modular (temas 6, 7 y 8 de este bloque)'
+      outcomes:
+        - 'Usar el módulo 2 para distinguir pares e impares'
+        - 'Cifrar y descifrar con el cifrado César'
+        - 'Calcular un dígito de control'
+      everyday_example: >-
+        Al escribir mal una cifra del número de una tarjeta, la página web
+        detecta el error al instante gracias a un dígito de control.
+    sections:
+      - title: Informática y cifrado César
+        concept: >-
+          En programación el operador % calcula restos; el cifrado César desplaza
+          las letras con una suma módulo 26.
+        explanation: |-
+          **Paridad.** En muchos lenguajes de programación `n % 2` da el resto de dividir entre 2: vale $0$ si $n$ es par y $1$ si es impar. Así decide un programa, por ejemplo, colorear filas alternas de una tabla.
+
+          **Posiciones circulares.** Si una lista tiene 5 elementos numerados de 0 a 4, la posición siguiente a $p$ es $(p + 1) \bmod 5$: tras el 4 vuelve al 0.
+
+          **Cifrado César.** Numeramos las letras del alfabeto de 26 letras (sin Ñ): A $= 0$, B $= 1$, …, Z $= 25$. Para cifrar con **clave** $k$ se suma $k$ módulo 26 a cada letra; para descifrar se resta $k$ módulo 26.
+
+          Con clave 3: X ($23$) $\to (23 + 3) \bmod 26 = 0$, que es A. Las letras del final "dan la vuelta" al principio.
+        definition: >-
+          El cifrado César de clave $k$ sustituye la letra de número $x$ por la de
+          número $(x + k) \bmod 26$; se descifra con $(x - k) \bmod 26$.
+        rules:
+          - '`n % 2` es 0 para pares y 1 para impares.'
+          - 'Cifrar: sumar la clave módulo 26. Descifrar: restarla módulo 26.'
+        examples:
+          - problem: 'Cifra la palabra HOLA con el cifrado César de clave 3'
+            solution: |-
+              **Paso 1.** Números: H $= 7$, O $= 14$, L $= 11$, A $= 0$.
+
+              **Paso 2.** Sumamos 3: $10, 17, 14, 3$ (ninguno llega a 26).
+
+              **Paso 3.** Letras: $10 =$ K, $17 =$ R, $14 =$ O, $3 =$ D.
+
+              Resultado: KROD.
+        common_errors:
+          - 'Numerar las letras desde 1 en lugar de desde 0 y luego reducir módulo 26: se desordena la vuelta.'
+          - 'Descifrar sumando la clave en lugar de restarla.'
+        summary: >-
+          El operador % calcula restos en programación; el cifrado César suma la
+          clave módulo 26 a cada letra.
+        check:
+          question: 'Con el cifrado César de clave 4, ¿en qué se convierte la letra Y (número 24)?'
+          options:
+            - 'C'
+            - 'Z'
+            - 'B'
+          answer: 0
+          explanation: >-
+            $(24 + 4) \bmod 26 = 28 \bmod 26 = 2$, que es la letra C (A $= 0$,
+            B $= 1$, C $= 2$).
+      - title: Dígitos de control
+        concept: >-
+          Un dígito de control es una cifra extra, calculada con una suma
+          ponderada módulo 10, que permite detectar errores al copiar un código.
+        explanation: |-
+          Muchos códigos (cuentas bancarias, códigos de barras, documentos) llevan al final un **dígito de control**. Se calcula a partir de las demás cifras con una regla fija; si alguien copia mal una cifra, el dígito de control ya no coincide y el sistema detecta el error.
+
+          Una regla sencilla (de ejemplo) para un código de 5 cifras $d_1 d_2 d_3 d_4 d_5$:
+
+          $$\text{control} = (5 d_1 + 4 d_2 + 3 d_3 + 2 d_4 + 1 d_5) \bmod 10$$
+
+          Los distintos pesos ($5, 4, 3, 2, 1$) hacen que, además de una cifra equivocada, también se detecten muchos intercambios de dos cifras vecinas.
+
+          Las reglas reales (como la de los códigos de barras) son parecidas: suman cifras multiplicadas por pesos y calculan el resto módulo 10 u 11.
+        definition: >-
+          Un dígito de control es una cifra añadida a un código, calculada
+          mediante una operación modular sobre sus otras cifras, que sirve para
+          detectar errores de transcripción.
+        rules:
+          - 'Se multiplica cada cifra por su peso, se suman los productos y se calcula el resto.'
+          - 'Si el dígito calculado no coincide con el escrito, hay un error.'
+        examples:
+          - problem: 'Calcula el dígito de control del código $31402$ con la regla $(5d_1 + 4d_2 + 3d_3 + 2d_4 + d_5) \bmod 10$'
+            solution: |-
+              **Paso 1.** $5 \cdot 3 + 4 \cdot 1 + 3 \cdot 4 + 2 \cdot 0 + 1 \cdot 2 = 15 + 4 + 12 + 0 + 2 = 33$.
+
+              **Paso 2.** $33 \bmod 10 = 3$.
+
+              Resultado: el dígito de control es $3$ (el código completo sería $314023$).
+        common_errors:
+          - 'Asignar los pesos en orden equivocado.'
+          - 'Dar la suma ponderada (33) en lugar de su resto (3).'
+        summary: >-
+          El dígito de control se obtiene con una suma ponderada módulo 10 y
+          permite detectar errores al copiar códigos.
+        check:
+          question: 'Con la misma regla, ¿cuál es el dígito de control de $20015$?'
+          options:
+            - '$22$'
+            - '$7$'
+            - '$2$'
+          answer: 1
+          explanation: >-
+            $5 \cdot 2 + 4 \cdot 0 + 3 \cdot 0 + 2 \cdot 1 + 1 \cdot 5 = 10 + 0 +
+            0 + 2 + 5 = 17$ y $17 \bmod 10 = 7$.
+    glossary:
+      - {term: Cifrado César, definition: 'Método de cifrado que desplaza cada letra un número fijo de posiciones (suma módulo 26).'}
+      - {term: Clave, definition: 'Número que indica cuánto se desplazan las letras al cifrar.'}
+      - {term: Dígito de control, definition: 'Cifra extra calculada con una operación modular para detectar errores.'}

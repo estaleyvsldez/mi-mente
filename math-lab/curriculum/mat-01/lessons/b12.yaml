@@ -1,0 +1,490 @@
+block: b12
+intro: |-
+  El máximo común divisor (MCD) de varios números es el mayor número que los divide a todos a la vez. En este bloque aprenderás qué significa, tres formas de calcularlo (listado de divisores, factorización prima y algoritmo de Euclides) y cómo usarlo en problemas de repartir y agrupar en partes iguales lo más grandes posible. El MCD será clave para simplificar fracciones (bloque 14).
+
+topics:
+  t01:
+    intro:
+      what: |-
+        El máximo común divisor de dos o más números es el mayor de los números que son divisores de todos ellos. Se escribe MCD; por ejemplo, $\text{MCD}(12, 18) = 6$.
+      purpose: |-
+        Sirve para encontrar el mayor tamaño de grupo, pieza o parte con el que se pueden repartir varias cantidades sin que sobre nada.
+      importance: |-
+        Es la herramienta que permite simplificar fracciones de un solo paso y resolver muchos problemas de reparto. También ayuda a calcular el MCM (bloque 13).
+      foundations: |-
+        Se basa en el concepto de divisor y en la lista de divisores de un número (bloque 10).
+      prerequisites:
+        - 'Concepto de divisor y divisores de un número (bloque 10, temas 2 y 4)'
+      outcomes:
+        - 'Explicar qué es el MCD con palabras propias'
+        - 'Reconocer casos especiales: cuando un número divide al otro y cuando el MCD es 1'
+      everyday_example: |-
+        Tienes 12 rosas y 18 claveles y quieres hacer ramos iguales sin que sobren flores, con el mayor número de ramos posible. Ese número es $\text{MCD}(12, 18) = 6$: 6 ramos, cada uno con 2 rosas y 3 claveles.
+    sections:
+      - title: El mayor divisor compartido
+        concept: El MCD es el mayor número que divide exactamente a todos los números dados.
+        explanation: |-
+          Lee el nombre de atrás hacia delante:
+
+          - **Divisor**: divide exactamente.
+          - **Común**: divide a todos los números a la vez.
+          - **Máximo**: es el mayor de todos los que cumplen lo anterior.
+
+          Para 12 y 18:
+
+          - Divisores de 12: $1, 2, 3, 4, 6, 12$.
+          - Divisores de 18: $1, 2, 3, 6, 9, 18$.
+          - Comunes: $1, 2, 3, 6$. El mayor es **6**.
+
+          **Casos especiales**
+
+          - Si un número divide al otro, el MCD es el menor: $\text{MCD}(6, 24) = 6$.
+          - Si el único divisor común es 1, el MCD es 1. Se dice que los números son **primos entre sí** (o coprimos), aunque ellos mismos no sean primos: $\text{MCD}(8, 15) = 1$.
+          - El MCD nunca es mayor que el menor de los números.
+        definition: |-
+          El **máximo común divisor** de los naturales $a$ y $b$ (no ambos 0), $\text{MCD}(a, b)$, es el mayor natural que es divisor de $a$ y de $b$. Si $\text{MCD}(a, b) = 1$, $a$ y $b$ son **primos entre sí**.
+        rules:
+          - 'El MCD es menor o igual que el menor de los números.'
+          - 'Si $a$ divide a $b$, entonces $\text{MCD}(a, b) = a$.'
+          - 'Si $\text{MCD}(a, b) = 1$, los números son primos entre sí.'
+        examples:
+          - problem: 'Calcula $\text{MCD}(8, 12)$.'
+            solution: |-
+              **Paso 1.** Divisores de 8: $1, 2, 4, 8$. Divisores de 12: $1, 2, 3, 4, 6, 12$.
+
+              **Paso 2.** Comunes: $1, 2, 4$.
+
+              Resultado: $\text{MCD}(8, 12) = 4$.
+          - problem: '¿Son 9 y 20 primos entre sí?'
+            solution: |-
+              **Paso 1.** Divisores de 9: $1, 3, 9$. Divisores de 20: $1, 2, 4, 5, 10, 20$.
+
+              **Paso 2.** Sólo comparten el 1.
+
+              Resultado: sí, $\text{MCD}(9, 20) = 1$; son primos entre sí.
+        common_errors:
+          - 'Elegir el mayor divisor de uno solo de los números.'
+          - 'Confundir MCD con MCM (el mínimo común múltiplo, bloque 13), que es un número grande.'
+          - 'Creer que "primos entre sí" significa que ambos números son primos.'
+        summary: |-
+          El MCD es el mayor divisor que comparten varios números. Nunca supera al menor; si vale 1, los números son primos entre sí.
+        check:
+          question: '¿Cuánto vale $\text{MCD}(8, 12)$?'
+          options: ['$2$', '$4$', '$24$']
+          answer: 1
+          explanation: |-
+            Los divisores comunes son 1, 2 y 4; el mayor es 4. El 2 es común pero no el máximo, y 24 es un múltiplo común, no un divisor.
+    glossary:
+      - {term: MCD, definition: 'Máximo común divisor: el mayor divisor común de varios números.'}
+      - {term: Primos entre sí, definition: 'Números cuyo MCD es 1.'}
+
+  t02:
+    intro:
+      what: |-
+        Los divisores comunes de varios números son los números que dividen exactamente a todos ellos.
+      purpose: |-
+        Sirven para conocer todas las formas de repartir varias cantidades a la vez en grupos iguales, no sólo la mayor.
+      importance: |-
+        El MCD es el mayor de los divisores comunes, y además todos los divisores comunes son divisores del MCD. Entender esto da sentido al MCD.
+      foundations: |-
+        Es la intersección (la parte compartida) de las listas de divisores de cada número.
+      prerequisites:
+        - 'Divisores de un número (bloque 10, tema 4)'
+        - 'Concepto de MCD (bloque 12, tema 1)'
+      outcomes:
+        - 'Encontrar todos los divisores comunes de dos o tres números'
+        - 'Relacionar los divisores comunes con el MCD'
+      everyday_example: |-
+        Con 24 lápices y 36 gomas puedes formar paquetes iguales (sin que sobre nada) de 1, 2, 3, 4, 6 o 12 paquetes: esos son los divisores comunes de 24 y 36.
+    sections:
+      - title: La parte compartida de las listas
+        concept: Los divisores comunes son los que aparecen en las listas de divisores de todos los números.
+        explanation: |-
+          Para hallar los divisores comunes de 24 y 36:
+
+          1. Lista los divisores de cada número.
+             - $D(24) = \{1, 2, 3, 4, 6, 8, 12, 24\}$
+             - $D(36) = \{1, 2, 3, 4, 6, 9, 12, 18, 36\}$
+          2. Marca los que están en **ambas** listas: $\{1, 2, 3, 4, 6, 12\}$.
+
+          Esta "parte compartida" se llama **intersección** de las dos listas.
+
+          **Propiedad importante**: el mayor divisor común es $12 = \text{MCD}(24, 36)$, y **todos** los divisores comunes $1, 2, 3, 4, 6, 12$ son exactamente los divisores de 12. Esto siempre ocurre: los divisores comunes de varios números son los divisores de su MCD.
+
+          Gracias a esto, si ya conoces el MCD, puedes obtener todos los divisores comunes listando sólo los divisores del MCD.
+        definition: |-
+          Un **divisor común** de $a$ y $b$ es un natural que divide a ambos. El conjunto de divisores comunes es $D(a) \cap D(b)$, y coincide con $D(\text{MCD}(a, b))$.
+        rules:
+          - 'Divisores comunes = números presentes en todas las listas de divisores.'
+          - 'El 1 siempre es divisor común.'
+          - 'Los divisores comunes son exactamente los divisores del MCD.'
+        examples:
+          - problem: 'Halla los divisores comunes de 18, 30 y 42.'
+            solution: |-
+              **Paso 1.** $D(18) = \{1, 2, 3, 6, 9, 18\}$, $D(30) = \{1, 2, 3, 5, 6, 10, 15, 30\}$, $D(42) = \{1, 2, 3, 6, 7, 14, 21, 42\}$.
+
+              **Paso 2.** Presentes en las tres: $1, 2, 3, 6$.
+
+              Resultado: los divisores comunes son $1, 2, 3$ y $6$ (y el MCD es 6).
+        common_errors:
+          - 'Incluir un número que sólo está en una de las listas.'
+          - 'Olvidar el 1.'
+        summary: |-
+          Los divisores comunes están en todas las listas de divisores. Son exactamente los divisores del MCD.
+        check:
+          question: '¿Cuáles son los divisores comunes de 15 y 20?'
+          options: ['$1$ y $5$', '$1$, $3$ y $5$', '$5$ y $60$']
+          answer: 0
+          explanation: |-
+            $D(15) = \{1, 3, 5, 15\}$ y $D(20) = \{1, 2, 4, 5, 10, 20\}$; comparten 1 y 5. El 3 no divide a 20 y el 60 es un múltiplo común.
+    glossary:
+      - {term: Divisor común, definition: 'Número que divide a todos los números dados.'}
+      - {term: Intersección, definition: 'Elementos que pertenecen a la vez a dos o más conjuntos.'}
+
+  t03:
+    intro:
+      what: |-
+        Calcular el MCD mediante listado de divisores consiste en escribir los divisores de cada número y elegir el mayor de los comunes.
+      purpose: |-
+        Sirve para calcular el MCD de números pequeños de forma directa y comprensible.
+      importance: |-
+        Es el método que mejor muestra el significado del MCD. Para números grandes es lento, y por eso después se aprenden métodos más rápidos.
+      foundations: |-
+        Las técnicas de búsqueda de divisores por parejas (bloque 10) y la definición de MCD.
+      prerequisites:
+        - 'Divisores de un número (bloque 10, tema 4)'
+        - 'Divisores comunes (bloque 12, tema 2)'
+      outcomes:
+        - 'Calcular el MCD de dos o tres números pequeños por listado'
+        - 'Usar un atajo: probar los divisores del menor de mayor a menor'
+      everyday_example: |-
+        Para saber en cuántas mesas iguales puedes sentar a 30 adultos y 45 niños, de modo que cada mesa tenga los mismos adultos y los mismos niños, listas los divisores y eliges el mayor común: 15 mesas.
+    sections:
+      - title: Listar, comparar y elegir el mayor
+        concept: Se listan los divisores de cada número, se marcan los comunes y se toma el mayor.
+        explanation: |-
+          **Procedimiento**
+
+          1. Lista los divisores de cada número (por parejas, como en el bloque 10).
+          2. Marca los divisores comunes.
+          3. El mayor de ellos es el MCD.
+
+          **Atajo útil**: como el MCD no puede superar al menor de los números, basta listar los divisores del **menor** y probarlos **de mayor a menor** en los demás números. El primero que divida a todos es el MCD.
+
+          Por ejemplo, para $\text{MCD}(16, 40)$: los divisores de 16 son $16, 8, 4, 2, 1$. ¿16 divide a 40? No ($40 = 16 \times 2 + 8$). ¿8 divide a 40? Sí. Entonces $\text{MCD}(16, 40) = 8$.
+        definition: |-
+          **Método del listado**: $\text{MCD}(a, b)$ es el mayor elemento común de $D(a)$ y $D(b)$.
+        rules:
+          - 'Lista completa de divisores de cada número.'
+          - 'El MCD es el mayor común.'
+          - 'Atajo: probar los divisores del menor, de mayor a menor.'
+        examples:
+          - problem: 'Calcula $\text{MCD}(30, 45)$ por listado.'
+            solution: |-
+              **Paso 1.** $D(30) = \{1, 2, 3, 5, 6, 10, 15, 30\}$.
+
+              **Paso 2.** $D(45) = \{1, 3, 5, 9, 15, 45\}$.
+
+              **Paso 3.** Comunes: $1, 3, 5, 15$. El mayor es 15.
+
+              Resultado: $\text{MCD}(30, 45) = 15$.
+          - problem: 'Calcula $\text{MCD}(12, 18, 30)$.'
+            solution: |-
+              **Paso 1.** $D(12) = \{1, 2, 3, 4, 6, 12\}$.
+
+              **Paso 2.** Probamos de mayor a menor: 12 no divide a 18; 6 divide a 18 ($18 = 6 \times 3$) y a 30 ($30 = 6 \times 5$).
+
+              Resultado: $\text{MCD}(12, 18, 30) = 6$.
+        common_errors:
+          - 'Dejar divisores sin listar y obtener un MCD demasiado pequeño.'
+          - 'Elegir el menor divisor común (que siempre es 1) en lugar del mayor.'
+        summary: |-
+          Lista los divisores, marca los comunes y elige el mayor. Para ir más rápido, prueba los divisores del menor de mayor a menor.
+        check:
+          question: '¿Cuánto vale $\text{MCD}(16, 40)$?'
+          options: ['$4$', '$8$', '$16$']
+          answer: 1
+          explanation: |-
+            16 no divide a 40, pero 8 sí ($40 = 8 \times 5$). El 4 es divisor común pero no el máximo.
+    glossary:
+      - {term: Método del listado, definition: 'Cálculo del MCD escribiendo los divisores de cada número y eligiendo el mayor común.'}
+
+  t04:
+    intro:
+      what: |-
+        Calcular el MCD mediante factorización prima consiste en descomponer cada número en primos y multiplicar los primos comunes, cada uno con el menor exponente.
+      purpose: |-
+        Sirve para calcular el MCD de números grandes o de varios números con rapidez y seguridad.
+      importance: |-
+        Es el método más usado en la práctica escolar y conecta el MCD con la factorización (bloque 11). Su "pareja" para el MCM se verá en el bloque 13.
+      foundations: |-
+        Un divisor común sólo puede usar los primos que tienen todos los números, y cada uno no más veces de las que aparece en el que menos lo tiene.
+      prerequisites:
+        - 'Descomposición en factores primos (bloque 11, tema 7)'
+        - 'Aplicaciones de la factorización: divisibilidad (bloque 11, tema 8)'
+        - 'Concepto de MCD (bloque 12, tema 1)'
+      outcomes:
+        - 'Calcular el MCD de dos o tres números por factorización'
+        - 'Explicar por qué se toma el menor exponente'
+      everyday_example: |-
+        Si dos recetas usan 72 g y 120 g de un ingrediente, y quieres medir ambas con la mayor cuchara posible que quepa un número exacto de veces en cada una, necesitas $\text{MCD}(72, 120) = 24$ g.
+    sections:
+      - title: Primos comunes con el menor exponente
+        concept: El MCD es el producto de los factores primos comunes, cada uno elevado al menor exponente con que aparece.
+        explanation: |-
+          **Procedimiento**
+
+          1. Factoriza cada número.
+          2. Elige los primos que aparecen en **todas** las factorizaciones.
+          3. De cada uno, toma el **menor** exponente.
+          4. Multiplica.
+
+          Ejemplo: $72 = 2^3 \times 3^2$ y $120 = 2^3 \times 3 \times 5$.
+
+          - Primos comunes: 2 y 3 (el 5 sólo está en 120).
+          - Menor exponente del 2: ambos tienen $2^3$, así que $2^3$.
+          - Menor exponente del 3: $3^2$ en 72 y $3^1$ en 120, así que $3$.
+          - $\text{MCD} = 2^3 \times 3 = 24$.
+
+          **¿Por qué el menor exponente?** Un divisor común tiene que "caber" en ambos números. Si usara $3^2$, no dividiría a 120, que sólo tiene un 3. El menor exponente es lo máximo que se puede tomar sin pasarse en ninguno.
+
+          Si no hay primos comunes, el MCD es 1.
+        definition: |-
+          Si se conocen las factorizaciones primas de $a$ y $b$, $\text{MCD}(a, b)$ es el producto de los primos comunes a ambas, cada uno elevado al menor de sus exponentes.
+        rules:
+          - 'Sólo primos comunes a todos los números.'
+          - 'Cada uno con el menor exponente.'
+          - 'Sin primos comunes, el MCD es 1.'
+        examples:
+          - problem: 'Calcula $\text{MCD}(84, 90)$ por factorización.'
+            solution: |-
+              **Paso 1.** $84 = 2^2 \times 3 \times 7$; $90 = 2 \times 3^2 \times 5$.
+
+              **Paso 2.** Primos comunes: 2 y 3. Menores exponentes: $2^1$ y $3^1$.
+
+              **Paso 3.** $\text{MCD} = 2 \times 3 = 6$.
+
+              Resultado: $\text{MCD}(84, 90) = 6$. Comprobación: $84 = 6 \times 14$ y $90 = 6 \times 15$.
+          - problem: 'Calcula $\text{MCD}(72, 120)$.'
+            solution: |-
+              **Paso 1.** $72 = 2^3 \times 3^2$; $120 = 2^3 \times 3 \times 5$.
+
+              **Paso 2.** Comunes: $2^3$ y $3$.
+
+              Resultado: $\text{MCD} = 8 \times 3 = 24$. Comprobación: $72 = 24 \times 3$ y $120 = 24 \times 5$.
+        common_errors:
+          - 'Tomar el mayor exponente (eso es para el MCM).'
+          - 'Incluir primos que no aparecen en todos los números.'
+          - 'Factorizar mal; conviene comprobar multiplicando.'
+        summary: |-
+          Factoriza, toma los primos comunes con el menor exponente y multiplica.
+        check:
+          question: '¿Cuánto vale el MCD de $2^2 \times 3^3$ y $2^3 \times 3 \times 5$?'
+          options: ['$12$', '$2^3 \times 3^3 \times 5$', '$6$']
+          answer: 0
+          explanation: |-
+            Primos comunes: 2 y 3, con menores exponentes $2^2$ y $3^1$: $4 \times 3 = 12$. La segunda opción es el MCM; el 6 usa un exponente demasiado pequeño para el 2.
+    glossary:
+      - {term: Factores comunes, definition: 'Primos que aparecen en las factorizaciones de todos los números.'}
+      - {term: Menor exponente, definition: 'El exponente más pequeño con que aparece un primo entre las factorizaciones.'}
+
+  t05:
+    intro:
+      what: |-
+        El algoritmo de Euclides es un método para calcular el MCD de dos números mediante divisiones sucesivas, sin necesidad de factorizar.
+      purpose: |-
+        Sirve para calcular el MCD de números grandes con rapidez, incluso cuando son difíciles de factorizar.
+      importance: |-
+        Es uno de los algoritmos más antiguos que se siguen usando (tiene más de 2300 años) y está en la base de muchos programas de computadora.
+      foundations: |-
+        Si $a = b \times q + r$, los divisores comunes de $a$ y $b$ son los mismos que los de $b$ y $r$. Por eso $\text{MCD}(a, b) = \text{MCD}(b, r)$, y los números se van haciendo más pequeños.
+      prerequisites:
+        - 'División con residuo y comprobación de la división (bloque 07)'
+        - 'Concepto de MCD (bloque 12, tema 1)'
+      outcomes:
+        - 'Calcular el MCD de dos números con el algoritmo de Euclides'
+        - 'Explicar por qué el algoritmo funciona'
+      everyday_example: |-
+        Para cubrir un suelo de 252 cm por 105 cm con las baldosas cuadradas más grandes posibles, Euclides da el lado en tres divisiones: 21 cm.
+    sections:
+      - title: Divisiones sucesivas
+        concept: Se divide el mayor entre el menor, luego el divisor entre el residuo, y así hasta obtener residuo 0; el último divisor es el MCD.
+        explanation: |-
+          **Procedimiento** para $\text{MCD}(a, b)$ con $a \ge b$:
+
+          1. Divide $a$ entre $b$ y obtén el residuo $r$.
+          2. Si $r = 0$, el MCD es $b$.
+          3. Si no, repite con $b$ y $r$ (el divisor pasa a ser dividendo y el residuo pasa a ser divisor).
+
+          Ejemplo: $\text{MCD}(48, 18)$.
+
+          - $48 = 18 \times 2 + 12$
+          - $18 = 12 \times 1 + 6$
+          - $12 = 6 \times 2 + 0$
+
+          El último divisor (con residuo 0) es **6**.
+
+          **¿Por qué funciona?** En $48 = 18 \times 2 + 12$, cualquier número que divida a 48 y a 18 divide también a $12 = 48 - 18 \times 2$ (la diferencia de múltiplos de un número es múltiplo de ese número, bloque 10). Y al revés, lo que divide a 18 y a 12 divide a 48. Por eso $\text{MCD}(48, 18) = \text{MCD}(18, 12)$. Los números bajan en cada paso, así que el proceso siempre termina.
+        definition: |-
+          **Algoritmo de Euclides**: si $a = b \times q + r$ con $0 \le r < b$, entonces $\text{MCD}(a, b) = \text{MCD}(b, r)$; y $\text{MCD}(b, 0) = b$.
+        rules:
+          - 'Divide el mayor entre el menor.'
+          - 'Sustituye la pareja $(a, b)$ por $(b, r)$.'
+          - 'El MCD es el último divisor, el que da residuo 0.'
+        examples:
+          - problem: 'Calcula $\text{MCD}(252, 105)$ con el algoritmo de Euclides.'
+            solution: |-
+              **Paso 1.** $252 = 105 \times 2 + 42$.
+
+              **Paso 2.** $105 = 42 \times 2 + 21$.
+
+              **Paso 3.** $42 = 21 \times 2 + 0$.
+
+              Resultado: $\text{MCD}(252, 105) = 21$. Comprobación: $252 = 21 \times 12$ y $105 = 21 \times 5$.
+        common_errors:
+          - 'Dar como MCD el último residuo, que es 0, en lugar del último divisor.'
+          - 'En el paso siguiente, dividir entre el cociente en vez de entre el residuo.'
+          - 'Equivocarse en una división intermedia; conviene comprobar con $\text{divisor} \times \text{cociente} + \text{residuo}$.'
+        summary: |-
+          Divide, cambia la pareja por (divisor, residuo) y repite hasta residuo 0. El último divisor es el MCD.
+        check:
+          question: '¿Cuánto vale $\text{MCD}(56, 21)$?'
+          options: ['$7$', '$14$', '$3$']
+          answer: 0
+          explanation: |-
+            $56 = 21 \times 2 + 14$; $21 = 14 \times 1 + 7$; $14 = 7 \times 2 + 0$. El MCD es 7. El 14 es un residuo intermedio y no divide a 21.
+    glossary:
+      - {term: Algoritmo de Euclides, definition: 'Método de divisiones sucesivas para calcular el MCD de dos números.'}
+      - {term: Algoritmo, definition: 'Secuencia finita de pasos precisos que resuelve un problema.'}
+
+  t06:
+    intro:
+      what: |-
+        Este tema muestra situaciones donde el MCD es la herramienta adecuada: partir, cortar o cubrir cantidades en partes iguales lo más grandes posible.
+      purpose: |-
+        Sirve para reconocer cuándo un problema pide un MCD y para interpretar su resultado.
+      importance: |-
+        El MCD aparece al cortar materiales sin desperdicio, embaldosar, organizar grupos y simplificar fracciones.
+      foundations: |-
+        El MCD es el mayor tamaño que "cabe" un número exacto de veces en cada cantidad.
+      prerequisites:
+        - 'Cálculo del MCD por cualquiera de los métodos (bloque 12, temas 3 a 5)'
+      outcomes:
+        - 'Identificar problemas de MCD por sus palabras clave'
+        - 'Resolver problemas de cortes y de cuadrados máximos'
+      everyday_example: |-
+        Un carpintero tiene dos listones de 24 cm y 36 cm y quiere cortarlos en trozos iguales, lo más largos posible, sin desperdiciar madera: cada trozo medirá $\text{MCD}(24, 36) = 12$ cm.
+    sections:
+      - title: Cuándo usar el MCD
+        concept: Se usa el MCD cuando hay que dividir varias cantidades en partes iguales, lo más grandes posible, sin que sobre nada.
+        explanation: |-
+          **Pistas en el enunciado**
+
+          - "Partes, trozos o grupos **iguales**".
+          - "**Sin que sobre** nada" o "sin desperdicio".
+          - "Lo **más grande** posible", "el **mayor** número de…".
+
+          Si aparecen, piensa en el MCD: buscas un número que **divida** a todas las cantidades (divisor común) y que sea **el mayor** (máximo).
+
+          **Interpretar el resultado.** El MCD da el tamaño de cada parte. Si te preguntan cuántas partes salen, divide cada cantidad entre el MCD y suma (o multiplica, en problemas de áreas).
+
+          **Otra aplicación**: simplificar fracciones. Dividir numerador y denominador entre su MCD da la fracción más simple de una vez (lo verás en el bloque 14).
+        definition: |-
+          Un **problema de MCD** es aquel en que se busca la mayor medida común que divide exactamente a varias cantidades.
+        rules:
+          - 'Partes iguales, sin sobrantes y lo más grandes posible: MCD.'
+          - 'El MCD es el tamaño de la parte; el número de partes se obtiene dividiendo.'
+        examples:
+          - problem: 'Dos cuerdas miden 24 m y 36 m. Se cortan en trozos iguales, lo más largos posible, sin que sobre cuerda. ¿Cuánto mide cada trozo y cuántos trozos salen?'
+            solution: |-
+              **Paso 1.** $\text{MCD}(24, 36) = 12$.
+
+              **Paso 2.** Trozos: $24 \div 12 = 2$ y $36 \div 12 = 3$; total $2 + 3 = 5$.
+
+              Respuesta: cada trozo mide 12 m y salen 5 trozos.
+          - problem: 'Un terreno de 60 m por 84 m se divide en parcelas cuadradas iguales, lo más grandes posible. ¿Cuánto mide el lado de cada parcela y cuántas hay?'
+            solution: |-
+              **Paso 1.** $60 = 2^2 \times 3 \times 5$, $84 = 2^2 \times 3 \times 7$. $\text{MCD} = 2^2 \times 3 = 12$.
+
+              **Paso 2.** A lo largo caben $84 \div 12 = 7$ parcelas y a lo ancho $60 \div 12 = 5$.
+
+              **Paso 3.** Total: $7 \times 5 = 35$ parcelas.
+
+              Respuesta: lado de 12 m; 35 parcelas.
+        common_errors:
+          - 'Usar el MCM en problemas de "lo más grande posible sin que sobre".'
+          - 'Dar el MCD como número de partes cuando se pedía el tamaño (o al revés).'
+          - 'En problemas de área, sumar en lugar de multiplicar el número de parcelas por fila y columna.'
+        summary: |-
+          Partes iguales, sin sobrantes y lo más grandes posible: MCD. Luego interpreta si te piden el tamaño o la cantidad de partes.
+        check:
+          question: 'Un piso mide 240 cm por 180 cm. ¿Qué lado deben tener las baldosas cuadradas más grandes que lo cubren sin cortar ninguna?'
+          options: ['$60$ cm', '$30$ cm', '$720$ cm']
+          answer: 0
+          explanation: |-
+            $240 = 2^4 \times 3 \times 5$ y $180 = 2^2 \times 3^2 \times 5$, así que $\text{MCD} = 2^2 \times 3 \times 5 = 60$. 30 cm también sirve, pero no es lo más grande; 720 es el MCM.
+    glossary:
+      - {term: Sin desperdicio, definition: 'Expresión que indica que la parte debe caber un número exacto de veces.'}
+
+  t07:
+    intro:
+      what: |-
+        Los problemas de reparto y agrupación con MCD piden formar el mayor número posible de grupos iguales con varias clases de objetos, sin que sobre ninguno.
+      purpose: |-
+        Sirve para organizar materiales, personas u objetos en lotes idénticos de forma óptima.
+      importance: |-
+        Es una situación muy frecuente (lotes, cestas, equipos) y obliga a interpretar bien qué representa el MCD y qué representa cada cociente.
+      foundations: |-
+        Si cada grupo debe ser idéntico, el número de grupos tiene que dividir a cada cantidad; el mayor número posible es el MCD.
+      prerequisites:
+        - 'Aplicaciones del MCD (bloque 12, tema 6)'
+      outcomes:
+        - 'Resolver problemas de cestas, lotes y equipos'
+        - 'Calcular cuántos objetos de cada tipo lleva cada grupo'
+        - 'Distinguir estos problemas de los de MCM'
+      everyday_example: |-
+        Un banco de alimentos tiene 48 latas de atún y 36 paquetes de arroz y quiere armar el mayor número de despensas idénticas, sin que sobre nada. Arma 12 despensas, cada una con 4 latas y 3 paquetes.
+    sections:
+      - title: Grupos idénticos, el mayor número posible
+        concept: El MCD de las cantidades da el mayor número de grupos idénticos; cada cociente da cuántos objetos de cada tipo lleva un grupo.
+        explanation: |-
+          Supón que tienes 48 manzanas y 36 naranjas y quieres hacer cestas **iguales** (cada una con las mismas manzanas y las mismas naranjas), sin que sobre fruta.
+
+          - El número de cestas debe dividir a 48 (para repartir las manzanas) y a 36 (para las naranjas): debe ser un **divisor común**.
+          - Si queremos **el mayor número de cestas**, tomamos el **MCD**: $\text{MCD}(48, 36) = 12$.
+          - Cada cesta lleva $48 \div 12 = 4$ manzanas y $36 \div 12 = 3$ naranjas.
+
+          Observa que aquí el MCD es el **número de grupos** y los cocientes son el **contenido** de cada grupo. En el tema anterior, el MCD era el **tamaño** de cada trozo. Lee bien qué pregunta el problema.
+
+          **¿MCD o MCM?** Si el problema habla de repartir y de que no sobre nada, es MCD. Si habla de que algo vuelva a coincidir o de la menor cantidad que se puede repartir de varias formas, será MCM (bloque 13).
+        definition: |-
+          En un problema de agrupación, el **mayor número de grupos idénticos** que se pueden formar con cantidades $a$, $b$, … sin sobrantes es $\text{MCD}(a, b, \ldots)$; cada grupo contiene $a \div \text{MCD}$, $b \div \text{MCD}$, … objetos de cada tipo.
+        rules:
+          - 'Número máximo de grupos idénticos = MCD de las cantidades.'
+          - 'Contenido de cada grupo = cada cantidad dividida entre el MCD.'
+          - 'Comprueba multiplicando: grupos por contenido debe dar el total.'
+        examples:
+          - problem: 'Hay 30 lápices, 45 borradores y 60 cuadernos. ¿Cuántos lotes idénticos, como máximo, se pueden formar sin que sobre nada? ¿Qué lleva cada lote?'
+            solution: |-
+              **Paso 1.** $30 = 2 \times 3 \times 5$, $45 = 3^2 \times 5$, $60 = 2^2 \times 3 \times 5$. Primos comunes: 3 y 5. $\text{MCD} = 15$.
+
+              **Paso 2.** Cada lote: $30 \div 15 = 2$ lápices, $45 \div 15 = 3$ borradores, $60 \div 15 = 4$ cuadernos.
+
+              **Paso 3.** Comprobación: $15 \times 2 = 30$, $15 \times 3 = 45$, $15 \times 4 = 60$.
+
+              Respuesta: 15 lotes, cada uno con 2 lápices, 3 borradores y 4 cuadernos.
+        common_errors:
+          - 'Responder con el contenido de un grupo cuando se pregunta el número de grupos.'
+          - 'Usar un divisor común que no es el mayor.'
+          - 'Sumar las cantidades y dividir el total, lo que no garantiza grupos idénticos.'
+        summary: |-
+          Para formar el mayor número de grupos idénticos, calcula el MCD; luego divide cada cantidad entre él para saber el contenido de cada grupo.
+        check:
+          question: 'En una clase hay 18 chicos y 24 chicas. Se forman grupos con el mismo número de chicos y el mismo número de chicas en cada grupo. ¿Cuántos grupos se pueden formar como máximo?'
+          options: ['$6$', '$72$', '$3$']
+          answer: 0
+          explanation: |-
+            $\text{MCD}(18, 24) = 6$ grupos, cada uno con 3 chicos y 4 chicas. 72 es el MCM, y 3 es el número de chicos por grupo.
+    glossary:
+      - {term: Lote, definition: 'Conjunto de objetos que se agrupan para repartir o vender juntos.'}
+      - {term: Grupos idénticos, definition: 'Grupos con la misma cantidad de cada tipo de objeto.'}

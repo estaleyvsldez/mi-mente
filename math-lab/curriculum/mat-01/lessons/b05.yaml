@@ -1,0 +1,690 @@
+block: b05
+intro: >-
+  La resta es la operación que deshace la suma. En este bloque verás sus
+  significados (quitar, comparar y completar), sus elementos, cómo restar naturales
+  y enteros, cómo funciona la desagrupación («pedir prestado»), cómo comprobar una
+  resta y cómo usarla para calcular mentalmente y resolver problemas.
+
+topics:
+  t01:
+    intro:
+      what: 'Restar es averiguar cuánto queda al quitar una cantidad de otra, o cuánto se diferencian dos cantidades.'
+      purpose: 'Sirve para calcular lo que queda, lo que falta y la diferencia entre dos cantidades.'
+      importance: 'Es la operación inversa de la suma y aparece en cualquier cálculo de cambio, ahorro, distancia o tiempo transcurrido.'
+      foundations: 'La suma y la acción de quitar objetos de una colección.'
+      prerequisites:
+        - 'Concepto de suma (bloque 4, tema 1).'
+        - 'Recta numérica (bloque 3, tema 7).'
+      outcomes:
+        - Reconocer los tres significados de la resta.
+        - Representar una resta en la recta numérica.
+        - Escribir una situación como resta.
+      everyday_example: >-
+        Pagas con un billete de 100 pesos una compra de 65: el cambio es
+        $100 - 65 = 35$ pesos.
+    sections:
+      - title: 'Quitar, comparar y completar'
+        concept: 'La resta responde a tres preguntas, «¿cuánto queda?», «¿cuánto más tiene uno que otro?» y «¿cuánto falta?».'
+        explanation: |-
+          La resta se escribe con el signo $-$ («menos») y tiene tres significados:
+
+          * **Quitar:** «Había 12 sillas y se llevaron 5. ¿Cuántas quedan?» $12 - 5 = 7$.
+          * **Comparar:** «Luis tiene 12 años y su hermana 5. ¿Cuántos años más tiene Luis?» $12 - 5 = 7$.
+          * **Completar:** «Tengo 5 cromos y el álbum necesita 12. ¿Cuántos me faltan?» $12 - 5 = 7$. Aquí se piensa como «¿qué número sumado a 5 da 12?».
+
+          Las tres situaciones son distintas, pero se resuelven con la misma operación.
+
+          **En la recta numérica**, restar un número positivo es **retroceder hacia la izquierda**. Para $12 - 5$: desde el 12, 5 saltos a la izquierda: 11, 10, 9, 8, 7.
+
+          También se puede ver como **la distancia** entre dos números: de 5 a 12 hay 7 unidades.
+
+          Con números naturales, sólo podemos restar si el primer número es **mayor o igual** que el segundo: $5 - 12$ no es un natural. Con los enteros sí se puede (lo verás en el tema 4).
+        definition: >-
+          La resta (o sustracción) $a - b$ es el número que sumado a $b$ da $a$; en la recta,
+          es retroceder $b$ unidades desde $a$, o la distancia de $b$ a $a$.
+        rules:
+          - 'Restar es quitar, comparar o completar.'
+          - 'Restar un positivo es retroceder hacia la izquierda en la recta.'
+          - 'En los naturales, $a - b$ sólo existe si $a \geq b$.'
+        examples:
+          - problem: 'Un viaje dura 45 minutos y ya llevas 28. ¿Cuánto falta?'
+            solution: |-
+              **Paso 1.** Situación de completar: ¿qué número sumado a 28 da 45?
+              **Paso 2.** Planteamos $45 - 28$.
+              **Paso 3.** De 28 a 30 hay 2; de 30 a 45 hay 15; en total $2 + 15 = 17$.
+              Resultado: faltan $17$ minutos.
+        common_errors:
+          - 'Creer que «comparar» se resuelve sumando las dos cantidades.'
+          - 'Restar el número mayor del menor en los naturales: $5 - 12$ no es 7.'
+        summary: >-
+          Restar es quitar, comparar o completar; en la recta es retroceder.
+        check:
+          question: 'Una mesa mide 150 cm y otra 120 cm. ¿Cuánto más mide la primera?'
+          options: ['30 cm', '270 cm', '130 cm']
+          answer: 0
+          explanation: 'Es una comparación: $150 - 120 = 30$ cm. Sumar (270) no responde a «cuánto más».'
+    glossary:
+      - term: 'Resta'
+        definition: 'Operación que quita una cantidad de otra; también se llama sustracción.'
+      - term: 'Diferencia'
+        definition: 'Resultado de una resta; distancia entre dos números.'
+    practice: []
+
+  t02:
+    intro:
+      what: 'Son los nombres de las partes de una resta: minuendo, sustraendo y diferencia.'
+      purpose: 'Permiten describir una resta con precisión y entender cómo se comprueba.'
+      importance: 'La comprobación de la resta y la relación con la suma se expresan con estos nombres.'
+      foundations: 'El concepto de resta.'
+      prerequisites:
+        - 'Concepto de resta (bloque 5, tema 1).'
+      outcomes:
+        - Identificar minuendo, sustraendo y diferencia.
+        - Saber que en la resta el orden importa.
+      everyday_example: >-
+        En «tenía 80 pesos, gasté 35, me quedan 45», 80 es el minuendo, 35 el
+        sustraendo y 45 la diferencia.
+    sections:
+      - title: 'Minuendo, sustraendo y diferencia'
+        concept: 'En $a - b = c$, $a$ es el minuendo (de lo que se quita), $b$ el sustraendo (lo que se quita) y $c$ la diferencia o resto.'
+        explanation: |-
+          $$\underbrace{20}_{\text{minuendo}} - \underbrace{8}_{\text{sustraendo}} = \underbrace{12}_{\text{diferencia}}$$
+
+          * **Minuendo:** la cantidad inicial, de la que se quita. Se escribe primero.
+          * **Sustraendo:** la cantidad que se quita. Va después del signo $-$.
+          * **Diferencia** (o **resto**): el resultado.
+
+          Una forma de recordarlo: el minuendo es el que «disminuye» y el sustraendo es lo que se «sustrae» (se quita).
+
+          **¡El orden importa!** A diferencia de la suma, en la resta no se pueden intercambiar minuendo y sustraendo: $20 - 8 = 12$, pero $8 - 20$ no es 12 (con enteros es $-12$).
+
+          Si el sustraendo es 0, la diferencia es el minuendo: $20 - 0 = 20$. Si minuendo y sustraendo son iguales, la diferencia es 0: $20 - 20 = 0$.
+        definition: >-
+          En la igualdad $a - b = c$, $a$ se llama minuendo, $b$ sustraendo y $c$ diferencia
+          o resto; se cumple $c + b = a$.
+        rules:
+          - 'Minuendo − sustraendo = diferencia.'
+          - 'En los naturales, el minuendo es mayor o igual que el sustraendo.'
+          - '$a - 0 = a$ y $a - a = 0$.'
+        examples:
+          - problem: 'En $305 - 120 = 185$, identifica los elementos.'
+            solution: |-
+              **Paso 1.** El número del que se quita, primero: $305$ es el minuendo.
+              **Paso 2.** El que se quita, tras el signo menos: $120$ es el sustraendo.
+              **Paso 3.** El resultado: $185$ es la diferencia.
+              **Comprobación.** $185 + 120 = 305$.
+        common_errors:
+          - 'Confundir minuendo y sustraendo.'
+          - 'Pensar que $a - b = b - a$, como en la suma.'
+        summary: >-
+          Minuendo − sustraendo = diferencia; el orden de minuendo y sustraendo no se puede
+          cambiar.
+        check:
+          question: 'En $64 - 29 = 35$, ¿cuál es el sustraendo?'
+          options: ['29', '64', '35']
+          answer: 0
+          explanation: 'El sustraendo es lo que se quita, el número que va después del signo menos: 29.'
+    glossary:
+      - term: 'Minuendo'
+        definition: 'Número del que se resta.'
+      - term: 'Sustraendo'
+        definition: 'Número que se resta.'
+      - term: 'Diferencia o resto'
+        definition: 'Resultado de la resta.'
+    practice: []
+
+  t03:
+    intro:
+      what: 'Es el procedimiento para restar números naturales de varias cifras restando por órdenes.'
+      purpose: 'Permite restar números grandes sin contar uno a uno.'
+      importance: 'Es la base de la resta con desagrupación y de la resta vertical.'
+      foundations: 'El valor posicional y las restas básicas de una cifra.'
+      prerequisites:
+        - 'Suma de números naturales (bloque 4, tema 3).'
+        - 'Elementos de la resta (bloque 5, tema 2).'
+      outcomes:
+        - Restar números de una cifra con seguridad.
+        - Restar números de varias cifras cuando cada cifra del minuendo es mayor o igual que la del sustraendo.
+      everyday_example: >-
+        Tienes 575 pesos y pagas 230: quitas 2 centenas de 5 y 3 decenas de 7, y te
+        quedan 345 pesos.
+    sections:
+      - title: 'Restar por órdenes'
+        concept: 'Para restar números de varias cifras se restan las unidades de las unidades, las decenas de las decenas, y así sucesivamente.'
+        explanation: |-
+          **Restas básicas.** Las restas de una cifra se deducen de las sumas que ya conoces: como $8 + 5 = 13$, sabemos que $13 - 5 = 8$ y $13 - 8 = 5$. Pensar «¿cuánto le falta a 5 para llegar a 13?» es una forma segura de restar.
+
+          **Varias cifras.** Igual que en la suma, sólo se restan cifras del mismo orden. Para $586 - 243$:
+
+          * unidades: $6 - 3 = 3$
+          * decenas: $8 - 4 = 4$
+          * centenas: $5 - 2 = 3$
+
+          Resultado: $343$. En columna:
+          $$\begin{array}{r} 586 \\ -\,243 \\ \hline 343 \end{array}$$
+
+          Se alinea por la derecha, se escribe el minuendo arriba y se resta **de derecha a izquierda**.
+
+          En este tema cada cifra de arriba es mayor o igual que la de abajo. Cuando no ocurre (por ejemplo, $52 - 27$, donde $2 < 7$), hay que desagrupar: lo verás en el tema 5.
+        definition: >-
+          Si cada cifra del minuendo es mayor o igual que la cifra del mismo orden del
+          sustraendo, la diferencia se obtiene restando cifra a cifra en cada orden.
+        rules:
+          - 'El minuendo va arriba y el sustraendo abajo, alineados por la derecha.'
+          - 'Se resta de derecha a izquierda.'
+          - 'Si el sustraendo tiene menos cifras, en sus columnas vacías se resta 0.'
+        examples:
+          - problem: 'Calcula $4\,875 - 1\,632$.'
+            solution: |-
+              **Paso 1.** Unidades: $5 - 2 = 3$.
+              **Paso 2.** Decenas: $7 - 3 = 4$.
+              **Paso 3.** Centenas: $8 - 6 = 2$.
+              **Paso 4.** Millares: $4 - 1 = 3$.
+              **Comprobación.** $3\,243 + 1\,632 = 4\,875$.
+              Resultado: $3\,243$.
+        common_errors:
+          - 'Restar la cifra de arriba a la de abajo cuando conviene: siempre es arriba menos abajo.'
+          - 'Alinear por la izquierda números de distinta longitud.'
+        summary: >-
+          Se resta orden a orden, de derecha a izquierda, con el minuendo arriba.
+        check:
+          question: '¿Cuánto es $968 - 425$?'
+          options: ['543', '533', '1393']
+          answer: 0
+          explanation: 'Unidades $8 - 5 = 3$; decenas $6 - 2 = 4$; centenas $9 - 4 = 5$: 543.'
+    glossary:
+      - term: 'Resta por órdenes'
+        definition: 'Resta de las cifras de igual orden por separado.'
+    practice: []
+
+  t04:
+    intro:
+      what: 'Es la resta cuando minuendo y sustraendo pueden ser positivos, negativos o cero.'
+      purpose: 'Calcular variaciones de temperatura, diferencias de altitud, saldos y cambios.'
+      importance: 'Con los enteros la resta siempre es posible; esta idea es clave en álgebra.'
+      foundations: 'El opuesto de un número y la suma de enteros.'
+      prerequisites:
+        - 'Números enteros: opuesto (bloque 3, tema 2).'
+        - 'Suma de números enteros (bloque 4, tema 4).'
+      outcomes:
+        - Transformar una resta de enteros en una suma.
+        - Restar enteros con cualquier signo.
+        - Calcular variaciones entre dos valores.
+      everyday_example: >-
+        Si por la mañana hay $-2\ ^\circ\text{C}$ y por la tarde $9\ ^\circ\text{C}$, la
+        temperatura subió $9 - (-2) = 11$ grados.
+    sections:
+      - title: 'Restar es sumar el opuesto'
+        concept: 'Para restar un entero se suma su opuesto, $a - b = a + (-b)$, y luego se aplica la regla de la suma de enteros.'
+        explanation: |-
+          Quitar una ganancia equivale a añadir una pérdida, y **quitar una pérdida equivale a añadir una ganancia**. Por eso:
+
+          $$a - b = a + (-b)$$
+
+          **Procedimiento:**
+
+          1. Conserva el minuendo.
+          2. Cambia la resta por una suma.
+          3. Cambia el sustraendo por su opuesto.
+          4. Resuelve la suma con las reglas del bloque 4.
+
+          Ejemplos:
+
+          * $5 - 12 = 5 + (-12) = -7$
+          * $4 - (-6) = 4 + 6 = 10$
+          * $-3 - 8 = -3 + (-8) = -11$
+          * $-10 - (-4) = -10 + 4 = -6$
+
+          **¿Por qué funciona?** La resta pregunta qué número sumado al sustraendo da el minuendo. Por ejemplo, $4 - (-6) = 10$ porque $10 + (-6) = 4$. ✓
+
+          **En la recta:** restar un positivo es ir a la izquierda; restar un negativo es ir a la **derecha**.
+
+          Fíjate en la doble negación: «menos menos» se convierte en «más»: $-(-6) = 6$.
+        definition: >-
+          Para todo par de enteros $a$ y $b$: $a - b = a + (-b)$, donde $-b$ es el opuesto de $b$.
+        rules:
+          - '$a - b = a + (-b)$.'
+          - 'Restar un negativo es sumar un positivo: $a - (-b) = a + b$.'
+          - 'La resta de enteros siempre da un entero.'
+        examples:
+          - problem: 'Calcula $-7 - (-15)$.'
+            solution: |-
+              **Paso 1.** Sumamos el opuesto de $-15$: $-7 + 15$.
+              **Paso 2.** Signos distintos: $15 - 7 = 8$; gana el signo de $15$ (positivo).
+              **Comprobación.** $8 + (-15) = -7$. ✓
+              Resultado: $8$.
+          - problem: 'Una ciudad está a 40 m sobre el nivel del mar y una mina a 25 m bajo el nivel del mar. ¿Qué diferencia de altura hay?'
+            solution: |-
+              **Paso 1.** Alturas: $40$ y $-25$.
+              **Paso 2.** Diferencia: $40 - (-25) = 40 + 25 = 65$.
+              Resultado: $65$ metros.
+        common_errors:
+          - 'No cambiar el signo del sustraendo: $4 - (-6)$ no es $-2$.'
+          - 'Cambiar también el signo del minuendo.'
+        summary: >-
+          Restar es sumar el opuesto: conserva el primero, cambia la resta por suma y el
+          sustraendo por su opuesto.
+        check:
+          question: '¿Cuánto es $3 - (-9)$?'
+          options: ['12', '$-6$', '6']
+          answer: 0
+          explanation: '$3 - (-9) = 3 + 9 = 12$. Si no se cambia el signo del sustraendo se obtiene un resultado incorrecto.'
+    glossary:
+      - term: 'Opuesto'
+        definition: 'Número con el mismo valor absoluto y signo contrario; el opuesto de $b$ es $-b$.'
+    practice: []
+
+  t05:
+    intro:
+      what: 'Es la técnica para restar cuando una cifra del minuendo es menor que la del sustraendo, cambiando 1 unidad de un orden por 10 del orden inferior.'
+      purpose: 'Permite restar cualquier par de naturales con el minuendo mayor.'
+      importance: 'Es el famoso «pedir prestado»; entender por qué funciona evita la mayoría de los errores de resta.'
+      foundations: 'El valor posicional: 1 decena = 10 unidades, 1 centena = 10 decenas.'
+      prerequisites:
+        - 'Unidades, decenas, centenas (bloque 2, tema 7).'
+        - 'Resta de números naturales (bloque 5, tema 3).'
+      outcomes:
+        - Restar con desagrupación en una columna.
+        - Restar con desagrupación en varias columnas.
+        - Desagrupar cuando hay ceros en el minuendo.
+      everyday_example: >-
+        Tienes 5 billetes de 10 y 2 monedas de 1 (52 pesos) y debes pagar 7: cambias un
+        billete de 10 por 10 monedas y ya puedes pagar.
+    sections:
+      - title: 'Cambiar uno por diez'
+        concept: 'Si la cifra de arriba es menor que la de abajo, se toma 1 unidad del orden de la izquierda y se convierte en 10 unidades del orden actual.'
+        explanation: |-
+          Calcula $52 - 27$:
+
+          * Unidades: $2 - 7$ no se puede con naturales.
+          * **Desagrupamos** una decena del 52: quedan 4 decenas, y las unidades pasan a ser $10 + 2 = 12$.
+          * Unidades: $12 - 7 = 5$.
+          * Decenas: $4 - 2 = 2$.
+
+          Resultado: $25$. El número no cambió, sólo su organización: 52 = 5 D + 2 U = 4 D + 12 U.
+
+          **Con ceros.** Calcula $403 - 158$. En las unidades $3 < 8$, pero hay 0 decenas. Entonces:
+
+          1. Desagrupamos 1 centena: 4 C → 3 C, y las decenas pasan a ser 10.
+          2. Desagrupamos 1 de esas decenas: 10 D → 9 D, y las unidades pasan a 13.
+          3. Unidades: $13 - 8 = 5$. Decenas: $9 - 5 = 4$. Centenas: $3 - 1 = 2$.
+
+          Resultado: $245$ (comprobación: $245 + 158 = 403$).
+
+          Es útil tachar la cifra desagrupada y escribir encima su nuevo valor.
+        definition: >-
+          Desagrupar es sustituir 1 unidad de un orden por 10 unidades del orden
+          inmediatamente inferior, sin cambiar el valor del número.
+        rules:
+          - 'Si la cifra de arriba es menor, pide 1 a la columna de la izquierda: su cifra baja 1 y la actual suma 10.'
+          - 'Si la columna de la izquierda es 0, desagrupa primero la siguiente columna no nula.'
+          - 'Comprueba sumando diferencia y sustraendo.'
+        examples:
+          - problem: 'Calcula $725 - 348$.'
+            solution: |-
+              **Paso 1.** Unidades: $5 < 8$. Desagrupamos 1 decena: decenas $2 \to 1$; unidades $15$. $15 - 8 = 7$.
+              **Paso 2.** Decenas: $1 < 4$. Desagrupamos 1 centena: centenas $7 \to 6$; decenas $11$. $11 - 4 = 7$.
+              **Paso 3.** Centenas: $6 - 3 = 3$.
+              **Comprobación.** $377 + 348 = 725$.
+              Resultado: $377$.
+        common_errors:
+          - 'Restar «el menor del mayor» en cada columna: en $52 - 27$ hacer $7 - 2 = 5$ y obtener 35.'
+          - 'Olvidar que la cifra que prestó disminuyó en 1.'
+        summary: >-
+          Cuando arriba hay menos, pide 1 al orden de la izquierda y conviértelo en 10; con
+          ceros, desagrupa en cadena.
+        check:
+          question: '¿Cuánto es $600 - 247$?'
+          options: ['353', '447', '463']
+          answer: 0
+          explanation: '6 C → 5 C, 9 D, 10 U. Unidades $10 - 7 = 3$; decenas $9 - 4 = 5$; centenas $5 - 2 = 3$: 353. Comprobación: $353 + 247 = 600$.'
+    glossary:
+      - term: 'Desagrupación'
+        definition: 'Cambio de 1 unidad de un orden por 10 del orden inferior; se conoce como «pedir prestado».'
+    practice: []
+
+  t06:
+    intro:
+      what: 'Es la relación por la cual la suma y la resta son operaciones inversas: una deshace lo que hace la otra.'
+      purpose: 'Permite encontrar un término desconocido de una suma o una resta y comprobar resultados.'
+      importance: 'Es la idea que, en álgebra, se usa para despejar incógnitas en ecuaciones.'
+      foundations: 'Los elementos de la suma y de la resta.'
+      prerequisites:
+        - 'Elementos de la suma (bloque 4, tema 2).'
+        - 'Elementos de la resta (bloque 5, tema 2).'
+      outcomes:
+        - Escribir las restas asociadas a una suma y viceversa.
+        - Encontrar el sumando, el minuendo o el sustraendo desconocido.
+      everyday_example: >-
+        Si después de gastar 35 pesos te quedan 45, tenías $45 + 35 = 80$ pesos: deshaces
+        la resta con una suma.
+    sections:
+      - title: 'Operaciones inversas'
+        concept: 'Si $a + b = c$, entonces $c - b = a$ y $c - a = b$; la resta deshace la suma y la suma deshace la resta.'
+        explanation: |-
+          Si a un número le sumas 7 y luego le restas 7, vuelves al número inicial. Por eso decimos que **suma y resta son operaciones inversas**.
+
+          Cada suma tiene dos restas asociadas (una «familia» de operaciones):
+          $$8 + 5 = 13 \quad\Longleftrightarrow\quad 13 - 5 = 8 \quad\text{y}\quad 13 - 8 = 5$$
+
+          **Encontrar términos desconocidos:**
+
+          | Falta… | Ejemplo | Se calcula |
+          |---|---|---|
+          | un sumando | $\square + 25 = 60$ | $60 - 25 = 35$ |
+          | el minuendo | $\square - 18 = 40$ | $40 + 18 = 58$ |
+          | el sustraendo | $70 - \square = 26$ | $70 - 26 = 44$ |
+
+          Reglas que salen de aquí:
+
+          * **sumando = suma − otro sumando**
+          * **minuendo = diferencia + sustraendo**
+          * **sustraendo = minuendo − diferencia**
+
+          Si dudas, prueba el resultado sustituyéndolo en la igualdad original: $35 + 25 = 60$. ✓
+        definition: >-
+          Para números cualesquiera, $a + b = c$ si y sólo si $c - b = a$. La resta es la
+          operación inversa de la suma.
+        rules:
+          - 'Sumando desconocido: suma menos el sumando conocido.'
+          - 'Minuendo desconocido: diferencia más sustraendo.'
+          - 'Sustraendo desconocido: minuendo menos diferencia.'
+        examples:
+          - problem: 'Completa: $\square - 136 = 289$.'
+            solution: |-
+              **Paso 1.** Falta el minuendo: minuendo = diferencia + sustraendo.
+              **Paso 2.** $289 + 136 = 425$.
+              **Comprobación.** $425 - 136 = 289$. ✓
+              Resultado: $425$.
+        common_errors:
+          - 'Para el minuendo desconocido, restar en lugar de sumar: $289 - 136$ no es el minuendo.'
+          - 'Para el sustraendo desconocido, sumar minuendo y diferencia.'
+        summary: >-
+          Suma y resta se deshacen mutuamente; con ello se encuentra cualquier término
+          desconocido.
+        check:
+          question: 'Completa: $\square + 47 = 120$.'
+          options: ['73', '167', '83']
+          answer: 0
+          explanation: 'Sumando = suma − otro sumando: $120 - 47 = 73$. Comprobación: $73 + 47 = 120$.'
+    glossary:
+      - term: 'Operación inversa'
+        definition: 'Operación que deshace el efecto de otra.'
+    practice: []
+
+  t07:
+    intro:
+      what: 'Es la verificación de que una resta está bien hecha usando la suma.'
+      purpose: 'Detectar errores en restas escritas, cambios de dinero o cuentas.'
+      importance: 'Comprobar es un hábito clave de la aritmética: da seguridad y evita errores costosos.'
+      foundations: 'La relación inversa entre suma y resta.'
+      prerequisites:
+        - 'Relación entre suma y resta (bloque 5, tema 6).'
+      outcomes:
+        - Comprobar una resta con la prueba de la suma.
+        - Detectar y localizar un error en una resta.
+      everyday_example: >-
+        Si pagas 100 con una compra de 63 y te devuelven 37, comprueba: $63 + 37 = 100$. ✓
+    sections:
+      - title: 'La prueba de la resta'
+        concept: 'Una resta es correcta si la diferencia más el sustraendo da el minuendo.'
+        explanation: |-
+          Como la suma deshace la resta, se cumple:
+          $$\text{diferencia} + \text{sustraendo} = \text{minuendo}$$
+
+          **Prueba de la resta:**
+
+          1. Suma la diferencia obtenida y el sustraendo.
+          2. Compara con el minuendo.
+          3. Si coinciden, la resta es correcta; si no, hay un error.
+
+          Ejemplo: alguien calculó $532 - 178 = 364$. Prueba: $364 + 178 = 542$, que no es 532. Hay un error. La resta correcta es $354$, porque $354 + 178 = 532$. ✓
+
+          También hay una **segunda prueba**: minuendo − diferencia = sustraendo. Para $532 - 354$: $532 - 354 = 178$. ✓
+
+          La prueba es especialmente útil en restas con desagrupación, donde es fácil olvidar que una cifra «prestó».
+
+          Antes de la prueba exacta, una **estimación** detecta errores grandes: $532 - 178$ es aproximadamente $530 - 180 = 350$.
+        definition: >-
+          La resta $a - b = c$ es correcta si y sólo si $c + b = a$.
+        rules:
+          - 'Diferencia + sustraendo = minuendo.'
+          - 'Minuendo − diferencia = sustraendo.'
+          - 'La estimación ayuda a detectar errores grandes.'
+        examples:
+          - problem: '¿Es correcto $1\,000 - 384 = 626$?'
+            solution: |-
+              **Paso 1.** Sumamos diferencia y sustraendo: $626 + 384 = 1\,010$.
+              **Paso 2.** $1\,010 \neq 1\,000$: es incorrecto.
+              **Paso 3.** Resta correcta: $1\,000 - 384 = 616$, porque $616 + 384 = 1\,000$.
+              Resultado: no es correcto; la diferencia es $616$.
+        common_errors:
+          - 'Comprobar sumando minuendo y sustraendo.'
+          - 'Comprobar sumando la diferencia consigo misma.'
+        summary: >-
+          Para comprobar una resta, suma diferencia y sustraendo: debe dar el minuendo.
+        check:
+          question: 'Para comprobar $850 - 275 = 575$, ¿qué suma haces y qué concluyes?'
+          options:
+            - '$575 + 275 = 850$: es correcta'
+            - '$850 + 275 = 1\,125$: es incorrecta'
+            - '$575 + 275 = 840$: es incorrecta'
+          answer: 0
+          explanation: 'Diferencia + sustraendo: $575 + 275 = 850$, igual al minuendo. La resta es correcta.'
+    glossary:
+      - term: 'Prueba de la resta'
+        definition: 'Comprobación de que diferencia más sustraendo es igual al minuendo.'
+    practice: []
+
+  t08:
+    intro:
+      what: 'Son estrategias para restar de cabeza aprovechando el valor posicional y la relación con la suma.'
+      purpose: 'Calcular cambios, descuentos y diferencias rápidamente.'
+      importance: 'Da agilidad y permite revisar cálculos hechos con papel o calculadora.'
+      foundations: 'La descomposición de números y la relación entre suma y resta.'
+      prerequisites:
+        - 'Suma mental (bloque 4, tema 7).'
+        - 'Relación entre suma y resta (bloque 5, tema 6).'
+      outcomes:
+        - Restar mentalmente por descomposición.
+        - Restar mentalmente por compensación.
+        - Restar contando hacia arriba.
+      everyday_example: >-
+        Para calcular el cambio de 500 pesos por una compra de 365, se cuenta hacia arriba:
+        de 365 a 400 son 35, de 400 a 500 son 100; el cambio es 135.
+    sections:
+      - title: 'Tres estrategias'
+        concept: 'Para restar mentalmente se puede descomponer el sustraendo, redondearlo y compensar, o contar desde el sustraendo hasta el minuendo.'
+        explanation: |-
+          **1. Descomposición.** Resta el sustraendo por partes, primero las decenas:
+          $$83 - 47 = 83 - 40 - 7 = 43 - 7 = 36$$
+
+          **2. Compensación.** Si el sustraendo está cerca de un número redondo, resta el redondo y corrige:
+          $$325 - 98 = 325 - 100 + 2 = 225 + 2 = 227$$
+          Restamos 2 de más, así que los devolvemos. **Si restas de más, suma la diferencia.** (Es al revés que en la suma.)
+
+          **3. Contar hacia arriba (completar).** Piensa la resta como «¿cuánto le falta al sustraendo para llegar al minuendo?» y avanza con saltos cómodos:
+          $$500 - 365: \quad 365 \xrightarrow{+35} 400 \xrightarrow{+100} 500 \qquad 35 + 100 = 135$$
+          Es ideal cuando el minuendo es un número redondo, como al calcular un cambio.
+
+          **Truco extra:** sumar o restar el mismo número a minuendo y sustraendo no cambia la diferencia: $83 - 47 = 86 - 50 = 36$.
+        definition: >-
+          Compensar en la resta es sustituir el sustraendo $b$ por un número cercano $c$ y
+          corregir: 'si $c > b$, $a - b = (a - c) + (c - b)$.'
+        rules:
+          - 'Descomposición: resta primero las decenas y luego las unidades.'
+          - 'Compensación: si restaste de más, suma la diferencia.'
+          - 'Contar hacia arriba: suma los saltos desde el sustraendo hasta el minuendo.'
+        examples:
+          - problem: 'Calcula mentalmente $142 - 59$.'
+            solution: |-
+              **Paso 1.** 59 está cerca de 60.
+              **Paso 2.** $142 - 60 = 82$.
+              **Paso 3.** Restamos 1 de más: $82 + 1 = 83$.
+              Resultado: $83$.
+          - problem: 'Calcula mentalmente $1\,000 - 640$ contando hacia arriba.'
+            solution: |-
+              **Paso 1.** De 640 a 700: 60.
+              **Paso 2.** De 700 a 1 000: 300.
+              **Paso 3.** $60 + 300 = 360$.
+              Resultado: $360$.
+        common_errors:
+          - 'Compensar en el sentido de la suma: en $142 - 59$ restar 60 y luego restar 1 más (daría 81).'
+          - 'Al contar hacia arriba, olvidar sumar alguno de los saltos.'
+        summary: >-
+          Descompón, compensa (si restas de más, suma) o cuenta hacia arriba desde el
+          sustraendo.
+        check:
+          question: 'Calcula mentalmente $250 - 99$.'
+          options: ['151', '149', '161']
+          answer: 0
+          explanation: '$250 - 100 = 150$; restamos 1 de más, así que sumamos 1: $151$.'
+    glossary:
+      - term: 'Contar hacia arriba'
+        definition: 'Calcular una resta sumando desde el sustraendo hasta el minuendo.'
+    practice: []
+
+  t09:
+    intro:
+      what: 'Es el algoritmo escrito de la resta, con minuendo y sustraendo en columnas y desagrupación cuando hace falta.'
+      purpose: 'Restar con seguridad números grandes o con ceros intermedios.'
+      importance: 'Es el método escrito estándar y se usa dentro de la división larga.'
+      foundations: 'El valor posicional y la desagrupación.'
+      prerequisites:
+        - 'Resta con desagrupación (bloque 5, tema 5).'
+        - 'Suma vertical (bloque 4, tema 8).'
+      outcomes:
+        - Colocar correctamente minuendo y sustraendo.
+        - Restar en vertical con desagrupaciones sucesivas.
+        - Comprobar con la prueba de la suma.
+      everyday_example: >-
+        Para saber cuánto queda de un presupuesto anual de 7 024 pesos tras gastar 2 638,
+        se resta en columna.
+    sections:
+      - title: 'El algoritmo de la resta vertical'
+        concept: 'Se escribe el minuendo arriba y el sustraendo abajo alineados por la derecha, y se resta columna a columna desde las unidades, desagrupando cuando la cifra de arriba es menor.'
+        explanation: |-
+          **Pasos:**
+
+          1. Escribe el **minuendo arriba** y el **sustraendo abajo**, alineados por la derecha.
+          2. Empieza por las unidades.
+          3. En cada columna: si la cifra de arriba es mayor o igual, resta. Si es menor, **desagrupa** 1 del orden de la izquierda (tacha esa cifra, escribe una menos) y suma 10 a la cifra actual.
+          4. Avanza hacia la izquierda.
+          5. Comprueba: diferencia + sustraendo = minuendo.
+
+          Ejemplo: $7\,024 - 2\,638$
+          $$\begin{array}{r} 7\,024 \\ -\,2\,638 \\ \hline 4\,386 \end{array}$$
+
+          * Unidades: $4 < 8$. Desagrupamos 1 decena (2 → 1): $14 - 8 = 6$.
+          * Decenas: $1 < 3$. Las centenas son 0, así que desagrupamos 1 millar (7 → 6): centenas 10; luego 1 centena (10 → 9): decenas $11$. $11 - 3 = 8$.
+          * Centenas: $9 - 6 = 3$.
+          * Millares: $6 - 2 = 4$.
+
+          Comprobación: $4\,386 + 2\,638 = 7\,024$. ✓
+
+          **Variante «tomar y devolver».** En algunos países se enseña otro método: sumar 10 a la cifra de arriba y sumar 1 a la cifra de abajo de la columna siguiente. Da el mismo resultado; usa el que te enseñaron, pero no mezcles los dos en la misma cuenta.
+        definition: >-
+          La resta vertical es el algoritmo que resta columna a columna, de derecha a
+          izquierda, desagrupando una unidad del orden superior cuando la cifra del
+          minuendo es menor que la del sustraendo.
+        rules:
+          - 'Minuendo arriba, sustraendo abajo, alineados por la derecha.'
+          - 'Arriba menor que abajo: desagrupa del orden de la izquierda.'
+          - 'Comprueba siempre con la suma.'
+        examples:
+          - problem: 'Calcula en vertical $5\,003 - 1\,467$.'
+            solution: |-
+              **Paso 1.** Unidades: $3 < 7$; decenas y centenas son 0. Desagrupamos 1 millar: 5 → 4; centenas 10 → 9 (al prestar); decenas 10 → 9 (al prestar); unidades 13.
+              **Paso 2.** Unidades: $13 - 7 = 6$.
+              **Paso 3.** Decenas: $9 - 6 = 3$.
+              **Paso 4.** Centenas: $9 - 4 = 5$.
+              **Paso 5.** Millares: $4 - 1 = 3$.
+              **Comprobación.** $3\,536 + 1\,467 = 5\,003$. ✓
+              Resultado: $3\,536$.
+        common_errors:
+          - 'Poner el número menor arriba.'
+          - 'Desagrupar y no restar 1 a la cifra que prestó.'
+          - 'Con ceros intermedios, convertir el 0 en 10 y olvidar que luego presta y queda en 9.'
+        summary: >-
+          Minuendo arriba, resta desde las unidades, desagrupa cuando haga falta y
+          comprueba con la suma.
+        check:
+          question: '¿Cuánto es $4\,210 - 1\,385$?'
+          options: ['2 825', '3 175', '2 835']
+          answer: 0
+          explanation: 'Unidades $10 - 5 = 5$; decenas (0 tras prestar) → desagrupar centena: $10 - 8 = 2$; centenas (1 tras prestar) → desagrupar millar: $11 - 3 = 8$; millares $3 - 1 = 2$: 2 825. Comprobación: $2\,825 + 1\,385 = 4\,210$.'
+    glossary:
+      - term: 'Resta vertical'
+        definition: 'Algoritmo escrito de la resta en columnas.'
+    practice: []
+
+  t10:
+    intro:
+      what: 'Es la aplicación de la resta para resolver problemas expresados con palabras.'
+      purpose: 'Resolver situaciones de quitar, comparar y completar, solas o combinadas con la suma.'
+      importance: 'La mayoría de los problemas reales combinan varias operaciones; reconocer cuándo restar es esencial.'
+      foundations: 'Los significados de la resta y el método de resolución de problemas.'
+      prerequisites:
+        - 'Concepto de resta (bloque 5, tema 1).'
+        - 'Resolución de problemas mediante suma (bloque 4, tema 10).'
+      outcomes:
+        - Identificar situaciones de quitar, comparar y completar.
+        - Resolver problemas de varios pasos con sumas y restas.
+        - Comprobar la respuesta.
+      everyday_example: >-
+        Para saber cuánto puedes gastar el resto del mes, restas a tu sueldo los pagos ya
+        hechos.
+    sections:
+      - title: 'Problemas de quitar, comparar y completar'
+        concept: 'Un problema se resuelve con resta cuando se pregunta cuánto queda, cuánto más o menos hay, o cuánto falta.'
+        explanation: |-
+          Se aplica el mismo método de cuatro pasos (comprender, plantear, calcular, comprobar). La clave es reconocer la situación:
+
+          | Situación | Pregunta típica | Ejemplo |
+          |---|---|---|
+          | Quitar | ¿Cuánto queda? | Tenía 80, gasté 35. |
+          | Comparar | ¿Cuánto más / menos? | Ana mide 165 cm, Luis 148 cm. |
+          | Completar | ¿Cuánto falta? | Tengo 230, necesito 500. |
+
+          **El minuendo es siempre la cantidad mayor** (en problemas con naturales): lo que había, la cantidad más grande comparada o la meta.
+
+          **Varios pasos.** Muchos problemas combinan sumas y restas. Por ejemplo, «tenía 500, gasté 120 y 85»: puedes restar dos veces ($500 - 120 - 85$) o sumar primero los gastos y restar una vez ($500 - 205$). Ambos caminos dan lo mismo: 295.
+
+          **Comprobación.** Haz la prueba de la resta y pregúntate si el resultado tiene sentido: lo que queda no puede ser mayor que lo que había.
+        definition: >-
+          Resolver un problema de resta es identificar el minuendo y el sustraendo que
+          representan la situación, calcular la diferencia e interpretarla.
+        rules:
+          - 'Quitar, comparar o completar → resta.'
+          - 'Restar dos cantidades seguidas equivale a restar su suma.'
+          - 'Comprueba con la prueba de la resta y con el sentido común.'
+        examples:
+          - problem: 'Un tanque tiene 1 200 litros. Se usan 350 litros el lunes y 480 el martes. ¿Cuántos litros quedan?'
+            solution: |-
+              **Paso 1.** Situación de quitar, dos veces.
+              **Paso 2.** Gastos totales: $350 + 480 = 830$ litros.
+              **Paso 3.** Quedan: $1\,200 - 830 = 370$ litros.
+              **Comprobación.** $370 + 830 = 1\,200$. ✓
+              Resultado: quedan $370$ litros.
+          - problem: 'Un libro tiene 312 páginas y Carmen ha leído 187. ¿Cuántas le faltan?'
+            solution: |-
+              **Paso 1.** Situación de completar: $312 - 187$.
+              **Paso 2.** Contando hacia arriba: de 187 a 200 son 13; de 200 a 312 son 112; $13 + 112 = 125$.
+              **Comprobación.** $125 + 187 = 312$. ✓
+              Resultado: le faltan $125$ páginas.
+        common_errors:
+          - 'Sumar en un problema de comparación porque aparece la palabra «más».'
+          - 'Poner como minuendo la cantidad menor.'
+          - 'En problemas de varios pasos, responder con un resultado intermedio.'
+        summary: >-
+          Identifica si hay que quitar, comparar o completar; el minuendo es la cantidad
+          mayor, y comprueba con la suma.
+        check:
+          question: 'Pedro tiene 1 500 pesos y quiere una bicicleta de 2 300. ¿Cuánto le falta?'
+          options: ['800 pesos', '3 800 pesos', '1 200 pesos']
+          answer: 0
+          explanation: 'Completar: $2\,300 - 1\,500 = 800$. Comprobación: $1\,500 + 800 = 2\,300$.'
+    glossary:
+      - term: 'Problema de varios pasos'
+        definition: 'Problema que requiere más de una operación para llegar a la respuesta.'
+    practice: []

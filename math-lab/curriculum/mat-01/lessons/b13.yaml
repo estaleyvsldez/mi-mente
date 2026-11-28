@@ -1,0 +1,479 @@
+block: b13
+intro: |-
+  El mínimo común múltiplo (MCM) de varios números es el menor número, distinto de 0, que es múltiplo de todos ellos. En este bloque aprenderás qué significa, cómo calcularlo por listado y por factorización, su relación con el MCD y cómo usarlo en problemas de coincidencias y repeticiones. El MCM será indispensable para sumar y restar fracciones con distinto denominador (bloque 15).
+
+topics:
+  t01:
+    intro:
+      what: |-
+        El mínimo común múltiplo de dos o más números es el menor número, distinto de cero, que es múltiplo de todos ellos. Se escribe MCM; por ejemplo, $\text{MCM}(4, 6) = 12$.
+      purpose: |-
+        Sirve para encontrar el primer momento en que coinciden sucesos que se repiten con distinta frecuencia, o la menor cantidad que se puede formar con grupos de distintos tamaños.
+      importance: |-
+        Es la herramienta para encontrar el común denominador más pequeño al sumar fracciones y para resolver problemas de horarios y calendarios.
+      foundations: |-
+        Se basa en el concepto de múltiplo y en la lista de múltiplos de un número (bloque 10).
+      prerequisites:
+        - 'Concepto de múltiplo y múltiplos de un número (bloque 10, temas 1 y 3)'
+      outcomes:
+        - 'Explicar qué es el MCM'
+        - 'Reconocer casos especiales: cuando un número es múltiplo del otro y cuando son primos entre sí'
+      everyday_example: |-
+        Las salchichas vienen en paquetes de 6 y los panes en bolsas de 8. Para tener el mismo número de salchichas que de panes sin que sobre nada, necesitas al menos $\text{MCM}(6, 8) = 24$ de cada uno: 4 paquetes de salchichas y 3 bolsas de pan.
+    sections:
+      - title: El menor múltiplo compartido
+        concept: El MCM es el menor número distinto de cero que es múltiplo de todos los números dados.
+        explanation: |-
+          Lee el nombre de atrás hacia delante:
+
+          - **Múltiplo**: se obtiene multiplicando.
+          - **Común**: es múltiplo de todos los números a la vez.
+          - **Mínimo**: es el menor de los que cumplen lo anterior (sin contar el 0).
+
+          Para 4 y 6:
+
+          - Múltiplos de 4: $4, 8, 12, 16, 20, 24, \ldots$
+          - Múltiplos de 6: $6, 12, 18, 24, \ldots$
+          - Comunes: $12, 24, 36, \ldots$ El menor es **12**.
+
+          ¿Por qué no se cuenta el 0? Porque el 0 es múltiplo de todos los números (bloque 11) y sería siempre el "mínimo", lo que no aportaría información.
+
+          **Casos especiales**
+
+          - Si un número es múltiplo del otro, el MCM es el mayor: $\text{MCM}(5, 20) = 20$.
+          - Si los números son primos entre sí ($\text{MCD} = 1$), el MCM es su producto: $\text{MCM}(5, 7) = 35$.
+          - El MCM nunca es menor que el mayor de los números.
+        definition: |-
+          El **mínimo común múltiplo** de los naturales $a$ y $b$ (distintos de 0), $\text{MCM}(a, b)$, es el menor natural distinto de 0 que es múltiplo de $a$ y de $b$.
+        rules:
+          - 'El MCM es mayor o igual que el mayor de los números.'
+          - 'Si $b$ es múltiplo de $a$, entonces $\text{MCM}(a, b) = b$.'
+          - 'Si $a$ y $b$ son primos entre sí, $\text{MCM}(a, b) = a \times b$.'
+        examples:
+          - problem: 'Calcula $\text{MCM}(6, 8)$.'
+            solution: |-
+              **Paso 1.** Múltiplos de 8: $8, 16, 24, 32, \ldots$
+
+              **Paso 2.** ¿Cuál es el primero que también es múltiplo de 6? 8 no, 16 no, 24 sí ($24 = 6 \times 4$).
+
+              Resultado: $\text{MCM}(6, 8) = 24$.
+        common_errors:
+          - 'Multiplicar siempre los números: $6 \times 8 = 48$ es un múltiplo común, pero no el menor.'
+          - 'Dar el 0 como MCM.'
+          - 'Confundir MCM con MCD.'
+        summary: |-
+          El MCM es el menor múltiplo común distinto de 0. Nunca es menor que el mayor de los números y, si éstos son primos entre sí, es su producto.
+        check:
+          question: '¿Cuánto vale $\text{MCM}(6, 8)$?'
+          options: ['$48$', '$24$', '$2$']
+          answer: 1
+          explanation: |-
+            24 es el primer múltiplo de 8 que también es múltiplo de 6. El 48 es común pero no el mínimo, y el 2 es el MCD.
+    glossary:
+      - {term: MCM, definition: 'Mínimo común múltiplo: el menor múltiplo común, distinto de 0, de varios números.'}
+
+  t02:
+    intro:
+      what: |-
+        Los múltiplos comunes de varios números son los números que son múltiplos de todos ellos a la vez. Hay infinitos.
+      purpose: |-
+        Sirven para conocer todos los momentos de coincidencia de sucesos periódicos, no sólo el primero.
+      importance: |-
+        Todos los múltiplos comunes son múltiplos del MCM. Esta propiedad permite encontrarlos todos fácilmente y da sentido al MCM.
+      foundations: |-
+        Es la parte compartida de las listas de múltiplos de cada número.
+      prerequisites:
+        - 'Múltiplos de un número (bloque 10, tema 3)'
+        - 'Concepto de MCM (bloque 13, tema 1)'
+      outcomes:
+        - 'Encontrar los primeros múltiplos comunes de dos o tres números'
+        - 'Usar el MCM para generar todos los múltiplos comunes'
+      everyday_example: |-
+        Si una lavadora se revisa cada 4 meses y una nevera cada 6, coincidirán en los meses 12, 24, 36… : los múltiplos comunes de 4 y 6.
+    sections:
+      - title: Coincidencias en las listas de múltiplos
+        concept: Los múltiplos comunes aparecen en todas las listas de múltiplos; son exactamente los múltiplos del MCM.
+        explanation: |-
+          Escribamos múltiplos de 4 y de 6:
+
+          - Múltiplos de 4: $4, 8, \mathbf{12}, 16, 20, \mathbf{24}, 28, 32, \mathbf{36}, \ldots$
+          - Múltiplos de 6: $6, \mathbf{12}, 18, \mathbf{24}, 30, \mathbf{36}, \ldots$
+
+          Los comunes son $12, 24, 36, \ldots$ Observa que son **los múltiplos de 12**, que es el MCM.
+
+          Esto siempre ocurre: **los múltiplos comunes de varios números son los múltiplos de su MCM**. Por eso, una vez conoces el MCM, obtienes todos los múltiplos comunes multiplicándolo por $1, 2, 3, \ldots$
+
+          A diferencia de los divisores comunes (que son finitos), los múltiplos comunes son **infinitos**.
+        definition: |-
+          Un **múltiplo común** de $a$ y $b$ es un número que es múltiplo de ambos. El conjunto de múltiplos comunes no nulos es $\{\text{MCM}, 2 \times \text{MCM}, 3 \times \text{MCM}, \ldots\}$.
+        rules:
+          - 'Múltiplos comunes = múltiplos del MCM.'
+          - 'Son infinitos.'
+          - 'El producto de los números siempre es un múltiplo común (aunque no siempre el menor).'
+        examples:
+          - problem: 'Escribe los tres primeros múltiplos comunes (no nulos) de 6 y 9.'
+            solution: |-
+              **Paso 1.** Múltiplos de 9: $9, 18, \ldots$ El 18 es múltiplo de 6. $\text{MCM}(6, 9) = 18$.
+
+              **Paso 2.** Múltiplos de 18: $18, 36, 54$.
+
+              Resultado: $18, 36, 54$.
+        common_errors:
+          - 'Incluir un número que sólo es múltiplo de uno de ellos.'
+          - 'Pensar que los múltiplos comunes se acaban.'
+        summary: |-
+          Los múltiplos comunes son infinitos y son exactamente los múltiplos del MCM.
+        check:
+          question: '¿Cuáles son los tres primeros múltiplos comunes (no nulos) de 3 y 5?'
+          options: ['$15$, $30$, $45$', '$3$, $5$, $15$', '$8$, $15$, $30$']
+          answer: 0
+          explanation: |-
+            $\text{MCM}(3, 5) = 15$, y sus múltiplos son 15, 30, 45. El 3 no es múltiplo de 5, y el 8 no es múltiplo de ninguno.
+    glossary:
+      - {term: Múltiplo común, definition: 'Número que es múltiplo de todos los números dados.'}
+
+  t03:
+    intro:
+      what: |-
+        Calcular el MCM mediante listado de múltiplos consiste en escribir múltiplos de los números hasta encontrar el primero que tienen en común.
+      purpose: |-
+        Sirve para calcular el MCM de números pequeños de forma directa.
+      importance: |-
+        Muestra con claridad qué significa el MCM. Para números grandes resulta lento, por eso luego se usa la factorización.
+      foundations: |-
+        Las listas de múltiplos (bloque 10) y la definición de MCM.
+      prerequisites:
+        - 'Múltiplos de un número (bloque 10, tema 3)'
+        - 'Concepto de MCM (bloque 13, tema 1)'
+      outcomes:
+        - 'Calcular el MCM de dos o tres números pequeños por listado'
+        - 'Usar el atajo de listar múltiplos del mayor'
+      everyday_example: |-
+        Si un faro destella cada 8 segundos y otro cada 12, basta ir contando 12, 24… y ver que 24 ya es múltiplo de 8: coinciden cada 24 segundos.
+    sections:
+      - title: Listar múltiplos del mayor
+        concept: Se listan múltiplos del número mayor y se toma el primero que sea múltiplo de los demás.
+        explanation: |-
+          **Procedimiento básico**: escribir los múltiplos de cada número hasta encontrar el primero que aparece en todas las listas.
+
+          **Atajo**: como el MCM es múltiplo del número mayor, basta listar **sólo los múltiplos del mayor** y comprobar, uno a uno, si son múltiplos de los demás (usando la división o los criterios de divisibilidad). El primero que lo sea es el MCM.
+
+          Ejemplo: $\text{MCM}(8, 12)$.
+
+          - Múltiplos de 12: $12, 24, \ldots$
+          - ¿12 es múltiplo de 8? No. ¿24? Sí ($24 = 8 \times 3$).
+          - $\text{MCM}(8, 12) = 24$.
+
+          Con tres números se hace igual: múltiplos del mayor, comprobando que sean múltiplos de los otros dos.
+        definition: |-
+          **Método del listado**: $\text{MCM}(a, b)$ es el menor múltiplo no nulo de $a$ que aparece también en la lista de múltiplos de $b$.
+        rules:
+          - 'Lista múltiplos del mayor: $n, 2n, 3n, \ldots$'
+          - 'El primero que sea múltiplo de todos los demás es el MCM.'
+        examples:
+          - problem: 'Calcula $\text{MCM}(4, 6, 10)$.'
+            solution: |-
+              **Paso 1.** Múltiplos de 10: $10, 20, 30, 40, 50, 60, \ldots$
+
+              **Paso 2.** 10: no es múltiplo de 4. 20: no es múltiplo de 6. 30: no es múltiplo de 4. 40: no es múltiplo de 6. 50: no es múltiplo de 4 ni de 6. 60: es múltiplo de 4 ($60 = 4 \times 15$) y de 6 ($60 = 6 \times 10$).
+
+              Resultado: $\text{MCM}(4, 6, 10) = 60$.
+        common_errors:
+          - 'Parar en un múltiplo común que no es el primero.'
+          - 'Comprobar sólo con uno de los números cuando hay tres.'
+        summary: |-
+          Lista múltiplos del mayor y elige el primero que sea múltiplo de los demás.
+        check:
+          question: '¿Cuánto vale $\text{MCM}(9, 12)$?'
+          options: ['$36$', '$108$', '$3$']
+          answer: 0
+          explanation: |-
+            Múltiplos de 12: 12, 24, 36. El 36 es el primero divisible entre 9. El 108 es el producto (un múltiplo común, pero no el menor) y el 3 es el MCD.
+    glossary:
+      - {term: Método del listado, definition: 'Cálculo del MCM buscando el primer múltiplo común en las listas de múltiplos.'}
+
+  t04:
+    intro:
+      what: |-
+        Calcular el MCM mediante factorización prima consiste en descomponer cada número en primos y multiplicar todos los primos que aparecen, cada uno con el mayor exponente.
+      purpose: |-
+        Sirve para calcular el MCM de números grandes o de varios números con rapidez.
+      importance: |-
+        Es el método más eficaz y se usa constantemente para hallar el común denominador de varias fracciones (bloque 15).
+      foundations: |-
+        Un múltiplo común debe contener a cada número; por tanto, necesita cada primo tantas veces como el número que más lo tiene.
+      prerequisites:
+        - 'Descomposición en factores primos (bloque 11, tema 7)'
+        - 'Cálculo del MCD mediante factorización (bloque 12, tema 4)'
+      outcomes:
+        - 'Calcular el MCM de dos o tres números por factorización'
+        - 'Distinguir la regla del MCM (mayor exponente) de la del MCD (menor exponente)'
+      everyday_example: |-
+        Para sumar fracciones con denominadores 12, 18 y 20 hace falta un denominador común. El más pequeño es $\text{MCM}(12, 18, 20) = 180$, que se obtiene en un momento por factorización.
+    sections:
+      - title: Todos los primos con el mayor exponente
+        concept: El MCM es el producto de todos los primos que aparecen, cada uno con el mayor exponente con que aparece.
+        explanation: |-
+          **Procedimiento**
+
+          1. Factoriza cada número.
+          2. Toma **todos** los primos que aparecen (comunes y no comunes).
+          3. De cada uno, toma el **mayor** exponente.
+          4. Multiplica.
+
+          Ejemplo: $72 = 2^3 \times 3^2$ y $120 = 2^3 \times 3 \times 5$.
+
+          - Primos que aparecen: 2, 3 y 5.
+          - Mayores exponentes: $2^3$, $3^2$ y $5^1$.
+          - $\text{MCM} = 2^3 \times 3^2 \times 5 = 8 \times 9 \times 5 = 360$.
+
+          **¿Por qué el mayor exponente?** El MCM tiene que ser múltiplo de 72, así que debe contener $2^3 \times 3^2$; y también de 120, así que debe contener $2^3 \times 3 \times 5$. Para contener a ambos necesita tres doses, dos treses y un cinco; y no necesita más, por eso es el menor.
+
+          **Compara con el MCD** (bloque 12): MCD = primos **comunes** con el **menor** exponente; MCM = **todos** los primos con el **mayor** exponente.
+        definition: |-
+          Si se conocen las factorizaciones primas de $a$ y $b$, $\text{MCM}(a, b)$ es el producto de todos los primos que aparecen en alguna de ellas, cada uno elevado al mayor de sus exponentes.
+        rules:
+          - 'Todos los primos que aparecen, comunes y no comunes.'
+          - 'Cada uno con el mayor exponente.'
+          - 'Comprueba que el resultado es divisible entre cada número.'
+        examples:
+          - problem: 'Calcula $\text{MCM}(12, 18, 20)$ por factorización.'
+            solution: |-
+              **Paso 1.** $12 = 2^2 \times 3$; $18 = 2 \times 3^2$; $20 = 2^2 \times 5$.
+
+              **Paso 2.** Primos: 2, 3 y 5. Mayores exponentes: $2^2$, $3^2$ y $5$.
+
+              **Paso 3.** $\text{MCM} = 4 \times 9 \times 5 = 180$.
+
+              Resultado: $180$. Comprobación: $180 = 12 \times 15 = 18 \times 10 = 20 \times 9$.
+        common_errors:
+          - 'Tomar sólo los primos comunes (eso se hace en el MCD).'
+          - 'Tomar el menor exponente.'
+          - 'Multiplicar todas las factorizaciones completas, lo que da un múltiplo común pero no el mínimo.'
+        summary: |-
+          MCM: todos los primos, cada uno con su mayor exponente. MCD: primos comunes con el menor exponente.
+        check:
+          question: '¿Cuánto vale el MCM de $2^2 \times 3$ y $2 \times 3^2$?'
+          options: ['$36$', '$6$', '$216$']
+          answer: 0
+          explanation: |-
+            Mayores exponentes: $2^2$ y $3^2$, así que $\text{MCM} = 4 \times 9 = 36$. El 6 es el MCD, y 216 es el producto $12 \times 18$.
+    glossary:
+      - {term: Mayor exponente, definition: 'El exponente más grande con que aparece un primo entre las factorizaciones.'}
+      - {term: Factores no comunes, definition: 'Primos que aparecen en la factorización de algunos de los números, pero no de todos.'}
+
+  t05:
+    intro:
+      what: |-
+        El MCD y el MCM de dos números están relacionados: su producto es igual al producto de los dos números, $\text{MCD}(a, b) \times \text{MCM}(a, b) = a \times b$.
+      purpose: |-
+        Sirve para calcular uno de ellos cuando ya se conoce el otro, y para comprobar resultados.
+      importance: |-
+        Esta relación muestra que MCD y MCM son dos caras de la misma información (la factorización) y ahorra cálculos.
+      foundations: |-
+        En la factorización, para cada primo, el MCD toma el menor exponente y el MCM el mayor; entre los dos usan exactamente los exponentes de $a$ y de $b$.
+      prerequisites:
+        - 'MCD por factorización (bloque 12, tema 4)'
+        - 'MCM por factorización (bloque 13, tema 4)'
+      outcomes:
+        - 'Calcular el MCM a partir del MCD (y al revés)'
+        - 'Comprobar un MCD o un MCM con la relación'
+        - 'Saber que la relación sólo vale para dos números'
+      everyday_example: |-
+        Si ya calculaste con Euclides que $\text{MCD}(84, 90) = 6$, obtienes el MCM sin factorizar: $84 \times 90 \div 6 = 1260$.
+    sections:
+      - title: MCD por MCM igual a $a$ por $b$
+        concept: Para dos números, el producto del MCD y el MCM es igual al producto de los números.
+        explanation: |-
+          Comprobémoslo con 12 y 18: $\text{MCD}(12, 18) = 6$ y $\text{MCM}(12, 18) = 36$.
+
+          $6 \times 36 = 216$ y $12 \times 18 = 216$. ¡Coinciden!
+
+          **¿Por qué?** Mira las factorizaciones: $12 = 2^2 \times 3$ y $18 = 2 \times 3^2$.
+
+          - Para el 2: exponentes 2 y 1. El MCD toma el 1 y el MCM el 2.
+          - Para el 3: exponentes 1 y 2. El MCD toma el 1 y el MCM el 2.
+
+          Entre el MCD y el MCM se usa cada exponente una vez, igual que en $12 \times 18$. Por eso los productos son iguales.
+
+          **Uso práctico**: $\text{MCM}(a, b) = (a \times b) \div \text{MCD}(a, b)$.
+
+          **Cuidado**: esta relación sólo vale para **dos** números. Con 2, 4 y 8: $\text{MCD} = 2$, $\text{MCM} = 8$, y $2 \times 8 = 16$, mientras que $2 \times 4 \times 8 = 64$.
+        definition: |-
+          Para naturales $a, b$ distintos de 0: $\text{MCD}(a, b) \times \text{MCM}(a, b) = a \times b$. En particular, si $a$ y $b$ son primos entre sí, $\text{MCM}(a, b) = a \times b$.
+        rules:
+          - '$\text{MCM}(a, b) = a \times b \div \text{MCD}(a, b)$.'
+          - '$\text{MCD}(a, b) = a \times b \div \text{MCM}(a, b)$.'
+          - 'Sólo para dos números.'
+        examples:
+          - problem: 'Sabiendo que $\text{MCD}(84, 90) = 6$, calcula $\text{MCM}(84, 90)$.'
+            solution: |-
+              **Paso 1.** $84 \times 90 = 7560$.
+
+              **Paso 2.** $7560 \div 6 = 1260$.
+
+              Resultado: $\text{MCM}(84, 90) = 1260$. Comprobación por factorización: $2^2 \times 3^2 \times 5 \times 7 = 1260$.
+          - problem: 'Dos números tienen producto 300 y MCM 60. ¿Cuál es su MCD?'
+            solution: |-
+              **Paso 1.** $\text{MCD} = 300 \div 60 = 5$.
+
+              Resultado: el MCD es 5 (por ejemplo, los números 15 y 20).
+        common_errors:
+          - 'Aplicar la relación a tres o más números.'
+          - 'Sumar en lugar de multiplicar.'
+          - 'Dividir entre el MCM cuando se busca el MCM.'
+        summary: |-
+          Para dos números, $\text{MCD} \times \text{MCM} = a \times b$. Permite obtener uno a partir del otro.
+        check:
+          question: 'Si $\text{MCD}(12, 20) = 4$, ¿cuánto vale $\text{MCM}(12, 20)$?'
+          options: ['$60$', '$240$', '$16$']
+          answer: 0
+          explanation: |-
+            $12 \times 20 = 240$ y $240 \div 4 = 60$. El 240 es el producto (falta dividir entre el MCD) y el 16 no tiene relación con la fórmula.
+    glossary:
+      - {term: Relación MCD–MCM, definition: 'Para dos números, $\text{MCD} \times \text{MCM} = a \times b$.'}
+
+  t06:
+    intro:
+      what: |-
+        Este tema muestra situaciones donde el MCM es la herramienta adecuada: la menor cantidad que se puede formar o repartir de varias maneras, y el común denominador de fracciones.
+      purpose: |-
+        Sirve para reconocer cuándo un problema pide un MCM y para interpretar su resultado.
+      importance: |-
+        El MCM aparece al comprar productos que vienen en paquetes distintos, al construir figuras con piezas iguales y, sobre todo, al operar con fracciones.
+      foundations: |-
+        El MCM es la menor cantidad que es a la vez múltiplo de todos los tamaños de grupo.
+      prerequisites:
+        - 'Cálculo del MCM (bloque 13, temas 3 y 4)'
+      outcomes:
+        - 'Identificar problemas de MCM por sus palabras clave'
+        - 'Resolver problemas de la menor cantidad común'
+        - 'Distinguir problemas de MCM y de MCD'
+      everyday_example: |-
+        Con baldosas rectangulares de 12 cm por 18 cm, el cuadrado más pequeño que puedes formar sin cortarlas tiene un lado de $\text{MCM}(12, 18) = 36$ cm.
+    sections:
+      - title: Cuándo usar el MCM
+        concept: Se usa el MCM cuando se busca la menor cantidad que es múltiplo de varias a la vez.
+        explanation: |-
+          **Pistas en el enunciado**
+
+          - "El **menor** número…", "la **mínima** cantidad…", "lo **antes** posible".
+          - Algo que se forma con **paquetes completos** de distintos tamaños.
+          - "Volver a **coincidir**" (lo verás en detalle en el tema 7).
+
+          **MCD o MCM**
+
+          | Situación | Herramienta |
+          |---|---|
+          | Repartir cantidades en partes iguales, lo más grandes posible | MCD |
+          | Buscar la menor cantidad que se pueda repartir de varias formas | MCM |
+
+          Una forma de comprobarlo: el MCD es **menor o igual** que los datos; el MCM es **mayor o igual**.
+
+          **Aplicación a fracciones**: para sumar $\frac{1}{4} + \frac{1}{6}$ hacen falta "trozos del mismo tamaño". El menor denominador común es $\text{MCM}(4, 6) = 12$. Lo estudiarás en el bloque 15.
+        definition: |-
+          Un **problema de MCM** es aquel en que se busca la menor cantidad no nula que es múltiplo común de varias cantidades.
+        rules:
+          - 'Menor cantidad común, coincidencias, paquetes de distintos tamaños: MCM.'
+          - 'El MCM es mayor o igual que los datos; el MCD, menor o igual.'
+        examples:
+          - problem: 'Se quiere formar el cuadrado más pequeño posible con baldosas de 12 cm por 18 cm, sin cortar ninguna. ¿Cuánto mide su lado y cuántas baldosas se usan?'
+            solution: |-
+              **Paso 1.** El lado debe ser múltiplo de 12 y de 18: $\text{MCM}(12, 18) = 36$ cm.
+
+              **Paso 2.** En un lado caben $36 \div 12 = 3$ baldosas y en el otro $36 \div 18 = 2$.
+
+              **Paso 3.** Total: $3 \times 2 = 6$ baldosas.
+
+              Respuesta: lado de 36 cm; 6 baldosas.
+        common_errors:
+          - 'Usar el MCD cuando el problema pide "el menor número que…".'
+          - 'Multiplicar los datos sin comprobar si hay un múltiplo común menor.'
+        summary: |-
+          Cuando buscas la menor cantidad que es múltiplo de varias, usa el MCM. Comprueba que el resultado sea mayor o igual que los datos.
+        check:
+          question: '¿Cuál es el menor número de caramelos que se puede repartir exactamente tanto entre 6 niños como entre 8 niños?'
+          options: ['$24$', '$48$', '$14$']
+          answer: 0
+          explanation: |-
+            Debe ser múltiplo de 6 y de 8; el menor es $\text{MCM}(6, 8) = 24$. El 48 también sirve, pero no es el menor; el 14 no es múltiplo de ninguno.
+    glossary:
+      - {term: Denominador común, definition: 'Denominador igual para varias fracciones; el menor es el MCM de sus denominadores.'}
+
+  t07:
+    intro:
+      what: |-
+        Los problemas de coincidencia y periodicidad tratan de sucesos que se repiten cada cierto tiempo y preguntan cuándo volverán a ocurrir a la vez.
+      purpose: |-
+        Sirve para programar horarios, turnos, revisiones o cualquier actividad que se repite con distintas frecuencias.
+      importance: |-
+        Es la aplicación más típica del MCM y aparece en transporte, salud, trabajo y vida diaria.
+      foundations: |-
+        Un suceso que ocurre cada $a$ minutos ocurre en los múltiplos de $a$. Dos sucesos coinciden en los múltiplos comunes, y la primera vez en el MCM.
+      prerequisites:
+        - 'Múltiplos comunes (bloque 13, tema 2)'
+        - 'Aplicaciones del MCM (bloque 13, tema 6)'
+      outcomes:
+        - 'Calcular cuándo vuelven a coincidir sucesos periódicos'
+        - 'Expresar el resultado como hora o día de la semana'
+      everyday_example: |-
+        Dos alarmas suenan juntas a las 10:00; una suena cada 15 minutos y otra cada 20. Vuelven a sonar juntas a las 11:00, porque $\text{MCM}(15, 20) = 60$ minutos.
+    sections:
+      - title: ¿Cuándo vuelven a coincidir?
+        concept: Si varios sucesos se repiten cada $a$, $b$, … unidades de tiempo y coinciden ahora, volverán a coincidir dentro de $\text{MCM}(a, b, \ldots)$.
+        explanation: |-
+          Un autobús sale cada 12 minutos y otro cada 18. Si salen juntos a las 8:00:
+
+          - El primero sale a los $12, 24, 36, 48, \ldots$ minutos.
+          - El segundo sale a los $18, 36, 54, \ldots$ minutos.
+
+          Vuelven a coincidir a los **36 minutos**, que es $\text{MCM}(12, 18)$. Después coincidirán cada 36 minutos: a los 72, 108, …
+
+          **Pasos para resolver**
+
+          1. Identifica los periodos (cada cuánto se repite cada suceso), todos en la **misma unidad**.
+          2. Calcula su MCM.
+          3. Traduce el resultado a lo que se pregunta: una hora, un día de la semana, una fecha.
+
+          **Días de la semana**: si algo ocurre dentro de 12 días y hoy es lunes, como $12 = 7 + 5$, será el mismo día que dentro de 5 días: sábado.
+        definition: |-
+          Si varios sucesos periódicos, de periodos $a, b, \ldots$, coinciden en un instante, la siguiente coincidencia ocurre $\text{MCM}(a, b, \ldots)$ unidades de tiempo después, y luego se repite con ese mismo periodo.
+        rules:
+          - 'Periodos en la misma unidad.'
+          - 'Próxima coincidencia: el MCM de los periodos.'
+          - 'Las coincidencias se repiten cada MCM.'
+        examples:
+          - problem: 'Dos autobuses salen juntos a las 8:00; uno sale cada 12 minutos y otro cada 18. ¿A qué hora vuelven a salir juntos?'
+            solution: |-
+              **Paso 1.** $12 = 2^2 \times 3$, $18 = 2 \times 3^2$. $\text{MCM} = 2^2 \times 3^2 = 36$.
+
+              **Paso 2.** $8{:}00 + 36$ minutos $= 8{:}36$.
+
+              Respuesta: a las 8:36.
+          - problem: 'Lucía nada cada 3 días y corre cada 4 días. Hoy, lunes, hizo ambas cosas. ¿Qué día de la semana volverá a hacer las dos?'
+            solution: |-
+              **Paso 1.** $\text{MCM}(3, 4) = 12$ días.
+
+              **Paso 2.** $12 = 7 + 5$: dentro de 12 días es el mismo día de la semana que dentro de 5. Lunes + 5 días = sábado.
+
+              Respuesta: dentro de 12 días, un sábado.
+          - problem: 'Tres faros destellan cada 4, 6 y 10 segundos. Si acaban de destellar juntos, ¿cuándo volverán a hacerlo?'
+            solution: |-
+              **Paso 1.** $4 = 2^2$, $6 = 2 \times 3$, $10 = 2 \times 5$. $\text{MCM} = 2^2 \times 3 \times 5 = 60$.
+
+              Respuesta: dentro de 60 segundos (1 minuto).
+        common_errors:
+          - 'Sumar los periodos en lugar de calcular el MCM.'
+          - 'Mezclar unidades (minutos y horas) sin convertirlas.'
+          - 'Contar el día de hoy como uno de los días que pasan.'
+        summary: |-
+          Los sucesos periódicos coinciden cada MCM de sus periodos. Usa la misma unidad y traduce el resultado a horas o días.
+        check:
+          question: 'Dos alarmas suenan cada 15 y cada 20 minutos. Sonaron juntas a las 10:00. ¿A qué hora vuelven a coincidir?'
+          options: ['11:00', '10:35', '15:00']
+          answer: 0
+          explanation: |-
+            $\text{MCM}(15, 20) = 60$ minutos, así que coinciden a las 11:00. Las 10:35 resultan de sumar los periodos ($15 + 20$).
+    glossary:
+      - {term: Periodo, definition: 'Tiempo que tarda un suceso en repetirse.'}
+      - {term: Coincidencia, definition: 'Momento en que dos o más sucesos ocurren a la vez.'}

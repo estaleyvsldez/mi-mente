@@ -1,0 +1,705 @@
+block: b03
+intro: >-
+  Los números no son todos del mismo tipo. En este bloque conocerás los conjuntos
+  numéricos (naturales, enteros, racionales, irracionales y reales), cómo se
+  relacionan entre sí, cómo se representan en la recta numérica y cómo se comparan
+  y ordenan.
+
+topics:
+  t01:
+    intro:
+      what: 'Los números naturales son los que usamos para contar: 1, 2, 3, 4, …'
+      purpose: 'Sirven para contar objetos y para ordenar (primero, segundo, tercero…).'
+      importance: 'Son el primer conjunto numérico y a partir de ellos se construyen todos los demás.'
+      foundations: 'La acción de contar objetos uno a uno y la idea de que siempre hay un número siguiente.'
+      prerequisites:
+        - 'Número y cantidad (bloque 1, tema 6).'
+        - 'Sistema decimal (bloque 2, tema 2).'
+      outcomes:
+        - Reconocer si un número es natural.
+        - Conocer el símbolo $\mathbb{N}$ y las propiedades básicas de los naturales.
+        - Identificar el sucesor y el antecesor de un natural.
+      everyday_example: >-
+        Contar las personas de una fila, los días de un mes o los pisos de un edificio
+        se hace con números naturales.
+    sections:
+      - title: 'Los números para contar'
+        concept: 'Los números naturales forman el conjunto $\mathbb{N} = \{1, 2, 3, 4, \dots\}$, que empieza en 1 y no tiene fin.'
+        explanation: |-
+          Los **números naturales** son los que aparecen de forma natural al contar: $1, 2, 3, 4, 5, \dots$ El conjunto se representa con la letra $\mathbb{N}$ y los tres puntos indican que **sigue sin fin**.
+
+          **Sobre el cero:** algunos libros incluyen el 0 entre los naturales y otros no. En este curso tomaremos $\mathbb{N} = \{1, 2, 3, \dots\}$ y diremos que el 0 es un número **entero** (lo verás en el siguiente tema). Si un texto incluye el 0, suele escribir $\mathbb{N}_0$.
+
+          Propiedades importantes:
+
+          * Tienen un **primer elemento**, el 1.
+          * Todo natural tiene un **sucesor** (el siguiente): el sucesor de $n$ es $n + 1$. Por eso no existe un «último» natural.
+          * Todo natural salvo el 1 tiene un **antecesor** (el anterior): $n - 1$.
+          * Al **sumar** o **multiplicar** dos naturales se obtiene otro natural. Pero al **restar** no siempre: $3 - 5$ no es natural. Esa limitación es la que lleva a los números enteros.
+
+          Los naturales no incluyen números con «partes», como $2{,}5$ o «medio».
+        definition: >-
+          El conjunto de los números naturales es $\mathbb{N} = \{1, 2, 3, \dots\}$:
+          empieza en 1 y cada elemento $n$ tiene un sucesor $n + 1$.
+        rules:
+          - 'El menor natural es 1 (con la convención de este curso).'
+          - 'Sucesor de $n$: $n + 1$. Antecesor de $n$ (si $n > 1$): $n - 1$.'
+          - 'Suma y producto de naturales son naturales; la resta no siempre.'
+        examples:
+          - problem: '¿Cuáles de estos números son naturales? $7,\ 0,\ 12,\ 2{,}5,\ 100$'
+            solution: |-
+              **Paso 1.** $7$, $12$ y $100$ sirven para contar: son naturales.
+              **Paso 2.** $0$ no es natural con nuestra convención (es entero).
+              **Paso 3.** $2{,}5$ tiene una parte decimal: no es natural.
+              Resultado: $7$, $12$ y $100$.
+        common_errors:
+          - 'Pensar que existe un natural más grande que todos: siempre se puede sumar 1.'
+          - 'Incluir números decimales como 3,5 entre los naturales.'
+        summary: >-
+          $\mathbb{N} = \{1, 2, 3, \dots\}$ es infinito, empieza en 1, y cada natural tiene un
+          sucesor; restar naturales no siempre da un natural.
+        check:
+          question: '¿Cuál es el sucesor de 99?'
+          options: ['100', '98', '990']
+          answer: 0
+          explanation: 'El sucesor es el siguiente: $99 + 1 = 100$. El 98 es el antecesor.'
+    glossary:
+      - term: 'Número natural'
+        definition: 'Número que sirve para contar: 1, 2, 3, …'
+      - term: 'Sucesor'
+        definition: 'Número siguiente a uno dado: el sucesor de $n$ es $n + 1$.'
+      - term: 'Antecesor'
+        definition: 'Número anterior a uno dado: el antecesor de $n$ es $n - 1$.'
+    practice: []
+
+  t02:
+    intro:
+      what: 'Los números enteros son los naturales, el cero y los opuestos negativos de los naturales.'
+      purpose: 'Sirven para expresar cantidades por debajo de un punto de referencia, como deudas, temperaturas bajo cero o pisos de sótano.'
+      importance: 'Permiten restar siempre y son imprescindibles para el álgebra y para las finanzas.'
+      foundations: 'Los números naturales y la idea de un punto de referencia (el cero) con dos sentidos.'
+      prerequisites:
+        - 'Números naturales (bloque 3, tema 1).'
+      outcomes:
+        - Reconocer números enteros positivos, negativos y el cero.
+        - Encontrar el opuesto de un entero.
+        - Calcular el valor absoluto de un entero.
+      everyday_example: >-
+        Si la temperatura es de 3 grados bajo cero, escribimos $-3\ ^\circ\text{C}$; si
+        debes 50 pesos, tu saldo es $-50$.
+    sections:
+      - title: 'Positivos, negativos y cero'
+        concept: 'Los enteros son $\mathbb{Z} = \{\dots, -3, -2, -1, 0, 1, 2, 3, \dots\}$, con los negativos a un lado del cero y los positivos al otro.'
+        explanation: |-
+          Con los naturales no podemos responder a «¿cuánto es $3 - 5$?». Para eso se crean los **números negativos**: $-1, -2, -3, \dots$, que se leen «menos uno», «menos dos»…
+
+          El conjunto de los **números enteros** se escribe $\mathbb{Z}$ y contiene:
+
+          * los **enteros positivos**: $1, 2, 3, \dots$ (los naturales; también se escriben $+1, +2, \dots$);
+          * el **cero**, que no es positivo ni negativo;
+          * los **enteros negativos**: $-1, -2, -3, \dots$
+
+          Los enteros expresan situaciones con **dos sentidos** respecto a una referencia: ganar o perder, subir o bajar, sobre o bajo cero.
+
+          **Opuesto.** El opuesto de un entero es el que está a la misma distancia del cero pero del otro lado: el opuesto de $5$ es $-5$, el de $-8$ es $8$, y el opuesto de $0$ es $0$.
+
+          **Valor absoluto.** Es la distancia de un número al cero, sin importar el lado. Se escribe entre barras: $|-5| = 5$ y $|5| = 5$. El valor absoluto nunca es negativo. Lo usaremos mucho para sumar y comparar enteros.
+        definition: >-
+          $\mathbb{Z} = \{\dots, -2, -1, 0, 1, 2, \dots\}$. El opuesto de $a$ es $-a$. El
+          valor absoluto $|a|$ es la distancia de $a$ al cero.
+        rules:
+          - 'Todo natural es entero, pero no todo entero es natural.'
+          - 'El 0 no es positivo ni negativo.'
+          - '$|a|$ es $a$ si $a$ es positivo o cero, y su opuesto si $a$ es negativo.'
+          - 'Un número y su opuesto tienen el mismo valor absoluto.'
+        examples:
+          - problem: 'Halla el opuesto y el valor absoluto de $-12$.'
+            solution: |-
+              **Paso 1.** El opuesto está al otro lado del cero, a la misma distancia: $12$.
+              **Paso 2.** La distancia de $-12$ al cero es 12: $|-12| = 12$.
+              Resultado: opuesto $12$; valor absoluto $12$.
+          - problem: 'Expresa con un entero: «un sótano dos pisos bajo la planta baja».'
+            solution: |-
+              **Paso 1.** La referencia (cero) es la planta baja.
+              **Paso 2.** «Bajo» indica el sentido negativo; son 2 pisos.
+              Resultado: $-2$.
+        common_errors:
+          - 'Creer que el valor absoluto «cambia el signo»: $|7| = 7$, no $-7$.'
+          - 'Considerar el 0 como positivo o como negativo.'
+        summary: >-
+          $\mathbb{Z}$ reúne negativos, cero y positivos; el opuesto cambia de lado y el
+          valor absoluto mide la distancia al cero.
+        check:
+          question: '¿Cuánto vale $|-9|$?'
+          options: ['9', '-9', '0']
+          answer: 0
+          explanation: 'El valor absoluto es la distancia al cero, y $-9$ está a 9 unidades del cero.'
+    glossary:
+      - term: 'Número entero'
+        definition: 'Cualquier número del conjunto $\{\dots, -2, -1, 0, 1, 2, \dots\}$.'
+      - term: 'Opuesto'
+        definition: 'Número a la misma distancia del cero pero del otro lado.'
+      - term: 'Valor absoluto'
+        definition: 'Distancia de un número al cero; se escribe $|a|$.'
+    practice: []
+
+  t03:
+    intro:
+      what: 'Los números racionales son los que pueden escribirse como cociente (fracción) de dos enteros, con denominador distinto de cero.'
+      purpose: 'Sirven para expresar partes de un todo y medidas que no son enteras, como medio litro o 2,5 metros.'
+      importance: 'Fracciones y decimales están en recetas, precios, medidas y porcentajes; son la base de los bloques de fracciones y decimales.'
+      foundations: 'Los enteros y la idea de repartir una unidad en partes iguales.'
+      prerequisites:
+        - 'Números enteros (bloque 3, tema 2).'
+      outcomes:
+        - Reconocer un número racional en forma de fracción o de decimal.
+        - Justificar que todo entero es racional.
+        - Distinguir decimales exactos y periódicos.
+      everyday_example: >-
+        «Tres cuartos de hora» son $\frac{3}{4}$ de hora: dividir la hora en 4 partes
+        iguales y tomar 3, es decir, 45 minutos.
+    sections:
+      - title: 'Fracciones y decimales'
+        concept: 'Un número racional es el que se puede escribir como $\frac{a}{b}$, con $a$ y $b$ enteros y $b \neq 0$.'
+        explanation: |-
+          Una **fracción** $\frac{a}{b}$ significa: divide la unidad en $b$ partes iguales y toma $a$ de ellas. El número de abajo ($b$) se llama **denominador** y el de arriba ($a$), **numerador**. Por ejemplo, $\frac{3}{4}$ es «tres cuartos». Las fracciones se estudian a fondo en el bloque 14; aquí sólo necesitamos la idea.
+
+          El conjunto de los **números racionales** se escribe $\mathbb{Q}$ (de «cociente»). Incluye:
+
+          * **Todos los enteros**, porque cualquier entero se puede escribir como fracción con denominador 1: $5 = \frac{5}{1}$, $-3 = \frac{-3}{1}$.
+          * Las **fracciones** no enteras: $\frac{1}{2}$, $-\frac{7}{3}$.
+          * Los **decimales exactos**, con un número finito de cifras decimales: $0{,}5 = \frac{5}{10}$, $2{,}25 = \frac{225}{100}$. (En $0{,}5$ la cifra tras la coma son **décimas**: 5 décimas; en $0{,}25$, 25 **centésimas**.)
+          * Los **decimales periódicos**, cuyas cifras se repiten sin fin: $0{,}333\ldots = \frac{1}{3}$, que se escribe $0{,}\overline{3}$.
+
+          El denominador **nunca puede ser 0**: repartir entre cero partes no tiene sentido (lo verás en el bloque 7).
+        definition: >-
+          $\mathbb{Q} = \left\{ \frac{a}{b} : a, b \in \mathbb{Z},\ b \neq 0 \right\}$. Un número
+          es racional si y sólo si su expresión decimal es exacta o periódica.
+        rules:
+          - 'Todo entero es racional: $n = \frac{n}{1}$.'
+          - 'Los decimales exactos y los periódicos son racionales.'
+          - 'El denominador de una fracción no puede ser 0.'
+        examples:
+          - problem: '¿Es $0{,}7$ un número racional? Justifícalo.'
+            solution: |-
+              **Paso 1.** $0{,}7$ son 7 décimas.
+              **Paso 2.** Se escribe como fracción: $0{,}7 = \frac{7}{10}$.
+              **Paso 3.** 7 y 10 son enteros y $10 \neq 0$.
+              Resultado: sí es racional.
+          - problem: '¿Es $-4$ racional?'
+            solution: |-
+              **Paso 1.** Escribimos $-4 = \frac{-4}{1}$.
+              Resultado: sí; todo entero es racional.
+        common_errors:
+          - 'Creer que los enteros no son racionales: todo entero es una fracción con denominador 1.'
+          - 'Pensar que $0{,}333\ldots$ no es racional porque «no termina»: es periódico, y vale $\frac{1}{3}$.'
+        summary: >-
+          Racional = fracción de enteros con denominador distinto de 0; incluye enteros,
+          decimales exactos y decimales periódicos.
+        check:
+          question: '¿Cuál de estos números es racional pero NO entero?'
+          options: ['$\frac{3}{4}$', '$-6$', '$\frac{8}{2}$']
+          answer: 0
+          explanation: '$\frac{3}{4}$ no es un número entero. $-6$ es entero y $\frac{8}{2} = 4$ también lo es (8 repartido en 2 partes da 4).'
+    glossary:
+      - term: 'Número racional'
+        definition: 'Número que se puede escribir como $\frac{a}{b}$ con $a, b$ enteros y $b \neq 0$.'
+      - term: 'Decimal periódico'
+        definition: 'Decimal en el que un grupo de cifras se repite sin fin.'
+      - term: 'Fracción'
+        definition: 'Expresión $\frac{a}{b}$: la unidad dividida en $b$ partes, de las que se toman $a$.'
+    practice: []
+
+  t04:
+    intro:
+      what: 'Los números irracionales son los que no pueden escribirse como fracción de dos enteros; su expresión decimal es infinita y no periódica.'
+      purpose: 'Aparecen al medir: la diagonal de un cuadrado de lado 1 o la relación entre la circunferencia y su diámetro ($\pi$).'
+      importance: 'Completan la recta numérica; sin ellos habría longitudes que no tendrían número.'
+      foundations: 'Los racionales y la idea de decimal infinito.'
+      prerequisites:
+        - 'Números racionales (bloque 3, tema 3).'
+      outcomes:
+        - Reconocer irracionales conocidos como $\sqrt{2}$ y $\pi$.
+        - Distinguir una raíz exacta (racional) de una no exacta (irracional).
+        - Explicar por qué $3{,}14$ es sólo una aproximación de $\pi$.
+      everyday_example: >-
+        Al calcular la longitud de una rueda se usa $\pi \approx 3{,}14$; el valor exacto
+        de $\pi$ tiene infinitas cifras decimales sin repetición.
+    sections:
+      - title: 'Decimales infinitos sin patrón'
+        concept: 'Un irracional tiene infinitas cifras decimales que nunca se repiten en bloque, por eso no es una fracción.'
+        explanation: |-
+          Ya sabemos que los racionales tienen decimales **exactos** o **periódicos**. Existen números cuya parte decimal es **infinita y no periódica**: nunca termina y no repite un mismo bloque. Esos son los **números irracionales** (conjunto $\mathbb{I}$).
+
+          **Ejemplos famosos:**
+
+          * $\pi = 3{,}14159265\ldots$: la longitud de una circunferencia dividida entre su diámetro.
+          * $\sqrt{2} = 1{,}41421356\ldots$
+
+          **¿Qué es $\sqrt{2}$?** La **raíz cuadrada** de un número es el número positivo que, multiplicado por sí mismo, da ese número. (Las raíces se estudian más adelante; aquí basta esta idea.) Como $3 \times 3 = 9$, $\sqrt{9} = 3$. Pero ningún entero ni ninguna fracción multiplicado por sí mismo da exactamente 2: $1{,}4 \times 1{,}4 = 1{,}96$ y $1{,}5 \times 1{,}5 = 2{,}25$. Por eso $\sqrt{2}$ es irracional.
+
+          **Cuidado:** no toda raíz es irracional. $\sqrt{4} = 2$, $\sqrt{25} = 5$ son **raíces exactas** y, por tanto, naturales. En general, la raíz cuadrada de un natural que no es el resultado de multiplicar un natural por sí mismo ($\sqrt{2}, \sqrt{3}, \sqrt{5}, \sqrt{7}$…) es irracional.
+
+          Valores como $3{,}14$ o $\frac{22}{7}$ son **aproximaciones** racionales de $\pi$, no su valor exacto.
+        definition: >-
+          Un número irracional es un número real que no puede expresarse como $\frac{a}{b}$
+          con $a, b$ enteros y $b \neq 0$; su desarrollo decimal es infinito y no periódico.
+        rules:
+          - 'Ningún número es racional e irracional a la vez.'
+          - '$\pi$ y $\sqrt{2}$ son irracionales.'
+          - 'Si $\sqrt{n}$ es exacta, es natural; si no lo es (con $n$ natural), es irracional.'
+        examples:
+          - problem: 'Clasifica $\sqrt{16}$ y $\sqrt{15}$.'
+            solution: |-
+              **Paso 1.** $4 \times 4 = 16$, así que $\sqrt{16} = 4$: es natural (y racional).
+              **Paso 2.** $3 \times 3 = 9$ y $4 \times 4 = 16$; ningún natural da 15, así que $\sqrt{15}$ no es exacta.
+              **Paso 3.** Por la regla anterior, $\sqrt{15}$ es irracional (vale aproximadamente $3{,}87$).
+              Resultado: $\sqrt{16}$ racional; $\sqrt{15}$ irracional.
+        common_errors:
+          - 'Decir que $\pi = 3{,}14$: es sólo una aproximación.'
+          - 'Pensar que toda raíz es irracional: $\sqrt{9} = 3$.'
+          - 'Confundir un decimal periódico (racional) con uno infinito no periódico (irracional).'
+        summary: >-
+          Los irracionales tienen decimales infinitos sin periodo; $\pi$ y las raíces no
+          exactas como $\sqrt{2}$ son los ejemplos clave.
+        check:
+          question: '¿Cuál de estos números es irracional?'
+          options: ['$\sqrt{3}$', '$\sqrt{36}$', '$0{,}\overline{6}$']
+          answer: 0
+          explanation: '$\sqrt{3}$ no es exacta. $\sqrt{36} = 6$ es natural y $0{,}\overline{6}$ es periódico, por tanto racional.'
+    glossary:
+      - term: 'Número irracional'
+        definition: 'Número cuyo desarrollo decimal es infinito y no periódico; no es una fracción.'
+      - term: 'Raíz cuadrada'
+        definition: 'Número positivo que multiplicado por sí mismo da el número dado: $\sqrt{9} = 3$.'
+      - term: 'Pi'
+        definition: 'Cociente entre la longitud de una circunferencia y su diámetro: $\pi \approx 3{,}1416$.'
+    practice: []
+
+  t05:
+    intro:
+      what: 'Los números reales son todos los racionales junto con todos los irracionales.'
+      purpose: 'Son los números con los que se miden longitudes, tiempos y cualquier magnitud continua.'
+      importance: 'Es el conjunto más amplio de este curso; cada punto de la recta numérica es un número real.'
+      foundations: 'Los conjuntos racional e irracional, que no tienen elementos en común.'
+      prerequisites:
+        - 'Números racionales (bloque 3, tema 3).'
+        - 'Números irracionales (bloque 3, tema 4).'
+      outcomes:
+        - Explicar qué es un número real.
+        - Reconocer que todo número estudiado en el curso es real.
+        - Relacionar los reales con los puntos de la recta.
+      everyday_example: >-
+        La estatura de una persona (1,72 m), una temperatura (−4 °C) o la longitud de
+        una diagonal ($\sqrt{2}$ m) son todos números reales.
+    sections:
+      - title: 'La unión de racionales e irracionales'
+        concept: 'El conjunto de los números reales, $\mathbb{R}$, está formado por todos los racionales y todos los irracionales.'
+        explanation: |-
+          Al juntar los racionales ($\mathbb{Q}$) y los irracionales ($\mathbb{I}$) obtenemos los **números reales**, $\mathbb{R}$:
+
+          $$\mathbb{R} = \mathbb{Q} \cup \mathbb{I}$$
+
+          (El símbolo $\cup$ se lee «unión» y significa «juntar los elementos de ambos conjuntos».)
+
+          Como racionales e irracionales no comparten ningún número, **cada real es exactamente una de las dos cosas**: o racional o irracional.
+
+          Los reales tienen una propiedad muy visual: **cada punto de la recta numérica corresponde a un número real, y cada número real a un punto**. Los racionales solos dejan «huecos» (por ejemplo, el punto $\sqrt{2}$); los irracionales los rellenan. Por eso se dice que la recta real es **continua**.
+
+          Todos los números que usarás en este curso de aritmética ($5$, $-3$, $\frac{2}{5}$, $0{,}75$, $\pi$…) son reales. (Existen números que no son reales, como los complejos, pero no forman parte de este curso.)
+        definition: >-
+          $\mathbb{R} = \mathbb{Q} \cup \mathbb{I}$: el conjunto de todos los números racionales
+          e irracionales. Existe una correspondencia uno a uno entre los reales y los
+          puntos de una recta.
+        rules:
+          - 'Todo número racional es real y todo irracional es real.'
+          - 'Un real es racional o irracional, nunca ambos.'
+          - 'Cada punto de la recta numérica representa un número real.'
+        examples:
+          - problem: '¿Es real el número $-\frac{5}{2}$? ¿Es racional o irracional?'
+            solution: |-
+              **Paso 1.** $-\frac{5}{2}$ es una fracción de enteros con denominador distinto de 0: es racional.
+              **Paso 2.** Todo racional es real.
+              Resultado: es real y racional (vale $-2{,}5$).
+        common_errors:
+          - 'Pensar que «real» significa «que existe en la vida real»: es el nombre de un conjunto.'
+          - 'Creer que un número puede ser racional e irracional a la vez.'
+        summary: >-
+          $\mathbb{R}$ reúne racionales e irracionales y llena por completo la recta numérica.
+        check:
+          question: '¿Cuál de estas afirmaciones es verdadera?'
+          options:
+            - 'Todo número irracional es real'
+            - 'Todo número real es racional'
+            - 'El número $\pi$ no es real'
+          answer: 0
+          explanation: '$\mathbb{I}$ está contenido en $\mathbb{R}$. No todo real es racional ($\sqrt{2}$ no lo es), y $\pi$ es real e irracional.'
+    glossary:
+      - term: 'Número real'
+        definition: 'Número racional o irracional; corresponde a un punto de la recta.'
+      - term: 'Unión'
+        definition: 'Conjunto formado por los elementos de dos conjuntos; se escribe $\cup$.'
+    practice: []
+
+  t06:
+    intro:
+      what: 'Clasificar un número es decidir a qué conjuntos numéricos pertenece ($\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{I}$, $\mathbb{R}$).'
+      purpose: 'Saber qué tipo de número tenemos indica qué operaciones y propiedades podemos usar con él.'
+      importance: 'Clasificar correctamente evita errores al resolver problemas y prepara para el álgebra.'
+      foundations: 'Las definiciones de cada conjunto y sus relaciones de inclusión.'
+      prerequisites:
+        - 'Naturales, enteros, racionales, irracionales y reales (bloque 3, temas 1–5).'
+      outcomes:
+        - Indicar todos los conjuntos a los que pertenece un número.
+        - Clasificar fracciones, decimales y raíces.
+        - Reconocer «disfraces», como $\frac{6}{3}$ o $\sqrt{25}$.
+      everyday_example: >-
+        Un número de invitados es natural; un saldo bancario puede ser negativo (entero);
+        un precio con céntimos es racional.
+    sections:
+      - title: 'Un procedimiento para clasificar'
+        concept: 'Un número puede pertenecer a varios conjuntos a la vez, porque los conjuntos están unos dentro de otros.'
+        explanation: |-
+          Los conjuntos están **anidados** como cajas dentro de cajas:
+
+          $$\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \qquad \mathbb{I} \subset \mathbb{R}$$
+
+          (El símbolo $\subset$ significa «está contenido en».) Por eso, si un número es natural, **también** es entero, racional y real.
+
+          **Procedimiento:**
+
+          1. **Simplifica primero.** Muchos números van «disfrazados»: $\frac{6}{3} = 2$, $\sqrt{25} = 5$, $-\frac{8}{4} = -2$.
+          2. ¿Es un decimal infinito no periódico, como $\pi$ o una raíz no exacta? → **irracional y real** (y nada más).
+          3. Si no, es **racional y real**. Además:
+             * ¿Es un número sin parte decimal? → también **entero**.
+             * ¿Es entero y mayor que 0? → también **natural**.
+
+          | Número | $\mathbb{N}$ | $\mathbb{Z}$ | $\mathbb{Q}$ | $\mathbb{I}$ | $\mathbb{R}$ |
+          |---|---|---|---|---|---|
+          | $7$ | sí | sí | sí | no | sí |
+          | $-4$ | no | sí | sí | no | sí |
+          | $0{,}5$ | no | no | sí | no | sí |
+          | $\sqrt{2}$ | no | no | no | sí | sí |
+        definition: >-
+          Clasificar un número es determinar todos los conjuntos numéricos a los que
+          pertenece, teniendo en cuenta que $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$
+          e $\mathbb{I} \subset \mathbb{R}$.
+        rules:
+          - 'Simplifica antes de clasificar.'
+          - 'Natural ⇒ entero ⇒ racional ⇒ real.'
+          - 'Irracional ⇒ real, pero nunca racional.'
+        examples:
+          - problem: 'Clasifica $\frac{12}{4}$.'
+            solution: |-
+              **Paso 1.** Simplificamos: 12 repartido en 4 partes iguales da 3, así que $\frac{12}{4} = 3$.
+              **Paso 2.** 3 es entero y mayor que 0: natural.
+              Resultado: pertenece a $\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$ y $\mathbb{R}$.
+          - problem: 'Clasifica $-0{,}25$.'
+            solution: |-
+              **Paso 1.** Es un decimal exacto: $-0{,}25 = -\frac{25}{100}$, racional.
+              **Paso 2.** Tiene parte decimal: no es entero ni natural.
+              Resultado: pertenece a $\mathbb{Q}$ y $\mathbb{R}$.
+        common_errors:
+          - 'Marcar un solo conjunto: si 7 es natural, también es entero, racional y real.'
+          - 'Clasificar $\sqrt{25}$ como irracional sin simplificar: vale 5.'
+        summary: >-
+          Simplifica, decide si es irracional; si no, es racional y mira si además es
+          entero y natural. Todo es real.
+        check:
+          question: '¿A qué conjuntos pertenece $-9$?'
+          options:
+            - '$\mathbb{Z}$, $\mathbb{Q}$ y $\mathbb{R}$'
+            - 'Sólo a $\mathbb{Z}$'
+            - '$\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$ y $\mathbb{R}$'
+          answer: 0
+          explanation: 'Es entero (y por tanto racional y real), pero no natural porque es negativo.'
+    glossary:
+      - term: 'Inclusión'
+        definition: 'Relación entre conjuntos en la que todos los elementos de uno están en el otro ($\subset$).'
+    practice: []
+
+  t07:
+    intro:
+      what: 'La recta numérica es una línea en la que cada punto representa un número, ordenados de menor a mayor de izquierda a derecha.'
+      purpose: 'Sirve para visualizar números, compararlos y entender las operaciones como desplazamientos.'
+      importance: 'Es una de las herramientas más útiles para comprender los negativos, las fracciones y el orden.'
+      foundations: 'Un punto de origen (el 0), una unidad de medida fija y dos sentidos.'
+      prerequisites:
+        - 'Números enteros (bloque 3, tema 2).'
+        - 'Números racionales (bloque 3, tema 3).'
+      outcomes:
+        - Dibujar una recta numérica con enteros.
+        - Ubicar fracciones y decimales entre dos enteros.
+        - Leer el número que marca un punto en una recta dividida en partes iguales.
+      everyday_example: >-
+        Un termómetro es una recta numérica vertical: el 0 en el medio, las temperaturas
+        positivas arriba y las negativas abajo.
+    sections:
+      - title: 'Construir y leer la recta'
+        concept: 'En la recta numérica el 0 es el origen, la distancia entre enteros consecutivos es siempre la misma y los números crecen hacia la derecha.'
+        explanation: |-
+          **Construcción:**
+
+          1. Dibuja una línea recta y marca un punto como **0** (el **origen**).
+          2. Elige una **unidad** (por ejemplo, 1 cm) y marca puntos a esa distancia a la derecha: $1, 2, 3, \dots$
+          3. Marca puntos a la misma distancia a la izquierda: $-1, -2, -3, \dots$
+
+          ```
+          ←—|——|——|——|——|——|——|—→
+           -3  -2  -1   0   1   2   3
+          ```
+
+          Un número y su opuesto quedan a la misma distancia del 0, en lados opuestos. Esa distancia es su valor absoluto.
+
+          **Números entre enteros.** Para ubicar fracciones o decimales, divide el tramo entre dos enteros en **partes iguales**. Si cada unidad se divide en 4 partes, cada parte mide $\frac{1}{4}$. Un punto que está 3 partes a la derecha del 2 representa $2 + \frac{3}{4} = 2{,}75$.
+
+          **Todo número no entero está entre dos enteros consecutivos.** Por ejemplo, $2{,}5$ está entre 2 y 3; $-1{,}5$ está entre $-2$ y $-1$. Cuidado con los negativos: el entero **menor** es el que está más a la **izquierda**, más lejos del 0.
+        definition: >-
+          La recta numérica es una recta con un origen (0) y una unidad, en la que cada
+          número real corresponde a un punto: los positivos a la derecha del 0 y los
+          negativos a la izquierda.
+        rules:
+          - 'Los números aumentan hacia la derecha.'
+          - 'Las divisiones de una unidad deben ser iguales.'
+          - 'Si la unidad se divide en $n$ partes, cada parte vale $\frac{1}{n}$.'
+        examples:
+          - problem: 'Cada unidad está dividida en 5 partes iguales. Un punto está 3 partes a la derecha de $-1$. ¿Qué número representa?'
+            solution: |-
+              **Paso 1.** Cada parte vale $\frac{1}{5} = 0{,}2$.
+              **Paso 2.** Tres partes valen $\frac{3}{5} = 0{,}6$.
+              **Paso 3.** Desde $-1$ avanzamos $0{,}6$ a la derecha: $-1 + 0{,}6 = -0{,}4$ (el punto está entre $-1$ y $0$, más cerca del 0).
+              Resultado: $-0{,}4$, es decir, $-\frac{2}{5}$.
+          - problem: '¿Entre qué dos enteros consecutivos está $-3{,}2$?'
+            solution: |-
+              **Paso 1.** $-3{,}2$ está un poco a la izquierda de $-3$.
+              **Paso 2.** El entero siguiente hacia la izquierda es $-4$.
+              Resultado: entre $-4$ y $-3$.
+        common_errors:
+          - 'Dibujar divisiones de distinto tamaño.'
+          - 'Decir que $-3{,}2$ está entre $-3$ y $-2$: está a la izquierda de $-3$.'
+        summary: >-
+          La recta tiene origen 0, unidad fija y crece hacia la derecha; dividiendo cada
+          unidad en partes iguales se ubican fracciones y decimales.
+        check:
+          question: 'El número $-2{,}5$ está entre dos enteros consecutivos. ¿Cuál es el menor de ellos?'
+          options: ['$-3$', '$-2$', '$2$']
+          answer: 0
+          explanation: '$-2{,}5$ está entre $-3$ y $-2$; el menor es el de la izquierda, $-3$.'
+    glossary:
+      - term: 'Recta numérica'
+        definition: 'Recta en la que cada punto representa un número.'
+      - term: 'Origen'
+        definition: 'El punto que representa el 0.'
+    practice: []
+
+  t08:
+    intro:
+      what: 'Comparar dos números es decidir cuál es mayor; ordenar es colocarlos de menor a mayor o de mayor a menor.'
+      purpose: 'Sirve para comparar precios, temperaturas, saldos, marcas deportivas y cualquier cantidad.'
+      importance: 'El orden es fundamental para estimar, redondear y resolver desigualdades más adelante.'
+      foundations: 'La recta numérica: un número es mayor que otro si está a su derecha.'
+      prerequisites:
+        - 'Recta numérica (bloque 3, tema 7).'
+        - 'Valor absoluto (bloque 3, tema 2).'
+      outcomes:
+        - Usar correctamente los símbolos $<$, $>$ y $=$.
+        - Comparar enteros, incluidos los negativos.
+        - Comparar y ordenar decimales.
+      everyday_example: >-
+        Hace más frío a $-8\ ^\circ\text{C}$ que a $-3\ ^\circ\text{C}$: $-8$ es menor que $-3$.
+    sections:
+      - title: 'Mayor, menor e igual'
+        concept: 'En la recta numérica, de dos números es mayor el que está más a la derecha.'
+        explanation: |-
+          **Símbolos:**
+
+          * $a < b$: «$a$ es menor que $b$».
+          * $a > b$: «$a$ es mayor que $b$».
+          * $a = b$: «son iguales».
+
+          Truco: la abertura del símbolo apunta siempre al número **mayor**: $3 < 8$, $8 > 3$.
+
+          **Reglas para comparar:**
+
+          1. **Positivo y negativo:** cualquier positivo es mayor que cualquier negativo, y el 0 está entre ambos: $-100 < 0 < 1$.
+          2. **Dos positivos:** es mayor el de mayor valor absoluto: $12 > 7$.
+          3. **Dos negativos:** es mayor el que está **más cerca del cero**, es decir, el de **menor** valor absoluto: $-3 > -8$. Piensa en deudas: deber 3 es mejor que deber 8.
+          4. **Decimales:** compara primero la parte entera; si es igual, compara cifra a cifra después de la coma (décimas, luego centésimas…). Puedes añadir ceros al final para igualar cifras: $2{,}5 = 2{,}50 > 2{,}35$.
+
+          **Ordenar** varios números: coloca primero los negativos (del más lejano al 0 al más cercano), luego el 0 si aparece, y después los positivos de menor a mayor.
+        definition: >-
+          Dados dos reales $a$ y $b$, $a < b$ si $a$ está a la izquierda de $b$ en la
+          recta numérica.
+        rules:
+          - 'Todo negativo es menor que 0, y 0 es menor que todo positivo.'
+          - 'Entre dos negativos, es mayor el de menor valor absoluto.'
+          - 'Para comparar decimales se igualan las cifras decimales añadiendo ceros.'
+        examples:
+          - problem: 'Ordena de menor a mayor: $3,\ -5,\ 0,\ -1,\ 2{,}5$'
+            solution: |-
+              **Paso 1.** Negativos: $-5$ y $-1$. $-5$ está más lejos del 0, así que $-5 < -1$.
+              **Paso 2.** Luego el $0$.
+              **Paso 3.** Positivos: $2{,}5 < 3$.
+              Resultado: $-5 < -1 < 0 < 2{,}5 < 3$.
+          - problem: 'Compara $0{,}7$ y $0{,}65$.'
+            solution: |-
+              **Paso 1.** Igualamos cifras: $0{,}70$ y $0{,}65$.
+              **Paso 2.** 70 centésimas es más que 65 centésimas.
+              Resultado: $0{,}7 > 0{,}65$.
+        common_errors:
+          - 'Comparar negativos como si fueran positivos: $-8$ NO es mayor que $-3$.'
+          - 'Creer que $0{,}65 > 0{,}7$ porque 65 es mayor que 7: hay que igualar cifras.'
+        summary: >-
+          Mayor es el que está más a la derecha; entre negativos gana el más cercano al
+          cero; en decimales, iguala cifras y compara.
+        check:
+          question: '¿Qué símbolo va en $-6 \;\square\; -2$?'
+          options: ['$<$', '$>$', '$=$']
+          answer: 0
+          explanation: '$-6$ está a la izquierda de $-2$ (más lejos del cero), así que $-6 < -2$.'
+    glossary:
+      - term: 'Desigualdad'
+        definition: 'Expresión que compara dos números con $<$ o $>$.'
+    practice: []
+
+  t09:
+    intro:
+      what: 'Es el estudio de las distintas formas de escribir un mismo número, por ejemplo como fracción o como decimal, y de mostrarlo en la recta.'
+      purpose: 'Permite elegir la forma más cómoda para cada situación: comparar, calcular o comunicar.'
+      importance: 'Pasar con soltura de fracción a decimal y de decimal a fracción es clave en los bloques de fracciones, decimales y porcentajes.'
+      foundations: 'Las fracciones decimales (con denominador 10, 100, 1000…) y la equivalencia de fracciones.'
+      prerequisites:
+        - 'Números racionales (bloque 3, tema 3).'
+        - 'Recta numérica (bloque 3, tema 7).'
+      outcomes:
+        - Escribir un decimal exacto como fracción decimal.
+        - Escribir fracciones sencillas como decimales.
+        - Simplificar una fracción dividiendo numerador y denominador por un mismo número.
+      everyday_example: >-
+        «Medio kilo», «$\frac{1}{2}$ kg» y «0,5 kg» son tres formas de decir la misma
+        cantidad.
+    sections:
+      - title: 'De decimal a fracción y de fracción a decimal'
+        concept: 'Un mismo número racional puede escribirse como fracción o como decimal; las fracciones con denominador 10, 100, 1000 hacen de puente.'
+        explanation: |-
+          **Décimas y centésimas.** En un decimal, la primera cifra tras la coma son **décimas** ($\frac{1}{10}$), la segunda **centésimas** ($\frac{1}{100}$), la tercera **milésimas** ($\frac{1}{1000}$).
+
+          **Decimal → fracción.** Escribe las cifras sin coma en el numerador y, en el denominador, un 1 seguido de tantos ceros como cifras decimales haya:
+          $$0{,}75 = \frac{75}{100}, \qquad 1{,}2 = \frac{12}{10}$$
+
+          **Simplificar.** Una fracción no cambia de valor si se **dividen numerador y denominador por el mismo número**. (Este procedimiento se estudia a fondo en el bloque 14; aquí basta con buscar un número que «quepa exacto» en ambos.) Por ejemplo, 25 cabe exactamente 3 veces en 75 y 4 veces en 100:
+          $$\frac{75}{100} = \frac{3}{4}$$
+
+          **Fracción → decimal.** Una fracción es una división indicada. Cuando el denominador es 2, 4, 5, 20, 25 o 50, un camino sencillo es **multiplicar numerador y denominador por el mismo número** para llegar a 10, 100 o 1000:
+          $$\frac{3}{4} = \frac{3 \times 25}{4 \times 25} = \frac{75}{100} = 0{,}75 \qquad \frac{1}{2} = \frac{5}{10} = 0{,}5$$
+
+          Equivalencias útiles para memorizar: $\frac{1}{2} = 0{,}5$, $\frac{1}{4} = 0{,}25$, $\frac{3}{4} = 0{,}75$, $\frac{1}{5} = 0{,}2$, $\frac{1}{10} = 0{,}1$.
+        definition: >-
+          Dos expresiones representan el mismo número racional si corresponden al mismo
+          punto de la recta; por ejemplo, $\frac{a}{b} = \frac{a \times k}{b \times k}$ para
+          cualquier $k \neq 0$.
+        rules:
+          - 'Decimal → fracción: cifras sin coma sobre 10, 100, 1000… según el número de decimales.'
+          - 'Multiplicar o dividir numerador y denominador por el mismo número (distinto de 0) no cambia el valor.'
+          - 'Una fracción está simplificada cuando ya no hay ningún número mayor que 1 que divida exacto a ambos términos.'
+        examples:
+          - problem: 'Escribe $0{,}4$ como fracción simplificada.'
+            solution: |-
+              **Paso 1.** Una cifra decimal: $0{,}4 = \frac{4}{10}$.
+              **Paso 2.** 2 cabe exacto en 4 (2 veces) y en 10 (5 veces): $\frac{4}{10} = \frac{2}{5}$.
+              **Paso 3.** 2 y 5 ya no tienen ningún divisor común mayor que 1.
+              Resultado: $0{,}4 = \frac{2}{5}$.
+          - problem: 'Escribe $\frac{7}{20}$ como decimal.'
+            solution: |-
+              **Paso 1.** Para pasar de 20 a 100 multiplicamos por 5.
+              **Paso 2.** $\frac{7 \times 5}{20 \times 5} = \frac{35}{100}$.
+              **Paso 3.** 35 centésimas: $0{,}35$.
+              Resultado: $\frac{7}{20} = 0{,}35$.
+        common_errors:
+          - 'Escribir $0{,}75 = \frac{75}{10}$: dos cifras decimales piden denominador 100.'
+          - 'Multiplicar sólo el denominador: hay que hacer lo mismo arriba y abajo.'
+          - 'Pensar que $\frac{1}{4} = 0{,}4$: el denominador no se copia como decimal.'
+        summary: >-
+          Decimales y fracciones se traducen mediante denominadores 10, 100, 1000; operar
+          igual arriba y abajo no cambia el valor.
+        check:
+          question: '¿Cuál es la escritura decimal de $\frac{3}{5}$?'
+          options: ['$0{,}6$', '$0{,}35$', '$3{,}5$']
+          answer: 0
+          explanation: '$\frac{3}{5} = \frac{3 \times 2}{5 \times 2} = \frac{6}{10} = 0{,}6$.'
+    glossary:
+      - term: 'Décima'
+        definition: 'Cada una de las 10 partes iguales de la unidad: $0{,}1 = \frac{1}{10}$.'
+      - term: 'Centésima'
+        definition: 'Cada una de las 100 partes iguales de la unidad: $0{,}01 = \frac{1}{100}$.'
+      - term: 'Simplificar'
+        definition: 'Dividir numerador y denominador de una fracción por un mismo número para obtener una fracción equivalente más sencilla.'
+    practice: []
+
+  t10:
+    intro:
+      what: 'Es el estudio de cómo se contienen unos conjuntos numéricos a otros.'
+      purpose: 'Permite razonar sobre afirmaciones como «todo entero es racional» y detectar las falsas.'
+      importance: 'Resume el bloque y da una visión de conjunto de todos los números del curso.'
+      foundations: 'Las definiciones de $\mathbb{N}$, $\mathbb{Z}$, $\mathbb{Q}$, $\mathbb{I}$ y $\mathbb{R}$.'
+      prerequisites:
+        - 'Clasificación de los números (bloque 3, tema 6).'
+      outcomes:
+        - Explicar la cadena $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$.
+        - Decidir si una afirmación sobre conjuntos es verdadera o falsa.
+        - Dar un contraejemplo para refutar una afirmación falsa.
+      everyday_example: >-
+        Igual que «todo perro es mamífero» pero «no todo mamífero es perro», todo
+        natural es entero, pero no todo entero es natural.
+    sections:
+      - title: 'Cajas dentro de cajas'
+        concept: 'Cada conjunto amplía al anterior para resolver una limitación, y los racionales y los irracionales juntos forman los reales sin compartir elementos.'
+        explanation: |-
+          Los conjuntos se fueron ampliando para poder hacer más operaciones:
+
+          * $\mathbb{N}$: contar. Pero $3 - 5$ no tiene respuesta.
+          * $\mathbb{Z}$: añade el 0 y los negativos; ya se puede restar siempre. Pero repartir 1 entre 2 no da un entero.
+          * $\mathbb{Q}$: añade las fracciones; ya se puede dividir (salvo entre 0). Pero $\sqrt{2}$ no es racional.
+          * $\mathbb{R}$: añade los irracionales y llena la recta.
+
+          Así se obtiene la cadena:
+          $$\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}, \qquad \mathbb{I} \subset \mathbb{R}, \qquad \mathbb{Q} \cup \mathbb{I} = \mathbb{R}$$
+
+          y racionales e irracionales **no tienen elementos en común**.
+
+          **Cómo razonar con afirmaciones:**
+
+          * «**Todo** A es B» es verdadera si A está dentro de B. Ejemplo: «todo entero es racional» (porque $n = \frac{n}{1}$).
+          * Para demostrar que «todo A es B» es **falsa** basta un **contraejemplo**: un elemento de A que no esté en B. «Todo entero es natural» es falsa porque $-3$ es entero y no natural.
+          * Entre dos racionales siempre hay otro racional (por ejemplo, el punto medio entre ambos).
+        definition: >-
+          Un conjunto $A$ está contenido en $B$ ($A \subset B$) si todo elemento de $A$ es
+          también elemento de $B$. Un contraejemplo es un caso concreto que muestra que
+          una afirmación general es falsa.
+        rules:
+          - '$\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$ e $\mathbb{I} \subset \mathbb{R}$.'
+          - '$\mathbb{Q}$ e $\mathbb{I}$ no comparten ningún número.'
+          - 'Un solo contraejemplo basta para refutar una afirmación del tipo «todo…».'
+        examples:
+          - problem: '¿Verdadero o falso? «Todo número racional es entero».'
+            solution: |-
+              **Paso 1.** Buscamos un racional que no sea entero.
+              **Paso 2.** $\frac{1}{2}$ es racional y no es entero (es $0{,}5$).
+              Resultado: falso; $\frac{1}{2}$ es un contraejemplo.
+        common_errors:
+          - 'Invertir la inclusión: que todo natural sea entero no significa que todo entero sea natural.'
+          - 'Creer que $\pi = 3{,}14$ y por tanto racional: $3{,}14$ es sólo una aproximación.'
+        summary: >-
+          $\mathbb{N} \subset \mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R}$ e $\mathbb{I} \subset \mathbb{R}$;
+          las afirmaciones falsas se refutan con un contraejemplo.
+        check:
+          question: '¿Verdadero o falso? «El 0 es un número entero».'
+          options: ['Verdadero', 'Falso']
+          answer: 0
+          explanation: '$\mathbb{Z} = \{\dots, -1, 0, 1, \dots\}$ incluye el 0.'
+    glossary:
+      - term: 'Contraejemplo'
+        definition: 'Caso concreto que demuestra que una afirmación general es falsa.'
+      - term: 'Subconjunto'
+        definition: 'Conjunto cuyos elementos están todos en otro conjunto.'
+    practice: []

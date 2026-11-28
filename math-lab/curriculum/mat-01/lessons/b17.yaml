@@ -1,0 +1,749 @@
+block: b17
+intro: >-
+  En el bloque anterior aprendiste qué es un número decimal y cómo se leen,
+  escriben y comparan. Ahora aprenderás a operar con ellos: sumar, restar,
+  multiplicar y dividir, redondear, estimar resultados y resolver problemas
+  reales, sobre todo de dinero y medidas. La idea central es siempre la misma:
+  operar como con números naturales y cuidar la posición de la coma.
+topics:
+  t01:
+    intro:
+      what: >-
+        La suma de decimales es la operación que reúne dos o más cantidades
+        con parte decimal, como $3{,}45 + 12{,}8$.
+      purpose: >-
+        Sirve para calcular totales de precios, longitudes, pesos o tiempos
+        que no son números enteros.
+      importance: >-
+        Casi todas las cantidades de la vida diaria (dinero, medidas) tienen
+        decimales; sumarlas bien evita errores en cuentas y compras.
+      foundations: >-
+        Se basa en el valor posicional decimal (b16): sólo se suman cifras del
+        mismo orden, décimas con décimas, centésimas con centésimas, igual que
+        en la suma de naturales se suman unidades con unidades.
+      prerequisites:
+        - 'Suma de números naturales y suma en columna (b04)'
+        - 'Valor posicional decimal: décimas, centésimas, milésimas (b16)'
+      outcomes:
+        - 'Sumar decimales con distinta cantidad de cifras decimales'
+        - 'Sumar un número entero y un decimal'
+        - 'Calcular totales de compras y medidas'
+      everyday_example: >-
+        Compras pan por $12{,}50$ pesos y leche por $8{,}75$ pesos: el total
+        es $12{,}50 + 8{,}75 = 21{,}25$ pesos.
+    sections:
+      - title: Coma debajo de coma
+        concept: Para sumar decimales se alinean las comas y se suma como con naturales.
+        explanation: |-
+          En $3{,}45$ el $4$ son décimas y el $5$ son centésimas; en $12{,}8$ el $8$ son décimas. Si escribimos los números en columna **alineando las comas**, cada cifra queda debajo de otra del mismo orden: décimas con décimas, centésimas con centésimas, unidades con unidades.
+
+          Cuando un número tiene menos cifras decimales que otro, podemos **rellenar con ceros** a la derecha: $12{,}8 = 12{,}80$, porque $8$ décimas son lo mismo que $80$ centésimas. Así ambos tienen el mismo número de cifras decimales y la columna queda ordenada.
+
+          Después se suma exactamente igual que con números naturales, de derecha a izquierda y con las llevadas de siempre (10 centésimas forman 1 décima, 10 décimas forman 1 unidad). Al final se baja la coma en la misma columna.
+
+          Un número entero, como $7$, tiene la coma "escondida" a su derecha: $7 = 7{,}0 = 7{,}00$.
+        definition: >-
+          La suma de decimales $a + b$ se obtiene escribiendo ambos números con
+          la misma cantidad de cifras decimales, sumándolos como naturales y
+          colocando la coma de modo que el resultado tenga esa misma cantidad de
+          cifras decimales.
+        rules:
+          - 'Coma debajo de coma: cada cifra queda alineada con las de su mismo orden.'
+          - 'Añadir ceros al final de la parte decimal no cambia el valor: $2{,}5 = 2{,}50$.'
+          - 'Las llevadas funcionan igual: 10 centésimas = 1 décima; 10 décimas = 1 unidad.'
+          - 'La suma de decimales es conmutativa y asociativa, como la de naturales (b08).'
+        examples:
+          - problem: 'Calcula $3{,}45 + 12{,}8$'
+            solution: |-
+              **Paso 1.** Igualamos las cifras decimales: $12{,}8 = 12{,}80$.
+              **Paso 2.** Escribimos en columna con las comas alineadas: $\;\;3{,}45$ sobre $12{,}80$.
+              **Paso 3.** Centésimas: $5 + 0 = 5$. Décimas: $4 + 8 = 12$, escribimos $2$ y llevamos $1$.
+              **Paso 4.** Unidades: $3 + 2 + 1 = 6$. Decenas: $1$.
+              **Paso 5.** Bajamos la coma: $16{,}25$.
+              Resultado: $16{,}25$.
+          - problem: 'Calcula $7 + 0{,}36$'
+            solution: |-
+              **Paso 1.** Escribimos el entero con coma: $7 = 7{,}00$.
+              **Paso 2.** Sumamos: $7{,}00 + 0{,}36 = 7{,}36$.
+              Resultado: $7{,}36$.
+        common_errors:
+          - 'Alinear los números por la derecha, como si fueran enteros: $3{,}45 + 12{,}8$ no es $4{,}73$. Alinea siempre por la coma.'
+          - 'Olvidar la coma en el resultado o colocarla en otra columna.'
+          - 'Pensar que $7 + 0{,}36 = 0{,}43$: el $7$ son unidades, no centésimas.'
+        summary: >-
+          Para sumar decimales: coma debajo de coma, rellenar con ceros si hace
+          falta, sumar como naturales y bajar la coma en su columna.
+        check:
+          question: '¿Cuánto es $2{,}5 + 0{,}75$?'
+          options: ['$3{,}25$', '$1{,}00$', '$2{,}80$', '$3{,}20$']
+          answer: 0
+          explanation: >-
+            $2{,}5 = 2{,}50$; luego $2{,}50 + 0{,}75 = 3{,}25$. La opción $1{,}00$
+            sale de alinear por la derecha ($25 + 75$), y $2{,}80$ de sumar sólo
+            las décimas.
+    glossary:
+      - {term: Sumando, definition: 'Cada uno de los números que se suman.'}
+      - {term: Alinear las comas, definition: 'Escribir los números en columna de modo que todas las comas queden en la misma columna.'}
+  t02:
+    intro:
+      what: >-
+        La resta de decimales calcula la diferencia entre dos cantidades con
+        parte decimal, como $15{,}3 - 4{,}75$.
+      purpose: >-
+        Sirve para calcular cambios de dinero, diferencias de medidas o cuánto
+        falta para alcanzar una cantidad.
+      importance: >-
+        Es la operación del "cambio" en una compra y de las comparaciones
+        entre medidas; un error de coma puede multiplicar el error por 10 o 100.
+      foundations: >-
+        Igual que la suma, se apoya en el valor posicional: sólo se restan
+        cifras del mismo orden. Las desagrupaciones (pedir prestado) funcionan
+        como en la resta de naturales.
+      prerequisites:
+        - 'Resta con desagrupación (b05)'
+        - 'Suma de decimales (b17, tema anterior)'
+      outcomes:
+        - 'Restar decimales con distinto número de cifras decimales'
+        - 'Restar un decimal de un número entero'
+        - 'Comprobar una resta mediante una suma'
+      everyday_example: >-
+        Pagas con un billete de $20$ pesos una compra de $13{,}40$ pesos: te
+        devuelven $20 - 13{,}40 = 6{,}60$ pesos.
+    sections:
+      - title: Restar alineando y rellenando
+        concept: Se alinean las comas, se completan con ceros las cifras decimales y se resta como con naturales.
+        explanation: |-
+          La resta de decimales sigue la misma regla que la suma: **coma debajo de coma**. Así restamos décimas de décimas y centésimas de centésimas.
+
+          En la resta es aún más importante **rellenar con ceros**, porque el número de arriba (el minuendo) puede tener menos cifras decimales que el de abajo. Por ejemplo, en $8 - 2{,}36$ escribimos $8 = 8{,}00$. Ahora sí hay centésimas "de dónde quitar": como $0$ centésimas no alcanzan para quitar $6$, desagrupamos: 1 unidad = 10 décimas, 1 décima = 10 centésimas, exactamente como en la resta de naturales con desagrupación.
+
+          Al terminar bajamos la coma en su columna. Para **comprobar**, sumamos el resultado con el sustraendo: debe dar el minuendo (la resta y la suma son operaciones inversas, b05).
+        definition: >-
+          La diferencia $a - b$ de dos decimales (con $a \ge b$) se obtiene
+          igualando sus cifras decimales con ceros, restándolos como naturales y
+          colocando la coma en la misma posición.
+        rules:
+          - 'Coma debajo de coma.'
+          - 'Si el minuendo tiene menos cifras decimales, se completan con ceros: $8 = 8{,}00$.'
+          - 'Se desagrupa igual que en naturales: 1 unidad = 10 décimas; 1 décima = 10 centésimas.'
+          - 'Comprobación: diferencia + sustraendo = minuendo.'
+        examples:
+          - problem: 'Calcula $15{,}3 - 4{,}75$'
+            solution: |-
+              **Paso 1.** Igualamos cifras decimales: $15{,}3 = 15{,}30$.
+              **Paso 2.** Centésimas: $0 - 5$ no se puede; desagrupamos una décima: $10 - 5 = 5$. Quedan $2$ décimas.
+              **Paso 3.** Décimas: $2 - 7$ no se puede; desagrupamos una unidad: $12 - 7 = 5$. Quedan $4$ unidades.
+              **Paso 4.** Unidades: $4 - 4 = 0$. Decenas: $1$.
+              **Paso 5.** Resultado con la coma: $10{,}55$.
+              **Comprobación:** $10{,}55 + 4{,}75 = 15{,}30$ ✓.
+              Resultado: $10{,}55$.
+          - problem: 'Calcula $8 - 2{,}36$'
+            solution: |-
+              **Paso 1.** Escribimos $8 = 8{,}00$.
+              **Paso 2.** Restamos como naturales: $800 - 236 = 564$.
+              **Paso 3.** Colocamos la coma con dos cifras decimales: $5{,}64$.
+              **Comprobación:** $5{,}64 + 2{,}36 = 8{,}00$ ✓.
+              Resultado: $5{,}64$.
+        common_errors:
+          - 'Bajar las cifras del sustraendo que "sobran" sin restarlas: $8 - 2{,}36$ no es $6{,}36$. Rellena con ceros el minuendo.'
+          - 'Alinear por la derecha en lugar de por la coma.'
+          - 'Restar la cifra menor de la mayor en cada columna (por ejemplo $5 - 0$ en lugar de $0 - 5$ con desagrupación).'
+        summary: >-
+          Para restar decimales: coma debajo de coma, completar con ceros,
+          restar como naturales con desagrupación y comprobar con una suma.
+        check:
+          question: '¿Cuánto es $6 - 1{,}25$?'
+          options: ['$5{,}25$', '$4{,}75$', '$5{,}75$', '$4{,}25$']
+          answer: 1
+          explanation: >-
+            $6 = 6{,}00$ y $6{,}00 - 1{,}25 = 4{,}75$. Comprobación:
+            $4{,}75 + 1{,}25 = 6$. La opción $5{,}25$ sale de no restar las
+            centésimas y décimas del sustraendo.
+    glossary:
+      - {term: Minuendo, definition: 'Número del que se resta.'}
+      - {term: Sustraendo, definition: 'Número que se resta.'}
+      - {term: Diferencia, definition: 'Resultado de la resta.'}
+  t03:
+    intro:
+      what: >-
+        La multiplicación de decimales calcula productos en los que al menos un
+        factor tiene parte decimal, como $2{,}35 \times 4$ o $1{,}2 \times 0{,}3$.
+      purpose: >-
+        Sirve para calcular el precio de varias unidades, áreas con medidas
+        decimales o partes de una cantidad.
+      importance: >-
+        Es la base del cálculo de precios, de los porcentajes (b22) y del
+        interés (b23).
+      foundations: >-
+        Un decimal es una fracción con denominador 10, 100, 1000… (b16). Al
+        multiplicar fracciones se multiplican los denominadores (b15), por eso
+        las cifras decimales de los factores se suman.
+      prerequisites:
+        - 'Multiplicación por varias cifras (b06)'
+        - 'Multiplicación de fracciones (b15)'
+        - 'Conversión entre fracciones y decimales (b16)'
+      outcomes:
+        - 'Multiplicar un decimal por un entero'
+        - 'Multiplicar dos decimales'
+        - 'Multiplicar rápidamente por 10, 100 y 1000'
+      everyday_example: >-
+        Si un kilo de tomates cuesta $2{,}35$ pesos, 4 kilos cuestan
+        $2{,}35 \times 4 = 9{,}40$ pesos.
+    sections:
+      - title: Multiplicar y contar cifras decimales
+        concept: Se multiplica sin comas y el producto lleva tantas cifras decimales como los dos factores juntos.
+        explanation: |-
+          En la multiplicación **no hace falta alinear las comas**. Se procede así: se multiplican los números como si fueran naturales (ignorando las comas) y después se coloca la coma.
+
+          ¿Dónde? Contamos las cifras decimales de cada factor y las **sumamos**: esa es la cantidad de cifras decimales del producto.
+
+          ¿Por qué funciona? Porque $1{,}2 = \frac{12}{10}$ y $0{,}3 = \frac{3}{10}$. Al multiplicar fracciones se multiplican numeradores y denominadores (b15):
+          $\frac{12}{10} \times \frac{3}{10} = \frac{36}{100} = 0{,}36$.
+          Los denominadores $10 \times 10 = 100$ explican las dos cifras decimales: $1 + 1 = 2$.
+
+          Si al colocar la coma faltan cifras, se añaden ceros a la izquierda: $0{,}4 \times 0{,}2$ da $8$ sin comas y necesita dos cifras decimales, así que es $0{,}08$.
+        definition: >-
+          Si $a$ tiene $m$ cifras decimales y $b$ tiene $n$, el producto
+          $a \times b$ se obtiene multiplicando los números sin coma y
+          colocando la coma de forma que el resultado tenga $m + n$ cifras
+          decimales.
+        rules:
+          - 'No se alinean las comas: se multiplica como con naturales.'
+          - 'Cifras decimales del producto = suma de las cifras decimales de los factores.'
+          - 'Si faltan cifras, se completan con ceros a la izquierda: $0{,}4 \times 0{,}2 = 0{,}08$.'
+          - 'Los ceros finales de la parte decimal pueden quitarse al final: $9{,}40 = 9{,}4$.'
+        examples:
+          - problem: 'Calcula $2{,}35 \times 4$'
+            solution: |-
+              **Paso 1.** Sin comas: $235 \times 4 = 940$.
+              **Paso 2.** Cifras decimales: $2{,}35$ tiene $2$; $4$ tiene $0$. Total: $2$.
+              **Paso 3.** Colocamos la coma: $9{,}40 = 9{,}4$.
+              Resultado: $9{,}4$.
+          - problem: 'Calcula $1{,}2 \times 0{,}3$'
+            solution: |-
+              **Paso 1.** Sin comas: $12 \times 3 = 36$.
+              **Paso 2.** Cifras decimales: $1 + 1 = 2$.
+              **Paso 3.** Colocamos la coma: $0{,}36$.
+              **Control:** $1{,}2$ es poco más de $1$, y $0{,}3$ es menos de la mitad; un resultado algo mayor que $0{,}3$ es razonable.
+              Resultado: $0{,}36$.
+        common_errors:
+          - 'Alinear las comas como en la suma: en la multiplicación no hace falta.'
+          - 'Poner sólo las cifras decimales de uno de los factores: $1{,}2 \times 0{,}3$ no es $3{,}6$.'
+          - 'Creer que multiplicar siempre agranda: al multiplicar por un número menor que 1 el resultado es menor.'
+        summary: >-
+          Multiplica como naturales y coloca la coma de modo que el producto
+          tenga tantas cifras decimales como los dos factores juntos.
+        check:
+          question: '¿Cuánto es $0{,}4 \times 0{,}2$?'
+          options: ['$0{,}8$', '$0{,}08$', '$8$', '$0{,}008$']
+          answer: 1
+          explanation: >-
+            $4 \times 2 = 8$ y el producto necesita $1 + 1 = 2$ cifras
+            decimales: $0{,}08$. Equivale a $\frac{4}{10} \times \frac{2}{10} =
+            \frac{8}{100}$.
+      - title: Multiplicar por 10, 100 y 1000
+        concept: Multiplicar por 10, 100 o 1000 corre la coma 1, 2 o 3 lugares a la derecha.
+        explanation: |-
+          Multiplicar por $10$ convierte cada décima en una unidad, cada centésima en una décima, y así sucesivamente: **todas las cifras suben un orden**. Visualmente, la coma se desplaza un lugar a la derecha.
+
+          Por la misma razón, multiplicar por $100$ corre la coma dos lugares y por $1000$, tres lugares. La regla práctica: **tantos lugares como ceros** tenga el $10$, $100$ o $1000$.
+
+          Si no hay suficientes cifras, se completan con ceros a la derecha: $0{,}5 \times 1000 = 500$, porque $0{,}5 = 0{,}500$ y al correr tres lugares queda $500$.
+
+          Es lo mismo que ya conoces con naturales (b06): $34 \times 100 = 3400$; allí la coma estaba oculta a la derecha del $4$.
+        definition: >-
+          Multiplicar un decimal por $10^n$ ($10$, $100$, $1000$…) equivale a
+          desplazar su coma $n$ lugares a la derecha, completando con ceros si
+          es necesario.
+        rules:
+          - '$\times 10$: la coma se corre 1 lugar a la derecha.'
+          - '$\times 100$: 2 lugares; $\times 1000$: 3 lugares.'
+          - 'Si faltan cifras, se añaden ceros a la derecha.'
+        examples:
+          - problem: 'Calcula $3{,}47 \times 100$'
+            solution: |-
+              **Paso 1.** $100$ tiene dos ceros: la coma se corre $2$ lugares a la derecha.
+              **Paso 2.** $3{,}47 \to 347$.
+              Resultado: $347$.
+          - problem: 'Calcula $0{,}5 \times 1000$'
+            solution: |-
+              **Paso 1.** Tres ceros: la coma se corre $3$ lugares.
+              **Paso 2.** Completamos: $0{,}500 \to 500$.
+              Resultado: $500$.
+        common_errors:
+          - 'Correr la coma hacia la izquierda: eso es dividir, no multiplicar.'
+          - 'Añadir ceros al final sin mover la coma: $3{,}47 \times 100$ no es $3{,}4700$.'
+        summary: >-
+          Por 10, 100 o 1000: la coma se desplaza a la derecha tantos lugares
+          como ceros tenga el número.
+        check:
+          question: '¿Cuánto es $2{,}06 \times 10$?'
+          options: ['$20{,}6$', '$206$', '$0{,}206$', '$2{,}060$']
+          answer: 0
+          explanation: >-
+            Por 10 la coma se corre un lugar a la derecha: $2{,}06 \to 20{,}6$.
+            $2{,}060$ vale lo mismo que $2{,}06$, y $0{,}206$ sería dividir.
+    glossary:
+      - {term: Factor, definition: 'Cada uno de los números que se multiplican.'}
+      - {term: Producto, definition: 'Resultado de la multiplicación.'}
+  t04:
+    intro:
+      what: >-
+        La división de decimales reparte o mide cantidades con parte decimal,
+        como $7{,}5 \div 3$ o $4{,}8 \div 0{,}6$.
+      purpose: >-
+        Sirve para calcular precios por unidad, repartir cantidades de dinero o
+        saber cuántas veces cabe una medida en otra.
+      importance: >-
+        Permite comparar precios (¿qué paquete sale más barato por kilo?) y es
+        necesaria para la regla de tres (b21) y los porcentajes (b22).
+      foundations: >-
+        Se apoya en la división larga (b07) y en una propiedad clave: si se
+        multiplican dividendo y divisor por el mismo número, el cociente no
+        cambia (es como amplificar una fracción, b14).
+      prerequisites:
+        - 'División larga (b07)'
+        - 'Amplificación de fracciones (b14)'
+        - 'Multiplicación por 10, 100 y 1000 (b17, tema anterior)'
+      outcomes:
+        - 'Dividir un decimal entre un entero'
+        - 'Continuar una división añadiendo ceros'
+        - 'Dividir entre un decimal'
+        - 'Dividir entre 10, 100 y 1000'
+      everyday_example: >-
+        Tres amigos pagan a partes iguales una cuenta de $7{,}50$ pesos: cada
+        uno pone $7{,}50 \div 3 = 2{,}50$ pesos.
+    sections:
+      - title: Decimal entre entero
+        concept: Se divide como con naturales y se coloca la coma en el cociente al pasar la coma del dividendo.
+        explanation: |-
+          Cuando el **divisor es un número entero**, la división se hace igual que la división larga de naturales. La única novedad: en el momento en que "bajamos" la primera cifra decimal del dividendo, **escribimos la coma en el cociente**. Así las décimas del dividendo producen décimas en el cociente.
+
+          Si la división no termina, podemos **añadir ceros** al dividendo ($3 = 3{,}0 = 3{,}00$) y seguir dividiendo para obtener décimas, centésimas, etc. Por ejemplo, $3 \div 4$: $3$ entre $4$ da $0$ enteros; ponemos la coma, bajamos un cero: $30 \div 4 = 7$ y sobran $2$; bajamos otro cero: $20 \div 4 = 5$. Resultado: $0{,}75$.
+
+          Para **dividir entre 10, 100 o 1000** basta correr la coma hacia la **izquierda** tantos lugares como ceros: $45{,}6 \div 100 = 0{,}456$.
+        definition: >-
+          Para dividir un decimal entre un entero se realiza la división larga y
+          se coloca la coma en el cociente justo antes de bajar la primera cifra
+          decimal del dividendo.
+        rules:
+          - 'Al pasar la coma del dividendo, se pone la coma en el cociente.'
+          - 'Se pueden añadir ceros a la derecha del dividendo para continuar la división.'
+          - '$\div 10, 100, 1000$: la coma se corre 1, 2 o 3 lugares a la izquierda.'
+          - 'Comprobación: cociente × divisor + residuo = dividendo (b07).'
+        examples:
+          - problem: 'Calcula $9{,}12 \div 4$'
+            solution: |-
+              **Paso 1.** $9 \div 4 = 2$, sobra $1$. Escribimos $2$.
+              **Paso 2.** Bajamos el $1$ (décimas): ponemos la coma en el cociente. $11 \div 4 = 2$, sobra $3$.
+              **Paso 3.** Bajamos el $2$: $32 \div 4 = 8$, sobra $0$.
+              **Paso 4.** Cociente: $2{,}28$.
+              **Comprobación:** $2{,}28 \times 4 = 9{,}12$ ✓.
+              Resultado: $2{,}28$.
+          - problem: 'Calcula $3 \div 4$'
+            solution: |-
+              **Paso 1.** $3 \div 4 = 0$; escribimos $0$ y la coma, y añadimos un cero: $30$.
+              **Paso 2.** $30 \div 4 = 7$, sobra $2$. Añadimos otro cero: $20 \div 4 = 5$, sobra $0$.
+              Resultado: $0{,}75$.
+        common_errors:
+          - 'Olvidar la coma en el cociente: $9{,}12 \div 4$ no es $228$.'
+          - 'Detener la división con residuo cuando se pide un resultado decimal: añade ceros y continúa.'
+          - 'Correr la coma a la derecha al dividir entre 10, 100 o 1000.'
+        summary: >-
+          Con divisor entero, se divide como siempre y se pone la coma al bajar
+          la primera cifra decimal. Para seguir, se añaden ceros.
+        check:
+          question: '¿Cuánto es $7{,}5 \div 3$?'
+          options: ['$25$', '$0{,}25$', '$2{,}5$', '$2{,}05$']
+          answer: 2
+          explanation: >-
+            $7 \div 3 = 2$ y sobra $1$; con la coma, $15 \div 3 = 5$: $2{,}5$.
+            Comprobación: $2{,}5 \times 3 = 7{,}5$.
+      - title: Dividir entre un decimal
+        concept: Se multiplica dividendo y divisor por 10, 100… hasta que el divisor sea entero.
+        explanation: |-
+          Dividir entre un decimal, como $4{,}8 \div 0{,}6$, parece difícil, pero lo transformamos en una división que ya sabemos hacer.
+
+          La división se puede escribir como fracción: $4{,}8 \div 0{,}6 = \frac{4{,}8}{0{,}6}$. Si **multiplicamos numerador y denominador por el mismo número**, el valor no cambia (amplificación, b14). Elegimos $10$, $100$ o $1000$ para que el divisor quede **entero**:
+          $\frac{4{,}8 \times 10}{0{,}6 \times 10} = \frac{48}{6} = 8$.
+
+          En la práctica: contamos las cifras decimales del divisor y **corremos la coma ese número de lugares en ambos números** (dividendo y divisor). Si el dividendo no tiene cifras suficientes, se completa con ceros: $2{,}4 \div 0{,}08 \to 240 \div 8 = 30$.
+
+          Comprueba que tiene sentido: $0{,}6$ cabe $8$ veces en $4{,}8$, porque $8 \times 0{,}6 = 4{,}8$.
+        definition: >-
+          Para calcular $a \div b$ con $b$ decimal, se multiplican $a$ y $b$
+          por la potencia de 10 que convierte a $b$ en entero; el cociente no
+          cambia: $a \div b = (a \times 10^n) \div (b \times 10^n)$.
+        rules:
+          - 'Se corre la coma en dividendo y divisor el mismo número de lugares.'
+          - 'El número de lugares es el de cifras decimales del divisor.'
+          - 'Dividir entre un número menor que 1 da un resultado mayor que el dividendo.'
+        examples:
+          - problem: 'Calcula $4{,}8 \div 0{,}6$'
+            solution: |-
+              **Paso 1.** El divisor tiene $1$ cifra decimal: multiplicamos ambos por $10$.
+              **Paso 2.** $4{,}8 \div 0{,}6 = 48 \div 6$.
+              **Paso 3.** $48 \div 6 = 8$.
+              **Comprobación:** $8 \times 0{,}6 = 4{,}8$ ✓.
+              Resultado: $8$.
+          - problem: 'Calcula $1{,}25 \div 0{,}5$'
+            solution: |-
+              **Paso 1.** Multiplicamos ambos por $10$: $12{,}5 \div 5$.
+              **Paso 2.** $12 \div 5 = 2$, sobra $2$; ponemos la coma: $25 \div 5 = 5$.
+              **Paso 3.** Cociente: $2{,}5$.
+              **Comprobación:** $2{,}5 \times 0{,}5 = 1{,}25$ ✓.
+              Resultado: $2{,}5$.
+        common_errors:
+          - 'Correr la coma sólo en el divisor: cambia el resultado. Hay que moverla en los dos números.'
+          - 'Creer que dividir siempre achica: $4{,}8 \div 0{,}6 = 8$ es mayor que $4{,}8$.'
+        summary: >-
+          Para dividir entre un decimal, haz entero el divisor multiplicando
+          ambos números por 10, 100 o 1000, y divide como siempre.
+        check:
+          question: '¿Cuánto es $2{,}4 \div 0{,}08$?'
+          options: ['$3$', '$0{,}3$', '$30$', '$300$']
+          answer: 2
+          explanation: >-
+            El divisor tiene 2 cifras decimales: multiplicamos ambos por 100.
+            $240 \div 8 = 30$. Comprobación: $30 \times 0{,}08 = 2{,}4$.
+    glossary:
+      - {term: Dividendo, definition: 'Número que se divide.'}
+      - {term: Divisor, definition: 'Número entre el que se divide.'}
+      - {term: Cociente, definition: 'Resultado de la división.'}
+  t05:
+    intro:
+      what: >-
+        Redondear es sustituir un número por otro más sencillo, con menos
+        cifras, que esté lo más cerca posible de él: por ejemplo, $3{,}467$
+        redondeado a las décimas es $3{,}5$.
+      purpose: >-
+        Sirve para expresar resultados con la precisión que tiene sentido:
+        precios con dos decimales, medidas con una cifra decimal, etc.
+      importance: >-
+        Muchos cálculos (divisiones, raíces, porcentajes) dan muchas cifras
+        decimales; redondear correctamente permite comunicar resultados claros
+        sin perder exactitud útil.
+      foundations: >-
+        Se basa en el valor posicional decimal y en la comparación de decimales
+        (b16): se elige, entre dos valores posibles, el más cercano al número
+        original.
+      prerequisites:
+        - 'Valor posicional decimal (b16)'
+        - 'Comparación y orden de decimales (b16)'
+      outcomes:
+        - 'Redondear decimales a las unidades, décimas o centésimas'
+        - 'Resolver redondeos con nueves que "arrastran" la llevada'
+        - 'Expresar precios redondeados a la centésima'
+      everyday_example: >-
+        Una división de cuenta da $12{,}666\ldots$ pesos por persona; en la
+        práctica cada uno paga $12{,}67$ pesos (redondeo a centésimas).
+    sections:
+      - title: La regla del redondeo
+        concept: Se mira la primera cifra que se elimina; si es 5 o más, la última cifra conservada aumenta en 1.
+        explanation: |-
+          Supongamos que queremos redondear $3{,}467$ a las **décimas**. El número está entre $3{,}4$ y $3{,}5$. ¿A cuál está más cerca? El punto medio entre ambos es $3{,}45$, y $3{,}467$ es mayor que $3{,}45$, así que está más cerca de $3{,}5$.
+
+          No hace falta pensar cada vez en el punto medio: basta mirar **la cifra inmediatamente a la derecha** de la posición a la que redondeamos (aquí, las centésimas: $6$).
+
+          * Si esa cifra es **0, 1, 2, 3 o 4**, la cifra conservada **se queda igual** (redondeo hacia abajo).
+          * Si es **5, 6, 7, 8 o 9**, la cifra conservada **aumenta en 1** (redondeo hacia arriba).
+
+          Después se eliminan todas las cifras a la derecha. Si al sumar 1 la cifra es un $9$, se convierte en $0$ y se lleva $1$ a la cifra de la izquierda: $2{,}996$ a centésimas da $3{,}00$. Ese $3{,}00$ se escribe con sus ceros, para indicar que la precisión es de centésimas.
+
+          En este bloque redondeamos decimales; en el bloque b25 ampliarás el redondeo a decenas, centenas y millares y lo compararás con otras formas de aproximar.
+        definition: >-
+          Redondear un número a cierta posición decimal es reemplazarlo por el
+          número con cifras hasta esa posición que esté más cerca de él; por
+          convenio, cuando la primera cifra eliminada es 5 o mayor, se redondea
+          hacia arriba.
+        rules:
+          - 'Localiza la cifra de la posición pedida (unidades, décimas, centésimas).'
+          - 'Mira sólo la cifra siguiente a su derecha.'
+          - 'Si es 5 o más, suma 1 a la cifra conservada; si es menor que 5, déjala igual.'
+          - 'Elimina las cifras de la derecha; conserva los ceros que indican la precisión ($3{,}00$).'
+          - 'Una llevada sobre un 9 lo convierte en 0 y suma 1 a la izquierda.'
+        examples:
+          - problem: 'Redondea $3{,}467$ a las décimas y a las centésimas.'
+            solution: |-
+              **Paso 1.** A las décimas: la cifra de las décimas es $4$; la siguiente es $6 \ge 5$, sube: $3{,}5$.
+              **Paso 2.** A las centésimas: la cifra es $6$; la siguiente es $7 \ge 5$, sube: $3{,}47$.
+              Resultado: $3{,}5$ y $3{,}47$.
+          - problem: 'Redondea $12{,}849$ a las unidades.'
+            solution: |-
+              **Paso 1.** La cifra de las unidades es $2$.
+              **Paso 2.** La cifra siguiente (décimas) es $8 \ge 5$: sube a $3$.
+              Resultado: $13$.
+          - problem: 'Redondea $2{,}996$ a las centésimas.'
+            solution: |-
+              **Paso 1.** Centésimas: $9$. La cifra siguiente es $6 \ge 5$: hay que sumar 1.
+              **Paso 2.** $9 + 1 = 10$: escribimos $0$ y llevamos $1$ a las décimas, que también son $9$: $0$ y llevamos $1$ a las unidades: $2 + 1 = 3$.
+              Resultado: $3{,}00$.
+        common_errors:
+          - 'Truncar (cortar sin mirar): $3{,}467$ a décimas no es $3{,}4$.'
+          - 'Redondear en cadena desde la última cifra: $5{,}349$ a décimas es $5{,}3$ (se mira el $4$), no $5{,}4$.'
+          - 'Escribir $3$ en lugar de $3{,}00$ cuando se pide precisión de centésimas.'
+        summary: >-
+          Para redondear, mira la cifra siguiente a la posición pedida: 5 o más
+          sube, menos de 5 se queda. Luego elimina las cifras de la derecha.
+        check:
+          question: '¿Cuánto es $5{,}349$ redondeado a las décimas?'
+          options: ['$5{,}4$', '$5{,}3$', '$5{,}35$', '$5{,}0$']
+          answer: 1
+          explanation: >-
+            La cifra de las décimas es $3$ y la siguiente es $4 < 5$, así que se
+            queda igual: $5{,}3$. El $9$ final no se mira: sólo cuenta la cifra
+            inmediatamente a la derecha.
+    glossary:
+      - {term: Redondear, definition: 'Sustituir un número por el más cercano con menos cifras, según una posición dada.'}
+      - {term: Truncar, definition: 'Cortar las cifras a partir de una posición sin mirar las siguientes (se estudia en b25).'}
+  t06:
+    intro:
+      what: >-
+        Aproximar es trabajar con un valor cercano al exacto. Aquí lo usaremos
+        para estimar el resultado de operaciones con decimales redondeando
+        antes los números.
+      purpose: >-
+        Sirve para calcular mentalmente un resultado aproximado y para
+        detectar errores (sobre todo de coma) en un cálculo exacto.
+      importance: >-
+        Estimar es una habilidad cotidiana: saber si el dinero alcanza, si un
+        total del supermercado es razonable o si la calculadora se usó bien.
+      foundations: >-
+        Se basa en el redondeo (tema anterior): al redondear cada número a las
+        unidades, la operación se vuelve sencilla y el resultado queda cerca
+        del exacto.
+      prerequisites:
+        - 'Redondeo de decimales (b17)'
+        - 'Operaciones con decimales (b17)'
+        - 'Cálculo mental (b04–b06)'
+      outcomes:
+        - 'Estimar sumas y productos de decimales'
+        - 'Usar el símbolo $\approx$ correctamente'
+        - 'Detectar resultados absurdos comparando con una estimación'
+      everyday_example: >-
+        En el supermercado llevas productos de $4{,}80$, $7{,}30$ y $2{,}95$
+        pesos: aproximadamente $5 + 7 + 3 = 15$ pesos, así que un billete de
+        $20$ alcanza.
+    sections:
+      - title: Estimar redondeando
+        concept: Se redondean los números a las unidades y se opera con ellos para obtener un resultado aproximado.
+        explanation: |-
+          Una **aproximación** es un valor cercano al exacto que se usa porque es más sencillo. Se escribe con el símbolo $\approx$ ("aproximadamente igual a").
+
+          Para **estimar** una operación con decimales:
+
+          1. Redondea cada número a las unidades (o a un valor fácil).
+          2. Opera con los números redondeados, mentalmente.
+          3. Usa el resultado como referencia: el valor exacto debe estar cerca.
+
+          Por ejemplo, $19{,}8 \times 3{,}1$: redondeando, $20 \times 3 = 60$. El resultado exacto es $61{,}38$, muy cerca. Si alguien hubiera obtenido $6{,}138$, la estimación nos avisa de que la coma está mal colocada.
+
+          La estimación no reemplaza al cálculo exacto: lo **acompaña**. En el bloque b25 estudiarás con más detalle la aproximación por defecto y por exceso, la estimación y cómo medir el error cometido.
+        definition: >-
+          Una aproximación de un número es otro número cercano a él. Estimar
+          una operación es calcular su valor aproximado operando con
+          aproximaciones de los datos.
+        rules:
+          - 'El símbolo $\approx$ indica aproximación; el $=$ se reserva para resultados exactos.'
+          - 'Para estimar, redondea primero y opera después.'
+          - 'Si el resultado exacto se aleja mucho de la estimación, revisa el cálculo.'
+        examples:
+          - problem: 'Estima $4{,}8 + 7{,}3$ y compáralo con el valor exacto.'
+            solution: |-
+              **Paso 1.** Redondeamos a las unidades: $4{,}8 \approx 5$; $7{,}3 \approx 7$.
+              **Paso 2.** Estimación: $5 + 7 = 12$.
+              **Paso 3.** Valor exacto: $4{,}8 + 7{,}3 = 12{,}1$, muy cerca de $12$.
+              Resultado: $\approx 12$.
+          - problem: 'Estima $19{,}8 \times 3{,}1$.'
+            solution: |-
+              **Paso 1.** Redondeamos: $19{,}8 \approx 20$; $3{,}1 \approx 3$.
+              **Paso 2.** Estimación: $20 \times 3 = 60$.
+              **Paso 3.** Valor exacto: $198 \times 31 = 6138$, con dos cifras decimales: $61{,}38$. Es coherente con $60$.
+              Resultado: $\approx 60$.
+        common_errors:
+          - 'Escribir $=$ en lugar de $\approx$ para un valor estimado.'
+          - 'Redondear sólo algunos de los números y operar con el resto exactos: se pierde la ventaja de la estimación.'
+          - 'Tomar la estimación como resultado final cuando se pide un valor exacto.'
+        summary: >-
+          Estimar es redondear los datos y operar con ellos. Sirve para
+          calcular rápido y para comprobar si un resultado exacto es razonable.
+        check:
+          question: 'Redondeando cada número a las unidades, ¿cuál es la estimación de $6{,}7 + 2{,}4$?'
+          options: ['$9$', '$8$', '$10$', '$9{,}1$']
+          answer: 0
+          explanation: >-
+            $6{,}7 \approx 7$ y $2{,}4 \approx 2$, así que $7 + 2 = 9$. El valor
+            $9{,}1$ es el resultado exacto, no la estimación pedida.
+    glossary:
+      - {term: Aproximación, definition: 'Valor cercano al exacto que se usa en su lugar.'}
+      - {term: Estimación, definition: 'Cálculo aproximado de un resultado usando datos redondeados.'}
+  t07:
+    intro:
+      what: >-
+        Las operaciones combinadas con decimales son expresiones con varias
+        operaciones, como $2{,}5 + 1{,}5 \times 4$, que se resuelven en un
+        orden establecido.
+      purpose: >-
+        Sirven para calcular en un solo planteamiento situaciones con varios
+        pasos, como "precio de varios artículos más un cargo fijo".
+      importance: >-
+        El orden de las operaciones garantiza que todos obtengamos el mismo
+        resultado; con decimales se añade el cuidado de la coma en cada paso.
+      foundations: >-
+        Se aplica la jerarquía de operaciones del bloque b09 exactamente igual
+        que con naturales; sólo cambian los números.
+      prerequisites:
+        - 'Jerarquía de operaciones y uso de paréntesis (b09)'
+        - 'Suma, resta, multiplicación y división de decimales (b17)'
+      outcomes:
+        - 'Resolver expresiones con decimales respetando la jerarquía'
+        - 'Usar paréntesis con decimales'
+        - 'Plantear y calcular situaciones de varios pasos'
+      everyday_example: >-
+        Un taxi cobra $2{,}5$ pesos de bajada de bandera y $1{,}5$ pesos por
+        kilómetro: un viaje de 4 km cuesta $2{,}5 + 1{,}5 \times 4 = 8{,}5$
+        pesos.
+    sections:
+      - title: Jerarquía con decimales
+        concept: Primero paréntesis, luego multiplicaciones y divisiones, y al final sumas y restas, de izquierda a derecha.
+        explanation: |-
+          Recuerda el orden del bloque b09:
+
+          1. **Paréntesis** (y otros signos de agrupación), de dentro hacia fuera.
+          2. **Potencias y raíces** (las estudiarás en b18 y b19).
+          3. **Multiplicaciones y divisiones**, de izquierda a derecha.
+          4. **Sumas y restas**, de izquierda a derecha.
+
+          Con decimales el procedimiento es idéntico; en cada paso se aplica la técnica correspondiente (coma debajo de coma en sumas y restas, contar cifras decimales en productos, hacer entero el divisor en divisiones).
+
+          Un buen hábito es **resolver un paso por línea**, copiando lo que aún no se ha operado. Así es fácil revisar dónde está un error. Y al final, una estimación rápida ayuda a detectar comas mal colocadas.
+        definition: >-
+          Una expresión combinada con decimales se evalúa aplicando la
+          jerarquía de operaciones: agrupaciones, potencias y raíces,
+          multiplicaciones y divisiones, y por último sumas y restas, cada
+          nivel de izquierda a derecha.
+        rules:
+          - 'Los paréntesis se resuelven primero.'
+          - 'La multiplicación y la división van antes que la suma y la resta.'
+          - 'Operaciones del mismo nivel: de izquierda a derecha.'
+          - 'Un paso por línea; copia lo que todavía no se opera.'
+        examples:
+          - problem: 'Calcula $2{,}5 + 1{,}5 \times 4$'
+            solution: |-
+              **Paso 1.** Primero la multiplicación: $1{,}5 \times 4 = 6$.
+              **Paso 2.** Luego la suma: $2{,}5 + 6 = 8{,}5$.
+              Resultado: $8{,}5$.
+          - problem: 'Calcula $(2{,}5 + 1{,}5) \times 4$'
+            solution: |-
+              **Paso 1.** Paréntesis: $2{,}5 + 1{,}5 = 4$.
+              **Paso 2.** Multiplicación: $4 \times 4 = 16$.
+              Resultado: $16$.
+          - problem: 'Calcula $10 - 0{,}6 \div 0{,}2$'
+            solution: |-
+              **Paso 1.** Primero la división: $0{,}6 \div 0{,}2 = 6 \div 2 = 3$.
+              **Paso 2.** Luego la resta: $10 - 3 = 7$.
+              Resultado: $7$.
+        common_errors:
+          - 'Operar de izquierda a derecha sin respetar la jerarquía: $2{,}5 + 1{,}5 \times 4$ no es $16$.'
+          - 'Ignorar el paréntesis o resolverlo al final.'
+          - 'Perder la coma en un paso intermedio.'
+        summary: >-
+          Con decimales se usa la misma jerarquía que con naturales. La
+          diferencia entre $2{,}5 + 1{,}5 \times 4 = 8{,}5$ y
+          $(2{,}5 + 1{,}5) \times 4 = 16$ la marcan los paréntesis.
+        check:
+          question: '¿Cuánto es $1{,}2 + 0{,}8 \times 5$?'
+          options: ['$10$', '$5{,}2$', '$4{,}2$', '$6$']
+          answer: 1
+          explanation: >-
+            Primero la multiplicación: $0{,}8 \times 5 = 4$; luego
+            $1{,}2 + 4 = 5{,}2$. La opción $10$ sale de sumar primero
+            ($2 \times 5$), lo cual no respeta la jerarquía.
+    glossary:
+      - {term: Jerarquía de operaciones, definition: 'Orden convenido en que se realizan las operaciones de una expresión.'}
+  t08:
+    intro:
+      what: >-
+        Son situaciones de la vida real (compras, cambio, precios por kilo,
+        medidas) que se resuelven con operaciones de decimales.
+      purpose: >-
+        Sirven para aplicar todo lo aprendido en el bloque a decisiones
+        concretas, sobre todo con dinero.
+      importance: >-
+        Resolver problemas es el objetivo final de la aritmética: traducir una
+        situación a operaciones, calcular y dar una respuesta con sentido.
+      foundations: >-
+        Usa un método general de resolución: comprender, planificar, ejecutar
+        y comprobar, junto con las cuatro operaciones con decimales.
+      prerequisites:
+        - 'Operaciones con decimales (b17)'
+        - 'Operaciones combinadas (b17)'
+        - 'Resolución de problemas con naturales (b04–b07)'
+      outcomes:
+        - 'Calcular el total de una compra'
+        - 'Calcular el cambio que se recibe'
+        - 'Calcular el precio por unidad (precio unitario)'
+      everyday_example: >-
+        Comprar 3 cuadernos de $12{,}75$ pesos y pagar con $50$: ¿cuánto te
+        devuelven? Resolverlo exige multiplicar y luego restar.
+    sections:
+      - title: Un método para resolver problemas
+        concept: Comprender, planificar, calcular y comprobar, dando la respuesta con unidades.
+        explanation: |-
+          Un problema con decimales se resuelve igual que uno con naturales. Conviene seguir cuatro pasos:
+
+          1. **Comprender.** ¿Qué datos hay? ¿Qué se pregunta? ¿En qué unidades?
+          2. **Planificar.** ¿Qué operaciones hacen falta y en qué orden? Palabras como "cada uno" o "por unidad" suelen indicar multiplicación o división; "cuánto sobra" o "cuánto devuelven", resta.
+          3. **Calcular** con cuidado la coma.
+          4. **Comprobar.** ¿La respuesta es razonable? Una estimación ayuda. ¿Responde a la pregunta? ¿Lleva unidades?
+
+          Tres situaciones muy frecuentes:
+
+          * **Total de una compra:** precio por unidad × cantidad.
+          * **Cambio:** dinero entregado − total.
+          * **Precio unitario:** total ÷ cantidad. Sirve para comparar ofertas: el paquete con menor precio por unidad es el más barato.
+
+          Con dinero, el resultado final se expresa con dos cifras decimales (centésimas), redondeando si hace falta.
+        definition: >-
+          Resolver un problema es traducir la situación a una expresión
+          aritmética, calcular su valor e interpretar el resultado en el
+          contexto, con sus unidades.
+        rules:
+          - 'Lee el problema completo antes de operar.'
+          - 'Total = precio unitario × cantidad; precio unitario = total ÷ cantidad.'
+          - 'Cambio = dinero entregado − total a pagar.'
+          - 'Las cantidades de dinero se expresan con dos cifras decimales.'
+          - 'Comprueba con una estimación.'
+        examples:
+          - problem: 'Compras 3 cuadernos de $12{,}75$ pesos y pagas con un billete de $50$. ¿Cuánto te devuelven?'
+            solution: |-
+              **Paso 1.** Total: $12{,}75 \times 3 = 38{,}25$ pesos ($1275 \times 3 = 3825$, dos cifras decimales).
+              **Paso 2.** Cambio: $50 - 38{,}25 = 11{,}75$ pesos.
+              **Paso 3.** Comprobación: $38{,}25 + 11{,}75 = 50$ ✓. Estimación: $13 \times 3 = 39$, cambio $\approx 11$ ✓.
+              Resultado: $11{,}75$ pesos.
+          - problem: 'Por $2{,}5$ kg de manzanas se pagaron $8{,}75$ pesos. ¿Cuál es el precio por kilo?'
+            solution: |-
+              **Paso 1.** Precio por kilo = total ÷ kilos: $8{,}75 \div 2{,}5$.
+              **Paso 2.** Hacemos entero el divisor: $87{,}5 \div 25$.
+              **Paso 3.** $87 \div 25 = 3$, sobra $12$; con la coma, $125 \div 25 = 5$: $3{,}5$.
+              **Comprobación:** $3{,}5 \times 2{,}5 = 8{,}75$ ✓.
+              Resultado: $3{,}50$ pesos por kilo.
+        common_errors:
+          - 'Operar con los números en el orden en que aparecen, sin pensar qué se pregunta.'
+          - 'Dividir al revés en el precio unitario (kilos ÷ pesos en lugar de pesos ÷ kilos).'
+          - 'Dar la respuesta sin unidades o sin comprobar si es razonable.'
+        summary: >-
+          Comprende, planifica, calcula y comprueba. En compras: total =
+          precio × cantidad, cambio = pagado − total, precio unitario = total
+          ÷ cantidad.
+        check:
+          question: 'Compras 4 jugos de $2{,}35$ pesos cada uno y pagas con $10$ pesos. ¿Cuánto te devuelven?'
+          options: ['$7{,}65$ pesos', '$0{,}60$ pesos', '$9{,}40$ pesos', '$1{,}60$ pesos']
+          answer: 1
+          explanation: >-
+            Total: $2{,}35 \times 4 = 9{,}40$ pesos. Cambio:
+            $10 - 9{,}40 = 0{,}60$ pesos. $9{,}40$ es el total, no el cambio, y
+            $7{,}65$ sale de restar un solo jugo.
+    glossary:
+      - {term: Precio unitario, definition: 'Precio de una unidad (un kilo, un litro, un artículo).'}
+      - {term: Cambio, definition: 'Dinero que se devuelve cuando se paga más de lo que cuesta la compra.'}

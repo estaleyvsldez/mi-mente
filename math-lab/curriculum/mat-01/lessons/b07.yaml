@@ -1,0 +1,825 @@
+block: b07
+intro: >-
+  La división es la operación de repartir en partes iguales y de averiguar cuántas
+  veces cabe una cantidad en otra. En este bloque verás sus elementos, la
+  diferencia entre división exacta e inexacta, el residuo, los algoritmos para
+  dividir por una y varias cifras (la división larga), la división de enteros, su
+  relación con la multiplicación, cómo comprobarla y cómo usarla en problemas.
+
+topics:
+  t01:
+    intro:
+      what: Dividir es repartir una cantidad en partes iguales, o averiguar cuántos grupos de un tamaño dado se pueden formar.
+      purpose: Sirve para repartir gastos, empaquetar, calcular precios por unidad y velocidades.
+      importance: Es la cuarta operación básica y la base de las fracciones, los decimales, las proporciones y los porcentajes.
+      foundations: La multiplicación (grupos iguales) y la resta repetida.
+      prerequisites:
+        - 'Concepto de multiplicación (bloque 6, tema 1).'
+        - 'Tablas de multiplicar (bloque 6, tema 4).'
+      outcomes:
+        - Reconocer situaciones de reparto y de agrupación.
+        - Escribir una situación como división.
+        - Resolver divisiones sencillas con las tablas.
+      everyday_example: >-
+        Cuatro amigos pagan una cena de 240 pesos a partes iguales: cada uno paga
+        $240 \div 4 = 60$ pesos.
+    sections:
+      - title: Repartir y agrupar
+        concept: La división responde a «¿cuánto le toca a cada uno?» (reparto) o «¿cuántos grupos salen?» (agrupación).
+        explanation: |-
+          La división se escribe con el signo $\div$ («entre» o «dividido entre») y tiene dos significados:
+
+          * **Reparto en partes iguales:** «Reparto 12 caramelos entre 3 niños por igual. ¿Cuántos recibe cada uno?» Se van dando uno a cada niño hasta que se acaban: cada uno recibe 4. $12 \div 3 = 4$.
+          * **Agrupación (o medida):** «Tengo 12 huevos y los pongo en cajas de 3. ¿Cuántas cajas lleno?» Se forman grupos de 3: salen 4 cajas. $12 \div 3 = 4$.
+
+          Ambos significados se resuelven con la misma operación.
+
+          **La división deshace la multiplicación.** Si 3 grupos de 4 son 12 ($4 \times 3 = 12$), repartir 12 en 3 grupos da 4. Por eso, para calcular $12 \div 3$ se busca en la tabla del 3 el número que da 12: $3 \times 4 = 12$, así que $12 \div 3 = 4$.
+
+          **También es una resta repetida:** de 12 quitamos 3 una y otra vez: $12 \to 9 \to 6 \to 3 \to 0$. Lo hicimos 4 veces.
+
+          A veces el reparto no es exacto y sobra algo (14 caramelos entre 3 niños: 4 a cada uno y sobran 2). Eso lo veremos en los temas 4 y 5.
+        definition: >-
+          Dividir un número $a$ entre un número $b$ (distinto de 0) es encontrar el número
+          $c$ tal que $b \times c = a$; se escribe $a \div b = c$.
+        rules:
+          - 'Reparto: ¿cuánto toca a cada parte? Agrupación: ¿cuántos grupos salen?'
+          - 'Para dividir se busca el factor que falta en una multiplicación.'
+          - 'Dividir es restar repetidamente el divisor.'
+        examples:
+          - problem: 'Con 35 flores se hacen ramos de 7. ¿Cuántos ramos salen?'
+            solution: |-
+              **Paso 1.** Situación de agrupación: ¿cuántos grupos de 7 caben en 35?
+              **Paso 2.** Planteamos $35 \div 7$.
+              **Paso 3.** En la tabla del 7: $7 \times 5 = 35$.
+              Resultado: salen $5$ ramos.
+        common_errors:
+          - 'Restar en lugar de dividir: $35 - 7 = 28$ no responde cuántos ramos salen.'
+          - 'Pensar que la división sólo sirve para repartir entre personas.'
+        summary: >-
+          Dividir es repartir en partes iguales o formar grupos iguales; es la operación
+          inversa de la multiplicación.
+        check:
+          question: 'Se reparten 48 pesos entre 6 personas por igual. ¿Cuánto recibe cada una?'
+          options: ['8 pesos', '42 pesos', '54 pesos']
+          answer: 0
+          explanation: '$48 \div 6 = 8$, porque $6 \times 8 = 48$.'
+    glossary:
+      - {term: División, definition: Operación de repartir en partes iguales o de formar grupos iguales.}
+      - {term: Reparto, definition: Distribución de una cantidad en partes iguales.}
+    practice: []
+
+  t02:
+    intro:
+      what: Son los nombres de las partes de una división: dividendo, divisor, cociente y residuo.
+      purpose: Permiten describir y comprobar una división con precisión.
+      importance: Los usarás en la comprobación de la división, en múltiplos y divisores y en fracciones.
+      foundations: El concepto de división.
+      prerequisites:
+        - 'Concepto de división (bloque 7, tema 1).'
+      outcomes:
+        - Identificar dividendo, divisor, cociente y residuo.
+        - Conocer las formas de escribir una división.
+        - Saber que el residuo es menor que el divisor.
+      everyday_example: >-
+        Si repartes 50 lápices en cajas de 8, el dividendo es 50, el divisor 8, el
+        cociente 6 (cajas llenas) y el residuo 2 (lápices sueltos).
+    sections:
+      - title: Dividendo, divisor, cociente y residuo
+        concept: En una división, el dividendo es lo que se reparte, el divisor el número de partes (o el tamaño del grupo), el cociente el resultado y el residuo lo que sobra.
+        explanation: |-
+          $$\underbrace{50}_{\text{dividendo}} \div \underbrace{8}_{\text{divisor}} = \underbrace{6}_{\text{cociente}} \text{ y sobran } \underbrace{2}_{\text{residuo}}$$
+
+          * **Dividendo:** la cantidad que se divide.
+          * **Divisor:** entre cuánto se divide.
+          * **Cociente:** cuánto toca a cada parte, o cuántos grupos salen.
+          * **Residuo** (o **resto**): lo que sobra. Siempre es **menor que el divisor**: si sobraran 8 o más, se podría formar otro grupo.
+
+          Los cuatro números cumplen la relación fundamental:
+          $$\text{dividendo} = \text{divisor} \times \text{cociente} + \text{residuo}$$
+          $$50 = 8 \times 6 + 2$$
+
+          **Formas de escribir una división:** $50 \div 8$, $50 / 8$, $\frac{50}{8}$, y la «casita» o galera usada para la división larga:
+
+          ```
+              6
+            ┌────
+          8 │ 50
+              2
+          ```
+
+          **El divisor nunca es 0.** Repartir entre cero partes no tiene sentido (lo justificarás en el tema 10).
+        definition: >-
+          En la división de $D$ entre $d$ ($d \neq 0$), $D$ es el dividendo, $d$ el divisor,
+          $c$ el cociente y $r$ el residuo, con $D = d \times c + r$ y $0 \leq r < d$.
+        rules:
+          - 'Dividendo = divisor × cociente + residuo.'
+          - 'El residuo es menor que el divisor.'
+          - 'El divisor no puede ser 0.'
+        examples:
+          - problem: 'En la división $29 \div 4$ el cociente es 7 y el residuo 1. Identifica todos los elementos y comprueba.'
+            solution: |-
+              **Paso 1.** Dividendo $29$, divisor $4$, cociente $7$, residuo $1$.
+              **Paso 2.** Comprobamos: $4 \times 7 + 1 = 28 + 1 = 29$. ✓
+              **Paso 3.** El residuo (1) es menor que el divisor (4). ✓
+        common_errors:
+          - 'Confundir dividendo y divisor: en $29 \div 4$ el dividendo es 29.'
+          - 'Aceptar un residuo igual o mayor que el divisor.'
+        summary: >-
+          Dividendo ÷ divisor = cociente, con un residuo menor que el divisor; y
+          dividendo = divisor × cociente + residuo.
+        check:
+          question: 'En $67 \div 9$ el cociente es 7 y el residuo 4. ¿Cuál es el divisor?'
+          options: ['9', '67', '7']
+          answer: 0
+          explanation: 'El divisor es el número entre el que se divide: 9. El 67 es el dividendo y el 7 el cociente.'
+    glossary:
+      - {term: Dividendo, definition: Número que se divide.}
+      - {term: Divisor, definition: Número entre el que se divide.}
+      - {term: Cociente, definition: Resultado de la división.}
+      - {term: Residuo o resto, definition: 'Lo que sobra en una división; es menor que el divisor.'}
+    practice: []
+
+  t03:
+    intro:
+      what: Una división exacta es aquella en la que el residuo es 0: el reparto no deja sobrante.
+      purpose: Permite saber si una cantidad se puede repartir o agrupar sin que sobre nada.
+      importance: Es la base de los conceptos de múltiplo y divisor (bloque 10) y de la simplificación de fracciones.
+      foundations: Las tablas de multiplicar y los elementos de la división.
+      prerequisites:
+        - 'Elementos de la división (bloque 7, tema 2).'
+      outcomes:
+        - Reconocer una división exacta.
+        - Resolver divisiones exactas con las tablas.
+        - Escribir la multiplicación asociada a una división exacta.
+      everyday_example: >-
+        24 sillas se pueden colocar en 4 filas de 6 exactamente: $24 \div 4 = 6$ y no
+        sobra ninguna.
+    sections:
+      - title: Cuando no sobra nada
+        concept: Una división es exacta cuando el residuo es 0, es decir, cuando el dividendo es igual al divisor por el cociente.
+        explanation: |-
+          En una división exacta el reparto es perfecto:
+          $$42 \div 6 = 7 \quad\text{porque}\quad 6 \times 7 = 42 \quad(\text{residuo } 0)$$
+
+          En ese caso la relación fundamental se simplifica:
+          $$\text{dividendo} = \text{divisor} \times \text{cociente}$$
+
+          **Cómo resolverla con las tablas:** busca en la tabla del divisor el número que da el dividendo. Para $56 \div 8$: $8 \times 7 = 56$, luego el cociente es 7.
+
+          **Cómo reconocerla:** una división es exacta si el dividendo aparece en la tabla (o en la lista de «múltiplos») del divisor. 42 está en la tabla del 6 (6, 12, 18, 24, 30, 36, **42**…); 44 no está, así que $44 \div 6$ no es exacta.
+
+          Casos especiales:
+
+          * $a \div 1 = a$ (repartir entre uno: se lo queda todo).
+          * $a \div a = 1$ (si $a \neq 0$).
+          * $0 \div a = 0$ (si $a \neq 0$): repartir nada da nada.
+
+          Para números grandes usarás los algoritmos de los temas 6 a 8; si el residuo final es 0, la división es exacta.
+        definition: >-
+          La división $D \div d$ es exacta si existe un número $c$ tal que $D = d \times c$;
+          equivalentemente, si su residuo es 0.
+        rules:
+          - 'Exacta ⇔ residuo 0 ⇔ dividendo = divisor × cociente.'
+          - '$a \div 1 = a$; $a \div a = 1$; $0 \div a = 0$ (con $a \neq 0$).'
+        examples:
+          - problem: '¿Es exacta $63 \div 9$? Calcula el cociente.'
+            solution: |-
+              **Paso 1.** Tabla del 9: 9, 18, 27, 36, 45, 54, 63.
+              **Paso 2.** $9 \times 7 = 63$: el dividendo está en la tabla.
+              Resultado: es exacta y el cociente es $7$ (residuo 0).
+        common_errors:
+          - 'Pensar que $0 \div 5$ no se puede hacer: da 0. Lo imposible es dividir ENTRE 0.'
+          - 'Creer que $7 \div 7 = 0$: es 1.'
+        summary: >-
+          Exacta significa residuo 0: el dividendo es el divisor por el cociente.
+        check:
+          question: '¿Cuál de estas divisiones es exacta?'
+          options: ['$54 \div 6$', '$50 \div 6$', '$52 \div 6$']
+          answer: 0
+          explanation: '$6 \times 9 = 54$, así que $54 \div 6 = 9$ con residuo 0. 50 y 52 no están en la tabla del 6.'
+    glossary:
+      - {term: División exacta, definition: División cuyo residuo es 0.}
+    practice: []
+
+  t04:
+    intro:
+      what: Una división inexacta es aquella en la que el residuo no es 0: el reparto deja un sobrante.
+      purpose: Permite describir repartos donde sobra algo, como al empaquetar o formar equipos.
+      importance: La mayoría de los repartos reales son inexactos; hay que saber reconocerlos e interpretar lo que sobra.
+      foundations: La división exacta y las tablas.
+      prerequisites:
+        - 'División exacta (bloque 7, tema 3).'
+      outcomes:
+        - Distinguir divisiones exactas e inexactas.
+        - Reconocer que en una división inexacta el dividendo queda entre dos productos de la tabla.
+      everyday_example: >-
+        25 personas en equipos de 4 forman 6 equipos y sobra 1 persona: $25 \div 4$ es
+        inexacta.
+    sections:
+      - title: Cuando sobra algo
+        concept: Una división es inexacta cuando el dividendo no está en la tabla del divisor; queda entre dos productos consecutivos y sobra un residuo distinto de 0.
+        explanation: |-
+          Repartamos 25 caramelos entre 4 niños: a cada uno le tocan 6 (eso son $4 \times 6 = 24$) y sobra 1. No se puede dar uno más a cada niño porque harían falta 4.
+
+          $$25 \div 4 = 6 \text{ y residuo } 1 \qquad 25 = 4 \times 6 + 1$$
+
+          **Cómo reconocerla:** el dividendo **no** está en la tabla del divisor, sino entre dos de sus productos:
+          $$4 \times 6 = 24 \;<\; 25 \;<\; 28 = 4 \times 7$$
+
+          **Clasificación:**
+
+          * **Exacta:** residuo $= 0$.
+          * **Inexacta:** residuo $\neq 0$ (y siempre menor que el divisor).
+
+          En una división inexacta de naturales, el cociente que calculamos es un número natural y el residuo indica lo que no se pudo repartir. (Más adelante, con decimales, podrás seguir repartiendo el residuo en partes más pequeñas: $25 \div 4 = 6{,}25$. Eso se estudia en el bloque de decimales.)
+
+          En el siguiente tema aprenderás a calcular con precisión cociente y residuo.
+        definition: >-
+          La división $D \div d$ es inexacta si $D = d \times c + r$ con $0 < r < d$; es decir,
+          si $D$ no es igual a $d$ multiplicado por ningún natural.
+        rules:
+          - 'Inexacta ⇔ residuo distinto de 0.'
+          - 'El dividendo queda entre dos productos consecutivos de la tabla del divisor.'
+          - 'El residuo siempre es menor que el divisor.'
+        examples:
+          - problem: '¿Es exacta o inexacta $38 \div 5$?'
+            solution: |-
+              **Paso 1.** Tabla del 5: …, 30, 35, 40, …
+              **Paso 2.** 38 está entre $35 = 5 \times 7$ y $40 = 5 \times 8$: no está en la tabla.
+              **Paso 3.** $38 = 5 \times 7 + 3$.
+              Resultado: inexacta (cociente 7, residuo 3).
+        common_errors:
+          - 'Llamar exacta a una división porque «da un número»: lo que decide es el residuo.'
+          - 'Dar un residuo mayor que el divisor, como $38 = 5 \times 6 + 8$.'
+        summary: >-
+          Inexacta = residuo distinto de 0; el dividendo cae entre dos productos de la
+          tabla del divisor.
+        check:
+          question: '¿Cuál de estas divisiones es inexacta?'
+          options: ['$45 \div 7$', '$42 \div 7$', '$49 \div 7$']
+          answer: 0
+          explanation: '45 está entre $42 = 7 \times 6$ y $49 = 7 \times 7$; sobra 3. Las otras dos son exactas.'
+    glossary:
+      - {term: División inexacta, definition: División cuyo residuo es distinto de 0.}
+    practice: []
+
+  t05:
+    intro:
+      what: Es el cálculo del cociente y del residuo de una división de naturales cuando ésta no es exacta.
+      purpose: Saber cuántos grupos completos se forman y cuánto sobra exactamente.
+      importance: El residuo es clave en problemas de reparto, en horarios y calendarios, y en la divisibilidad.
+      foundations: Las tablas y la relación dividendo = divisor × cociente + residuo.
+      prerequisites:
+        - 'División inexacta (bloque 7, tema 4).'
+      outcomes:
+        - Calcular el cociente como el mayor número de veces que cabe el divisor.
+        - Calcular el residuo restando.
+        - Verificar que el residuo es menor que el divisor.
+      everyday_example: >-
+        100 días son 14 semanas completas y 2 días: $100 = 7 \times 14 + 2$.
+    sections:
+      - title: Cociente y residuo
+        concept: El cociente es el mayor número de veces que el divisor cabe en el dividendo sin pasarse, y el residuo es lo que queda.
+        explanation: |-
+          **Procedimiento para $D \div d$:**
+
+          1. Busca el **mayor producto** de la tabla del divisor que **no supere** al dividendo. Su factor es el cociente.
+          2. Resta ese producto del dividendo: el resultado es el residuo.
+          3. Comprueba que el residuo es **menor que el divisor**.
+
+          Ejemplo: $47 \div 6$.
+
+          * Tabla del 6: $6 \times 7 = 42$, $6 \times 8 = 48$. 48 se pasa de 47, así que el mayor que no supera es 42. **Cociente: 7.**
+          * $47 - 42 = 5$. **Residuo: 5.**
+          * $5 < 6$. ✓
+
+          Se escribe $47 \div 6 = 7$, residuo $5$, o bien $47 = 6 \times 7 + 5$.
+
+          **Si el residuo sale mayor o igual que el divisor**, el cociente es demasiado pequeño: cabe una vez más. Por ejemplo, si para $47 \div 6$ propusieras cociente 6, el residuo sería $47 - 36 = 11 \geq 6$: hay que subir el cociente a 7.
+
+          **Si el dividendo es menor que el divisor**, el cociente es 0 y el residuo es el propio dividendo: $3 \div 5 = 0$, residuo $3$.
+        definition: >-
+          Dados naturales $D$ y $d \neq 0$, existen un único cociente $c$ y un único residuo
+          $r$ tales que $D = d \times c + r$ y $0 \leq r < d$ (división entera).
+        rules:
+          - 'Cociente: el mayor $c$ con $d \times c \leq D$.'
+          - 'Residuo: $r = D - d \times c$.'
+          - 'Siempre $0 \leq r < d$.'
+        examples:
+          - problem: 'Calcula cociente y residuo de $83 \div 9$.'
+            solution: |-
+              **Paso 1.** Tabla del 9: $9 \times 9 = 81$, $9 \times 10 = 90$. El mayor que no supera 83 es 81.
+              **Paso 2.** Cociente $9$. Residuo $83 - 81 = 2$.
+              **Paso 3.** $2 < 9$ ✓ y $9 \times 9 + 2 = 83$ ✓.
+              Resultado: cociente $9$, residuo $2$.
+        common_errors:
+          - 'Elegir un producto que supera al dividendo (48 para 47) y obtener un «residuo negativo».'
+          - 'Quedarse con un residuo mayor que el divisor.'
+        summary: >-
+          El cociente es cuántas veces cabe el divisor sin pasarse; el residuo es lo que
+          sobra y debe ser menor que el divisor.
+        check:
+          question: '¿Cuál es el cociente y el residuo de $59 \div 8$?'
+          options: ['Cociente 7, residuo 3', 'Cociente 6, residuo 11', 'Cociente 8, residuo 5']
+          answer: 0
+          explanation: '$8 \times 7 = 56 \leq 59 < 64 = 8 \times 8$. Residuo $59 - 56 = 3 < 8$. Con cociente 6 el residuo (11) supera al divisor.'
+    glossary:
+      - {term: División entera, definition: 'División de naturales que da un cociente y un residuo, con $D = d \times c + r$ y $r < d$.'}
+    practice: []
+
+  t06:
+    intro:
+      what: Es el algoritmo para dividir un número de varias cifras entre un divisor de una cifra.
+      purpose: Calcular divisiones como $735 \div 6$ que no se resuelven directamente con las tablas.
+      importance: Es la primera versión del algoritmo de la división larga.
+      foundations: El valor posicional, las tablas, la división con residuo y la resta.
+      prerequisites:
+        - 'División con residuo (bloque 7, tema 5).'
+        - 'Resta de números naturales (bloque 5, tema 3).'
+      outcomes:
+        - Dividir entre una cifra cifra a cifra.
+        - Manejar los ceros en el cociente.
+        - Comprobar el resultado.
+      everyday_example: >-
+        Repartir un premio de 864 pesos entre 4 personas: $864 \div 4 = 216$ pesos cada una.
+    sections:
+      - title: Dividir por órdenes
+        concept: Se reparte primero el orden más alto (centenas), lo que sobra se cambia a decenas y se reparte junto con ellas, y así hasta las unidades.
+        explanation: |-
+          Piensa en $735 \div 6$ como repartir 7 billetes de 100, 3 de 10 y 5 monedas de 1 entre 6 personas:
+
+          1. **Centenas:** 7 billetes de 100 entre 6: toca **1** a cada uno y sobra 1 billete ($7 - 6 = 1$).
+          2. **Bajamos** las decenas: el billete de 100 sobrante se cambia por 10 de 10; con los 3 que había son **13** decenas. $13 \div 6 = 2$ ($6 \times 2 = 12$), sobra 1.
+          3. **Bajamos** las unidades: 1 decena sobrante = 10 unidades, más 5: **15**. $15 \div 6 = 2$ ($6 \times 2 = 12$), sobran 3.
+
+          Cociente: $122$; residuo: $3$. Comprobación: $6 \times 122 + 3 = 732 + 3 = 735$. ✓
+
+          En cada paso se repite el ciclo: **dividir, multiplicar, restar, bajar la siguiente cifra**.
+
+          **Si la primera cifra es menor que el divisor**, se toman dos cifras: en $252 \div 4$, como $2 < 4$, empezamos con 25.
+
+          **Ceros en el cociente.** Si al bajar una cifra el número es menor que el divisor, se escribe **0** en el cociente y se baja la siguiente cifra. En $618 \div 3$: $6 \div 3 = 2$; baja 1: $1 \div 3 = 0$ (se escribe 0); baja 8: $18 \div 3 = 6$. Cociente: $206$.
+        definition: >-
+          El algoritmo de división por una cifra divide sucesivamente, de izquierda a
+          derecha, cada resto parcial seguido de la siguiente cifra del dividendo; las
+          cifras obtenidas forman el cociente y el último resto es el residuo.
+        rules:
+          - 'Se empieza por la izquierda (el orden más alto).'
+          - 'Ciclo: dividir, multiplicar, restar, bajar.'
+          - 'Cada resto parcial debe ser menor que el divisor.'
+          - 'Si un número parcial es menor que el divisor, se escribe 0 en el cociente.'
+        examples:
+          - problem: 'Calcula $864 \div 4$.'
+            solution: |-
+              **Paso 1.** $8 \div 4 = 2$; $4 \times 2 = 8$; resto 0.
+              **Paso 2.** Bajamos 6: $6 \div 4 = 1$; $4 \times 1 = 4$; resto 2.
+              **Paso 3.** Bajamos 4: $24 \div 4 = 6$; resto 0.
+              **Comprobación.** $4 \times 216 = 864$. ✓
+              Resultado: $216$, división exacta.
+          - problem: 'Calcula $1\,509 \div 7$.'
+            solution: |-
+              **Paso 1.** $1 < 7$: tomamos 15. $15 \div 7 = 2$; $7 \times 2 = 14$; resto 1.
+              **Paso 2.** Bajamos 0: $10 \div 7 = 1$; resto 3.
+              **Paso 3.** Bajamos 9: $39 \div 7 = 5$; $7 \times 5 = 35$; resto 4.
+              **Comprobación.** $7 \times 215 + 4 = 1\,505 + 4 = 1\,509$. ✓
+              Resultado: cociente $215$, residuo $4$.
+        common_errors:
+          - 'Olvidar el 0 del cociente: $618 \div 3$ no es 26.'
+          - 'Dejar un resto parcial mayor o igual que el divisor.'
+        summary: >-
+          Divide de izquierda a derecha repitiendo dividir, multiplicar, restar y bajar; no
+          olvides los ceros del cociente.
+        check:
+          question: '¿Cuánto es $832 \div 8$?'
+          options: ['104', '14', '140']
+          answer: 0
+          explanation: '$8 \div 8 = 1$; baja 3: $3 \div 8 = 0$ (se escribe 0); baja 2: $32 \div 8 = 4$. Cociente 104. Comprobación: $8 \times 104 = 832$.'
+    glossary:
+      - {term: Resto parcial, definition: Lo que sobra en cada paso intermedio del algoritmo de la división.}
+      - {term: Bajar una cifra, definition: Escribir la siguiente cifra del dividendo a la derecha del resto parcial.}
+    practice: []
+
+  t07:
+    intro:
+      what: Es el algoritmo para dividir cuando el divisor tiene dos o más cifras.
+      purpose: Calcular divisiones como $936 \div 24$ o $8\,745 \div 125$.
+      importance: Completa el dominio de la división escrita y entrena la estimación.
+      foundations: La división por una cifra, la multiplicación por varias cifras y la estimación.
+      prerequisites:
+        - 'División por una cifra (bloque 7, tema 6).'
+        - 'Multiplicación por una cifra (bloque 6, tema 5).'
+      outcomes:
+        - Estimar cada cifra del cociente.
+        - Corregir una estimación demasiado grande o pequeña.
+        - Dividir entre números de dos y tres cifras.
+      everyday_example: >-
+        Para saber cuántas cajas de 24 latas se llenan con 936 latas, se calcula
+        $936 \div 24 = 39$.
+    sections:
+      - title: Estimar y ajustar cada cifra
+        concept: El método es el mismo que con una cifra, pero cada cifra del cociente se estima (con las primeras cifras) y se ajusta si el producto se pasa o se queda corto.
+        explanation: |-
+          Con un divisor de dos cifras ya no basta con las tablas: hay que **estimar**.
+
+          **Ejemplo: $936 \div 24$**
+
+          1. **¿Cuántas cifras tomar?** 9 es menor que 24; tomamos **93**.
+          2. **Estimar:** ¿cuántas veces cabe 24 en 93? Mira sólo las primeras cifras: «9 entre 2» da 4. Probamos: $24 \times 4 = 96$, **se pasa** de 93. Bajamos a 3: $24 \times 3 = 72$. ✓ Resto: $93 - 72 = 21$ (menor que 24 ✓).
+          3. **Bajamos** el 6: **216**. Estimamos «21 entre 2» ≈ 10, pero una cifra del cociente sólo puede ser de 0 a 9; probamos 9: $24 \times 9 = 216$. Resto 0.
+
+          Cociente $39$, residuo $0$. Comprobación: $24 \times 39 = 936$. ✓
+
+          **Reglas de ajuste:**
+
+          * Si el producto **se pasa** del número parcial, la cifra es demasiado grande: réstale 1.
+          * Si el resto parcial sale **mayor o igual que el divisor**, la cifra es demasiado pequeña: súmale 1.
+
+          **Truco de estimación:** redondea el divisor. Para dividir entre 24, piensa en 20 o 25; para 38, piensa en 40.
+        definition: >-
+          En la división por un divisor de varias cifras, cada cifra $q$ del cociente es el
+          mayor dígito tal que divisor $\times\ q$ no supera el número parcial; se obtiene
+          estimando y ajustando.
+        rules:
+          - 'Toma tantas cifras del dividendo como hagan falta para que el número sea mayor o igual que el divisor.'
+          - 'Estima con las primeras cifras o redondeando el divisor.'
+          - 'Si el producto se pasa, baja la cifra; si el resto es ≥ divisor, súbela.'
+          - 'Cada cifra del cociente está entre 0 y 9.'
+        examples:
+          - problem: 'Calcula $1\,875 \div 32$.'
+            solution: |-
+              **Paso 1.** 18 < 32; tomamos 187. Estimamos con $32 \approx 30$: $187 \div 30 \approx 6$. $32 \times 6 = 192$, se pasa. Probamos 5: $32 \times 5 = 160$. Resto $187 - 160 = 27$.
+              **Paso 2.** Bajamos 5: 275. Estimamos $275 \div 30 \approx 9$: $32 \times 9 = 288$, se pasa. Probamos 8: $32 \times 8 = 256$. Resto $275 - 256 = 19$.
+              **Comprobación.** $32 \times 58 + 19 = 1\,856 + 19 = 1\,875$. ✓
+              Resultado: cociente $58$, residuo $19$.
+        common_errors:
+          - 'Aceptar una cifra cuyo producto se pasa del número parcial.'
+          - 'Escribir una «cifra» de dos dígitos (como 10) en el cociente.'
+        summary: >-
+          Estima cada cifra con las primeras cifras o redondeando, multiplica, ajusta si se
+          pasa o se queda corta, resta y baja.
+        check:
+          question: '¿Cuánto es $672 \div 21$?'
+          options: ['32', '23', '302']
+          answer: 0
+          explanation: '67 entre 21: 3 ($63$), resto 4; baja 2: 42 entre 21 = 2, resto 0. Cociente 32. Comprobación: $21 \times 32 = 672$.'
+    glossary:
+      - {term: Estimación del cociente, definition: Aproximación de cada cifra del cociente usando las primeras cifras o números redondos.}
+    practice: []
+
+  t08:
+    intro:
+      what: La división larga es el algoritmo completo de la división escrita, con su disposición en galera y el ciclo dividir–multiplicar–restar–bajar.
+      purpose: Resolver cualquier división de naturales, con divisor de una o varias cifras, de forma ordenada.
+      importance: Reúne todo lo aprendido; su estructura reaparece al dividir decimales y al convertir fracciones en decimales.
+      foundations: La división por una y por varias cifras.
+      prerequisites:
+        - 'División por una cifra (bloque 7, tema 6).'
+        - 'División por varias cifras (bloque 7, tema 7).'
+      outcomes:
+        - Disponer correctamente una división larga.
+        - Aplicar el ciclo de cuatro pasos hasta terminar.
+        - Interpretar el último resto como residuo y comprobar.
+      everyday_example: >-
+        Para repartir 5 287 kg de grano en 13 camiones se usa la división larga:
+        406 kg por camión y sobran 9 kg.
+    sections:
+      - title: El ciclo de cuatro pasos
+        concept: La división larga repite el ciclo dividir, multiplicar, restar y bajar hasta que no quedan cifras por bajar.
+        explanation: |-
+          **Disposición (galera):** el dividendo dentro, el divisor a la izquierda y el cociente arriba (en algunos países, el divisor a la derecha y el cociente debajo; el método es el mismo).
+
+          **El ciclo:**
+
+          1. **Dividir:** ¿cuántas veces cabe el divisor en el número parcial? Escribe esa cifra en el cociente.
+          2. **Multiplicar:** divisor × esa cifra.
+          3. **Restar:** número parcial − producto. El resultado debe ser menor que el divisor.
+          4. **Bajar:** la siguiente cifra del dividendo, a la derecha del resto.
+
+          Se repite hasta bajar la última cifra. El último resto es el **residuo**.
+
+          **Ejemplo: $5\,287 \div 13$**
+
+          ```
+               406
+             ┌──────
+          13 │ 5287
+              -52
+               ──
+                08     8 < 13 → cociente 0
+                87
+               -78
+                ──
+                 9
+          ```
+
+          * $52 \div 13 = 4$; $13 \times 4 = 52$; resto 0; bajamos 8.
+          * $8 \div 13 = 0$ → escribimos **0**; bajamos 7: 87.
+          * $87 \div 13 = 6$; $13 \times 6 = 78$; resto 9.
+
+          Cociente $406$, residuo $9$. Comprobación: $13 \times 406 + 9 = 5\,278 + 9 = 5\,287$. ✓
+
+          **Control rápido:** el cociente tiene tantas cifras como pasos del ciclo (aquí 3: 4, 0, 6).
+        definition: >-
+          La división larga es el algoritmo que calcula el cociente de $D \div d$ cifra a
+          cifra, de izquierda a derecha, mediante el ciclo dividir–multiplicar–restar–bajar,
+          y deja como último resto el residuo $r < d$.
+        rules:
+          - 'Dividir, multiplicar, restar, bajar; repetir.'
+          - 'Cada vez que se baja una cifra se escribe una cifra en el cociente (aunque sea 0).'
+          - 'Cada resto debe ser menor que el divisor.'
+          - 'Comprueba: divisor × cociente + residuo = dividendo.'
+        examples:
+          - problem: 'Resuelve con división larga $9\,450 \div 45$.'
+            solution: |-
+              **Paso 1.** $94 \div 45 = 2$; $45 \times 2 = 90$; resto 4.
+              **Paso 2.** Bajamos 5: $45 \div 45 = 1$; resto 0.
+              **Paso 3.** Bajamos 0: $0 \div 45 = 0$; resto 0.
+              **Comprobación.** $45 \times 210 = 9\,450$. ✓
+              Resultado: cociente $210$, residuo $0$.
+        common_errors:
+          - 'Bajar dos cifras a la vez sin escribir un 0 en el cociente.'
+          - 'Olvidar la última cifra del dividendo (en $9\,450 \div 45$, dar 21 en vez de 210).'
+        summary: >-
+          Galera y ciclo dividir–multiplicar–restar–bajar; una cifra del cociente por cada
+          cifra bajada; comprueba al final.
+        check:
+          question: '¿Cuál es el resultado de $3\,628 \div 12$?'
+          options: ['Cociente 302, residuo 4', 'Cociente 32, residuo 4', 'Cociente 302, residuo 16']
+          answer: 0
+          explanation: '$36 \div 12 = 3$, resto 0; baja 2: $2 \div 12 = 0$; baja 8: $28 \div 12 = 2$, resto 4. Comprobación: $12 \times 302 + 4 = 3\,628$. Un residuo de 16 sería mayor que el divisor.'
+    glossary:
+      - {term: División larga, definition: Algoritmo escrito completo de la división.}
+      - {term: Galera, definition: Disposición gráfica de la división larga.}
+    practice: []
+
+  t09:
+    intro:
+      what: Es la división cuando el dividendo o el divisor son enteros negativos.
+      purpose: Calcular promedios de pérdidas, reparto de deudas y variaciones medias.
+      importance: La regla de los signos de la división, igual a la de la multiplicación, se usa constantemente en álgebra.
+      foundations: La regla de los signos de la multiplicación y la relación entre multiplicación y división.
+      prerequisites:
+        - 'Multiplicación de números enteros (bloque 6, tema 8).'
+        - 'División exacta (bloque 7, tema 3).'
+      outcomes:
+        - Aplicar la regla de los signos en la división.
+        - Dividir enteros (divisiones exactas).
+      everyday_example: >-
+        Una deuda de 900 pesos repartida entre 3 socios: cada uno debe
+        $(-900) \div 3 = -300$ pesos.
+    sections:
+      - title: La regla de los signos en la división
+        concept: El cociente de dos enteros es positivo si tienen el mismo signo y negativo si tienen signos distintos; su valor absoluto es el cociente de los valores absolutos.
+        explanation: |-
+          Como la división es la inversa de la multiplicación, hereda la misma regla de los signos. Por ejemplo, $(-12) \div 3 = -4$ porque $3 \times (-4) = -12$.
+
+          | ÷ | + | − |
+          |---|---|---|
+          | **+** | + | − |
+          | **−** | − | + |
+
+          **Procedimiento:**
+
+          1. Decide el signo: **iguales → positivo; distintos → negativo**.
+          2. Divide los valores absolutos.
+
+          Ejemplos:
+
+          * $(-36) \div 4 = -9$ (distintos; $36 \div 4 = 9$)
+          * $(-42) \div (-6) = 7$ (iguales; comprobación: $(-6) \times 7 = -42$ ✓)
+          * $50 \div (-10) = -5$
+
+          **Comprobar** es fácil: el divisor por el cociente debe dar el dividendo, con su signo.
+
+          En este tema trabajamos con divisiones **exactas**. (La división con residuo de números negativos tiene convenciones especiales que no necesitarás en este curso.)
+
+          Recuerda: **no se puede dividir entre 0**, sea cual sea el signo del dividendo.
+        definition: >-
+          Para enteros $a$ y $b \neq 0$ con $a \div b$ exacta: $|a \div b| = |a| \div |b|$, y el
+          cociente es positivo si $a$ y $b$ tienen el mismo signo y negativo si tienen signos
+          distintos.
+        rules:
+          - '$(+) \div (+) = (+)$ y $(-) \div (-) = (+)$.'
+          - '$(+) \div (-) = (-)$ y $(-) \div (+) = (-)$.'
+          - '$0 \div b = 0$ para $b \neq 0$; dividir entre 0 no está definido.'
+        examples:
+          - problem: 'Calcula $(-72) \div (-8)$.'
+            solution: |-
+              **Paso 1.** Signos iguales → positivo.
+              **Paso 2.** $72 \div 8 = 9$.
+              **Comprobación.** $(-8) \times 9 = -72$. ✓
+              Resultado: $9$.
+        common_errors:
+          - 'Pensar que $(-72) \div (-8)$ es negativo porque «hay negativos».'
+          - 'Usar la regla de la suma en lugar de la de la multiplicación.'
+        summary: >-
+          Igual que en la multiplicación: signos iguales, positivo; distintos, negativo.
+        check:
+          question: '¿Cuánto es $56 \div (-7)$?'
+          options: ['$-8$', '$8$', '$-49$']
+          answer: 0
+          explanation: 'Signos distintos → negativo; $56 \div 7 = 8$. Comprobación: $(-7) \times (-8) = 56$.'
+    glossary:
+      - {term: Regla de los signos (división), definition: 'Signos iguales dan cociente positivo; signos distintos, negativo.'}
+    practice: []
+
+  t10:
+    intro:
+      what: Es la relación por la cual multiplicación y división son operaciones inversas.
+      purpose: Encontrar factores desconocidos, dividendos y divisores, y comprobar resultados.
+      importance: Explica por qué no se puede dividir entre 0 y es la herramienta para despejar en ecuaciones.
+      foundations: Los elementos de la multiplicación y de la división.
+      prerequisites:
+        - 'Elementos de la multiplicación (bloque 6, tema 2).'
+        - 'División exacta (bloque 7, tema 3).'
+      outcomes:
+        - Escribir las divisiones asociadas a una multiplicación.
+        - Hallar el término desconocido de una multiplicación o división.
+        - Explicar por qué no se puede dividir entre 0.
+      everyday_example: >-
+        Si 6 entradas costaron 450 pesos, cada entrada costó $450 \div 6 = 75$ pesos,
+        porque $75 \times 6 = 450$.
+    sections:
+      - title: Operaciones inversas
+        concept: Si $a \times b = c$ (con $b \neq 0$), entonces $c \div b = a$; multiplicar y dividir por el mismo número se deshacen mutuamente.
+        explanation: |-
+          Si multiplicas un número por 5 y luego lo divides entre 5, vuelves al número inicial. Cada multiplicación tiene dos divisiones asociadas:
+          $$7 \times 8 = 56 \quad\Longleftrightarrow\quad 56 \div 8 = 7 \quad\text{y}\quad 56 \div 7 = 8$$
+
+          **Términos desconocidos:**
+
+          | Falta… | Ejemplo | Se calcula |
+          |---|---|---|
+          | un factor | $9 \times \square = 72$ | $72 \div 9 = 8$ |
+          | el dividendo | $\square \div 6 = 15$ | $15 \times 6 = 90$ |
+          | el divisor | $84 \div \square = 7$ | $84 \div 7 = 12$ |
+
+          * **factor = producto ÷ otro factor**
+          * **dividendo = cociente × divisor** (en divisiones exactas)
+          * **divisor = dividendo ÷ cociente**
+
+          **¿Por qué no se puede dividir entre 0?** $6 \div 0$ debería ser un número que multiplicado por 0 dé 6. Pero cualquier número por 0 da 0, nunca 6. No existe tal número. Y $0 \div 0$ tampoco tiene sentido, porque *cualquier* número multiplicado por 0 da 0: no habría un único resultado. Por eso **la división entre 0 no está definida**.
+        definition: >-
+          Para $b \neq 0$: $a \div b = c$ si y sólo si $c \times b = a$. La división entre 0
+          no está definida.
+        rules:
+          - 'Factor desconocido: producto ÷ factor conocido.'
+          - 'Dividendo desconocido: cociente × divisor.'
+          - 'Divisor desconocido: dividendo ÷ cociente.'
+          - 'Nunca se divide entre 0.'
+        examples:
+          - problem: 'Completa: $\square \div 12 = 25$.'
+            solution: |-
+              **Paso 1.** Falta el dividendo: cociente × divisor.
+              **Paso 2.** $25 \times 12 = 300$.
+              **Comprobación.** $300 \div 12 = 25$ porque $12 \times 25 = 300$. ✓
+              Resultado: $300$.
+        common_errors:
+          - 'Para el dividendo desconocido, dividir en lugar de multiplicar.'
+          - 'Creer que $5 \div 0 = 0$ o que $5 \div 0 = 5$: no está definido.'
+        summary: >-
+          Multiplicar y dividir son inversas; así se hallan términos desconocidos. Dividir
+          entre 0 no tiene sentido.
+        check:
+          question: 'Completa: $8 \times \square = 96$.'
+          options: ['12', '88', '104']
+          answer: 0
+          explanation: 'Factor = producto ÷ factor conocido: $96 \div 8 = 12$. Comprobación: $8 \times 12 = 96$.'
+    glossary:
+      - {term: Operación inversa, definition: Operación que deshace el efecto de otra.}
+      - {term: No definido, definition: 'Se dice de una operación que no tiene resultado, como dividir entre 0.'}
+    practice: []
+
+  t11:
+    intro:
+      what: Es la verificación de que una división está bien hecha usando la multiplicación y la suma.
+      purpose: Detectar errores en divisiones largas, repartos y cálculos de precios unitarios.
+      importance: La división larga tiene muchos pasos; la prueba da seguridad sobre el resultado.
+      foundations: La relación dividendo = divisor × cociente + residuo.
+      prerequisites:
+        - 'Elementos de la división (bloque 7, tema 2).'
+        - 'Relación entre multiplicación y división (bloque 7, tema 10).'
+      outcomes:
+        - Aplicar la prueba de la división.
+        - Detectar errores en el cociente o en el residuo.
+      everyday_example: >-
+        Si repartiste 250 pesos entre 7 personas dando 35 a cada una y te sobraron 5,
+        compruebas: $7 \times 35 + 5 = 250$. ✓
+    sections:
+      - title: La prueba de la división
+        concept: Una división es correcta si el divisor por el cociente más el residuo da el dividendo y, además, el residuo es menor que el divisor.
+        explanation: |-
+          **Prueba de la división:**
+
+          1. Multiplica el **divisor por el cociente**.
+          2. Suma el **residuo**.
+          3. El resultado debe ser el **dividendo**.
+          4. Comprueba también que el **residuo es menor que el divisor**.
+
+          $$\text{divisor} \times \text{cociente} + \text{residuo} = \text{dividendo}, \qquad \text{residuo} < \text{divisor}$$
+
+          **¿Por qué hace falta la condición 4?** Porque una igualdad puede cumplirse con un cociente equivocado. Por ejemplo, para $50 \div 8$ alguien da cociente 5 y residuo 10: $8 \times 5 + 10 = 50$ se cumple, ¡pero el residuo 10 es mayor que 8! Cabía una vez más: lo correcto es cociente 6, residuo 2.
+
+          **Ejemplo correcto:** $735 \div 6 = 122$, residuo $3$. Prueba: $6 \times 122 = 732$; $732 + 3 = 735$ ✓; $3 < 6$ ✓.
+
+          **Ejemplo con error:** alguien dice $458 \div 7 = 64$, residuo $8$. Ya falla la condición 4 ($8 \geq 7$). La correcta es cociente 65, residuo 3: $7 \times 65 + 3 = 455 + 3 = 458$. ✓
+        definition: >-
+          El par (cociente $c$, residuo $r$) es correcto para $D \div d$ si y sólo si
+          $d \times c + r = D$ y $0 \leq r < d$.
+        rules:
+          - 'Divisor × cociente + residuo = dividendo.'
+          - 'Residuo < divisor.'
+          - 'Si una de las dos condiciones falla, la división está mal.'
+        examples:
+          - problem: 'Alguien calculó $1\,000 \div 24 = 41$, residuo $16$. ¿Es correcto?'
+            solution: |-
+              **Paso 1.** $24 \times 41 = 984$.
+              **Paso 2.** $984 + 16 = 1\,000$. ✓
+              **Paso 3.** $16 < 24$. ✓
+              Resultado: es correcto.
+        common_errors:
+          - 'Olvidar sumar el residuo en la prueba.'
+          - 'No verificar que el residuo sea menor que el divisor.'
+        summary: >-
+          Prueba: divisor × cociente + residuo = dividendo, y residuo menor que el divisor.
+        check:
+          question: 'Se afirma que $95 \div 6$ da cociente 15 y residuo 5. ¿Es correcto?'
+          options:
+            - 'Sí: $6 \times 15 + 5 = 95$ y $5 < 6$'
+            - 'No: $6 \times 15 + 5 = 96$'
+            - 'No: el residuo debería ser 0'
+          answer: 0
+          explanation: '$6 \times 15 = 90$; $90 + 5 = 95$, y el residuo 5 es menor que 6. Ambas condiciones se cumplen.'
+    glossary:
+      - {term: Prueba de la división, definition: 'Comprobación de que divisor × cociente + residuo = dividendo, con residuo menor que el divisor.'}
+    practice: []
+
+  t12:
+    intro:
+      what: Es la aplicación de la división para resolver problemas de reparto, agrupación y precio unitario.
+      purpose: Resolver situaciones reales e interpretar correctamente el cociente y el residuo.
+      importance: En los problemas de división, la respuesta no siempre es el cociente: a veces es el residuo o el cociente más uno.
+      foundations: Los significados de la división y la división con residuo.
+      prerequisites:
+        - 'Concepto de división (bloque 7, tema 1).'
+        - 'División con residuo (bloque 7, tema 5).'
+      outcomes:
+        - Reconocer problemas de reparto y de agrupación.
+        - Interpretar el residuo según la pregunta.
+        - Resolver problemas de varios pasos con división.
+      everyday_example: >-
+        Para llevar 130 personas en autobuses de 40 plazas hacen falta 4 autobuses, aunque
+        $130 \div 40 = 3$ con residuo 10.
+    sections:
+      - title: Interpretar el cociente y el residuo
+        concept: En un problema de división hay que decidir si la respuesta es el cociente, el residuo o el cociente aumentado en uno, según lo que se pregunte.
+        explanation: |-
+          Se aplica el método de siempre (comprender, plantear, calcular, comprobar). Es división cuando se **reparte en partes iguales**, se **forman grupos iguales** o se busca un **valor por unidad** (precio de una, velocidad por hora).
+
+          **El residuo exige pensar.** Mira tres preguntas sobre la misma división, $130 \div 40 = 3$, residuo $10$:
+
+          | Pregunta | Respuesta |
+          |---|---|
+          | ¿Cuántos autobuses se llenan por completo? | **3** (el cociente) |
+          | ¿Cuántas personas quedan sin autobús lleno? | **10** (el residuo) |
+          | ¿Cuántos autobuses hacen falta para llevar a todos? | **4** (cociente + 1: las 10 personas que sobran necesitan otro autobús) |
+
+          **Regla práctica:** si sobra algo y **todos** deben quedar atendidos, se redondea el cociente **hacia arriba**.
+
+          **Varios pasos.** Por ejemplo, «3 amigos compran 2 pizzas de 180 pesos y pagan a partes iguales»: primero se multiplica ($2 \times 180 = 360$) y luego se divide ($360 \div 3 = 120$ pesos cada uno).
+
+          **Comprueba** siempre con la prueba de la división y con el sentido común.
+        definition: >-
+          Un problema de división se modela con $D \div d$; la respuesta puede ser el
+          cociente $c$, el residuo $r$ o $c + 1$ (si $r > 0$ y hay que cubrir el total).
+        rules:
+          - 'Repartir, agrupar o calcular por unidad → división.'
+          - '¿Grupos completos? → cociente. ¿Cuánto sobra? → residuo.'
+          - 'Si hay que cubrir todo y sobra algo → cociente + 1.'
+        examples:
+          - problem: 'Se envasan 250 huevos en cartones de 12. ¿Cuántos cartones se llenan y cuántos huevos sobran?'
+            solution: |-
+              **Paso 1.** Agrupación: $250 \div 12$.
+              **Paso 2.** $25 \div 12 = 2$, resto 1; bajamos 0: $10 \div 12 = 0$, resto 10. Cociente 20, residuo 10.
+              **Comprobación.** $12 \times 20 + 10 = 250$. ✓
+              Resultado: se llenan $20$ cartones y sobran $10$ huevos.
+          - problem: 'Un grupo de 75 personas sube en ascensor; caben 8 por viaje. ¿Cuántos viajes hacen falta como mínimo?'
+            solution: |-
+              **Paso 1.** $75 \div 8 = 9$, residuo 3 ($8 \times 9 = 72$).
+              **Paso 2.** Las 3 personas restantes necesitan otro viaje.
+              Resultado: $10$ viajes.
+        common_errors:
+          - 'Responder siempre con el cociente, aunque la pregunta pida cubrir el total.'
+          - 'Escribir el residuo como si fuera parte del cociente («9,3 viajes»).'
+        summary: >-
+          Decide qué pide la pregunta: grupos completos (cociente), sobrante (residuo) o
+          cubrir todo (cociente + 1).
+        check:
+          question: 'Hay que transportar 58 cajas en una camioneta que lleva 9 cajas por viaje. ¿Cuántos viajes se necesitan para llevarlas todas?'
+          options: ['7', '6', '4']
+          answer: 0
+          explanation: '$58 \div 9 = 6$, residuo 4 ($9 \times 6 = 54$). Las 4 cajas que sobran requieren otro viaje: 7. El 6 sólo cuenta los viajes llenos y el 4 es el residuo.'
+    glossary:
+      - {term: Redondeo hacia arriba, definition: Tomar el siguiente número natural cuando sobra algo y hay que cubrir el total.}
+    practice: []

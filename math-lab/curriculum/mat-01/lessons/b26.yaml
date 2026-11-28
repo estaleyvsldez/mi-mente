@@ -1,0 +1,790 @@
+block: b26
+intro: >-
+  La distancia a una estrella o el tamaño de una bacteria se escriben con
+  tantas cifras que es fácil equivocarse. La notación científica resuelve el
+  problema: expresa cualquier número como una cifra entre 1 y 10 multiplicada
+  por una potencia de 10. En este bloque usarás lo aprendido sobre potencias
+  (bloque 18) y cifras significativas (bloque 25).
+topics:
+  t01:
+    intro:
+      what: >-
+        La notación científica es una forma de escribir un número como el
+        producto de un número entre 1 y 10 por una potencia de 10.
+      purpose: >-
+        Sirve para escribir, leer y comparar con comodidad números muy grandes o
+        muy pequeños.
+      importance: >-
+        Es el lenguaje habitual de la ciencia, la ingeniería y las calculadoras;
+        sin ella sería muy fácil perder o añadir ceros.
+      foundations: >-
+        Se apoya en las potencias de base 10, incluidos los exponentes
+        negativos (bloque 18), y en el valor posicional decimal (bloque 16).
+      prerequisites:
+        - 'Potencias de base 10 (bloque 18, tema 5)'
+        - 'Exponentes negativos (bloque 18, tema 10)'
+        - 'Valor posicional decimal (bloque 16)'
+      outcomes:
+        - 'Reconocer si un número está escrito en notación científica'
+        - 'Identificar la mantisa y el exponente'
+        - 'Interpretar el tamaño de un número a partir de su exponente'
+      everyday_example: >-
+        La distancia media de la Tierra al Sol es de unos 150 000 000 km; en
+        notación científica se escribe $1{,}5 \times 10^8$ km.
+    sections:
+      - title: La forma a × 10ⁿ
+        concept: >-
+          Un número en notación científica tiene la forma $a \times 10^n$, con
+          $1 \le a < 10$ y $n$ entero.
+        explanation: |-
+          Un número escrito en notación científica tiene dos partes:
+
+          * La **mantisa** $a$ (también llamada coeficiente): un número con **una sola cifra entera distinta de cero**, es decir, $1 \le a < 10$. Puede tener decimales.
+          * Una **potencia de 10**, $10^n$, cuyo exponente $n$ es un número entero (positivo, negativo o cero).
+
+          Ejemplos correctos: $3{,}2 \times 10^5$, $7 \times 10^{-3}$, $1{,}08 \times 10^{12}$.
+
+          Ejemplos **incorrectos**: $32 \times 10^4$ (la mantisa es mayor que 10), $0{,}5 \times 10^3$ (la mantisa es menor que 1), $3 \times 5^4$ (la base no es 10).
+
+          La idea clave: la mantisa dice **cuáles son las cifras** y el exponente dice **qué tamaño** tiene el número.
+        definition: >-
+          Un número está escrito en notación científica cuando tiene la forma
+          $a \times 10^n$, donde $1 \le a < 10$ y $n$ es un número entero.
+        rules:
+          - 'La mantisa tiene exactamente una cifra entera, y no es cero.'
+          - 'La base de la potencia es siempre 10.'
+          - 'El exponente es un número entero (puede ser negativo).'
+        examples:
+          - problem: '¿Están en notación científica $4{,}7 \times 10^{6}$, $47 \times 10^{5}$ y $0{,}47 \times 10^{7}$?'
+            solution: |-
+              **Paso 1.** $4{,}7 \times 10^6$: la mantisa $4{,}7$ cumple $1 \le 4{,}7 < 10$. Sí.
+
+              **Paso 2.** $47 \times 10^5$: la mantisa $47$ es mayor que 10. No.
+
+              **Paso 3.** $0{,}47 \times 10^7$: la mantisa $0{,}47$ es menor que 1. No.
+
+              Resultado: sólo $4{,}7 \times 10^6$ está en notación científica (los tres representan el mismo número, $4\,700\,000$).
+        common_errors:
+          - 'Aceptar una mantisa como $12{,}5$ o $0{,}8$: debe estar entre 1 y 10 (sin llegar a 10).'
+          - 'Pensar que el exponente negativo hace negativo al número: $2 \times 10^{-3}$ es positivo y pequeño.'
+        summary: >-
+          Notación científica: mantisa entre 1 y 10 por una potencia de 10 con
+          exponente entero.
+        check:
+          question: '¿Cuál está escrito correctamente en notación científica?'
+          options:
+            - '$25 \times 10^{3}$'
+            - '$2{,}5 \times 10^{4}$'
+            - '$0{,}25 \times 10^{5}$'
+            - '$2{,}5 \times 5^{4}$'
+          answer: 1
+          explanation: >-
+            Sólo $2{,}5 \times 10^4$ tiene mantisa entre 1 y 10 y base 10. La
+            primera tiene mantisa mayor que 10, la tercera menor que 1 y la
+            cuarta tiene base 5.
+      - title: Qué nos dice el exponente
+        concept: >-
+          El exponente indica el tamaño del número: positivo para números
+          grandes, negativo para números menores que 1.
+        explanation: |-
+          Observa estos números:
+
+          | Notación científica | Valor | Tamaño |
+          |---|---|---|
+          | $3 \times 10^{4}$ | $30\,000$ | grande |
+          | $3 \times 10^{0}$ | $3$ | entre 1 y 10 |
+          | $3 \times 10^{-4}$ | $0{,}0003$ | pequeño |
+
+          * Si $n > 0$, el número es mayor o igual que 10.
+          * Si $n = 0$, el número está entre 1 y 10 (recuerda del bloque 18 que $10^0 = 1$).
+          * Si $n < 0$, el número está entre 0 y 1.
+
+          Cada vez que el exponente aumenta en 1, el número se hace **10 veces mayor**. Por eso, de un vistazo al exponente sabemos el **orden de magnitud** del número.
+        definition: >-
+          En $a \times 10^n$, el exponente $n$ es el orden de magnitud del
+          número: $10^n$ es la mayor potencia de 10 que no supera al número.
+        rules:
+          - 'Exponente positivo: número mayor o igual que 10.'
+          - 'Exponente cero: número entre 1 y 10.'
+          - 'Exponente negativo: número entre 0 y 1.'
+        examples:
+          - problem: 'Una bacteria mide unos $2 \times 10^{-6}$ m. ¿Es mayor o menor que un metro?'
+            solution: |-
+              **Paso 1.** El exponente $-6$ es negativo, así que el número está entre 0 y 1.
+
+              **Paso 2.** $10^{-6} = 0{,}000001$, una millonésima.
+
+              Resultado: es muchísimo menor que un metro: dos millonésimas de metro.
+        common_errors:
+          - 'Creer que $10^{-6}$ es un número negativo: es positivo, aunque muy pequeño.'
+          - 'Pensar que un exponente mayor sólo añade "un poco": cada unidad multiplica por 10.'
+        summary: >-
+          El exponente da el tamaño del número; cada unidad de diferencia
+          multiplica o divide por 10.
+        check:
+          question: '¿Cuál de estos números es menor que 1?'
+          options:
+            - '$9{,}9 \times 10^{0}$'
+            - '$1{,}2 \times 10^{-2}$'
+            - '$1{,}2 \times 10^{2}$'
+          answer: 1
+          explanation: >-
+            Sólo el exponente negativo da un número entre 0 y 1:
+            $1{,}2 \times 10^{-2} = 0{,}012$. El primero vale $9{,}9$ y el
+            tercero $120$.
+    glossary:
+      - {term: Notación científica, definition: 'Escritura de un número como $a \times 10^n$ con $1 \le a < 10$ y $n$ entero.'}
+      - {term: Mantisa, definition: 'Factor $a$ de la notación científica; también se llama coeficiente.'}
+      - {term: Orden de magnitud, definition: 'Exponente de la potencia de 10; indica el tamaño del número.'}
+  t02:
+    intro:
+      what: >-
+        Las potencias de 10 son los números $10^n$: 10, 100, 1000... y también
+        0,1; 0,01; 0,001... cuando el exponente es negativo.
+      purpose: >-
+        Son la pieza que da tamaño a la notación científica y permiten
+        multiplicar y dividir por 10, 100, 1000... moviendo la coma.
+      importance: >-
+        Manejar con soltura las potencias de 10 es imprescindible para convertir
+        a notación científica, para los prefijos del sistema métrico (bloque 27)
+        y para leer cantidades enormes.
+      foundations: >-
+        Repasa las potencias de base 10 y los exponentes negativos del bloque 18
+        y la multiplicación por 10, 100 y 1000 del bloque 6.
+      prerequisites:
+        - 'Potencias de base 10 (bloque 18, tema 5)'
+        - 'Exponentes negativos y propiedades de las potencias (bloque 18)'
+        - 'Multiplicación por múltiplos de 10, 100 y 1000 (bloque 6)'
+      outcomes:
+        - 'Escribir como potencia de 10 cantidades como mil, un millón o una milésima'
+        - 'Multiplicar y dividir por potencias de 10 moviendo la coma'
+        - 'Aplicar el producto y el cociente de potencias de 10'
+      everyday_example: >-
+        Un billón de pesos (escala larga) es un millón de millones: $10^{12}$
+        pesos, un 1 seguido de doce ceros.
+    sections:
+      - title: Potencias de 10 positivas y negativas
+        concept: >-
+          $10^n$ es un 1 seguido de $n$ ceros; $10^{-n}$ es un 1 en la
+          $n$-ésima posición decimal.
+        explanation: |-
+          Recuerda del bloque 18:
+
+          * Con exponente positivo, $10^n$ es un **1 seguido de $n$ ceros**: $10^3 = 1000$, $10^6 = 1\,000\,000$.
+          * Con exponente negativo, $10^{-n} = \frac{1}{10^n}$: es un 1 situado en la posición decimal número $n$. $10^{-1} = 0{,}1$, $10^{-3} = 0{,}001$.
+
+          Algunos nombres útiles (en escala larga, la que usamos en español):
+
+          | Nombre | Potencia |
+          |---|---|
+          | mil | $10^3$ |
+          | un millón | $10^6$ |
+          | mil millones | $10^9$ |
+          | un billón | $10^{12}$ |
+          | una décima | $10^{-1}$ |
+          | una centésima | $10^{-2}$ |
+          | una milésima | $10^{-3}$ |
+          | una millonésima | $10^{-6}$ |
+
+          Atención: en inglés *billion* significa mil millones ($10^9$), pero en español un **billón** es un millón de millones ($10^{12}$).
+        definition: >-
+          Para $n$ natural, $10^n$ es el producto de $n$ factores iguales a 10 y
+          $10^{-n} = \frac{1}{10^n}$; además $10^0 = 1$.
+        rules:
+          - '$10^n$ (con $n > 0$) tiene $n$ ceros detrás del 1.'
+          - '$10^{-n}$ tiene el 1 en la posición decimal $n$: $10^{-4} = 0{,}0001$.'
+          - 'Un billón es $10^{12}$ y mil millones es $10^9$.'
+        examples:
+          - problem: 'Escribe como potencia de 10: un millón y una diezmilésima'
+            solution: |-
+              **Paso 1.** Un millón es $1\,000\,000$: un 1 seguido de 6 ceros, así que es $10^6$.
+
+              **Paso 2.** Una diezmilésima es $\frac{1}{10\,000} = 0{,}0001$; el 1 está en la cuarta posición decimal, así que es $10^{-4}$.
+
+              Resultado: $10^6$ y $10^{-4}$.
+        common_errors:
+          - 'Contar los ceros de $0{,}001$ incluido el de la parte entera y decir $10^{-4}$: se cuenta la posición decimal del 1, que es la tercera: $10^{-3}$.'
+          - 'Confundir el billón español ($10^{12}$) con el *billion* inglés ($10^9$).'
+        summary: >-
+          Las potencias positivas de 10 son 1 seguido de ceros; las negativas son
+          décimas, centésimas, milésimas...
+        check:
+          question: '¿Qué potencia de 10 es una centésima?'
+          options:
+            - '$10^{2}$'
+            - '$10^{-2}$'
+            - '$10^{-100}$'
+          answer: 1
+          explanation: >-
+            Una centésima es $0{,}01 = \frac{1}{100} = 10^{-2}$. $10^2 = 100$ es
+            cien, no una centésima.
+      - title: Multiplicar y dividir por potencias de 10
+        concept: >-
+          Multiplicar por $10^n$ mueve la coma $n$ lugares a la derecha;
+          dividir, $n$ lugares a la izquierda.
+        explanation: |-
+          Multiplicar por 10 hace que cada cifra pase a la posición siguiente de la izquierda (las unidades pasan a decenas, las décimas a unidades…). En la práctica, se ve como si la **coma se moviera un lugar a la derecha**:
+
+          * $3{,}75 \times 10^2 = 375$ (la coma se mueve 2 lugares a la derecha).
+          * $3{,}75 \times 10^{-2} = 0{,}0375$ (multiplicar por $10^{-2}$ es dividir entre 100: la coma se mueve 2 lugares a la izquierda).
+
+          Cuando faltan cifras se rellenan con **ceros**.
+
+          Además, recuerda las propiedades del bloque 18, que aquí son muy útiles:
+
+          $$10^a \times 10^b = 10^{a+b} \qquad 10^a \div 10^b = 10^{a-b}$$
+
+          Por ejemplo, $10^5 \times 10^{-2} = 10^{3}$ y $10^{4} \div 10^{7} = 10^{-3}$.
+        definition: >-
+          Para cualquier número $x$ y entero $n$, $x \times 10^n$ se obtiene
+          desplazando la coma de $x$ $n$ lugares a la derecha si $n > 0$ o $|n|$
+          lugares a la izquierda si $n < 0$.
+        rules:
+          - 'Exponente positivo: la coma va a la derecha (el número crece).'
+          - 'Exponente negativo: la coma va a la izquierda (el número decrece).'
+          - 'Producto de potencias de 10: se suman los exponentes. Cociente: se restan.'
+        examples:
+          - problem: 'Calcula $0{,}046 \times 10^{5}$ y $10^{8} \div 10^{-3}$'
+            solution: |-
+              **Paso 1.** $0{,}046 \times 10^5$: la coma se mueve 5 lugares a la derecha. $0{,}046 \to 4600$ (se añaden dos ceros). Resultado: $4600$.
+
+              **Paso 2.** $10^8 \div 10^{-3} = 10^{8 - (-3)} = 10^{11}$.
+
+              Resultado: $4600$ y $10^{11}$.
+        common_errors:
+          - 'Restar mal exponentes negativos: $8 - (-3) = 11$, no $5$.'
+          - 'Mover la coma hacia el lado equivocado con exponentes negativos.'
+        summary: >-
+          Multiplicar por potencias de 10 es mover la coma; al multiplicar
+          potencias de 10 se suman los exponentes y al dividir se restan.
+        check:
+          question: '¿Cuánto es $2{,}5 \times 10^{-3}$?'
+          options:
+            - '$2500$'
+            - '$0{,}0025$'
+            - '$0{,}025$'
+          answer: 1
+          explanation: >-
+            Exponente $-3$: la coma se mueve 3 lugares a la izquierda:
+            $2{,}5 \to 0{,}0025$. $2500$ sería con exponente $+3$.
+    glossary:
+      - {term: Potencia de 10, definition: 'Número de la forma $10^n$ con $n$ entero.'}
+      - {term: Billón, definition: 'En español, un millón de millones: $10^{12}$.'}
+      - {term: Escala larga, definition: 'Sistema de nombres en que cada nuevo nombre (millón, billón...) multiplica por un millón.'}
+  t03:
+    intro:
+      what: >-
+        Es el procedimiento para pasar un número escrito de forma habitual a la
+        forma $a \times 10^n$.
+      purpose: >-
+        Sirve para escribir de forma compacta números muy grandes o muy pequeños
+        y prepararlos para operar o comparar.
+      importance: >-
+        Es la destreza central del bloque: sin ella no se puede usar la notación
+        científica en problemas reales.
+      foundations: >-
+        Se basa en la multiplicación por potencias de 10 (tema 2) y en la idea de
+        que $a \times 10^n$ debe valer lo mismo que el número original.
+      prerequisites:
+        - 'Concepto de notación científica (tema 1 de este bloque)'
+        - 'Potencias de 10 (tema 2 de este bloque)'
+        - 'Cifras significativas (bloque 25)'
+      outcomes:
+        - 'Convertir números grandes a notación científica'
+        - 'Convertir números menores que 1 a notación científica'
+        - 'Ajustar expresiones como $35 \times 10^4$ a notación científica correcta'
+      everyday_example: >-
+        Un disco duro de 2 000 000 000 000 bytes se describe como
+        $2 \times 10^{12}$ bytes.
+    sections:
+      - title: Números grandes
+        concept: >-
+          Se coloca la coma después de la primera cifra y el exponente es el
+          número de lugares que se movió hacia la izquierda.
+        explanation: |-
+          Para escribir $45\,000\,000$ en notación científica:
+
+          1. **Mantisa.** Colocamos la coma justo después de la primera cifra no nula y quitamos los ceros finales que no sean significativos: $4{,}5$.
+          2. **Exponente.** Contamos cuántos lugares se ha movido la coma hacia la izquierda. En $45\,000\,000$ la coma (invisible) está al final; hasta quedar detrás del 4 se mueve $7$ lugares.
+          3. Escribimos $4{,}5 \times 10^7$.
+
+          ¿Por qué funciona? Al mover la coma 7 lugares a la izquierda hemos dividido entre $10^7$; para que el número no cambie, multiplicamos por $10^7$.
+
+          **Comprobación rápida:** $4{,}5 \times 10^7$ moviendo la coma 7 lugares a la derecha vuelve a dar $45\,000\,000$.
+        definition: >-
+          Para un número $x \ge 10$, su notación científica es $a \times 10^n$
+          donde $a$ se obtiene desplazando la coma $n$ lugares a la izquierda
+          hasta que $1 \le a < 10$.
+        rules:
+          - 'La mantisa empieza con la primera cifra no nula del número.'
+          - 'Números mayores o iguales que 10: el exponente es positivo.'
+          - 'El exponente es el número de lugares que se movió la coma.'
+          - 'Si la mantisa sale mayor o igual que 10, se mueve la coma otro lugar más y se suma 1 al exponente.'
+        examples:
+          - problem: 'Escribe $308\,000$ en notación científica'
+            solution: |-
+              **Paso 1.** Mantisa: la coma detrás del 3, quitando los ceros finales: $3{,}08$ (el 0 intermedio se conserva).
+
+              **Paso 2.** De $308\,000$ a $3{,}08000$ la coma se movió $5$ lugares a la izquierda.
+
+              **Paso 3.** $3{,}08 \times 10^5$.
+
+              **Comprobación.** $3{,}08 \times 100\,000 = 308\,000$.
+
+              Resultado: $3{,}08 \times 10^5$.
+          - problem: 'Escribe $35 \times 10^4$ en notación científica'
+            solution: |-
+              **Paso 1.** $35 = 3{,}5 \times 10^1$.
+
+              **Paso 2.** $35 \times 10^4 = 3{,}5 \times 10^1 \times 10^4 = 3{,}5 \times 10^5$ (se suman los exponentes).
+
+              Resultado: $3{,}5 \times 10^5$.
+        common_errors:
+          - 'Contar los ceros en lugar de los lugares que se mueve la coma: $308\,000$ tiene 4 ceros pero el exponente es 5.'
+          - 'Quitar el cero intermedio de la mantisa: $3{,}08$, no $3{,}8$.'
+        summary: >-
+          Para números grandes: coma tras la primera cifra, exponente positivo
+          igual a los lugares recorridos.
+        check:
+          question: '¿Cómo se escribe $7\,200\,000$ en notación científica?'
+          options:
+            - '$7{,}2 \times 10^{5}$'
+            - '$72 \times 10^{5}$'
+            - '$7{,}2 \times 10^{6}$'
+          answer: 2
+          explanation: >-
+            La coma se mueve 6 lugares hasta quedar detrás del 7: $7{,}2 \times
+            10^6$. $72 \times 10^5$ vale lo mismo pero su mantisa no está entre 1
+            y 10.
+      - title: Números menores que 1
+        concept: >-
+          Se mueve la coma hacia la derecha hasta pasar la primera cifra no nula;
+          el exponente es negativo.
+        explanation: |-
+          Para escribir $0{,}00072$:
+
+          1. **Mantisa.** Movemos la coma hacia la derecha hasta dejarla detrás de la primera cifra no nula: $7{,}2$.
+          2. **Exponente.** Contamos los lugares: de $0{,}00072$ a $7{,}2$ la coma se ha movido $4$ lugares hacia la **derecha**, así que el exponente es $-4$.
+          3. Escribimos $7{,}2 \times 10^{-4}$.
+
+          Al mover la coma a la derecha hemos multiplicado por $10^4$; para compensarlo multiplicamos por $10^{-4}$.
+
+          Fíjate en que los ceros de la izquierda **desaparecen**: no eran cifras significativas (bloque 25), sólo indicaban el tamaño, y ahora de eso se encarga el exponente.
+        definition: >-
+          Para $0 < x < 1$, su notación científica es $a \times 10^{-n}$ donde $a$
+          se obtiene desplazando la coma $n$ lugares a la derecha hasta que
+          $1 \le a < 10$.
+        rules:
+          - 'Números entre 0 y 1: el exponente es negativo.'
+          - 'El valor absoluto del exponente es la posición decimal de la primera cifra no nula.'
+          - 'Los ceros de la izquierda no aparecen en la mantisa.'
+        examples:
+          - problem: 'Escribe $0{,}0000305$ en notación científica'
+            solution: |-
+              **Paso 1.** La primera cifra no nula es el 3, en la quinta posición decimal.
+
+              **Paso 2.** Mantisa: $3{,}05$.
+
+              **Paso 3.** La coma se mueve 5 lugares a la derecha: exponente $-5$.
+
+              **Comprobación.** $3{,}05 \times 10^{-5}$: mover la coma 5 lugares a la izquierda da $0{,}0000305$.
+
+              Resultado: $3{,}05 \times 10^{-5}$.
+        common_errors:
+          - 'Poner exponente positivo a un número pequeño: $0{,}00072 \neq 7{,}2 \times 10^{4}$.'
+          - 'Contar también el cero de la parte entera al calcular el exponente.'
+        summary: >-
+          Para números menores que 1: la coma va a la derecha hasta la primera
+          cifra no nula y el exponente es negativo.
+        check:
+          question: '¿Cómo se escribe $0{,}0081$ en notación científica?'
+          options:
+            - '$8{,}1 \times 10^{-3}$'
+            - '$8{,}1 \times 10^{3}$'
+            - '$81 \times 10^{-4}$'
+          answer: 0
+          explanation: >-
+            La primera cifra no nula (8) está en la tercera posición decimal:
+            $8{,}1 \times 10^{-3}$. El exponente positivo daría $8100$ y la
+            tercera opción tiene mantisa mayor que 10.
+    glossary:
+      - {term: Conversión a notación científica, definition: 'Paso de un número a la forma $a \times 10^n$ sin cambiar su valor.'}
+      - {term: Desplazamiento de la coma, definition: 'Número de lugares que se mueve la coma; da el exponente.'}
+  t04:
+    intro:
+      what: >-
+        Es el procedimiento inverso: pasar un número escrito como
+        $a \times 10^n$ a su escritura decimal habitual.
+      purpose: >-
+        Sirve para interpretar cantidades expresadas en notación científica,
+        por ejemplo en una calculadora o un texto científico.
+      importance: >-
+        Permite hacerse una idea real de las cantidades y usarlas en cálculos
+        cotidianos.
+      foundations: >-
+        Se basa en multiplicar por potencias de 10 moviendo la coma (tema 2).
+      prerequisites:
+        - 'Potencias de 10 (tema 2 de este bloque)'
+        - 'Conversión a notación científica (tema 3 de este bloque)'
+      outcomes:
+        - 'Escribir en notación decimal números con exponente positivo'
+        - 'Escribir en notación decimal números con exponente negativo'
+        - 'Leer en palabras cantidades grandes expresadas en notación científica'
+      everyday_example: >-
+        Una calculadora muestra 6.02E5; significa $6{,}02 \times 10^5$, es
+        decir, 602 000.
+    sections:
+      - title: Mover la coma según el exponente
+        concept: >-
+          Exponente positivo: la coma se mueve a la derecha; negativo: a la
+          izquierda; se rellenan con ceros los huecos.
+        explanation: |-
+          Para pasar $a \times 10^n$ a notación decimal multiplicamos la mantisa por la potencia de 10, es decir, **movemos la coma** de la mantisa:
+
+          * Si $n > 0$, $n$ lugares a la **derecha**. $6{,}02 \times 10^5$: $6{,}02 \to 602\,000$ (después del 2 se añaden 3 ceros, porque las cifras $0$ y $2$ ya ocupan dos de los cinco lugares).
+          * Si $n < 0$, $|n|$ lugares a la **izquierda**. $3{,}9 \times 10^{-3}$: $3{,}9 \to 0{,}0039$.
+
+          Truco para el exponente negativo: el exponente indica en qué posición decimal queda la **primera cifra de la mantisa**. Con $10^{-3}$, el 3 de $3{,}9$ queda en las milésimas.
+
+          Una buena costumbre es comprobar el resultado convirtiéndolo de nuevo a notación científica.
+        definition: >-
+          La notación decimal de $a \times 10^n$ es el número que resulta de
+          desplazar la coma de $a$ $n$ lugares (a la derecha si $n > 0$, a la
+          izquierda si $n < 0$).
+        rules:
+          - 'Se mueve la coma tantos lugares como indica el exponente.'
+          - 'Los lugares que queden vacíos se rellenan con ceros.'
+          - 'Con exponente negativo, la primera cifra de la mantisa ocupa la posición decimal $|n|$.'
+        examples:
+          - problem: 'Escribe en notación decimal $1{,}25 \times 10^{6}$ y $4 \times 10^{-5}$'
+            solution: |-
+              **Paso 1.** $1{,}25 \times 10^6$: coma 6 lugares a la derecha. Las cifras $2$ y $5$ ocupan dos lugares; faltan 4 ceros: $1\,250\,000$.
+
+              **Paso 2.** $4 \times 10^{-5}$: coma 5 lugares a la izquierda; el 4 queda en la quinta posición decimal: $0{,}00004$.
+
+              Resultado: $1\,250\,000$ y $0{,}00004$.
+        common_errors:
+          - 'Añadir tantos ceros como indica el exponente sin descontar las cifras decimales de la mantisa: $1{,}25 \times 10^6$ no es $125\,000\,000$.'
+          - 'Poner un cero de menos con exponente negativo: $4 \times 10^{-5}$ es $0{,}00004$, no $0{,}0004$.'
+        summary: >-
+          Para pasar a notación decimal se mueve la coma de la mantisa tantos
+          lugares como indica el exponente, rellenando con ceros.
+        check:
+          question: '¿Cuánto es $5{,}3 \times 10^{-4}$ en notación decimal?'
+          options:
+            - '$0{,}00053$'
+            - '$0{,}0053$'
+            - '$53\,000$'
+          answer: 0
+          explanation: >-
+            Coma 4 lugares a la izquierda: el 5 queda en la cuarta posición
+            decimal: $0{,}00053$.
+      - title: Leer cantidades grandes
+        concept: >-
+          Agrupando las cifras de tres en tres se puede leer en palabras el
+          número obtenido.
+        explanation: |-
+          Una vez escrito en notación decimal, el número se lee como aprendiste en el bloque 2, agrupando las cifras de tres en tres desde la derecha. Algunas equivalencias directas ayudan:
+
+          * $10^3$: miles. $10^6$: millones. $10^9$: miles de millones. $10^{12}$: billones.
+
+          Así, $3{,}4 \times 10^{9}$ son $3\,400\,000\,000$: **tres mil cuatrocientos millones**.
+
+          Y $2{,}5 \times 10^{12}$ son **dos billones quinientos mil millones** (escala larga).
+
+          Leer en voz alta ayuda a comprobar que no se ha perdido ningún cero.
+        definition: >-
+          Leer un número es expresarlo en palabras según sus grupos de tres
+          cifras (unidades, miles, millones, miles de millones, billones...).
+        rules:
+          - '$a \times 10^6$ se lee como "$a$ millones".'
+          - '$a \times 10^9$ se lee como "$a$ miles de millones" (no "billones").'
+          - '$a \times 10^{12}$ se lee como "$a$ billones".'
+        examples:
+          - problem: 'Escribe en cifras y en palabras $7{,}8 \times 10^{9}$'
+            solution: |-
+              **Paso 1.** Coma 9 lugares a la derecha: $7\,800\,000\,000$.
+
+              **Paso 2.** Grupos: $7\,800$ millones.
+
+              Resultado: siete mil ochocientos millones.
+        common_errors:
+          - 'Leer $10^9$ como "un billón": en español es mil millones.'
+        summary: >-
+          El exponente indica directamente si hablamos de miles, millones, miles
+          de millones o billones.
+        check:
+          question: '¿Cómo se lee $6 \times 10^{12}$?'
+          options:
+            - 'Seis mil millones'
+            - 'Seis billones'
+            - 'Seis millones'
+          answer: 1
+          explanation: >-
+            $10^{12}$ es un billón en escala larga, así que $6 \times 10^{12}$
+            son seis billones. Seis mil millones sería $6 \times 10^9$.
+    glossary:
+      - {term: Notación decimal, definition: 'Escritura habitual de un número, con sus cifras y la coma, sin potencias de 10.'}
+      - {term: Mil millones, definition: '$10^9$; en inglés se llama *billion*.'}
+  t05:
+    intro:
+      what: >-
+        Son las reglas para multiplicar, dividir, sumar y restar números
+        escritos en notación científica.
+      purpose: >-
+        Permiten calcular con cantidades enormes o diminutas sin escribir todos
+        sus ceros.
+      importance: >-
+        Los cálculos científicos (distancias, tiempos, cantidades de
+        datos) se hacen así; además, ayudan a estimar mentalmente resultados.
+      foundations: >-
+        Se basa en las propiedades de las potencias (bloque 18): producto y
+        cociente de potencias de igual base, y en las propiedades conmutativa y
+        asociativa (bloque 8).
+      prerequisites:
+        - 'Propiedades de las potencias (bloque 18, tema 7)'
+        - 'Propiedades conmutativa, asociativa y distributiva (bloque 8)'
+        - 'Conversión a notación científica (tema 3 de este bloque)'
+      outcomes:
+        - 'Multiplicar y dividir números en notación científica'
+        - 'Sumar y restar números en notación científica'
+        - 'Ajustar el resultado para que la mantisa quede entre 1 y 10'
+      everyday_example: >-
+        Si un servidor guarda $4 \times 10^6$ archivos de $2 \times 10^5$ bytes
+        cada uno, ocupa $8 \times 10^{11}$ bytes.
+    sections:
+      - title: Multiplicación y división
+        concept: >-
+          Se operan las mantisas entre sí y las potencias de 10 entre sí:
+          exponentes que se suman al multiplicar y se restan al dividir.
+        explanation: |-
+          Gracias a las propiedades conmutativa y asociativa podemos reordenar los factores:
+
+          $$(3 \times 10^4) \times (5 \times 10^6) = (3 \times 5) \times (10^4 \times 10^6) = 15 \times 10^{10}$$
+
+          El resultado $15 \times 10^{10}$ es correcto, pero no está en notación científica, porque $15 \ge 10$. Lo **ajustamos**: $15 = 1{,}5 \times 10^1$, así que
+
+          $$15 \times 10^{10} = 1{,}5 \times 10^{11}$$
+
+          En la división se hace igual: se dividen las mantisas y se **restan** los exponentes. Si la mantisa queda menor que 1, se ajusta en sentido contrario: $0{,}5 \times 10^3 = 5 \times 10^2$.
+        definition: >-
+          $(a \times 10^m)(b \times 10^n) = (a b) \times 10^{m+n}$ y
+          $(a \times 10^m) \div (b \times 10^n) = (a \div b) \times 10^{m-n}$,
+          ajustando después la mantisa si es necesario.
+        rules:
+          - 'Producto: se multiplican las mantisas y se suman los exponentes.'
+          - 'Cociente: se dividen las mantisas y se restan los exponentes.'
+          - 'Si la mantisa queda $\ge 10$, se divide entre 10 y se suma 1 al exponente.'
+          - 'Si la mantisa queda $< 1$, se multiplica por 10 y se resta 1 al exponente.'
+        examples:
+          - problem: 'Calcula $(8 \times 10^{9}) \div (2 \times 10^{3})$'
+            solution: |-
+              **Paso 1.** Mantisas: $8 \div 2 = 4$.
+
+              **Paso 2.** Exponentes: $9 - 3 = 6$.
+
+              Resultado: $4 \times 10^6$.
+          - problem: 'Calcula $(2 \times 10^{-2}) \div (8 \times 10^{4})$'
+            solution: |-
+              **Paso 1.** Mantisas: $2 \div 8 = 0{,}25$.
+
+              **Paso 2.** Exponentes: $-2 - 4 = -6$. Tenemos $0{,}25 \times 10^{-6}$.
+
+              **Paso 3.** Ajuste: $0{,}25 = 2{,}5 \times 10^{-1}$, así que el resultado es $2{,}5 \times 10^{-6-1} = 2{,}5 \times 10^{-7}$.
+
+              Resultado: $2{,}5 \times 10^{-7}$.
+        common_errors:
+          - 'Multiplicar los exponentes en lugar de sumarlos: $10^4 \times 10^6 = 10^{10}$, no $10^{24}$.'
+          - 'Olvidar ajustar la mantisa cuando sale mayor que 10 o menor que 1.'
+        summary: >-
+          Al multiplicar se suman exponentes y al dividir se restan; después se
+          ajusta la mantisa.
+        check:
+          question: '¿Cuánto es $(4 \times 10^{5}) \times (3 \times 10^{-2})$ en notación científica?'
+          options:
+            - '$12 \times 10^{3}$'
+            - '$1{,}2 \times 10^{4}$'
+            - '$1{,}2 \times 10^{-10}$'
+          answer: 1
+          explanation: >-
+            $4 \times 3 = 12$ y $5 + (-2) = 3$: $12 \times 10^3 = 1{,}2 \times
+            10^4$. La primera opción es el valor correcto sin ajustar y la tercera
+            multiplica los exponentes.
+      - title: Suma y resta
+        concept: >-
+          Sólo se pueden sumar o restar las mantisas cuando las potencias de 10
+          tienen el mismo exponente.
+        explanation: |-
+          En la suma no se pueden sumar los exponentes. Es como sumar objetos del mismo tipo: $3{,}2$ "centenas de mil" más $4{,}1$ "centenas de mil" son $7{,}3$ "centenas de mil". Por la propiedad distributiva:
+
+          $$3{,}2 \times 10^5 + 4{,}1 \times 10^5 = (3{,}2 + 4{,}1) \times 10^5 = 7{,}3 \times 10^5$$
+
+          Si los exponentes son **distintos**, primero se reescribe uno de los números para que tenga el mismo exponente que el otro (normalmente el mayor):
+
+          $$5 \times 10^4 + 3 \times 10^3 = 5 \times 10^4 + 0{,}3 \times 10^4 = 5{,}3 \times 10^4$$
+
+          Comprobación: $50\,000 + 3000 = 53\,000$.
+        definition: >-
+          $a \times 10^n + b \times 10^n = (a + b) \times 10^n$ y
+          $a \times 10^n - b \times 10^n = (a - b) \times 10^n$.
+        rules:
+          - 'Antes de sumar o restar, se igualan los exponentes.'
+          - 'Se suman o restan las mantisas y se conserva el exponente común.'
+          - 'Al final se ajusta la mantisa si es necesario.'
+        examples:
+          - problem: 'Calcula $9{,}6 \times 10^{7} + 7 \times 10^{6}$'
+            solution: |-
+              **Paso 1.** Igualamos al exponente mayor: $7 \times 10^6 = 0{,}7 \times 10^7$.
+
+              **Paso 2.** Sumamos mantisas: $9{,}6 + 0{,}7 = 10{,}3$. Tenemos $10{,}3 \times 10^7$.
+
+              **Paso 3.** Ajuste: $10{,}3 \times 10^7 = 1{,}03 \times 10^8$.
+
+              **Comprobación.** $96\,000\,000 + 7\,000\,000 = 103\,000\,000$.
+
+              Resultado: $1{,}03 \times 10^8$.
+        common_errors:
+          - 'Sumar los exponentes al sumar: $10^5 + 10^5$ es $2 \times 10^5$, no $10^{10}$.'
+          - 'Sumar mantisas con exponentes distintos sin igualarlos antes.'
+        summary: >-
+          Para sumar o restar, primero se igualan los exponentes y luego se
+          operan las mantisas.
+        check:
+          question: '¿Cuánto es $6 \times 10^{3} - 2 \times 10^{2}$?'
+          options:
+            - '$4 \times 10^{1}$'
+            - '$5{,}8 \times 10^{3}$'
+            - '$4 \times 10^{3}$'
+          answer: 1
+          explanation: >-
+            $2 \times 10^2 = 0{,}2 \times 10^3$, así que $(6 - 0{,}2) \times 10^3 =
+            5{,}8 \times 10^3$. Comprobación: $6000 - 200 = 5800$.
+    glossary:
+      - {term: Ajuste de la mantisa, definition: 'Reescritura del resultado para que la mantisa quede entre 1 y 10.'}
+      - {term: Igualar exponentes, definition: 'Reescribir un número para que tenga el mismo exponente que otro antes de sumar o restar.'}
+  t06:
+    intro:
+      what: >-
+        Es el uso de la notación científica para describir y calcular
+        cantidades reales de la física, la astronomía, la biología y la
+        informática.
+      purpose: >-
+        Sirve para comparar tamaños muy distintos y para resolver problemas con
+        datos científicos.
+      importance: >-
+        Las noticias científicas, los datos técnicos y las especificaciones de
+        aparatos usan estas cantidades; entenderlas es parte de la cultura
+        básica.
+      foundations: >-
+        Reúne todo el bloque y lo combina con la división (bloque 7) y las
+        unidades de tiempo.
+      prerequisites:
+        - 'Operaciones en notación científica (tema 5 de este bloque)'
+        - 'Conversión a notación decimal (tema 4 de este bloque)'
+      outcomes:
+        - 'Comparar cantidades expresadas en notación científica'
+        - 'Resolver problemas de distancia, tiempo y tamaño con notación científica'
+        - 'Calcular cuántas veces mayor es una cantidad que otra'
+      everyday_example: >-
+        La luz del Sol tarda unos 500 segundos (algo más de 8 minutos) en llegar
+        a la Tierra; se calcula dividiendo dos números en notación científica.
+    sections:
+      - title: Comparar magnitudes
+        concept: >-
+          Se comparan primero los exponentes; si son iguales, se comparan las
+          mantisas.
+        explanation: |-
+          Para comparar dos números positivos en notación científica:
+
+          1. El que tiene **mayor exponente** es mayor (porque las mantisas están entre 1 y 10, un exponente mayor siempre gana). $2 \times 10^8 > 9 \times 10^7$.
+          2. Si los exponentes son iguales, es mayor el de mayor mantisa. $4{,}5 \times 10^6 > 3{,}9 \times 10^6$.
+
+          Para saber **cuántas veces** mayor es una cantidad que otra, se dividen. Por ejemplo, la Tierra tiene un radio de unos $6{,}4 \times 10^6$ m y una persona mide alrededor de $1{,}6$ m:
+
+          $$\frac{6{,}4 \times 10^6}{1{,}6} = 4 \times 10^6$$
+
+          El radio terrestre es unos cuatro millones de veces la altura de una persona.
+        definition: >-
+          Si $1 \le a, b < 10$ y $m > n$, entonces $a \times 10^m > b \times
+          10^n$.
+        rules:
+          - 'A mayor exponente, mayor número (con mantisas correctas y números positivos).'
+          - 'Con el mismo exponente, decide la mantisa.'
+          - 'Para saber cuántas veces es mayor, se divide.'
+        examples:
+          - problem: 'Un virus mide $1{,}2 \times 10^{-7}$ m y una bacteria $3 \times 10^{-6}$ m. ¿Cuál es mayor y cuántas veces?'
+            solution: |-
+              **Paso 1.** Exponentes: $-6 > -7$, así que la bacteria es mayor.
+
+              **Paso 2.** Dividimos: $\frac{3 \times 10^{-6}}{1{,}2 \times 10^{-7}} = \frac{3}{1{,}2} \times 10^{-6-(-7)} = 2{,}5 \times 10^{1} = 25$.
+
+              Resultado: la bacteria es $25$ veces mayor que el virus.
+        common_errors:
+          - 'Creer que $-7$ es mayor que $-6$: en la recta numérica $-7$ está más a la izquierda (bloque 24).'
+          - 'Comparar sólo las mantisas sin mirar los exponentes.'
+        summary: >-
+          Se compara primero el exponente y luego la mantisa; dividiendo se sabe
+          cuántas veces mayor es una cantidad.
+        check:
+          question: '¿Qué cantidad es mayor?'
+          options:
+            - '$9{,}9 \times 10^{4}$'
+            - '$1{,}1 \times 10^{5}$'
+            - 'Son iguales'
+          answer: 1
+          explanation: >-
+            El exponente 5 es mayor que el 4: $1{,}1 \times 10^5 = 110\,000$ y
+            $9{,}9 \times 10^4 = 99\,000$.
+      - title: Cálculos con datos científicos
+        concept: >-
+          Los datos se escriben en notación científica y se operan con las reglas
+          del tema 5.
+        explanation: |-
+          Muchos problemas científicos se resuelven con una sola operación, pero con números enormes. Por ejemplo, la velocidad de la luz es de unos $3 \times 10^8$ metros por segundo y la distancia de la Tierra al Sol, de unos $1{,}5 \times 10^{11}$ metros.
+
+          Como tiempo $=$ distancia $\div$ velocidad:
+
+          $$\frac{1{,}5 \times 10^{11}}{3 \times 10^{8}} = 0{,}5 \times 10^{3} = 5 \times 10^{2} = 500 \text{ s}$$
+
+          Es decir, $500$ s, que son $8$ min y $20$ s.
+
+          Recomendaciones:
+
+          * Escribe todos los datos en notación científica y en las **mismas unidades**.
+          * Opera mantisas y exponentes por separado.
+          * Interpreta el resultado: ¿tiene sentido su tamaño?
+        definition: >-
+          Resolver un problema con notación científica es expresar los datos
+          como $a \times 10^n$, operar con las reglas de las potencias y dar el
+          resultado con su unidad.
+        rules:
+          - 'Todos los datos deben estar en la misma unidad antes de operar.'
+          - 'Al final, se ajusta la mantisa y se interpreta el resultado.'
+        examples:
+          - problem: 'En un año hay unos $3{,}15 \times 10^{7}$ segundos. ¿Qué distancia recorre la luz en un año (año luz)?'
+            solution: |-
+              **Paso 1.** Distancia $=$ velocidad $\times$ tiempo $= (3 \times 10^8) \times (3{,}15 \times 10^7)$.
+
+              **Paso 2.** Mantisas: $3 \times 3{,}15 = 9{,}45$. Exponentes: $8 + 7 = 15$.
+
+              Resultado: un año luz son unos $9{,}45 \times 10^{15}$ m.
+        common_errors:
+          - 'Mezclar kilómetros y metros en el mismo cálculo.'
+          - 'Dar el resultado sin unidad.'
+        summary: >-
+          Con los datos en notación científica y en las mismas unidades, los
+          cálculos científicos se reducen a operar mantisas y exponentes.
+        check:
+          question: 'Un satélite está a $3{,}6 \times 10^{7}$ m. ¿Cuánto tarda en llegarle una señal que viaja a $3 \times 10^{8}$ m/s?'
+          options:
+            - '$1{,}2 \times 10^{-1}$ s'
+            - '$1{,}2 \times 10^{1}$ s'
+            - '$1{,}08 \times 10^{16}$ s'
+          answer: 0
+          explanation: >-
+            Tiempo $= \frac{3{,}6 \times 10^7}{3 \times 10^8} = 1{,}2 \times
+            10^{-1} = 0{,}12$ s. La tercera opción multiplica en lugar de
+            dividir.
+    glossary:
+      - {term: Año luz, definition: 'Distancia que recorre la luz en un año, unos $9{,}45 \times 10^{15}$ m.'}
+      - {term: Velocidad de la luz, definition: 'Aproximadamente $3 \times 10^8$ metros por segundo.'}

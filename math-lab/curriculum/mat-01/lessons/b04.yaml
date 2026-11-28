@@ -1,0 +1,683 @@
+block: b04
+intro: >-
+  La suma es la primera operación aritmética. En este bloque aprenderás qué
+  significa sumar, cómo se llaman sus elementos, cómo sumar naturales y enteros,
+  cómo funciona la reagrupación («llevar»), qué propiedades tiene la suma y cómo
+  usarla para calcular mentalmente y resolver problemas.
+
+topics:
+  t01:
+    intro:
+      what: 'Sumar es reunir dos o más cantidades en una sola, o agregar una cantidad a otra.'
+      purpose: 'Sirve para obtener totales, acumular y avanzar.'
+      importance: 'Es la operación más básica; la resta, la multiplicación y muchas otras se definen a partir de ella.'
+      foundations: 'La acción de contar y la idea de juntar colecciones de objetos.'
+      prerequisites:
+        - 'Números naturales (bloque 3, tema 1).'
+        - 'Recta numérica (bloque 3, tema 7).'
+      outcomes:
+        - Reconocer situaciones de juntar y de agregar.
+        - Representar una suma con objetos y en la recta numérica.
+        - Escribir una situación como suma.
+      everyday_example: >-
+        Si en tu cartera hay 20 pesos y te pagan 15, ahora tienes $20 + 15 = 35$ pesos.
+    sections:
+      - title: 'Juntar y agregar'
+        concept: 'Sumar es contar cuántos objetos hay en total cuando se juntan varias colecciones, o cuánto hay después de agregar una cantidad.'
+        explanation: |-
+          La suma responde a la pregunta **«¿cuántos hay en total?»**. Aparece en dos tipos de situaciones:
+
+          * **Juntar:** hay dos grupos a la vez y se reúnen. «Hay 5 hombres y 3 mujeres; ¿cuántas personas hay?» $5 + 3 = 8$.
+          * **Agregar:** hay una cantidad inicial y llega otra. «Tenía 5 libros y compré 3; ¿cuántos tengo?» $5 + 3 = 8$.
+
+          Se escribe con el signo $+$ («más») y el resultado después de $=$.
+
+          **En la recta numérica**, sumar un número positivo es **avanzar hacia la derecha**. Para calcular $5 + 3$: sitúate en el 5 y da 3 saltos de una unidad a la derecha: 6, 7, 8. Llegas al 8.
+
+          Esto muestra que sumar es **contar hacia adelante**, una idea que usaremos en el cálculo mental. Con números grandes, contar uno a uno sería lento; por eso en los próximos temas aprenderemos métodos que aprovechan el valor posicional.
+
+          Observa que al sumar números naturales el resultado nunca es menor que ninguno de los números que se suman.
+        definition: >-
+          La suma (o adición) de dos números $a$ y $b$ es el número $a + b$ que se obtiene
+          al reunir $a$ unidades con $b$ unidades; en la recta, es avanzar $b$ unidades
+          desde $a$.
+        rules:
+          - 'La suma responde a «¿cuántos hay en total?».'
+          - 'Sumar un número positivo es avanzar hacia la derecha en la recta.'
+          - 'Al sumar naturales, el total es mayor que cada uno de los números sumados.'
+        examples:
+          - problem: 'En un estante hay 6 platos y se colocan 7 más. ¿Cuántos platos hay?'
+            solution: |-
+              **Paso 1.** Situación de agregar: hay que sumar.
+              **Paso 2.** Planteamos $6 + 7$.
+              **Paso 3.** Desde 6 contamos 7 hacia adelante: 7, 8, 9, 10, 11, 12, 13.
+              Resultado: hay $13$ platos.
+        common_errors:
+          - 'Contar el número de partida como primer salto: para $6 + 7$ el primer salto lleva al 7, no al 6.'
+          - 'Sumar cuando la situación pide quitar o comparar.'
+        summary: >-
+          Sumar es juntar o agregar; en la recta es avanzar hacia la derecha.
+        check:
+          question: 'Ana tiene 9 fotos y Luis 4. Si las juntan, ¿cuántas fotos hay?'
+          options: ['13', '5', '94']
+          answer: 0
+          explanation: 'Juntar es sumar: $9 + 4 = 13$. El 5 sería una resta y 94 es escribir las cifras juntas.'
+    glossary:
+      - term: 'Suma'
+        definition: 'Operación de reunir cantidades; también se llama adición.'
+      - term: 'Agregar'
+        definition: 'Añadir una cantidad a otra que ya existía.'
+    practice: []
+
+  t02:
+    intro:
+      what: 'Son los nombres de las partes de una suma: los sumandos, el signo más y el resultado, llamado suma o total.'
+      purpose: 'Permiten hablar con precisión de una suma y entender las explicaciones y enunciados.'
+      importance: 'Los nombres se usan en todo el curso, por ejemplo al hablar de propiedades o de la relación entre suma y resta.'
+      foundations: 'El concepto de suma.'
+      prerequisites:
+        - 'Concepto de suma (bloque 4, tema 1).'
+      outcomes:
+        - Identificar los sumandos y la suma en una igualdad.
+        - Encontrar un sumando conociendo la suma y el otro sumando (por tanteo).
+      everyday_example: >-
+        En un ticket, cada precio es un sumando y el «TOTAL» del final es la suma.
+    sections:
+      - title: 'Sumandos y suma'
+        concept: 'En $a + b = c$, los números $a$ y $b$ son los sumandos y $c$ es la suma o total.'
+        explanation: |-
+          En la igualdad
+          $$\underbrace{8}_{\text{sumando}} + \underbrace{5}_{\text{sumando}} = \underbrace{13}_{\text{suma}}$$
+
+          * **Sumandos:** los números que se suman. Puede haber dos o más.
+          * **Signo $+$:** indica la operación; se lee «más».
+          * **Suma o total:** el resultado. Fíjate que la palabra «suma» designa tanto la operación como su resultado.
+
+          La igualdad puede escribirse en cualquier sentido: $13 = 8 + 5$ también es correcta y los papeles no cambian (8 y 5 siguen siendo sumandos).
+
+          **Sumando desconocido.** A veces se conoce la suma y uno de los sumandos: $\square + 5 = 13$. El número que falta es el que, sumado a 5, da 13. Puedes encontrarlo contando desde 5 hasta 13: hay 8 saltos. En el bloque 5 verás que esto se resuelve con una resta.
+        definition: >-
+          En la igualdad $a + b = c$, $a$ y $b$ se llaman sumandos y $c$ se llama suma o total.
+        rules:
+          - 'Los sumandos son los números que se suman; la suma es el resultado.'
+          - 'Una suma puede tener más de dos sumandos.'
+          - 'La posición a un lado u otro del $=$ no cambia el papel de cada número.'
+        examples:
+          - problem: 'En $12 + 30 + 7 = 49$, identifica los sumandos y la suma.'
+            solution: |-
+              **Paso 1.** Los números unidos por $+$ son $12$, $30$ y $7$: son los sumandos.
+              **Paso 2.** El número después del $=$ es $49$: es la suma.
+              **Comprobación.** $12 + 30 = 42$ y $42 + 7 = 49$.
+              Resultado: sumandos 12, 30 y 7; suma 49.
+        common_errors:
+          - 'Llamar «sumando» al resultado.'
+          - 'Pensar que sólo puede haber dos sumandos.'
+        summary: >-
+          Sumandos + sumandos = suma (o total).
+        check:
+          question: 'En $25 + 14 = 39$, ¿cuál es la suma?'
+          options: ['39', '25', '14']
+          answer: 0
+          explanation: 'La suma es el resultado, 39; 25 y 14 son los sumandos.'
+    glossary:
+      - term: 'Sumando'
+        definition: 'Cada uno de los números que se suman.'
+      - term: 'Suma o total'
+        definition: 'Resultado de una adición.'
+    practice: []
+
+  t03:
+    intro:
+      what: 'Es el procedimiento para sumar números naturales de varias cifras sumando por órdenes (unidades con unidades, decenas con decenas…).'
+      purpose: 'Permite sumar números grandes sin contar uno a uno.'
+      importance: 'Es la base de la suma con reagrupación, la suma vertical y de todas las cuentas por escrito.'
+      foundations: 'El valor posicional y las sumas básicas de una cifra (las «tablas de sumar»).'
+      prerequisites:
+        - 'Valor posicional (bloque 2, tema 6).'
+        - 'Elementos de la suma (bloque 4, tema 2).'
+      outcomes:
+        - Sumar números de una cifra con seguridad.
+        - Sumar números de varias cifras sin reagrupación.
+        - Explicar por qué se suman unidades con unidades y decenas con decenas.
+      everyday_example: >-
+        Si pagas 230 pesos de luz y 150 de agua, sumas 2 centenas con 1 centena y 3
+        decenas con 5 decenas: 380 pesos.
+    sections:
+      - title: 'Sumar por órdenes'
+        concept: 'Para sumar números de varias cifras se suman por separado las unidades, las decenas, las centenas…, porque sólo se pueden juntar cosas del mismo tipo.'
+        explanation: |-
+          **Las sumas básicas.** Conviene saber de memoria las sumas de dos números de una cifra ($0 + 0$ hasta $9 + 9$). Un truco: para $7 + 8$ piensa «$7 + 3 = 10$ y faltan 5: 15». Completar hasta 10 es muy útil.
+
+          **Números de varias cifras.** Recuerda que $234 = 200 + 30 + 4$ y $152 = 100 + 50 + 2$. Sólo tiene sentido juntar unidades con unidades, decenas con decenas y centenas con centenas, igual que se suman metros con metros. Así:
+
+          * unidades: $4 + 2 = 6$
+          * decenas: $3 + 5 = 8$ decenas
+          * centenas: $2 + 1 = 3$ centenas
+
+          y el resultado es $386$.
+
+          Es cómodo escribir los números **uno debajo de otro, alineados por la derecha**, para que cada columna sea un orden:
+          $$\begin{array}{r} 234 \\ +\,152 \\ \hline 386 \end{array}$$
+          y sumar **de derecha a izquierda**. En este tema todas las columnas suman 9 o menos; en el tema 5 verás qué hacer cuando una columna pasa de 9.
+        definition: >-
+          La suma de dos naturales escritos en base 10 se obtiene sumando las cifras de
+          cada orden; si ninguna columna supera 9, cada suma parcial es la cifra del
+          resultado en ese orden.
+        rules:
+          - 'Alinea los números por la derecha (unidades bajo unidades).'
+          - 'Suma de derecha a izquierda, columna por columna.'
+          - 'Sumar 0 no cambia un número: $a + 0 = a$.'
+        examples:
+          - problem: 'Calcula $4\,052 + 1\,326$.'
+            solution: |-
+              **Paso 1.** Unidades: $2 + 6 = 8$.
+              **Paso 2.** Decenas: $5 + 2 = 7$.
+              **Paso 3.** Centenas: $0 + 3 = 3$.
+              **Paso 4.** Unidades de millar: $4 + 1 = 5$.
+              Resultado: $5\,378$.
+        common_errors:
+          - 'Alinear por la izquierda cuando los números tienen distinta cantidad de cifras.'
+          - 'Sumar todas las cifras entre sí como si fueran unidades.'
+        summary: >-
+          Se suman unidades con unidades, decenas con decenas, etc., alineando por la
+          derecha y empezando por las unidades.
+        check:
+          question: '¿Cuánto es $523 + 341$?'
+          options: ['864', '854', '964']
+          answer: 0
+          explanation: 'Unidades $3 + 1 = 4$; decenas $2 + 4 = 6$; centenas $5 + 3 = 8$: 864.'
+    glossary:
+      - term: 'Orden'
+        definition: 'Posición de una cifra: unidades, decenas, centenas…'
+      - term: 'Columna'
+        definition: 'Cifras de un mismo orden colocadas una debajo de otra.'
+    practice: []
+
+  t04:
+    intro:
+      what: 'Es la suma cuando los sumandos pueden ser positivos, negativos o cero.'
+      purpose: 'Sirve para calcular saldos, cambios de temperatura, ganancias y pérdidas.'
+      importance: 'Es la base de la resta de enteros y del álgebra.'
+      foundations: 'El valor absoluto y la recta numérica.'
+      prerequisites:
+        - 'Números enteros y valor absoluto (bloque 3, tema 2).'
+        - 'Suma de números naturales (bloque 4, tema 3).'
+      outcomes:
+        - Sumar enteros del mismo signo.
+        - Sumar enteros de distinto signo.
+        - Interpretar una suma de enteros en una situación real.
+      everyday_example: >-
+        Si tu cuenta tiene $-30$ pesos (una deuda) y depositas 50, tu saldo pasa a
+        $-30 + 50 = 20$ pesos.
+    sections:
+      - title: 'La regla de los signos para sumar'
+        concept: 'Con signos iguales se suman los valores absolutos y se conserva el signo; con signos distintos se restan y se pone el signo del de mayor valor absoluto.'
+        explanation: |-
+          Piensa en los enteros como **ganancias** (positivos) y **pérdidas** (negativos).
+
+          **Mismo signo.** Dos pérdidas se acumulan: perder 7 y perder 5 es perder 12.
+          $$(-7) + (-5) = -12$$
+          Regla: se **suman los valores absolutos** ($7 + 5 = 12$) y se **conserva el signo** común.
+
+          **Distinto signo.** Una ganancia y una pérdida se compensan: ganar 4 y perder 9 deja una pérdida de 5.
+          $$4 + (-9) = -5$$
+          Regla: se **restan los valores absolutos** (el mayor menos el menor: $9 - 4 = 5$) y se pone el **signo del que tiene mayor valor absoluto** (aquí $-9$, así que negativo).
+
+          (Restar «el mayor menos el menor» es quitar; la resta se estudia a fondo en el bloque 5, pero con números pequeños puedes contar hacia atrás.)
+
+          **En la recta:** sumar un positivo es avanzar a la derecha; sumar un negativo es avanzar a la **izquierda**. Para $4 + (-9)$: desde el 4, 9 pasos a la izquierda: llegas al $-5$.
+
+          **Opuestos:** un número más su opuesto da 0: $8 + (-8) = 0$.
+
+          Los negativos se escriben entre paréntesis cuando van después de un signo: $4 + (-9)$, no $4 + -9$.
+        definition: >-
+          Si $a$ y $b$ tienen el mismo signo, $a + b$ tiene ese signo y valor absoluto
+          $|a| + |b|$. Si tienen signos distintos, $a + b$ tiene el signo del de mayor valor
+          absoluto y valor absoluto igual a la diferencia de sus valores absolutos.
+        rules:
+          - 'Mismo signo: se suman los valores absolutos y se conserva el signo.'
+          - 'Distinto signo: se restan los valores absolutos y gana el signo del mayor valor absoluto.'
+          - '$a + (-a) = 0$.'
+        examples:
+          - problem: 'Calcula $(-15) + 6$.'
+            solution: |-
+              **Paso 1.** Signos distintos.
+              **Paso 2.** Valores absolutos: 15 y 6. Restamos: $15 - 6 = 9$.
+              **Paso 3.** El de mayor valor absoluto es $-15$: el resultado es negativo.
+              Resultado: $-9$.
+          - problem: 'Calcula $(-8) + (-13)$.'
+            solution: |-
+              **Paso 1.** Mismo signo (negativo).
+              **Paso 2.** Sumamos valores absolutos: $8 + 13 = 21$.
+              Resultado: $-21$.
+        common_errors:
+          - 'Sumar los valores absolutos cuando los signos son distintos: $(-15) + 6$ no es $-21$.'
+          - 'Poner el signo del primer número en vez del de mayor valor absoluto.'
+        summary: >-
+          Signos iguales: suma y conserva el signo. Signos distintos: resta y pon el signo
+          del de mayor valor absoluto.
+        check:
+          question: '¿Cuánto es $12 + (-20)$?'
+          options: ['$-8$', '$8$', '$-32$']
+          answer: 0
+          explanation: 'Signos distintos: $20 - 12 = 8$, con el signo de $-20$: $-8$.'
+    glossary:
+      - term: 'Regla de los signos'
+        definition: 'Conjunto de reglas que indica el signo del resultado al operar con enteros.'
+    practice: []
+
+  t05:
+    intro:
+      what: 'Es la técnica para sumar cuando la suma de una columna es 10 o más, cambiando 10 unidades de un orden por 1 del orden siguiente.'
+      purpose: 'Permite sumar cualquier par de números de varias cifras.'
+      importance: 'Es el famoso «me llevo una»; entender por qué funciona evita errores y prepara para la resta con desagrupación.'
+      foundations: 'El valor posicional: 10 unidades = 1 decena, 10 decenas = 1 centena…'
+      prerequisites:
+        - 'Unidades, decenas, centenas (bloque 2, tema 7).'
+        - 'Suma de números naturales (bloque 4, tema 3).'
+      outcomes:
+        - Sumar con reagrupación en una o varias columnas.
+        - Explicar qué significa «llevar».
+      everyday_example: >-
+        Si juntas 8 monedas de 1 peso con otras 7, tienes 15 monedas: puedes cambiar 10
+        por un billete de 10 y te quedan 5 monedas sueltas.
+    sections:
+      - title: 'Cambiar diez por uno'
+        concept: 'Cuando una columna suma 10 o más, se escribe la cifra de las unidades de esa suma y se pasa 1 (o más) al orden siguiente.'
+        explanation: |-
+          Calcula $48 + 27$ por órdenes:
+
+          * Unidades: $8 + 7 = 15$ unidades. Pero en un lugar sólo cabe una cifra.
+          * 15 unidades son **1 decena y 5 unidades**. Dejamos el 5 en las unidades y **llevamos** la decena a la columna de las decenas.
+          * Decenas: $4 + 2 + 1$ (la que llevamos) $= 7$ decenas.
+
+          Resultado: $75$. En columna se anota el 1 llevado encima:
+          $$\begin{array}{r} {\scriptsize 1}\phantom{8} \\ 48 \\ +\,27 \\ \hline 75 \end{array}$$
+
+          Esto se llama **reagrupación** (o «llevar»): agrupamos 10 unidades de un orden y las cambiamos por 1 unidad del orden siguiente. Funciona igual en todas las columnas: 10 decenas forman 1 centena, 10 centenas forman 1 unidad de millar.
+
+          Si en la última columna (la de la izquierda) hay que llevar, la cifra llevada se escribe delante: $70 + 50 = 120$.
+        definition: >-
+          Reagrupar es sustituir 10 unidades de un orden por 1 unidad del orden
+          inmediatamente superior; en la suma, si una columna suma $s \geq 10$, se escribe la
+          cifra de las unidades de $s$ y se suma la de las decenas a la columna siguiente.
+        rules:
+          - 'Si una columna suma 10 o más, escribe la última cifra y lleva el resto a la columna de la izquierda.'
+          - 'La cifra llevada se suma junto con las cifras de la columna siguiente.'
+          - 'Al sumar dos números, se lleva como mucho 1 en cada columna.'
+        examples:
+          - problem: 'Calcula $586 + 237$.'
+            solution: |-
+              **Paso 1.** Unidades: $6 + 7 = 13$. Escribimos 3, llevamos 1.
+              **Paso 2.** Decenas: $8 + 3 + 1 = 12$. Escribimos 2, llevamos 1.
+              **Paso 3.** Centenas: $5 + 2 + 1 = 8$.
+              **Estimación.** $590 + 240 = 830$, cerca del resultado.
+              Resultado: $823$.
+        common_errors:
+          - 'Olvidar sumar la cifra que se lleva.'
+          - 'Escribir 13 completo en la columna de las unidades: en cada lugar sólo cabe una cifra.'
+        summary: >-
+          Si una columna llega a 10 o más, escribe la cifra de las unidades y lleva 1 a la
+          siguiente columna: 10 de un orden = 1 del siguiente.
+        check:
+          question: '¿Cuánto es $365 + 278$?'
+          options: ['643', '533', '5313']
+          answer: 0
+          explanation: 'Unidades $5 + 8 = 13$ → 3, llevo 1; decenas $6 + 7 + 1 = 14$ → 4, llevo 1; centenas $3 + 2 + 1 = 6$: 643.'
+    glossary:
+      - term: 'Reagrupación'
+        definition: 'Cambio de 10 unidades de un orden por 1 del orden siguiente.'
+      - term: 'Llevada'
+        definition: 'Cifra que se pasa a la columna siguiente al reagrupar.'
+    practice: []
+
+  t06:
+    intro:
+      what: 'Son las reglas que cumple siempre la suma: conmutativa, asociativa, elemento neutro y clausura.'
+      purpose: 'Permiten reordenar y agrupar sumandos para calcular más fácilmente y comprobar resultados.'
+      importance: 'Son la justificación de los trucos de cálculo mental y se usan constantemente en álgebra.'
+      foundations: 'El significado de la suma como juntar: el total no depende del orden ni de cómo se junten los grupos.'
+      prerequisites:
+        - 'Suma de números naturales (bloque 4, tema 3).'
+      outcomes:
+        - Nombrar y reconocer las propiedades de la suma.
+        - Completar igualdades aplicando una propiedad.
+        - Usar las propiedades para sumar más fácilmente.
+      everyday_example: >-
+        Da igual meter primero las naranjas y luego las manzanas en la bolsa o al revés:
+        la cantidad total de fruta es la misma.
+    sections:
+      - title: 'Conmutativa, asociativa y neutro'
+        concept: 'En la suma, el orden y la agrupación de los sumandos no cambian el resultado, y sumar 0 no cambia un número.'
+        explanation: |-
+          **Propiedad conmutativa:** el orden de los sumandos no altera la suma.
+          $$3 + 9 = 9 + 3 = 12$$
+          Por eso es más fácil pensar $2 + 47$ como $47 + 2$.
+
+          **Propiedad asociativa:** la forma de agrupar los sumandos no altera la suma. Los **paréntesis** indican qué se calcula primero:
+          $$(6 + 4) + 7 = 10 + 7 = 17 \qquad 6 + (4 + 7) = 6 + 11 = 17$$
+
+          **Elemento neutro:** el 0. Sumar 0 deja el número igual: $25 + 0 = 25$.
+
+          **Clausura:** la suma de dos naturales es siempre un natural (y la de dos enteros, un entero).
+
+          Combinando conmutativa y asociativa podemos **reordenar y agrupar como queramos** los sumandos. Truco: busca parejas que formen decenas.
+          $$8 + 13 + 2 + 7 = (8 + 2) + (13 + 7) = 10 + 20 = 30$$
+
+          Estas propiedades se profundizarán en el bloque 8, donde se compararán con las de las demás operaciones.
+        definition: >-
+          Para todos los números $a$, $b$ y $c$: $a + b = b + a$ (conmutativa);
+          $(a + b) + c = a + (b + c)$ (asociativa); $a + 0 = a$ (elemento neutro).
+        rules:
+          - 'Conmutativa: $a + b = b + a$.'
+          - 'Asociativa: $(a + b) + c = a + (b + c)$.'
+          - 'Elemento neutro: $a + 0 = 0 + a = a$.'
+          - 'Lo que está entre paréntesis se calcula primero.'
+        examples:
+          - problem: 'Calcula de la forma más cómoda: $37 + 18 + 3$.'
+            solution: |-
+              **Paso 1.** Por la conmutativa, cambiamos el orden: $37 + 3 + 18$.
+              **Paso 2.** Por la asociativa, agrupamos: $(37 + 3) + 18 = 40 + 18$.
+              **Paso 3.** $40 + 18 = 58$.
+              Resultado: $58$.
+        common_errors:
+          - 'Confundir conmutativa (cambia el orden) con asociativa (cambia la agrupación).'
+          - 'Creer que el neutro de la suma es 1: es 0.'
+        summary: >-
+          Conmutativa (orden), asociativa (agrupación) y neutro (0): permiten reordenar y
+          agrupar sumandos libremente.
+        check:
+          question: '¿Qué propiedad se aplica en $(5 + 8) + 2 = 5 + (8 + 2)$?'
+          options: ['Asociativa', 'Conmutativa', 'Elemento neutro']
+          answer: 0
+          explanation: 'Los sumandos están en el mismo orden; sólo cambian los paréntesis, es decir, la agrupación.'
+    glossary:
+      - term: 'Propiedad conmutativa'
+        definition: 'El orden de los sumandos no altera la suma.'
+      - term: 'Propiedad asociativa'
+        definition: 'La agrupación de los sumandos no altera la suma.'
+      - term: 'Elemento neutro'
+        definition: 'Número que no cambia a otro al operar; en la suma, el 0.'
+    practice: []
+
+  t07:
+    intro:
+      what: 'Son estrategias para sumar de cabeza, sin papel, aprovechando el valor posicional y las propiedades de la suma.'
+      purpose: 'Permiten calcular rápido en compras, estimaciones y situaciones cotidianas.'
+      importance: 'El cálculo mental da agilidad numérica y ayuda a detectar errores en cuentas escritas o de calculadora.'
+      foundations: 'La descomposición de números y las propiedades conmutativa y asociativa.'
+      prerequisites:
+        - 'Descomposición de números (bloque 2, tema 9).'
+        - 'Propiedades de la suma (bloque 4, tema 6).'
+      outcomes:
+        - Sumar mentalmente descomponiendo en decenas y unidades.
+        - Sumar mentalmente por compensación (redondear y corregir).
+        - Formar decenas para simplificar.
+      everyday_example: >-
+        Para sumar un producto de 99 pesos a una cuenta de 250, piensa: $250 + 100 = 350$
+        y quita 1: 349.
+    sections:
+      - title: 'Descomponer y compensar'
+        concept: 'Para sumar mentalmente conviene descomponer un sumando en decenas y unidades, o redondearlo y luego compensar la diferencia.'
+        explanation: |-
+          **Estrategia 1: descomposición.** Descompón el segundo sumando y súmalo por partes, primero las decenas:
+          $$47 + 36 = 47 + 30 + 6 = 77 + 6 = 83$$
+          Funciona por la propiedad asociativa: $36 = 30 + 6$ y da igual sumarlo de una vez o en dos pasos.
+
+          **Estrategia 2: compensación.** Si un sumando está cerca de un número redondo, súmale el redondo y corrige:
+          $$256 + 99 = 256 + 100 - 1 = 356 - 1 = 355$$
+          Sumamos 1 de más, así que lo quitamos al final. **Si sumas de más, resta lo que sobra.**
+
+          **Estrategia 3: formar decenas.** Pasa unidades de un sumando a otro para completar una decena:
+          $$58 + 25 = 60 + 23 = 83$$
+          (le quitamos 2 al 25 y se los damos al 58; el total no cambia).
+
+          Elige la estrategia según los números: la compensación es ideal con sumandos terminados en 8 o 9; la descomposición, con números de dos cifras cualesquiera.
+        definition: >-
+          Compensar es sustituir un sumando por un número cercano más cómodo y corregir
+          después la diferencia: $a + b = (a + c) - (c - b)$ cuando $c$ es mayor que $b$.
+        rules:
+          - 'Descomposición: $a + b = a + \text{decenas de } b + \text{unidades de } b$.'
+          - 'Compensación: si redondeas hacia arriba, resta al final lo que añadiste.'
+          - 'Pasar unidades de un sumando a otro no cambia el total.'
+        examples:
+          - problem: 'Calcula mentalmente $68 + 29$.'
+            solution: |-
+              **Paso 1.** 29 está cerca de 30 (le falta 1).
+              **Paso 2.** $68 + 30 = 98$.
+              **Paso 3.** Sumamos 1 de más: $98 - 1 = 97$.
+              Resultado: $97$.
+          - problem: 'Calcula mentalmente $54 + 38$ por descomposición.'
+            solution: |-
+              **Paso 1.** $38 = 30 + 8$.
+              **Paso 2.** $54 + 30 = 84$.
+              **Paso 3.** $84 + 8 = 92$.
+              Resultado: $92$.
+        common_errors:
+          - 'Compensar en el sentido equivocado: en $68 + 29$ se suma 30 y luego se RESTA 1, no se suma.'
+          - 'Olvidar las unidades tras sumar las decenas.'
+        summary: >-
+          Descompón en decenas y unidades, o redondea y compensa: si sumaste de más,
+          resta la diferencia.
+        check:
+          question: 'Para calcular $145 + 98$ por compensación, ¿qué haces?'
+          options:
+            - '$145 + 100 = 245$ y luego restas 2: 243'
+            - '$145 + 100 = 245$ y luego sumas 2: 247'
+            - '$145 + 90 = 235$ y luego restas 8: 227'
+          answer: 0
+          explanation: 'Sumaste 2 de más (100 en vez de 98), así que hay que restar 2: $245 - 2 = 243$.'
+    glossary:
+      - term: 'Compensación'
+        definition: 'Redondear un número para operar y corregir después la diferencia.'
+      - term: 'Cálculo mental'
+        definition: 'Cálculo realizado de memoria con estrategias basadas en las propiedades.'
+    practice: []
+
+  t08:
+    intro:
+      what: 'Es la disposición de los sumandos en columnas, uno debajo de otro, para sumar por órdenes de derecha a izquierda con reagrupación.'
+      purpose: 'Es el método escrito más seguro para sumar números grandes o con distinta cantidad de cifras.'
+      importance: 'Organiza el cálculo y reduce errores; es el modelo de la resta, la multiplicación y la división escritas.'
+      foundations: 'El valor posicional y la reagrupación.'
+      prerequisites:
+        - 'Suma de números naturales (bloque 4, tema 3).'
+        - 'Suma con reagrupación (bloque 4, tema 5).'
+      outcomes:
+        - Colocar correctamente sumandos de distinta cantidad de cifras.
+        - Sumar en vertical con llevadas.
+        - Revisar el resultado con una estimación.
+      everyday_example: >-
+        Al cuadrar las cuentas de la semana en un cuaderno, se escriben los gastos en
+        columna y se suman abajo.
+    sections:
+      - title: 'El algoritmo de la suma vertical'
+        concept: 'Se escriben los números alineados por la derecha, se suma cada columna empezando por las unidades y se llevan las decenas de cada suma a la columna siguiente.'
+        explanation: |-
+          Ya usamos la columna en los temas anteriores; ahora la formalizamos como **algoritmo** (una lista de pasos que siempre funciona):
+
+          1. **Alinea por la derecha:** unidades bajo unidades, decenas bajo decenas… Si un número tiene menos cifras, sus columnas de la izquierda se consideran 0.
+          2. Traza una línea debajo del último sumando.
+          3. **Suma la columna de las unidades.** Escribe la cifra de las unidades del resultado y lleva la de las decenas encima de la columna siguiente.
+          4. **Repite** con cada columna hacia la izquierda, sumando también lo que llevas.
+          5. Si en la última columna llevas algo, escríbelo delante.
+          6. **Revisa** con una estimación.
+
+          Ejemplo: $1\,205 + 389$
+          $$\begin{array}{r} 1\,205 \\ +\,\phantom{1\,}389 \\ \hline 1\,594 \end{array}$$
+          Unidades: $5 + 9 = 14$ → 4, llevo 1. Decenas: $0 + 8 + 1 = 9$. Centenas: $2 + 3 = 5$. Millares: $1$.
+
+          Estimación: $1\,200 + 400 = 1\,600$, muy cerca de $1\,594$. Bien.
+        definition: >-
+          La suma vertical es el algoritmo que suma columna a columna, de derecha a
+          izquierda, cifras de igual orden, trasladando a la columna siguiente las decenas
+          de cada suma parcial.
+        rules:
+          - 'Alinea siempre por la derecha.'
+          - 'Empieza por la columna de las unidades.'
+          - 'Anota las llevadas para no olvidarlas.'
+          - 'Estima para comprobar el orden de magnitud.'
+        examples:
+          - problem: 'Calcula en vertical $7\,486 + 2\,957$.'
+            solution: |-
+              **Paso 1.** Unidades: $6 + 7 = 13$ → 3, llevo 1.
+              **Paso 2.** Decenas: $8 + 5 + 1 = 14$ → 4, llevo 1.
+              **Paso 3.** Centenas: $4 + 9 + 1 = 14$ → 4, llevo 1.
+              **Paso 4.** Millares: $7 + 2 + 1 = 10$ → escribimos 10.
+              **Estimación.** $7\,500 + 3\,000 = 10\,500$, coherente.
+              Resultado: $10\,443$.
+        common_errors:
+          - 'Alinear por la izquierda: $1\,205 + 389$ daría un resultado absurdo.'
+          - 'Olvidar escribir la última llevada: el resultado de $7\,486 + 2\,957$ es 10 443, no 443.'
+        summary: >-
+          Alinea por la derecha, suma columna a columna desde las unidades llevando las
+          decenas, y estima para comprobar.
+        check:
+          question: '¿Cuánto es $809 + 96$ en vertical?'
+          options: ['905', '895', '1769']
+          answer: 0
+          explanation: 'Unidades $9 + 6 = 15$ → 5, llevo 1; decenas $0 + 9 + 1 = 10$ → 0, llevo 1; centenas $8 + 1 = 9$: 905. 1769 sale de alinear mal.'
+    glossary:
+      - term: 'Algoritmo'
+        definition: 'Secuencia ordenada de pasos que resuelve un tipo de problema.'
+    practice: []
+
+  t09:
+    intro:
+      what: 'Es la suma de tres o más sumandos, de cabeza o en columna.'
+      purpose: 'Sirve para totalizar listas: facturas, inventarios, gastos del mes.'
+      importance: 'Aparece constantemente en la vida real y requiere organizar bien las columnas y las llevadas, que pueden ser mayores que 1.'
+      foundations: 'La propiedad asociativa y la suma vertical.'
+      prerequisites:
+        - 'Propiedades de la suma (bloque 4, tema 6).'
+        - 'Suma vertical (bloque 4, tema 8).'
+      outcomes:
+        - Sumar varios números en columna, incluso con llevadas de 2 o más.
+        - Agrupar sumandos de forma conveniente.
+        - Comprobar una suma larga sumando en otro orden.
+      everyday_example: >-
+        La compra del mercado: 45 pesos de verdura, 82 de carne, 19 de pan y 36 de
+        fruta. El total es una suma de cuatro sumandos.
+    sections:
+      - title: 'Muchos sumandos'
+        concept: 'Varios números se suman igual que dos, columna a columna, pero la suma de una columna puede llegar a 20, 30 o más y entonces se llevan 2, 3…'
+        explanation: |-
+          **De cabeza o paso a paso.** Por la propiedad asociativa podemos sumar los sumandos de dos en dos: $12 + 25 + 8 = (12 + 8) + 25 = 20 + 25 = 45$. Busca parejas que formen números redondos.
+
+          **En columna.** Se colocan todos los sumandos alineados por la derecha y se suma cada columna completa. La diferencia con dos sumandos es que una columna puede sumar mucho:
+
+          $$\begin{array}{r} 47 \\ 85 \\ 69 \\ +\,38 \\ \hline 239 \end{array}$$
+
+          * Unidades: $7 + 5 + 9 + 8 = 29$ → escribimos 9 y **llevamos 2** (29 unidades son 2 decenas y 9 unidades).
+          * Decenas: $4 + 8 + 6 + 3 + 2 = 23$ → escribimos 23.
+
+          Para sumar una columna larga, ve acumulando: $7 + 5 = 12$, $12 + 9 = 21$, $21 + 8 = 29$.
+
+          **Comprobación.** Suma la columna en el orden contrario (de abajo hacia arriba). Por la propiedad conmutativa debe dar lo mismo; si no, hay un error.
+        definition: >-
+          La suma de varios sumandos $a_1 + a_2 + \dots + a_n$ se calcula sumando
+          sucesivamente; por las propiedades conmutativa y asociativa, el resultado no
+          depende del orden ni de la agrupación.
+        rules:
+          - 'Si una columna suma 20 o más, se llevan las decenas completas (2, 3…).'
+          - 'Puedes agrupar los sumandos como quieras.'
+          - 'Comprueba sumando en otro orden.'
+        examples:
+          - problem: 'Calcula $45 + 82 + 19 + 36$.'
+            solution: |-
+              **Paso 1.** Unidades: $5 + 2 + 9 + 6 = 22$ → 2, llevo 2.
+              **Paso 2.** Decenas: $4 + 8 + 1 + 3 + 2 = 18$.
+              **Paso 3.** Resultado en columna: $182$.
+              **Comprobación por parejas.** $(45 + 36) + (82 + 19) = 81 + 101 = 182$.
+              Resultado: $182$.
+        common_errors:
+          - 'Llevar siempre 1, aunque la columna sume 22 o 29.'
+          - 'Saltarse un sumando al sumar una columna larga.'
+        summary: >-
+          Con varios sumandos, suma cada columna completa y lleva todas sus decenas;
+          comprueba sumando en otro orden.
+        check:
+          question: '¿Cuánto es $28 + 34 + 19 + 7$?'
+          options: ['88', '78', '98']
+          answer: 0
+          explanation: 'Unidades $8 + 4 + 9 + 7 = 28$ → 8, llevo 2; decenas $2 + 3 + 1 + 2 = 8$: 88. Comprobación: $28 + 34 = 62$, $62 + 19 = 81$, $81 + 7 = 88$.'
+    glossary:
+      - term: 'Suma sucesiva'
+        definition: 'Suma de varios números realizada de dos en dos.'
+    practice: []
+
+  t10:
+    intro:
+      what: 'Es la aplicación de la suma para resolver problemas expresados con palabras.'
+      purpose: 'Traducir situaciones reales (compras, distancias, edades, inventarios) a sumas y obtener la respuesta.'
+      importance: 'Resolver problemas es el objetivo final de aprender a sumar.'
+      foundations: 'El concepto de suma (juntar y agregar) y un método ordenado de resolución.'
+      prerequisites:
+        - 'Concepto de suma (bloque 4, tema 1).'
+        - 'Suma de varios números (bloque 4, tema 9).'
+      outcomes:
+        - Identificar cuándo un problema se resuelve con suma.
+        - Resolver problemas de uno y de varios pasos.
+        - Comunicar la respuesta con unidades y comprobarla.
+      everyday_example: >-
+        Para saber cuántos kilómetros recorres en una semana sumas los kilómetros de cada
+        día.
+    sections:
+      - title: 'Un método en cuatro pasos'
+        concept: 'Para resolver un problema hay que comprenderlo, plantear la operación, calcularla y comprobar que la respuesta tiene sentido.'
+        explanation: |-
+          **1. Comprender.** Lee el problema completo. ¿Qué se pregunta? ¿Qué datos hay? ¿Hay datos que sobran?
+
+          **2. Plantear.** Decide la operación. Es una suma si hay que:
+          * **juntar** cantidades («en total», «entre todos»);
+          * **agregar** («le dan», «llegan», «aumenta»);
+          * averiguar el valor final tras un **aumento** («costaba 30 y subió 5»).
+
+          Escribe la operación antes de calcular.
+
+          **3. Calcular.** Usa cálculo mental o vertical, según los números.
+
+          **4. Comprobar y responder.** ¿El resultado es razonable? (En una suma de naturales, el total debe ser mayor que cada sumando.) Escribe la respuesta en una frase con unidades.
+
+          **Problemas de varios pasos.** A veces hay que hacer una suma con un resultado intermedio y luego otra. Ve paso a paso y anota qué representa cada resultado.
+
+          Las palabras clave ayudan, pero no bastan: «Juan tiene 5 más que Ana» puede pedir sumar o restar según qué se pregunte. Entender la situación es lo más importante.
+        definition: >-
+          Resolver un problema de suma es construir un modelo $a + b + \dots = ?$ que
+          represente la situación, calcularlo e interpretar el resultado.
+        rules:
+          - 'Comprender, plantear, calcular, comprobar.'
+          - 'La respuesta lleva unidades.'
+          - 'En problemas de varios pasos, nombra cada resultado intermedio.'
+        examples:
+          - problem: 'Un autobús sale con 23 pasajeros. En la primera parada suben 15 y en la segunda suben 8. ¿Cuántos pasajeros lleva? (Nadie baja.)'
+            solution: |-
+              **Paso 1.** Se pregunta el total final; sólo suben personas: agregar.
+              **Paso 2.** Planteamiento: $23 + 15 + 8$.
+              **Paso 3.** $23 + 15 = 38$ (pasajeros tras la primera parada); $38 + 8 = 46$.
+              **Paso 4.** 46 es mayor que 23, coherente.
+              Resultado: el autobús lleva $46$ pasajeros.
+          - problem: 'Una camisa cuesta 350 pesos y un pantalón cuesta 175 pesos más que la camisa. ¿Cuánto cuestan las dos prendas juntas?'
+            solution: |-
+              **Paso 1.** Primero el precio del pantalón: $350 + 175 = 525$ pesos.
+              **Paso 2.** Luego el total: $350 + 525 = 875$ pesos.
+              **Paso 3.** Estimación: $350 + 500 = 850$, cerca.
+              Resultado: las dos prendas cuestan $875$ pesos.
+        common_errors:
+          - 'Responder sólo el resultado intermedio (525) en lugar de lo que se pregunta (875).'
+          - 'Sumar datos que no corresponden a la pregunta.'
+          - 'Olvidar las unidades en la respuesta.'
+        summary: >-
+          Comprende, plantea, calcula y comprueba; en problemas de varios pasos, avanza
+          resultado a resultado hasta responder la pregunta.
+        check:
+          question: 'Marta ahorró 120 pesos en enero, 85 en febrero y 140 en marzo. ¿Cuánto ahorró en total?'
+          options: ['345 pesos', '335 pesos', '245 pesos']
+          answer: 0
+          explanation: '$120 + 85 = 205$ y $205 + 140 = 345$ pesos.'
+    glossary:
+      - term: 'Planteamiento'
+        definition: 'Operación que representa la situación de un problema.'
+      - term: 'Dato'
+        definition: 'Número conocido que aparece en un problema.'
+    practice: []

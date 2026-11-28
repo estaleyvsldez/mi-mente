@@ -1,0 +1,995 @@
+block: b18
+intro: >-
+  La potenciación es una forma abreviada de escribir y calcular
+  multiplicaciones de factores iguales. En este bloque aprenderás a leer y
+  calcular potencias de naturales, enteros y fracciones, las potencias de 10,
+  los cuadrados y cubos, las propiedades que simplifican los cálculos y el
+  significado de los exponentes cero, uno y negativos. Terminaremos con
+  aplicaciones en áreas, volúmenes y crecimiento.
+topics:
+  t01:
+    intro:
+      what: >-
+        Una potencia es una multiplicación repetida de un mismo número:
+        $2^3 = 2 \times 2 \times 2 = 8$.
+      purpose: >-
+        Sirve para escribir de forma breve multiplicaciones largas de factores
+        iguales y para describir fenómenos que crecen multiplicándose.
+      importance: >-
+        Las potencias aparecen en áreas y volúmenes, en el sistema decimal
+        ($100 = 10^2$), en el interés compuesto (b23) y en la notación
+        científica (b26).
+      foundations: >-
+        Así como la multiplicación abrevia una suma repetida (b06), la
+        potenciación abrevia una multiplicación repetida.
+      prerequisites:
+        - 'Multiplicación como suma repetida (b06)'
+        - 'Tablas de multiplicar (b06)'
+      outcomes:
+        - 'Explicar qué significa una potencia'
+        - 'Escribir una multiplicación repetida como potencia y al revés'
+        - 'Distinguir potencia de multiplicación'
+      everyday_example: >-
+        Si cada persona reenvía un mensaje a 3 personas, en la tercera ronda
+        lo reciben $3 \times 3 \times 3 = 3^3 = 27$ personas.
+    sections:
+      - title: Multiplicar un número por sí mismo
+        concept: Una potencia indica cuántas veces se multiplica un número por sí mismo.
+        explanation: |-
+          Recuerda que la multiplicación abrevia sumas repetidas: $5 + 5 + 5 = 3 \times 5$. De la misma manera, cuando **multiplicamos** un número por sí mismo varias veces, usamos una notación abreviada:
+
+          $$2 \times 2 \times 2 = 2^3$$
+
+          Se lee "dos elevado a tres" o "dos al cubo". El número grande ($2$) es el **factor que se repite** y el número pequeño y elevado ($3$) dice **cuántas veces** aparece ese factor.
+
+          Para calcularla, se multiplica paso a paso: $2 \times 2 = 4$, $4 \times 2 = 8$. Así, $2^3 = 8$.
+
+          Es muy importante no confundir $2^3$ con $2 \times 3$:
+          * $2 \times 3 = 2 + 2 + 2 = 6$ (suma repetida).
+          * $2^3 = 2 \times 2 \times 2 = 8$ (multiplicación repetida).
+
+          La operación de calcular potencias se llama **potenciación**, y su resultado se llama **potencia**.
+        definition: >-
+          Para un número $a$ y un número natural $n \ge 2$, la potencia $a^n$ es
+          el producto de $n$ factores iguales a $a$:
+          $a^n = a \times a \times \cdots \times a$ ($n$ veces).
+        rules:
+          - '$a^n$ significa multiplicar $a$ por sí mismo hasta tener $n$ factores.'
+          - '$a^n$ no es $a \times n$.'
+          - 'El resultado de una potenciación se llama potencia.'
+        examples:
+          - problem: 'Escribe $5 \times 5 \times 5 \times 5$ como potencia y calcúlala.'
+            solution: |-
+              **Paso 1.** El factor que se repite es $5$ y aparece $4$ veces: $5^4$.
+              **Paso 2.** Calculamos: $5 \times 5 = 25$; $25 \times 5 = 125$; $125 \times 5 = 625$.
+              Resultado: $5^4 = 625$.
+          - problem: '¿Qué significa $3^2$ y cuánto vale?'
+            solution: |-
+              **Paso 1.** $3^2 = 3 \times 3$ (dos factores iguales a $3$).
+              **Paso 2.** $3 \times 3 = 9$.
+              Resultado: $3^2 = 9$ (y no $3 \times 2 = 6$).
+        common_errors:
+          - 'Multiplicar el número grande por el pequeño: $2^3 \neq 6$.'
+          - 'Contar mal los factores: $2^3$ tiene tres doses, no dos multiplicaciones de más.'
+        summary: >-
+          Una potencia es una multiplicación repetida: $a^n$ es $a$ multiplicado
+          por sí mismo $n$ veces.
+        check:
+          question: '¿Qué significa $5^3$?'
+          options: ['$5 \times 3$', '$5 \times 5 \times 5$', '$5 + 5 + 5$', '$3 \times 3 \times 3 \times 3 \times 3$']
+          answer: 1
+          explanation: >-
+            $5^3$ es el producto de tres factores iguales a $5$:
+            $5 \times 5 \times 5 = 125$. $5 \times 3$ y $5 + 5 + 5$ valen $15$, y
+            la última opción es $3^5$.
+    glossary:
+      - {term: Potenciación, definition: 'Operación que consiste en multiplicar un número por sí mismo varias veces.'}
+      - {term: Potencia, definition: 'Resultado de la potenciación; también se llama así a la expresión $a^n$.'}
+  t02:
+    intro:
+      what: >-
+        En una potencia $a^n$, la base $a$ es el factor que se repite y el
+        exponente $n$ indica cuántas veces se repite.
+      purpose: >-
+        Conocer los nombres permite leer, escribir y hablar correctamente de las
+        potencias y de sus propiedades.
+      importance: >-
+        Todas las reglas de este bloque se enuncian en términos de base y
+        exponente; confundirlos lleva a errores graves ($2^5 = 32$, pero
+        $5^2 = 25$).
+      foundations: >-
+        Es la terminología de la definición de potencia (tema anterior), igual
+        que en la multiplicación hablamos de factores y producto (b06).
+      prerequisites:
+        - 'Concepto de potencia (b18)'
+      outcomes:
+        - 'Identificar base y exponente'
+        - 'Leer potencias en voz alta'
+        - 'Escribir una multiplicación repetida en forma de potencia'
+      everyday_example: >-
+        Un cubo de 4 cm de arista tiene un volumen de $4^3$ cm³: la base es la
+        medida de la arista y el exponente, las tres dimensiones.
+    sections:
+      - title: Los nombres de una potencia
+        concept: La base es el número que se multiplica; el exponente, cuántas veces.
+        explanation: |-
+          En la expresión $a^n = p$:
+
+          * $a$ es la **base**: el factor que se repite. Se escribe en tamaño normal.
+          * $n$ es el **exponente**: el número de veces que aparece la base como factor. Se escribe pequeño, arriba a la derecha.
+          * $p$ es la **potencia**: el resultado.
+
+          Por ejemplo, en $7^4 = 2401$, la base es $7$, el exponente es $4$ y la potencia es $2401$.
+
+          **Cómo se leen:**
+          * $a^2$: "$a$ al cuadrado" o "$a$ elevado a dos".
+          * $a^3$: "$a$ al cubo" o "$a$ elevado a tres".
+          * $a^4$: "$a$ a la cuarta"; $a^5$: "$a$ a la quinta", etc.
+
+          El orden importa: $2^5 = 2 \times 2 \times 2 \times 2 \times 2 = 32$, mientras que $5^2 = 5 \times 5 = 25$. Cambiar base y exponente da, en general, un número distinto.
+        definition: >-
+          En $a^n$, el número $a$ se llama base y el número $n$, exponente; el
+          valor $a^n$ se llama potencia $n$-ésima de $a$.
+        rules:
+          - 'Base: factor que se repite. Exponente: número de factores.'
+          - 'Exponente 2 se lee "al cuadrado"; exponente 3, "al cubo".'
+          - 'En general $a^n \neq n^a$: el orden importa.'
+        examples:
+          - problem: 'En $6^4$, identifica la base y el exponente, y léela.'
+            solution: |-
+              **Paso 1.** La base es el número grande: $6$.
+              **Paso 2.** El exponente es el pequeño: $4$.
+              **Paso 3.** Se lee "seis a la cuarta" y significa $6 \times 6 \times 6 \times 6$.
+              Resultado: base $6$, exponente $4$.
+          - problem: 'Escribe $3 \times 3 \times 3 \times 3 \times 3$ en forma de potencia.'
+            solution: |-
+              **Paso 1.** El factor que se repite (base) es $3$.
+              **Paso 2.** Contamos los factores: $5$. Ese es el exponente.
+              Resultado: $3^5$.
+        common_errors:
+          - 'Contar los signos $\times$ en lugar de los factores: en $3 \times 3 \times 3$ hay dos signos pero tres factores, así que es $3^3$.'
+          - 'Intercambiar base y exponente al escribir o leer.'
+        summary: >-
+          En $a^n$, $a$ es la base (lo que se multiplica) y $n$ el exponente
+          (cuántas veces). El resultado es la potencia.
+        check:
+          question: 'En la potencia $9^2$, ¿cuál es el exponente?'
+          options: ['$9$', '$2$', '$81$', '$18$']
+          answer: 1
+          explanation: >-
+            El exponente es el número pequeño y elevado, $2$: indica que la base
+            $9$ se multiplica dos veces. $81$ es la potencia (el resultado).
+    glossary:
+      - {term: Base, definition: 'Factor que se repite en una potencia.'}
+      - {term: Exponente, definition: 'Número que indica cuántas veces se repite la base como factor.'}
+  t03:
+    intro:
+      what: >-
+        Son potencias cuya base es un número natural, como $3^4$ o $10^3$, y se
+        calculan multiplicando paso a paso.
+      purpose: >-
+        Sirve para obtener el valor numérico de cualquier potencia de base
+        natural.
+      importance: >-
+        Calcular potencias con soltura es necesario en las operaciones
+        combinadas (b09), en las raíces (b19) y en las aplicaciones.
+      foundations: >-
+        Se basa en la definición de potencia y en la multiplicación de
+        naturales: cada paso multiplica el resultado anterior por la base.
+      prerequisites:
+        - 'Base y exponente (b18)'
+        - 'Multiplicación por varias cifras (b06)'
+      outcomes:
+        - 'Calcular potencias de naturales paso a paso'
+        - 'Reconocer las potencias de 0 y de 1'
+        - 'Usar potencias en operaciones combinadas'
+      everyday_example: >-
+        Un tablero de 8 por 8 casillas tiene $8^2 = 64$ casillas.
+    sections:
+      - title: Calcular paso a paso
+        concept: Se multiplica la base por sí misma, acumulando el resultado, hasta usar tantos factores como indica el exponente.
+        explanation: |-
+          Para calcular $3^4$ no hace falta escribir todo de golpe; se va **acumulando**:
+
+          * $3^1 = 3$ (un solo factor)
+          * $3^2 = 3 \times 3 = 9$
+          * $3^3 = 9 \times 3 = 27$
+          * $3^4 = 27 \times 3 = 81$
+
+          Cada potencia es la anterior multiplicada por la base. Por eso las potencias **crecen muy deprisa**: $2^{10} = 1024$.
+
+          **Casos especiales:**
+          * Base $1$: $1^n = 1 \times 1 \times \cdots = 1$ para cualquier exponente.
+          * Base $0$: $0^n = 0$ si $n \ge 1$, porque cualquier producto con un factor $0$ es $0$.
+
+          En las **operaciones combinadas** (b09), las potencias se calculan **antes** que las multiplicaciones y las sumas: $2 + 3^2 = 2 + 9 = 11$.
+        definition: >-
+          Para $a$ natural, $a^n$ se obtiene multiplicando sucesivamente:
+          $a^n = a^{n-1} \times a$.
+        rules:
+          - 'Cada potencia es la anterior multiplicada por la base.'
+          - '$1^n = 1$ para todo exponente natural.'
+          - '$0^n = 0$ para todo exponente $n \ge 1$.'
+          - 'En la jerarquía, las potencias van antes que multiplicaciones y sumas.'
+        examples:
+          - problem: 'Calcula $2^5$'
+            solution: |-
+              **Paso 1.** $2 \times 2 = 4$.
+              **Paso 2.** $4 \times 2 = 8$.
+              **Paso 3.** $8 \times 2 = 16$.
+              **Paso 4.** $16 \times 2 = 32$ (ya usamos 5 factores).
+              Resultado: $2^5 = 32$.
+          - problem: 'Calcula $4 + 2 \times 3^2$'
+            solution: |-
+              **Paso 1.** Primero la potencia: $3^2 = 9$.
+              **Paso 2.** Luego la multiplicación: $2 \times 9 = 18$.
+              **Paso 3.** Por último la suma: $4 + 18 = 22$.
+              Resultado: $22$.
+        common_errors:
+          - 'Multiplicar base por exponente: $2^5 \neq 10$.'
+          - 'Hacer un paso de más o de menos: cuenta los factores, no las multiplicaciones.'
+          - 'Calcular $(2 \times 3)^2$ cuando la expresión es $2 \times 3^2$: el exponente sólo afecta al $3$.'
+        summary: >-
+          Calcula las potencias multiplicando por la base paso a paso. $1^n = 1$
+          y $0^n = 0$; en las combinadas, las potencias van primero.
+        check:
+          question: '¿Cuánto vale $2^6$?'
+          options: ['$12$', '$36$', '$64$', '$32$']
+          answer: 2
+          explanation: >-
+            $2, 4, 8, 16, 32, 64$: con seis factores iguales a $2$ se obtiene
+            $64$. $12 = 2 \times 6$, $36 = 6^2$ y $32 = 2^5$.
+    glossary:
+      - {term: Potencia de un natural, definition: 'Resultado de elevar un número natural a un exponente.'}
+  t04:
+    intro:
+      what: >-
+        Son potencias cuya base es un número entero, posiblemente negativo,
+        como $(-2)^3$ o $(-3)^2$.
+      purpose: >-
+        Sirve para calcular potencias en situaciones con números negativos y
+        para entender cuándo el resultado es positivo o negativo.
+      importance: >-
+        Saber el signo de una potencia evita uno de los errores más
+        frecuentes en álgebra: confundir $(-3)^2$ con $-3^2$.
+      foundations: >-
+        Se basa en la regla de los signos de la multiplicación de enteros
+        (b06): un número par de factores negativos da positivo; uno impar,
+        negativo.
+      prerequisites:
+        - 'Números enteros (b03)'
+        - 'Multiplicación de números enteros y regla de los signos (b06)'
+        - 'Potencias de números naturales (b18)'
+      outcomes:
+        - 'Determinar el signo de una potencia de base negativa'
+        - 'Calcular potencias de enteros'
+        - 'Distinguir $(-a)^n$ de $-a^n$'
+      everyday_example: >-
+        Si cada día una deuda "se multiplica" con signo negativo, saber si el
+        resultado es positivo o negativo depende de cuántas veces se repite el
+        factor; es la regla de los signos aplicada a potencias.
+    sections:
+      - title: El signo de una potencia
+        concept: Una base negativa con exponente par da positivo; con exponente impar, negativo.
+        explanation: |-
+          Con una base negativa, la potencia es una multiplicación de factores negativos. Por la regla de los signos (b06), cada **par** de factores negativos da un resultado positivo:
+
+          * $(-2)^2 = (-2) \times (-2) = 4$
+          * $(-2)^3 = (-2) \times (-2) \times (-2) = 4 \times (-2) = -8$
+          * $(-2)^4 = -8 \times (-2) = 16$
+
+          El signo va **alternando**. Por eso:
+          * **Exponente par** → resultado **positivo**.
+          * **Exponente impar** → resultado **negativo**.
+
+          El valor sin signo se calcula como con naturales: $2^3 = 8$, y luego se pone el signo.
+
+          **Cuidado con los paréntesis.** El exponente afecta sólo a lo que está inmediatamente a su izquierda:
+          * $(-3)^2$: el exponente afecta a $-3$: $(-3) \times (-3) = 9$.
+          * $-3^2$: el exponente afecta sólo al $3$; el signo menos queda fuera: $-(3 \times 3) = -9$.
+
+          Si la base es positiva, la potencia siempre es positiva.
+        definition: >-
+          Para un entero $a$ y un natural $n$: si $n$ es par, $(-a)^n = a^n$;
+          si $n$ es impar, $(-a)^n = -a^n$. Además, $-a^n$ significa
+          $-(a^n)$.
+        rules:
+          - 'Base negativa, exponente par: resultado positivo.'
+          - 'Base negativa, exponente impar: resultado negativo.'
+          - '$(-a)^n$ y $-a^n$ son distintos cuando $n$ es par.'
+          - 'Base positiva: resultado siempre positivo.'
+        examples:
+          - problem: 'Calcula $(-3)^3$'
+            solution: |-
+              **Paso 1.** Signo: base negativa con exponente impar ($3$) → negativo.
+              **Paso 2.** Valor: $3^3 = 27$.
+              Resultado: $(-3)^3 = -27$.
+          - problem: 'Calcula $(-2)^4$ y $-2^4$'
+            solution: |-
+              **Paso 1.** $(-2)^4$: base $-2$, exponente par → positivo; $2^4 = 16$. Vale $16$.
+              **Paso 2.** $-2^4$: la base es $2$ (el signo está fuera): $-(2^4) = -16$.
+              Resultado: $(-2)^4 = 16$ y $-2^4 = -16$.
+        common_errors:
+          - 'Pensar que toda potencia de base negativa es negativa: $(-5)^2 = 25$.'
+          - 'Confundir $-3^2$ con $(-3)^2$: sin paréntesis, el signo no se eleva.'
+          - 'Creer que un exponente par "quita" el signo de lo que está fuera del paréntesis.'
+        summary: >-
+          Base negativa: exponente par → positivo; impar → negativo. Los
+          paréntesis deciden si el signo forma parte de la base.
+        check:
+          question: '¿Cuánto vale $(-2)^5$?'
+          options: ['$32$', '$-32$', '$-10$', '$10$']
+          answer: 1
+          explanation: >-
+            El exponente $5$ es impar y la base es negativa, así que el resultado
+            es negativo: $-(2^5) = -32$.
+    glossary:
+      - {term: Exponente par, definition: 'Exponente divisible entre 2 (2, 4, 6…).'}
+      - {term: Exponente impar, definition: 'Exponente no divisible entre 2 (1, 3, 5…).'}
+  t05:
+    intro:
+      what: >-
+        Las potencias de base 10 son $10^1 = 10$, $10^2 = 100$, $10^3 = 1000$,
+        etc.: un 1 seguido de tantos ceros como indica el exponente.
+      purpose: >-
+        Sirven para escribir números muy grandes o muy pequeños de forma breve
+        y para entender el sistema decimal.
+      importance: >-
+        Nuestro sistema de numeración se basa en potencias de 10 (b02), y son
+        la base de la notación científica (b26) y de las conversiones de
+        unidades (b27).
+      foundations: >-
+        Cada orden del sistema decimal vale 10 veces el anterior: unidades,
+        decenas ($10$), centenas ($10^2$), millares ($10^3$)…
+      prerequisites:
+        - 'Valor posicional y sistema decimal (b02)'
+        - 'Multiplicación por 10, 100 y 1000 (b06, b17)'
+        - 'Décimas, centésimas y milésimas (b16)'
+      outcomes:
+        - 'Escribir potencias de 10 como números y al revés'
+        - 'Descomponer un número usando potencias de 10'
+        - 'Interpretar potencias de 10 con exponente negativo como decimales'
+      everyday_example: >-
+        Un millón es $1\,000\,000 = 10^6$; es más fácil escribir y comparar
+        $10^6$ que contar seis ceros.
+    sections:
+      - title: Un uno seguido de ceros
+        concept: $10^n$ es un 1 seguido de $n$ ceros.
+        explanation: |-
+          Calculemos algunas potencias de 10:
+
+          * $10^1 = 10$
+          * $10^2 = 10 \times 10 = 100$
+          * $10^3 = 10 \times 10 \times 10 = 1000$
+          * $10^6 = 1\,000\,000$ (un millón)
+
+          Cada vez que multiplicamos por 10 se añade un cero. Por tanto, **el exponente es igual al número de ceros**. Al revés: $10\,000$ tiene cuatro ceros, así que $10\,000 = 10^4$.
+
+          Esto conecta con el **valor posicional** (b02): las decenas valen $10^1$, las centenas $10^2$, los millares $10^3$. Así, un número se puede descomponer como
+          $3\,400 = 3 \times 10^3 + 4 \times 10^2$,
+          o también $3\,400 = 34 \times 10^2$.
+
+          Y multiplicar por $10^n$ es correr la coma $n$ lugares a la derecha (b17): $2{,}5 \times 10^3 = 2500$.
+        definition: >-
+          Para todo natural $n \ge 1$, $10^n$ es el número que se escribe con un
+          $1$ seguido de $n$ ceros.
+        rules:
+          - 'Número de ceros de $10^n$ = exponente $n$.'
+          - 'Multiplicar por $10^n$ corre la coma $n$ lugares a la derecha.'
+          - 'Cada orden del sistema decimal es una potencia de 10.'
+        examples:
+          - problem: 'Escribe $10^5$ como número y $1\,000\,000\,000$ como potencia de 10.'
+            solution: |-
+              **Paso 1.** $10^5$: un $1$ seguido de $5$ ceros: $100\,000$.
+              **Paso 2.** $1\,000\,000\,000$ tiene $9$ ceros: $10^9$.
+              Resultado: $100\,000$ y $10^9$.
+          - problem: 'Descompón $52\,000$ usando potencias de 10.'
+            solution: |-
+              **Paso 1.** $52\,000 = 5 \times 10\,000 + 2 \times 1000$.
+              **Paso 2.** $= 5 \times 10^4 + 2 \times 10^3$.
+              **Paso 3.** También: $52\,000 = 52 \times 10^3$.
+              Resultado: $5 \times 10^4 + 2 \times 10^3$.
+        common_errors:
+          - 'Confundir $10^4$ con $10 \times 4 = 40$.'
+          - 'Contar mal los ceros en números largos: agrúpalos de tres en tres.'
+        summary: >-
+          $10^n$ es un 1 con $n$ ceros. Las potencias de 10 son los órdenes del
+          sistema decimal.
+        check:
+          question: '¿Cuál es el valor de $10^4$?'
+          options: ['$40$', '$1000$', '$10\,000$', '$100\,000$']
+          answer: 2
+          explanation: >-
+            $10^4$ es un $1$ seguido de $4$ ceros: $10\,000$. $1000 = 10^3$ y
+            $100\,000 = 10^5$.
+      - title: Potencias de 10 hacia los decimales
+        concept: Siguiendo el patrón de dividir entre 10, $10^{-1} = 0{,}1$, $10^{-2} = 0{,}01$…
+        explanation: |-
+          Observa la lista de potencias de 10 de mayor a menor: **cada vez que el exponente baja 1, el valor se divide entre 10**:
+
+          $10^3 = 1000 \to 10^2 = 100 \to 10^1 = 10$.
+
+          Si continuamos el patrón un paso más, el exponente llega a $0$ y el valor a $10 \div 10 = 1$: por eso $10^0 = 1$ (lo justificarás en general en el tema "Exponente cero").
+
+          Y si seguimos, aparecen **exponentes negativos** y los valores se vuelven decimales (b16):
+          * $10^{-1} = 1 \div 10 = 0{,}1$ (una décima)
+          * $10^{-2} = 0{,}01$ (una centésima)
+          * $10^{-3} = 0{,}001$ (una milésima)
+
+          Regla práctica: en $10^{-n}$, la cifra $1$ ocupa el lugar $n$ después de la coma. Es decir, $10^{-n} = \frac{1}{10^n}$. En el tema "Exponentes negativos" verás que esta idea vale para cualquier base.
+        definition: >-
+          Para $n$ natural, $10^{-n} = \frac{1}{10^n}$: un decimal con el $1$ en
+          la $n$-ésima posición después de la coma.
+        rules:
+          - 'Bajar 1 el exponente equivale a dividir entre 10.'
+          - '$10^0 = 1$.'
+          - '$10^{-n} = \frac{1}{10^n}$; el $1$ queda en la posición $n$ tras la coma.'
+        examples:
+          - problem: 'Escribe $10^{-3}$ como número decimal.'
+            solution: |-
+              **Paso 1.** $10^{-3} = \frac{1}{10^3} = \frac{1}{1000}$.
+              **Paso 2.** Una milésima: el $1$ en la tercera posición tras la coma.
+              Resultado: $0{,}001$.
+          - problem: 'Escribe $0{,}0001$ como potencia de 10.'
+            solution: |-
+              **Paso 1.** El $1$ está en la cuarta posición después de la coma.
+              **Paso 2.** Por tanto es $\frac{1}{10^4} = 10^{-4}$.
+              Resultado: $10^{-4}$.
+        common_errors:
+          - 'Pensar que $10^{-2}$ es negativo ($-100$): el exponente negativo no cambia el signo, da un número pequeño y positivo.'
+          - 'Contar los ceros en lugar de la posición: $10^{-3} = 0{,}001$ tiene dos ceros tras la coma, pero el $1$ está en la tercera posición.'
+        summary: >-
+          Las potencias de 10 con exponente negativo son decimales:
+          $10^{-n} = \frac{1}{10^n}$.
+        check:
+          question: '¿Cuál es el valor de $10^{-2}$?'
+          options: ['$-100$', '$-20$', '$0{,}01$', '$0{,}1$']
+          answer: 2
+          explanation: >-
+            $10^{-2} = \frac{1}{10^2} = \frac{1}{100} = 0{,}01$, un número
+            positivo. $0{,}1$ es $10^{-1}$.
+    glossary:
+      - {term: Potencia de 10, definition: 'Número de la forma $10^n$; para $n$ natural es un 1 seguido de $n$ ceros.'}
+      - {term: Orden decimal, definition: 'Cada posición del sistema decimal (unidades, decenas, centenas…), que vale una potencia de 10.'}
+  t06:
+    intro:
+      what: >-
+        El cuadrado de un número es la potencia de exponente 2 ($a^2$) y el
+        cubo, la de exponente 3 ($a^3$).
+      purpose: >-
+        Sirven para calcular áreas de cuadrados y volúmenes de cubos, y para
+        preparar el estudio de las raíces (b19).
+      importance: >-
+        Reconocer cuadrados y cubos perfectos (como $49$ o $125$) agiliza el
+        cálculo mental y es imprescindible para calcular raíces exactas.
+      foundations: >-
+        Los nombres vienen de la geometría: un cuadrado de lado $a$ tiene área
+        $a^2$, y un cubo de arista $a$ tiene volumen $a^3$.
+      prerequisites:
+        - 'Potencias de números naturales (b18)'
+        - 'Tablas de multiplicar (b06)'
+      outcomes:
+        - 'Calcular cuadrados y cubos'
+        - 'Reconocer cuadrados perfectos y cubos perfectos'
+        - 'Relacionar cuadrados con áreas y cubos con volúmenes'
+      everyday_example: >-
+        Una baldosa cuadrada de 30 cm de lado cubre $30^2 = 900$ cm².
+    sections:
+      - title: Cuadrados y cubos perfectos
+        concept: Un cuadrado perfecto es $n^2$ y un cubo perfecto es $n^3$, con $n$ natural.
+        explanation: |-
+          **¿Por qué "cuadrado"?** Si colocamos puntos formando un cuadrado de $4$ filas y $4$ columnas, hay $4 \times 4 = 4^2 = 16$ puntos. El área de un cuadrado de lado $4$ es $4^2 = 16$ unidades cuadradas.
+
+          **¿Por qué "cubo"?** Un cubo de $3$ bloques de largo, $3$ de ancho y $3$ de alto contiene $3 \times 3 \times 3 = 3^3 = 27$ bloques.
+
+          Los números que son cuadrado de un natural se llaman **cuadrados perfectos**: $1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, \ldots$
+
+          Los que son cubo de un natural se llaman **cubos perfectos**: $1, 8, 27, 64, 125, 216, 343, 512, 729, 1000, \ldots$
+
+          Conviene memorizar los cuadrados hasta $12^2 = 144$ y los cubos hasta $5^3 = 125$ (y $10^3 = 1000$). Algunos números son ambas cosas: $64 = 8^2 = 4^3$.
+
+          Atención: "el doble" de un número no es su cuadrado. El doble de $7$ es $14$; el cuadrado de $7$ es $49$.
+        definition: >-
+          El cuadrado de $a$ es $a^2 = a \times a$ y el cubo de $a$ es
+          $a^3 = a \times a \times a$. Un natural es cuadrado (cubo) perfecto si
+          es el cuadrado (cubo) de algún natural.
+        rules:
+          - 'Cuadrado: multiplicar el número por sí mismo una vez ($a \times a$).'
+          - 'Cubo: tres factores iguales ($a \times a \times a$).'
+          - 'Área de un cuadrado de lado $l$: $l^2$; volumen de un cubo de arista $l$: $l^3$.'
+        examples:
+          - problem: 'Calcula el cuadrado de $7$ y el cubo de $4$.'
+            solution: |-
+              **Paso 1.** $7^2 = 7 \times 7 = 49$.
+              **Paso 2.** $4^3 = 4 \times 4 \times 4 = 16 \times 4 = 64$.
+              Resultado: $49$ y $64$.
+          - problem: '¿Es $125$ un cuadrado perfecto o un cubo perfecto?'
+            solution: |-
+              **Paso 1.** Cuadrados cercanos: $11^2 = 121$ y $12^2 = 144$; $125$ no es cuadrado perfecto.
+              **Paso 2.** Cubos: $5^3 = 5 \times 5 \times 5 = 125$.
+              Resultado: $125$ es un cubo perfecto ($5^3$).
+        common_errors:
+          - 'Confundir el cuadrado con el doble: $9^2 = 81$, no $18$.'
+          - 'Confundir el cubo con el triple: $4^3 = 64$, no $12$.'
+        summary: >-
+          Cuadrado: $a^2$, área de un cuadrado. Cubo: $a^3$, volumen de un
+          cubo. Memoriza los más usados.
+        check:
+          question: '¿Cuánto es el cuadrado de $9$?'
+          options: ['$18$', '$81$', '$729$', '$27$']
+          answer: 1
+          explanation: >-
+            El cuadrado de $9$ es $9 \times 9 = 81$. $18$ es el doble, $27$ el
+            triple y $729$ el cubo.
+    glossary:
+      - {term: Cuadrado perfecto, definition: 'Número que es el cuadrado de un número natural (1, 4, 9, 16…).'}
+      - {term: Cubo perfecto, definition: 'Número que es el cubo de un número natural (1, 8, 27, 64…).'}
+  t07:
+    intro:
+      what: >-
+        Son reglas que permiten operar con potencias sin calcularlas por
+        completo, por ejemplo $2^3 \times 2^4 = 2^7$.
+      purpose: >-
+        Sirven para simplificar productos, cocientes y potencias de potencias,
+        y para calcular más rápido.
+      importance: >-
+        Son la base del trabajo con exponentes en álgebra y en notación
+        científica, y explican los exponentes cero y negativos.
+      foundations: >-
+        Todas se deducen de la definición: una potencia es una multiplicación
+        repetida, y al juntar o cancelar factores iguales se suman o restan
+        los exponentes.
+      prerequisites:
+        - 'Concepto de potencia, base y exponente (b18)'
+        - 'Propiedades asociativa y conmutativa de la multiplicación (b08)'
+        - 'Simplificación de fracciones (b14)'
+      outcomes:
+        - 'Multiplicar y dividir potencias de igual base'
+        - 'Calcular la potencia de una potencia'
+        - 'Aplicar la potencia de un producto y de un cociente'
+        - 'Reconocer que la potencia no se reparte sobre una suma'
+      everyday_example: >-
+        Para saber cuántas veces más grande es $10^6$ que $10^2$, basta restar
+        exponentes: $10^6 \div 10^2 = 10^4$, es decir, $10\,000$ veces.
+    sections:
+      - title: Producto y cociente de igual base
+        concept: Al multiplicar potencias de igual base se suman los exponentes; al dividir, se restan.
+        explanation: |-
+          **Producto.** Escribamos $2^3 \times 2^4$ desarrollando cada potencia:
+          $(2 \times 2 \times 2) \times (2 \times 2 \times 2 \times 2)$.
+          En total hay $3 + 4 = 7$ factores iguales a $2$, así que $2^3 \times 2^4 = 2^7$. Comprobación: $8 \times 16 = 128 = 2^7$ ✓.
+
+          **Cociente.** En $5^6 \div 5^4$, escrito como fracción, hay seis cincos arriba y cuatro abajo. Al simplificar (b14) se cancelan cuatro pares y quedan $6 - 4 = 2$ cincos arriba:
+          $5^6 \div 5^4 = 5^2 = 25$.
+
+          Estas reglas funcionan **sólo si las bases son iguales**. En $2^3 \times 3^2$ no se puede juntar nada: se calcula $8 \times 9 = 72$.
+
+          Por ahora usaremos el cociente cuando el exponente de arriba es mayor que el de abajo. Qué ocurre cuando son iguales o el de abajo es mayor lo verás en los temas de exponente cero y exponentes negativos.
+        definition: >-
+          Para $a \neq 0$ y naturales $m, n$: $a^m \times a^n = a^{m+n}$ y, si
+          $m > n$, $a^m \div a^n = a^{m-n}$.
+        rules:
+          - 'Producto de igual base: se conserva la base y se suman los exponentes.'
+          - 'Cociente de igual base: se conserva la base y se restan los exponentes (arriba menos abajo).'
+          - 'Con bases distintas, estas reglas no se aplican.'
+          - 'Un número sin exponente visible tiene exponente 1: $a = a^1$.'
+        examples:
+          - problem: 'Expresa como una sola potencia: $7^5 \times 7^2$.'
+            solution: |-
+              **Paso 1.** Misma base ($7$): se suman exponentes.
+              **Paso 2.** $5 + 2 = 7$.
+              Resultado: $7^7$.
+          - problem: 'Expresa como una sola potencia y calcula: $3^7 \div 3^4$.'
+            solution: |-
+              **Paso 1.** Misma base: se restan exponentes, $7 - 4 = 3$.
+              **Paso 2.** $3^3 = 27$.
+              Resultado: $3^3 = 27$.
+        common_errors:
+          - 'Multiplicar los exponentes en un producto: $2^3 \times 2^4$ no es $2^{12}$.'
+          - 'Multiplicar también las bases: $2^3 \times 2^4$ no es $4^7$.'
+          - 'Aplicar la regla con bases distintas.'
+        summary: >-
+          Misma base: en el producto se suman los exponentes y en el cociente
+          se restan.
+        check:
+          question: '¿Cuál es el resultado de $4^3 \times 4^5$ como una sola potencia?'
+          options: ['$4^{15}$', '$16^8$', '$4^8$', '$4^2$']
+          answer: 2
+          explanation: >-
+            Misma base: se suman los exponentes, $3 + 5 = 8$, así que $4^8$. Los
+            exponentes no se multiplican y la base no cambia.
+      - title: Potencia de una potencia, de un producto y de un cociente
+        concept: En una potencia de potencia se multiplican los exponentes; la potencia se reparte sobre productos y cocientes, pero no sobre sumas.
+        explanation: |-
+          **Potencia de una potencia.** $(3^2)^3 = 3^2 \times 3^2 \times 3^2$. Por la regla del producto, $2 + 2 + 2 = 2 \times 3 = 6$: $(3^2)^3 = 3^6 = 729$. Se **multiplican** los exponentes.
+
+          **Potencia de un producto.** $(2 \times 5)^3 = (2 \times 5)(2 \times 5)(2 \times 5)$. Reordenando (propiedad conmutativa, b08): $2^3 \times 5^3 = 8 \times 125 = 1000$. Comprobación: $10^3 = 1000$ ✓.
+
+          **Potencia de un cociente.** De la misma forma, $\left(\frac{2}{3}\right)^2 = \frac{2}{3} \times \frac{2}{3} = \frac{2^2}{3^2} = \frac{4}{9}$: se elevan numerador y denominador.
+
+          **¡Con la suma no funciona!** $(2 + 3)^2 = 5^2 = 25$, pero $2^2 + 3^2 = 4 + 9 = 13$. La potencia **no se reparte** sobre una suma ni sobre una resta. En esos casos, primero se resuelve el paréntesis.
+        definition: >-
+          Para números $a$, $b$ (con $b \neq 0$ cuando divide) y naturales $m$,
+          $n$: $(a^m)^n = a^{m \cdot n}$, $(a \times b)^n = a^n \times b^n$ y
+          $\left(\frac{a}{b}\right)^n = \frac{a^n}{b^n}$.
+        rules:
+          - 'Potencia de una potencia: se multiplican los exponentes.'
+          - 'Potencia de un producto: se eleva cada factor.'
+          - 'Potencia de un cociente: se elevan numerador y denominador.'
+          - 'En general $(a + b)^n \neq a^n + b^n$.'
+        examples:
+          - problem: 'Expresa como una sola potencia: $(5^4)^2$.'
+            solution: |-
+              **Paso 1.** Potencia de potencia: se multiplican los exponentes.
+              **Paso 2.** $4 \times 2 = 8$.
+              Resultado: $5^8$.
+          - problem: 'Calcula $(2 \times 5)^3$ de dos maneras.'
+            solution: |-
+              **Paso 1.** Primero el paréntesis: $10^3 = 1000$.
+              **Paso 2.** Repartiendo la potencia: $2^3 \times 5^3 = 8 \times 125 = 1000$.
+              Resultado: $1000$ en ambos casos.
+        common_errors:
+          - 'Sumar los exponentes en una potencia de potencia: $(3^2)^3$ no es $3^5$.'
+          - 'Repartir la potencia sobre una suma: $(2 + 3)^2 \neq 2^2 + 3^2$.'
+          - 'Elevar sólo el numerador de una fracción: $\left(\frac{2}{3}\right)^2 \neq \frac{4}{3}$.'
+        summary: >-
+          $(a^m)^n = a^{m \cdot n}$; la potencia se reparte sobre productos y
+          cocientes, nunca sobre sumas.
+        check:
+          question: '¿Cuál es el resultado de $(4^3)^2$ como una sola potencia?'
+          options: ['$4^5$', '$4^6$', '$4^9$', '$16^3$']
+          answer: 1
+          explanation: >-
+            En una potencia de potencia se multiplican los exponentes:
+            $3 \times 2 = 6$, así que $4^6$. Sumarlos daría $4^5$, que es
+            incorrecto.
+    glossary:
+      - {term: Potencias de igual base, definition: 'Potencias que tienen la misma base, como $2^3$ y $2^5$.'}
+      - {term: Potencia de una potencia, definition: 'Expresión de la forma $(a^m)^n$.'}
+  t08:
+    intro:
+      what: >-
+        El exponente cero indica que no se multiplica ningún factor; por
+        convenio y por coherencia con las propiedades, $a^0 = 1$ si
+        $a \neq 0$.
+      purpose: >-
+        Sirve para que las propiedades de las potencias funcionen siempre,
+        también cuando los exponentes se igualan al dividir.
+      importance: >-
+        Aparece en la descomposición de números ($7 = 7 \times 10^0$), en la
+        notación científica y al simplificar expresiones.
+      foundations: >-
+        Se deduce de la regla del cociente de igual base: $a^n \div a^n$ vale 1
+        (todo número no nulo dividido entre sí mismo) y, restando exponentes,
+        $a^{n-n} = a^0$.
+      prerequisites:
+        - 'Propiedades de las potencias: cociente de igual base (b18)'
+        - 'División de un número entre sí mismo (b07)'
+      outcomes:
+        - 'Calcular potencias de exponente cero'
+        - 'Justificar por qué $a^0 = 1$'
+        - 'Distinguir $(-a)^0$ de $-a^0$'
+      everyday_example: >-
+        En la descomposición $345 = 3 \times 10^2 + 4 \times 10^1 + 5 \times 10^0$,
+        las unidades corresponden a $10^0 = 1$.
+    sections:
+      - title: Por qué $a^0 = 1$
+        concept: Todo número distinto de cero elevado a cero da 1.
+        explanation: |-
+          Aplicamos la regla del cociente a un caso especial: $5^3 \div 5^3$.
+
+          * Por un lado, cualquier número distinto de cero dividido entre sí mismo da $1$: $125 \div 125 = 1$.
+          * Por otro, restando exponentes: $5^3 \div 5^3 = 5^{3-3} = 5^0$.
+
+          Para que ambas cosas sean ciertas a la vez, **debe ser $5^0 = 1$**. Lo mismo ocurre con cualquier base distinta de cero: $a^0 = 1$.
+
+          También lo confirma el patrón de las potencias de 10: $10^2 = 100$, $10^1 = 10$, $10^0 = 1$ (cada paso divide entre 10).
+
+          **Cuidado con dos detalles:**
+          * La base negativa entre paréntesis también da $1$: $(-5)^0 = 1$. Pero $-5^0 = -(5^0) = -1$, porque el signo queda fuera.
+          * $0^0$ **no está definido** en aritmética: la regla exige base distinta de cero (dividir entre $0^n = 0$ no es posible).
+        definition: >-
+          Para todo número $a \neq 0$, se define $a^0 = 1$. La expresión $0^0$
+          no está definida.
+        rules:
+          - '$a^0 = 1$ para todo $a \neq 0$.'
+          - '$(-a)^0 = 1$, pero $-a^0 = -1$.'
+          - '$0^0$ no está definido.'
+        examples:
+          - problem: 'Calcula $7^0$, $(-5)^0$ y $-5^0$.'
+            solution: |-
+              **Paso 1.** $7^0 = 1$ (base distinta de cero).
+              **Paso 2.** $(-5)^0 = 1$ (la base es $-5$, distinta de cero).
+              **Paso 3.** $-5^0 = -(5^0) = -1$ (la base es $5$; el signo está fuera).
+              Resultado: $1$, $1$ y $-1$.
+          - problem: 'Calcula $3^4 \div 3^4$ de dos maneras.'
+            solution: |-
+              **Paso 1.** Directamente: $81 \div 81 = 1$.
+              **Paso 2.** Con la propiedad: $3^{4-4} = 3^0 = 1$.
+              Resultado: $1$.
+        common_errors:
+          - 'Creer que $a^0 = 0$: no se multiplica "nada", pero el resultado es $1$, el elemento neutro de la multiplicación.'
+          - 'Creer que $a^0 = a$: eso ocurre con el exponente uno.'
+          - 'Olvidar que $-a^0 = -1$.'
+        summary: >-
+          $a^0 = 1$ para $a \neq 0$, porque $a^n \div a^n = 1 = a^0$. $0^0$ no
+          está definido.
+        check:
+          question: '¿Cuánto vale $2026^0$?'
+          options: ['$0$', '$2026$', '$1$', 'No está definido']
+          answer: 2
+          explanation: >-
+            Todo número distinto de cero elevado a cero vale $1$. Sólo $0^0$ no
+            está definido.
+    glossary:
+      - {term: Exponente cero, definition: 'Exponente $0$; para cualquier base no nula, la potencia vale 1.'}
+  t09:
+    intro:
+      what: >-
+        Una potencia de exponente uno tiene un solo factor, así que es igual a
+        la base: $a^1 = a$.
+      purpose: >-
+        Sirve para aplicar las propiedades de las potencias a números sin
+        exponente visible, como $3 \times 3^4 = 3^5$.
+      importance: >-
+        Es un detalle que evita muchos errores al simplificar: cualquier
+        número "sin exponente" tiene, en realidad, exponente 1.
+      foundations: >-
+        Se deduce de la definición (un solo factor) y de la regla del cociente:
+        $a^3 \div a^2 = a$, y restando exponentes, $a^{3-2} = a^1$.
+      prerequisites:
+        - 'Propiedades de las potencias (b18)'
+        - 'Exponente cero (b18)'
+      outcomes:
+        - 'Calcular potencias de exponente uno'
+        - 'Escribir un número como potencia de exponente uno para aplicar propiedades'
+      everyday_example: >-
+        En $345 = 3 \times 10^2 + 4 \times 10^1 + 5 \times 10^0$, las decenas
+        corresponden a $10^1 = 10$.
+    sections:
+      - title: Un solo factor
+        concept: Todo número elevado a uno es igual a sí mismo.
+        explanation: |-
+          Si $a^n$ significa "$n$ factores iguales a $a$", entonces $a^1$ es **un solo factor**: no hay nada con qué multiplicarlo, y el resultado es el propio $a$.
+
+          La regla del cociente lo confirma: $4^3 \div 4^2 = 64 \div 16 = 4$, y restando exponentes, $4^{3-2} = 4^1$. Luego $4^1 = 4$.
+
+          Esto vale para cualquier base, incluso $0$ y los negativos:
+          * $9^1 = 9$
+          * $(-4)^1 = -4$
+          * $0^1 = 0$
+
+          **¿Para qué sirve?** Para usar las propiedades cuando un número aparece sin exponente: $3 \times 3^4 = 3^1 \times 3^4 = 3^{1+4} = 3^5$. Si olvidamos ese exponente $1$ "invisible", contaríamos mal.
+
+          No confundas los dos casos especiales: **exponente cero da 1**; **exponente uno da la base**.
+        definition: >-
+          Para todo número $a$, $a^1 = a$.
+        rules:
+          - '$a^1 = a$ para cualquier número $a$.'
+          - 'Un número sin exponente visible tiene exponente 1.'
+          - 'Comparación: $a^0 = 1$ (si $a \neq 0$) y $a^1 = a$.'
+        examples:
+          - problem: 'Calcula $(-8)^1$ y $15^1$.'
+            solution: |-
+              **Paso 1.** Un solo factor: $(-8)^1 = -8$.
+              **Paso 2.** $15^1 = 15$.
+              Resultado: $-8$ y $15$.
+          - problem: 'Expresa como una sola potencia: $2 \times 2^5$, y calcula $5^1 + 5^0$.'
+            solution: |-
+              **Paso 1.** $2 = 2^1$, así que $2^1 \times 2^5 = 2^{1+5} = 2^6$.
+              **Paso 2.** $5^1 + 5^0 = 5 + 1 = 6$.
+              Resultado: $2^6$ y $6$.
+        common_errors:
+          - 'Responder $1$ para $a^1$: eso es el exponente cero.'
+          - 'No contar el exponente 1 implícito: $2 \times 2^5$ no es $2^5$.'
+        summary: >-
+          $a^1 = a$. Todo número sin exponente tiene exponente 1, lo que permite
+          aplicar las propiedades.
+        check:
+          question: '¿Cuánto vale $(-8)^1$?'
+          options: ['$1$', '$8$', '$-8$', '$-1$']
+          answer: 2
+          explanation: >-
+            Con exponente uno hay un solo factor, la propia base: $(-8)^1 = -8$.
+    glossary:
+      - {term: Exponente uno, definition: 'Exponente $1$; la potencia es igual a la base.'}
+  t10:
+    intro:
+      what: >-
+        Un exponente negativo indica el inverso de una potencia:
+        $a^{-n} = \frac{1}{a^n}$, por ejemplo $2^{-3} = \frac{1}{8}$.
+      purpose: >-
+        Sirve para escribir números pequeños (como $0{,}001 = 10^{-3}$) y para
+        que la regla del cociente funcione aunque el exponente de abajo sea
+        mayor.
+      importance: >-
+        Es imprescindible en la notación científica (b26) y en ciencias, donde
+        se trabaja con cantidades muy pequeñas.
+      foundations: >-
+        Se deduce de la regla del cociente: $a^2 \div a^5$ simplificado como
+        fracción da $\frac{1}{a^3}$, y restando exponentes da $a^{-3}$.
+      prerequisites:
+        - 'Propiedades de las potencias (b18)'
+        - 'Exponente cero (b18)'
+        - 'Fracciones: simplificación e inverso de una fracción (b14, b15)'
+        - 'Potencias de base 10 con exponente negativo (b18)'
+      outcomes:
+        - 'Calcular potencias con exponente negativo'
+        - 'Calcular potencias negativas de fracciones'
+        - 'Escribir decimales pequeños como potencias de 10'
+      everyday_example: >-
+        Un milímetro es la milésima parte de un metro: $10^{-3}$ m.
+    sections:
+      - title: El exponente negativo invierte
+        concept: $a^{-n}$ es el inverso de $a^n$, es decir, $\frac{1}{a^n}$.
+        explanation: |-
+          Calculemos $2^2 \div 2^5$ de dos formas.
+
+          **Simplificando la fracción** (b14):
+          $\frac{2 \times 2}{2 \times 2 \times 2 \times 2 \times 2} = \frac{1}{2 \times 2 \times 2} = \frac{1}{2^3} = \frac{1}{8}$.
+
+          **Restando exponentes:** $2^{2-5} = 2^{-3}$.
+
+          Para que ambas sean iguales, **debe ser** $2^{-3} = \frac{1}{2^3} = \frac{1}{8}$.
+
+          En general, el exponente negativo **no hace negativo el número**: indica que la potencia pasa al denominador. $a^{-n}$ es el **inverso** de $a^n$, porque $a^n \times a^{-n} = a^0 = 1$.
+
+          Pasos para calcular $a^{-n}$:
+          1. Escribir $\frac{1}{a^n}$.
+          2. Calcular $a^n$.
+
+          Por ejemplo, $10^{-2} = \frac{1}{100} = 0{,}01$, igual que vimos con las potencias de 10. La base debe ser distinta de cero (no se puede dividir entre $0$).
+        definition: >-
+          Para $a \neq 0$ y $n$ natural, $a^{-n} = \frac{1}{a^n}$.
+        rules:
+          - '$a^{-n} = \frac{1}{a^n}$, con $a \neq 0$.'
+          - 'Un exponente negativo no cambia el signo del resultado.'
+          - '$a^n \times a^{-n} = 1$: son inversos.'
+          - 'Las propiedades de las potencias siguen valiendo con exponentes negativos.'
+        examples:
+          - problem: 'Calcula $5^{-2}$ y $10^{-3}$.'
+            solution: |-
+              **Paso 1.** $5^{-2} = \frac{1}{5^2} = \frac{1}{25}$.
+              **Paso 2.** $10^{-3} = \frac{1}{10^3} = \frac{1}{1000} = 0{,}001$.
+              Resultado: $\frac{1}{25}$ y $0{,}001$.
+          - problem: 'Calcula $3^4 \div 3^6$.'
+            solution: |-
+              **Paso 1.** Restamos exponentes: $3^{4-6} = 3^{-2}$.
+              **Paso 2.** $3^{-2} = \frac{1}{3^2} = \frac{1}{9}$.
+              **Comprobación:** $81 \div 729 = \frac{81}{729} = \frac{1}{9}$ ✓.
+              Resultado: $\frac{1}{9}$.
+        common_errors:
+          - 'Dar un resultado negativo: $5^{-2} \neq -25$.'
+          - 'Multiplicar base por exponente: $5^{-2} \neq -10$.'
+          - 'Invertir sin elevar: $5^{-2} \neq \frac{1}{5}$.'
+        summary: >-
+          $a^{-n} = \frac{1}{a^n}$: el exponente negativo invierte la potencia,
+          sin cambiar el signo.
+        check:
+          question: '¿Cuánto vale $5^{-2}$?'
+          options: ['$-25$', '$-10$', '$\frac{1}{25}$', '$\frac{1}{10}$']
+          answer: 2
+          explanation: >-
+            $5^{-2} = \frac{1}{5^2} = \frac{1}{25}$. El exponente negativo no
+            vuelve negativo el resultado; indica el inverso.
+      - title: Exponente negativo con base fraccionaria
+        concept: Una fracción elevada a un exponente negativo es su fracción inversa elevada al exponente positivo.
+        explanation: |-
+          Si la base es una fracción, por ejemplo $\left(\frac{2}{3}\right)^{-2}$, aplicamos la definición:
+          $\left(\frac{2}{3}\right)^{-2} = \frac{1}{\left(\frac{2}{3}\right)^2} = \frac{1}{\frac{4}{9}} = \frac{9}{4}$.
+
+          Dividir $1$ entre una fracción es multiplicar por su inversa (b15), así que el resultado es lo mismo que **invertir la fracción y cambiar el signo del exponente**:
+          $\left(\frac{2}{3}\right)^{-2} = \left(\frac{3}{2}\right)^2 = \frac{9}{4}$.
+
+          Este atajo es muy útil. Un caso particular: $\left(\frac{1}{2}\right)^{-3} = 2^3 = 8$. Fíjate en que, con base menor que 1, el exponente negativo da un número **mayor**.
+        definition: >-
+          Para $a, b \neq 0$ y $n$ natural,
+          $\left(\frac{a}{b}\right)^{-n} = \left(\frac{b}{a}\right)^{n} = \frac{b^n}{a^n}$.
+        rules:
+          - 'Se invierte la fracción y el exponente pasa a ser positivo.'
+          - 'Después se elevan numerador y denominador.'
+        examples:
+          - problem: 'Calcula $\left(\frac{2}{3}\right)^{-2}$'
+            solution: |-
+              **Paso 1.** Invertimos la base: $\left(\frac{3}{2}\right)^2$.
+              **Paso 2.** Elevamos: $\frac{3^2}{2^2} = \frac{9}{4}$.
+              Resultado: $\frac{9}{4}$.
+          - problem: 'Calcula $\left(\frac{1}{2}\right)^{-3}$'
+            solution: |-
+              **Paso 1.** Invertimos: $\left(\frac{2}{1}\right)^3 = 2^3$.
+              **Paso 2.** $2^3 = 8$.
+              Resultado: $8$.
+        common_errors:
+          - 'Invertir la fracción pero dejar el exponente negativo.'
+          - 'Elevar sólo el numerador.'
+          - 'Cambiar el signo de la fracción en lugar de invertirla.'
+        summary: >-
+          Con base fraccionaria: invierte la fracción y eleva al exponente
+          positivo.
+        check:
+          question: '¿Cuánto vale $\left(\frac{3}{4}\right)^{-2}$?'
+          options: ['$\frac{9}{16}$', '$\frac{16}{9}$', '$-\frac{9}{16}$', '$\frac{4}{3}$']
+          answer: 1
+          explanation: >-
+            Invertimos y elevamos al cuadrado:
+            $\left(\frac{4}{3}\right)^2 = \frac{16}{9}$. $\frac{9}{16}$ sería
+            el exponente $+2$, y $\frac{4}{3}$ el exponente $-1$.
+    glossary:
+      - {term: Exponente negativo, definition: 'Exponente menor que cero; indica el inverso de la potencia: $a^{-n} = \frac{1}{a^n}$.'}
+      - {term: Inverso de un número, definition: 'Número que multiplicado por él da 1; el inverso de $a$ es $\frac{1}{a}$.'}
+  t11:
+    intro:
+      what: >-
+        Son situaciones reales que se modelan con potencias: áreas, volúmenes,
+        crecimiento por duplicación y cantidades muy grandes.
+      purpose: >-
+        Sirven para ver la potenciación como herramienta para describir el
+        mundo, no sólo como cálculo.
+      importance: >-
+        El crecimiento "exponencial" (bacterias, contagios, interés compuesto)
+        es muy distinto del crecimiento por sumas, y entenderlo ayuda a tomar
+        mejores decisiones.
+      foundations: >-
+        Se usan la definición de potencia, los cuadrados y cubos y las
+        potencias de 10.
+      prerequisites:
+        - 'Cuadrados y cubos (b18)'
+        - 'Potencias de base 10 (b18)'
+        - 'Propiedades de las potencias (b18)'
+      outcomes:
+        - 'Calcular áreas de cuadrados y volúmenes de cubos'
+        - 'Resolver problemas de crecimiento por duplicación'
+        - 'Distinguir crecimiento por suma y por multiplicación'
+      everyday_example: >-
+        Doblar una hoja de papel por la mitad 5 veces produce $2^5 = 32$ capas.
+    sections:
+      - title: Áreas, volúmenes y crecimiento
+        concept: Las potencias modelan áreas ($l^2$), volúmenes ($l^3$) y cantidades que se multiplican por un mismo factor en cada paso.
+        explanation: |-
+          **Áreas y volúmenes.** Un terreno cuadrado de $15$ m de lado tiene un área de $15^2 = 225$ m² (metros cuadrados). Una caja cúbica de $4$ cm de arista tiene un volumen de $4^3 = 64$ cm³ (centímetros cúbicos). El exponente coincide con el "²" o "³" de la unidad.
+
+          **Crecimiento por duplicación.** Si una cantidad se **duplica** en cada periodo, después de $n$ periodos se ha multiplicado por $2^n$. Si una colonia empieza con $3$ bacterias y se duplica cada hora:
+          * tras 1 hora: $3 \times 2 = 6$
+          * tras 2 horas: $3 \times 2^2 = 12$
+          * tras $n$ horas: $3 \times 2^n$
+
+          Compara con un crecimiento **por suma**: añadir 2 bacterias cada hora daría, tras 10 horas, $3 + 20 = 23$; duplicando, $3 \times 2^{10} = 3072$. La multiplicación repetida crece muchísimo más rápido.
+
+          Esta misma idea, con un factor como $1{,}05$ en lugar de $2$, es la del interés compuesto que estudiarás en b23.
+        definition: >-
+          Si una cantidad inicial $C$ se multiplica por un factor $k$ en cada
+          periodo, después de $n$ periodos vale $C \times k^n$.
+        rules:
+          - 'Área de un cuadrado de lado $l$: $l^2$.'
+          - 'Volumen de un cubo de arista $l$: $l^3$.'
+          - 'Duplicar $n$ veces es multiplicar por $2^n$; triplicar $n$ veces, por $3^n$.'
+        examples:
+          - problem: 'Una colonia empieza con $3$ bacterias y se duplica cada hora. ¿Cuántas habrá después de $5$ horas?'
+            solution: |-
+              **Paso 1.** Cada hora se multiplica por $2$: tras $5$ horas, por $2^5$.
+              **Paso 2.** $2^5 = 32$.
+              **Paso 3.** $3 \times 32 = 96$.
+              Resultado: $96$ bacterias.
+          - problem: 'Un depósito cúbico mide $3$ m de arista. ¿Cuál es su volumen?'
+            solution: |-
+              **Paso 1.** Volumen del cubo: $l^3 = 3^3$.
+              **Paso 2.** $3 \times 3 \times 3 = 27$.
+              Resultado: $27$ m³.
+        common_errors:
+          - 'Sumar en lugar de multiplicar: duplicar 5 veces no es sumar $2 \times 5$.'
+          - 'Calcular $2^5$ y olvidar multiplicar por la cantidad inicial.'
+          - 'Usar $l \times 2$ para el área de un cuadrado en lugar de $l^2$.'
+        summary: >-
+          Las potencias describen áreas, volúmenes y procesos que se multiplican
+          por el mismo factor una y otra vez.
+        check:
+          question: 'Una bacteria se duplica cada hora. Empezando con 1, ¿cuántas habrá tras 10 horas?'
+          options: ['$20$', '$100$', '$512$', '$1024$']
+          answer: 3
+          explanation: >-
+            Tras 10 duplicaciones hay $1 \times 2^{10} = 1024$ bacterias. $512$
+            corresponde a 9 horas y $20$ a sumar en lugar de multiplicar.
+    glossary:
+      - {term: Crecimiento exponencial, definition: 'Crecimiento en el que la cantidad se multiplica por el mismo factor en cada periodo.'}
+      - {term: Metro cuadrado (m²), definition: 'Área de un cuadrado de 1 m de lado.'}
+      - {term: Centímetro cúbico (cm³), definition: 'Volumen de un cubo de 1 cm de arista.'}

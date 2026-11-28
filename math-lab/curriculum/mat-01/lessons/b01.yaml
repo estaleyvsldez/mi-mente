@@ -1,0 +1,795 @@
+block: b01
+intro: >-
+  Este primer bloque presenta la aritmética: qué estudia, de dónde viene, por qué
+  es útil y en qué se diferencia de otras ramas de las matemáticas. También
+  fijamos el vocabulario básico (número, cantidad, magnitud y operación) que
+  usaremos durante todo el curso. No hace falta ningún conocimiento previo.
+
+topics:
+  t01:
+    intro:
+      what: >-
+        La aritmética es la rama de las matemáticas que estudia los números y las
+        operaciones que se hacen con ellos: sumar, restar, multiplicar y dividir,
+        y otras que se construyen a partir de estas.
+      purpose: >-
+        Sirve para contar, medir, comparar y calcular cantidades de forma exacta,
+        tanto en la vida diaria como en el trabajo y en el resto de las matemáticas.
+      importance: >-
+        Es la base de todo lo demás: el álgebra, la geometría, la estadística o la
+        contabilidad usan constantemente la aritmética. Quien domina la aritmética
+        aprende el resto con mucha más seguridad.
+      foundations: >-
+        Se apoya en la idea de número (cuántos hay) y en reglas precisas para
+        combinar números y obtener otros nuevos.
+      prerequisites:
+        - Ninguno. Es el punto de partida del curso.
+      outcomes:
+        - Explicar con tus palabras qué estudia la aritmética.
+        - Reconocer si una situación se resuelve con aritmética.
+        - Nombrar las cuatro operaciones básicas.
+      everyday_example: >-
+        Cuando compruebas si te devolvieron bien el cambio en una tienda, estás
+        haciendo aritmética: comparas lo que pagaste, lo que costó y lo que recibiste.
+    sections:
+      - title: 'La ciencia de los números'
+        concept: 'La aritmética estudia los números y cómo se combinan mediante operaciones.'
+        explanation: |-
+          La palabra **aritmética** viene del griego *arithmós*, que significa «número».
+          Estudiar aritmética es aprender dos cosas:
+
+          1. **Qué son los números** y cómo se escriben y se leen (por ejemplo, que $305$ se lee «trescientos cinco»).
+          2. **Qué podemos hacer con ellos**: las **operaciones**. Las cuatro básicas son la **suma** (juntar), la **resta** (quitar o comparar), la **multiplicación** (repetir una cantidad varias veces) y la **división** (repartir en partes iguales).
+
+          Cada operación toma unos números y produce un número nuevo, siempre siguiendo reglas fijas. Por eso la aritmética es **exacta**: si dos personas hacen bien la misma cuenta, obtienen el mismo resultado.
+
+          A lo largo del curso veremos cada operación con calma, por qué funciona y cómo usarla para resolver problemas. En este primer tema basta con reconocer de qué trata la aritmética.
+        definition: >-
+          La aritmética es la parte de las matemáticas que estudia los números, sus
+          propiedades y las operaciones entre ellos.
+        rules:
+          - 'Las cuatro operaciones básicas son suma, resta, multiplicación y división.'
+          - 'Una operación combina números para obtener un único resultado.'
+          - 'Los resultados de la aritmética son exactos: no dependen de opiniones.'
+        examples:
+          - problem: '¿Es aritmética calcular cuántas sillas hay en 3 filas de 4 sillas?'
+            solution: |-
+              **Paso 1.** Identificamos que hay números: 3 filas y 4 sillas por fila.
+              **Paso 2.** Hay que combinarlos para obtener un total: contar $4 + 4 + 4$ sillas.
+              **Paso 3.** $4 + 4 = 8$ y $8 + 4 = 12$.
+              Resultado: sí es aritmética; hay $12$ sillas.
+        common_errors:
+          - 'Creer que la aritmética es sólo «hacer cuentas de memoria». También es entender por qué funcionan.'
+          - 'Pensar que es un tema sólo para niños: los adultos la usan a diario en dinero, tiempo y medidas.'
+        summary: >-
+          La aritmética estudia los números y sus operaciones (suma, resta,
+          multiplicación y división) y da resultados exactos.
+        check:
+          question: '¿Qué estudia la aritmética?'
+          options:
+            - 'Los números y las operaciones entre ellos'
+            - 'Las formas y figuras como triángulos y círculos'
+            - 'Los fenómenos del clima'
+          answer: 0
+          explanation: >-
+            La aritmética trata de los números y sus operaciones. Las figuras son
+            tema de la geometría, y el clima es tema de la meteorología.
+    glossary:
+      - term: 'Aritmética'
+        definition: 'Rama de las matemáticas que estudia los números y sus operaciones.'
+      - term: 'Operación'
+        definition: 'Procedimiento que combina números para obtener un resultado.'
+    practice:
+      - question: 'La palabra «aritmética» viene del griego y significa…'
+        options: ['número', 'forma', 'medida de la tierra']
+        answer: 0
+        explanation: >-
+          *Arithmós* significa número. «Medida de la tierra» es el origen de la
+          palabra geometría.
+        level: 1
+      - question: '¿Cuál de estas NO es una de las cuatro operaciones básicas?'
+        options: ['Suma', 'División', 'Medir un ángulo', 'Multiplicación']
+        answer: 2
+        explanation: >-
+          Las cuatro operaciones básicas son suma, resta, multiplicación y división.
+          Medir ángulos pertenece a la geometría.
+        level: 1
+      - question: '¿Qué operación básica corresponde a la idea de «juntar»?'
+        options: ['Suma', 'Resta', 'División']
+        answer: 0
+        explanation: 'Juntar cantidades es sumar. Restar es quitar o comparar; dividir es repartir.'
+        level: 1
+      - question: 'Dos personas calculan bien la misma cuenta. ¿Qué ocurre con sus resultados?'
+        options: ['Son iguales', 'Pueden ser distintos', 'Depende de la calculadora']
+        answer: 0
+        explanation: 'La aritmética es exacta: si la cuenta está bien hecha, el resultado es siempre el mismo.'
+        level: 2
+      - question: 'Repartir 12 panes en partes iguales entre 3 personas corresponde a…'
+        options: ['una división', 'una suma', 'una resta']
+        answer: 0
+        explanation: 'Repartir en partes iguales es la idea de la división.'
+        level: 2
+      - question: '¿Cuál de estas situaciones es un problema de aritmética?'
+        options:
+          - 'Calcular cuánto pagas por 2 cafés de 3 pesos cada uno'
+          - 'Elegir el color de una pared'
+          - 'Describir la forma de una mesa'
+        answer: 0
+        explanation: >-
+          Sólo el primero pide combinar números ($3 + 3 = 6$ pesos). Los otros no
+          piden ningún cálculo con números.
+        level: 2
+      - question: 'Tienes 10 monedas y regalas 4. ¿Qué operación usas para saber cuántas te quedan y cuál es el resultado?'
+        options: ['Resta; quedan 6', 'Suma; quedan 14', 'Resta; quedan 4']
+        answer: 0
+        explanation: 'Quitar es restar: $10 - 4 = 6$. Sumar daría 14, que no tiene sentido porque regalaste monedas.'
+        level: 3
+      - question: 'Hay 4 cajas con 5 libros cada una. ¿Qué operación representa mejor la situación?'
+        options: ['Multiplicación: 4 veces 5', 'Resta: 5 menos 4', 'División: 5 entre 4']
+        answer: 0
+        explanation: >-
+          Se repite la misma cantidad (5) cuatro veces: es una multiplicación, que
+          equivale a $5 + 5 + 5 + 5 = 20$.
+        level: 3
+      - question: '¿Por qué decimos que la aritmética es la base de otras ramas de las matemáticas?'
+        options:
+          - 'Porque las demás ramas usan números y operaciones constantemente'
+          - 'Porque fue la última en inventarse'
+          - 'Porque no tiene reglas'
+        answer: 0
+        explanation: >-
+          Álgebra, geometría o estadística calculan con números todo el tiempo.
+          La aritmética es antigua y tiene reglas muy precisas.
+        level: 3
+
+  t02:
+    intro:
+      what: >-
+        Es el recorrido de cómo la humanidad aprendió a contar, a escribir números
+        y a calcular, desde las marcas en huesos hasta el sistema que usamos hoy.
+      purpose: >-
+        Conocer la historia ayuda a entender por qué escribimos los números como lo
+        hacemos y por qué el cero y el valor posicional fueron inventos tan valiosos.
+      importance: >-
+        Muestra que la aritmética es una creación humana que se fue perfeccionando
+        para resolver necesidades reales: comercio, agricultura, construcción.
+      foundations: >-
+        La necesidad de registrar cantidades, el paso de las marcas a los símbolos y
+        el descubrimiento del cero y del valor posicional.
+      prerequisites:
+        - 'Qué es la aritmética (bloque 1, tema 1).'
+      outcomes:
+        - Ordenar las grandes etapas de la historia de los números.
+        - Explicar por qué el cero fue un avance importante.
+        - Reconocer el origen de las cifras que usamos hoy.
+      everyday_example: >-
+        Los números romanos que aún ves en relojes o en los nombres de reyes (Carlos III)
+        son un sistema antiguo; las cifras 0 a 9 de tu teléfono son otro, más moderno y
+        práctico para calcular.
+    sections:
+      - title: 'De las marcas a las cifras'
+        concept: 'Los números pasaron de marcas sueltas a símbolos y, finalmente, a cifras con valor según su posición.'
+        explanation: |-
+          **1. Contar con marcas.** Hace decenas de miles de años se hacían muescas en huesos o palos: una marca por cada objeto. Es contar «uno a uno».
+
+          **2. Primeros símbolos.** Civilizaciones como la egipcia y la mesopotámica (hace unos 5000 años) crearon símbolos para grupos: un signo para 1, otro para 10, otro para 100. Los mesopotámicos agrupaban de 60 en 60, y de ahí vienen los 60 minutos de una hora.
+
+          **3. Sistemas antiguos famosos.** Los romanos usaban letras: I = 1, V = 5, X = 10, L = 50, C = 100. Servían para escribir, pero eran incómodos para calcular.
+
+          **4. El cero y la posición.** En la India, alrededor del siglo V, se perfeccionó un sistema con diez cifras en el que **el valor de cada cifra depende de su posición**, y se usó el **cero** como cifra. Los mayas también tuvieron un cero de forma independiente.
+
+          **5. Llegada a Europa.** Los matemáticos árabes, como al-Juarismi (siglo IX), difundieron este sistema. Por eso sus cifras se llaman **indoarábigas**. En el siglo XIII, Fibonacci lo dio a conocer en Europa.
+        definition: >-
+          Un sistema de numeración posicional es aquel en el que el valor de una cifra
+          depende del lugar que ocupa dentro del número (lo estudiarás en el bloque 2).
+        rules:
+          - 'Orden aproximado: marcas, símbolos por grupos, sistemas como el romano, sistema posicional con cero.'
+          - 'Nuestras cifras 0, 1, 2, …, 9 son indoarábigas.'
+          - 'El cero permite distinguir números como 25, 205 y 250.'
+        examples:
+          - problem: '¿Por qué el cero es tan útil? Compara 25 y 205.'
+            solution: |-
+              **Paso 1.** En $25$ hay 2 decenas y 5 unidades.
+              **Paso 2.** En $205$ hay 2 centenas, ninguna decena y 5 unidades.
+              **Paso 3.** Sin el cero, ambos se escribirían «2 5» y no sabríamos cuál es cuál.
+              Resultado: el cero marca un lugar vacío y evita confusiones.
+        common_errors:
+          - 'Creer que los números siempre se escribieron como hoy: nuestro sistema tiene unos 1500 años.'
+          - 'Pensar que el cero «no vale nada»: como cifra, indica que una posición está vacía.'
+        summary: >-
+          La humanidad pasó de contar con marcas a crear símbolos; el gran avance fue
+          el sistema posicional con cero, nacido en la India y difundido por los árabes.
+        check:
+          question: '¿Dónde se perfeccionó el sistema de diez cifras con cero que usamos hoy?'
+          options: ['En la India', 'En Roma', 'En la antigua Grecia']
+          answer: 0
+          explanation: >-
+            Se desarrolló en la India y lo difundieron los árabes. Los romanos usaban
+            letras y no tenían cero.
+    glossary:
+      - term: 'Cifras indoarábigas'
+        definition: 'Los símbolos 0, 1, 2, 3, 4, 5, 6, 7, 8 y 9.'
+      - term: 'Numeración romana'
+        definition: 'Sistema antiguo que usa letras como I, V, X, L, C, D y M.'
+      - term: 'Cero'
+        definition: 'Cifra que indica que una posición está vacía; también es un número.'
+    practice:
+      - question: '¿Cuál fue la forma más antigua de registrar cantidades?'
+        options: ['Marcas o muescas en huesos y palos', 'La calculadora', 'Las cifras indoarábigas']
+        answer: 0
+        explanation: 'Las muescas, una por objeto, son el registro más antiguo que se conoce.'
+        level: 1
+      - question: 'En numeración romana, ¿qué vale la letra X?'
+        options: ['10', '5', '50']
+        answer: 0
+        explanation: 'X = 10; V = 5; L = 50.'
+        level: 1
+      - question: '¿Cómo se llaman las cifras 0 a 9 que usamos hoy?'
+        options: ['Indoarábigas', 'Romanas', 'Egipcias']
+        answer: 0
+        explanation: 'Se llaman indoarábigas porque nacieron en la India y llegaron a Europa a través de los árabes.'
+        level: 1
+      - question: 'Los 60 minutos de una hora son herencia de…'
+        options: ['los mesopotámicos, que agrupaban de 60 en 60', 'los romanos', 'Fibonacci']
+        answer: 0
+        explanation: 'Los mesopotámicos contaban agrupando de 60 en 60, y esa costumbre sobrevive en horas y minutos.'
+        level: 2
+      - question: '¿Qué papel cumple el cero en el número 307?'
+        options: ['Indica que no hay decenas', 'No cumple ningún papel', 'Indica que hay 10 decenas']
+        answer: 0
+        explanation: 'En 307 hay 3 centenas, 0 decenas y 7 unidades; el cero marca la posición vacía.'
+        level: 2
+      - question: '¿Por qué los números romanos son incómodos para calcular?'
+        options:
+          - 'Porque no tienen cero ni valor posicional sencillo'
+          - 'Porque sólo sirven para números pares'
+          - 'Porque se escriben de derecha a izquierda'
+        answer: 0
+        explanation: >-
+          Sin cero y sin un valor posicional sencillo, no se pueden colocar los
+          números en columnas para sumar o restar con facilidad.
+        level: 2
+      - question: 'Ordena de más antiguo a más reciente.'
+        options:
+          - 'Marcas en huesos → símbolos egipcios → cifras indoarábigas en Europa'
+          - 'Cifras indoarábigas en Europa → marcas en huesos → símbolos egipcios'
+          - 'Símbolos egipcios → cifras indoarábigas en Europa → marcas en huesos'
+        answer: 0
+        explanation: 'Las marcas son prehistóricas; los símbolos egipcios tienen unos 5000 años; las cifras indoarábigas llegaron a Europa hacia el siglo XIII.'
+        level: 3
+      - question: 'Sin el cero, ¿qué números se confundirían al escribirlos?'
+        options: ['34, 304 y 340', '34 y 43', '12 y 21']
+        answer: 0
+        explanation: >-
+          Sin una cifra para la posición vacía, 34, 304 y 340 se verían igual («3 4»).
+          34 y 43 se distinguen por el orden de sus cifras.
+        level: 3
+      - question: '¿Qué hizo Fibonacci en la historia de la aritmética?'
+        options:
+          - 'Dio a conocer en Europa el sistema indoarábigo'
+          - 'Inventó los números romanos'
+          - 'Inventó las muescas para contar'
+        answer: 0
+        explanation: 'En el siglo XIII su libro difundió en Europa las cifras indoarábigas y sus métodos de cálculo.'
+        level: 3
+
+  t03:
+    intro:
+      what: >-
+        Es la reflexión sobre por qué merece la pena aprender aritmética: qué
+        capacidades desarrolla y qué puertas abre.
+      purpose: >-
+        Ayuda a encontrar motivos concretos para estudiar y a reconocer la aritmética
+        en decisiones personales, laborales y económicas.
+      importance: >-
+        Una persona que calcula con seguridad toma mejores decisiones con su dinero,
+        su tiempo y su trabajo, y no depende siempre de otros o de una calculadora.
+      foundations: >-
+        La aritmética entrena el razonamiento ordenado, la estimación y la
+        comprobación de resultados.
+      prerequisites:
+        - 'Qué es la aritmética (bloque 1, tema 1).'
+      outcomes:
+        - Explicar al menos tres razones para aprender aritmética.
+        - Distinguir entre calcular y estimar.
+        - Valorar la comprobación de resultados.
+      everyday_example: >-
+        Antes de firmar un préstamo, saber calcular cuánto pagarás en total te
+        protege de sorpresas desagradables.
+    sections:
+      - title: 'Por qué la aritmética importa'
+        concept: 'La aritmética da autonomía, protege de errores y es la base para aprender más matemáticas.'
+        explanation: |-
+          Hay tres grandes razones para aprender aritmética.
+
+          **1. Autonomía en la vida diaria.** Presupuestos, compras, recetas, horarios, distancias: todo implica números. Si sabes calcular, decides por ti mismo y detectas errores en una factura o en un cambio.
+
+          **2. Pensamiento ordenado.** Resolver una cuenta exige seguir pasos en orden y revisar. Ese hábito sirve en cualquier trabajo: planificar, organizar, comprobar.
+
+          **3. Base para aprender más.** Álgebra, estadística, finanzas o informática se construyen sobre la aritmética. Sin ella, todo lo demás se vuelve difícil.
+
+          Además, la aritmética enseña a **estimar**: dar un valor aproximado rápido. Por ejemplo, si compras 3 productos de unos 10 pesos cada uno, sabes que pagarás alrededor de 30 pesos. Si la caja te cobra 300, la estimación te avisa de que algo está mal, aunque no hayas hecho la cuenta exacta.
+
+          Una calculadora ayuda, pero no sabe si tecleaste mal un número. Tu comprensión de la aritmética es la que detecta el error.
+        definition: >-
+          Estimar es obtener un valor aproximado de un resultado usando números
+          redondeados, para saber si un cálculo exacto es razonable.
+        rules:
+          - 'Antes de calcular, estima un resultado aproximado.'
+          - 'Después de calcular, compara con la estimación.'
+          - 'Una calculadora no sustituye la comprensión: sólo ejecuta lo que tecleas.'
+        examples:
+          - problem: 'Compras 2 camisas de 19 pesos y la cuenta dice 380 pesos. ¿Es razonable?'
+            solution: |-
+              **Paso 1.** Estimamos: 19 está cerca de 20.
+              **Paso 2.** Dos camisas de unos 20 pesos cuestan unos $20 + 20 = 40$ pesos.
+              **Paso 3.** 380 es muchísimo más que 40.
+              Resultado: no es razonable; probablemente se tecleó un cero de más (el total exacto es $19 + 19 = 38$ pesos).
+        common_errors:
+          - 'Confiar ciegamente en la calculadora sin estimar antes.'
+          - 'Pensar que la aritmética sólo sirve en la escuela.'
+        summary: >-
+          La aritmética da autonomía, ordena el pensamiento y es la base de otras
+          disciplinas; estimar ayuda a detectar errores.
+        check:
+          question: '¿Para qué sirve estimar antes de hacer una cuenta?'
+          options:
+            - 'Para saber si el resultado exacto es razonable'
+            - 'Para no tener que hacer nunca la cuenta exacta'
+            - 'Para que el resultado salga más grande'
+          answer: 0
+          explanation: >-
+            La estimación da una idea aproximada con la que comparar el resultado
+            exacto. No sustituye al cálculo exacto cuando se necesita precisión.
+    glossary:
+      - term: 'Estimar'
+        definition: 'Calcular un valor aproximado con números redondeados.'
+      - term: 'Comprobar'
+        definition: 'Revisar que un resultado es correcto por otro camino.'
+    practice:
+      - question: '¿Cuál es una razón para aprender aritmética?'
+        options: ['Tomar decisiones con el dinero por uno mismo', 'Memorizar fechas históricas', 'Aprender a dibujar']
+        answer: 0
+        explanation: 'La aritmética da autonomía en temas de dinero, tiempo y medidas.'
+        level: 1
+      - question: 'Dar un valor aproximado rápido de una cuenta se llama…'
+        options: ['estimar', 'comprobar', 'dividir']
+        answer: 0
+        explanation: 'Estimar es aproximar; comprobar es verificar un resultado ya obtenido.'
+        level: 1
+      - question: '¿Qué disciplina se construye sobre la aritmética?'
+        options: ['El álgebra', 'La ortografía', 'La pintura']
+        answer: 0
+        explanation: 'El álgebra generaliza las operaciones de la aritmética usando letras.'
+        level: 1
+      - question: '¿Por qué no basta con tener una calculadora?'
+        options:
+          - 'Porque no avisa si tecleaste mal un número'
+          - 'Porque siempre da resultados aproximados'
+          - 'Porque no sabe sumar'
+        answer: 0
+        explanation: 'La calculadora hace exactamente lo que tecleas; sólo tu comprensión detecta un error de tecleo.'
+        level: 2
+      - question: 'Compras 3 artículos de unos 10 pesos. ¿Qué total aproximado esperas?'
+        options: ['Unos 30 pesos', 'Unos 300 pesos', 'Unos 3 pesos']
+        answer: 0
+        explanation: 'Tres veces 10 son $10 + 10 + 10 = 30$.'
+        level: 2
+      - question: '¿Qué hábito de pensamiento entrena la aritmética?'
+        options: ['Seguir pasos en orden y revisar', 'Adivinar rápido sin revisar', 'Evitar los números']
+        answer: 0
+        explanation: 'Cada cálculo exige un orden y una revisión final.'
+        level: 2
+      - question: 'Compras 2 productos de 49 pesos y te cobran 980. ¿Qué concluyes?'
+        options:
+          - 'Hay un error: el total debería rondar los 100 pesos'
+          - 'Es correcto'
+          - 'Te cobraron menos de lo debido'
+        answer: 0
+        explanation: '49 está cerca de 50; dos de 50 son 100. 980 es casi diez veces más, así que hay un error (el total exacto es 98).'
+        level: 3
+      - question: 'Una receta para 4 personas lleva 2 tazas de arroz. Quieres cocinar para 8. ¿Qué te permite la aritmética?'
+        options:
+          - 'Calcular que necesitas 4 tazas'
+          - 'Saber que necesitas 2 tazas igual'
+          - 'Nada, la cocina no usa números'
+        answer: 0
+        explanation: '8 personas son el doble de 4; el doble de 2 tazas es $2 + 2 = 4$ tazas.'
+        level: 3
+      - question: '¿Cuál es el orden más prudente al hacer una cuenta importante?'
+        options:
+          - 'Estimar, calcular y comparar el resultado con la estimación'
+          - 'Calcular y no revisar nunca'
+          - 'Estimar y dar la estimación como resultado exacto'
+        answer: 0
+        explanation: 'La estimación sirve de control del resultado exacto; juntas dan seguridad.'
+        level: 3
+
+  t04:
+    intro:
+      what: >-
+        Es el uso de la aritmética en situaciones reales: compras, cocina, horarios,
+        viajes, facturas y trabajo.
+      purpose: >-
+        Sirve para resolver problemas concretos traduciendo una situación cotidiana a
+        una operación con números.
+      importance: >-
+        Reconocer qué operación pide una situación es la habilidad clave para usar las
+        matemáticas fuera del aula.
+      foundations: >-
+        Las ideas intuitivas de juntar (sumar) y quitar (restar), que se estudiarán a
+        fondo en los bloques 4 y 5.
+      prerequisites:
+        - 'Qué es la aritmética (bloque 1, tema 1).'
+        - 'Saber contar y reconocer números pequeños.'
+      outcomes:
+        - Traducir una situación cotidiana a una suma o una resta.
+        - Resolver problemas sencillos de compras y cantidades.
+        - Interpretar el resultado en el contexto del problema.
+      everyday_example: >-
+        Tienes 50 pesos y compras pan por 12: restar te dice cuánto te queda; si luego
+        alguien te da 5 más, sumar te dice tu nuevo total.
+    sections:
+      - title: 'Juntar y quitar en la vida diaria'
+        concept: 'Muchas situaciones cotidianas se resuelven juntando cantidades (suma) o quitando una cantidad de otra (resta).'
+        explanation: |-
+          Todavía no hemos estudiado las operaciones con detalle (eso llega en los bloques 4 y 5), pero ya puedes usar dos ideas que conoces de la vida diaria:
+
+          * **Juntar o agregar** cantidades es **sumar**. Se escribe con el signo $+$. Ejemplo: 3 manzanas y 4 manzanas son $3 + 4 = 7$ manzanas.
+          * **Quitar** una cantidad de otra es **restar**. Se escribe con el signo $-$. Ejemplo: si tenías 9 huevos y usas 2, te quedan $9 - 2 = 7$.
+
+          Para resolver un problema cotidiano conviene seguir siempre el mismo método:
+
+          1. **Leer** y entender qué se pregunta.
+          2. **Identificar los datos** (los números) y la acción: ¿se junta o se quita?
+          3. **Calcular**.
+          4. **Responder con unidades** (pesos, minutos, personas…) y revisar si tiene sentido.
+
+          Las palabras ayudan: «en total», «juntos», «le dan», «gana» suelen indicar suma; «quedan», «gasta», «pierde», «cuánto falta» suelen indicar resta. Pero lo importante es entender la situación, no sólo buscar palabras.
+        definition: >-
+          Sumar es reunir dos o más cantidades en una sola; restar es averiguar cuánto
+          queda al quitar una cantidad de otra.
+        rules:
+          - 'Juntar o agregar → suma ($+$).'
+          - 'Quitar, gastar o perder → resta ($-$).'
+          - 'La respuesta debe llevar unidades y tener sentido en el contexto.'
+        examples:
+          - problem: 'Pagas un café de 15 pesos y un pan de 8 pesos. ¿Cuánto gastas en total?'
+            solution: |-
+              **Paso 1.** Se pregunta el gasto total: hay que juntar dos precios.
+              **Paso 2.** Datos: 15 pesos y 8 pesos. Acción: juntar → suma.
+              **Paso 3.** $15 + 8 = 23$ (contamos 8 a partir de 15: 16, 17, …, 23).
+              Resultado: gastas $23$ pesos.
+          - problem: 'Tenías 40 pesos y gastaste 23. ¿Cuánto te queda?'
+            solution: |-
+              **Paso 1.** Se pregunta lo que queda: hay que quitar.
+              **Paso 2.** Datos: 40 y 23. Acción: quitar → resta.
+              **Paso 3.** $40 - 23 = 17$ (comprobación: $17 + 23 = 40$).
+              Resultado: te quedan $17$ pesos.
+        common_errors:
+          - 'Sumar todos los números que aparecen sin pensar qué ocurre en la situación.'
+          - 'Olvidar las unidades: decir «17» en lugar de «17 pesos».'
+          - 'No revisar el sentido: si gastas dinero, no puede quedarte más del que tenías.'
+        summary: >-
+          Para aplicar la aritmética: lee, identifica datos y acción (juntar o quitar),
+          calcula y responde con unidades.
+        check:
+          question: 'En una reunión hay 12 personas y se van 5. ¿Qué operación indica cuántas quedan y cuál es el resultado?'
+          options: ['Resta: quedan 7', 'Suma: quedan 17', 'Resta: quedan 5']
+          answer: 0
+          explanation: 'Se van personas, así que se quita: $12 - 5 = 7$. Sumar daría más personas que al principio, lo que no tiene sentido.'
+    glossary:
+      - term: 'Dato'
+        definition: 'Número conocido que aparece en un problema.'
+      - term: 'Unidad'
+        definition: 'Lo que se cuenta o mide (pesos, minutos, metros…).'
+    practice: []
+
+  t05:
+    intro:
+      what: >-
+        Es la comparación entre la aritmética y otras ramas de las matemáticas como el
+        álgebra, la geometría, la estadística y la probabilidad.
+      purpose: >-
+        Sirve para ubicar la aritmética dentro del mapa de las matemáticas y saber qué
+        tipo de problemas resuelve cada rama.
+      importance: >-
+        Saber a qué rama pertenece un problema ayuda a elegir las herramientas
+        adecuadas y a entender cómo se conectan las ramas entre sí.
+      foundations: >-
+        Cada rama tiene su objeto de estudio: números concretos, números generales
+        (letras), formas y espacio, datos o azar.
+      prerequisites:
+        - 'Qué es la aritmética (bloque 1, tema 1).'
+      outcomes:
+        - Clasificar un problema según la rama de las matemáticas.
+        - Explicar la diferencia entre aritmética y álgebra.
+        - Reconocer que todas las ramas usan la aritmética.
+      everyday_example: >-
+        Calcular el precio de 3 entradas es aritmética; medir cuánta pintura cubre una
+        pared es geometría; calcular el promedio de tus gastos del mes es estadística.
+    sections:
+      - title: 'El mapa de las matemáticas'
+        concept: 'Cada rama de las matemáticas estudia un tipo de objeto distinto, y todas se apoyan en la aritmética.'
+        explanation: |-
+          Las matemáticas son como una ciudad con barrios. Algunos de los principales:
+
+          * **Aritmética:** números concretos y sus operaciones. Ejemplo: $8 + 5 = 13$.
+          * **Álgebra:** usa **letras** para representar números desconocidos o generales. Ejemplo: «un número más 5 da 13», que se escribe $x + 5 = 13$, y se busca $x$. El álgebra generaliza la aritmética.
+          * **Geometría:** formas, tamaños y posiciones: líneas, ángulos, triángulos, áreas. La palabra significa «medida de la tierra».
+          * **Estadística:** recoger, organizar e interpretar **datos** (por ejemplo, encuestas o promedios).
+          * **Probabilidad:** estudia el **azar**: qué tan posible es que algo ocurra, como sacar cara al lanzar una moneda.
+
+          Las ramas no están aisladas. Para calcular un área (geometría) o un promedio (estadística) hay que sumar, multiplicar o dividir: es decir, usar aritmética. Por eso empezamos por ella.
+
+          Una pista útil: si sólo aparecen números concretos y operaciones, es aritmética; si aparecen letras que representan números, es álgebra; si hay figuras o medidas de espacio, es geometría.
+        definition: >-
+          La aritmética trabaja con números concretos; el álgebra, con símbolos que
+          representan números; la geometría, con formas y espacio; la estadística, con
+          datos; la probabilidad, con el azar.
+        rules:
+          - 'Números concretos y operaciones → aritmética.'
+          - 'Letras que representan números → álgebra.'
+          - 'Figuras, longitudes, áreas y ángulos → geometría.'
+          - 'Datos y encuestas → estadística; azar → probabilidad.'
+        examples:
+          - problem: 'Clasifica: «Si $x + 3 = 10$, ¿cuánto vale $x$?»'
+            solution: |-
+              **Paso 1.** Observamos que aparece una letra, $x$, que representa un número desconocido.
+              **Paso 2.** Usar letras para números es propio del álgebra.
+              **Paso 3.** Para resolverlo usamos aritmética: el número que sumado a 3 da 10 es 7, porque $7 + 3 = 10$.
+              Resultado: es un problema de álgebra (que se apoya en la aritmética); $x = 7$.
+        common_errors:
+          - 'Creer que el álgebra no tiene nada que ver con la aritmética: la generaliza.'
+          - 'Pensar que cualquier problema con números es aritmética: un área es geometría aunque use números.'
+        summary: >-
+          Aritmética (números concretos), álgebra (letras), geometría (formas),
+          estadística (datos) y probabilidad (azar) son ramas conectadas; todas usan la aritmética.
+        check:
+          question: 'Calcular la probabilidad de sacar un 6 al lanzar un dado pertenece principalmente a…'
+          options: ['la probabilidad', 'la geometría', 'el álgebra']
+          answer: 0
+          explanation: >-
+            Estudiar qué tan posible es un resultado al azar es objeto de la
+            probabilidad. La geometría estudia formas y el álgebra usa letras para números.
+    glossary:
+      - term: 'Álgebra'
+        definition: 'Rama que usa letras para representar números y generalizar la aritmética.'
+      - term: 'Geometría'
+        definition: 'Rama que estudia formas, tamaños y posiciones en el espacio.'
+      - term: 'Estadística'
+        definition: 'Rama que recoge, organiza e interpreta datos.'
+      - term: 'Probabilidad'
+        definition: 'Rama que estudia el azar y la posibilidad de que algo ocurra.'
+    practice:
+      - question: '¿Qué rama usa letras para representar números desconocidos?'
+        options: ['Álgebra', 'Geometría', 'Estadística']
+        answer: 0
+        explanation: 'El álgebra usa letras como $x$ para representar números.'
+        level: 1
+      - question: '¿Qué rama estudia triángulos, círculos y ángulos?'
+        options: ['Geometría', 'Aritmética', 'Probabilidad']
+        answer: 0
+        explanation: 'Las formas y el espacio son el objeto de la geometría.'
+        level: 1
+      - question: 'Calcular $25 + 17$ es un problema de…'
+        options: ['aritmética', 'geometría', 'probabilidad']
+        answer: 0
+        explanation: 'Sólo hay números concretos y una operación.'
+        level: 1
+      - question: '¿Qué relación hay entre aritmética y álgebra?'
+        options:
+          - 'El álgebra generaliza la aritmética usando letras'
+          - 'No tienen ninguna relación'
+          - 'La aritmética es una parte de la geometría'
+        answer: 0
+        explanation: 'El álgebra expresa con letras reglas que en aritmética se ven con números concretos.'
+        level: 2
+      - question: 'Organizar las respuestas de una encuesta en una tabla corresponde a…'
+        options: ['la estadística', 'el álgebra', 'la geometría']
+        answer: 0
+        explanation: 'Recoger y organizar datos es tarea de la estadística.'
+        level: 2
+      - question: '¿Por qué el cálculo del área de un terreno usa aritmética aunque sea geometría?'
+        options:
+          - 'Porque para obtener el área hay que operar con números'
+          - 'Porque el área no tiene números'
+          - 'Porque la geometría y la aritmética son lo mismo'
+        answer: 0
+        explanation: 'La geometría plantea el problema y la aritmética hace los cálculos.'
+        level: 2
+      - question: 'Clasifica: «¿Qué número $n$ cumple $n + 4 = 9$?» y halla $n$.'
+        options: ['Álgebra; $n = 5$', 'Geometría; $n = 13$', 'Álgebra; $n = 13$']
+        answer: 0
+        explanation: 'Aparece una letra que representa un número (álgebra). Como $5 + 4 = 9$, $n = 5$.'
+        level: 3
+      - question: 'Una tienda quiere saber qué producto se vende más a partir de las ventas del mes. ¿Qué ramas intervienen?'
+        options:
+          - 'Estadística, apoyada en la aritmética'
+          - 'Sólo geometría'
+          - 'Sólo probabilidad'
+        answer: 0
+        explanation: 'Analizar datos de ventas es estadística, y para contarlos y compararlos se usa la aritmética.'
+        level: 3
+      - question: '¿Cuál de estas afirmaciones es correcta?'
+        options:
+          - 'Todas las ramas de las matemáticas usan la aritmética'
+          - 'La probabilidad no usa números'
+          - 'La geometría nunca hace cálculos'
+        answer: 0
+        explanation: 'La aritmética es la herramienta común; la probabilidad y la geometría también calculan con números.'
+        level: 3
+
+  t06:
+    intro:
+      what: >-
+        Son las cuatro ideas básicas del curso: número, cantidad, magnitud y operación,
+        y la diferencia entre ellas.
+      purpose: >-
+        Sirve para hablar con precisión: distinguir el número 5 de «5 manzanas» o de
+        «5 kilogramos», y entender qué hace una operación.
+      importance: >-
+        Usar bien el vocabulario evita confusiones al leer problemas y al seguir las
+        explicaciones de los bloques siguientes.
+      foundations: >-
+        La idea de contar objetos y la idea de medir una propiedad (longitud, peso,
+        tiempo) comparándola con una unidad.
+      prerequisites:
+        - 'Qué es la aritmética (bloque 1, tema 1).'
+      outcomes:
+        - Distinguir número, cantidad y magnitud.
+        - Reconocer magnitudes y sus unidades.
+        - Identificar qué es una operación y su resultado.
+      everyday_example: >-
+        En la etiqueta «2 kg de arroz», el 2 es un número, el peso es la magnitud, el
+        kilogramo es la unidad y «2 kg» es la cantidad de arroz.
+    sections:
+      - title: 'Número, cantidad y magnitud'
+        concept: 'Un número es una idea abstracta; una cantidad es un número acompañado de lo que cuenta o mide; una magnitud es lo que se puede medir.'
+        explanation: |-
+          * **Número:** es la idea de «cuántos» o «cuánto», sin referirse a nada concreto. El número 3 es lo que tienen en común 3 sillas, 3 días y 3 personas. Se escribe con **cifras** (los símbolos 0 a 9).
+          * **Magnitud:** es una **propiedad que se puede medir**: la longitud, el peso (masa), el tiempo, la temperatura, el dinero. La belleza o la alegría no son magnitudes, porque no se miden con una unidad.
+          * **Unidad:** es la medida de referencia con la que comparamos: metro, kilogramo, minuto, peso (moneda).
+          * **Cantidad:** es el valor concreto de algo: un número junto con su unidad o con lo que cuenta. «3 metros», «20 minutos», «7 libros».
+
+          Medir es averiguar **cuántas veces cabe la unidad** en lo que medimos. Si una mesa mide 2 metros, el metro cabe 2 veces a lo largo de la mesa.
+
+          Cuidado: sólo podemos sumar o comparar directamente cantidades de la **misma magnitud y unidad**. Tiene sentido sumar 2 metros y 3 metros (5 metros), pero no 2 metros y 3 minutos.
+        definition: >-
+          Número: ente abstracto que expresa cuántos o cuánto. Magnitud: propiedad
+          medible. Cantidad: valor concreto de una magnitud o de un conjunto, expresado
+          con un número y una unidad.
+        rules:
+          - 'Un número no lleva unidad; una cantidad sí.'
+          - 'Una magnitud se mide comparándola con una unidad.'
+          - 'Sólo se suman o comparan cantidades de la misma magnitud y unidad.'
+        examples:
+          - problem: 'Analiza «15 minutos»: ¿cuál es el número, la magnitud, la unidad y la cantidad?'
+            solution: |-
+              **Paso 1.** El número es $15$.
+              **Paso 2.** Lo que se mide es el tiempo: esa es la magnitud.
+              **Paso 3.** La unidad es el minuto.
+              Resultado: la cantidad es «15 minutos» (número + unidad).
+        common_errors:
+          - 'Confundir número y cifra: 25 es un número escrito con dos cifras, 2 y 5.'
+          - 'Sumar cantidades de magnitudes distintas, como metros con minutos.'
+        summary: >-
+          El número es abstracto; la magnitud es lo medible; la unidad es la referencia;
+          la cantidad es número más unidad.
+        check:
+          question: '¿Cuál de estas es una magnitud?'
+          options: ['La longitud', 'La alegría', 'El color favorito']
+          answer: 0
+          explanation: 'La longitud se mide con unidades como el metro. La alegría y el color favorito no se miden con una unidad.'
+      - title: 'Qué es una operación'
+        concept: 'Una operación toma números (llamados términos) y, siguiendo una regla, produce un único resultado.'
+        explanation: |-
+          Una **operación** es una regla que combina números para obtener otro. Tiene tres partes:
+
+          * los **términos** u operandos: los números de partida;
+          * el **signo** u operador, que indica qué hacer: $+$, $-$, $\times$, $\div$;
+          * el **resultado**, que se escribe después del signo igual $=$.
+
+          Por ejemplo, en $6 + 2 = 8$ los términos son 6 y 2, el signo es $+$ y el resultado es 8.
+
+          El signo $=$ significa que **lo que hay a ambos lados vale lo mismo**. No significa «y ahora sale», sino «es igual a». Por eso $8 = 6 + 2$ también es correcto.
+
+          Las cuatro operaciones básicas son:
+
+          | Operación | Signo | Idea |
+          |---|---|---|
+          | Suma | $+$ | juntar |
+          | Resta | $-$ | quitar o comparar |
+          | Multiplicación | $\times$ | repetir una cantidad |
+          | División | $\div$ | repartir en partes iguales |
+
+          Cada una tiene su propio bloque más adelante, donde aprenderás los nombres de sus términos y cómo calcularlas.
+        definition: >-
+          Una operación aritmética es una regla que asigna a dos números (o más) un único
+          número llamado resultado.
+        rules:
+          - 'El signo $=$ indica que ambos lados tienen el mismo valor.'
+          - 'Cada operación tiene un signo propio: $+$, $-$, $\times$, $\div$.'
+          - 'Una operación bien hecha da siempre un único resultado.'
+        examples:
+          - problem: 'Identifica las partes de $9 - 4 = 5$.'
+            solution: |-
+              **Paso 1.** Los términos son $9$ y $4$.
+              **Paso 2.** El signo es $-$: es una resta (quitar 4 a 9).
+              **Paso 3.** El resultado, después del $=$, es $5$.
+              Resultado: términos 9 y 4, operación resta, resultado 5.
+        common_errors:
+          - 'Pensar que $=$ sólo significa «da como resultado» y rechazar escrituras como $8 = 6 + 2$.'
+          - 'Confundir el signo $\times$ (multiplicar) con la letra x.'
+        summary: >-
+          Una operación combina términos mediante un signo y da un único resultado; el
+          signo igual expresa que ambos lados valen lo mismo.
+        check:
+          question: '¿Qué significa el signo $=$ en $10 = 7 + 3$?'
+          options:
+            - 'Que ambos lados tienen el mismo valor'
+            - 'Que la cuenta está mal escrita'
+            - 'Que hay que restar'
+          answer: 0
+          explanation: 'El signo igual indica igualdad de valor, y $7 + 3$ vale 10. Puede escribirse en cualquiera de los dos sentidos.'
+    glossary:
+      - term: 'Número'
+        definition: 'Idea abstracta que expresa cuántos o cuánto.'
+      - term: 'Magnitud'
+        definition: 'Propiedad que se puede medir (longitud, masa, tiempo…).'
+      - term: 'Cantidad'
+        definition: 'Valor concreto: un número con su unidad.'
+      - term: 'Operación'
+        definition: 'Regla que combina números y da un único resultado.'
+    practice:
+      - question: 'En «4 litros de leche», ¿cuál es la unidad?'
+        options: ['El litro', 'El 4', 'La leche']
+        answer: 0
+        explanation: 'El litro es la unidad de medida; 4 es el número; «4 litros» es la cantidad.'
+        level: 1
+      - question: '¿Qué signo corresponde a la multiplicación?'
+        options: ['$\times$', '$+$', '$-$']
+        answer: 0
+        explanation: '$\times$ es multiplicación; $+$ es suma y $-$ es resta.'
+        level: 1
+      - question: '¿Cuántas cifras tiene el número 507?'
+        options: ['3', '2', '507']
+        answer: 0
+        explanation: 'Se escribe con las cifras 5, 0 y 7; el cero también es una cifra.'
+        level: 1
+      - question: '¿Cuál de estas expresiones es una cantidad?'
+        options: ['8 kilogramos', '8', 'El peso']
+        answer: 0
+        explanation: 'Una cantidad es número más unidad. «8» es sólo un número y «el peso» es una magnitud.'
+        level: 2
+      - question: '¿Se pueden sumar directamente 3 metros y 2 horas?'
+        options:
+          - 'No, son magnitudes distintas'
+          - 'Sí, dan 5 metros'
+          - 'Sí, dan 5 horas'
+        answer: 0
+        explanation: 'Sólo se suman cantidades de la misma magnitud y unidad.'
+        level: 2
+      - question: 'En $12 \div 3 = 4$, ¿cuál es el resultado?'
+        options: ['4', '12', '3']
+        answer: 0
+        explanation: 'El resultado es el número que aparece al otro lado del signo igual, 4. 12 y 3 son los términos.'
+        level: 2
+      - question: 'Una cuerda mide 6 metros. ¿Qué significa?'
+        options:
+          - 'Que el metro cabe 6 veces a lo largo de la cuerda'
+          - 'Que la cuerda pesa 6 kilogramos'
+          - 'Que la cuerda tiene 6 cifras'
+        answer: 0
+        explanation: 'Medir es contar cuántas veces cabe la unidad en lo que se mide.'
+        level: 3
+      - question: '¿Cuál de estas igualdades es correcta?'
+        options: ['$9 = 4 + 5$', '$9 = 4 + 4$', '$4 + 5 = 10$']
+        answer: 0
+        explanation: '$4 + 5$ vale 9, así que $9 = 4 + 5$ es correcta aunque el resultado esté a la izquierda. $4 + 4 = 8$ y $4 + 5 \neq 10$.'
+        level: 3
+      - question: '¿Cuál de estas NO es una magnitud?'
+        options: ['La simpatía de una persona', 'La temperatura', 'El tiempo']
+        answer: 0
+        explanation: 'La simpatía no se mide con una unidad; la temperatura (grados) y el tiempo (minutos) sí.'
+        level: 3

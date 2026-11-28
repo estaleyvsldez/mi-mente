@@ -1,0 +1,757 @@
+block: b22
+intro: >-
+  Los porcentajes están en todas partes: descuentos, impuestos, aumentos de
+  precio, encuestas, notas, intereses. Un porcentaje es una razón con
+  consecuente 100. En este bloque aprenderás qué significa, cómo se relaciona
+  con fracciones y decimales, cómo calcular el porcentaje de una cantidad, qué
+  porcentaje representa una parte, aumentos, descuentos y variaciones
+  porcentuales, y sus aplicaciones comerciales. Usaremos todo lo aprendido
+  sobre decimales (b17), proporciones (b20) y regla de tres (b21).
+topics:
+  t01:
+    intro:
+      what: >-
+        Un porcentaje es una forma de expresar una cantidad como parte de 100:
+        el $35\,\%$ significa "35 de cada 100".
+      purpose: >-
+        Sirve para comparar proporciones de forma sencilla, porque todas se
+        refieren a una misma base: 100.
+      importance: >-
+        Es el lenguaje habitual de precios, impuestos, estadísticas y finanzas;
+        entenderlo es esencial para tomar decisiones informadas.
+      foundations: >-
+        Un porcentaje es una razón (b20) cuyo consecuente es 100, o una
+        fracción con denominador 100 (b14).
+      prerequisites:
+        - 'Concepto de razón (b20)'
+        - 'Fracciones con denominador 100 y centésimas (b14, b16)'
+      outcomes:
+        - 'Explicar el significado de un porcentaje'
+        - 'Representar porcentajes en una cuadrícula de 100'
+        - 'Reconocer porcentajes de referencia (100 %, 50 %, 25 %, 10 %)'
+      everyday_example: >-
+        "El 60 % de los encuestados prefiere el tren" significa que, de cada
+        100 personas, 60 lo prefieren.
+    sections:
+      - title: De cada cien
+        concept: El $p\,\%$ significa $p$ partes de cada 100.
+        explanation: |-
+          La palabra **porcentaje** viene de "por ciento": **de cada cien**. El símbolo $\%$ se lee "por ciento".
+
+          Imagina una cuadrícula de $10 \times 10 = 100$ casillas. Si pintamos $35$, hemos pintado el **35 %** de la cuadrícula: $35$ de cada $100$. Como fracción, $35\,\% = \frac{35}{100}$.
+
+          **Porcentajes de referencia:**
+          * $100\,\%$ es el total (las 100 casillas).
+          * $50\,\%$ es la mitad ($\frac{50}{100} = \frac{1}{2}$).
+          * $25\,\%$ es la cuarta parte ($\frac{1}{4}$).
+          * $10\,\%$ es la décima parte ($\frac{1}{10}$).
+          * $1\,\%$ es la centésima parte ($\frac{1}{100}$).
+
+          Un porcentaje puede ser **mayor que 100 %**: si un precio pasa a ser el doble, el nuevo precio es el $200\,\%$ del original. Y puede tener decimales: $12{,}5\,\%$.
+
+          La gran ventaja de los porcentajes es que permiten **comparar**. Decir "18 de 60 aprobaron" y "24 de 80 aprobaron" no deja ver a simple vista cuál es mejor; en porcentajes, ambos son el $30\,\%$.
+        definition: >-
+          Un porcentaje $p\,\%$ es la razón $p : 100$, es decir, el número
+          $\frac{p}{100}$.
+        rules:
+          - '$p\,\% = \frac{p}{100}$.'
+          - '$100\,\%$ es el total; $50\,\%$ la mitad; $25\,\%$ la cuarta parte; $10\,\%$ la décima parte.'
+          - 'Un porcentaje puede ser mayor que 100 % o tener decimales.'
+        examples:
+          - problem: 'En una cuadrícula de 100 casillas se pintan 47. ¿Qué porcentaje está pintado y qué porcentaje no?'
+            solution: |-
+              **Paso 1.** Pintadas: $47$ de $100$ → $47\,\%$.
+              **Paso 2.** Sin pintar: $100 - 47 = 53$ → $53\,\%$.
+              **Comprobación:** $47\,\% + 53\,\% = 100\,\%$ ✓.
+              Resultado: $47\,\%$ pintado y $53\,\%$ sin pintar.
+          - problem: '¿Qué fracción del total es el $25\,\%$?'
+            solution: |-
+              **Paso 1.** $25\,\% = \frac{25}{100}$.
+              **Paso 2.** Simplificamos entre $25$: $\frac{1}{4}$.
+              Resultado: la cuarta parte.
+        common_errors:
+          - 'Pensar que un porcentaje no puede superar el 100 %.'
+          - 'Confundir $25\,\%$ con $\frac{1}{25}$: es $\frac{25}{100} = \frac{1}{4}$.'
+        summary: >-
+          $p\,\%$ significa $p$ de cada $100$: es la fracción $\frac{p}{100}$.
+        check:
+          question: 'En una cuadrícula de 100 casillas hay 8 pintadas. ¿Qué porcentaje está pintado?'
+          options: ['$8\,\%$', '$80\,\%$', '$0{,}8\,\%$', '$92\,\%$']
+          answer: 0
+          explanation: >-
+            $8$ de cada $100$ es el $8\,\%$. $92\,\%$ es la parte sin pintar.
+    glossary:
+      - {term: Porcentaje, definition: 'Razón entre una cantidad y 100; se escribe con el símbolo %.'}
+      - {term: Tanto por ciento, definition: 'Otro nombre del porcentaje.'}
+  t02:
+    intro:
+      what: >-
+        Un mismo valor puede escribirse como porcentaje, como fracción o como
+        decimal: $75\,\% = \frac{3}{4} = 0{,}75$.
+      purpose: >-
+        Sirve para elegir en cada momento la forma más cómoda de calcular.
+      importance: >-
+        Para operar con porcentajes casi siempre se pasa a fracción o decimal;
+        dominar las conversiones hace los cálculos rápidos y seguros.
+      foundations: >-
+        Se basa en que $p\,\% = \frac{p}{100}$, en la conversión entre
+        fracciones y decimales (b16) y en la multiplicación y división por 100
+        (b17).
+      prerequisites:
+        - 'Concepto de porcentaje (b22)'
+        - 'Conversión entre fracciones y decimales (b16)'
+        - 'Multiplicación y división por 100 (b17)'
+        - 'Simplificación de fracciones (b14)'
+      outcomes:
+        - 'Pasar de porcentaje a decimal y a fracción'
+        - 'Pasar de decimal o fracción a porcentaje'
+        - 'Memorizar equivalencias frecuentes'
+      everyday_example: >-
+        Un descuento del 50 % es lo mismo que pagar la mitad ($\frac{1}{2}$) o
+        multiplicar el precio por $0{,}5$.
+    sections:
+      - title: Tres formas del mismo número
+        concept: Para pasar de porcentaje a decimal se divide entre 100; de decimal a porcentaje se multiplica por 100.
+        explanation: |-
+          **Porcentaje → decimal:** dividir entre 100, es decir, correr la coma dos lugares a la izquierda (b17).
+          $35\,\% = 35 \div 100 = 0{,}35$; $\;6\,\% = 0{,}06$; $\;120\,\% = 1{,}2$.
+
+          **Porcentaje → fracción:** escribir sobre 100 y simplificar (b14).
+          $35\,\% = \frac{35}{100} = \frac{7}{20}$.
+
+          **Decimal → porcentaje:** multiplicar por 100 (coma dos lugares a la derecha).
+          $0{,}8 = 80\,\%$; $\;0{,}125 = 12{,}5\,\%$.
+
+          **Fracción → porcentaje:** pasar a decimal dividiendo (b16) y multiplicar por 100. O amplificar hasta denominador 100.
+          $\frac{3}{4} = 0{,}75 = 75\,\%$; también $\frac{3}{4} = \frac{75}{100}$.
+
+          Algunas fracciones dan decimales periódicos: $\frac{1}{3} = 0{,}333\ldots \approx 33{,}3\,\%$.
+
+          **Equivalencias que conviene memorizar:**
+
+          | Porcentaje | 10 % | 20 % | 25 % | 50 % | 75 % | 100 % |
+          |---|---|---|---|---|---|---|
+          | Fracción | $\frac{1}{10}$ | $\frac{1}{5}$ | $\frac{1}{4}$ | $\frac{1}{2}$ | $\frac{3}{4}$ | $1$ |
+          | Decimal | $0{,}1$ | $0{,}2$ | $0{,}25$ | $0{,}5$ | $0{,}75$ | $1$ |
+        definition: >-
+          $p\,\% = \frac{p}{100} = p \div 100$. Recíprocamente, un número $d$
+          equivale al porcentaje $(d \times 100)\,\%$.
+        rules:
+          - 'Porcentaje → decimal: $\div 100$.'
+          - 'Decimal → porcentaje: $\times 100$.'
+          - 'Porcentaje → fracción: sobre 100 y simplificar.'
+          - 'Fracción → porcentaje: a decimal y $\times 100$.'
+        examples:
+          - problem: 'Escribe $40\,\%$ como decimal y como fracción irreducible.'
+            solution: |-
+              **Paso 1.** Decimal: $40 \div 100 = 0{,}4$.
+              **Paso 2.** Fracción: $\frac{40}{100}$; simplificando entre $20$: $\frac{2}{5}$.
+              Resultado: $0{,}4$ y $\frac{2}{5}$.
+          - problem: 'Expresa $\frac{1}{8}$ como porcentaje.'
+            solution: |-
+              **Paso 1.** A decimal: $1 \div 8 = 0{,}125$.
+              **Paso 2.** Por 100: $0{,}125 \times 100 = 12{,}5$.
+              Resultado: $12{,}5\,\%$.
+        common_errors:
+          - 'Escribir $6\,\% = 0{,}6$: es $0{,}06$ (seis centésimas).'
+          - 'Olvidar simplificar la fracción.'
+          - 'Pensar que $0{,}5\,\%$ es la mitad: la mitad es $50\,\%$; $0{,}5\,\%$ es $0{,}005$.'
+        summary: >-
+          Porcentaje ↔ decimal: dividir o multiplicar por 100. Porcentaje ↔
+          fracción: sobre 100 y simplificar, o dividir y multiplicar por 100.
+        check:
+          question: '¿Qué porcentaje es $0{,}06$?'
+          options: ['$60\,\%$', '$6\,\%$', '$0{,}6\,\%$', '$0{,}06\,\%$']
+          answer: 1
+          explanation: >-
+            $0{,}06 \times 100 = 6$, así que $0{,}06 = 6\,\%$. El $60\,\%$
+            sería $0{,}6$.
+    glossary:
+      - {term: Equivalencia, definition: 'Distintas escrituras de un mismo valor, como $50\,\%$, $\frac{1}{2}$ y $0{,}5$.'}
+  t03:
+    intro:
+      what: >-
+        Calcular porcentajes es resolver cualquiera de las tres preguntas
+        básicas: ¿cuánto es el $p\,\%$ de un total?, ¿qué porcentaje es una
+        parte del total? y ¿cuál es el total si conozco una parte y su
+        porcentaje?
+      purpose: >-
+        Sirve para interpretar notas, encuestas, resultados y ofertas, y para
+        reconstruir datos a partir de porcentajes.
+      importance: >-
+        Las tres preguntas aparecen constantemente; reconocer cuál se plantea
+        es la clave para resolver bien cualquier problema de porcentajes.
+      foundations: >-
+        Las tres se resuelven con una sola relación,
+        $\text{parte} = \frac{p}{100} \times \text{total}$, que es una
+        proporción (b20) y puede resolverse por regla de tres directa (b21).
+      prerequisites:
+        - 'Relación entre porcentaje, fracción y decimal (b22)'
+        - 'Regla de tres simple directa (b21)'
+        - 'Propiedad fundamental de las proporciones (b20)'
+      outcomes:
+        - 'Calcular qué porcentaje representa una parte de un total'
+        - 'Calcular el total conociendo una parte y su porcentaje'
+        - 'Reconocer cuál de las tres preguntas plantea un problema'
+      everyday_example: >-
+        Si aprobaste 45 de 60 preguntas, ¿qué porcentaje aciertaste?
+        $\frac{45}{60} \times 100 = 75\,\%$.
+    sections:
+      - title: La relación parte–total
+        concept: Parte, total y porcentaje están unidos por la proporción $\frac{\text{parte}}{\text{total}} = \frac{p}{100}$.
+        explanation: |-
+          Todo problema básico de porcentajes involucra tres datos: el **total** (el $100\,\%$), la **parte** y el **porcentaje** $p$. Se relacionan con una proporción:
+          $$\frac{\text{parte}}{\text{total}} = \frac{p}{100}.$$
+          Conocidos dos datos, se calcula el tercero:
+
+          | Se busca | Cálculo |
+          |---|---|
+          | La parte | $\text{parte} = \text{total} \times p \div 100$ |
+          | El porcentaje | $p = \text{parte} \div \text{total} \times 100$ |
+          | El total | $\text{total} = \text{parte} \times 100 \div p$ |
+
+          No hace falta memorizar la tabla: basta plantear la proporción, o una **regla de tres directa** (b21): "si el total es el $100\,\%$, la parte es el $p\,\%$".
+
+          Por ejemplo, el $20\,\%$ de $150$: $150 \times 20 \div 100 = 30$. (Este caso, la parte, lo estudiarás con más métodos en el tema "Porcentaje de una cantidad".) En las secciones siguientes trabajamos las otras dos preguntas.
+        definition: >-
+          Si la parte $P$ es el $p\,\%$ del total $T$, entonces
+          $P = \frac{p}{100} \times T$, o equivalentemente
+          $\frac{P}{T} = \frac{p}{100}$.
+        rules:
+          - 'El total corresponde siempre al $100\,\%$.'
+          - 'Parte $= T \times p \div 100$.'
+          - 'Identifica primero qué dato falta: parte, porcentaje o total.'
+        examples:
+          - problem: 'Calcula el $20\,\%$ de $150$ con una regla de tres.'
+            solution: |-
+              **Paso 1.** $100\,\% \to 150$; $20\,\% \to x$.
+              **Paso 2.** Directa: $x = \frac{150 \times 20}{100} = \frac{3000}{100} = 30$.
+              Resultado: $30$.
+        common_errors:
+          - 'Confundir la parte con el total.'
+          - 'Usar como total un dato que no corresponde al 100 %.'
+        summary: >-
+          $\frac{\text{parte}}{\text{total}} = \frac{p}{100}$: conocidos dos de
+          los tres datos, se calcula el tercero.
+        check:
+          question: 'En "el 30 % de los 200 empleados usa bicicleta", ¿qué dato es el total?'
+          options: ['$30$', '$200$', '$60$', '$100$']
+          answer: 1
+          explanation: >-
+            El total (el 100 %) es el conjunto de los $200$ empleados. $30$ es el
+            porcentaje y $60$ la parte ($30\,\%$ de $200$).
+      - title: ¿Qué porcentaje es?
+        concept: Para saber qué porcentaje es una parte de un total, se divide la parte entre el total y se multiplica por 100.
+        explanation: |-
+          Pregunta típica: "¿Qué porcentaje de 60 es 45?".
+
+          De la proporción $\frac{45}{60} = \frac{p}{100}$ obtenemos
+          $$p = \frac{45}{60} \times 100.$$
+
+          Calculamos: $\frac{45}{60} = 0{,}75$ y $0{,}75 \times 100 = 75$. Es el $75\,\%$.
+
+          **Interpretación:** la razón parte : total, expresada "sobre 100". Por eso a veces es cómodo simplificar primero: $\frac{45}{60} = \frac{3}{4} = 75\,\%$.
+
+          Si el resultado no es exacto, se redondea (b17), por ejemplo a las décimas: $\frac{1}{3} \times 100 \approx 33{,}3\,\%$.
+
+          Si la parte es **mayor** que el total, el porcentaje es mayor que $100\,\%$: $90$ es el $150\,\%$ de $60$.
+        definition: >-
+          El porcentaje que representa la parte $P$ del total $T$ es
+          $p = \frac{P}{T} \times 100$.
+        rules:
+          - '$p = \text{parte} \div \text{total} \times 100$.'
+          - 'Se divide siempre entre el total (el 100 %).'
+          - 'Si la parte supera al total, $p > 100$.'
+        examples:
+          - problem: 'En un curso de 25 personas, 7 hablan inglés. ¿Qué porcentaje habla inglés?'
+            solution: |-
+              **Paso 1.** $\frac{7}{25} = 0{,}28$.
+              **Paso 2.** $0{,}28 \times 100 = 28$.
+              Resultado: el $28\,\%$.
+        common_errors:
+          - 'Dividir el total entre la parte: $\frac{25}{7} \times 100$ no tiene sentido aquí.'
+          - 'Olvidar multiplicar por 100 y responder $0{,}28\,\%$.'
+        summary: >-
+          ¿Qué porcentaje es? Parte ÷ total × 100.
+        check:
+          question: '¿Qué porcentaje de 48 es 12?'
+          options: ['$4\,\%$', '$25\,\%$', '$12\,\%$', '$400\,\%$']
+          answer: 1
+          explanation: >-
+            $\frac{12}{48} = \frac{1}{4} = 0{,}25$, y $0{,}25 \times 100 = 25$:
+            el $25\,\%$. $400\,\%$ sale de dividir al revés.
+      - title: El total a partir de una parte
+        concept: Si se conoce una parte y su porcentaje, el total es la parte multiplicada por 100 y dividida entre el porcentaje.
+        explanation: |-
+          Pregunta típica: "El $30\,\%$ de un número es $24$. ¿Cuál es el número?".
+
+          Regla de tres directa: $30\,\% \to 24$; $100\,\% \to x$.
+          $$x = \frac{24 \times 100}{30} = \frac{2400}{30} = 80.$$
+
+          **Razonamiento por unidad:** si el $30\,\%$ son $24$, el $1\,\%$ es $24 \div 30 = 0{,}8$ y el $100\,\%$ es $0{,}8 \times 100 = 80$.
+
+          Comprobación: el $30\,\%$ de $80$ es $80 \times 0{,}3 = 24$ ✓.
+
+          Este tipo de pregunta aparece, por ejemplo, cuando conocemos lo que se pagó de un anticipo y su porcentaje, y queremos saber el precio completo.
+        definition: >-
+          Si $P$ es el $p\,\%$ de un total $T$ (con $p \neq 0$), entonces
+          $T = \frac{P \times 100}{p}$.
+        rules:
+          - '$\text{total} = \text{parte} \times 100 \div p$.'
+          - 'Comprueba calculando el $p\,\%$ del total obtenido.'
+        examples:
+          - problem: 'Pagaste un anticipo de 150 pesos, que es el 20 % del precio. ¿Cuál es el precio total?'
+            solution: |-
+              **Paso 1.** $20\,\% \to 150$; $100\,\% \to x$.
+              **Paso 2.** $x = \frac{150 \times 100}{20} = \frac{15\,000}{20} = 750$.
+              **Comprobación:** $20\,\%$ de $750$ $= 750 \times 0{,}2 = 150$ ✓.
+              Resultado: $750$ pesos.
+        common_errors:
+          - 'Calcular el $p\,\%$ de la parte ($20\,\%$ de $150 = 30$) en lugar del total.'
+          - 'Sumar el porcentaje a la parte.'
+        summary: >-
+          Total = parte × 100 ÷ porcentaje. Comprueba siempre.
+        check:
+          question: 'El 30 % de un número es 24. ¿Cuál es el número?'
+          options: ['$7{,}2$', '$72$', '$80$', '$54$']
+          answer: 2
+          explanation: >-
+            $x = \frac{24 \times 100}{30} = 80$. Comprobación: $30\,\%$ de $80$
+            es $24$. $7{,}2$ es el $30\,\%$ de $24$.
+    glossary:
+      - {term: Total, definition: 'Cantidad que corresponde al 100 %.'}
+      - {term: Parte, definition: 'Cantidad que corresponde a un porcentaje del total.'}
+  t04:
+    intro:
+      what: >-
+        Un aumento porcentual es un incremento de una cantidad en un
+        porcentaje de su valor: subir un precio de 800 pesos un 15 % lo deja
+        en 920 pesos.
+      purpose: >-
+        Sirve para calcular precios con incrementos, salarios con aumentos,
+        poblaciones que crecen o importes con recargo.
+      importance: >-
+        Los aumentos porcentuales son constantes en la economía diaria
+        (inflación, tarifas, impuestos) y la base del interés (b23).
+      foundations: >-
+        Se calcula el porcentaje de la cantidad y se suma, o se multiplica por
+        el factor $1 + \frac{p}{100}$, gracias a la propiedad distributiva
+        (b08).
+      prerequisites:
+        - 'Cálculo de porcentajes (b22)'
+        - 'Multiplicación de decimales (b17)'
+        - 'Propiedad distributiva (b08)'
+      outcomes:
+        - 'Calcular el valor final tras un aumento porcentual'
+        - 'Usar el factor de aumento'
+        - 'Calcular el valor original antes de un aumento'
+      everyday_example: >-
+        Un alquiler de 2500 pesos sube un 8 %: aumenta 200 pesos y queda en
+        2700 pesos.
+    sections:
+      - title: Sumar el aumento o usar el factor
+        concept: El valor final es el inicial más su $p\,\%$, o el inicial multiplicado por $1 + \frac{p}{100}$.
+        explanation: |-
+          **Método 1: calcular el aumento y sumarlo.**
+          Un precio de $800$ pesos sube un $15\,\%$.
+          * Aumento: $15\,\%$ de $800 = 800 \times 0{,}15 = 120$.
+          * Precio final: $800 + 120 = 920$ pesos.
+
+          **Método 2: el factor de aumento.**
+          El precio final es el $100\,\% + 15\,\% = 115\,\%$ del original. Como $115\,\% = 1{,}15$:
+          $$800 \times 1{,}15 = 920.$$
+          Ambos métodos coinciden por la propiedad distributiva (b08): $800 + 800 \times 0{,}15 = 800 \times (1 + 0{,}15)$.
+
+          El número $1 + \frac{p}{100}$ se llama **factor de aumento**. Es muy útil: un aumento del $8\,\%$ es multiplicar por $1{,}08$; uno del $100\,\%$, multiplicar por $2$ (duplicar).
+
+          **Camino inverso.** Si después de un aumento del $15\,\%$ algo cuesta $920$, el precio original es $920 \div 1{,}15 = 800$. ¡No se obtiene restando el $15\,\%$ de $920$!
+        definition: >-
+          Aumentar una cantidad $C$ en un $p\,\%$ da
+          $C + \frac{p}{100} \times C = C \times \left(1 + \frac{p}{100}\right)$.
+        rules:
+          - 'Valor final = valor inicial + aumento.'
+          - 'Factor de aumento: $1 + \frac{p}{100}$ (por ejemplo, $1{,}15$ para el $15\,\%$).'
+          - 'Valor inicial = valor final ÷ factor de aumento.'
+          - 'El porcentaje se calcula siempre sobre el valor inicial.'
+        examples:
+          - problem: 'Un salario de 2500 pesos sube un 8 %. ¿Cuál es el nuevo salario?'
+            solution: |-
+              **Paso 1.** Aumento: $2500 \times 0{,}08 = 200$.
+              **Paso 2.** Nuevo salario: $2500 + 200 = 2700$.
+              **Con el factor:** $2500 \times 1{,}08 = 2700$ ✓.
+              Resultado: $2700$ pesos.
+          - problem: 'Tras un aumento del 25 %, una entrada cuesta 50 pesos. ¿Cuánto costaba antes?'
+            solution: |-
+              **Paso 1.** Factor de aumento: $1{,}25$.
+              **Paso 2.** Precio anterior: $50 \div 1{,}25 = 5000 \div 125 = 40$.
+              **Comprobación:** $40 \times 1{,}25 = 50$ ✓.
+              Resultado: $40$ pesos.
+        common_errors:
+          - 'Calcular el aumento y olvidar sumarlo: el $15\,\%$ de $800$ es $120$, pero el precio final es $920$.'
+          - 'Usar el factor $0{,}15$ en lugar de $1{,}15$.'
+          - 'Para hallar el precio original, restar el $p\,\%$ del precio final.'
+        summary: >-
+          Aumentar un $p\,\%$ es multiplicar por $1 + \frac{p}{100}$. Para
+          volver al valor original, se divide entre ese factor.
+        check:
+          question: 'Un producto de 400 pesos aumenta un 25 %. ¿Cuál es el nuevo precio?'
+          options: ['$425$ pesos', '$100$ pesos', '$500$ pesos', '$300$ pesos']
+          answer: 2
+          explanation: >-
+            Aumento: $400 \times 0{,}25 = 100$; nuevo precio $400 + 100 = 500$
+            (o $400 \times 1{,}25 = 500$). $100$ es sólo el aumento.
+    glossary:
+      - {term: Aumento porcentual, definition: 'Incremento de una cantidad en un porcentaje de su valor inicial.'}
+      - {term: Factor de aumento, definition: 'Número $1 + \frac{p}{100}$ por el que se multiplica para aplicar un aumento del $p\,\%$.'}
+  t05:
+    intro:
+      what: >-
+        Un descuento porcentual es una rebaja de una cantidad en un porcentaje
+        de su valor: un 30 % de descuento sobre 1200 pesos deja el precio en
+        840 pesos.
+      purpose: >-
+        Sirve para calcular precios rebajados, comparar ofertas y entender
+        descuentos encadenados.
+      importance: >-
+        Las rebajas son una de las situaciones de porcentajes más frecuentes;
+        entender los descuentos sucesivos evita creer que "20 % + 10 % = 30 %".
+      foundations: >-
+        Es el caso simétrico del aumento: se resta el porcentaje, o se
+        multiplica por el factor $1 - \frac{p}{100}$.
+      prerequisites:
+        - 'Aumentos porcentuales (b22)'
+        - 'Multiplicación de decimales (b17)'
+      outcomes:
+        - 'Calcular el precio final con un descuento'
+        - 'Usar el factor de descuento'
+        - 'Calcular descuentos sucesivos'
+      everyday_example: >-
+        Una prenda de 250 pesos con un 20 % de descuento cuesta 200 pesos.
+    sections:
+      - title: Restar el descuento o usar el factor
+        concept: El precio final es el inicial menos su $p\,\%$, o el inicial multiplicado por $1 - \frac{p}{100}$.
+        explanation: |-
+          **Método 1: calcular el descuento y restarlo.**
+          Un artículo de $1200$ pesos tiene un $30\,\%$ de descuento.
+          * Descuento: $1200 \times 0{,}30 = 360$.
+          * Precio final: $1200 - 360 = 840$ pesos.
+
+          **Método 2: el factor de descuento.**
+          Si descuentan el $30\,\%$, se paga el $100\,\% - 30\,\% = 70\,\%$:
+          $$1200 \times 0{,}70 = 840.$$
+
+          El número $1 - \frac{p}{100}$ se llama **factor de descuento**: $0{,}7$ para el $30\,\%$, $0{,}85$ para el $15\,\%$, $0{,}5$ para el $50\,\%$.
+
+          Pensar en "lo que se paga" en lugar de "lo que se descuenta" suele ahorrar un paso.
+        definition: >-
+          Descontar un $p\,\%$ de una cantidad $C$ da
+          $C - \frac{p}{100} \times C = C \times \left(1 - \frac{p}{100}\right)$.
+        rules:
+          - 'Precio final = precio inicial − descuento.'
+          - 'Factor de descuento: $1 - \frac{p}{100}$.'
+          - 'Se paga el $(100 - p)\,\%$ del precio.'
+        examples:
+          - problem: 'Una prenda de 250 pesos tiene un 20 % de descuento. ¿Cuánto se paga?'
+            solution: |-
+              **Paso 1.** Descuento: $250 \times 0{,}2 = 50$.
+              **Paso 2.** Se paga $250 - 50 = 200$.
+              **Con el factor:** $250 \times 0{,}8 = 200$ ✓.
+              Resultado: $200$ pesos.
+        common_errors:
+          - 'Responder con el descuento ($50$) en lugar del precio final.'
+          - 'Usar como factor $0{,}2$ en lugar de $0{,}8$.'
+        summary: >-
+          Descontar un $p\,\%$ es multiplicar por $1 - \frac{p}{100}$: se paga
+          el $(100 - p)\,\%$.
+        check:
+          question: 'Un artículo de 1200 pesos tiene un 15 % de descuento. ¿Cuánto se paga?'
+          options: ['$180$ pesos', '$1185$ pesos', '$1020$ pesos', '$1380$ pesos']
+          answer: 2
+          explanation: >-
+            Se paga el $85\,\%$: $1200 \times 0{,}85 = 1020$ pesos. $180$ es el
+            descuento y $1380$ sería un aumento.
+      - title: Descuentos sucesivos
+        concept: Cada descuento se aplica sobre el precio ya rebajado; los porcentajes no se suman.
+        explanation: |-
+          Una tienda ofrece un $20\,\%$ de descuento y, en caja, otro $10\,\%$ **sobre el nuevo precio**. Para un artículo de $1000$ pesos:
+
+          * Tras el primer descuento: $1000 \times 0{,}8 = 800$.
+          * Tras el segundo: $800 \times 0{,}9 = 720$.
+
+          Se pagan $720$ pesos. Si se sumaran los porcentajes ($30\,\%$) se pagarían $700$, lo cual es **incorrecto**: el segundo $10\,\%$ se calcula sobre $800$, no sobre $1000$.
+
+          Con factores es directo: $1000 \times 0{,}8 \times 0{,}9 = 1000 \times 0{,}72 = 720$. El descuento total equivale a un $28\,\%$ ($1 - 0{,}72 = 0{,}28$).
+
+          Como la multiplicación es conmutativa (b08), el **orden** de los descuentos no cambia el resultado final: $0{,}9 \times 0{,}8 = 0{,}8 \times 0{,}9$.
+        definition: >-
+          Aplicar sucesivamente descuentos del $p\,\%$ y del $q\,\%$ a $C$ da
+          $C \times \left(1 - \frac{p}{100}\right) \times \left(1 - \frac{q}{100}\right)$.
+        rules:
+          - 'Cada descuento se aplica sobre el precio que resulta del anterior.'
+          - 'Se multiplican los factores; los porcentajes no se suman.'
+          - 'El orden de los descuentos no altera el precio final.'
+        examples:
+          - problem: 'Un artículo de 500 pesos tiene un 10 % de descuento y luego otro 10 % sobre el nuevo precio. ¿Cuál es el precio final?'
+            solution: |-
+              **Paso 1.** Primer descuento: $500 \times 0{,}9 = 450$.
+              **Paso 2.** Segundo descuento: $450 \times 0{,}9 = 405$.
+              **Comprobación:** $500 \times 0{,}81 = 405$ ✓.
+              Resultado: $405$ pesos (no $400$).
+        common_errors:
+          - 'Sumar los porcentajes: $10\,\% + 10\,\%$ no equivale a $20\,\%$ de descuento.'
+          - 'Aplicar el segundo descuento sobre el precio original.'
+        summary: >-
+          En descuentos sucesivos se multiplican los factores; el descuento
+          total es menor que la suma de los porcentajes.
+        check:
+          question: 'Un artículo de 1000 pesos tiene un 20 % de descuento y después otro 10 % sobre el nuevo precio. ¿Cuánto se paga?'
+          options: ['$700$ pesos', '$720$ pesos', '$780$ pesos', '$800$ pesos']
+          answer: 1
+          explanation: >-
+            $1000 \times 0{,}8 = 800$ y $800 \times 0{,}9 = 720$ pesos. $700$
+            resulta de sumar erróneamente los porcentajes.
+    glossary:
+      - {term: Descuento porcentual, definition: 'Rebaja de una cantidad en un porcentaje de su valor.'}
+      - {term: Factor de descuento, definition: 'Número $1 - \frac{p}{100}$ por el que se multiplica para aplicar un descuento del $p\,\%$.'}
+  t06:
+    intro:
+      what: >-
+        Es el cálculo de la parte que corresponde a un porcentaje dado de una
+        cantidad, como el $35\,\%$ de $240$.
+      purpose: >-
+        Sirve para calcular comisiones, impuestos, propinas, partes de una
+        población o de un presupuesto.
+      importance: >-
+        Es la operación más frecuente con porcentajes y aparece dentro de
+        aumentos, descuentos e intereses; conviene dominar varios métodos,
+        incluidos los mentales.
+      foundations: >-
+        Se basa en que $p\,\% = \frac{p}{100}$: tomar el $p\,\%$ de $N$ es
+        multiplicar $N$ por $\frac{p}{100}$ (o por el decimal equivalente).
+      prerequisites:
+        - 'Relación entre porcentaje, fracción y decimal (b22)'
+        - 'Cálculo de porcentajes: la relación parte–total (b22)'
+        - 'Multiplicación de fracciones y de decimales (b15, b17)'
+      outcomes:
+        - 'Calcular el porcentaje de una cantidad por varios métodos'
+        - 'Calcular mentalmente porcentajes habituales (10 %, 5 %, 25 %, 50 %)'
+        - 'Elegir el método más cómodo'
+      everyday_example: >-
+        Una propina del 10 % sobre una cuenta de 480 pesos son 48 pesos:
+        basta correr la coma un lugar.
+    sections:
+      - title: Varios caminos al mismo resultado
+        concept: El $p\,\%$ de $N$ es $N \times \frac{p}{100}$, y se puede calcular con fracciones, decimales o cálculo mental.
+        explanation: |-
+          **Método 1: fórmula general.** $p\,\%$ de $N = \frac{N \times p}{100}$.
+          $35\,\%$ de $240 = \frac{240 \times 35}{100} = \frac{8400}{100} = 84$.
+
+          **Método 2: con el decimal.** $35\,\% = 0{,}35$: $240 \times 0{,}35 = 84$.
+
+          **Método 3: con la fracción equivalente,** útil para porcentajes "redondos":
+          * $50\,\%$ → la mitad; $25\,\%$ → la cuarta parte; $20\,\%$ → la quinta parte.
+          * $12{,}5\,\%$ de $64$ $= \frac{1}{8}$ de $64 = 8$.
+
+          **Método 4: cálculo mental a partir del 10 % y el 1 %.**
+          * $10\,\%$: correr la coma un lugar a la izquierda ($10\,\%$ de $80 = 8$).
+          * $5\,\%$: la mitad del $10\,\%$ ($4$).
+          * $15\,\% = 10\,\% + 5\,\% = 8 + 4 = 12$.
+          * $1\,\%$: correr la coma dos lugares ($1\,\%$ de $350 = 3{,}5$), y $7\,\% = 7 \times 3{,}5 = 24{,}5$.
+
+          Un dato curioso: el $p\,\%$ de $N$ es igual al $N\,\%$ de $p$ (por la propiedad conmutativa). El $8\,\%$ de $50$ es el $50\,\%$ de $8$, es decir, $4$.
+        definition: >-
+          El $p\,\%$ de una cantidad $N$ es $\frac{p}{100} \times N$.
+        rules:
+          - '$p\,\%$ de $N = N \times p \div 100 = N \times$ (decimal del porcentaje).'
+          - '$10\,\%$: dividir entre 10; $1\,\%$: dividir entre 100.'
+          - '$50\,\%$: la mitad; $25\,\%$: la cuarta parte; $20\,\%$: la quinta parte.'
+          - 'Los porcentajes pueden descomponerse: $15\,\% = 10\,\% + 5\,\%$.'
+        examples:
+          - problem: 'Calcula el $35\,\%$ de $240$.'
+            solution: |-
+              **Paso 1.** $240 \times 35 = 8400$.
+              **Paso 2.** $8400 \div 100 = 84$.
+              **Con el 10 %:** $10\,\% = 24$; $30\,\% = 72$; $5\,\% = 12$; $35\,\% = 72 + 12 = 84$ ✓.
+              Resultado: $84$.
+          - problem: 'Calcula mentalmente el $15\,\%$ de $80$ y el $7\,\%$ de $350$.'
+            solution: |-
+              **Paso 1.** $10\,\%$ de $80 = 8$; $5\,\% = 4$; $15\,\% = 12$.
+              **Paso 2.** $1\,\%$ de $350 = 3{,}5$; $7\,\% = 7 \times 3{,}5 = 24{,}5$.
+              Resultado: $12$ y $24{,}5$.
+        common_errors:
+          - 'Multiplicar por el porcentaje sin dividir entre 100: el $35\,\%$ de $240$ no es $8400$.'
+          - 'Usar $0{,}7$ para el $7\,\%$: es $0{,}07$.'
+          - 'Pensar que el 10 % de una cantidad es siempre 10.'
+        summary: >-
+          El $p\,\%$ de $N$ es $N \times \frac{p}{100}$. Para calcular
+          mentalmente, usa el 10 %, el 5 % y el 1 %.
+        check:
+          question: '¿Cuánto es el $20\,\%$ de $150$?'
+          options: ['$3$', '$30$', '$130$', '$7{,}5$']
+          answer: 1
+          explanation: >-
+            $150 \times 0{,}2 = 30$ (o la quinta parte de $150$). $130$ sería
+            restar 20 pesos, y $7{,}5$ el $5\,\%$.
+    glossary:
+      - {term: Cálculo mental de porcentajes, definition: 'Obtener porcentajes combinando el 10 %, 5 %, 1 % y fracciones sencillas.'}
+  t07:
+    intro:
+      what: >-
+        La variación porcentual mide cuánto ha cambiado una cantidad en
+        relación con su valor inicial, expresado en porcentaje: pasar de 50 a
+        65 es un aumento del 30 %.
+      purpose: >-
+        Sirve para comparar cambios de precios, poblaciones, ventas o
+        resultados, aunque las cantidades sean de tamaños distintos.
+      importance: >-
+        Es la forma habitual de informar sobre la inflación, el crecimiento
+        económico o la evolución de cualquier dato; interpretarla bien evita
+        engaños.
+      foundations: >-
+        Es un caso de "¿qué porcentaje es?" (b22): se compara la diferencia
+        (final − inicial) con el valor inicial.
+      prerequisites:
+        - 'Cálculo de porcentajes: qué porcentaje es una parte (b22)'
+        - 'Aumentos y descuentos porcentuales (b22)'
+        - 'Números negativos (b03) y redondeo (b17)'
+      outcomes:
+        - 'Calcular la variación porcentual entre dos valores'
+        - 'Distinguir aumentos (variación positiva) de disminuciones (negativa)'
+        - 'Entender por qué subir y bajar el mismo porcentaje no deja igual'
+      everyday_example: >-
+        Si el pasaje sube de 80 a 100 pesos, la variación es
+        $\frac{20}{80} \times 100 = 25\,\%$.
+    sections:
+      - title: Cambio respecto al valor inicial
+        concept: Variación porcentual = (valor final − valor inicial) ÷ valor inicial × 100.
+        explanation: |-
+          Para medir un cambio en porcentaje:
+
+          1. **Diferencia:** valor final − valor inicial.
+          2. **Comparar con el inicial:** dividir la diferencia entre el **valor inicial**.
+          3. **Multiplicar por 100.**
+
+          $$\text{variación} = \frac{\text{final} - \text{inicial}}{\text{inicial}} \times 100.$$
+
+          Si el resultado es **positivo**, hubo un aumento; si es **negativo**, una disminución.
+
+          * De $50$ a $65$: $\frac{65 - 50}{50} \times 100 = \frac{15}{50} \times 100 = 30\,\%$ (aumento).
+          * De $80$ a $60$: $\frac{60 - 80}{80} \times 100 = \frac{-20}{80} \times 100 = -25\,\%$ (disminución del $25\,\%$).
+
+          **¡Cuidado con la asimetría!** Un precio de $100$ que sube un $20\,\%$ pasa a $120$. Si luego baja de $120$ a $100$, la variación es $\frac{-20}{120} \times 100 \approx -16{,}67\,\%$, no $-20\,\%$. Y si de $120$ bajara un $20\,\%$, quedaría en $96$, no en $100$. Los porcentajes se calculan siempre **sobre el valor de partida**, que cambia.
+        definition: >-
+          La variación porcentual de un valor inicial $V_i \neq 0$ a un valor
+          final $V_f$ es $\frac{V_f - V_i}{V_i} \times 100$.
+        rules:
+          - 'Se divide siempre entre el valor inicial.'
+          - 'Positiva: aumento. Negativa: disminución.'
+          - 'Subir y luego bajar el mismo porcentaje no devuelve al valor inicial.'
+        examples:
+          - problem: 'Las ventas pasan de 1200 a 1500 unidades. ¿Cuál es la variación porcentual?'
+            solution: |-
+              **Paso 1.** Diferencia: $1500 - 1200 = 300$.
+              **Paso 2.** $\frac{300}{1200} = 0{,}25$.
+              **Paso 3.** $0{,}25 \times 100 = 25$.
+              Resultado: aumento del $25\,\%$ ($+25\,\%$).
+          - problem: 'Un producto baja de 80 a 60 pesos. ¿Cuál es la variación porcentual?'
+            solution: |-
+              **Paso 1.** Diferencia: $60 - 80 = -20$.
+              **Paso 2.** $\frac{-20}{80} = -0{,}25$.
+              **Paso 3.** $-0{,}25 \times 100 = -25$.
+              Resultado: $-25\,\%$ (disminución del $25\,\%$).
+        common_errors:
+          - 'Dividir entre el valor final: de $40$ a $50$ no es $\frac{10}{50} = 20\,\%$, sino $\frac{10}{40} = 25\,\%$.'
+          - 'Dar la diferencia ($10$ pesos) en lugar del porcentaje.'
+          - 'Creer que tras subir un 20 % y bajar un 20 % se vuelve al inicio.'
+        summary: >-
+          Variación = (final − inicial) ÷ inicial × 100. Positiva si sube,
+          negativa si baja.
+        check:
+          question: 'Un precio pasa de 40 a 50 pesos. ¿Cuál es la variación porcentual?'
+          options: ['$+10\,\%$', '$+20\,\%$', '$+25\,\%$', '$+125\,\%$']
+          answer: 2
+          explanation: >-
+            $\frac{50 - 40}{40} \times 100 = \frac{10}{40} \times 100 = 25\,\%$.
+            $20\,\%$ sale de dividir entre el valor final, y $125\,\%$ es la
+            razón final ÷ inicial.
+    glossary:
+      - {term: Variación porcentual, definition: 'Cambio de una cantidad expresado como porcentaje de su valor inicial.'}
+      - {term: Valor inicial, definition: 'Valor de partida, que se toma como 100 %.'}
+  t08:
+    intro:
+      what: >-
+        Son situaciones del comercio y de la vida diaria que se resuelven con
+        porcentajes: impuestos sobre el precio, comisiones, propinas y precios
+        con impuesto incluido.
+      purpose: >-
+        Sirven para entender facturas, recibos y ofertas, y para calcular lo
+        que realmente se paga o se cobra.
+      importance: >-
+        Saber calcular un impuesto, una comisión o el precio sin impuesto
+        permite revisar cuentas y evitar errores o abusos.
+      foundations: >-
+        Se combinan el porcentaje de una cantidad, los aumentos y descuentos
+        porcentuales y el cálculo del valor original.
+      prerequisites:
+        - 'Porcentaje de una cantidad (b22)'
+        - 'Aumentos y descuentos porcentuales (b22)'
+      outcomes:
+        - 'Calcular precios con impuesto'
+        - 'Calcular comisiones y propinas'
+        - 'Obtener el precio sin impuesto a partir del precio final'
+      everyday_example: >-
+        Un producto cuesta 350 pesos sin impuesto; con un impuesto del 16 % se
+        pagan 406 pesos.
+    sections:
+      - title: Impuestos, comisiones y propinas
+        concept: Un impuesto es un aumento porcentual sobre el precio; una comisión o una propina son un porcentaje de una cantidad.
+        explanation: |-
+          **Impuesto sobre el precio** (como el IVA, impuesto al valor agregado). Se calcula sobre el precio base y se suma: es un **aumento porcentual**. Con un impuesto del $16\,\%$, el precio final es el base $\times 1{,}16$.
+
+          **Precio con impuesto incluido.** Si ya incluye el impuesto, el precio base se obtiene **dividiendo** entre el factor: $580 \div 1{,}16 = 500$. Igual que en los aumentos, no se obtiene restando el $16\,\%$ de $580$.
+
+          **Comisión.** Muchos vendedores cobran un porcentaje de lo que venden: con un $5\,\%$ de comisión sobre $12\,000$ pesos de ventas, cobran $12\,000 \times 0{,}05 = 600$ pesos.
+
+          **Propina.** Es un porcentaje de la cuenta, por ejemplo el $10\,\%$: sobre $480$ pesos, $48$ pesos.
+
+          **Descuento e impuesto juntos.** Si un artículo de $1000$ pesos tiene un $20\,\%$ de descuento y luego paga un $16\,\%$ de impuesto: $1000 \times 0{,}8 \times 1{,}16 = 928$ pesos. Como se multiplican factores, da igual el orden: $1000 \times 1{,}16 \times 0{,}8 = 928$.
+        definition: >-
+          Un impuesto del $p\,\%$ sobre un precio base $B$ da un precio final
+          $B \times \left(1 + \frac{p}{100}\right)$; una comisión del $p\,\%$
+          sobre unas ventas $V$ es $\frac{p}{100} \times V$.
+        rules:
+          - 'Precio con impuesto = base × $(1 + \frac{p}{100})$.'
+          - 'Base = precio con impuesto ÷ $(1 + \frac{p}{100})$.'
+          - 'Comisión o propina = porcentaje de la cantidad.'
+          - 'Descuentos e impuestos se aplican multiplicando factores; el orden no importa.'
+        examples:
+          - problem: 'Un producto cuesta 350 pesos sin impuesto. Si el impuesto es del 16 %, ¿cuánto se paga?'
+            solution: |-
+              **Paso 1.** Impuesto: $350 \times 0{,}16 = 56$.
+              **Paso 2.** Total: $350 + 56 = 406$.
+              **Con el factor:** $350 \times 1{,}16 = 406$ ✓.
+              Resultado: $406$ pesos.
+          - problem: 'Un recibo de 580 pesos incluye un impuesto del 16 %. ¿Cuál es el precio sin impuesto?'
+            solution: |-
+              **Paso 1.** $580$ es el $116\,\%$ del precio base.
+              **Paso 2.** Base: $580 \div 1{,}16 = 58\,000 \div 116 = 500$.
+              **Comprobación:** $500 \times 1{,}16 = 580$ ✓.
+              Resultado: $500$ pesos (el impuesto era de $80$ pesos).
+        common_errors:
+          - 'Restar el 16 % del precio con impuesto para obtener la base ($580 - 92{,}80 = 487{,}20$ es incorrecto).'
+          - 'Olvidar sumar el impuesto al precio base.'
+          - 'Calcular la comisión sobre la ganancia en lugar de sobre las ventas cuando el enunciado dice "sobre las ventas".'
+        summary: >-
+          Impuesto: multiplicar por $1 + \frac{p}{100}$; quitarlo: dividir
+          entre ese factor. Comisión y propina: porcentaje de la cantidad.
+        check:
+          question: 'Un vendedor cobra un 3 % de comisión. Si vendió 25 000 pesos, ¿cuánto cobra de comisión?'
+          options: ['$75$ pesos', '$7500$ pesos', '$750$ pesos', '$25\,750$ pesos']
+          answer: 2
+          explanation: >-
+            $25\,000 \times 0{,}03 = 750$ pesos. $7500$ sería el $30\,\%$ y
+            $25\,750$ es la suma de ventas y comisión.
+    glossary:
+      - {term: IVA, definition: 'Impuesto al valor agregado: un porcentaje que se suma al precio de venta.'}
+      - {term: Comisión, definition: 'Porcentaje de las ventas que cobra quien las realiza.'}
+      - {term: Precio base, definition: 'Precio antes de aplicar impuestos.'}

@@ -1,0 +1,685 @@
+block: b15
+intro: |-
+  En este bloque aprenderás a operar con fracciones: sumar y restar (con igual y con distinto denominador), multiplicar, dividir, resolver operaciones combinadas y trabajar con números mixtos. Al final aplicarás todo a problemas cotidianos. Cada regla se apoya en lo que ya sabes: fracciones equivalentes y simplificación (bloque 14), MCM (bloque 13) y jerarquía de operaciones (bloque 09).
+
+topics:
+  t01:
+    intro:
+      what: |-
+        Sumar fracciones con igual denominador es juntar partes del mismo tamaño: se suman los numeradores y se conserva el denominador, como en $\frac{2}{7} + \frac{3}{7} = \frac{5}{7}$.
+      purpose: |-
+        Sirve para juntar cantidades fraccionarias que ya están expresadas en el mismo tipo de parte (cuartos con cuartos, octavos con octavos).
+      importance: |-
+        Es el caso básico de la suma de fracciones: el caso de distinto denominador (tema 2) se reduce siempre a éste.
+      foundations: |-
+        El denominador nombra el tamaño de la parte y el numerador cuenta cuántas hay (bloque 14). Juntar 2 séptimos y 3 séptimos da 5 séptimos, igual que 2 manzanas y 3 manzanas son 5 manzanas.
+      prerequisites:
+        - 'Numerador y denominador (bloque 14, tema 2)'
+        - 'Simplificación de fracciones (bloque 14, tema 9)'
+        - 'Números mixtos (bloque 14, tema 7)'
+      outcomes:
+        - 'Sumar dos o más fracciones con el mismo denominador'
+        - 'Simplificar el resultado y expresarlo como número mixto si conviene'
+      everyday_example: |-
+        Por la mañana bebes $\frac{3}{8}$ de una botella de agua y por la tarde $\frac{4}{8}$. En total has bebido $\frac{7}{8}$ de la botella.
+    sections:
+      - title: Sumar partes del mismo tamaño
+        concept: Con igual denominador se suman los numeradores y el denominador se deja igual.
+        explanation: |-
+          En $\frac{2}{7} + \frac{3}{7}$ todas las partes son **séptimos**. Tienes 2 séptimos y añades 3 séptimos: en total, 5 séptimos.
+
+          $$\frac{2}{7} + \frac{3}{7} = \frac{2 + 3}{7} = \frac{5}{7}$$
+
+          ¿Por qué no se suman también los denominadores? Porque el denominador **no cuenta cosas**: indica el tamaño de cada parte. Al juntar séptimos con séptimos, las partes siguen siendo séptimos. Si sumaras los denominadores obtendrías $\frac{5}{14}$, que es **menos** que $\frac{3}{7}$ sola: un resultado imposible al sumar algo positivo.
+
+          **Después de sumar:**
+
+          - **Simplifica** si se puede: $\frac{1}{6} + \frac{3}{6} = \frac{4}{6} = \frac{2}{3}$.
+          - Si el resultado es impropio, puedes dejarlo así o escribirlo como número mixto: $\frac{5}{8} + \frac{7}{8} = \frac{12}{8} = \frac{3}{2} = 1\,\frac{1}{2}$.
+          - Con tres o más fracciones de igual denominador se suman todos los numeradores.
+        definition: |-
+          Para $b \neq 0$: $\frac{a}{b} + \frac{c}{b} = \frac{a + c}{b}$.
+        rules:
+          - 'Se suman los numeradores.'
+          - 'El denominador se conserva.'
+          - 'El resultado se simplifica siempre que sea posible.'
+        examples:
+          - problem: 'Calcula y simplifica $\frac{1}{6} + \frac{3}{6}$'
+            solution: |-
+              **Paso 1.** Mismo denominador: sumamos numeradores, $1 + 3 = 4$. Queda $\frac{4}{6}$.
+
+              **Paso 2.** Simplificamos: $\text{MCD}(4, 6) = 2$, así que $\frac{4}{6} = \frac{2}{3}$.
+
+              Resultado: $\frac{2}{3}$.
+          - problem: 'Calcula $\frac{2}{9} + \frac{4}{9} + \frac{5}{9}$'
+            solution: |-
+              **Paso 1.** Sumamos los numeradores: $2 + 4 + 5 = 11$. Queda $\frac{11}{9}$.
+
+              **Paso 2.** $\text{MCD}(11, 9) = 1$: ya es irreducible. Como número mixto, $11 \div 9 = 1$ con residuo 2: $1\,\frac{2}{9}$.
+
+              Resultado: $\frac{11}{9} = 1\,\frac{2}{9}$.
+        common_errors:
+          - 'Sumar también los denominadores: $\frac{2}{7} + \frac{3}{7} \neq \frac{5}{14}$.'
+          - 'Olvidar simplificar el resultado.'
+        summary: |-
+          Con igual denominador se suman sólo los numeradores; el denominador indica el tamaño de la parte y no cambia. Después se simplifica.
+        check:
+          question: '¿Cuánto es $\frac{3}{10} + \frac{4}{10}$?'
+          options: ['$\frac{7}{10}$', '$\frac{7}{20}$', '$\frac{12}{100}$']
+          answer: 0
+          explanation: |-
+            Se suman los numeradores ($3 + 4 = 7$) y se conserva el denominador: $\frac{7}{10}$. $\frac{7}{20}$ suma también los denominadores, lo cual es incorrecto.
+    glossary:
+      - {term: Fracciones homogéneas, definition: 'Fracciones que tienen el mismo denominador.'}
+
+  t02:
+    intro:
+      what: |-
+        Sumar fracciones con distinto denominador consiste en convertirlas primero en fracciones equivalentes con un denominador común y luego sumar los numeradores.
+      purpose: |-
+        Sirve para juntar cantidades expresadas en partes de distinto tamaño, como medio litro y un tercio de litro.
+      importance: |-
+        Es la situación más habitual al sumar fracciones y reúne varias ideas: fracciones equivalentes, amplificación y MCM.
+      foundations: |-
+        Sólo se pueden sumar directamente partes del mismo tamaño. Con el MCM de los denominadores (bloque 13) se obtiene el menor tamaño de parte común, y con la amplificación (bloque 14) se reescribe cada fracción.
+      prerequisites:
+        - 'Suma de fracciones con igual denominador (bloque 15, tema 1)'
+        - 'Amplificación de fracciones (bloque 14, tema 10)'
+        - 'Mínimo común múltiplo (bloque 13)'
+      outcomes:
+        - 'Sumar dos o tres fracciones con distinto denominador'
+        - 'Elegir el MCM como denominador común'
+      everyday_example: |-
+        Una receta lleva $\frac{1}{2}$ taza de leche y $\frac{1}{3}$ taza de agua. Para saber el líquido total se expresan ambas en sextos: $\frac{3}{6} + \frac{2}{6} = \frac{5}{6}$ de taza.
+    sections:
+      - title: Igualar el tamaño de las partes
+        concept: Antes de sumar, se escriben las fracciones con un denominador común, preferiblemente el MCM de los denominadores.
+        explanation: |-
+          ¿Cuánto es $\frac{1}{4} + \frac{1}{6}$? Cuartos y sextos son partes de distinto tamaño: no se pueden contar juntas tal cual. Necesitamos un tamaño de parte en el que quepan exactamente ambas.
+
+          **Procedimiento**
+
+          1. **Denominador común**: el MCM de los denominadores. $\text{MCM}(4, 6) = 12$.
+          2. **Amplifica** cada fracción a ese denominador: $\frac{1}{4} = \frac{3}{12}$ (porque $12 \div 4 = 3$) y $\frac{1}{6} = \frac{2}{12}$ (porque $12 \div 6 = 2$).
+          3. **Suma** los numeradores: $\frac{3}{12} + \frac{2}{12} = \frac{5}{12}$.
+          4. **Simplifica** si se puede.
+
+          Cualquier múltiplo común sirve como denominador (por ejemplo, $4 \times 6 = 24$), pero el MCM da los números más pequeños y menos trabajo al simplificar.
+
+          Con tres fracciones se hace igual, usando el MCM de los tres denominadores.
+        definition: |-
+          Si $m = \text{MCM}(b, d)$, entonces $\frac{a}{b} + \frac{c}{d} = \frac{a \times (m \div b) + c \times (m \div d)}{m}$.
+        rules:
+          - 'Denominador común: el MCM de los denominadores.'
+          - 'Cada numerador se multiplica por el mismo factor que su denominador.'
+          - 'Después se suman los numeradores y se simplifica.'
+        examples:
+          - problem: 'Calcula $\frac{2}{3} + \frac{3}{4}$'
+            solution: |-
+              **Paso 1.** $\text{MCM}(3, 4) = 12$.
+
+              **Paso 2.** $\frac{2}{3} = \frac{8}{12}$ y $\frac{3}{4} = \frac{9}{12}$.
+
+              **Paso 3.** $\frac{8}{12} + \frac{9}{12} = \frac{17}{12}$.
+
+              Resultado: $\frac{17}{12} = 1\,\frac{5}{12}$.
+          - problem: 'Calcula $\frac{1}{2} + \frac{1}{3} + \frac{1}{6}$'
+            solution: |-
+              **Paso 1.** $\text{MCM}(2, 3, 6) = 6$.
+
+              **Paso 2.** $\frac{1}{2} = \frac{3}{6}$, $\frac{1}{3} = \frac{2}{6}$, $\frac{1}{6} = \frac{1}{6}$.
+
+              **Paso 3.** $\frac{3 + 2 + 1}{6} = \frac{6}{6} = 1$.
+
+              Resultado: $1$.
+        common_errors:
+          - 'Sumar numeradores y denominadores: $\frac{1}{2} + \frac{1}{3} \neq \frac{2}{5}$.'
+          - 'Cambiar el denominador sin multiplicar también el numerador.'
+          - 'Usar un denominador común que no es múltiplo de todos los denominadores.'
+        summary: |-
+          Para sumar con distinto denominador: MCM de los denominadores, amplificar cada fracción, sumar numeradores y simplificar.
+        check:
+          question: '¿Cuánto es $\frac{1}{3} + \frac{1}{4}$?'
+          options: ['$\frac{2}{7}$', '$\frac{7}{12}$', '$\frac{1}{7}$']
+          answer: 1
+          explanation: |-
+            Con denominador 12: $\frac{4}{12} + \frac{3}{12} = \frac{7}{12}$. $\frac{2}{7}$ suma numeradores y denominadores, lo cual es incorrecto.
+    glossary:
+      - {term: Fracciones heterogéneas, definition: 'Fracciones con distinto denominador.'}
+      - {term: Mínimo común denominador, definition: 'El MCM de los denominadores, usado como denominador común.'}
+
+  t03:
+    intro:
+      what: |-
+        Restar fracciones es quitar una cantidad fraccionaria de otra. Con igual denominador se restan los numeradores; con distinto denominador, primero se busca un denominador común.
+      purpose: |-
+        Sirve para calcular lo que queda, lo que falta o la diferencia entre dos cantidades fraccionarias.
+      importance: |-
+        La resta aparece en todos los problemas de "lo que sobra" o "lo que queda" con fracciones, que son muy frecuentes.
+      foundations: |-
+        Es la operación inversa de la suma (bloque 05), y sigue exactamente el mismo procedimiento que la suma de fracciones.
+      prerequisites:
+        - 'Suma de fracciones (bloque 15, temas 1 y 2)'
+        - 'Fracciones aparentes: escribir un entero como fracción (bloque 14, tema 6)'
+      outcomes:
+        - 'Restar fracciones con igual y distinto denominador'
+        - 'Restar una fracción de un número entero'
+      everyday_example: |-
+        Tenías $\frac{3}{4}$ de un pastel y te comes $\frac{1}{6}$ del pastel entero. Te quedan $\frac{9}{12} - \frac{2}{12} = \frac{7}{12}$ del pastel.
+    sections:
+      - title: Restar numeradores con el mismo denominador
+        concept: Se igualan los denominadores (si hace falta) y se restan los numeradores.
+        explanation: |-
+          **Igual denominador.** Se restan los numeradores y se conserva el denominador:
+
+          $$\frac{5}{8} - \frac{3}{8} = \frac{2}{8} = \frac{1}{4}$$
+
+          **Distinto denominador.** Como en la suma: MCM de los denominadores, amplificar, restar numeradores y simplificar.
+
+          $$\frac{3}{4} - \frac{1}{6} = \frac{9}{12} - \frac{2}{12} = \frac{7}{12}$$
+
+          **Entero menos fracción.** Escribe el entero como fracción aparente con el denominador de la otra fracción (bloque 14, tema 6):
+
+          $$2 - \frac{3}{5} = \frac{10}{5} - \frac{3}{5} = \frac{7}{5}$$
+
+          **Resultado negativo.** Si restas una fracción mayor de una menor, el resultado es negativo, igual que con los enteros (bloque 05): $\frac{1}{4} - \frac{3}{4} = -\frac{2}{4} = -\frac{1}{2}$. En los problemas cotidianos de "lo que queda" esto no suele ocurrir.
+        definition: |-
+          Para $b \neq 0$: $\frac{a}{b} - \frac{c}{b} = \frac{a - c}{b}$. Con distinto denominador, se reescriben primero ambas fracciones con un denominador común.
+        rules:
+          - 'Mismo denominador: se restan los numeradores.'
+          - 'Distinto denominador: primero denominador común (MCM).'
+          - 'Un entero $n$ se escribe como $\frac{n \times b}{b}$.'
+        examples:
+          - problem: 'Calcula $\frac{5}{6} - \frac{1}{4}$'
+            solution: |-
+              **Paso 1.** $\text{MCM}(6, 4) = 12$.
+
+              **Paso 2.** $\frac{5}{6} = \frac{10}{12}$ y $\frac{1}{4} = \frac{3}{12}$.
+
+              **Paso 3.** $\frac{10 - 3}{12} = \frac{7}{12}$.
+
+              Resultado: $\frac{7}{12}$.
+          - problem: 'Calcula $3 - \frac{2}{7}$'
+            solution: |-
+              **Paso 1.** $3 = \frac{21}{7}$.
+
+              **Paso 2.** $\frac{21}{7} - \frac{2}{7} = \frac{19}{7}$.
+
+              Resultado: $\frac{19}{7} = 2\,\frac{5}{7}$.
+        common_errors:
+          - 'Restar también los denominadores: $\frac{5}{6} - \frac{1}{4} \neq \frac{4}{2}$.'
+          - 'En "entero menos fracción", restar el entero del numerador: $3 - \frac{2}{7} \neq \frac{1}{7}$.'
+        summary: |-
+          La resta de fracciones sigue los pasos de la suma: denominador común, restar numeradores y simplificar.
+        check:
+          question: '¿Cuánto es $\frac{5}{6} - \frac{1}{4}$?'
+          options: ['$\frac{7}{12}$', '$\frac{4}{2}$', '$\frac{2}{3}$']
+          answer: 0
+          explanation: |-
+            $\frac{10}{12} - \frac{3}{12} = \frac{7}{12}$. $\frac{4}{2}$ resta numeradores y denominadores por separado, lo cual no tiene sentido.
+    glossary:
+      - {term: Diferencia, definition: 'Resultado de una resta.'}
+
+  t04:
+    intro:
+      what: |-
+        Multiplicar fracciones consiste en multiplicar los numeradores entre sí y los denominadores entre sí: $\frac{2}{3} \times \frac{3}{4} = \frac{6}{12} = \frac{1}{2}$.
+      purpose: |-
+        Sirve para calcular una fracción de otra fracción ("la mitad de tres cuartos"), áreas con medidas fraccionarias y fracciones de cantidades.
+      importance: |-
+        Es la operación más sencilla de realizar con fracciones y es la base de la división de fracciones (tema 5) y de muchos problemas.
+      foundations: |-
+        "$\frac{2}{3}$ de $\frac{3}{4}$" significa dividir $\frac{3}{4}$ en 3 partes iguales y tomar 2: eso equivale a multiplicar. También se usa que un entero es una fracción con denominador 1 (bloque 14).
+      prerequisites:
+        - 'Fracción de una cantidad (bloque 14, tema 1)'
+        - 'Simplificación de fracciones (bloque 14, tema 9)'
+        - 'Propiedades de la multiplicación (bloque 08)'
+      outcomes:
+        - 'Multiplicar fracciones y simplificar el resultado'
+        - 'Multiplicar una fracción por un entero'
+        - 'Simplificar antes de multiplicar'
+      everyday_example: |-
+        Si una receta para 4 personas lleva $\frac{3}{4}$ de taza de azúcar y quieres hacer la mitad, necesitas $\frac{1}{2} \times \frac{3}{4} = \frac{3}{8}$ de taza.
+    sections:
+      - title: Numerador por numerador, denominador por denominador
+        concept: El producto de dos fracciones tiene por numerador el producto de los numeradores y por denominador el producto de los denominadores.
+        explanation: |-
+          ¿Cuánto es la mitad de $\frac{3}{4}$? Si cada cuarto se parte en 2, salen octavos; de los 3 cuartos tomamos la mitad, que son 3 octavos:
+
+          $$\frac{1}{2} \times \frac{3}{4} = \frac{1 \times 3}{2 \times 4} = \frac{3}{8}$$
+
+          En la multiplicación **no hace falta denominador común**: se multiplica directamente arriba con arriba y abajo con abajo.
+
+          **Fracción por entero.** Escribe el entero con denominador 1: $4 \times \frac{2}{5} = \frac{4}{1} \times \frac{2}{5} = \frac{8}{5}$. En la práctica, se multiplica el entero sólo por el numerador.
+
+          **Simplificar antes de multiplicar.** Si un numerador y un denominador (aunque sean de fracciones distintas) tienen un divisor común, se puede dividir entre él antes de multiplicar. Así los números son más pequeños:
+
+          $$\frac{4}{9} \times \frac{3}{8} = \frac{\cancel{4}^{\,1} \times \cancel{3}^{\,1}}{\cancel{9}_{\,3} \times \cancel{8}_{\,2}} = \frac{1}{6}$$
+
+          (Se dividió 4 y 8 entre 4, y 3 y 9 entre 3.) Multiplicar primero da $\frac{12}{72}$, que al simplificar también es $\frac{1}{6}$.
+
+          Observa que al multiplicar por una fracción propia el resultado es **menor** que el número original: tomar una parte de algo da menos que el todo.
+        definition: |-
+          Para $b, d \neq 0$: $\frac{a}{b} \times \frac{c}{d} = \frac{a \times c}{b \times d}$.
+        rules:
+          - 'Numerador: producto de numeradores. Denominador: producto de denominadores.'
+          - 'Un entero $n$ es $\frac{n}{1}$.'
+          - 'Se puede simplificar en cruz antes de multiplicar.'
+        examples:
+          - problem: 'Calcula y simplifica $\frac{2}{3} \times \frac{3}{4}$'
+            solution: |-
+              **Paso 1.** Numeradores: $2 \times 3 = 6$. Denominadores: $3 \times 4 = 12$. Queda $\frac{6}{12}$.
+
+              **Paso 2.** Simplificamos entre 6: $\frac{6}{12} = \frac{1}{2}$.
+
+              Resultado: $\frac{1}{2}$.
+          - problem: 'Calcula $\frac{5}{6} \times 3$'
+            solution: |-
+              **Paso 1.** $\frac{5}{6} \times \frac{3}{1} = \frac{15}{6}$.
+
+              **Paso 2.** Simplificamos entre 3: $\frac{15}{6} = \frac{5}{2}$.
+
+              Resultado: $\frac{5}{2} = 2\,\frac{1}{2}$.
+        common_errors:
+          - 'Buscar un denominador común como en la suma: en la multiplicación no hace falta.'
+          - 'Al multiplicar por un entero, multiplicar también el denominador: $3 \times \frac{5}{6} \neq \frac{15}{18}$.'
+          - 'Simplificar dos numeradores entre sí (sólo se simplifica un numerador con un denominador).'
+        summary: |-
+          Para multiplicar fracciones, multiplica numeradores y denominadores. Simplifica antes o después.
+        check:
+          question: '¿Cuánto es $\frac{3}{5} \times \frac{10}{9}$, simplificado?'
+          options: ['$\frac{2}{3}$', '$\frac{13}{14}$', '$\frac{30}{14}$']
+          answer: 0
+          explanation: |-
+            $\frac{3 \times 10}{5 \times 9} = \frac{30}{45} = \frac{2}{3}$ (dividiendo entre 15). $\frac{13}{14}$ suma en lugar de multiplicar.
+    glossary:
+      - {term: Producto de fracciones, definition: 'Fracción cuyo numerador y denominador son los productos de los numeradores y de los denominadores.'}
+      - {term: Simplificar en cruz, definition: 'Dividir un numerador y un denominador de fracciones distintas por un divisor común antes de multiplicar.'}
+
+  t05:
+    intro:
+      what: |-
+        Dividir fracciones consiste en multiplicar la primera fracción por el inverso de la segunda: $\frac{2}{3} \div \frac{4}{5} = \frac{2}{3} \times \frac{5}{4}$.
+      purpose: |-
+        Sirve para saber cuántas veces cabe una cantidad fraccionaria en otra, o para repartir una cantidad fraccionaria.
+      importance: |-
+        Aparece en problemas de reparto, de medidas ("¿cuántos vasos de $\frac{1}{4}$ de litro salen de 3 litros?") y en las proporciones.
+      foundations: |-
+        Dividir entre un número es multiplicar por su inverso multiplicativo (bloque 08, tema 5). El inverso de $\frac{c}{d}$ es $\frac{d}{c}$, porque $\frac{c}{d} \times \frac{d}{c} = 1$.
+      prerequisites:
+        - 'Elemento inverso (bloque 08, tema 5)'
+        - 'Relación entre multiplicación y división (bloque 07)'
+        - 'Multiplicación de fracciones (bloque 15, tema 4)'
+      outcomes:
+        - 'Dividir fracciones entre sí'
+        - 'Dividir un entero entre una fracción y una fracción entre un entero'
+      everyday_example: |-
+        Con 3 litros de jugo, ¿cuántos vasos de $\frac{1}{4}$ de litro se llenan? $3 \div \frac{1}{4} = 3 \times 4 = 12$ vasos.
+    sections:
+      - title: Multiplicar por el inverso
+        concept: Para dividir entre una fracción se multiplica por su inverso, que se obtiene intercambiando numerador y denominador.
+        explanation: |-
+          **Idea.** ¿Cuántos cuartos caben en 3 unidades? Cada unidad tiene 4 cuartos, así que en 3 unidades caben 12. Es decir:
+
+          $$3 \div \frac{1}{4} = 3 \times 4 = 12$$
+
+          Dividir entre $\frac{1}{4}$ dio lo mismo que multiplicar por 4, que es el **inverso** de $\frac{1}{4}$.
+
+          **Regla general.** El inverso de $\frac{c}{d}$ es $\frac{d}{c}$ (se "da la vuelta"). Para dividir:
+
+          $$\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$$
+
+          **¿Por qué funciona?** Una división se comprueba multiplicando (bloque 07): el cociente por el divisor debe dar el dividendo. Y en efecto, $\left(\frac{a}{b} \times \frac{d}{c}\right) \times \frac{c}{d} = \frac{a}{b} \times 1 = \frac{a}{b}$.
+
+          **Con enteros**: escribe el entero con denominador 1. Así, $\frac{3}{4} \div 2 = \frac{3}{4} \times \frac{1}{2} = \frac{3}{8}$.
+
+          No se puede dividir entre la fracción $\frac{0}{d} = 0$: no tiene inverso.
+        definition: |-
+          Para $b, c, d \neq 0$: $\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \frac{d}{c} = \frac{a \times d}{b \times c}$.
+        rules:
+          - 'Se mantiene la primera fracción.'
+          - 'Se cambia la división por multiplicación y se invierte la segunda fracción.'
+          - 'Se multiplica y se simplifica.'
+        examples:
+          - problem: 'Calcula $\frac{2}{3} \div \frac{4}{5}$'
+            solution: |-
+              **Paso 1.** Inverso de $\frac{4}{5}$: $\frac{5}{4}$.
+
+              **Paso 2.** $\frac{2}{3} \times \frac{5}{4} = \frac{10}{12}$.
+
+              **Paso 3.** Simplificamos entre 2: $\frac{5}{6}$.
+
+              Resultado: $\frac{5}{6}$.
+          - problem: 'Calcula $6 \div \frac{2}{3}$'
+            solution: |-
+              **Paso 1.** $6 = \frac{6}{1}$; inverso de $\frac{2}{3}$: $\frac{3}{2}$.
+
+              **Paso 2.** $\frac{6}{1} \times \frac{3}{2} = \frac{18}{2} = 9$.
+
+              Resultado: $9$. (En 6 unidades caben 9 trozos de $\frac{2}{3}$.)
+        common_errors:
+          - 'Invertir la primera fracción en lugar de la segunda.'
+          - 'Invertir y además seguir dividiendo, en vez de multiplicar.'
+          - 'Pensar que dividir siempre da un número menor: dividir entre una fracción propia da un número mayor.'
+        summary: |-
+          Para dividir fracciones, multiplica la primera por el inverso de la segunda. Dividir entre una fracción menor que 1 hace crecer el resultado.
+        check:
+          question: '¿Cuánto es $\frac{3}{5} \div \frac{9}{10}$, simplificado?'
+          options: ['$\frac{2}{3}$', '$\frac{27}{50}$', '$\frac{3}{2}$']
+          answer: 0
+          explanation: |-
+            $\frac{3}{5} \times \frac{10}{9} = \frac{30}{45} = \frac{2}{3}$. $\frac{27}{50}$ multiplica sin invertir y $\frac{3}{2}$ invierte el resultado.
+    glossary:
+      - {term: Inverso de una fracción, definition: 'Fracción que se obtiene intercambiando numerador y denominador; su producto con la original es 1.'}
+      - {term: Recíproco, definition: 'Otro nombre del inverso multiplicativo.'}
+
+  t06:
+    intro:
+      what: |-
+        Las operaciones combinadas con fracciones son expresiones con varias operaciones entre fracciones, que se resuelven con la misma jerarquía que con números enteros.
+      purpose: |-
+        Sirve para resolver cálculos de varios pasos con fracciones, como los de recetas, medidas o fórmulas.
+      importance: |-
+        Reúne todo lo aprendido en el bloque y en el bloque 09. Es la forma en que aparecen las fracciones en problemas reales y en álgebra.
+      foundations: |-
+        La jerarquía de operaciones (bloque 09): agrupaciones; potencias y raíces; multiplicaciones y divisiones; sumas y restas. Cada operación se hace con las reglas de este bloque.
+      prerequisites:
+        - 'Jerarquía de operaciones (bloque 09)'
+        - 'Suma, resta, multiplicación y división de fracciones (bloque 15, temas 1 a 5)'
+      outcomes:
+        - 'Resolver expresiones con dos o tres operaciones entre fracciones'
+        - 'Resolver expresiones con paréntesis'
+      everyday_example: |-
+        Tienes $\frac{1}{2}$ kilo de harina y compras 3 bolsas de $\frac{1}{4}$ de kilo. En total tienes $\frac{1}{2} + 3 \times \frac{1}{4} = \frac{1}{2} + \frac{3}{4} = \frac{5}{4}$ kilos.
+    sections:
+      - title: La jerarquía también vale con fracciones
+        concept: Primero paréntesis, luego multiplicaciones y divisiones, y al final sumas y restas, simplificando en cada paso.
+        explanation: |-
+          Con fracciones **no cambia nada del orden**: se aplica la jerarquía del bloque 09.
+
+          1. Paréntesis (y demás agrupaciones), de dentro hacia fuera.
+          2. Potencias y raíces.
+          3. Multiplicaciones y divisiones, de izquierda a derecha.
+          4. Sumas y restas, de izquierda a derecha.
+
+          Consejos prácticos:
+
+          - **Simplifica en cada paso**: trabajar con fracciones irreducibles mantiene los números pequeños.
+          - Busca el denominador común sólo cuando vayas a **sumar o restar**; para multiplicar o dividir no hace falta.
+          - Escribe una línea por paso, como en el bloque 09.
+
+          Por ejemplo, en $\frac{1}{4} + \frac{1}{2} \times \frac{1}{2}$ primero se multiplica ($\frac{1}{4}$) y después se suma: $\frac{1}{4} + \frac{1}{4} = \frac{2}{4} = \frac{1}{2}$. Sumar primero daría $\frac{3}{4} \times \frac{1}{2} = \frac{3}{8}$, que es incorrecto.
+        definition: |-
+          Una **operación combinada con fracciones** es una expresión con varias operaciones entre fracciones; su valor se obtiene aplicando la jerarquía de operaciones y, en cada paso, las reglas de operación con fracciones.
+        rules:
+          - 'Misma jerarquía que con enteros.'
+          - 'Denominador común sólo para sumar y restar.'
+          - 'Simplificar en cada paso.'
+        examples:
+          - problem: 'Calcula $\frac{1}{2} + \frac{1}{3} \times \frac{3}{4}$'
+            solution: |-
+              **Paso 1.** Multiplicación: $\frac{1}{3} \times \frac{3}{4} = \frac{3}{12} = \frac{1}{4}$.
+
+              **Paso 2.** Suma: $\frac{1}{2} + \frac{1}{4} = \frac{2}{4} + \frac{1}{4} = \frac{3}{4}$.
+
+              Resultado: $\frac{3}{4}$.
+          - problem: 'Calcula $\left(\frac{1}{2} + \frac{1}{3}\right) \times \frac{6}{5}$'
+            solution: |-
+              **Paso 1.** Paréntesis: $\frac{3}{6} + \frac{2}{6} = \frac{5}{6}$.
+
+              **Paso 2.** $\frac{5}{6} \times \frac{6}{5} = \frac{30}{30} = 1$.
+
+              Resultado: $1$.
+          - problem: 'Calcula $\frac{2}{3} \times \frac{3}{4} + \frac{1}{2} \div \frac{2}{5}$'
+            solution: |-
+              **Paso 1.** Segundo nivel: $\frac{2}{3} \times \frac{3}{4} = \frac{6}{12} = \frac{1}{2}$ y $\frac{1}{2} \div \frac{2}{5} = \frac{1}{2} \times \frac{5}{2} = \frac{5}{4}$.
+
+              **Paso 2.** Suma: $\frac{1}{2} + \frac{5}{4} = \frac{2}{4} + \frac{5}{4} = \frac{7}{4}$.
+
+              Resultado: $\frac{7}{4} = 1\,\frac{3}{4}$.
+        common_errors:
+          - 'Operar de izquierda a derecha sin respetar la jerarquía.'
+          - 'Buscar denominador común antes de una multiplicación, complicando el cálculo.'
+          - 'No simplificar los resultados intermedios.'
+        summary: |-
+          Con fracciones se usa la misma jerarquía de siempre; cada operación se hace con su regla y se simplifica en cada paso.
+        check:
+          question: '¿Cuánto es $\frac{1}{4} + \frac{1}{2} \times \frac{1}{2}$?'
+          options: ['$\frac{1}{2}$', '$\frac{3}{8}$', '$\frac{1}{4}$']
+          answer: 0
+          explanation: |-
+            Primero $\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}$; luego $\frac{1}{4} + \frac{1}{4} = \frac{1}{2}$. $\frac{3}{8}$ resulta de sumar antes de multiplicar.
+    glossary:
+      - {term: Resultado intermedio, definition: 'Valor obtenido en un paso de la resolución, antes del resultado final.'}
+
+  t07:
+    intro:
+      what: |-
+        Este tema trata la conversión entre números mixtos y fracciones impropias y su uso al operar: para sumar, restar, multiplicar o dividir números mixtos, se convierten primero en fracciones impropias.
+      purpose: |-
+        Sirve para operar con cantidades como "2 tazas y media" o "1 hora y cuarto" sin errores.
+      importance: |-
+        En la vida diaria las cantidades se expresan como números mixtos, pero las reglas de operación funcionan con fracciones. Convertir bien evita errores muy frecuentes, sobre todo al multiplicar.
+      foundations: |-
+        Las conversiones del bloque 14 (tema 7): $a\,\frac{b}{c} = \frac{a \times c + b}{c}$, y al revés mediante la división con residuo.
+      prerequisites:
+        - 'Números mixtos (bloque 14, tema 7)'
+        - 'Operaciones con fracciones (bloque 15, temas 1 a 5)'
+      outcomes:
+        - 'Convertir con soltura entre números mixtos y fracciones impropias'
+        - 'Operar con números mixtos'
+      everyday_example: |-
+        Si un tablón mide $2\,\frac{1}{2}$ metros y necesitas $1\,\frac{1}{5}$ veces esa longitud, la medida es $\frac{5}{2} \times \frac{6}{5} = 3$ metros.
+    sections:
+      - title: Repaso de la conversión
+        concept: Mixto a impropia multiplicando y sumando; impropia a mixto dividiendo.
+        explanation: |-
+          **Mixto a impropia**: entero por denominador, más numerador; mismo denominador.
+
+          $$2\,\frac{1}{3} = \frac{2 \times 3 + 1}{3} = \frac{7}{3}$$
+
+          **Impropia a mixto**: divide el numerador entre el denominador; el cociente es el entero y el residuo, el numerador.
+
+          $$\frac{17}{5}: \ 17 \div 5 = 3 \text{ residuo } 2 \ \Rightarrow \ 3\,\frac{2}{5}$$
+
+          **¿Cuándo usar cada forma?**
+
+          - Para **calcular**, usa fracciones impropias: las reglas de este bloque se aplican directamente.
+          - Para **comunicar el resultado** en un contexto cotidiano, el número mixto suele ser más claro ("3 kilos y dos quintos").
+
+          Recuerda que $2\,\frac{1}{3}$ significa $2 + \frac{1}{3}$, **no** $2 \times \frac{1}{3}$.
+        definition: |-
+          $a\,\frac{b}{c} = \frac{a \times c + b}{c}$; y si $n = c \times q + r$ con $0 < r < c$, entonces $\frac{n}{c} = q\,\frac{r}{c}$.
+        rules:
+          - 'Mixto a impropia: $a \times c + b$ sobre $c$.'
+          - 'Impropia a mixto: cociente, residuo y mismo denominador.'
+          - 'Se calcula con impropias y se expresa con mixtos si conviene.'
+        examples:
+          - problem: 'Convierte $4\,\frac{3}{8}$ en fracción impropia y $\frac{29}{6}$ en número mixto.'
+            solution: |-
+              **Paso 1.** $4 \times 8 + 3 = 35$: $4\,\frac{3}{8} = \frac{35}{8}$.
+
+              **Paso 2.** $29 \div 6 = 4$, residuo 5: $\frac{29}{6} = 4\,\frac{5}{6}$.
+
+              Resultado: $\frac{35}{8}$ y $4\,\frac{5}{6}$.
+        common_errors:
+          - 'Sumar el entero al numerador sin multiplicarlo por el denominador.'
+          - 'Leer el número mixto como una multiplicación.'
+        summary: |-
+          Mixto a impropia: multiplicar y sumar. Impropia a mixto: dividir. Se opera con impropias.
+        check:
+          question: '¿Cuál es la fracción impropia equivalente a $3\,\frac{1}{4}$?'
+          options: ['$\frac{13}{4}$', '$\frac{4}{4}$', '$\frac{12}{4}$']
+          answer: 0
+          explanation: |-
+            $3 \times 4 + 1 = 13$: $\frac{13}{4}$. $\frac{4}{4}$ suma el entero sin multiplicar, y $\frac{12}{4}$ olvida el cuarto adicional.
+      - title: Operar con números mixtos
+        concept: Se convierten los mixtos en impropias, se opera y se vuelve a mixto si se desea.
+        explanation: |-
+          **Procedimiento**
+
+          1. Convierte cada número mixto en fracción impropia.
+          2. Opera con las reglas de este bloque.
+          3. Simplifica y, si conviene, expresa el resultado como número mixto.
+
+          **Atención con la multiplicación.** Es un error frecuente multiplicar "enteros con enteros y fracciones con fracciones":
+
+          $$2\,\frac{1}{2} \times 1\,\frac{1}{5} \neq 2 \times 1 + \frac{1}{2} \times \frac{1}{5}$$
+
+          Eso olvida productos cruzados (como $2 \times \frac{1}{5}$). Lo correcto es convertir: $\frac{5}{2} \times \frac{6}{5} = \frac{30}{10} = 3$.
+
+          En la **suma** sí se podrían sumar enteros y fracciones por separado (por las propiedades conmutativa y asociativa), pero convertir a impropias funciona siempre y evita confusiones.
+        definition: |-
+          Para operar con números mixtos se sustituyen por sus fracciones impropias equivalentes y se aplican las reglas de las operaciones con fracciones.
+        rules:
+          - 'Convertir a impropias antes de operar.'
+          - 'Nunca multiplicar o dividir por separado las partes enteras y las fraccionarias.'
+        examples:
+          - problem: 'Calcula $1\,\frac{1}{2} + 2\,\frac{2}{3}$'
+            solution: |-
+              **Paso 1.** $1\,\frac{1}{2} = \frac{3}{2}$ y $2\,\frac{2}{3} = \frac{8}{3}$.
+
+              **Paso 2.** $\text{MCM}(2, 3) = 6$: $\frac{9}{6} + \frac{16}{6} = \frac{25}{6}$.
+
+              **Paso 3.** $25 \div 6 = 4$, residuo 1.
+
+              Resultado: $\frac{25}{6} = 4\,\frac{1}{6}$.
+          - problem: 'Calcula $2\,\frac{1}{2} \times 1\,\frac{1}{5}$'
+            solution: |-
+              **Paso 1.** $2\,\frac{1}{2} = \frac{5}{2}$ y $1\,\frac{1}{5} = \frac{6}{5}$.
+
+              **Paso 2.** $\frac{5}{2} \times \frac{6}{5} = \frac{30}{10} = 3$.
+
+              Resultado: $3$.
+        common_errors:
+          - 'Multiplicar parte entera con parte entera y fracción con fracción.'
+          - 'Olvidar convertir uno de los números mixtos.'
+        summary: |-
+          Para operar con números mixtos, conviértelos en impropias, opera y vuelve a número mixto si te lo piden.
+        check:
+          question: '¿Cuánto es $1\,\frac{1}{2} \times 1\,\frac{1}{2}$?'
+          options: ['$2\,\frac{1}{4}$', '$1\,\frac{1}{4}$', '$2\,\frac{1}{2}$']
+          answer: 0
+          explanation: |-
+            $\frac{3}{2} \times \frac{3}{2} = \frac{9}{4} = 2\,\frac{1}{4}$. $1\,\frac{1}{4}$ resulta de multiplicar por separado enteros ($1 \times 1$) y fracciones ($\frac{1}{2} \times \frac{1}{2}$).
+    glossary:
+      - {term: Número mixto, definition: 'Entero seguido de una fracción propia, como $2\,\frac{1}{3}$.'}
+      - {term: Fracción impropia, definition: 'Fracción con numerador mayor que el denominador.'}
+
+  t08:
+    intro:
+      what: |-
+        Este tema aplica las operaciones con fracciones a problemas de la vida cotidiana: partes de una cantidad, lo que queda, partes "del resto" y el cálculo del total a partir de una parte.
+      purpose: |-
+        Sirve para resolver situaciones reales de dinero, tiempo, recetas y medidas en las que aparecen fracciones.
+      importance: |-
+        Las fracciones se usan constantemente para describir partes (un tercio del sueldo, la mitad del camino). Saber traducir el enunciado a operaciones es tan importante como saber calcular.
+      foundations: |-
+        "$\frac{a}{b}$ de" significa multiplicar por $\frac{a}{b}$; el todo es la fracción $1 = \frac{b}{b}$; y lo que queda es $1$ menos lo usado.
+      prerequisites:
+        - 'Fracción de una cantidad (bloque 14, tema 1)'
+        - 'Operaciones con fracciones (bloque 15, temas 1 a 7)'
+        - 'Resolución paso a paso (bloque 09, tema 8)'
+      outcomes:
+        - 'Calcular fracciones de cantidades y lo que queda'
+        - 'Resolver problemas de "fracción del resto"'
+        - 'Hallar el total conociendo una parte'
+      everyday_example: |-
+        Cobras 1200 pesos y destinas $\frac{1}{3}$ al alquiler. El alquiler cuesta $\frac{1}{3} \times 1200 = 400$ pesos y te quedan 800.
+    sections:
+      - title: Partes, resto y fracción del resto
+        concept: Se traduce cada frase a una operación con fracciones y se aplica a la cantidad total.
+        explanation: |-
+          **Fracción de una cantidad.** "$\frac{3}{5}$ de 40" es $\frac{3}{5} \times 40 = 40 \div 5 \times 3 = 24$.
+
+          **Lo que queda.** Si se usa $\frac{2}{5}$ de algo, queda $1 - \frac{2}{5} = \frac{3}{5}$ (recuerda que el todo es $\frac{5}{5} = 1$).
+
+          **Fracción del resto.** Es la situación más delicada. "Gasta $\frac{1}{3}$ y luego $\frac{1}{4}$ **del resto**": el segundo $\frac{1}{4}$ no se aplica al total, sino a lo que quedó.
+
+          - Tras gastar $\frac{1}{3}$, queda $\frac{2}{3}$.
+          - $\frac{1}{4}$ del resto es $\frac{1}{4} \times \frac{2}{3} = \frac{2}{12} = \frac{1}{6}$ del total.
+          - Queda $\frac{2}{3} - \frac{1}{6} = \frac{4}{6} - \frac{1}{6} = \frac{3}{6} = \frac{1}{2}$ del total.
+
+          **Pasos generales**
+
+          1. Identifica el total y cada fracción (¿del total o del resto?).
+          2. Calcula con fracciones o con cantidades, paso a paso.
+          3. Responde con una frase y unidades, y comprueba que el resultado es razonable.
+        definition: |-
+          En un problema con fracciones, "$\frac{a}{b}$ de $C$" es $\frac{a}{b} \times C$; la parte que queda tras usar $\frac{a}{b}$ es $1 - \frac{a}{b}$; y una fracción "del resto" se multiplica por la fracción que quedaba.
+        rules:
+          - '"De" significa multiplicar.'
+          - 'Lo que queda: $1$ menos lo usado.'
+          - '"Del resto": la fracción se aplica a lo que quedó, no al total.'
+        examples:
+          - problem: 'Un depósito de 60 litros está lleno y se gastan $\frac{2}{5}$. ¿Cuántos litros quedan?'
+            solution: |-
+              **Paso 1.** Queda $1 - \frac{2}{5} = \frac{3}{5}$ del depósito.
+
+              **Paso 2.** $\frac{3}{5}$ de 60: $60 \div 5 = 12$; $12 \times 3 = 36$.
+
+              Respuesta: quedan 36 litros.
+          - problem: 'Ana tiene 120 pesos. Gasta $\frac{1}{3}$ en un libro y $\frac{1}{4}$ del resto en comida. ¿Cuánto le queda?'
+            solution: |-
+              **Paso 1.** Libro: $\frac{1}{3} \times 120 = 40$. Resto: $120 - 40 = 80$.
+
+              **Paso 2.** Comida: $\frac{1}{4} \times 80 = 20$. Queda $80 - 20 = 60$.
+
+              **Paso 3.** Comprobación con fracciones: queda $\frac{1}{2}$ del total, y $\frac{1}{2} \times 120 = 60$.
+
+              Respuesta: le quedan 60 pesos.
+        common_errors:
+          - 'Aplicar la fracción "del resto" al total: $\frac{1}{4}$ de 120 sería 30, no 20.'
+          - 'Dar lo gastado cuando se pregunta lo que queda.'
+          - 'Dividir entre el numerador y multiplicar por el denominador.'
+        summary: |-
+          "De" es multiplicar; lo que queda es $1$ menos lo usado; y "del resto" se aplica a lo que quedaba. Responde siempre con unidades.
+        check:
+          question: 'Juan tiene 90 pesos y gasta $\frac{2}{9}$ de su dinero. ¿Cuántos pesos gasta?'
+          options: ['$20$', '$70$', '$45$']
+          answer: 0
+          explanation: |-
+            $90 \div 9 = 10$ y $10 \times 2 = 20$ pesos. El 70 es lo que le queda, no lo que gasta.
+      - title: Hallar el total a partir de una parte
+        concept: Si se conoce cuánto vale una fracción del total, se divide entre el numerador y se multiplica por el denominador.
+        explanation: |-
+          A veces se conoce la **parte** y se pregunta por el **total**. Por ejemplo: "$\frac{2}{3}$ de un número es 18. ¿Cuál es el número?"
+
+          Razonamiento con las partes:
+
+          - $\frac{2}{3}$ son 2 partes de 3 y valen 18, así que **una** parte ($\frac{1}{3}$) vale $18 \div 2 = 9$.
+          - El total son **3** partes: $9 \times 3 = 27$.
+
+          Comprobación: $\frac{2}{3}$ de 27 es $27 \div 3 \times 2 = 18$. ✔
+
+          Es el camino inverso al de "fracción de una cantidad": allí se divide entre el denominador y se multiplica por el numerador; aquí se divide entre el **numerador** y se multiplica por el **denominador**. Equivale a dividir la parte entre la fracción: $18 \div \frac{2}{3} = 18 \times \frac{3}{2} = 27$.
+        definition: |-
+          Si $\frac{a}{b}$ de un total $T$ vale $P$, entonces $T = P \div \frac{a}{b} = P \div a \times b$.
+        rules:
+          - 'Una parte: lo conocido dividido entre el numerador.'
+          - 'El total: una parte por el denominador.'
+          - 'Comprueba calculando la fracción del total obtenido.'
+        examples:
+          - problem: 'Las $\frac{3}{4}$ partes de los alumnos de una clase son 24. ¿Cuántos alumnos hay?'
+            solution: |-
+              **Paso 1.** Un cuarto: $24 \div 3 = 8$.
+
+              **Paso 2.** El total (cuatro cuartos): $8 \times 4 = 32$.
+
+              **Paso 3.** Comprobación: $\frac{3}{4}$ de 32 es $32 \div 4 \times 3 = 24$.
+
+              Respuesta: hay 32 alumnos.
+        common_errors:
+          - 'Calcular la fracción de la parte ($\frac{3}{4}$ de 24) en lugar de buscar el total.'
+          - 'Obtener un total menor que la parte conocida.'
+        summary: |-
+          Para hallar el total a partir de una parte, divide entre el numerador y multiplica por el denominador. Comprueba el resultado.
+        check:
+          question: 'Si $\frac{3}{5}$ de un número es 30, ¿cuál es el número?'
+          options: ['$50$', '$18$', '$90$']
+          answer: 0
+          explanation: |-
+            $30 \div 3 = 10$ (un quinto) y $10 \times 5 = 50$. El 18 es $\frac{3}{5}$ de 30, que no es lo que se pregunta.
+    glossary:
+      - {term: Fracción del resto, definition: 'Fracción que se aplica a lo que queda después de una primera parte, no al total.'}
+      - {term: Fracción complementaria, definition: 'Lo que falta para completar la unidad: $1 - \frac{a}{b}$.'}

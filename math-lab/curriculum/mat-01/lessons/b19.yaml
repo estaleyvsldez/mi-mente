@@ -1,0 +1,831 @@
+block: b19
+intro: >-
+  La radicación es la operación inversa de la potenciación: si sabemos que
+  $7^2 = 49$, la raíz cuadrada de $49$ es $7$. En este bloque aprenderás qué
+  es una raíz, sus elementos, cómo calcular raíces cuadradas y cúbicas exactas,
+  cómo aproximar las que no son exactas, sus propiedades, cómo simplificarlas
+  y para qué sirven en problemas de áreas y volúmenes.
+topics:
+  t01:
+    intro:
+      what: >-
+        Una raíz responde a la pregunta "¿qué número, elevado a cierto
+        exponente, da este resultado?". Por ejemplo, $\sqrt{49} = 7$ porque
+        $7^2 = 49$.
+      purpose: >-
+        Sirve para deshacer una potencia: encontrar la base cuando se conoce la
+        potencia y el exponente.
+      importance: >-
+        Las raíces aparecen al calcular el lado de un cuadrado conocida su
+        área, en geometría, en física y en estadística.
+      foundations: >-
+        Se basa en la idea de operación inversa, como la resta deshace la suma
+        y la división deshace la multiplicación (b05, b07).
+      prerequisites:
+        - 'Concepto de potencia, base y exponente (b18)'
+        - 'Cuadrados y cubos (b18)'
+        - 'Relación entre multiplicación y división como operaciones inversas (b07)'
+      outcomes:
+        - 'Explicar qué significa una raíz'
+        - 'Comprobar una raíz elevando el resultado'
+        - 'Relacionar raíces con la pregunta inversa de la potencia'
+      everyday_example: >-
+        Un mantel cuadrado cubre $4$ m². ¿Cuánto mide de lado? El número que al
+        cuadrado da $4$ es $2$: mide $2$ m.
+    sections:
+      - title: La operación inversa de la potencia
+        concept: Calcular una raíz es buscar la base de una potencia conocida.
+        explanation: |-
+          En la potenciación conocemos la base y el exponente y buscamos el resultado: $7^2 = \,?$ → $49$.
+
+          En la **radicación** conocemos el resultado y el exponente y buscamos la base: $?^2 = 49$ → $7$. Se escribe
+          $$\sqrt{49} = 7$$
+          y se lee "la raíz cuadrada de 49 es 7".
+
+          Toda raíz se **comprueba** elevando: $\sqrt{49} = 7$ es correcto porque $7^2 = 49$.
+
+          Observa que también $(-7)^2 = 49$. Para que el símbolo $\sqrt{\;}$ dé un único resultado, se acuerda que **la raíz cuadrada es el valor no negativo**: $\sqrt{49} = 7$. (Cuando haga falta, se dice que las soluciones de $x^2 = 49$ son $7$ y $-7$.)
+
+          Además, **ningún número real elevado al cuadrado da negativo** (positivo por positivo y negativo por negativo dan positivo, b06). Por eso $\sqrt{-49}$ no existe entre los números reales.
+
+          Igual que hay potencias de exponente 3, 4…, hay raíces cúbicas, cuartas… que estudiarás en los temas siguientes.
+        definition: >-
+          Para $a \ge 0$, la raíz cuadrada $\sqrt{a}$ es el número $r \ge 0$ tal
+          que $r^2 = a$. En general, la raíz $n$-ésima de $a$ es un número $r$
+          tal que $r^n = a$.
+        rules:
+          - '$\sqrt{a} = r$ significa $r^2 = a$, con $r \ge 0$.'
+          - 'Una raíz se comprueba elevando el resultado.'
+          - 'La raíz cuadrada de un número negativo no existe en los reales.'
+        examples:
+          - problem: '¿Cuánto es $\sqrt{36}$? Comprueba.'
+            solution: |-
+              **Paso 1.** Buscamos un número no negativo que al cuadrado dé $36$.
+              **Paso 2.** $6^2 = 6 \times 6 = 36$.
+              **Comprobación:** $6^2 = 36$ ✓.
+              Resultado: $\sqrt{36} = 6$.
+          - problem: '¿Es cierto que $\sqrt{100} = 50$?'
+            solution: |-
+              **Paso 1.** Comprobamos elevando: $50^2 = 2500 \neq 100$. Es falso.
+              **Paso 2.** El número correcto es $10$, porque $10^2 = 100$.
+              Resultado: $\sqrt{100} = 10$.
+        common_errors:
+          - 'Dividir entre 2: $\sqrt{100}$ no es $50$. La raíz cuadrada no es la mitad.'
+          - 'Dar un resultado negativo para $\sqrt{a}$: el símbolo indica la raíz no negativa.'
+        summary: >-
+          La raíz es la operación inversa de la potencia: $\sqrt{a} = r$
+          significa $r^2 = a$. Siempre se puede comprobar elevando.
+        check:
+          question: '¿Qué significa $\sqrt{64} = 8$?'
+          options: ['Que $64 \div 2 = 8$', 'Que $8^2 = 64$', 'Que $64 \div 8 = 8$ con residuo', 'Que $2^8 = 64$']
+          answer: 1
+          explanation: >-
+            La raíz cuadrada de $64$ es el número que al cuadrado da $64$, y
+            $8^2 = 64$. $64 \div 2 = 32$ y $2^8 = 256$.
+    glossary:
+      - {term: Radicación, definition: 'Operación inversa de la potenciación: encontrar la base conocida la potencia y el exponente.'}
+      - {term: Raíz, definition: 'Resultado de la radicación.'}
+  t02:
+    intro:
+      what: >-
+        La raíz cuadrada de un número $a$ es el número no negativo que
+        multiplicado por sí mismo da $a$: $\sqrt{81} = 9$.
+      purpose: >-
+        Sirve para calcular el lado de un cuadrado conocida su área y, en
+        general, para deshacer un cuadrado.
+      importance: >-
+        Es la raíz más usada en la práctica: geometría, distancias,
+        estadística y fórmulas científicas.
+      foundations: >-
+        Se basa en conocer los cuadrados perfectos (b18) y en la
+        descomposición en factores primos (b11) para números más grandes.
+      prerequisites:
+        - 'Concepto de raíz (b19)'
+        - 'Cuadrados perfectos (b18)'
+        - 'Descomposición en factores primos (b11)'
+      outcomes:
+        - 'Calcular raíces cuadradas exactas de cuadrados perfectos'
+        - 'Calcular raíces cuadradas grandes mediante factorización'
+      everyday_example: >-
+        Para cubrir un patio cuadrado de $144$ m² con baldosas, conviene saber
+        que su lado mide $\sqrt{144} = 12$ m.
+    sections:
+      - title: Raíz cuadrada con la tabla de cuadrados
+        concept: Para hallar $\sqrt{a}$ se busca qué número al cuadrado da $a$.
+        explanation: |-
+          El método más directo es usar la **tabla de cuadrados** que memorizaste en b18:
+
+          | $n$ | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+          |---|---|---|---|---|---|---|---|---|---|---|---|---|
+          | $n^2$ | 1 | 4 | 9 | 16 | 25 | 36 | 49 | 64 | 81 | 100 | 121 | 144 |
+
+          Leída al revés, la tabla da las raíces: $\sqrt{121} = 11$, $\sqrt{49} = 7$.
+
+          Casos especiales: $\sqrt{0} = 0$ y $\sqrt{1} = 1$.
+
+          Para cuadrados de decenas exactas, observa que $(10 \times 3)^2 = 900$, así que $\sqrt{900} = 30$, $\sqrt{2500} = 50$: la raíz de un número terminado en un **par** de ceros se obtiene quitando ese par de ceros y poniendo un cero en la raíz.
+
+          Una pista útil: un cuadrado perfecto nunca termina en $2$, $3$, $7$ u $8$.
+        definition: >-
+          Para $a \ge 0$, $\sqrt{a}$ es el único número $r \ge 0$ con
+          $r \times r = a$.
+        rules:
+          - 'Lee la tabla de cuadrados al revés.'
+          - '$\sqrt{0} = 0$, $\sqrt{1} = 1$.'
+          - 'Si $\sqrt{a} = r$, entonces $\sqrt{a \times 100} = r \times 10$.'
+          - 'Comprueba siempre elevando al cuadrado.'
+        examples:
+          - problem: 'Calcula $\sqrt{144}$ y $\sqrt{4900}$.'
+            solution: |-
+              **Paso 1.** $12^2 = 144$, así que $\sqrt{144} = 12$.
+              **Paso 2.** $4900 = 49 \times 100$ y $\sqrt{49} = 7$; por tanto $\sqrt{4900} = 70$.
+              **Comprobación:** $70^2 = 4900$ ✓.
+              Resultado: $12$ y $70$.
+        common_errors:
+          - 'Confundir la raíz con la mitad: $\sqrt{16} = 4$, no $8$.'
+          - 'Quitar un número impar de ceros: $\sqrt{4000}$ no es $20$ (pues $20^2 = 400$).'
+        summary: >-
+          Las raíces cuadradas exactas pequeñas se obtienen leyendo al revés la
+          tabla de cuadrados; siempre se comprueban elevando.
+        check:
+          question: '¿Cuánto vale $\sqrt{81}$?'
+          options: ['$9$', '$40{,}5$', '$8$', '$27$']
+          answer: 0
+          explanation: >-
+            $9^2 = 81$, así que $\sqrt{81} = 9$. $40{,}5$ es la mitad de $81$,
+            y $8^2 = 64$.
+      - title: Raíz cuadrada por factorización
+        concept: Si un número se descompone en factores primos con exponentes pares, su raíz se obtiene dividiendo los exponentes entre 2.
+        explanation: |-
+          Para números grandes, como $324$, la tabla no basta. Usamos la **descomposición en factores primos** (b11):
+          $324 = 2^2 \times 3^4$.
+
+          Buscamos un número que, al cuadrado, dé $324$. Como al elevar al cuadrado se **duplican** los exponentes (potencia de una potencia, b18), la raíz se obtiene **dividiendo cada exponente entre 2**:
+          $\sqrt{2^2 \times 3^4} = 2^1 \times 3^2 = 2 \times 9 = 18$.
+
+          Comprobación: $18^2 = 324$ ✓.
+
+          Este método funciona cuando **todos los exponentes son pares**: entonces el número es un cuadrado perfecto. Si algún exponente es impar, la raíz no es exacta (lo verás en "Raíces exactas" y "Raíces aproximadas").
+        definition: >-
+          Si $a = p_1^{2k_1} \times p_2^{2k_2} \times \cdots$, entonces
+          $\sqrt{a} = p_1^{k_1} \times p_2^{k_2} \times \cdots$.
+        rules:
+          - 'Descompón el número en factores primos.'
+          - 'Si todos los exponentes son pares, divide cada uno entre 2.'
+          - 'Multiplica los factores resultantes y comprueba.'
+        examples:
+          - problem: 'Calcula $\sqrt{576}$ por factorización.'
+            solution: |-
+              **Paso 1.** $576 = 2 \times 288 = 2^2 \times 144 = \cdots = 2^6 \times 3^2$ (pues $2^6 = 64$ y $64 \times 9 = 576$).
+              **Paso 2.** Exponentes pares: los dividimos entre 2: $2^3 \times 3^1$.
+              **Paso 3.** $8 \times 3 = 24$.
+              **Comprobación:** $24^2 = 576$ ✓.
+              Resultado: $\sqrt{576} = 24$.
+        common_errors:
+          - 'Dividir entre 2 los factores primos en lugar de los exponentes.'
+          - 'Olvidar algún factor de la descomposición.'
+        summary: >-
+          Factoriza: si todos los exponentes son pares, la raíz cuadrada se
+          obtiene dividiéndolos entre 2.
+        check:
+          question: 'Si $196 = 2^2 \times 7^2$, ¿cuánto vale $\sqrt{196}$?'
+          options: ['$98$', '$28$', '$14$', '$49$']
+          answer: 2
+          explanation: >-
+            Dividiendo los exponentes entre 2: $2 \times 7 = 14$, y
+            $14^2 = 196$. $98$ es la mitad de $196$.
+    glossary:
+      - {term: Raíz cuadrada, definition: 'Número no negativo que elevado al cuadrado da el número dado.'}
+      - {term: Cuadrado perfecto, definition: 'Número natural cuya raíz cuadrada es un número natural.'}
+  t03:
+    intro:
+      what: >-
+        La raíz cúbica de un número $a$, escrita $\sqrt[3]{a}$, es el número
+        que elevado al cubo da $a$: $\sqrt[3]{27} = 3$.
+      purpose: >-
+        Sirve para calcular la arista de un cubo conocido su volumen y, en
+        general, para deshacer un cubo.
+      importance: >-
+        Aparece en problemas de volumen y capacidad, y muestra una diferencia
+        importante con la raíz cuadrada: existe para números negativos.
+      foundations: >-
+        Se basa en los cubos perfectos (b18) y en la regla de los signos de
+        las potencias de enteros (b18).
+      prerequisites:
+        - 'Concepto de raíz (b19)'
+        - 'Cubos perfectos (b18)'
+        - 'Potencias de números enteros (b18)'
+      outcomes:
+        - 'Calcular raíces cúbicas exactas'
+        - 'Calcular raíces cúbicas de números negativos'
+      everyday_example: >-
+        Una caja cúbica de $125$ cm³ tiene una arista de $\sqrt[3]{125} = 5$
+        cm.
+    sections:
+      - title: Deshacer un cubo
+        concept: $\sqrt[3]{a} = r$ significa $r^3 = a$.
+        explanation: |-
+          La raíz cúbica lleva un **3 pequeño** en el símbolo de raíz: $\sqrt[3]{\;}$. Pregunta: ¿qué número multiplicado **tres veces** por sí mismo da el radicando?
+
+          Usamos la tabla de cubos (b18):
+
+          | $n$ | 1 | 2 | 3 | 4 | 5 | 6 | 10 |
+          |---|---|---|---|---|---|---|---|
+          | $n^3$ | 1 | 8 | 27 | 64 | 125 | 216 | 1000 |
+
+          Así, $\sqrt[3]{64} = 4$ y $\sqrt[3]{1000} = 10$.
+
+          **Números negativos.** A diferencia de la raíz cuadrada, la raíz cúbica de un negativo **sí existe**: $(-2)^3 = -8$, porque un número impar de factores negativos da negativo (b18). Por tanto $\sqrt[3]{-8} = -2$. La raíz cúbica conserva el signo del radicando.
+
+          Y como siempre: **se comprueba elevando**, esta vez al cubo.
+        definition: >-
+          Para todo número $a$, la raíz cúbica $\sqrt[3]{a}$ es el único número
+          real $r$ tal que $r^3 = a$.
+        rules:
+          - '$\sqrt[3]{a} = r \iff r^3 = a$.'
+          - 'La raíz cúbica de un positivo es positiva; la de un negativo, negativa.'
+          - 'Se comprueba elevando al cubo.'
+        examples:
+          - problem: 'Calcula $\sqrt[3]{216}$'
+            solution: |-
+              **Paso 1.** Probamos cubos: $5^3 = 125$ (poco), $6^3 = 216$ ✓.
+              Resultado: $\sqrt[3]{216} = 6$.
+          - problem: 'Calcula $\sqrt[3]{-27}$'
+            solution: |-
+              **Paso 1.** El radicando es negativo: la raíz será negativa.
+              **Paso 2.** $3^3 = 27$, así que probamos $-3$: $(-3)^3 = -27$ ✓.
+              Resultado: $\sqrt[3]{-27} = -3$.
+        common_errors:
+          - 'Dividir entre 3: $\sqrt[3]{27}$ no es $9$.'
+          - 'Decir que la raíz cúbica de un negativo no existe: eso sólo pasa con índices pares.'
+          - 'Comprobar elevando al cuadrado en lugar de al cubo.'
+        summary: >-
+          $\sqrt[3]{a}$ es el número que al cubo da $a$. Existe también para
+          negativos y conserva el signo.
+        check:
+          question: '¿Cuánto vale $\sqrt[3]{64}$?'
+          options: ['$8$', '$4$', '$21{,}3$', '$16$']
+          answer: 1
+          explanation: >-
+            $4^3 = 4 \times 4 \times 4 = 64$, así que $\sqrt[3]{64} = 4$. $8$
+            es la raíz cuadrada de $64$, no la cúbica.
+    glossary:
+      - {term: Raíz cúbica, definition: 'Número que elevado al cubo da el número dado.'}
+  t04:
+    intro:
+      what: >-
+        Son los nombres de las partes de una raíz: en $\sqrt[n]{a} = r$, $n$ es
+        el índice, $a$ el radicando y $r$ la raíz.
+      purpose: >-
+        Sirve para leer cualquier raíz (cuadrada, cúbica, cuarta…) y aplicar
+        sus reglas con precisión.
+      importance: >-
+        El índice determina qué potencia se deshace y si la raíz de un negativo
+        existe; el radicando es el número sobre el que se opera.
+      foundations: >-
+        Cada elemento de la raíz corresponde a un elemento de la potencia: el
+        índice al exponente, el radicando a la potencia y la raíz a la base.
+      prerequisites:
+        - 'Base y exponente (b18)'
+        - 'Raíz cuadrada y raíz cúbica (b19)'
+      outcomes:
+        - 'Identificar índice, radicando y raíz'
+        - 'Calcular raíces de índice 4 y 5 sencillas'
+        - 'Decidir si una raíz existe según el índice'
+      everyday_example: >-
+        Como $3^4 = 81$, la raíz cuarta de $81$ es $3$: el índice $4$ indica
+        que buscamos un número que multiplicado cuatro veces dé $81$.
+    sections:
+      - title: Las partes de una raíz
+        concept: El índice dice qué potencia se deshace; el radicando es el número del que se extrae la raíz.
+        explanation: |-
+          En la expresión $\sqrt[n]{a} = r$:
+
+          * $\sqrt{\;}$ es el **signo radical**.
+          * $n$ es el **índice**: el número pequeño a la izquierda. Indica el exponente al que hay que elevar la raíz.
+          * $a$ es el **radicando**: el número que está "dentro" del radical.
+          * $r$ es la **raíz**: el resultado.
+
+          Se cumple $r^n = a$. Comparado con la potencia: el índice es el exponente, el radicando es la potencia y la raíz es la base.
+
+          En la raíz cuadrada el índice $2$ **no se escribe**: $\sqrt{25}$ significa $\sqrt[2]{25}$.
+
+          Ejemplos con otros índices: $\sqrt[4]{81} = 3$ porque $3^4 = 81$; $\sqrt[5]{32} = 2$ porque $2^5 = 32$.
+
+          **¿Cuándo existe?** Si el índice es **par** (2, 4, 6…), el radicando debe ser **mayor o igual que 0**: ningún número elevado a un exponente par da negativo. Si el índice es **impar** (3, 5…), cualquier radicando sirve: $\sqrt[5]{-32} = -2$.
+        definition: >-
+          En $\sqrt[n]{a} = r$ (con $n \ge 2$), $n$ es el índice, $a$ el
+          radicando y $r$ la raíz, y se cumple $r^n = a$. Si $n$ es par, se
+          exige $a \ge 0$ y $r \ge 0$.
+        rules:
+          - 'Índice 2 no se escribe.'
+          - 'Índice par: el radicando no puede ser negativo (en los reales).'
+          - 'Índice impar: la raíz tiene el mismo signo que el radicando.'
+          - 'La raíz se comprueba elevándola al índice.'
+        examples:
+          - problem: 'En $\sqrt[4]{16} = 2$, identifica sus elementos y comprueba.'
+            solution: |-
+              **Paso 1.** Índice: $4$. Radicando: $16$. Raíz: $2$.
+              **Paso 2.** Comprobación: $2^4 = 16$ ✓.
+              Resultado: índice $4$, radicando $16$, raíz $2$.
+          - problem: '¿Existen $\sqrt[4]{-16}$ y $\sqrt[3]{-125}$?'
+            solution: |-
+              **Paso 1.** $\sqrt[4]{-16}$: índice par y radicando negativo → no existe en los reales.
+              **Paso 2.** $\sqrt[3]{-125}$: índice impar → existe; $(-5)^3 = -125$, así que vale $-5$.
+              Resultado: la primera no existe; la segunda vale $-5$.
+        common_errors:
+          - 'Confundir índice con radicando.'
+          - 'Pensar que $\sqrt{9}$ no tiene índice: su índice es 2.'
+          - 'Calcular raíces de índice par de números negativos.'
+        summary: >-
+          En $\sqrt[n]{a} = r$: índice $n$, radicando $a$, raíz $r$, y
+          $r^n = a$. Índice par exige radicando no negativo.
+        check:
+          question: 'En $\sqrt[3]{125} = 5$, ¿cuál es el radicando?'
+          options: ['$3$', '$5$', '$125$', '$15$']
+          answer: 2
+          explanation: >-
+            El radicando es el número que está dentro del radical, $125$. El
+            índice es $3$ y la raíz es $5$.
+    glossary:
+      - {term: Índice, definition: 'Número que indica qué raíz se extrae (2 cuadrada, 3 cúbica…).'}
+      - {term: Radicando, definition: 'Número del que se extrae la raíz.'}
+      - {term: Signo radical, definition: 'El símbolo $\sqrt{\;}$.'}
+  t05:
+    intro:
+      what: >-
+        Una raíz es exacta cuando su resultado es un número entero (o, en
+        general, se puede expresar exactamente), como $\sqrt{49} = 7$.
+      purpose: >-
+        Sirve para reconocer rápidamente si una raíz tiene un resultado exacto
+        o habrá que aproximarla.
+      importance: >-
+        Distinguir raíces exactas de no exactas evita perder tiempo buscando un
+        entero que no existe y prepara la simplificación de raíces.
+      foundations: >-
+        Una raíz cuadrada de un natural es exacta si y sólo si el radicando es
+        un cuadrado perfecto; esto se ve con la tabla de cuadrados o con los
+        exponentes pares de la factorización.
+      prerequisites:
+        - 'Raíz cuadrada (b19)'
+        - 'Cuadrados perfectos (b18)'
+        - 'Descomposición en factores primos (b11)'
+      outcomes:
+        - 'Decidir si una raíz cuadrada es exacta'
+        - 'Encontrar los cuadrados perfectos entre los que está un número'
+        - 'Calcular raíces exactas de números grandes'
+      everyday_example: >-
+        Un terreno cuadrado de $400$ m² tiene lado exacto ($20$ m); uno de
+        $500$ m² no tiene lado entero.
+    sections:
+      - title: Reconocer una raíz exacta
+        concept: $\sqrt{n}$ es exacta si $n$ es un cuadrado perfecto.
+        explanation: |-
+          Una **raíz cuadrada exacta** de un número natural $n$ es aquella cuyo resultado es un número natural. Ocurre sólo cuando $n$ es un **cuadrado perfecto**.
+
+          **Cómo decidirlo:**
+          1. Busca dos cuadrados consecutivos entre los que esté $n$.
+          2. Si $n$ coincide con uno de ellos, la raíz es exacta.
+          3. Si queda estrictamente entre ambos, la raíz **no es exacta** (es aproximada).
+
+          Por ejemplo, $196$: $14^2 = 196$ → exacta. En cambio, $200$: $14^2 = 196 < 200 < 225 = 15^2$ → no exacta; su raíz está entre $14$ y $15$.
+
+          **Pistas rápidas:**
+          * Un cuadrado perfecto nunca termina en $2$, $3$, $7$ u $8$. Así, $\sqrt{287}$ seguro que no es exacta.
+          * Con la factorización: es cuadrado perfecto si todos los exponentes son pares. $72 = 2^3 \times 3^2$ tiene un exponente impar → $\sqrt{72}$ no es exacta.
+
+          Ojo: que termine en $1, 4, 5, 6, 9$ o $0$ **no garantiza** que sea exacta ($\sqrt{21}$ no lo es). La pista sólo sirve para descartar.
+
+          Lo mismo vale para la raíz cúbica: es exacta si el radicando es un cubo perfecto.
+        definition: >-
+          La raíz $\sqrt[n]{a}$ de un natural $a$ es exacta si existe un natural
+          $r$ con $r^n = a$; en caso contrario es no exacta (o inexacta).
+        rules:
+          - '$\sqrt{n}$ es exacta $\iff$ $n$ es cuadrado perfecto.'
+          - 'Si $k^2 < n < (k+1)^2$, entonces $\sqrt{n}$ no es exacta y está entre $k$ y $k+1$.'
+          - 'Terminación en 2, 3, 7 u 8: nunca cuadrado perfecto.'
+          - 'Factorización con todos los exponentes pares: cuadrado perfecto.'
+        examples:
+          - problem: '¿Es exacta $\sqrt{169}$? ¿Y $\sqrt{170}$?'
+            solution: |-
+              **Paso 1.** $13^2 = 169$, así que $\sqrt{169} = 13$ es exacta.
+              **Paso 2.** $13^2 = 169 < 170 < 196 = 14^2$: $\sqrt{170}$ no es exacta; está entre $13$ y $14$.
+              Resultado: la primera es exacta; la segunda, no.
+          - problem: '¿Es exacta $\sqrt{900}$? ¿Y $\sqrt{238}$?'
+            solution: |-
+              **Paso 1.** $900 = 9 \times 100$ y $30^2 = 900$: exacta, vale $30$.
+              **Paso 2.** $238$ termina en $8$: no es cuadrado perfecto. Raíz no exacta.
+              Resultado: $\sqrt{900} = 30$ exacta; $\sqrt{238}$ no exacta.
+        common_errors:
+          - 'Pensar que todo número par tiene raíz exacta.'
+          - 'Usar la pista de la última cifra para afirmar que una raíz es exacta: sólo sirve para descartar.'
+        summary: >-
+          Una raíz cuadrada es exacta cuando el radicando es un cuadrado
+          perfecto. Si no, está entre dos enteros consecutivos.
+        check:
+          question: '¿Cuál de estas raíces cuadradas es exacta?'
+          options: ['$\sqrt{120}$', '$\sqrt{121}$', '$\sqrt{122}$', '$\sqrt{128}$']
+          answer: 1
+          explanation: >-
+            $11^2 = 121$. Los otros números están entre $10^2 = 100$ y
+            $12^2 = 144$ sin ser cuadrados perfectos ($122$ y $128$ terminan en
+            2 y 8).
+    glossary:
+      - {term: Raíz exacta, definition: 'Raíz cuyo resultado es un número natural (o entero).'}
+      - {term: Raíz no exacta, definition: 'Raíz cuyo radicando no es una potencia perfecta; su valor sólo se puede aproximar con decimales.'}
+  t06:
+    intro:
+      what: >-
+        Una raíz aproximada es un valor decimal cercano a una raíz no exacta,
+        como $\sqrt{30} \approx 5{,}5$.
+      purpose: >-
+        Sirve para obtener un valor útil de raíces como $\sqrt{2}$ o
+        $\sqrt{30}$, que no tienen resultado entero.
+      importance: >-
+        La mayoría de las raíces no son exactas; en la práctica (medidas,
+        construcción) necesitamos su valor aproximado con cierta precisión.
+      foundations: >-
+        Se basa en acotar la raíz entre enteros consecutivos (tema anterior),
+        probar décimas elevándolas al cuadrado y redondear (b17).
+      prerequisites:
+        - 'Raíces exactas (b19)'
+        - 'Multiplicación de decimales (b17)'
+        - 'Redondeo de decimales (b17)'
+      outcomes:
+        - 'Acotar una raíz cuadrada entre dos enteros consecutivos'
+        - 'Aproximar una raíz cuadrada a las décimas por tanteo'
+      everyday_example: >-
+        Un jardín cuadrado de $30$ m² tiene un lado de aproximadamente $5{,}5$
+        m; con ese dato se compra la cerca.
+    sections:
+      - title: Acotar y afinar por tanteo
+        concept: Se encierra la raíz entre enteros y luego entre décimas, elevando al cuadrado cada candidato.
+        explanation: |-
+          Para aproximar $\sqrt{30}$:
+
+          **1. Acotar entre enteros.** $5^2 = 25 < 30 < 36 = 6^2$, así que $5 < \sqrt{30} < 6$.
+
+          **2. Probar décimas.** Elevamos al cuadrado candidatos entre 5 y 6:
+          * $5{,}4^2 = 29{,}16$ (menor que 30)
+          * $5{,}5^2 = 30{,}25$ (mayor que 30)
+          Luego $5{,}4 < \sqrt{30} < 5{,}5$.
+
+          **3. Redondear a las décimas.** Hay que decidir si está más cerca de $5{,}4$ o de $5{,}5$. Miramos el punto medio, $5{,}45$: $5{,}45^2 = 29{,}7025 < 30$. Como la raíz es **mayor** que $5{,}45$, se redondea a $5{,}5$.
+
+          Así, $\sqrt{30} \approx 5{,}5$. (Con calculadora: $5{,}477\ldots$, que efectivamente redondea a $5{,}5$.)
+
+          **¿Por qué funciona?** Porque si un número positivo es mayor que otro, su cuadrado también lo es: comparar cuadrados equivale a comparar los números.
+        definition: >-
+          Aproximar $\sqrt{a}$ a las décimas es encontrar el decimal con una
+          cifra decimal más cercano a $\sqrt{a}$, comparando $a$ con los
+          cuadrados de los candidatos.
+        rules:
+          - 'Si $k^2 < a < (k+1)^2$, entonces $k < \sqrt{a} < k + 1$.'
+          - 'Para afinar, eleva al cuadrado los decimales candidatos.'
+          - 'Para redondear, compara $a$ con el cuadrado del punto medio.'
+          - 'Usa $\approx$ para indicar que el resultado es aproximado.'
+        examples:
+          - problem: 'Aproxima $\sqrt{10}$ a las décimas.'
+            solution: |-
+              **Paso 1.** $3^2 = 9 < 10 < 16 = 4^2$: entre $3$ y $4$ (y muy cerca de 3).
+              **Paso 2.** $3{,}1^2 = 9{,}61 < 10$ y $3{,}2^2 = 10{,}24 > 10$: entre $3{,}1$ y $3{,}2$.
+              **Paso 3.** Punto medio: $3{,}15^2 = 9{,}9225 < 10$, así que la raíz es mayor que $3{,}15$.
+              Resultado: $\sqrt{10} \approx 3{,}2$.
+          - problem: '¿Entre qué dos enteros consecutivos está $\sqrt{55}$?'
+            solution: |-
+              **Paso 1.** $7^2 = 49 < 55 < 64 = 8^2$.
+              Resultado: entre $7$ y $8$.
+        common_errors:
+          - 'Elegir siempre el entero menor sin redondear.'
+          - 'Quedarse con la décima menor sin comparar con el punto medio: $\sqrt{30} \approx 5{,}4$ es incorrecto.'
+          - 'Escribir $=$ en lugar de $\approx$.'
+        summary: >-
+          Acota la raíz entre enteros, luego entre décimas, y redondea
+          comparando con el cuadrado del punto medio.
+        check:
+          question: '¿Entre qué dos enteros consecutivos está $\sqrt{20}$?'
+          options: ['Entre $10$ y $11$', 'Entre $3$ y $4$', 'Entre $4$ y $5$', 'Entre $5$ y $6$']
+          answer: 2
+          explanation: >-
+            $4^2 = 16 < 20 < 25 = 5^2$, así que $4 < \sqrt{20} < 5$. La opción
+            "entre $10$ y $11$" confunde la raíz con la mitad.
+    glossary:
+      - {term: Acotar, definition: 'Encontrar dos valores entre los que está un número.'}
+      - {term: Tanteo, definition: 'Método de probar valores y corregir según el resultado.'}
+  t07:
+    intro:
+      what: >-
+        Potencias y raíces del mismo índice son operaciones inversas: una
+        deshace lo que hace la otra.
+      purpose: >-
+        Sirve para comprobar raíces, simplificar expresiones como
+        $(\sqrt{7})^2 = 7$ y pasar de una potencia a una raíz y al revés.
+      importance: >-
+        Es la clave para resolver problemas en los que se conoce un área o un
+        volumen y se busca una medida, y prepara el trabajo con exponentes en
+        álgebra.
+      foundations: >-
+        Se basa en la definición de raíz: $\sqrt[n]{a} = r$ significa
+        exactamente $r^n = a$.
+      prerequisites:
+        - 'Concepto de potencia (b18)'
+        - 'Índice y radicando (b19)'
+      outcomes:
+        - 'Pasar de una igualdad de potencia a una de raíz'
+        - 'Simplificar $(\sqrt[n]{a})^n$ y $\sqrt[n]{a^n}$'
+        - 'Evitar el error de $\sqrt{(-5)^2}$'
+      everyday_example: >-
+        Si un cuadrado tiene área $l^2$, su lado es $\sqrt{l^2} = l$: elevar
+        al cuadrado y sacar raíz cuadrada se anulan.
+    sections:
+      - title: Operaciones inversas
+        concept: Elevar a $n$ y extraer la raíz de índice $n$ se anulan mutuamente.
+        explanation: |-
+          Toda igualdad de potencia se puede leer como una de raíz, y al revés:
+
+          $$6^3 = 216 \quad\Longleftrightarrow\quad \sqrt[3]{216} = 6$$
+
+          Por eso, si aplicamos una operación y luego la otra, **volvemos al número inicial**:
+
+          * **Raíz y luego potencia:** $(\sqrt{13})^2 = 13$. No hace falta conocer $\sqrt{13}$: por definición, es el número cuyo cuadrado es $13$.
+          * **Potencia y luego raíz:** $\sqrt[3]{5^3} = \sqrt[3]{125} = 5$.
+
+          Es como sumar 4 y restar 4, o multiplicar por 3 y dividir entre 3 (b05, b07).
+
+          **Cuidado con índices pares y números negativos.** $\sqrt{(-5)^2} = \sqrt{25} = 5$, **no** $-5$, porque la raíz cuadrada es siempre no negativa. Con índice impar no hay problema: $\sqrt[3]{(-2)^3} = \sqrt[3]{-8} = -2$.
+
+          Más adelante (b24) verás que $\sqrt{a^2}$ es el **valor absoluto** de $a$.
+        definition: >-
+          Para $n \ge 2$: $\left(\sqrt[n]{a}\right)^n = a$ (siempre que la raíz
+          exista), y $\sqrt[n]{a^n} = a$ si $a \ge 0$ o si $n$ es impar.
+        rules:
+          - '$r^n = a \iff \sqrt[n]{a} = r$ (con $r \ge 0$ si $n$ es par).'
+          - '$(\sqrt[n]{a})^n = a$.'
+          - '$\sqrt[n]{a^n} = a$ si $a \ge 0$; con índice par y $a < 0$, el resultado es $-a$ (positivo).'
+        examples:
+          - problem: 'Sabiendo que $7^3 = 343$, ¿cuánto vale $\sqrt[3]{343}$?'
+            solution: |-
+              **Paso 1.** La raíz cúbica deshace el cubo.
+              **Paso 2.** Como $7^3 = 343$, entonces $\sqrt[3]{343} = 7$.
+              Resultado: $7$.
+          - problem: 'Calcula sin hallar la raíz: $\left(\sqrt{19}\right)^2$, y calcula $\sqrt{(-6)^2}$.'
+            solution: |-
+              **Paso 1.** La raíz cuadrada y el cuadrado se anulan: $(\sqrt{19})^2 = 19$.
+              **Paso 2.** $(-6)^2 = 36$ y $\sqrt{36} = 6$.
+              Resultado: $19$ y $6$.
+        common_errors:
+          - 'Intentar calcular $\sqrt{19}$ antes de elevar: no hace falta.'
+          - 'Escribir $\sqrt{(-6)^2} = -6$: la raíz cuadrada nunca es negativa.'
+          - 'Usar índices distintos: $\sqrt{5^3}$ no es $5$.'
+        summary: >-
+          La potencia y la raíz del mismo índice se anulan. Con índice par, la
+          raíz devuelve siempre un valor no negativo.
+        check:
+          question: '¿Cuánto vale $\left(\sqrt[3]{7}\right)^3$?'
+          options: ['$7$', '$21$', '$343$', '$\sqrt[3]{21}$']
+          answer: 0
+          explanation: >-
+            La raíz cúbica y el cubo son operaciones inversas, así que
+            $\left(\sqrt[3]{7}\right)^3 = 7$. $343 = 7^3$ sería elevar sin
+            haber sacado la raíz.
+    glossary:
+      - {term: Operaciones inversas, definition: 'Operaciones que se deshacen mutuamente, como la potencia y la raíz del mismo índice.'}
+  t08:
+    intro:
+      what: >-
+        Son reglas para operar con raíces: la raíz de un producto es el
+        producto de las raíces, y la de un cociente es el cociente de las
+        raíces.
+      purpose: >-
+        Sirven para calcular raíces de números grandes descomponiéndolos y
+        para multiplicar o dividir raíces.
+      importance: >-
+        Son la base de la simplificación de raíces (tema siguiente) y del
+        trabajo con radicales en álgebra.
+      foundations: >-
+        Se deducen de la potencia de un producto y de un cociente (b18):
+        $(\sqrt{a} \times \sqrt{b})^2 = a \times b$.
+      prerequisites:
+        - 'Propiedades de las potencias (b18)'
+        - 'Relación entre potencias y raíces (b19)'
+        - 'Operaciones con fracciones (b15)'
+      outcomes:
+        - 'Calcular la raíz de un producto o de un cociente'
+        - 'Multiplicar y dividir raíces del mismo índice'
+        - 'Reconocer que la raíz no se reparte sobre sumas'
+      everyday_example: >-
+        Para calcular mentalmente $\sqrt{3600}$: $\sqrt{36 \times 100} =
+        \sqrt{36} \times \sqrt{100} = 6 \times 10 = 60$.
+    sections:
+      - title: Raíz de un producto y de un cociente
+        concept: $\sqrt{a \times b} = \sqrt{a} \times \sqrt{b}$ y $\sqrt{\frac{a}{b}} = \frac{\sqrt{a}}{\sqrt{b}}$, pero la raíz no se reparte sobre una suma.
+        explanation: |-
+          **Raíz de un producto.** Calculemos $\sqrt{4 \times 25}$ de dos formas:
+          * Primero el producto: $\sqrt{100} = 10$.
+          * Raíz de cada factor: $\sqrt{4} \times \sqrt{25} = 2 \times 5 = 10$.
+
+          Coinciden. ¿Por qué? Porque $(\sqrt{4} \times \sqrt{25})^2 = (\sqrt{4})^2 \times (\sqrt{25})^2 = 4 \times 25$ (potencia de un producto, b18). Así que $\sqrt{4} \times \sqrt{25}$ es el número cuyo cuadrado es $4 \times 25$.
+
+          La regla también se usa **al revés**, para multiplicar raíces: $\sqrt{2} \times \sqrt{8} = \sqrt{16} = 4$.
+
+          **Raíz de un cociente.** De la misma forma:
+          $\sqrt{\frac{100}{4}} = \frac{\sqrt{100}}{\sqrt{4}} = \frac{10}{2} = 5$, y en efecto $\sqrt{25} = 5$.
+
+          **¡No vale para sumas ni restas!** $\sqrt{9 + 16} = \sqrt{25} = 5$, pero $\sqrt{9} + \sqrt{16} = 3 + 4 = 7$. Primero se resuelve lo que hay dentro del radical.
+
+          Las mismas reglas valen para cualquier índice, siempre que **el índice sea el mismo**: $\sqrt[3]{8 \times 27} = 2 \times 3 = 6$.
+        definition: >-
+          Para $a, b \ge 0$ (y $b \neq 0$ al dividir) y el mismo índice $n$:
+          $\sqrt[n]{a \times b} = \sqrt[n]{a} \times \sqrt[n]{b}$ y
+          $\sqrt[n]{\frac{a}{b}} = \frac{\sqrt[n]{a}}{\sqrt[n]{b}}$.
+        rules:
+          - 'Raíz de un producto = producto de las raíces.'
+          - 'Raíz de un cociente = cociente de las raíces.'
+          - 'Para multiplicar raíces del mismo índice, se multiplican los radicandos.'
+          - 'En general $\sqrt{a + b} \neq \sqrt{a} + \sqrt{b}$.'
+        examples:
+          - problem: 'Calcula $\sqrt{16 \times 9}$ usando propiedades.'
+            solution: |-
+              **Paso 1.** $\sqrt{16 \times 9} = \sqrt{16} \times \sqrt{9}$.
+              **Paso 2.** $= 4 \times 3 = 12$.
+              **Comprobación:** $12^2 = 144 = 16 \times 9$ ✓.
+              Resultado: $12$.
+          - problem: 'Calcula $\sqrt{\frac{49}{64}}$ y $\sqrt{3} \times \sqrt{12}$.'
+            solution: |-
+              **Paso 1.** $\sqrt{\frac{49}{64}} = \frac{\sqrt{49}}{\sqrt{64}} = \frac{7}{8}$.
+              **Paso 2.** $\sqrt{3} \times \sqrt{12} = \sqrt{36} = 6$.
+              Resultado: $\frac{7}{8}$ y $6$.
+        common_errors:
+          - 'Repartir la raíz sobre una suma: $\sqrt{9 + 16} \neq 3 + 4$.'
+          - 'Multiplicar raíces de índices distintos con esta regla.'
+          - 'Sumar las raíces cuando se pide la raíz de un producto.'
+        summary: >-
+          La raíz se reparte sobre productos y cocientes (mismo índice), pero
+          nunca sobre sumas o restas.
+        check:
+          question: '¿Cuánto vale $\sqrt{9 \times 49}$?'
+          options: ['$10$', '$21$', '$58$', '$441$']
+          answer: 1
+          explanation: >-
+            $\sqrt{9} \times \sqrt{49} = 3 \times 7 = 21$, y $21^2 = 441$.
+            $10 = 3 + 7$ sería sumar las raíces, y $441$ es el radicando.
+    glossary:
+      - {term: Radical, definition: 'Expresión con el signo de raíz, como $\sqrt{5}$ o $\sqrt[3]{7}$.'}
+  t09:
+    intro:
+      what: >-
+        Simplificar una raíz es escribirla como un número multiplicado por una
+        raíz más pequeña, por ejemplo $\sqrt{50} = 5\sqrt{2}$.
+      purpose: >-
+        Sirve para expresar raíces no exactas de la forma más sencilla
+        posible, lo que facilita compararlas y operarlas.
+      importance: >-
+        Es la forma estándar de presentar resultados con raíces en matemáticas
+        y ciencias.
+      foundations: >-
+        Se basa en la raíz de un producto: si el radicando tiene un factor que
+        es cuadrado perfecto, su raíz "sale" del radical.
+      prerequisites:
+        - 'Propiedades de los radicales (b19)'
+        - 'Cuadrados perfectos (b18)'
+        - 'Descomposición en factores primos (b11)'
+      outcomes:
+        - 'Extraer factores de una raíz cuadrada'
+        - 'Simplificar raíces usando la factorización prima'
+      everyday_example: >-
+        La diagonal de un cuadrado de lado 1 mide $\sqrt{2}$; la de uno de lado
+        5 mide $\sqrt{50} = 5\sqrt{2}$, es decir, 5 veces más.
+    sections:
+      - title: Sacar factores del radical
+        concept: Se busca el mayor cuadrado perfecto que divide al radicando y se extrae su raíz.
+        explanation: |-
+          Tomemos $\sqrt{50}$. No es exacta, pero $50 = 25 \times 2$ y $25$ es un cuadrado perfecto. Por la raíz de un producto:
+          $$\sqrt{50} = \sqrt{25 \times 2} = \sqrt{25} \times \sqrt{2} = 5\sqrt{2}.$$
+          Se lee "cinco raíz de dos" y significa $5 \times \sqrt{2}$.
+
+          **Método 1: el mayor cuadrado perfecto.** Busca el **mayor** cuadrado perfecto ($4, 9, 16, 25, 36, 49, \ldots$) que divida al radicando.
+
+          **Método 2: factorización prima.** Descompón el radicando y agrupa los factores en **pares**: cada par sale del radical como un solo factor; lo que no forma par se queda dentro.
+          $72 = 2^3 \times 3^2 = (2^2 \times 3^2) \times 2$, así que $\sqrt{72} = 2 \times 3 \times \sqrt{2} = 6\sqrt{2}$.
+
+          Una raíz está **completamente simplificada** cuando el número que queda dentro no tiene ningún factor cuadrado perfecto mayor que $1$.
+        definition: >-
+          Si $a = k^2 \times m$ con $k, m$ naturales, entonces
+          $\sqrt{a} = k\sqrt{m}$. La raíz está simplificada cuando $m$ no es
+          divisible por ningún cuadrado perfecto mayor que $1$.
+        rules:
+          - 'Busca el mayor cuadrado perfecto que divide al radicando.'
+          - 'Con factores primos: cada par sale como un factor; lo impar se queda dentro.'
+          - '$k\sqrt{m}$ significa $k \times \sqrt{m}$.'
+          - 'Verifica que el radicando final no tenga factores cuadrados.'
+        examples:
+          - problem: 'Simplifica $\sqrt{12}$ y $\sqrt{45}$.'
+            solution: |-
+              **Paso 1.** $12 = 4 \times 3$: $\sqrt{12} = \sqrt{4} \times \sqrt{3} = 2\sqrt{3}$.
+              **Paso 2.** $45 = 9 \times 5$: $\sqrt{45} = 3\sqrt{5}$.
+              Resultado: $2\sqrt{3}$ y $3\sqrt{5}$.
+          - problem: 'Simplifica $\sqrt{72}$.'
+            solution: |-
+              **Paso 1.** El mayor cuadrado perfecto que divide a $72$ es $36$: $72 = 36 \times 2$.
+              **Paso 2.** $\sqrt{72} = \sqrt{36} \times \sqrt{2} = 6\sqrt{2}$.
+              **Comprobación:** $(6\sqrt{2})^2 = 36 \times 2 = 72$ ✓.
+              Resultado: $6\sqrt{2}$.
+        common_errors:
+          - 'No usar el mayor cuadrado: $\sqrt{72} = 2\sqrt{18}$ es correcto pero incompleto, porque $18 = 9 \times 2$.'
+          - 'Sacar el factor sin su raíz: $\sqrt{50} \neq 25\sqrt{2}$.'
+          - 'Dejar dentro un factor que forma pareja.'
+        summary: >-
+          Para simplificar $\sqrt{a}$, escribe $a = k^2 \times m$ con $k^2$ el
+          mayor cuadrado posible: $\sqrt{a} = k\sqrt{m}$.
+        check:
+          question: '¿Cuál es la forma simplificada de $\sqrt{45}$?'
+          options: ['$9\sqrt{5}$', '$5\sqrt{3}$', '$3\sqrt{5}$', '$15\sqrt{3}$']
+          answer: 2
+          explanation: >-
+            $45 = 9 \times 5$, así que $\sqrt{45} = 3\sqrt{5}$. Comprobación:
+            $(3\sqrt{5})^2 = 9 \times 5 = 45$. $9\sqrt{5}$ olvida sacar la raíz
+            de $9$.
+    glossary:
+      - {term: Simplificar una raíz, definition: 'Escribirla como $k\sqrt{m}$ con el menor radicando posible.'}
+      - {term: Coeficiente, definition: 'Número que multiplica a una raíz, como el $5$ en $5\sqrt{2}$.'}
+  t10:
+    intro:
+      what: >-
+        Son situaciones reales que se resuelven con raíces: calcular el lado
+        de un cuadrado conocida su área o la arista de un cubo conocido su
+        volumen.
+      purpose: >-
+        Sirven para pasar de una medida de superficie o volumen a una medida
+        de longitud.
+      importance: >-
+        En construcción, jardinería o embalaje es frecuente conocer el área o
+        el volumen y necesitar las dimensiones.
+      foundations: >-
+        Si el área $A$ de un cuadrado es $l^2$, el lado es $l = \sqrt{A}$;
+        si el volumen $V$ de un cubo es $l^3$, la arista es $l = \sqrt[3]{V}$.
+      prerequisites:
+        - 'Raíz cuadrada y raíz cúbica (b19)'
+        - 'Raíces aproximadas (b19)'
+        - 'Aplicaciones de las potencias (b18)'
+      outcomes:
+        - 'Calcular el lado de un cuadrado conocida su área'
+        - 'Calcular la arista de un cubo conocido su volumen'
+        - 'Usar raíces aproximadas en problemas'
+      everyday_example: >-
+        Para cercar un terreno cuadrado de $400$ m², hay que saber su lado
+        ($20$ m) y luego el perímetro ($80$ m).
+    sections:
+      - title: De áreas y volúmenes a longitudes
+        concept: Lado del cuadrado = raíz cuadrada del área; arista del cubo = raíz cúbica del volumen.
+        explanation: |-
+          En b18 vimos que el área de un cuadrado de lado $l$ es $l^2$ y el volumen de un cubo de arista $l$ es $l^3$. Si conocemos el área o el volumen y buscamos $l$, hacemos la **operación inversa**:
+
+          * lado $= \sqrt{A}$, donde $A$ es el área;
+          * arista $= \sqrt[3]{V}$, donde $V$ es el volumen.
+
+          Las unidades también "se deshacen": de m² se pasa a m; de cm³, a cm.
+
+          Si el área no es un cuadrado perfecto, el lado es una raíz no exacta y se da **aproximado**, por ejemplo a las décimas o centésimas, según la precisión que pida la situación.
+
+          Después de calcular la raíz, muchas veces el problema continúa: por ejemplo, el perímetro de un cuadrado es $4 \times l$.
+        definition: >-
+          Si un cuadrado tiene área $A$, su lado mide $l = \sqrt{A}$; si un cubo
+          tiene volumen $V$, su arista mide $l = \sqrt[3]{V}$.
+        rules:
+          - 'Lado = $\sqrt{A}$ (área $A$); arista = $\sqrt[3]{V}$ (volumen $V$).'
+          - 'm² → m; cm³ → cm.'
+          - 'Si la raíz no es exacta, se aproxima y se usa $\approx$.'
+        examples:
+          - problem: 'Una plaza cuadrada tiene $400$ m² de área. ¿Cuánto mide su lado y cuál es su perímetro?'
+            solution: |-
+              **Paso 1.** Lado: $\sqrt{400} = 20$ m (pues $20^2 = 400$).
+              **Paso 2.** Perímetro: $4 \times 20 = 80$ m.
+              Resultado: lado $20$ m; perímetro $80$ m.
+          - problem: 'Una caja cúbica tiene $343$ cm³ de volumen. ¿Cuánto mide su arista?'
+            solution: |-
+              **Paso 1.** Arista: $\sqrt[3]{343}$.
+              **Paso 2.** $7^3 = 7 \times 7 \times 7 = 343$.
+              Resultado: $7$ cm.
+          - problem: 'Un huerto cuadrado tiene $50$ m². Aproxima su lado a las décimas.'
+            solution: |-
+              **Paso 1.** $7^2 = 49 < 50 < 64 = 8^2$: entre $7$ y $8$.
+              **Paso 2.** $7{,}0^2 = 49$ y $7{,}1^2 = 50{,}41$: entre $7{,}0$ y $7{,}1$.
+              **Paso 3.** Punto medio: $7{,}05^2 = 49{,}7025 < 50$, así que se redondea a $7{,}1$.
+              Resultado: el lado mide $\approx 7{,}1$ m.
+        common_errors:
+          - 'Dividir el área entre 4 para obtener el lado (eso sería con el perímetro).'
+          - 'Usar raíz cuadrada para un volumen: la arista de un cubo usa raíz cúbica.'
+          - 'Dejar la unidad cuadrada en una longitud: el lado se mide en m, no en m².'
+        summary: >-
+          Para pasar de área a lado se usa la raíz cuadrada, y de volumen a
+          arista, la raíz cúbica.
+        check:
+          question: 'Un salón cuadrado tiene $81$ m² de área. ¿Cuánto mide su lado?'
+          options: ['$9$ m', '$20{,}25$ m', '$40{,}5$ m', '$27$ m']
+          answer: 0
+          explanation: >-
+            Lado $= \sqrt{81} = 9$ m, porque $9^2 = 81$. $20{,}25$ sale de
+            dividir el área entre 4, que no es correcto.
+    glossary:
+      - {term: Arista, definition: 'Segmento donde se unen dos caras de un cuerpo; en el cubo, todas miden lo mismo.'}
+      - {term: Perímetro, definition: 'Longitud del borde de una figura; en un cuadrado, $4 \times$ lado.'}

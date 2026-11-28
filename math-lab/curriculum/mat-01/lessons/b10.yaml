@@ -1,0 +1,625 @@
+block: b10
+intro: |-
+  Los múltiplos y los divisores describen cómo se relacionan los números a través de la multiplicación y la división exacta. En este bloque aprenderás a reconocerlos, a listarlos, a usar criterios rápidos de divisibilidad y a aplicarlos en problemas de agrupar y repartir. Son la base de los números primos (bloque 11), del MCD (bloque 12), del MCM (bloque 13) y de las fracciones (bloque 14).
+
+topics:
+  t01:
+    intro:
+      what: |-
+        Un múltiplo de un número es el resultado de multiplicar ese número por un número natural. Por ejemplo, 35 es múltiplo de 7 porque $7 \times 5 = 35$.
+      purpose: |-
+        Sirve para reconocer cantidades que se pueden formar juntando grupos completos de un mismo tamaño.
+      importance: |-
+        Saber si un número es múltiplo de otro permite decidir si un reparto es exacto, organizar objetos en grupos iguales y, más adelante, calcular el MCM y sumar fracciones.
+      foundations: |-
+        Se basa en la multiplicación (bloque 06) y en la división exacta (bloque 07): $a$ es múltiplo de $b$ exactamente cuando $a \div b$ da residuo $0$.
+      prerequisites:
+        - 'Tablas de multiplicar (bloque 06)'
+        - 'División exacta y con residuo (bloque 07)'
+      outcomes:
+        - 'Decidir si un número es múltiplo de otro'
+        - 'Justificar la respuesta con una multiplicación o una división'
+      everyday_example: |-
+        Los huevos se venden en cajas de 6. Puedes comprar 12, 18 o 30 huevos en cajas completas, porque son múltiplos de 6; pero no 20, porque $20 \div 6$ deja residuo 2.
+    sections:
+      - title: Qué es un múltiplo
+        concept: Un número es múltiplo de otro si se obtiene multiplicando ese otro por un número natural.
+        explanation: |-
+          Piensa en grupos de 7 objetos. Con 1 grupo tienes 7; con 2 grupos, 14; con 5 grupos, 35. Los números $7, 14, 21, 28, 35, \ldots$ son los **múltiplos de 7**: cantidades que se pueden formar con grupos completos de 7.
+
+          Para saber si un número $a$ es múltiplo de $b$ hay dos caminos equivalentes:
+
+          1. **Buscar la multiplicación**: ¿existe un natural $k$ con $b \times k = a$? Como $7 \times 5 = 35$, 35 es múltiplo de 7.
+          2. **Dividir**: si $a \div b$ es **exacta** (residuo $0$), $a$ es múltiplo de $b$. Como $40 \div 6 = 6$ con residuo $4$, 40 **no** es múltiplo de 6.
+
+          Algunos hechos que se deducen de la definición:
+
+          - Todo número es múltiplo de sí mismo ($b \times 1 = b$) y múltiplo de 1.
+          - El $0$ es múltiplo de cualquier número, porque $b \times 0 = 0$.
+
+          En este bloque trabajamos con números naturales.
+        definition: |-
+          Un número natural $a$ es **múltiplo** de un número natural $b$ si existe un número natural $k$ tal que $a = b \times k$. Equivalentemente (para $b \neq 0$), si la división $a \div b$ es exacta.
+        rules:
+          - '$a$ es múltiplo de $b$ si $a = b \times k$ para algún natural $k$.'
+          - 'Si $a \div b$ tiene residuo $0$, $a$ es múltiplo de $b$; si no, no lo es.'
+          - 'Todo número es múltiplo de 1 y de sí mismo; el 0 es múltiplo de todos.'
+        examples:
+          - problem: '¿Es 84 múltiplo de 7?'
+            solution: |-
+              **Paso 1.** Dividimos: $84 \div 7 = 12$, residuo $0$.
+
+              **Paso 2.** La división es exacta, por tanto $84 = 7 \times 12$.
+
+              Resultado: sí, 84 es múltiplo de 7.
+          - problem: '¿Es 50 múltiplo de 4?'
+            solution: |-
+              **Paso 1.** Dividimos: $50 \div 4 = 12$, residuo $2$ (porque $4 \times 12 = 48$).
+
+              **Paso 2.** El residuo no es 0.
+
+              Resultado: no, 50 no es múltiplo de 4.
+        common_errors:
+          - 'Confundir el orden: 35 es múltiplo de 7, pero 7 no es múltiplo de 35.'
+          - 'Pensar que un múltiplo debe estar en la tabla hasta el 10: 84 es múltiplo de 7 aunque $7 \times 12$ no esté en la tabla escolar.'
+          - 'Olvidar que el propio número es múltiplo de sí mismo.'
+        summary: |-
+          $a$ es múltiplo de $b$ cuando $a = b \times k$, es decir, cuando $a \div b$ es exacta.
+        check:
+          question: '¿Cuál de estos números es múltiplo de 8?'
+          options: ['$28$', '$36$', '$48$']
+          answer: 2
+          explanation: |-
+            $48 = 8 \times 6$. En cambio, $28 \div 8$ deja residuo 4 y $36 \div 8$ deja residuo 4.
+    glossary:
+      - {term: Múltiplo, definition: 'Número que resulta de multiplicar otro por un número natural.'}
+      - {term: División exacta, definition: 'División cuyo residuo es 0.'}
+
+  t02:
+    intro:
+      what: |-
+        Un divisor de un número es otro número que lo divide de forma exacta. Por ejemplo, 6 es divisor de 42 porque $42 \div 6 = 7$ sin residuo.
+      purpose: |-
+        Sirve para saber en cuántos grupos iguales se puede repartir una cantidad sin que sobre nada.
+      importance: |-
+        Los divisores son la base de los números primos, del MCD y de la simplificación de fracciones.
+      foundations: |-
+        Es la otra cara del concepto de múltiplo: si $a = b \times k$, entonces $b$ y $k$ son divisores de $a$. Se apoya en la división exacta (bloque 07).
+      prerequisites:
+        - 'Concepto de múltiplo (bloque 10, tema 1)'
+        - 'División exacta y división entre 0 (bloque 07)'
+      outcomes:
+        - 'Decidir si un número es divisor de otro'
+        - 'Usar con propiedad las expresiones "divide a", "es divisible entre" y "es divisor de"'
+      everyday_example: |-
+        Tienes 24 galletas y quieres repartirlas por igual. Puedes hacerlo entre 2, 3, 4, 6, 8 o 12 personas sin que sobre ninguna: esos números son divisores de 24. Entre 5 personas sobrarían galletas.
+    sections:
+      - title: Qué es un divisor
+        concept: Un número es divisor de otro si lo divide exactamente, sin dejar residuo.
+        explanation: |-
+          Decimos que **6 es divisor de 42** porque $42 \div 6 = 7$ con residuo $0$. Otras formas de decir lo mismo:
+
+          - "6 **divide a** 42".
+          - "42 **es divisible entre** 6".
+          - "42 es **múltiplo** de 6".
+
+          En cambio, 5 no es divisor de 42, porque $42 = 5 \times 8 + 2$: sobra 2.
+
+          Hechos importantes:
+
+          - El **1** es divisor de todos los números ($a \div 1 = a$).
+          - Todo número es divisor de sí mismo ($a \div a = 1$).
+          - Un divisor de un número natural (distinto de 0) nunca es mayor que el propio número.
+          - El **0 no se usa como divisor**: dividir entre 0 no tiene sentido (bloque 07).
+        definition: |-
+          Un número natural $b \neq 0$ es **divisor** de $a$ si la división $a \div b$ es exacta, es decir, si existe un natural $k$ con $a = b \times k$.
+        rules:
+          - '$b$ es divisor de $a$ si $a \div b$ tiene residuo 0.'
+          - '"$b$ divide a $a$", "$a$ es divisible entre $b$" y "$a$ es múltiplo de $b$" dicen lo mismo.'
+          - 'El 1 y el propio número siempre son divisores; el 0 no puede ser divisor.'
+        examples:
+          - problem: '¿Es 9 divisor de 117?'
+            solution: |-
+              **Paso 1.** Dividimos: $117 \div 9 = 13$, residuo $0$ (pues $9 \times 13 = 117$).
+
+              Resultado: sí, 9 es divisor de 117.
+          - problem: '¿Es 4 divisor de 90?'
+            solution: |-
+              **Paso 1.** Dividimos: $90 \div 4 = 22$, residuo $2$ (pues $4 \times 22 = 88$).
+
+              Resultado: no, 4 no es divisor de 90.
+        common_errors:
+          - 'Invertir la relación: 6 es divisor de 42, pero 42 no es divisor de 6.'
+          - 'Pensar que el 0 divide a algún número: la división entre 0 no está definida.'
+          - 'Confundir "divisor de un número" con "el divisor de una división" (el número entre el que se divide), que puede no ser exacto.'
+        summary: |-
+          $b$ es divisor de $a$ si $a \div b$ es exacta. Es la relación inversa de "ser múltiplo".
+        check:
+          question: '¿Cuál de estos números es divisor de 45?'
+          options: ['$4$', '$9$', '$6$']
+          answer: 1
+          explanation: |-
+            $45 \div 9 = 5$ exacta. Con 4 sobra 1 y con 6 sobran 3.
+    glossary:
+      - {term: Divisor, definition: 'Número que divide a otro de forma exacta.'}
+      - {term: Divisible, definition: '"$a$ es divisible entre $b$" significa que $a \div b$ es exacta.'}
+
+  t03:
+    intro:
+      what: |-
+        Los múltiplos de un número son todos los resultados de multiplicarlo por $0, 1, 2, 3, \ldots$. Forman una lista que nunca termina.
+      purpose: |-
+        Sirve para encontrar cantidades que se pueden formar con grupos completos y, más adelante, para buscar múltiplos comunes (MCM).
+      importance: |-
+        Listar múltiplos de forma rápida y ordenada es una herramienta básica para resolver problemas de calendarios, horarios y fracciones.
+      foundations: |-
+        La multiplicación y la suma repetida: cada múltiplo se obtiene sumando el número al múltiplo anterior.
+      prerequisites:
+        - 'Concepto de múltiplo (bloque 10, tema 1)'
+        - 'Multiplicación como suma repetida (bloque 06)'
+      outcomes:
+        - 'Escribir los primeros múltiplos de un número'
+        - 'Encontrar los múltiplos de un número dentro de un intervalo'
+      everyday_example: |-
+        Si un autobús pasa cada 15 minutos desde las 8:00, pasará a los 15, 30, 45, 60… minutos: los múltiplos de 15.
+    sections:
+      - title: La lista de múltiplos
+        concept: Los múltiplos de un número se obtienen multiplicándolo por 1, 2, 3… o sumándolo una y otra vez.
+        explanation: |-
+          Para escribir los múltiplos de 7 multiplicamos por los naturales:
+
+          $7 \times 1 = 7,\ 7 \times 2 = 14,\ 7 \times 3 = 21,\ 7 \times 4 = 28,\ 7 \times 5 = 35, \ldots$
+
+          También se puede ir **sumando 7** cada vez: $7, 14, 21, 28, 35, \ldots$ Los múltiplos están igualmente separados en la recta numérica.
+
+          Características:
+
+          - La lista es **infinita**: siempre hay un múltiplo más.
+          - El $0$ es múltiplo de todos, pero cuando se piden "los primeros múltiplos" normalmente se empieza por el propio número (múltiplos **no nulos**).
+
+          **Múltiplos en un intervalo.** Para hallar los múltiplos de 6 entre 40 y 70, divide el extremo inferior: $40 \div 6 = 6$ con residuo $4$. El primer múltiplo mayor que 40 es $6 \times 7 = 42$. Después se suma 6 hasta pasar de 70.
+        definition: |-
+          El conjunto de **múltiplos** de $n$ es $\{0, n, 2n, 3n, \ldots\}$: todos los productos $n \times k$ con $k$ natural.
+        rules:
+          - 'Múltiplos de $n$: $n \times 1, n \times 2, n \times 3, \ldots$'
+          - 'Cada múltiplo es el anterior más $n$.'
+          - 'Un número tiene infinitos múltiplos.'
+        examples:
+          - problem: 'Escribe los 5 primeros múltiplos no nulos de 9.'
+            solution: |-
+              **Paso 1.** $9 \times 1 = 9$, $9 \times 2 = 18$, $9 \times 3 = 27$, $9 \times 4 = 36$, $9 \times 5 = 45$.
+
+              Resultado: $9, 18, 27, 36, 45$.
+          - problem: 'Escribe los múltiplos de 6 entre 40 y 70.'
+            solution: |-
+              **Paso 1.** $40 \div 6 = 6$, residuo 4. El siguiente múltiplo es $6 \times 7 = 42$.
+
+              **Paso 2.** Sumamos 6: $42, 48, 54, 60, 66$. El siguiente, $72$, ya pasa de 70.
+
+              Resultado: $42, 48, 54, 60, 66$.
+        common_errors:
+          - 'Confundir múltiplos con divisores: los múltiplos de 6 son mayores o iguales que 6 (salvo el 0).'
+          - 'Saltarse un múltiplo al sumar mentalmente.'
+          - 'Creer que la lista de múltiplos termina.'
+        summary: |-
+          Los múltiplos de $n$ se obtienen multiplicando por $1, 2, 3, \ldots$ o sumando $n$ repetidamente. Son infinitos.
+        check:
+          question: '¿Cuáles son los múltiplos de 9 entre 20 y 40?'
+          options: ['$27$ y $36$', '$18$, $27$ y $36$', '$29$ y $38$']
+          answer: 0
+          explanation: |-
+            Los múltiplos de 9 son $9, 18, 27, 36, 45, \ldots$; entre 20 y 40 están 27 y 36. El 18 es menor que 20.
+    glossary:
+      - {term: Múltiplos no nulos, definition: 'Múltiplos distintos de 0: $n, 2n, 3n, \ldots$'}
+      - {term: Intervalo, definition: 'Conjunto de números comprendidos entre dos valores dados.'}
+
+  t04:
+    intro:
+      what: |-
+        Los divisores de un número son todos los naturales que lo dividen exactamente. A diferencia de los múltiplos, forman una lista finita.
+      purpose: |-
+        Sirve para conocer todas las formas de repartir una cantidad en grupos iguales y para calcular el MCD.
+      importance: |-
+        Encontrar todos los divisores de forma ordenada, sin olvidar ninguno, es la técnica que usarás para identificar números primos (bloque 11) y para calcular el MCD (bloque 12).
+      foundations: |-
+        Cada divisor viene en pareja: si $a = b \times c$, entonces $b$ y $c$ son ambos divisores de $a$. Buscar parejas ahorra la mitad del trabajo.
+      prerequisites:
+        - 'Concepto de divisor (bloque 10, tema 2)'
+        - 'División exacta (bloque 07)'
+      outcomes:
+        - 'Encontrar todos los divisores de un número'
+        - 'Saber cuándo detener la búsqueda'
+      everyday_example: |-
+        Un profesor tiene 36 alumnos y quiere formar equipos del mismo tamaño. Las posibilidades son los divisores de 36: equipos de 1, 2, 3, 4, 6, 9, 12, 18 o 36 personas.
+    sections:
+      - title: Buscar divisores por parejas
+        concept: Los divisores de un número se encuentran por parejas de factores cuyo producto es ese número.
+        explanation: |-
+          Para hallar todos los divisores de 36, probamos a dividir entre $1, 2, 3, \ldots$ y anotamos las divisiones exactas **en parejas**:
+
+          - $36 = 1 \times 36$
+          - $36 = 2 \times 18$
+          - $36 = 3 \times 12$
+          - $36 = 4 \times 9$
+          - $5$ no divide a 36.
+          - $36 = 6 \times 6$
+
+          ¿Cuándo parar? Cuando el número que probamos, multiplicado por sí mismo, supera al número. Después de 6, el siguiente candidato sería 7, y $7 \times 7 = 49 > 36$: cualquier divisor mayor ya apareció como compañero de uno menor.
+
+          Divisores de 36: $1, 2, 3, 4, 6, 9, 12, 18, 36$.
+
+          Características:
+
+          - La lista es **finita**: el menor divisor es 1 y el mayor es el propio número.
+          - Si un número es un cuadrado ($36 = 6 \times 6$), uno de sus divisores aparece emparejado consigo mismo.
+        definition: |-
+          El conjunto de **divisores** de $n$ es el conjunto de naturales $d$ tales que $n \div d$ es exacta. Se suele escribir $D(n)$; por ejemplo, $D(36) = \{1, 2, 3, 4, 6, 9, 12, 18, 36\}$.
+        rules:
+          - 'Prueba los números $1, 2, 3, \ldots$ y anota cada división exacta como una pareja.'
+          - 'Detente cuando el candidato multiplicado por sí mismo supere al número.'
+          - 'El 1 y el propio número siempre están en la lista.'
+        examples:
+          - problem: 'Encuentra todos los divisores de 28.'
+            solution: |-
+              **Paso 1.** $28 = 1 \times 28$; $28 = 2 \times 14$; 3 no divide (residuo 1); $28 = 4 \times 7$; 5 no divide (residuo 3).
+
+              **Paso 2.** El siguiente candidato sería 6, pero $6 \times 6 = 36 > 28$. Paramos.
+
+              Resultado: $D(28) = \{1, 2, 4, 7, 14, 28\}$ (6 divisores).
+        common_errors:
+          - 'Olvidar el compañero de cada divisor (anotar 2 pero no 14).'
+          - 'Seguir probando hasta el propio número: basta llegar hasta donde el cuadrado del candidato lo supere.'
+          - 'Olvidar el 1 o el propio número.'
+        summary: |-
+          Los divisores se buscan por parejas; la búsqueda termina cuando el candidato al cuadrado supera al número. La lista es finita.
+        check:
+          question: '¿Cuántos divisores tiene 20?'
+          options: ['$4$', '$6$', '$5$']
+          answer: 1
+          explanation: |-
+            $20 = 1 \times 20 = 2 \times 10 = 4 \times 5$. Divisores: $1, 2, 4, 5, 10, 20$, es decir, 6.
+    glossary:
+      - {term: 'D(n)', definition: 'Notación para el conjunto de divisores de $n$.'}
+      - {term: Pareja de divisores, definition: 'Dos divisores cuyo producto es el número: $4 \times 9 = 36$.'}
+
+  t05:
+    intro:
+      what: |-
+        Un criterio de divisibilidad es una regla rápida que permite saber si un número es divisible entre otro sin hacer la división.
+      purpose: |-
+        Sirve para ahorrar tiempo al buscar divisores, simplificar fracciones o factorizar en primos.
+      importance: |-
+        Con números grandes, dividir es lento. Los criterios permiten decidir con una mirada a la última cifra o con una suma de cifras.
+      foundations: |-
+        Se basan en el valor posicional (bloque 02): todo número se escribe como suma de unidades, decenas, centenas… y $10$, $100$, $1000$ tienen propiedades especiales de divisibilidad.
+      prerequisites:
+        - 'Valor posicional y descomposición de números (bloque 02)'
+        - 'Concepto de divisor (bloque 10, tema 2)'
+      outcomes:
+        - 'Aplicar los criterios del 2, 5 y 10'
+        - 'Aplicar los criterios del 3 y 9'
+        - 'Explicar por qué funcionan'
+      everyday_example: |-
+        Si cuentas 1 278 personas y quieres saber si caben exactamente en mesas de 9, basta sumar $1 + 2 + 7 + 8 = 18$: como 18 es múltiplo de 9, sí caben, sin hacer la división.
+    sections:
+      - title: 'Criterios de la última cifra: 2, 5 y 10'
+        concept: La divisibilidad entre 2, 5 y 10 depende sólo de la última cifra del número.
+        explanation: |-
+          Cualquier número se puede separar en "decenas" más "unidades". Por ejemplo, $3\,476 = 3\,470 + 6$. La parte $3\,470$ es un múltiplo de 10, y **10 es divisible entre 2, entre 5 y entre 10**. Así que esa parte nunca molesta: todo depende de la última cifra.
+
+          - **Divisible entre 2**: la última cifra es par ($0, 2, 4, 6, 8$). Por ejemplo, $3\,476$ termina en 6: sí.
+          - **Divisible entre 5**: la última cifra es $0$ o $5$. Por ejemplo, $2\,345$: sí; $3\,452$: no.
+          - **Divisible entre 10**: la última cifra es $0$. Por ejemplo, $890$: sí.
+
+          Los números divisibles entre 2 se llaman **pares**; los demás, **impares**.
+        definition: |-
+          Un número natural es divisible entre 2 si su cifra de las unidades es par; entre 5 si es 0 o 5; y entre 10 si es 0.
+        rules:
+          - 'Entre 2: termina en 0, 2, 4, 6 u 8.'
+          - 'Entre 5: termina en 0 o 5.'
+          - 'Entre 10: termina en 0.'
+        examples:
+          - problem: '¿Es 7 315 divisible entre 2, entre 5 y entre 10?'
+            solution: |-
+              **Paso 1.** Última cifra: 5.
+
+              **Paso 2.** 5 no es par: no es divisible entre 2. Termina en 5: sí es divisible entre 5. No termina en 0: no es divisible entre 10.
+
+              Resultado: sólo es divisible entre 5 ($7\,315 \div 5 = 1\,463$).
+        common_errors:
+          - 'Mirar la primera cifra en lugar de la última.'
+          - 'Creer que un número que termina en 5 es divisible entre 10.'
+        summary: |-
+          Para 2, 5 y 10 basta mirar la última cifra, porque el resto del número es múltiplo de 10.
+        check:
+          question: '¿Cuál de estos números es divisible entre 5?'
+          options: ['$1\,234$', '$2\,345$', '$3\,452$']
+          answer: 1
+          explanation: |-
+            $2\,345$ termina en 5. Los otros terminan en 4 y en 2.
+      - title: 'Criterios de la suma de cifras: 3 y 9'
+        concept: Un número es divisible entre 3 (o entre 9) si la suma de sus cifras lo es.
+        explanation: |-
+          ¿Por qué funciona? Descompongamos $234$:
+
+          $234 = 2 \times 100 + 3 \times 10 + 4$
+
+          Como $100 = 99 + 1$ y $10 = 9 + 1$:
+
+          $234 = 2 \times 99 + 3 \times 9 + (2 + 3 + 4)$
+
+          Las partes $2 \times 99$ y $3 \times 9$ son múltiplos de 9 (y por tanto de 3). Lo que decide es lo que queda: **la suma de las cifras**, $2 + 3 + 4 = 9$. Como 9 es múltiplo de 9 y de 3, el número 234 es divisible entre 9 y entre 3. En efecto, $234 = 9 \times 26$.
+
+          - **Divisible entre 3**: la suma de sus cifras es múltiplo de 3.
+          - **Divisible entre 9**: la suma de sus cifras es múltiplo de 9.
+
+          Si la suma es grande, puedes volver a sumar sus cifras.
+        definition: |-
+          Un número natural es divisible entre 3 si y sólo si la suma de sus cifras es múltiplo de 3; y es divisible entre 9 si y sólo si la suma de sus cifras es múltiplo de 9.
+        rules:
+          - 'Entre 3: la suma de cifras es múltiplo de 3.'
+          - 'Entre 9: la suma de cifras es múltiplo de 9.'
+          - 'Todo número divisible entre 9 es divisible entre 3, pero no al revés.'
+        examples:
+          - problem: '¿Es 1 278 divisible entre 3? ¿Y entre 9?'
+            solution: |-
+              **Paso 1.** Suma de cifras: $1 + 2 + 7 + 8 = 18$.
+
+              **Paso 2.** 18 es múltiplo de 3 y de 9.
+
+              Resultado: es divisible entre 3 y entre 9 ($1\,278 = 9 \times 142$).
+          - problem: '¿Es 452 divisible entre 3?'
+            solution: |-
+              **Paso 1.** Suma de cifras: $4 + 5 + 2 = 11$.
+
+              **Paso 2.** 11 no es múltiplo de 3.
+
+              Resultado: no es divisible entre 3.
+        common_errors:
+          - 'Aplicar el criterio de la suma de cifras al 2 o al 5, donde no sirve.'
+          - 'Pensar que si es divisible entre 3 también lo es entre 9: 12 es divisible entre 3 pero no entre 9.'
+        summary: |-
+          Para 3 y 9 se suman las cifras, porque 10, 100, 1000… son "un múltiplo de 9 más 1".
+        check:
+          question: '¿Cuál de estos números es divisible entre 9?'
+          options: ['$3\,141$', '$2\,024$', '$1\,112$']
+          answer: 0
+          explanation: |-
+            $3 + 1 + 4 + 1 = 9$: es divisible entre 9 ($3\,141 = 9 \times 349$). Las cifras de 2 024 suman 8 y las de 1 112 suman 5.
+    glossary:
+      - {term: Criterio de divisibilidad, definition: 'Regla que permite saber si un número es divisible entre otro sin hacer la división.'}
+      - {term: Número par, definition: 'Número divisible entre 2.'}
+      - {term: Suma de cifras, definition: 'Resultado de sumar todos los dígitos de un número.'}
+
+  t06:
+    intro:
+      what: |-
+        Este tema reúne los criterios de divisibilidad entre 2, 3, 4, 5, 6, 8, 9 y 10, y añade otros útiles como los del 11 y el 25, y la forma de combinar criterios.
+      purpose: |-
+        Sirve para tener un repertorio completo con el que decidir rápidamente la divisibilidad de cualquier número.
+      importance: |-
+        Estos criterios se usan constantemente al factorizar (bloque 11), simplificar fracciones (bloque 14) y calcular MCD y MCM.
+      foundations: |-
+        Las mismas ideas del tema anterior: el valor posicional y el hecho de que $100$ es múltiplo de 4 y de 25, y $1000$ es múltiplo de 8.
+      prerequisites:
+        - 'Criterios de divisibilidad del 2, 3, 5, 9 y 10 (bloque 10, tema 5)'
+      outcomes:
+        - 'Aplicar los criterios del 4, 6, 8, 11 y 25'
+        - 'Combinar criterios correctamente (por ejemplo, para 6, 12 o 15)'
+      everyday_example: |-
+        Un año se divide en trimestres de 3 meses y en semestres de 6 meses. Para saber si 3 516 objetos pueden repartirse en 6 cajas iguales, basta comprobar que el número es par y que sus cifras suman un múltiplo de 3.
+    sections:
+      - title: Criterios del 4, el 8 y el 6
+        concept: El 4 y el 8 se deciden mirando las últimas cifras; el 6, combinando los criterios del 2 y del 3.
+        explanation: |-
+          **Criterio del 4.** Como $100 = 4 \times 25$, cualquier cantidad de centenas es múltiplo de 4. Sólo importan las **dos últimas cifras**: un número es divisible entre 4 si el número formado por sus dos últimas cifras lo es. Ejemplo: $3\,516$ termina en $16 = 4 \times 4$: sí ($3\,516 = 4 \times 879$).
+
+          **Criterio del 8.** Como $1000 = 8 \times 125$, sólo importan las **tres últimas cifras**. Ejemplo: $7\,120$ termina en $120 = 8 \times 15$: sí. En cambio, $3\,516$ termina en $516$, y $516 \div 8 = 64$ con residuo 4: no.
+
+          **Criterio del 6.** $6 = 2 \times 3$. Un número es divisible entre 6 si es divisible **a la vez** entre 2 y entre 3. Ejemplo: $3\,516$ es par y sus cifras suman $3 + 5 + 1 + 6 = 15$, múltiplo de 3: sí es divisible entre 6 ($3\,516 = 6 \times 586$).
+        definition: |-
+          Un número es divisible entre 4 si sus dos últimas cifras forman un múltiplo de 4; entre 8 si sus tres últimas cifras forman un múltiplo de 8; y entre 6 si es divisible entre 2 y entre 3.
+        rules:
+          - 'Entre 4: las dos últimas cifras forman un múltiplo de 4 (o son 00).'
+          - 'Entre 8: las tres últimas cifras forman un múltiplo de 8 (o son 000).'
+          - 'Entre 6: par y con suma de cifras múltiplo de 3.'
+        examples:
+          - problem: '¿Es 2 536 divisible entre 4, entre 8 y entre 6?'
+            solution: |-
+              **Paso 1.** Entre 4: $36 = 4 \times 9$. Sí.
+
+              **Paso 2.** Entre 8: $536 = 8 \times 67$. Sí.
+
+              **Paso 3.** Entre 6: es par, pero $2 + 5 + 3 + 6 = 16$, que no es múltiplo de 3. No.
+
+              Resultado: divisible entre 4 y 8, pero no entre 6.
+        common_errors:
+          - 'Mirar sólo la última cifra para el 4: 14 termina en 4 pero no es divisible entre 4.'
+          - 'Para el 6, comprobar sólo una de las dos condiciones.'
+        summary: |-
+          4: dos últimas cifras. 8: tres últimas cifras. 6: a la vez entre 2 y entre 3.
+        check:
+          question: '¿Cuál de estos números es divisible entre 6?'
+          options: ['$1\,234$', '$3\,345$', '$2\,346$']
+          answer: 2
+          explanation: |-
+            $2\,346$ es par y $2 + 3 + 4 + 6 = 15$ es múltiplo de 3. $1\,234$ es par pero sus cifras suman 10; $3\,345$ es impar.
+      - title: Otros criterios y cómo combinarlos
+        concept: Hay criterios para el 11 y el 25, y se pueden combinar criterios de números que no comparten divisores.
+        explanation: |-
+          **Criterio del 25.** Como $100 = 25 \times 4$, sólo importan las dos últimas cifras: el número es divisible entre 25 si termina en $00$, $25$, $50$ o $75$.
+
+          **Criterio del 11.** Suma las cifras en posiciones alternas empezando por la derecha, con signos $+$ y $-$ alternados. Si el resultado es $0$ o un múltiplo de 11, el número es divisible entre 11. Ejemplo: $2\,728$: $8 - 2 + 7 - 2 = 11$, sí ($2\,728 = 11 \times 248$).
+
+          **El 7** no tiene un criterio sencillo de uso habitual: lo más práctico es dividir.
+
+          **Combinar criterios.** Para el 15 ($= 3 \times 5$) basta que sea divisible entre 3 y entre 5. Para el 12 ($= 3 \times 4$), entre 3 y entre 4. Pero **cuidado**: para combinar, los dos números no deben tener divisores comunes (salvo el 1). Por ejemplo, 12 no se puede comprobar con 2 y 6: el número 18 es divisible entre 2 y entre 6, y no lo es entre 12.
+        definition: |-
+          Si $m$ y $n$ no tienen divisores comunes distintos de 1, un número es divisible entre $m \times n$ si y sólo si es divisible entre $m$ y entre $n$.
+        rules:
+          - 'Entre 25: termina en 00, 25, 50 o 75.'
+          - 'Entre 11: la suma alternada de cifras es 0 o múltiplo de 11.'
+          - 'Para combinar criterios, usa factores sin divisores comunes: $12 = 3 \times 4$, $15 = 3 \times 5$.'
+        examples:
+          - problem: '¿Es 1 980 divisible entre 12?'
+            solution: |-
+              **Paso 1.** $12 = 3 \times 4$, y 3 y 4 no comparten divisores.
+
+              **Paso 2.** Entre 3: $1 + 9 + 8 + 0 = 18$. Sí. Entre 4: $80 = 4 \times 20$. Sí.
+
+              Resultado: sí ($1\,980 = 12 \times 165$).
+        common_errors:
+          - 'Combinar criterios de números con divisores comunes, como 2 y 6 para el 12.'
+          - 'En el criterio del 11, no alternar los signos.'
+        summary: |-
+          25: dos últimas cifras. 11: suma alternada. Para números compuestos, combina criterios de factores que no compartan divisores.
+        check:
+          question: '¿Cuál de estos números es divisible entre 4?'
+          options: ['$1\,318$', '$2\,536$', '$3\,410$']
+          answer: 1
+          explanation: |-
+            Las dos últimas cifras de $2\,536$ son $36 = 4 \times 9$. En los otros, $18$ y $10$ no son múltiplos de 4.
+    glossary:
+      - {term: Suma alternada, definition: 'Suma de las cifras con signos $+$ y $-$ alternados, empezando por la derecha.'}
+      - {term: Combinar criterios, definition: 'Comprobar la divisibilidad entre un producto usando los criterios de sus factores, si éstos no comparten divisores.'}
+
+  t07:
+    intro:
+      what: |-
+        Múltiplos y divisores son dos maneras de mirar la misma relación: si $a = b \times k$, entonces $a$ es múltiplo de $b$ y $b$ es divisor de $a$.
+      purpose: |-
+        Sirve para traducir con soltura entre distintas formas de decir lo mismo y para razonar con propiedades generales.
+      importance: |-
+        Confundir "múltiplo" y "divisor" es uno de los errores más comunes. Entender su relación evita fallos en MCD, MCM y fracciones.
+      foundations: |-
+        La relación entre multiplicación y división (bloque 07): si $b \times k = a$, entonces $a \div b = k$ y $a \div k = b$.
+      prerequisites:
+        - 'Concepto de múltiplo y de divisor (bloque 10, temas 1 y 2)'
+        - 'Relación entre multiplicación y división (bloque 07)'
+      outcomes:
+        - 'Expresar una misma relación con distintas palabras'
+        - 'Aplicar propiedades de múltiplos y divisores'
+        - 'Distinguir afirmaciones verdaderas y falsas sobre divisibilidad'
+      everyday_example: |-
+        Si una caja contiene 6 paquetes de 8 galletas, hay $6 \times 8 = 48$ galletas. Entonces 48 se puede repartir exactamente en grupos de 6 o de 8: 48 es múltiplo de ambos, y ambos son divisores de 48.
+    sections:
+      - title: Dos caras de la misma relación
+        concept: Si $a = b \times k$, el número mayor es múltiplo y los factores son divisores.
+        explanation: |-
+          De la igualdad $48 = 6 \times 8$ se pueden leer **cinco afirmaciones equivalentes**:
+
+          - 48 es múltiplo de 6 (y de 8).
+          - 6 es divisor de 48 (y 8 también).
+          - 6 divide a 48.
+          - 48 es divisible entre 6.
+          - $48 \div 6 = 8$ es una división exacta.
+
+          **Propiedades útiles**
+
+          1. **Transitiva**: si 12 es divisor de 36 y 36 es divisor de 108, entonces 12 es divisor de 108. (Si $36 = 12 \times 3$ y $108 = 36 \times 3$, entonces $108 = 12 \times 9$.)
+          2. **Suma de múltiplos**: si dos números son múltiplos de 7, su suma también: $14 + 21 = 35 = 7 \times 5$. Lo mismo ocurre con la diferencia: $21 - 14 = 7$.
+          3. **Comparación**: los divisores de $n$ son finitos y no pasan de $n$; los múltiplos son infinitos y (salvo el 0) no bajan de $n$. El número $n$ es a la vez su mayor divisor y su menor múltiplo no nulo.
+        definition: |-
+          Para naturales $a$ y $b$ con $b \neq 0$: $a$ es múltiplo de $b$ $\iff$ $b$ es divisor de $a$ $\iff$ $a \div b$ es exacta.
+        rules:
+          - '$a$ múltiplo de $b$ equivale a $b$ divisor de $a$.'
+          - 'Si $a$ divide a $b$ y $b$ divide a $c$, entonces $a$ divide a $c$.'
+          - 'La suma y la diferencia de múltiplos de $n$ son múltiplos de $n$.'
+        examples:
+          - problem: 'A partir de $9 \times 7 = 63$, escribe dos afirmaciones con "múltiplo" y dos con "divisor".'
+            solution: |-
+              **Paso 1.** Múltiplo: "63 es múltiplo de 9" y "63 es múltiplo de 7".
+
+              **Paso 2.** Divisor: "9 es divisor de 63" y "7 es divisor de 63".
+
+              Resultado: las cuatro afirmaciones son verdaderas y expresan la misma igualdad.
+          - problem: '¿Es $350 + 49$ múltiplo de 7, sin calcular la suma?'
+            solution: |-
+              **Paso 1.** $350 = 7 \times 50$ y $49 = 7 \times 7$: ambos son múltiplos de 7.
+
+              **Paso 2.** La suma de múltiplos de 7 es múltiplo de 7.
+
+              Resultado: sí. En efecto, $399 = 7 \times 57$.
+        common_errors:
+          - 'Decir "9 es múltiplo de 63": el múltiplo es el número grande.'
+          - 'Pensar que el 0 es divisor de todos los números: el 0 es múltiplo de todos, no divisor.'
+        summary: |-
+          "Ser múltiplo" y "ser divisor" son la misma relación leída en sentidos opuestos. Las propiedades transitiva y de la suma ayudan a razonar sin dividir.
+        check:
+          question: 'Sabiendo que $9 \times 7 = 63$, ¿cuál de estas afirmaciones es FALSA?'
+          options: ['63 es múltiplo de 9', '7 es divisor de 63', '9 es múltiplo de 63']
+          answer: 2
+          explanation: |-
+            9 es divisor de 63, no múltiplo. Los múltiplos de 63 son 0, 63, 126, …
+    glossary:
+      - {term: Propiedad transitiva, definition: 'Si $a$ divide a $b$ y $b$ divide a $c$, entonces $a$ divide a $c$.'}
+      - {term: Afirmaciones equivalentes, definition: 'Frases distintas que expresan exactamente la misma relación.'}
+
+  t08:
+    intro:
+      what: |-
+        Este tema muestra cómo usar múltiplos, divisores y criterios de divisibilidad para resolver problemas de la vida cotidiana.
+      purpose: |-
+        Sirve para reconocer cuándo un problema pide "repartir en grupos iguales" (divisores) o "repetir a intervalos regulares" (múltiplos).
+      importance: |-
+        Muchas decisiones prácticas (organizar personas, empaquetar productos, programar tareas) se resuelven con estas ideas.
+      foundations: |-
+        Los divisores dicen en cuántos grupos iguales se reparte una cantidad; los múltiplos dicen qué cantidades se alcanzan repitiendo un grupo.
+      prerequisites:
+        - 'Múltiplos y divisores de un número (bloque 10, temas 3 y 4)'
+        - 'Criterios de divisibilidad (bloque 10, temas 5 y 6)'
+      outcomes:
+        - 'Resolver problemas de reparto exacto y organización en filas'
+        - 'Resolver problemas de repeticiones periódicas'
+      everyday_example: |-
+        Si debes tomar un medicamento cada 6 horas empezando a medianoche, las tomas serán a las 6, 12, 18 y 24 horas: los múltiplos de 6.
+    sections:
+      - title: ¿Divisores o múltiplos?
+        concept: Si se reparte en partes iguales se buscan divisores; si algo se repite a intervalos fijos se buscan múltiplos.
+        explanation: |-
+          Antes de calcular, pregúntate qué describe el problema:
+
+          - **Repartir, agrupar, ordenar en filas iguales, sin que sobre**: se buscan **divisores** de la cantidad total.
+          - **Algo que ocurre cada cierto tiempo, cantidades que se forman con paquetes completos**: se buscan **múltiplos** del tamaño del intervalo o del paquete.
+
+          Después, usa la herramienta adecuada: listar divisores (tema 4), listar múltiplos (tema 3) o un criterio de divisibilidad (temas 5 y 6) para responder rápidamente si un reparto es exacto.
+
+          Por último, **interpreta**: ¿el problema excluye algún caso (por ejemplo, "más de una fila")? ¿Pide cuántas opciones hay o cuál es la mayor?
+        definition: |-
+          Un problema de **divisibilidad** es aquel cuya solución depende de que una división sea exacta, es decir, de las relaciones de múltiplo y divisor entre las cantidades.
+        rules:
+          - 'Repartir en grupos iguales: divisores.'
+          - 'Repeticiones regulares: múltiplos.'
+          - 'Leer bien las condiciones que excluyen casos.'
+        examples:
+          - problem: 'Se quieren colocar 24 sillas en filas iguales, con más de una fila y más de una silla por fila. ¿De cuántas maneras se puede hacer?'
+            solution: |-
+              **Paso 1.** El número de filas debe dividir a 24. $D(24) = \{1, 2, 3, 4, 6, 8, 12, 24\}$.
+
+              **Paso 2.** Excluimos 1 fila (una sola fila) y 24 filas (una silla por fila).
+
+              **Paso 3.** Quedan $2, 3, 4, 6, 8, 12$ filas.
+
+              Respuesta: de 6 maneras.
+          - problem: '¿Se pueden repartir 156 caramelos entre 3 niños sin que sobre ninguno?'
+            solution: |-
+              **Paso 1.** Criterio del 3: $1 + 5 + 6 = 12$, múltiplo de 3.
+
+              **Paso 2.** Sí es divisible: $156 \div 3 = 52$.
+
+              Respuesta: sí, 52 caramelos para cada niño.
+        common_errors:
+          - 'Usar múltiplos cuando el problema pide repartir (o al revés).'
+          - 'Olvidar las condiciones del enunciado, como excluir una sola fila.'
+          - 'No responder con una frase completa y unidades.'
+        summary: |-
+          Repartir pide divisores; repetir pide múltiplos. Calcula con la herramienta adecuada y revisa las condiciones del enunciado.
+        check:
+          question: '¿Se pueden formar equipos de 4 personas con 30 alumnos sin que sobre nadie?'
+          options: ['Sí, porque 30 es par', 'No, porque 4 no es divisor de 30', 'Sí, porque 30 es múltiplo de 2']
+          answer: 1
+          explanation: |-
+            $30 \div 4 = 7$ con residuo 2: sobrarían 2 alumnos. Que 30 sea par sólo garantiza grupos de 2, no de 4.
+    glossary:
+      - {term: Reparto exacto, definition: 'Reparto en partes iguales en el que no sobra nada.'}
+      - {term: Periodicidad, definition: 'Repetición de un hecho a intervalos regulares.'}

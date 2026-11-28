@@ -1,0 +1,820 @@
+block: b28
+intro: >-
+  Muchas situaciones siguen una regla que se repite: el ahorro que crece cada
+  semana, los asientos de un teatro o los números de las casas de una calle.
+  En este bloque aprenderás qué es una sucesión, a descubrir patrones, a
+  distinguir sucesiones crecientes y decrecientes y a trabajar con las
+  sucesiones aritméticas, que avanzan siempre con el mismo salto.
+topics:
+  t01:
+    intro:
+      what: >-
+        Una sucesión es una lista ordenada de números, llamados términos, en la
+        que cada uno ocupa una posición: primero, segundo, tercero...
+      purpose: >-
+        Sirve para describir cantidades que cambian paso a paso y para predecir
+        valores futuros.
+      importance: >-
+        Las sucesiones son la base para estudiar patrones, crecimiento,
+        ahorro periódico y, más adelante, funciones.
+      foundations: >-
+        Se apoya en los números naturales como posiciones (bloque 3) y en las
+        operaciones básicas para calcular términos.
+      prerequisites:
+        - 'Números naturales y enteros (bloque 3)'
+        - 'Jerarquía de operaciones (bloque 9)'
+      outcomes:
+        - 'Identificar los términos y posiciones de una sucesión'
+        - 'Usar la notación $a_n$'
+        - 'Calcular términos de una sucesión dada por una fórmula'
+      everyday_example: >-
+        Los números de las casas de una acera, 1, 3, 5, 7, 9..., forman una
+        sucesión: cada casa tiene su lugar y su número.
+    sections:
+      - title: Términos y posiciones
+        concept: >-
+          En una sucesión importa el orden: cada término ocupa una posición
+          numerada.
+        explanation: |-
+          En la sucesión $2, 5, 8, 11, 14, \ldots$:
+
+          * El primer término es $2$, el segundo es $5$, el tercero es $8$…
+          * Los puntos suspensivos indican que la lista continúa.
+
+          Para nombrar los términos se usa la letra $a$ con un subíndice que indica la **posición**: $a_1 = 2$, $a_2 = 5$, $a_3 = 8$. En general, $a_n$ es el término que ocupa el lugar $n$ y se lee "a sub ene".
+
+          No hay que confundir la **posición** ($n$, siempre un número natural: 1, 2, 3…) con el **valor** del término ($a_n$, que puede ser cualquier número). En la sucesión anterior, la posición 4 tiene el valor 11.
+
+          El orden importa: $1, 2, 3$ y $3, 2, 1$ son sucesiones distintas, aunque tengan los mismos números.
+        definition: >-
+          Una sucesión es una lista ordenada de números $a_1, a_2, a_3, \ldots$,
+          donde $a_n$ es el término que ocupa la posición $n$.
+        rules:
+          - 'La posición $n$ es un número natural: 1, 2, 3...'
+          - '$a_n$ es el valor del término en la posición $n$.'
+          - 'Cambiar el orden de los términos da otra sucesión.'
+        examples:
+          - problem: 'En la sucesión $10, 20, 40, 80, 160, \ldots$, ¿cuánto valen $a_2$ y $a_5$?'
+            solution: |-
+              **Paso 1.** Contamos posiciones: $a_1 = 10$, $a_2 = 20$, $a_3 = 40$, $a_4 = 80$, $a_5 = 160$.
+
+              Resultado: $a_2 = 20$ y $a_5 = 160$.
+        common_errors:
+          - 'Confundir la posición con el valor: en $2, 5, 8, \ldots$, $a_3$ no vale 3, vale 8.'
+          - 'Empezar a contar las posiciones desde 0: el primer término es $a_1$.'
+        summary: >-
+          Una sucesión es una lista ordenada; $a_n$ es el término de la posición
+          $n$.
+        check:
+          question: 'En la sucesión $7, 4, 1, -2, -5, \ldots$, ¿cuánto vale $a_4$?'
+          options:
+            - '$4$'
+            - '$-2$'
+            - '$1$'
+          answer: 1
+          explanation: >-
+            Contando: $a_1 = 7$, $a_2 = 4$, $a_3 = 1$, $a_4 = -2$.
+      - title: Sucesiones dadas por una fórmula
+        concept: >-
+          Una fórmula para $a_n$ permite calcular cualquier término sustituyendo
+          $n$ por la posición.
+        explanation: |-
+          A veces la sucesión se describe con una **fórmula** o **término general** que dice cómo calcular el término a partir de su posición. Por ejemplo:
+
+          $$a_n = 3n + 1$$
+
+          Para hallar un término sustituimos $n$ por la posición y operamos respetando la jerarquía (bloque 9): primero la multiplicación, luego la suma.
+
+          * $a_1 = 3 \cdot 1 + 1 = 4$
+          * $a_2 = 3 \cdot 2 + 1 = 7$
+          * $a_{10} = 3 \cdot 10 + 1 = 31$
+
+          La ventaja de la fórmula es que podemos calcular directamente un término lejano, como $a_{100}$, sin escribir los anteriores.
+        definition: >-
+          El término general de una sucesión es una expresión que da el valor de
+          $a_n$ para cada posición $n$.
+        rules:
+          - 'Para calcular $a_k$ se sustituye $n$ por $k$ en la fórmula.'
+          - 'Se respeta la jerarquía de operaciones.'
+        examples:
+          - problem: 'Si $a_n = 5n - 2$, calcula $a_1$, $a_4$ y $a_{20}$'
+            solution: |-
+              **Paso 1.** $a_1 = 5 \cdot 1 - 2 = 3$.
+
+              **Paso 2.** $a_4 = 5 \cdot 4 - 2 = 18$.
+
+              **Paso 3.** $a_{20} = 5 \cdot 20 - 2 = 98$.
+
+              Resultado: $3$, $18$ y $98$.
+        common_errors:
+          - 'Escribir $5n$ como "5 seguido de n": $5 \cdot 4$ es 20, no 54.'
+          - 'Restar antes de multiplicar.'
+        summary: >-
+          Con el término general se obtiene cualquier término sustituyendo la
+          posición en la fórmula.
+        check:
+          question: 'Si $a_n = 2n + 7$, ¿cuánto vale $a_6$?'
+          options:
+            - '$19$'
+            - '$33$'
+            - '$15$'
+          answer: 0
+          explanation: >-
+            $a_6 = 2 \cdot 6 + 7 = 12 + 7 = 19$.
+    glossary:
+      - {term: Sucesión, definition: 'Lista ordenada de números.'}
+      - {term: Término, definition: 'Cada uno de los números de una sucesión.'}
+      - {term: Término general, definition: 'Fórmula que da el valor de $a_n$ según su posición $n$.'}
+  t02:
+    intro:
+      what: >-
+        Un patrón numérico es la regla que permite pasar de un término de una
+        sucesión al siguiente.
+      purpose: >-
+        Sirve para continuar una sucesión, predecir términos y comprender cómo
+        cambia una cantidad.
+      importance: >-
+        Reconocer patrones es una habilidad básica del razonamiento matemático
+        y de la resolución de problemas.
+      foundations: >-
+        Se basa en las cuatro operaciones y en las potencias (bloque 18).
+      prerequisites:
+        - 'Concepto de sucesión (tema 1 de este bloque)'
+        - 'Operaciones con números enteros (bloques 4 a 7 y 24)'
+        - 'Cuadrados y cubos (bloque 18)'
+      outcomes:
+        - 'Descubrir patrones de suma y de multiplicación'
+        - 'Reconocer patrones de cuadrados y patrones alternados'
+        - 'Calcular el siguiente término de una sucesión'
+      everyday_example: >-
+        Si una planta mide 2, 4, 8, 16 cm en semanas sucesivas, el patrón
+        "duplicar" permite predecir que la siguiente semana medirá 32 cm.
+    sections:
+      - title: Patrones de suma y de multiplicación
+        concept: >-
+          Muchos patrones consisten en sumar siempre lo mismo o multiplicar
+          siempre por lo mismo.
+        explanation: |-
+          Para descubrir el patrón, compara cada término con el anterior:
+
+          * **Sumar (o restar) una cantidad fija.** En $4, 9, 14, 19, \ldots$ cada término es el anterior más 5. El siguiente es $24$.
+          * **Multiplicar por una cantidad fija.** En $3, 6, 12, 24, \ldots$ cada término es el anterior por 2. El siguiente es $48$.
+
+          Una forma ordenada de buscar: calcula las **diferencias** entre términos consecutivos (restando cada término menos el anterior). Si son todas iguales, el patrón es de suma. Si no, prueba con los **cocientes** (dividiendo cada término entre el anterior). Si son todos iguales, el patrón es de multiplicación.
+
+          Es importante comprobar el patrón con **todos** los términos dados, no sólo con los dos primeros.
+        definition: >-
+          Un patrón aditivo suma una cantidad constante a cada término; un patrón
+          multiplicativo multiplica cada término por una cantidad constante.
+        rules:
+          - 'Diferencias iguales: patrón de suma.'
+          - 'Cocientes iguales: patrón de multiplicación.'
+          - 'El patrón debe cumplirse en todos los términos conocidos.'
+        examples:
+          - problem: 'Halla el siguiente término: $5, 15, 45, 135, \ldots$'
+            solution: |-
+              **Paso 1.** Diferencias: $10, 30, 90$. No son iguales.
+
+              **Paso 2.** Cocientes: $15 \div 5 = 3$, $45 \div 15 = 3$, $135 \div 45 = 3$. Son iguales: se multiplica por 3.
+
+              **Paso 3.** $135 \times 3 = 405$.
+
+              Resultado: $405$.
+        common_errors:
+          - 'Mirar sólo los dos primeros términos: en $2, 4, 8$ se podría pensar en "sumar 2", pero $4 + 2 \neq 8$.'
+        summary: >-
+          Las diferencias constantes indican un patrón de suma; los cocientes
+          constantes, uno de multiplicación.
+        check:
+          question: '¿Cuál es el siguiente término de $50, 43, 36, 29, \ldots$?'
+          options:
+            - '$22$'
+            - '$21$'
+            - '$36$'
+          answer: 0
+          explanation: >-
+            Cada término es el anterior menos 7: $29 - 7 = 22$.
+      - title: Otros patrones
+        concept: >-
+          Hay patrones de cuadrados, patrones alternados y patrones en los que
+          cada término depende de los dos anteriores.
+        explanation: |-
+          No todos los patrones son de suma o multiplicación constante:
+
+          * **Cuadrados.** $1, 4, 9, 16, 25, \ldots$ son $1^2, 2^2, 3^2, 4^2, 5^2$. El siguiente es $6^2 = 36$. Sus diferencias ($3, 5, 7, 9$) aumentan de 2 en 2.
+          * **Alternados.** $5, 9, 7, 11, 9, \ldots$ alterna "sumar 4" y "restar 2". El siguiente es $9 + 4 = 13$.
+          * **Suma de los dos anteriores.** $1, 1, 2, 3, 5, 8, \ldots$ (la sucesión de Fibonacci): cada término es la suma de los dos anteriores. El siguiente es $5 + 8 = 13$.
+
+          Ante una sucesión desconocida, ve probando: diferencias, cocientes, cuadrados, alternancia, relación con los dos anteriores.
+        definition: >-
+          Un patrón numérico es cualquier regla, fija y comprobable, que
+          determina cada término de una sucesión a partir de su posición o de los
+          términos anteriores.
+        rules:
+          - 'Si las diferencias aumentan de 2 en 2, puede tratarse de cuadrados.'
+          - 'Si las diferencias alternan, el patrón es alternado.'
+        examples:
+          - problem: 'Halla el siguiente término: $3, 8, 6, 11, 9, \ldots$'
+            solution: |-
+              **Paso 1.** Diferencias: $+5, -2, +5, -2$.
+
+              **Paso 2.** Toca sumar 5: $9 + 5 = 14$.
+
+              Resultado: $14$.
+        common_errors:
+          - 'Abandonar tras ver que las diferencias no son constantes, sin probar otros patrones.'
+        summary: >-
+          Además de sumar o multiplicar, un patrón puede ser de cuadrados, de
+          operaciones alternadas o de sumar los dos términos anteriores.
+        check:
+          question: '¿Cuál es el siguiente término de $2, 3, 5, 8, 13, \ldots$?'
+          options:
+            - '$18$'
+            - '$21$'
+            - '$26$'
+          answer: 1
+          explanation: >-
+            Cada término es la suma de los dos anteriores: $8 + 13 = 21$.
+    glossary:
+      - {term: Patrón numérico, definition: 'Regla que genera los términos de una sucesión.'}
+      - {term: Diferencia, definition: 'Resultado de restar a un término el anterior.'}
+      - {term: Sucesión de Fibonacci, definition: 'Sucesión 1, 1, 2, 3, 5, 8... en que cada término es la suma de los dos anteriores.'}
+  t03:
+    intro:
+      what: >-
+        Una sucesión creciente es aquella en la que cada término es mayor que el
+        anterior.
+      purpose: >-
+        Sirve para describir cantidades que aumentan: ahorros, población,
+        distancia recorrida.
+      importance: >-
+        Saber si una cantidad crece o no es la primera pregunta al analizar
+        datos que cambian con el tiempo.
+      foundations: >-
+        Se basa en la comparación y orden de números enteros y decimales
+        (bloques 3, 16 y 24).
+      prerequisites:
+        - 'Comparación y orden de números (bloque 3)'
+        - 'Números positivos y negativos (bloque 24)'
+        - 'Concepto de sucesión (tema 1 de este bloque)'
+      outcomes:
+        - 'Reconocer si una sucesión es creciente'
+        - 'Distinguir entre creciente y no creciente con ejemplos'
+        - 'Relacionar el crecimiento con diferencias positivas'
+      everyday_example: >-
+        El saldo de una hucha en la que cada semana metes dinero y nunca sacas es
+        una sucesión creciente.
+    sections:
+      - title: Reconocer una sucesión creciente
+        concept: >-
+          Es creciente si cada término es mayor que el que le precede:
+          $a_{n+1} > a_n$.
+        explanation: |-
+          Para saber si una sucesión es creciente, compara **cada** término con el siguiente:
+
+          * $2, 5, 8, 11, \ldots$: $2 < 5 < 8 < 11$. Creciente.
+          * $-10, -6, -3, -1, \ldots$: $-10 < -6 < -3 < -1$. Creciente, aunque todos sus términos sean negativos (recuerda la recta numérica del bloque 24).
+          * $0{,}1;\ 0{,}15;\ 0{,}2;\ 0{,}25; \ldots$: creciente.
+
+          Basta con **un solo** par de términos en que el siguiente no sea mayor para que la sucesión **no** sea creciente: $1, 4, 3, 7, \ldots$ no es creciente porque $3 < 4$.
+
+          Equivalentemente: una sucesión es creciente cuando todas las diferencias $a_{n+1} - a_n$ son **positivas**.
+        definition: >-
+          Una sucesión es creciente si $a_{n+1} > a_n$ para toda posición $n$.
+        rules:
+          - 'Se compara cada término con el siguiente, no sólo el primero con el último.'
+          - 'Creciente equivale a diferencias consecutivas positivas.'
+          - 'Con números negativos, es mayor el que está más a la derecha en la recta.'
+        examples:
+          - problem: '¿Es creciente la sucesión $-8, -5, -5, -1, \ldots$?'
+            solution: |-
+              **Paso 1.** $-8 < -5$: aumenta.
+
+              **Paso 2.** $-5$ y $-5$ son iguales: el término no aumenta.
+
+              Resultado: no es creciente (en sentido estricto), porque un término no supera al anterior.
+        common_errors:
+          - 'Creer que $-5 < -8$: en la recta numérica $-5$ está a la derecha de $-8$, así que $-5 > -8$.'
+          - 'Mirar sólo el primer y el último término.'
+        summary: >-
+          Una sucesión es creciente cuando cada término es mayor que el anterior,
+          es decir, cuando todas sus diferencias son positivas.
+        check:
+          question: '¿Cuál de estas sucesiones es creciente?'
+          options:
+            - '$3, 6, 5, 9, \ldots$'
+            - '$-12, -9, -6, -3, \ldots$'
+            - '$10, 8, 6, 4, \ldots$'
+          answer: 1
+          explanation: >-
+            En $-12, -9, -6, -3$ cada término es mayor que el anterior (se suma
+            3). La primera baja de 6 a 5 y la tercera disminuye siempre.
+    glossary:
+      - {term: Sucesión creciente, definition: 'Sucesión en la que cada término es mayor que el anterior.'}
+      - {term: Monotonía, definition: 'Comportamiento de una sucesión: si crece, decrece o ninguna de las dos.'}
+  t04:
+    intro:
+      what: >-
+        Una sucesión decreciente es aquella en la que cada término es menor que
+        el anterior.
+      purpose: >-
+        Sirve para describir cantidades que disminuyen: el saldo de una deuda
+        que se paga, el combustible de un depósito, la temperatura al
+        anochecer.
+      importance: >-
+        Junto con las crecientes, permite clasificar el comportamiento de una
+        sucesión y detectar las que no siguen ninguno de los dos.
+      foundations: >-
+        Se basa en la comparación de números (bloques 3 y 24) y en las
+        sucesiones crecientes (tema 3).
+      prerequisites:
+        - 'Sucesiones crecientes (tema 3 de este bloque)'
+        - 'Números positivos y negativos (bloque 24)'
+        - 'Comparación de fracciones (bloque 14)'
+      outcomes:
+        - 'Reconocer si una sucesión es decreciente'
+        - 'Clasificar una sucesión como creciente, decreciente o ninguna de las dos'
+        - 'Interpretar sucesiones decrecientes en contextos reales'
+      everyday_example: >-
+        Si debes 1000 pesos y pagas 100 cada mes, la deuda forma la sucesión
+        decreciente 1000, 900, 800, 700...
+    sections:
+      - title: Reconocer una sucesión decreciente
+        concept: >-
+          Es decreciente si cada término es menor que el anterior:
+          $a_{n+1} < a_n$.
+        explanation: |-
+          Igual que en el tema anterior, se compara cada término con el siguiente:
+
+          * $20, 17, 14, 11, \ldots$: siempre baja. Decreciente.
+          * $1, \frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \ldots$: cada término es la mitad del anterior; decreciente, aunque nunca llega a cero ni a ser negativo.
+          * $2, -1, -4, -7, \ldots$: decreciente; pasa de positivos a negativos.
+
+          Una sucesión es decreciente cuando todas sus diferencias $a_{n+1} - a_n$ son **negativas**.
+
+          **Tres casos posibles.** Al clasificar, una sucesión puede ser creciente, decreciente o **ni creciente ni decreciente** (si sube y baja, como $4, 7, 5, 9, 6, \ldots$, o si se repite algún término).
+        definition: >-
+          Una sucesión es decreciente si $a_{n+1} < a_n$ para toda posición $n$.
+        rules:
+          - 'Decreciente equivale a diferencias consecutivas negativas.'
+          - 'Si unas diferencias son positivas y otras negativas, no es ni creciente ni decreciente.'
+          - 'Una sucesión decreciente puede tener todos sus términos positivos.'
+        examples:
+          - problem: 'Clasifica: $9, 6, 7, 4, \ldots$'
+            solution: |-
+              **Paso 1.** Diferencias: $6 - 9 = -3$; $7 - 6 = +1$; $4 - 7 = -3$.
+
+              **Paso 2.** Hay diferencias negativas y una positiva.
+
+              Resultado: no es ni creciente ni decreciente.
+        common_errors:
+          - 'Creer que una sucesión decreciente tiene que llegar a números negativos.'
+          - 'Clasificar como decreciente una sucesión que baja "en general" pero sube en algún paso.'
+        summary: >-
+          Una sucesión es decreciente cuando cada término es menor que el
+          anterior; si sube y baja, no es ni creciente ni decreciente.
+        check:
+          question: '¿Cómo es la sucesión $100, 50, 25, 12{,}5, \ldots$?'
+          options:
+            - 'Creciente'
+            - 'Decreciente'
+            - 'Ni creciente ni decreciente'
+          answer: 1
+          explanation: >-
+            Cada término es la mitad del anterior, así que siempre es menor:
+            decreciente.
+    glossary:
+      - {term: Sucesión decreciente, definition: 'Sucesión en la que cada término es menor que el anterior.'}
+      - {term: Sucesión no monótona, definition: 'Sucesión que no es ni creciente ni decreciente.'}
+  t05:
+    intro:
+      what: >-
+        Una sucesión aritmética es aquella en la que cada término se obtiene
+        sumando al anterior siempre la misma cantidad.
+      purpose: >-
+        Sirve para modelar situaciones de crecimiento o disminución constante y
+        calcular cualquier término sin escribir los anteriores.
+      importance: >-
+        Es la sucesión más sencilla y frecuente: tarifas por tramos, ahorros
+        fijos, filas de asientos, calendarios.
+      foundations: >-
+        Se basa en los patrones de suma (tema 2), en la multiplicación como suma
+        repetida (bloque 6) y en el término general (tema 1).
+      prerequisites:
+        - 'Patrones numéricos (tema 2 de este bloque)'
+        - 'Multiplicación como suma repetida (bloque 6)'
+        - 'Sucesiones dadas por una fórmula (tema 1 de este bloque)'
+      outcomes:
+        - 'Reconocer una sucesión aritmética'
+        - 'Calcular cualquier término con $a_n = a_1 + (n-1)d$'
+        - 'Hallar la posición de un término conocido'
+      everyday_example: >-
+        Un taxi cobra 30 pesos al subir y 8 pesos por kilómetro: los precios
+        tras 1, 2, 3 km forman la sucesión aritmética 38, 46, 54...
+    sections:
+      - title: Qué es una sucesión aritmética
+        concept: >-
+          Es una sucesión en la que la diferencia entre términos consecutivos es
+          siempre la misma.
+        explanation: |-
+          En $5, 8, 11, 14, \ldots$ siempre se suma $3$. Esa cantidad fija se llama **diferencia** y se representa con la letra $d$ (en el tema 6 la estudiaremos con detalle).
+
+          * Si $d > 0$, la sucesión aritmética es creciente: $5, 8, 11, \ldots$ ($d = 3$).
+          * Si $d < 0$, es decreciente: $20, 15, 10, \ldots$ ($d = -5$).
+          * Si $d = 0$, todos los términos son iguales: $4, 4, 4, \ldots$
+
+          ¿Cómo saber si una sucesión es aritmética? Calcula las diferencias consecutivas: si **todas** son iguales, lo es. $3, 6, 12, 24$ **no** es aritmética (sus diferencias son $3, 6, 12$).
+        definition: >-
+          Una sucesión es aritmética si existe un número $d$ tal que
+          $a_{n+1} = a_n + d$ para toda posición $n$.
+        rules:
+          - 'Todas las diferencias consecutivas son iguales a $d$.'
+          - '$d > 0$: creciente; $d < 0$: decreciente; $d = 0$: constante.'
+        examples:
+          - problem: '¿Es aritmética la sucesión $7, 11, 15, 19, \ldots$? ¿Y $1, 2, 4, 7, \ldots$?'
+            solution: |-
+              **Paso 1.** Diferencias de la primera: $4, 4, 4$. Iguales: sí es aritmética, con $d = 4$.
+
+              **Paso 2.** Diferencias de la segunda: $1, 2, 3$. Distintas: no es aritmética.
+
+              Resultado: sólo la primera es aritmética.
+        common_errors:
+          - 'Considerar aritmética cualquier sucesión creciente.'
+        summary: >-
+          Una sucesión aritmética suma siempre la misma diferencia $d$; según su
+          signo, crece, decrece o es constante.
+        check:
+          question: '¿Cuál de estas sucesiones es aritmética?'
+          options:
+            - '$2, 4, 8, 16, \ldots$'
+            - '$1, 4, 9, 16, \ldots$'
+            - '$30, 26, 22, 18, \ldots$'
+          answer: 2
+          explanation: >-
+            En $30, 26, 22, 18$ la diferencia es siempre $-4$. Las otras tienen
+            diferencias distintas ($2, 4, 8$ y $3, 5, 7$).
+      - title: El término general
+        concept: >-
+          El término $n$ de una sucesión aritmética es $a_n = a_1 + (n-1)\,d$.
+        explanation: |-
+          Para llegar al término $n$ partiendo de $a_1$, ¿cuántas veces sumamos $d$? Para llegar a $a_2$, una vez; a $a_3$, dos veces; a $a_{10}$, nueve veces. En general, **$n - 1$ veces**. Y sumar $d$ repetidas veces es multiplicar (bloque 6):
+
+          $$a_n = a_1 + (n - 1)\,d$$
+
+          Con esta fórmula calculamos un término lejano directamente. En $5, 8, 11, \ldots$ ($a_1 = 5$, $d = 3$):
+
+          $$a_{20} = 5 + 19 \cdot 3 = 5 + 57 = 62$$
+
+          También sirve para saber **qué posición** ocupa un valor: si $a_n = 62$, entonces $62 - 5 = (n - 1) \cdot 3$, es decir, $57 = (n-1) \cdot 3$, así que $n - 1 = 19$ y $n = 20$.
+        definition: >-
+          En una sucesión aritmética con primer término $a_1$ y diferencia $d$,
+          el término general es $a_n = a_1 + (n-1)\,d$.
+        rules:
+          - 'Para llegar al término $n$ se suma $d$ exactamente $n - 1$ veces.'
+          - 'Para hallar la posición de un valor: $n - 1 = \frac{a_n - a_1}{d}$.'
+        examples:
+          - problem: 'En la sucesión $7, 11, 15, \ldots$, ¿qué lugar ocupa el término $87$?'
+            solution: |-
+              **Paso 1.** $a_1 = 7$ y $d = 4$.
+
+              **Paso 2.** $87 - 7 = 80$ es lo que se ha sumado en total.
+
+              **Paso 3.** $80 \div 4 = 20$ veces se ha sumado $d$, así que $n - 1 = 20$ y $n = 21$.
+
+              **Comprobación.** $a_{21} = 7 + 20 \cdot 4 = 87$.
+
+              Resultado: el término $87$ ocupa la posición $21$.
+        common_errors:
+          - 'Usar $n \cdot d$ en lugar de $(n - 1) \cdot d$: $a_{20}$ no es $5 + 20 \cdot 3$.'
+          - 'Olvidar sumar 1 al final cuando se calcula la posición.'
+        summary: >-
+          $a_n = a_1 + (n-1)d$ permite calcular cualquier término y también la
+          posición de un valor conocido.
+        check:
+          question: 'En la sucesión aritmética $4, 10, 16, \ldots$, ¿cuánto vale $a_{10}$?'
+          options:
+            - '$64$'
+            - '$58$'
+            - '$60$'
+          answer: 1
+          explanation: >-
+            $a_{10} = 4 + 9 \cdot 6 = 4 + 54 = 58$. $64$ sale de usar $10 \cdot 6$
+            en lugar de $9 \cdot 6$.
+    glossary:
+      - {term: Sucesión aritmética, definition: 'Sucesión en la que se suma siempre la misma cantidad $d$.'}
+      - {term: Primer término, definition: 'Término $a_1$, con el que empieza la sucesión.'}
+  t06:
+    intro:
+      what: >-
+        La diferencia común es la cantidad fija $d$ que se suma a cada término de
+        una sucesión aritmética para obtener el siguiente.
+      purpose: >-
+        Sirve para identificar una sucesión aritmética y construir su término
+        general.
+      importance: >-
+        Es el dato que caracteriza la sucesión junto con el primer término: si
+        se conocen $a_1$ y $d$, se conoce toda la sucesión.
+      foundations: >-
+        Se basa en la resta de números enteros (bloque 24) y en el término
+        general (tema 5).
+      prerequisites:
+        - 'Resta de números enteros (bloques 5 y 24)'
+        - 'Sucesiones aritméticas (tema 5 de este bloque)'
+      outcomes:
+        - 'Calcular la diferencia común a partir de términos consecutivos'
+        - 'Calcular la diferencia común a partir de términos no consecutivos'
+        - 'Interpretar el signo de $d$'
+      everyday_example: >-
+        Si una vela mide 20 cm y cada hora pierde 1,5 cm, la diferencia común de
+        la sucesión de longitudes es $-1{,}5$ cm.
+    sections:
+      - title: Calcular la diferencia común
+        concept: >-
+          Se resta a un término el anterior: $d = a_{n+1} - a_n$.
+        explanation: |-
+          La diferencia común se calcula siempre en el mismo orden: **término siguiente menos término anterior**.
+
+          * En $3, 10, 17, \ldots$: $d = 10 - 3 = 7$.
+          * En $20, 17, 14, \ldots$: $d = 17 - 20 = -3$. El signo negativo indica que la sucesión decrece.
+
+          Si restas al revés ($20 - 17 = 3$) obtienes el signo equivocado y la sucesión que construyas crecerá en lugar de decrecer.
+
+          Conviene comprobar con más de un par de términos que la diferencia es la misma; si no lo es, la sucesión no es aritmética.
+        definition: >-
+          La diferencia común de una sucesión aritmética es $d = a_{n+1} - a_n$,
+          que tiene el mismo valor para todo $n$.
+        rules:
+          - 'Siempre: término siguiente menos término anterior.'
+          - '$d$ puede ser positivo, negativo, cero o decimal.'
+        examples:
+          - problem: 'Halla la diferencia común de $2{,}5;\ 4;\ 5{,}5;\ 7; \ldots$'
+            solution: |-
+              **Paso 1.** $4 - 2{,}5 = 1{,}5$.
+
+              **Paso 2.** Comprobamos: $5{,}5 - 4 = 1{,}5$ y $7 - 5{,}5 = 1{,}5$.
+
+              Resultado: $d = 1{,}5$.
+        common_errors:
+          - 'Restar el anterior menos el siguiente y obtener el signo contrario.'
+        summary: >-
+          $d$ es el término siguiente menos el anterior; su signo indica si la
+          sucesión crece o decrece.
+        check:
+          question: '¿Cuál es la diferencia común de $-1, -5, -9, -13, \ldots$?'
+          options:
+            - '$4$'
+            - '$-4$'
+            - '$-6$'
+          answer: 1
+          explanation: >-
+            $-5 - (-1) = -5 + 1 = -4$. La sucesión decrece, así que $d$ es
+            negativo.
+      - title: Diferencia a partir de términos lejanos
+        concept: >-
+          Si se conocen dos términos no consecutivos, se divide su diferencia
+          entre el número de saltos que los separan.
+        explanation: |-
+          Supón que sabemos $a_1 = 4$ y $a_6 = 29$, pero no los términos intermedios. Entre la posición 1 y la 6 hay $6 - 1 = 5$ saltos, y en cada salto se suma $d$:
+
+          $$29 - 4 = 5 \cdot d \quad\Rightarrow\quad d = \frac{25}{5} = 5$$
+
+          En general, para dos posiciones $m > k$:
+
+          $$d = \frac{a_m - a_k}{m - k}$$
+
+          Es como saber que en 5 escalones iguales se suben 25 cm: cada escalón mide 5 cm.
+        definition: >-
+          En una sucesión aritmética, para posiciones $m \neq k$,
+          $d = \frac{a_m - a_k}{m - k}$.
+        rules:
+          - 'Número de saltos entre las posiciones $k$ y $m$: $m - k$.'
+          - 'Se divide la diferencia de valores entre el número de saltos.'
+        examples:
+          - problem: 'En una sucesión aritmética, $a_3 = 11$ y $a_8 = 36$. Halla $d$ y $a_1$.'
+            solution: |-
+              **Paso 1.** Saltos: $8 - 3 = 5$.
+
+              **Paso 2.** $d = \frac{36 - 11}{5} = \frac{25}{5} = 5$.
+
+              **Paso 3.** De $a_1$ a $a_3$ hay 2 saltos: $a_1 = 11 - 2 \cdot 5 = 1$.
+
+              Resultado: $d = 5$ y $a_1 = 1$.
+        common_errors:
+          - 'Dividir entre la posición mayor en lugar de entre el número de saltos: de $a_1$ a $a_6$ hay 5 saltos, no 6.'
+        summary: >-
+          Con dos términos cualesquiera, $d$ es la diferencia de valores dividida
+          entre la diferencia de posiciones.
+        check:
+          question: 'En una sucesión aritmética, $a_1 = 10$ y $a_5 = 30$. ¿Cuánto vale $d$?'
+          options:
+            - '$4$'
+            - '$5$'
+            - '$6$'
+          answer: 1
+          explanation: >-
+            Hay $5 - 1 = 4$ saltos y $30 - 10 = 20$: $d = 20 \div 4 = 5$. Dividir
+            entre 5 posiciones daría 4, que es incorrecto.
+    glossary:
+      - {term: Diferencia común, definition: 'Cantidad fija $d$ que se suma a cada término de una sucesión aritmética.'}
+      - {term: Salto, definition: 'Paso de un término al siguiente.'}
+  t07:
+    intro:
+      what: >-
+        Identificar un patrón es descubrir, mediante una estrategia ordenada, la
+        regla que sigue una sucesión.
+      purpose: >-
+        Sirve para continuar sucesiones desconocidas, encontrar su término
+        general y justificar la respuesta.
+      importance: >-
+        Es una estrategia general de razonamiento que se usa en todas las ramas
+        de las matemáticas y en la vida diaria.
+      foundations: >-
+        Reúne los patrones del tema 2, las sucesiones aritméticas (temas 5 y 6) y
+        las potencias (bloque 18).
+      prerequisites:
+        - 'Patrones numéricos (tema 2 de este bloque)'
+        - 'Sucesiones aritméticas y diferencia común (temas 5 y 6 de este bloque)'
+        - 'Potencias (bloque 18)'
+      outcomes:
+        - 'Aplicar una estrategia ordenada para descubrir patrones'
+        - 'Usar las segundas diferencias'
+        - 'Justificar el patrón encontrado'
+      everyday_example: >-
+        Al ver los números de una sala de cine (fila A: 1-20, fila B: 21-40...)
+        puedes deducir en qué fila está el asiento 87.
+    sections:
+      - title: Una estrategia ordenada
+        concept: >-
+          Se prueban, en orden, diferencias, cocientes y otros patrones, y se
+          comprueba la regla con todos los términos.
+        explanation: |-
+          Ante una sucesión desconocida, sigue estos pasos:
+
+          1. **Diferencias** entre términos consecutivos. Si son constantes → sucesión aritmética.
+          2. **Cocientes** entre términos consecutivos. Si son constantes → se multiplica siempre por lo mismo.
+          3. **Segundas diferencias** (diferencias de las diferencias). Si son constantes, el patrón tiene que ver con cuadrados.
+          4. **Otros**: alternancia, relación con los dos términos anteriores, relación con la posición ($n^2$, $2^n$…).
+          5. **Comprueba** la regla con todos los términos dados antes de usarla.
+
+          Por ejemplo, en $2, 5, 10, 17, 26, \ldots$:
+
+          * Diferencias: $3, 5, 7, 9$ (no constantes).
+          * Segundas diferencias: $2, 2, 2$ (constantes).
+          * La siguiente diferencia será $11$: el término siguiente es $26 + 11 = 37$.
+          * Además, cada término es $n^2 + 1$: $1 + 1, 4 + 1, 9 + 1, \ldots$ y $6^2 + 1 = 37$. Las dos vías coinciden.
+        definition: >-
+          Las segundas diferencias de una sucesión son las diferencias entre
+          diferencias consecutivas.
+        rules:
+          - 'Diferencias constantes: aritmética.'
+          - 'Cocientes constantes: patrón multiplicativo.'
+          - 'Segundas diferencias constantes: patrón relacionado con $n^2$.'
+          - 'Una regla sólo es válida si funciona con todos los términos dados.'
+        examples:
+          - problem: 'Halla el siguiente término de $1, 3, 7, 15, 31, \ldots$'
+            solution: |-
+              **Paso 1.** Diferencias: $2, 4, 8, 16$. No constantes.
+
+              **Paso 2.** Las diferencias se duplican; también se observa que cada término es el anterior por 2 más 1: $1 \cdot 2 + 1 = 3$, $3 \cdot 2 + 1 = 7$, $7 \cdot 2 + 1 = 15$, $15 \cdot 2 + 1 = 31$.
+
+              **Paso 3.** $31 \cdot 2 + 1 = 63$ (y la diferencia siguiente sería $32$: $31 + 32 = 63$).
+
+              Resultado: $63$.
+        common_errors:
+          - 'Proponer una regla que sólo funciona para los primeros términos.'
+          - 'No probar las segundas diferencias cuando las primeras no son constantes.'
+        summary: >-
+          Diferencias, cocientes, segundas diferencias y otros patrones, en ese
+          orden, y siempre comprobando la regla.
+        check:
+          question: 'En $4, 7, 12, 19, 28, \ldots$ las diferencias son $3, 5, 7, 9$. ¿Cuál es el siguiente término?'
+          options:
+            - '$37$'
+            - '$39$'
+            - '$40$'
+          answer: 1
+          explanation: >-
+            Las diferencias aumentan de 2 en 2, así que la siguiente es 11:
+            $28 + 11 = 39$. (Además, cada término es $n^2 + 3$, y $6^2 + 3 = 39$.)
+    glossary:
+      - {term: Segundas diferencias, definition: 'Diferencias entre las diferencias consecutivas de una sucesión.'}
+      - {term: Conjetura, definition: 'Regla propuesta que hay que comprobar antes de aceptarla.'}
+  t08:
+    intro:
+      what: >-
+        Es el uso de las sucesiones, sobre todo las aritméticas, para resolver
+        problemas reales.
+      purpose: >-
+        Sirve para calcular ahorros periódicos, pagos escalonados, asientos,
+        calendarios y totales acumulados.
+      importance: >-
+        Muchos problemas cotidianos de crecimiento constante se resuelven en un
+        paso con el término general en lugar de largas listas.
+      foundations: >-
+        Se basa en el término general (tema 5), en la diferencia común (tema 6) y
+        en las propiedades de la suma (bloque 8).
+      prerequisites:
+        - 'Sucesiones aritméticas y término general (tema 5 de este bloque)'
+        - 'Diferencia común (tema 6 de este bloque)'
+        - 'Propiedades conmutativa y asociativa de la suma (bloque 8)'
+      outcomes:
+        - 'Modelizar una situación con una sucesión aritmética'
+        - 'Calcular un término concreto en un contexto real'
+        - 'Calcular la suma de los primeros términos de una sucesión aritmética'
+      everyday_example: >-
+        Si ahorras 50 pesos la primera semana y cada semana 10 más que la
+        anterior, en la semana 12 ahorrarás 160 pesos.
+    sections:
+      - title: Modelizar con una sucesión aritmética
+        concept: >-
+          Se identifican el primer término y la diferencia en el enunciado y se
+          aplica el término general.
+        explanation: |-
+          Para resolver un problema con sucesiones:
+
+          1. **Reconoce** la sucesión: ¿qué cantidad cambia paso a paso? ¿cambia siempre en lo mismo?
+          2. **Identifica** $a_1$ (el valor inicial) y $d$ (cuánto cambia en cada paso).
+          3. **Decide** qué posición $n$ te preguntan.
+          4. **Aplica** $a_n = a_1 + (n-1)d$.
+          5. **Interpreta** el resultado con su unidad.
+
+          Ejemplo: en un teatro la primera fila tiene $20$ asientos y cada fila tiene $2$ más que la anterior. ¿Cuántos asientos tiene la fila $15$? Aquí $a_1 = 20$, $d = 2$ y $n = 15$:
+
+          $$a_{15} = 20 + 14 \cdot 2 = 48 \text{ asientos}$$
+        definition: >-
+          Modelizar una situación con una sucesión aritmética es representar una
+          cantidad que cambia de forma constante mediante $a_1$ y $d$.
+        rules:
+          - '$a_1$ es el valor del primer paso, no siempre el valor "antes de empezar".'
+          - '$d$ es lo que cambia en cada paso, con su signo.'
+        examples:
+          - problem: 'Ahorras $50$ pesos la primera semana y cada semana $10$ más que la anterior. ¿Cuánto ahorras en la semana $12$?'
+            solution: |-
+              **Paso 1.** $a_1 = 50$, $d = 10$, $n = 12$.
+
+              **Paso 2.** $a_{12} = 50 + 11 \cdot 10 = 50 + 110 = 160$.
+
+              Resultado: $160$ pesos en la semana $12$.
+        common_errors:
+          - 'Confundir lo que se ahorra en una semana con el total acumulado.'
+          - 'Usar $n \cdot d$ en lugar de $(n-1) \cdot d$.'
+        summary: >-
+          Identificar $a_1$, $d$ y $n$ en el enunciado convierte el problema en
+          una aplicación directa del término general.
+        check:
+          question: 'Un taxi cobra $38$ pesos por el primer kilómetro y $8$ pesos por cada kilómetro adicional. ¿Cuánto cuesta un viaje de $10$ km?'
+          options:
+            - '$118$ pesos'
+            - '$110$ pesos'
+            - '$126$ pesos'
+          answer: 1
+          explanation: >-
+            $a_1 = 38$, $d = 8$: $a_{10} = 38 + 9 \cdot 8 = 38 + 72 = 110$ pesos.
+            $118$ resulta de usar $10 \cdot 8$.
+      - title: Sumar los términos
+        concept: >-
+          La suma de los $n$ primeros términos de una sucesión aritmética es
+          $S_n = \frac{n\,(a_1 + a_n)}{2}$.
+        explanation: |-
+          Cuenta la historia que el joven matemático Gauss sumó $1 + 2 + 3 + \cdots + 100$ en un momento. Su idea: emparejar el primero con el último, el segundo con el penúltimo… $1 + 100 = 101$, $2 + 99 = 101$, $3 + 98 = 101$. Todas las parejas suman lo mismo, y hay $100 \div 2 = 50$ parejas:
+
+          $$1 + 2 + \cdots + 100 = 50 \cdot 101 = 5050$$
+
+          Esto funciona en **cualquier** sucesión aritmética, porque al avanzar por un extremo se suma $d$ y al retroceder por el otro se resta $d$. Por eso:
+
+          $$S_n = \frac{n\,(a_1 + a_n)}{2}$$
+
+          Es decir: número de términos por la suma del primero y el último, dividido entre 2.
+        definition: >-
+          La suma de los $n$ primeros términos de una sucesión aritmética es
+          $S_n = a_1 + a_2 + \cdots + a_n = \frac{n(a_1 + a_n)}{2}$.
+        rules:
+          - 'Primero se calcula el último término $a_n$ con el término general.'
+          - 'Después se aplica $S_n = \frac{n(a_1 + a_n)}{2}$.'
+        examples:
+          - problem: 'Con el ahorro anterior ($50$ pesos la primera semana y $10$ más cada semana), ¿cuánto se ha ahorrado en total en $12$ semanas?'
+            solution: |-
+              **Paso 1.** Último término: $a_{12} = 160$ (ejemplo anterior).
+
+              **Paso 2.** $S_{12} = \frac{12 \cdot (50 + 160)}{2} = \frac{12 \cdot 210}{2} = 6 \cdot 210 = 1260$.
+
+              Resultado: $1260$ pesos en total.
+        common_errors:
+          - 'Olvidar dividir entre 2.'
+          - 'Confundir el total acumulado $S_n$ con el último término $a_n$.'
+        summary: >-
+          Emparejando primero y último, la suma de una sucesión aritmética es el
+          número de términos por $(a_1 + a_n)$, dividido entre 2.
+        check:
+          question: 'Un teatro tiene $10$ filas; la primera tiene $20$ asientos y cada una $2$ más que la anterior (la última tiene $38$). ¿Cuántos asientos hay en total?'
+          options:
+            - '$290$'
+            - '$580$'
+            - '$380$'
+          answer: 0
+          explanation: >-
+            $S_{10} = \frac{10 \cdot (20 + 38)}{2} = \frac{580}{2} = 290$. $580$
+            olvida dividir entre 2.
+    glossary:
+      - {term: Modelizar, definition: 'Representar una situación real con una expresión matemática.'}
+      - {term: Suma de una sucesión aritmética, definition: '$S_n = \frac{n(a_1 + a_n)}{2}$.'}

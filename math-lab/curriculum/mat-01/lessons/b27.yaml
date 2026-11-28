@@ -1,0 +1,1240 @@
+block: b27
+intro: >-
+  Medir es comparar una cantidad con una unidad. Para entendernos en todo el
+  mundo usamos el Sistema Internacional de Unidades, basado en el sistema
+  decimal: cambiar de unidad suele ser multiplicar o dividir por 10, 100 o
+  1000. En este bloque aprenderás las unidades de longitud, masa, tiempo,
+  temperatura, capacidad, superficie y volumen, sus prefijos y cómo convertir
+  de una a otra.
+topics:
+  t01:
+    intro:
+      what: >-
+        El Sistema Internacional de Unidades (SI) es el conjunto de unidades de
+        medida acordado internacionalmente y usado por casi todos los países.
+      purpose: >-
+        Sirve para que una medida signifique lo mismo en cualquier lugar: un
+        metro es igual en todas partes.
+      importance: >-
+        Sin unidades comunes no habría comercio, ciencia ni ingeniería
+        fiables. Además, al ser decimal, las conversiones son sencillas.
+      foundations: >-
+        Se apoya en el sistema de numeración decimal (bloque 2) y en las
+        potencias de 10 (bloques 18 y 26).
+      prerequisites:
+        - 'Sistema decimal y valor posicional (bloque 2)'
+        - 'Conceptos de cantidad y magnitud (bloque 1)'
+        - 'Potencias de 10 (bloque 26)'
+      outcomes:
+        - 'Distinguir magnitud, cantidad y unidad'
+        - 'Nombrar las siete unidades básicas del SI y sus símbolos'
+        - 'Reconocer unidades derivadas y unidades de uso común aceptadas'
+      everyday_example: >-
+        Una etiqueta que dice "500 g" o una señal de "80 km/h" usan unidades del
+        SI o derivadas de ellas.
+    sections:
+      - title: Magnitudes y unidades básicas
+        concept: >-
+          El SI define siete unidades básicas, una para cada magnitud
+          fundamental.
+        explanation: |-
+          Recuerda del bloque 1: una **magnitud** es una propiedad que se puede medir (longitud, masa, tiempo…) y una **unidad** es la cantidad que se toma como referencia para medirla. Medir es contar cuántas veces cabe la unidad: "$3$ m" significa tres veces la longitud de un metro.
+
+          El SI tiene **siete unidades básicas**:
+
+          | Magnitud | Unidad | Símbolo |
+          |---|---|---|
+          | longitud | metro | m |
+          | masa | kilogramo | kg |
+          | tiempo | segundo | s |
+          | intensidad de corriente eléctrica | amperio | A |
+          | temperatura | kelvin | K |
+          | cantidad de sustancia | mol | mol |
+          | intensidad luminosa | candela | cd |
+
+          Fíjate en que la unidad básica de masa es el **kilogramo**, no el gramo.
+
+          Los **símbolos** no son abreviaturas: no llevan punto, no cambian en plural y se escriben separados del número: "$5$ kg", no "5 kgs." ni "5Kg".
+        definition: >-
+          El Sistema Internacional de Unidades es un sistema de unidades basado
+          en siete unidades básicas (m, kg, s, A, K, mol, cd) de las que se
+          derivan todas las demás.
+        rules:
+          - 'La unidad básica de masa es el kilogramo (kg).'
+          - 'Los símbolos no llevan punto ni plural: 3 km, no 3 kms.'
+          - 'Entre el número y el símbolo se deja un espacio.'
+        examples:
+          - problem: '¿Qué unidad básica del SI corresponde a cada magnitud: el tiempo que dura una carrera y la masa de un saco?'
+            solution: |-
+              **Paso 1.** El tiempo se mide en segundos (s).
+
+              **Paso 2.** La masa se mide en kilogramos (kg).
+
+              Resultado: segundo y kilogramo.
+        common_errors:
+          - 'Pensar que la unidad básica de masa es el gramo.'
+          - 'Escribir símbolos con punto o plural: "kgs.", "mts".'
+        summary: >-
+          El SI tiene siete unidades básicas; las más usadas a diario son el
+          metro, el kilogramo y el segundo.
+        check:
+          question: '¿Cuál es la unidad básica del SI para la masa?'
+          options:
+            - 'El gramo (g)'
+            - 'El kilogramo (kg)'
+            - 'El litro (L)'
+          answer: 1
+          explanation: >-
+            En el SI la unidad básica de masa es el kilogramo. El gramo es un
+            submúltiplo y el litro mide capacidad, no masa.
+      - title: Unidades derivadas y de uso común
+        concept: >-
+          Las unidades derivadas se forman combinando las básicas; algunas
+          unidades fuera del SI se aceptan por su uso diario.
+        explanation: |-
+          Muchas magnitudes se miden con **unidades derivadas**, que se obtienen multiplicando o dividiendo unidades básicas:
+
+          * Superficie: metro cuadrado, m² ($\text{m} \times \text{m}$).
+          * Volumen: metro cúbico, m³ ($\text{m} \times \text{m} \times \text{m}$).
+          * Velocidad: metro por segundo, m/s (metros recorridos en cada segundo).
+
+          Además, se aceptan junto al SI algunas unidades muy prácticas: el **litro** (L) para capacidad, la **hora** (h) y el **minuto** (min) para el tiempo, el **grado Celsius** (°C) para la temperatura, la **tonelada** (t) para la masa y la **hectárea** (ha) para terrenos.
+
+          Las veremos todas en los temas siguientes.
+        definition: >-
+          Una unidad derivada es la que se obtiene combinando unidades básicas
+          mediante productos y cocientes.
+        rules:
+          - 'm² y m³ se obtienen multiplicando metros; m/s, dividiendo metros entre segundos.'
+          - 'Litro, hora, minuto, grado Celsius, tonelada y hectárea se aceptan para uso cotidiano.'
+        examples:
+          - problem: 'Un coche recorre $100$ m en $5$ s. ¿Qué unidad usarías para su velocidad y cuánto vale?'
+            solution: |-
+              **Paso 1.** La velocidad es distancia dividida entre tiempo: unidad m/s.
+
+              **Paso 2.** $100 \div 5 = 20$.
+
+              Resultado: $20$ m/s.
+        common_errors:
+          - 'Usar m² para longitudes o m para superficies.'
+        summary: >-
+          Las unidades derivadas combinan las básicas (m², m³, m/s) y otras
+          unidades prácticas como el litro o la hora se aceptan junto al SI.
+        check:
+          question: '¿Cuál de estas es una unidad derivada del SI?'
+          options:
+            - 'Metro (m)'
+            - 'Metro por segundo (m/s)'
+            - 'Segundo (s)'
+          answer: 1
+          explanation: >-
+            El m/s se obtiene dividiendo metro entre segundo, por eso es
+            derivada. El metro y el segundo son unidades básicas.
+    glossary:
+      - {term: Magnitud, definition: 'Propiedad que se puede medir.'}
+      - {term: Unidad, definition: 'Cantidad de referencia con la que se compara al medir.'}
+      - {term: SI, definition: 'Sistema Internacional de Unidades.'}
+      - {term: Unidad derivada, definition: 'Unidad formada combinando unidades básicas, como m² o m/s.'}
+  t02:
+    intro:
+      what: >-
+        La longitud mide la distancia entre dos puntos; su unidad básica es el
+        metro (m).
+      purpose: >-
+        Sirve para medir alturas, distancias, tamaños de objetos o recorridos.
+      importance: >-
+        Es la magnitud más usada y el modelo para entender las demás: sus
+        conversiones siguen la misma "escalera" de 10 en 10.
+      foundations: >-
+        Se basa en la multiplicación y división por 10, 100 y 1000 (bloques 6,
+        7 y 17) y en el sistema decimal.
+      prerequisites:
+        - 'Sistema Internacional de Unidades (tema 1 de este bloque)'
+        - 'Multiplicación y división de decimales por 10, 100 y 1000 (bloque 17)'
+      outcomes:
+        - 'Conocer los múltiplos y submúltiplos del metro'
+        - 'Convertir entre unidades de longitud'
+        - 'Expresar en una sola unidad medidas como 2 km 30 m'
+      everyday_example: >-
+        Una carrera popular de 10 km son 10 000 m, y una hoja de papel mide unos
+        30 cm de largo.
+    sections:
+      - title: La escalera de la longitud
+        concept: >-
+          Cada unidad de longitud es 10 veces la siguiente más pequeña.
+        explanation: |-
+          Las unidades de longitud, de mayor a menor, forman una escalera:
+
+          $$\text{km} \;\to\; \text{hm} \;\to\; \text{dam} \;\to\; \text{m} \;\to\; \text{dm} \;\to\; \text{cm} \;\to\; \text{mm}$$
+
+          (kilómetro, hectómetro, decámetro, metro, decímetro, centímetro, milímetro). Cada peldaño vale **10 veces** el siguiente: $1$ km $= 10$ hm, $1$ m $= 10$ dm, $1$ cm $= 10$ mm.
+
+          Para convertir:
+
+          * Si **bajamos** a una unidad **más pequeña**, necesitamos más unidades para la misma longitud: **multiplicamos** por 10 en cada peldaño.
+          * Si **subimos** a una unidad **más grande**, necesitamos menos: **dividimos** entre 10 en cada peldaño.
+
+          Equivalencias muy útiles: $1$ km $= 1000$ m, $1$ m $= 100$ cm, $1$ m $= 1000$ mm.
+        definition: >-
+          En el sistema métrico decimal, cada unidad de longitud es igual a 10
+          unidades del orden inmediatamente inferior.
+        rules:
+          - 'Unidad mayor a menor: se multiplica por 10 por cada peldaño.'
+          - 'Unidad menor a mayor: se divide entre 10 por cada peldaño.'
+          - 'Multiplicar o dividir por 10, 100, 1000 es mover la coma 1, 2 o 3 lugares.'
+        examples:
+          - problem: 'Convierte $3{,}5$ km a metros y $245$ cm a metros'
+            solution: |-
+              **Paso 1.** De km a m hay 3 peldaños hacia abajo: multiplicamos por $1000$. $3{,}5 \times 1000 = 3500$ m.
+
+              **Paso 2.** De cm a m hay 2 peldaños hacia arriba: dividimos entre $100$. $245 \div 100 = 2{,}45$ m.
+
+              Resultado: $3500$ m y $2{,}45$ m.
+        common_errors:
+          - 'Multiplicar cuando se pasa a una unidad mayor: al pasar a una unidad más grande el número debe hacerse más pequeño.'
+          - 'Olvidar el decámetro y el hectómetro al contar peldaños.'
+        summary: >-
+          Las unidades de longitud van de 10 en 10: hacia abajo se multiplica,
+          hacia arriba se divide.
+        check:
+          question: '¿Cuántos metros son $0{,}8$ km?'
+          options:
+            - '$8$ m'
+            - '$80$ m'
+            - '$800$ m'
+          answer: 2
+          explanation: >-
+            De km a m se multiplica por $1000$: $0{,}8 \times 1000 = 800$ m.
+      - title: Medidas en varias unidades
+        concept: >-
+          Para expresar en una sola unidad una medida como "2 km 30 m", se
+          convierte cada parte y se suman.
+        explanation: |-
+          A veces una medida se da en varias unidades a la vez: "$2$ km $30$ m" o "$1$ m $5$ cm". Para operar con ella conviene expresarla en **una sola unidad**:
+
+          1. Elegimos la unidad final.
+          2. Convertimos cada parte a esa unidad.
+          3. Sumamos.
+
+          $2$ km $30$ m en metros: $2$ km $= 2000$ m, más $30$ m: $2030$ m.
+
+          Cuidado con el valor posicional: $1$ m $5$ cm son $1{,}05$ m (5 cm son 5 centésimas de metro), **no** $1{,}5$ m.
+        definition: >-
+          Una medida compleja se expresa en varias unidades; su forma incompleja
+          la expresa en una sola unidad.
+        rules:
+          - 'Se convierten todas las partes a la misma unidad antes de sumar.'
+          - 'Las posiciones vacías se rellenan con ceros: 1 m 5 cm = 1,05 m.'
+        examples:
+          - problem: 'Expresa $4$ m $7$ dm $3$ cm en centímetros'
+            solution: |-
+              **Paso 1.** $4$ m $= 400$ cm.
+
+              **Paso 2.** $7$ dm $= 70$ cm.
+
+              **Paso 3.** $400 + 70 + 3 = 473$ cm.
+
+              Resultado: $473$ cm.
+        common_errors:
+          - 'Escribir 1 m 5 cm como 1,5 m: lo correcto es 1,05 m.'
+        summary: >-
+          Una medida en varias unidades se pasa a una sola convirtiendo cada
+          parte y sumando.
+        check:
+          question: '¿Cuántos metros son $3$ m $8$ cm?'
+          options:
+            - '$3{,}8$ m'
+            - '$3{,}08$ m'
+            - '$38$ m'
+          answer: 1
+          explanation: >-
+            $8$ cm son $0{,}08$ m (ocho centésimas de metro): $3 + 0{,}08 =
+            3{,}08$ m.
+    glossary:
+      - {term: Metro, definition: 'Unidad básica de longitud del SI (m).'}
+      - {term: Múltiplo, definition: 'Unidad mayor que la básica, como el kilómetro.'}
+      - {term: Submúltiplo, definition: 'Unidad menor que la básica, como el centímetro.'}
+  t03:
+    intro:
+      what: >-
+        La masa mide la cantidad de materia de un cuerpo; su unidad básica en el
+        SI es el kilogramo (kg).
+      purpose: >-
+        Sirve para comprar alimentos, dosificar medicamentos, calcular cargas o
+        seguir una receta.
+      importance: >-
+        Es una de las magnitudes más usadas en el comercio y la salud; sus
+        conversiones siguen la misma escalera que la longitud.
+      foundations: >-
+        Se basa en la escalera decimal de las unidades (tema 2) y en la
+        multiplicación y división por potencias de 10.
+      prerequisites:
+        - 'Longitud y la escalera de unidades (tema 2 de este bloque)'
+        - 'Multiplicación y división de decimales por 10, 100 y 1000 (bloque 17)'
+      outcomes:
+        - 'Conocer las unidades de masa y la tonelada'
+        - 'Convertir entre unidades de masa'
+        - 'Distinguir masa y peso en el lenguaje científico'
+      everyday_example: >-
+        Un paquete de arroz de 1 kg contiene 1000 g, y una pastilla puede tener
+        500 mg de medicamento.
+    sections:
+      - title: Unidades de masa y conversiones
+        concept: >-
+          Las unidades de masa forman una escalera de 10 en 10 alrededor del
+          gramo; la tonelada son 1000 kg.
+        explanation: |-
+          Aunque la unidad básica del SI es el kilogramo, los nombres de las unidades se construyen a partir del **gramo** (g):
+
+          $$\text{kg} \;\to\; \text{hg} \;\to\; \text{dag} \;\to\; \text{g} \;\to\; \text{dg} \;\to\; \text{cg} \;\to\; \text{mg}$$
+
+          Igual que con la longitud, cada peldaño vale 10 veces el siguiente. Las equivalencias más usadas:
+
+          * $1$ kg $= 1000$ g
+          * $1$ g $= 1000$ mg
+          * $1$ tonelada (t) $= 1000$ kg
+
+          **Masa y peso.** En el lenguaje diario decimos "peso 70 kg", pero en ciencia el **peso** es la fuerza con que la Tierra atrae un cuerpo, y la **masa** es la cantidad de materia. La masa no cambia si vas a la Luna; el peso sí. En este curso hablamos de masa.
+        definition: >-
+          Las unidades de masa del sistema métrico se relacionan por potencias de
+          10: cada una es 10 veces la del orden inferior; además, $1$ t $= 1000$
+          kg.
+        rules:
+          - 'Hacia unidades menores se multiplica; hacia mayores se divide.'
+          - '1 kg = 1000 g; 1 g = 1000 mg; 1 t = 1000 kg.'
+        examples:
+          - problem: 'Convierte $2{,}4$ kg a gramos y $750$ mg a gramos'
+            solution: |-
+              **Paso 1.** De kg a g hay 3 peldaños hacia abajo: $2{,}4 \times 1000 = 2400$ g.
+
+              **Paso 2.** De mg a g hay 3 peldaños hacia arriba: $750 \div 1000 = 0{,}75$ g.
+
+              Resultado: $2400$ g y $0{,}75$ g.
+          - problem: 'Un camión carga $3{,}2$ t. ¿Cuántos kilogramos son?'
+            solution: |-
+              **Paso 1.** $1$ t $= 1000$ kg.
+
+              **Paso 2.** $3{,}2 \times 1000 = 3200$.
+
+              Resultado: $3200$ kg.
+        common_errors:
+          - 'Confundir mg con g en medicamentos: 500 mg son 0,5 g, no 500 g.'
+          - 'Dividir entre 100 en lugar de entre 1000 al pasar de g a kg.'
+        summary: >-
+          La masa se mide en kg, g, mg y t; las conversiones siguen la escalera
+          decimal y conviene recordar que kg, g y mg van de 1000 en 1000.
+        check:
+          question: '¿Cuántos kilogramos son $1250$ g?'
+          options:
+            - '$12{,}5$ kg'
+            - '$1{,}25$ kg'
+            - '$125$ kg'
+          answer: 1
+          explanation: >-
+            De g a kg se divide entre $1000$: $1250 \div 1000 = 1{,}25$ kg.
+    glossary:
+      - {term: Masa, definition: 'Cantidad de materia de un cuerpo; se mide en kilogramos.'}
+      - {term: Tonelada, definition: 'Unidad de masa igual a 1000 kg (t).'}
+      - {term: Peso, definition: 'En ciencia, fuerza con que un planeta atrae a un cuerpo.'}
+  t04:
+    intro:
+      what: >-
+        El tiempo mide la duración de los sucesos; su unidad básica es el
+        segundo (s), y se usan también el minuto, la hora, el día y la semana.
+      purpose: >-
+        Sirve para organizar horarios, calcular duraciones y velocidades.
+      importance: >-
+        Es la única magnitud de uso diario que **no** es decimal: horas y
+        minutos van de 60 en 60, y confundirlo con el sistema decimal es un
+        error muy frecuente.
+      foundations: >-
+        Se basa en la multiplicación y la división con resto (bloques 6 y 7).
+      prerequisites:
+        - 'Multiplicación por varias cifras (bloque 6)'
+        - 'División con residuo (bloque 7)'
+      outcomes:
+        - 'Convertir entre segundos, minutos, horas, días y semanas'
+        - 'Pasar una cantidad de minutos a horas y minutos'
+        - 'Interpretar horas expresadas con decimales'
+      everyday_example: >-
+        Una película de 135 minutos dura 2 horas y 15 minutos.
+    sections:
+      - title: El sistema sexagesimal
+        concept: >-
+          Una hora tiene 60 minutos y un minuto tiene 60 segundos.
+        explanation: |-
+          Las unidades de tiempo pequeñas se agrupan de **60 en 60**, un sistema heredado de la antigua Mesopotamia llamado **sexagesimal**:
+
+          * $1$ min $= 60$ s
+          * $1$ h $= 60$ min $= 60 \times 60 = 3600$ s
+          * $1$ día $= 24$ h
+          * $1$ semana $= 7$ días
+
+          Para convertir se usa la misma lógica que con las demás magnitudes: a una unidad **menor** se **multiplica** por el factor, y a una **mayor** se **divide**. La diferencia es que el factor no es 10, sino 60, 24 o 7.
+        definition: >-
+          El sistema sexagesimal es un sistema de base 60; en la medida del
+          tiempo, $1$ h $= 60$ min y $1$ min $= 60$ s.
+        rules:
+          - '1 h = 60 min; 1 min = 60 s; 1 h = 3600 s.'
+          - '1 día = 24 h; 1 semana = 7 días.'
+          - 'A unidad menor se multiplica; a unidad mayor se divide.'
+        examples:
+          - problem: '¿Cuántos minutos son $2$ h $15$ min? ¿Y cuántos segundos son $3$ h?'
+            solution: |-
+              **Paso 1.** $2$ h $= 2 \times 60 = 120$ min; más $15$: $135$ min.
+
+              **Paso 2.** $3$ h $= 3 \times 3600 = 10\,800$ s.
+
+              Resultado: $135$ min y $10\,800$ s.
+        common_errors:
+          - 'Usar 100 minutos por hora: 2 h 15 min no son 215 min.'
+        summary: >-
+          Las horas, minutos y segundos van de 60 en 60; los días tienen 24 horas
+          y las semanas 7 días.
+        check:
+          question: '¿Cuántos minutos son $3$ h $40$ min?'
+          options:
+            - '$340$ min'
+            - '$220$ min'
+            - '$180$ min'
+          answer: 1
+          explanation: >-
+            $3 \times 60 = 180$ min, más $40$: $220$ min. $340$ es el error de
+            tratar las horas como centenas.
+      - title: Horas, minutos y decimales
+        concept: >-
+          Para pasar minutos a horas y minutos se divide entre 60: el cociente
+          son horas y el resto, minutos.
+        explanation: |-
+          Si una tarea dura $200$ min, ¿cuántas horas son? Dividimos entre 60 (bloque 7):
+
+          $$200 = 60 \times 3 + 20$$
+
+          El **cociente** ($3$) son horas completas y el **resto** ($20$) son los minutos que sobran: $3$ h $20$ min.
+
+          Cuidado con los **decimales**: $1{,}5$ h **no** es $1$ h $50$ min. Media hora son $30$ min, así que $1{,}5$ h $= 1$ h $30$ min. En general, la parte decimal de las horas se multiplica por 60: $0{,}25$ h $= 0{,}25 \times 60 = 15$ min.
+        definition: >-
+          Para expresar $m$ minutos en horas y minutos se hace la división entera
+          $m = 60q + r$, con $0 \le r < 60$: son $q$ horas y $r$ minutos.
+        rules:
+          - 'Minutos a horas y minutos: cociente entre 60 = horas; resto = minutos.'
+          - 'Parte decimal de una hora × 60 = minutos.'
+        examples:
+          - problem: 'Expresa $2{,}75$ h en horas y minutos'
+            solution: |-
+              **Paso 1.** La parte entera son $2$ h.
+
+              **Paso 2.** $0{,}75 \times 60 = 45$ min.
+
+              Resultado: $2$ h $45$ min.
+        common_errors:
+          - 'Leer 1,5 h como 1 h 50 min: son 1 h 30 min.'
+          - 'Dividir entre 100 en lugar de entre 60.'
+        summary: >-
+          Los minutos se pasan a horas dividiendo entre 60 (cociente y resto) y
+          las horas decimales se convierten multiplicando la parte decimal por
+          60.
+        check:
+          question: '¿Cuánto es $1{,}2$ h en horas y minutos?'
+          options:
+            - '$1$ h $20$ min'
+            - '$1$ h $12$ min'
+            - '$1$ h $2$ min'
+          answer: 1
+          explanation: >-
+            $0{,}2 \times 60 = 12$ min, así que $1{,}2$ h son $1$ h $12$ min.
+    glossary:
+      - {term: Sistema sexagesimal, definition: 'Sistema de base 60, usado para horas, minutos y segundos.'}
+      - {term: Segundo, definition: 'Unidad básica de tiempo del SI (s).'}
+  t05:
+    intro:
+      what: >-
+        La temperatura indica lo caliente o frío que está un cuerpo; se mide en
+        grados Celsius (°C), en kelvin (K) o en grados Fahrenheit (°F).
+      purpose: >-
+        Sirve para entender el clima, cocinar, cuidar la salud y leer datos
+        científicos o de otros países.
+      importance: >-
+        Sus escalas no empiezan en el mismo cero, por eso sus conversiones no
+        son una simple multiplicación: es un buen ejemplo de que no todas las
+        conversiones son proporcionales.
+      foundations: >-
+        Se basa en la suma y resta de decimales y enteros (bloques 17 y 24) y en
+        la multiplicación por fracciones (bloque 15).
+      prerequisites:
+        - 'Operaciones con números enteros (bloque 24)'
+        - 'Multiplicación de fracciones (bloque 15)'
+        - 'Jerarquía de operaciones (bloque 9)'
+      outcomes:
+        - 'Convertir entre grados Celsius y kelvin'
+        - 'Convertir entre grados Celsius y Fahrenheit'
+        - 'Interpretar temperaturas negativas'
+      everyday_example: >-
+        Si en un viaje el pronóstico anuncia 86 °F, conviene saber que son 30 °C:
+        hará calor.
+    sections:
+      - title: Celsius y kelvin
+        concept: >-
+          Las escalas Celsius y Kelvin tienen grados del mismo tamaño; sólo se
+          diferencian en 273,15.
+        explanation: |-
+          En la escala **Celsius** el agua se congela a $0$ °C y hierve a $100$ °C (a nivel del mar). Las temperaturas bajo cero son números negativos (bloque 24).
+
+          La unidad del SI es el **kelvin** (K, sin "grado"). Su cero, $0$ K, es el **cero absoluto**, la temperatura más baja posible, que equivale a $-273{,}15$ °C. Un aumento de $1$ K es igual a un aumento de $1$ °C, así que basta con sumar o restar:
+
+          $$\text{K} = \text{°C} + 273{,}15 \qquad \text{°C} = \text{K} - 273{,}15$$
+
+          Por eso en kelvin nunca hay temperaturas negativas.
+        definition: >-
+          La temperatura en kelvin se obtiene sumando $273{,}15$ a la
+          temperatura en grados Celsius: $T_K = T_C + 273{,}15$.
+        rules:
+          - 'De °C a K se suma 273,15; de K a °C se resta 273,15.'
+          - 'Se escribe "300 K", no "300 °K".'
+        examples:
+          - problem: 'Convierte $25$ °C y $-40$ °C a kelvin'
+            solution: |-
+              **Paso 1.** $25 + 273{,}15 = 298{,}15$ K.
+
+              **Paso 2.** $-40 + 273{,}15 = 233{,}15$ K.
+
+              Resultado: $298{,}15$ K y $233{,}15$ K.
+        common_errors:
+          - 'Restar en lugar de sumar al pasar de °C a K.'
+          - 'Escribir "grados kelvin": la unidad es simplemente kelvin.'
+        summary: >-
+          Para pasar de Celsius a kelvin se suma 273,15, y para volver se resta.
+        check:
+          question: '¿Cuántos kelvin son $10$ °C?'
+          options:
+            - '$283{,}15$ K'
+            - '$263{,}15$ K'
+            - '$2731{,}5$ K'
+          answer: 0
+          explanation: >-
+            $10 + 273{,}15 = 283{,}15$ K. Restar daría $263{,}15$ y multiplicar
+            no tiene sentido en esta conversión.
+      - title: Celsius y Fahrenheit
+        concept: >-
+          °F = °C × 9/5 + 32 y °C = (°F − 32) × 5/9.
+        explanation: |-
+          La escala **Fahrenheit**, usada en algunos países, tiene el congelamiento del agua en $32$ °F y la ebullición en $212$ °F. Entre esos puntos hay $180$ grados Fahrenheit, frente a $100$ grados Celsius, así que cada grado Celsius equivale a $\frac{180}{100} = \frac{9}{5}$ grados Fahrenheit. Además, el cero está desplazado $32$ grados.
+
+          $$\text{°F} = \text{°C} \times \frac{9}{5} + 32$$
+
+          $$\text{°C} = (\text{°F} - 32) \times \frac{5}{9}$$
+
+          Respeta la jerarquía de operaciones (bloque 9): de Celsius a Fahrenheit primero se multiplica y luego se suma 32; de Fahrenheit a Celsius, **primero se resta 32** (por eso el paréntesis) y luego se multiplica.
+
+          Esta conversión **no es proporcional**: $20$ °C no son el doble de calientes que $10$ °C en Fahrenheit ($68$ °F frente a $50$ °F).
+        definition: >-
+          Las temperaturas Celsius ($T_C$) y Fahrenheit ($T_F$) se relacionan por
+          $T_F = \frac{9}{5}T_C + 32$.
+        rules:
+          - 'De °C a °F: multiplicar por 9/5 y después sumar 32.'
+          - 'De °F a °C: restar 32 y después multiplicar por 5/9.'
+        examples:
+          - problem: 'Convierte $20$ °C a °F y $77$ °F a °C'
+            solution: |-
+              **Paso 1.** $20 \times \frac{9}{5} = 36$; $36 + 32 = 68$ °F.
+
+              **Paso 2.** $77 - 32 = 45$; $45 \times \frac{5}{9} = 25$ °C.
+
+              Resultado: $68$ °F y $25$ °C.
+        common_errors:
+          - 'Olvidar sumar o restar 32.'
+          - 'Multiplicar antes de restar 32 al pasar de °F a °C.'
+        summary: >-
+          °F = °C × 9/5 + 32; para volver se resta 32 y se multiplica por 5/9.
+        check:
+          question: '¿Cuántos °C son $50$ °F?'
+          options:
+            - '$10$ °C'
+            - '$27{,}8$ °C'
+            - '$-4{,}2$ °C'
+          answer: 0
+          explanation: >-
+            $50 - 32 = 18$ y $18 \times \frac{5}{9} = 10$ °C. $27{,}8$ resulta de
+            olvidar restar 32 y $-4{,}2$ de multiplicar antes de restar.
+    glossary:
+      - {term: Kelvin, definition: 'Unidad de temperatura del SI (K); 0 K es el cero absoluto.'}
+      - {term: Grado Celsius, definition: 'Unidad de temperatura en la que el agua se congela a 0 °C y hierve a 100 °C.'}
+      - {term: Cero absoluto, definition: 'Temperatura más baja posible: 0 K = −273,15 °C.'}
+  t06:
+    intro:
+      what: >-
+        La capacidad mide cuánto líquido (o material) cabe en un recipiente; su
+        unidad principal es el litro (L).
+      purpose: >-
+        Sirve para comprar bebidas y combustible, cocinar, medir medicamentos o
+        calcular el agua de un depósito.
+      importance: >-
+        Es una de las medidas más presentes en la vida diaria y, como veremos en
+        el tema 8, está ligada directamente al volumen.
+      foundations: >-
+        Sigue la misma escalera decimal que la longitud y la masa (temas 2 y 3).
+      prerequisites:
+        - 'Longitud y la escalera de unidades (tema 2 de este bloque)'
+        - 'Operaciones con decimales (bloque 17)'
+      outcomes:
+        - 'Conocer los múltiplos y submúltiplos del litro'
+        - 'Convertir entre unidades de capacidad'
+        - 'Sumar cantidades expresadas en distintas unidades de capacidad'
+      everyday_example: >-
+        Una botella de 1,5 L contiene 1500 mL, es decir, seis vasos de 250 mL.
+    sections:
+      - title: Unidades de capacidad y conversiones
+        concept: >-
+          Las unidades de capacidad forman una escalera de 10 en 10 alrededor del
+          litro.
+        explanation: |-
+          La escalera de la capacidad es:
+
+          $$\text{kL} \;\to\; \text{hL} \;\to\; \text{daL} \;\to\; \text{L} \;\to\; \text{dL} \;\to\; \text{cL} \;\to\; \text{mL}$$
+
+          Cada peldaño vale 10 veces el siguiente. Las equivalencias más usadas son:
+
+          * $1$ L $= 10$ dL $= 100$ cL $= 1000$ mL
+          * $1$ kL $= 1000$ L
+
+          En las etiquetas verás sobre todo L, cL y mL. Una lata de refresco de $33$ cL contiene $330$ mL, es decir, $0{,}33$ L.
+
+          Para **sumar** cantidades en distintas unidades, primero se pasan todas a la misma unidad.
+        definition: >-
+          Las unidades de capacidad del sistema métrico se relacionan por
+          potencias de 10 a partir del litro.
+        rules:
+          - 'A unidad menor se multiplica por 10 por peldaño; a mayor se divide.'
+          - '1 L = 1000 mL = 100 cL.'
+          - 'Para sumar capacidades se pasan a la misma unidad.'
+        examples:
+          - problem: 'Se mezclan $2$ L de agua con $350$ mL de jugo. ¿Cuántos mililitros hay en total? ¿Y litros?'
+            solution: |-
+              **Paso 1.** $2$ L $= 2 \times 1000 = 2000$ mL.
+
+              **Paso 2.** $2000 + 350 = 2350$ mL.
+
+              **Paso 3.** En litros: $2350 \div 1000 = 2{,}35$ L.
+
+              Resultado: $2350$ mL, es decir, $2{,}35$ L.
+        common_errors:
+          - 'Sumar 2 L + 350 mL = 352: hay que igualar las unidades antes.'
+          - 'Pensar que 1 L = 100 mL.'
+        summary: >-
+          La capacidad se mide en litros y sus múltiplos y submúltiplos, que van
+          de 10 en 10; 1 L son 1000 mL.
+        check:
+          question: '¿Cuántos litros son $250$ mL?'
+          options:
+            - '$2{,}5$ L'
+            - '$0{,}25$ L'
+            - '$25$ L'
+          answer: 1
+          explanation: >-
+            De mL a L se divide entre $1000$: $250 \div 1000 = 0{,}25$ L.
+    glossary:
+      - {term: Capacidad, definition: 'Cantidad que cabe en un recipiente.'}
+      - {term: Litro, definition: 'Unidad de capacidad (L), igual a 1000 mL.'}
+  t07:
+    intro:
+      what: >-
+        La superficie mide la extensión de una región plana; su unidad en el SI
+        es el metro cuadrado (m²).
+      purpose: >-
+        Sirve para calcular cuánta pintura, baldosa o césped se necesita, o el
+        tamaño de una vivienda o un terreno.
+      importance: >-
+        Sus conversiones no van de 10 en 10 sino de 100 en 100, y entender el
+        porqué evita uno de los errores más comunes en medidas.
+      foundations: >-
+        Se basa en la escalera de la longitud (tema 2), en la multiplicación y
+        en los cuadrados (bloque 18).
+      prerequisites:
+        - 'Longitud (tema 2 de este bloque)'
+        - 'Cuadrados y cubos (bloque 18)'
+        - 'Multiplicación de decimales (bloque 17)'
+      outcomes:
+        - 'Entender qué es un metro cuadrado'
+        - 'Convertir entre unidades de superficie'
+        - 'Usar la hectárea para medir terrenos'
+      everyday_example: >-
+        Un piso de 80 m² cabe 80 veces un cuadrado de 1 m de lado; un campo de
+        fútbol ocupa algo menos de una hectárea.
+    sections:
+      - title: El metro cuadrado y la escalera de 100
+        concept: >-
+          Cada unidad de superficie es 100 veces la siguiente más pequeña.
+        explanation: |-
+          Un **metro cuadrado** (m²) es la superficie de un cuadrado de $1$ m de lado. Para hallar la superficie de un rectángulo contamos cuántos cuadrados de $1$ m² caben: se multiplica el largo por el ancho. Un suelo de $4$ m por $3$ m mide $4 \times 3 = 12$ m².
+
+          ¿Por qué el factor es 100? Un cuadrado de $1$ m de lado mide $10$ dm por $10$ dm, así que contiene $10 \times 10 = 100$ cuadraditos de $1$ dm². Es decir, $1$ m² $= 100$ dm².
+
+          La escalera es la misma que la de longitud, pero **cada peldaño vale 100**:
+
+          $$\text{km}^2 \to \text{hm}^2 \to \text{dam}^2 \to \text{m}^2 \to \text{dm}^2 \to \text{cm}^2 \to \text{mm}^2$$
+
+          Así, $1$ m² $= 100$ dm² $= 10\,000$ cm².
+        definition: >-
+          En el sistema métrico, cada unidad de superficie es igual a 100
+          unidades del orden inmediatamente inferior, porque $10 \times 10 =
+          100$.
+        rules:
+          - 'Cada peldaño de superficie vale 100: se multiplica o divide por 100.'
+          - '1 m² = 100 dm² = 10 000 cm².'
+          - 'Superficie de un rectángulo = largo × ancho, con ambos en la misma unidad.'
+        examples:
+          - problem: 'Convierte $3$ m² a cm² y $4500$ cm² a m²'
+            solution: |-
+              **Paso 1.** De m² a cm² hay 2 peldaños hacia abajo: $\times 100 \times 100 = \times 10\,000$. $3 \times 10\,000 = 30\,000$ cm².
+
+              **Paso 2.** De cm² a m² hay 2 peldaños hacia arriba: $\div 10\,000$. $4500 \div 10\,000 = 0{,}45$ m².
+
+              Resultado: $30\,000$ cm² y $0{,}45$ m².
+        common_errors:
+          - 'Usar 10 por peldaño como en la longitud: 1 m² no son 10 dm², sino 100.'
+          - 'Multiplicar largo por ancho con unidades distintas (metros por centímetros).'
+        summary: >-
+          Las unidades de superficie van de 100 en 100 porque un cuadrado de lado
+          10 contiene 100 cuadraditos.
+        check:
+          question: '¿Cuántos dm² son $5$ m²?'
+          options:
+            - '$50$ dm²'
+            - '$500$ dm²'
+            - '$5000$ dm²'
+          answer: 1
+          explanation: >-
+            Un peldaño de superficie vale 100: $5 \times 100 = 500$ dm².
+      - title: Medidas agrarias
+        concept: >-
+          Para terrenos se usan el área (a) y la hectárea (ha): 1 a = 100 m² y
+          1 ha = 10 000 m².
+        explanation: |-
+          Para medir campos y fincas se usan nombres especiales:
+
+          | Unidad agraria | Equivale a | En m² |
+          |---|---|---|
+          | área (a) | dam² | $100$ m² |
+          | hectárea (ha) | hm² | $10\,000$ m² |
+
+          Una hectárea es un cuadrado de $100$ m de lado. Como $1$ km² $= 100$ hm², también $1$ km² $= 100$ ha.
+        definition: >-
+          La hectárea es la unidad de superficie igual a un hectómetro cuadrado,
+          $1$ ha $= 10\,000$ m².
+        rules:
+          - '1 ha = 1 hm² = 10 000 m².'
+          - '1 a = 1 dam² = 100 m².'
+          - '1 km² = 100 ha.'
+        examples:
+          - problem: 'Una finca mide $2{,}5$ km². ¿Cuántas hectáreas son? ¿Y cuántos m²?'
+            solution: |-
+              **Paso 1.** $1$ km² $= 100$ ha: $2{,}5 \times 100 = 250$ ha.
+
+              **Paso 2.** $250 \times 10\,000 = 2\,500\,000$ m².
+
+              Resultado: $250$ ha, es decir, $2\,500\,000$ m².
+        common_errors:
+          - 'Confundir área (unidad agraria, 100 m²) con la palabra área como superficie en general.'
+        summary: >-
+          La hectárea (10 000 m²) y el área (100 m²) son las unidades habituales
+          para terrenos.
+        check:
+          question: '¿Cuántos m² tiene un terreno de $3$ ha?'
+          options:
+            - '$300$ m²'
+            - '$3000$ m²'
+            - '$30\,000$ m²'
+          answer: 2
+          explanation: >-
+            $1$ ha $= 10\,000$ m², así que $3$ ha $= 30\,000$ m².
+    glossary:
+      - {term: Metro cuadrado, definition: 'Superficie de un cuadrado de 1 m de lado (m²).'}
+      - {term: Hectárea, definition: 'Unidad agraria igual a 10 000 m² (ha).'}
+      - {term: Área (unidad), definition: 'Unidad agraria igual a 100 m² (a).'}
+  t08:
+    intro:
+      what: >-
+        El volumen mide el espacio que ocupa un cuerpo; su unidad en el SI es el
+        metro cúbico (m³).
+      purpose: >-
+        Sirve para calcular cuánto cabe en una caja, un tanque o una habitación
+        y relacionarlo con litros.
+      importance: >-
+        Conecta la geometría con la capacidad: saber que 1 dm³ es 1 L permite
+        pasar de medidas de un depósito a los litros que contiene.
+      foundations: >-
+        Se basa en la longitud (tema 2), en los cubos (bloque 18) y en la
+        capacidad (tema 6).
+      prerequisites:
+        - 'Longitud (tema 2 de este bloque)'
+        - 'Capacidad (tema 6 de este bloque)'
+        - 'Cuadrados y cubos (bloque 18)'
+      outcomes:
+        - 'Entender qué es un metro cúbico'
+        - 'Convertir entre unidades de volumen'
+        - 'Relacionar unidades de volumen con unidades de capacidad'
+      everyday_example: >-
+        Un cartón de leche de 1 L ocupa exactamente 1 dm³, un cubo de 10 cm de
+        lado.
+    sections:
+      - title: El metro cúbico y la escalera de 1000
+        concept: >-
+          Cada unidad de volumen es 1000 veces la siguiente más pequeña.
+        explanation: |-
+          Un **metro cúbico** (m³) es el volumen de un cubo de $1$ m de arista. El volumen de una caja (un prisma rectangular) es **largo × ancho × alto**: cuántos cubitos de 1 unidad caben.
+
+          ¿Por qué el factor es 1000? Un cubo de $1$ m de arista mide $10$ dm de largo, $10$ de ancho y $10$ de alto: contiene $10 \times 10 \times 10 = 1000$ cubitos de $1$ dm³. Recuerda los cubos del bloque 18: $10^3 = 1000$.
+
+          $$\text{m}^3 \;\to\; \text{dm}^3 \;\to\; \text{cm}^3 \;\to\; \text{mm}^3$$
+
+          Cada peldaño vale **1000**. Así, $1$ m³ $= 1000$ dm³ $= 1\,000\,000$ cm³.
+        definition: >-
+          En el sistema métrico, cada unidad de volumen es igual a 1000 unidades
+          del orden inmediatamente inferior, porque $10^3 = 1000$.
+        rules:
+          - 'Cada peldaño de volumen vale 1000.'
+          - 'Volumen de una caja = largo × ancho × alto, en la misma unidad.'
+          - 'Longitud: ×10; superficie: ×100; volumen: ×1000 por peldaño.'
+        examples:
+          - problem: 'Convierte $2$ m³ a dm³ y $3500$ cm³ a dm³'
+            solution: |-
+              **Paso 1.** De m³ a dm³ hay 1 peldaño hacia abajo: $2 \times 1000 = 2000$ dm³.
+
+              **Paso 2.** De cm³ a dm³ hay 1 peldaño hacia arriba: $3500 \div 1000 = 3{,}5$ dm³.
+
+              Resultado: $2000$ dm³ y $3{,}5$ dm³.
+        common_errors:
+          - 'Usar 10 o 100 por peldaño: en volumen cada peldaño vale 1000.'
+        summary: >-
+          Las unidades de volumen van de 1000 en 1000 porque un cubo de arista 10
+          contiene 1000 cubitos.
+        check:
+          question: '¿Cuántos cm³ son $4$ dm³?'
+          options:
+            - '$40$ cm³'
+            - '$400$ cm³'
+            - '$4000$ cm³'
+          answer: 2
+          explanation: >-
+            Un peldaño de volumen vale 1000: $4 \times 1000 = 4000$ cm³.
+      - title: Volumen y capacidad
+        concept: >-
+          Un decímetro cúbico equivale a un litro: 1 dm³ = 1 L.
+        explanation: |-
+          El litro se definió como la capacidad de un cubo de $1$ dm de arista. Por eso:
+
+          | Volumen | Capacidad |
+          |---|---|
+          | $1$ m³ | $1000$ L |
+          | $1$ dm³ | $1$ L |
+          | $1$ cm³ | $1$ mL |
+
+          Con estas equivalencias, si conocemos las medidas de un recipiente podemos calcular cuántos litros caben: calculamos el volumen y lo convertimos.
+        definition: >-
+          Las unidades de volumen y capacidad se relacionan por $1$ dm³ $= 1$ L,
+          de donde $1$ m³ $= 1000$ L y $1$ cm³ $= 1$ mL.
+        rules:
+          - '1 dm³ = 1 L.'
+          - '1 m³ = 1000 L.'
+          - '1 cm³ = 1 mL.'
+        examples:
+          - problem: 'Un depósito mide $2$ m de largo, $1$ m de ancho y $1{,}5$ m de alto. ¿Cuántos litros caben?'
+            solution: |-
+              **Paso 1.** Volumen: $2 \times 1 \times 1{,}5 = 3$ m³.
+
+              **Paso 2.** $1$ m³ $= 1000$ L, así que $3 \times 1000 = 3000$ L.
+
+              Resultado: $3000$ L.
+        common_errors:
+          - 'Creer que 1 m³ = 1 L: un metro cúbico son mil litros.'
+        summary: >-
+          1 dm³ = 1 L permite pasar de volumen a capacidad; 1 m³ son 1000 L y
+          1 cm³ es 1 mL.
+        check:
+          question: 'Una jeringa contiene $5$ cm³. ¿Cuántos mililitros son?'
+          options:
+            - '$5$ mL'
+            - '$50$ mL'
+            - '$5000$ mL'
+          answer: 0
+          explanation: >-
+            $1$ cm³ $= 1$ mL, así que $5$ cm³ $= 5$ mL.
+    glossary:
+      - {term: Volumen, definition: 'Espacio que ocupa un cuerpo.'}
+      - {term: Metro cúbico, definition: 'Volumen de un cubo de 1 m de arista (m³).'}
+      - {term: Decímetro cúbico, definition: 'Volumen de un cubo de 1 dm de arista; equivale a 1 L.'}
+  t09:
+    intro:
+      what: >-
+        La conversión de unidades es el procedimiento para expresar una misma
+        cantidad en otra unidad sin cambiar su valor.
+      purpose: >-
+        Sirve para comparar y operar cantidades dadas en unidades distintas y
+        para resolver problemas con unidades compuestas como km/h.
+      importance: >-
+        Un error de conversión puede arruinar un cálculo correcto. Un método
+        general y seguro evita depender de la memoria.
+      foundations: >-
+        Reúne las escaleras de los temas 2 a 8 y añade el factor de conversión,
+        que se basa en la multiplicación de fracciones (bloque 15) y en la
+        propiedad del elemento neutro (bloque 8).
+      prerequisites:
+        - 'Unidades de longitud, masa, capacidad, superficie y volumen (temas 2 a 8 de este bloque)'
+        - 'Multiplicación y simplificación de fracciones (bloques 14 y 15)'
+        - 'Elemento neutro de la multiplicación (bloque 8)'
+      outcomes:
+        - 'Convertir con la escalera eligiendo el factor 10, 100 o 1000'
+        - 'Usar factores de conversión'
+        - 'Convertir unidades compuestas como km/h a m/s'
+      everyday_example: >-
+        Para saber si un coche a 72 km/h va más rápido que una bicicleta a
+        15 m/s, hay que pasar ambas velocidades a la misma unidad.
+    sections:
+      - title: Método de la escalera
+        concept: >-
+          Se cuentan los peldaños entre las unidades y se multiplica o divide por
+          10, 100 o 1000 en cada uno según la magnitud.
+        explanation: |-
+          Para cualquier conversión dentro del sistema métrico:
+
+          1. **Identifica la magnitud**: longitud, masa y capacidad van de 10 en 10; superficie, de 100 en 100; volumen, de 1000 en 1000.
+          2. **Cuenta los peldaños** entre la unidad de partida y la de llegada.
+          3. **Decide la dirección**: hacia una unidad menor se multiplica (el número crece); hacia una mayor se divide (el número decrece).
+          4. **Mueve la coma**: 1 lugar por peldaño en longitud, masa y capacidad; 2 en superficie; 3 en volumen.
+
+          Una comprobación de sentido común: si la unidad nueva es más pequeña, el número **tiene** que ser mayor.
+        definition: >-
+          Convertir de una unidad a otra es multiplicar la cantidad por el
+          número de unidades nuevas que caben en una unidad original.
+        rules:
+          - 'Longitud, masa, capacidad: factor 10 por peldaño.'
+          - 'Superficie: factor 100 por peldaño.'
+          - 'Volumen: factor 1000 por peldaño.'
+          - 'Unidad más pequeña, número más grande (y al revés).'
+        examples:
+          - problem: 'Convierte $0{,}6$ hm² a m² y $85$ dg a hg'
+            solution: |-
+              **Paso 1.** Superficie, de hm² a m²: 2 peldaños hacia abajo, $\times 100 \times 100 = \times 10\,000$. $0{,}6 \times 10\,000 = 6000$ m².
+
+              **Paso 2.** Masa, de dg a hg: dg → g → dag → hg, 3 peldaños hacia arriba, $\div 1000$. $85 \div 1000 = 0{,}085$ hg.
+
+              Resultado: $6000$ m² y $0{,}085$ hg.
+        common_errors:
+          - 'Usar el factor de la longitud en superficies o volúmenes.'
+          - 'Contar mal los peldaños por olvidar unidades intermedias.'
+        summary: >-
+          Magnitud, peldaños y dirección: con estos tres datos se resuelve
+          cualquier conversión del sistema métrico.
+        check:
+          question: '¿Cuántos m³ son $7500$ dm³?'
+          options:
+            - '$75$ m³'
+            - '$7{,}5$ m³'
+            - '$0{,}75$ m³'
+          answer: 1
+          explanation: >-
+            En volumen un peldaño vale 1000 y vamos a una unidad mayor:
+            $7500 \div 1000 = 7{,}5$ m³.
+      - title: Factores de conversión
+        concept: >-
+          Un factor de conversión es una fracción que vale 1, con la misma
+          cantidad expresada en dos unidades.
+        explanation: |-
+          Como $1$ km $= 1000$ m, la fracción $\frac{1000 \text{ m}}{1 \text{ km}}$ vale **1**: numerador y denominador son la misma longitud. Multiplicar por 1 no cambia una cantidad (elemento neutro, bloque 8), pero sí cambia la unidad, porque las unidades se **simplifican** como en las fracciones:
+
+          $$3{,}2 \text{ km} \times \frac{1000 \text{ m}}{1 \text{ km}} = 3200 \text{ m}$$
+
+          Este método es muy útil para **unidades compuestas**, como la velocidad. Para pasar $72$ km/h a m/s usamos dos factores, uno para la distancia y otro para el tiempo ($1$ h $= 3600$ s):
+
+          $$72 \,\frac{\text{km}}{\text{h}} \times \frac{1000 \text{ m}}{1 \text{ km}} \times \frac{1 \text{ h}}{3600 \text{ s}} = \frac{72\,000}{3600} \,\frac{\text{m}}{\text{s}} = 20 \,\frac{\text{m}}{\text{s}}$$
+
+          El factor se coloca de manera que la unidad que se quiere eliminar quede en el lado opuesto (arriba si estaba abajo y viceversa).
+        definition: >-
+          Un factor de conversión es una fracción igual a 1 cuyo numerador y
+          denominador expresan la misma cantidad en unidades distintas.
+        rules:
+          - 'La unidad que se quiere eliminar debe aparecer en el lado opuesto del factor.'
+          - 'Se pueden encadenar varios factores.'
+          - 'De km/h a m/s se divide entre 3,6; de m/s a km/h se multiplica por 3,6.'
+        examples:
+          - problem: 'Convierte $15$ m/s a km/h'
+            solution: |-
+              **Paso 1.** $15 \,\frac{\text{m}}{\text{s}} \times \frac{1 \text{ km}}{1000 \text{ m}} \times \frac{3600 \text{ s}}{1 \text{ h}}$.
+
+              **Paso 2.** $\frac{15 \times 3600}{1000} = \frac{54\,000}{1000} = 54$.
+
+              Resultado: $15$ m/s $= 54$ km/h.
+        common_errors:
+          - 'Poner el factor al revés, de modo que la unidad no se simplifica (km × km/m).'
+          - 'Convertir sólo la distancia y olvidar el tiempo en una velocidad.'
+        summary: >-
+          Multiplicar por fracciones que valen 1 cambia la unidad sin cambiar la
+          cantidad y sirve también para unidades compuestas.
+        check:
+          question: '¿A cuántos m/s equivalen $90$ km/h?'
+          options:
+            - '$25$ m/s'
+            - '$324$ m/s'
+            - '$9$ m/s'
+          answer: 0
+          explanation: >-
+            $90 \times 1000 \div 3600 = 90\,000 \div 3600 = 25$ m/s. $324$ sale de
+            multiplicar por $3{,}6$ en lugar de dividir.
+    glossary:
+      - {term: Factor de conversión, definition: 'Fracción igual a 1 que relaciona dos unidades de la misma magnitud.'}
+      - {term: Unidad compuesta, definition: 'Unidad formada por varias unidades, como km/h.'}
+  t10:
+    intro:
+      what: >-
+        Los prefijos del sistema métrico son palabras que se anteponen a una
+        unidad para multiplicarla por una potencia de 10 (kilo, mili, mega...).
+      purpose: >-
+        Sirven para formar múltiplos y submúltiplos de cualquier unidad y
+        expresar cantidades muy grandes o pequeñas con números cómodos.
+      importance: >-
+        Aparecen constantemente en tecnología (megabytes, gigahercios),
+        medicina (microgramos) y ciencia (nanómetros).
+      foundations: >-
+        Se basa en las potencias de 10 y en la notación científica (bloques 18 y
+        26).
+      prerequisites:
+        - 'Potencias de 10 y notación científica (bloque 26)'
+        - 'Unidades de longitud, masa y capacidad (temas 2, 3 y 6 de este bloque)'
+      outcomes:
+        - 'Asociar cada prefijo con su potencia de 10 y su símbolo'
+        - 'Convertir cantidades con prefijos grandes y pequeños'
+        - 'Interpretar unidades tecnológicas como MB o GHz'
+      everyday_example: >-
+        Un teléfono con procesador de 3 GHz realiza unos $3 \times 10^9$ ciclos
+        por segundo.
+    sections:
+      - title: Prefijos habituales
+        concept: >-
+          kilo, hecto y deca multiplican por 1000, 100 y 10; deci, centi y mili
+          dividen entre 10, 100 y 1000.
+        explanation: |-
+          Ya has usado estos prefijos en los temas anteriores. Ahora los vemos como **potencias de 10**:
+
+          | Prefijo | Símbolo | Factor |
+          |---|---|---|
+          | kilo | k | $10^3 = 1000$ |
+          | hecto | h | $10^2 = 100$ |
+          | deca | da | $10^1 = 10$ |
+          | (unidad) | | $10^0 = 1$ |
+          | deci | d | $10^{-1} = 0{,}1$ |
+          | centi | c | $10^{-2} = 0{,}01$ |
+          | mili | m | $10^{-3} = 0{,}001$ |
+
+          El mismo prefijo significa lo mismo con cualquier unidad: un kilómetro son $1000$ metros, un kilogramo son $1000$ gramos y un kilolitro son $1000$ litros.
+
+          Atención a las mayúsculas y minúsculas: **m** minúscula delante de una unidad es "mili" (mm, mg), pero **m** sola es metro.
+        definition: >-
+          Un prefijo del SI es un factor $10^n$ que se antepone al nombre de una
+          unidad para formar un múltiplo ($n > 0$) o un submúltiplo ($n < 0$).
+        rules:
+          - 'kilo = 10³, hecto = 10², deca = 10.'
+          - 'deci = 10⁻¹, centi = 10⁻², mili = 10⁻³.'
+          - 'Un prefijo significa lo mismo con cualquier unidad.'
+        examples:
+          - problem: '¿Cuántos gramos son $4$ hg? ¿Cuántos litros son $35$ cL?'
+            solution: |-
+              **Paso 1.** hecto $= 100$: $4$ hg $= 4 \times 100 = 400$ g.
+
+              **Paso 2.** centi $= 0{,}01$: $35$ cL $= 35 \times 0{,}01 = 0{,}35$ L.
+
+              Resultado: $400$ g y $0{,}35$ L.
+        common_errors:
+          - 'Confundir deca (×10) con deci (÷10).'
+          - 'Escribir el símbolo de kilo con mayúscula (Km, Kg): es minúscula, k.'
+        summary: >-
+          Cada prefijo es una potencia de 10 que vale lo mismo con cualquier
+          unidad.
+        check:
+          question: '¿Por cuánto multiplica el prefijo "centi"?'
+          options:
+            - '$100$'
+            - '$0{,}01$'
+            - '$0{,}1$'
+          answer: 1
+          explanation: >-
+            centi $= 10^{-2} = 0{,}01$: un centímetro es una centésima de metro.
+            $100$ corresponde a hecto y $0{,}1$ a deci.
+      - title: Prefijos grandes y pequeños
+        concept: >-
+          mega, giga y tera multiplican por 10⁶, 10⁹ y 10¹²; micro y nano, por
+          10⁻⁶ y 10⁻⁹.
+        explanation: |-
+          Para cantidades muy grandes o muy pequeñas se usan prefijos que saltan de mil en mil:
+
+          | Prefijo | Símbolo | Factor |
+          |---|---|---|
+          | tera | T | $10^{12}$ |
+          | giga | G | $10^9$ |
+          | mega | M | $10^6$ |
+          | micro | μ | $10^{-6}$ |
+          | nano | n | $10^{-9}$ |
+
+          Así, $5$ GHz $= 5 \times 10^9$ Hz, $3$ μm $= 3 \times 10^{-6}$ m $= 0{,}000003$ m y $2$ MW $= 2\,000\,000$ W.
+
+          Fíjate en que **M** mayúscula es mega ($10^6$) y **m** minúscula es mili ($10^{-3}$): ¡hay $10^9$ veces de diferencia!
+        definition: >-
+          Los prefijos mega, giga y tera corresponden a $10^6$, $10^9$ y
+          $10^{12}$; micro y nano, a $10^{-6}$ y $10^{-9}$.
+        rules:
+          - 'M (mega) = 10⁶ y m (mili) = 10⁻³: no se deben confundir.'
+          - 'Con prefijos, la conversión es una multiplicación por una potencia de 10 (bloque 26).'
+        examples:
+          - problem: 'Expresa $250$ nm (nanómetros) en metros, en notación científica'
+            solution: |-
+              **Paso 1.** nano $= 10^{-9}$: $250$ nm $= 250 \times 10^{-9}$ m.
+
+              **Paso 2.** $250 = 2{,}5 \times 10^2$, así que $2{,}5 \times 10^{2} \times 10^{-9} = 2{,}5 \times 10^{-7}$ m.
+
+              Resultado: $2{,}5 \times 10^{-7}$ m.
+        common_errors:
+          - 'Confundir MW (megavatio) con mW (milivatio).'
+          - 'Sumar mal los exponentes al combinar el prefijo con la potencia de la mantisa.'
+        summary: >-
+          mega, giga y tera para lo grande; micro y nano para lo pequeño; cada
+          uno es una potencia de 10.
+        check:
+          question: '¿Cuántos gramos son $8$ μg (microgramos)?'
+          options:
+            - '$8 \times 10^{6}$ g'
+            - '$8 \times 10^{-6}$ g'
+            - '$8 \times 10^{-3}$ g'
+          answer: 1
+          explanation: >-
+            micro $= 10^{-6}$, así que $8$ μg $= 8 \times 10^{-6}$ g. $10^{-3}$
+            corresponde a mili y $10^6$ a mega.
+    glossary:
+      - {term: Prefijo, definition: 'Palabra antepuesta a una unidad que la multiplica por una potencia de 10.'}
+      - {term: Mega, definition: 'Prefijo que multiplica por $10^6$ (M).'}
+      - {term: Micro, definition: 'Prefijo que multiplica por $10^{-6}$ (μ).'}
+  t11:
+    intro:
+      what: >-
+        Es el uso de las unidades y sus conversiones para resolver situaciones
+        reales de cocina, viajes, salud, construcción y compras.
+      purpose: >-
+        Sirve para tomar decisiones correctas cuando los datos vienen en
+        unidades distintas.
+      importance: >-
+        La mayoría de errores en problemas reales no son de cálculo sino de
+        unidades: mezclar gramos con kilos o minutos con horas.
+      foundations: >-
+        Reúne todo el bloque y lo combina con la proporcionalidad (bloques 20 y
+        21).
+      prerequisites:
+        - 'Conversión de unidades (tema 9 de este bloque)'
+        - 'Regla de tres simple (bloque 21)'
+        - 'Operaciones con decimales (bloque 17)'
+      outcomes:
+        - 'Homogeneizar unidades antes de operar'
+        - 'Resolver problemas de recetas, dosis, velocidades y mezclas'
+        - 'Comparar precios por unidad de medida'
+      everyday_example: >-
+        Un frasco de jarabe de 0,25 L y una dosis de 5 mL: ¿para cuántas tomas
+        alcanza?
+    sections:
+      - title: Homogeneizar unidades
+        concept: >-
+          Antes de sumar, restar, comparar o dividir cantidades, se expresan
+          todas en la misma unidad.
+        explanation: |-
+          En los problemas reales las cantidades suelen venir en unidades distintas. La regla de oro es: **antes de operar, pasa todo a la misma unidad**. Normalmente conviene elegir la unidad más pequeña para evitar decimales, o la que pide la pregunta.
+
+          Pasos:
+
+          1. Lee qué unidad pide la respuesta.
+          2. Convierte todas las cantidades a una misma unidad.
+          3. Opera.
+          4. Si hace falta, convierte el resultado a la unidad pedida.
+          5. Comprueba que la respuesta es razonable.
+        definition: >-
+          Homogeneizar unidades es expresar todas las cantidades de una misma
+          magnitud en una sola unidad antes de operar con ellas.
+        rules:
+          - 'Sólo se pueden sumar, restar o comparar cantidades en la misma unidad.'
+          - 'La respuesta debe darse en la unidad que pide la pregunta.'
+        examples:
+          - problem: 'Un frasco de jarabe tiene $0{,}25$ L y cada dosis es de $5$ mL. ¿Cuántas dosis contiene?'
+            solution: |-
+              **Paso 1.** Pasamos a mL: $0{,}25 \times 1000 = 250$ mL.
+
+              **Paso 2.** Dividimos: $250 \div 5 = 50$.
+
+              Resultado: $50$ dosis.
+          - problem: 'Una receta para 4 personas lleva $750$ g de harina. ¿Cuántos kg se necesitan para 10 personas?'
+            solution: |-
+              **Paso 1.** Por persona: $750 \div 4 = 187{,}5$ g.
+
+              **Paso 2.** Para 10 personas: $187{,}5 \times 10 = 1875$ g.
+
+              **Paso 3.** En kg: $1875 \div 1000 = 1{,}875$ kg.
+
+              Resultado: $1{,}875$ kg.
+        common_errors:
+          - 'Dividir 0,25 entre 5 sin convertir: daría 0,05, que no son dosis.'
+          - 'Dar la respuesta en una unidad distinta de la pedida.'
+        summary: >-
+          Pasar todas las cantidades a la misma unidad es el primer paso de
+          cualquier problema con medidas.
+        check:
+          question: 'Una cuerda de $3$ m se corta en trozos de $25$ cm. ¿Cuántos trozos salen?'
+          options:
+            - '$12$ trozos'
+            - '$0{,}12$ trozos'
+            - '$75$ trozos'
+          answer: 0
+          explanation: >-
+            $3$ m $= 300$ cm y $300 \div 25 = 12$ trozos.
+      - title: Comparar precios por unidad
+        concept: >-
+          Para saber qué envase es más barato se calcula el precio de una misma
+          cantidad (por kilo, por litro...).
+        explanation: |-
+          En el supermercado, los envases grandes no siempre son más baratos. Para comparar se calcula el **precio unitario**: el precio de $1$ kg, de $1$ L o de $100$ g. Es una razón (bloque 20): precio dividido entre cantidad, **con las cantidades en la misma unidad**.
+
+          Por ejemplo: un paquete de $500$ g de café cuesta $60$ pesos y otro de $1$ kg, $110$ pesos.
+
+          * Paquete pequeño: $500$ g $= 0{,}5$ kg; $60 \div 0{,}5 = 120$ pesos/kg.
+          * Paquete grande: $110 \div 1 = 110$ pesos/kg.
+
+          El grande sale más barato por kilo.
+        definition: >-
+          El precio unitario es el cociente entre el precio y la cantidad de
+          producto, expresada en una unidad fija.
+        rules:
+          - 'Se expresan todas las cantidades en la misma unidad.'
+          - 'Precio unitario = precio ÷ cantidad.'
+          - 'Es más barato el de menor precio unitario.'
+        examples:
+          - problem: '¿Qué es más barato: $1{,}5$ L de aceite por $96$ pesos o $750$ mL por $45$ pesos?'
+            solution: |-
+              **Paso 1.** $750$ mL $= 0{,}75$ L.
+
+              **Paso 2.** $96 \div 1{,}5 = 64$ pesos/L.
+
+              **Paso 3.** $45 \div 0{,}75 = 60$ pesos/L.
+
+              Resultado: el envase de $750$ mL es más barato por litro.
+        common_errors:
+          - 'Comparar sólo los precios totales sin tener en cuenta la cantidad.'
+          - 'Dividir cantidades en unidades distintas (litros con mililitros).'
+        summary: >-
+          El precio unitario, con las cantidades en la misma unidad, permite
+          comparar envases de distinto tamaño.
+        check:
+          question: 'Un queso de $250$ g cuesta $40$ pesos. ¿Cuál es su precio por kilo?'
+          options:
+            - '$10$ pesos/kg'
+            - '$160$ pesos/kg'
+            - '$100$ pesos/kg'
+          answer: 1
+          explanation: >-
+            $250$ g $= 0{,}25$ kg y $40 \div 0{,}25 = 160$ pesos/kg. También: en
+            1 kg caben 4 piezas de 250 g, $4 \times 40 = 160$.
+    glossary:
+      - {term: Homogeneizar, definition: 'Expresar todas las cantidades en la misma unidad.'}
+      - {term: Precio unitario, definition: 'Precio de una unidad de medida del producto (por kg, por L...).'}

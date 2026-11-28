@@ -1,0 +1,680 @@
+block: b20
+intro: >-
+  Comparar cantidades es una de las tareas más frecuentes de la vida diaria:
+  ¿cuántos gramos de harina por persona?, ¿cuántos kilómetros por hora?, ¿qué
+  escala tiene un mapa? En este bloque aprenderás qué es una razón, qué es una
+  proporción, su propiedad fundamental y cómo reconocer magnitudes directa e
+  inversamente proporcionales. Es la base de la regla de tres (b21) y de los
+  porcentajes (b22).
+topics:
+  t01:
+    intro:
+      what: >-
+        Una razón es una comparación entre dos cantidades mediante un cociente.
+        Se escribe $a : b$ o $\frac{a}{b}$ y se lee "$a$ es a $b$".
+      purpose: >-
+        Sirve para expresar cuántas veces cabe una cantidad en otra o cuánto
+        corresponde de una por cada unidad de la otra.
+      importance: >-
+        Las razones están detrás de la velocidad, los precios por kilo, las
+        escalas, las recetas y los porcentajes.
+      foundations: >-
+        Se basa en la división (b07) y en las fracciones (b14): una razón se
+        escribe y se simplifica como una fracción.
+      prerequisites:
+        - 'Concepto de división (b07)'
+        - 'Qué es una fracción y simplificación de fracciones (b14)'
+        - 'Máximo común divisor (b12)'
+      outcomes:
+        - 'Escribir la razón entre dos cantidades'
+        - 'Simplificar una razón'
+        - 'Interpretar razones con unidades, como km/h'
+      everyday_example: >-
+        Si en una reunión hay 12 mujeres y 18 hombres, la razón mujeres :
+        hombres es $12 : 18 = 2 : 3$: por cada 2 mujeres hay 3 hombres.
+    sections:
+      - title: Comparar por cociente
+        concept: Una razón compara dos cantidades dividiéndolas.
+        explanation: |-
+          Hay dos formas de comparar $12$ y $18$:
+          * **Por diferencia:** $18 - 12 = 6$ ("hay 6 más").
+          * **Por cociente:** $\frac{12}{18}$ ("¿qué parte es una de la otra?").
+
+          La **razón** es la comparación por cociente. Se escribe $12 : 18$ o $\frac{12}{18}$, y se lee "12 es a 18". **El orden importa**: la razón mujeres : hombres es $12 : 18$, mientras que hombres : mujeres es $18 : 12$.
+
+          Como una fracción, una razón se puede **simplificar** dividiendo ambos términos entre su MCD (b12). $\text{MCD}(12, 18) = 6$, así que $12 : 18 = 2 : 3$. Se interpreta: **por cada 2 mujeres hay 3 hombres**.
+
+          **Razón y fracción no son exactamente lo mismo.** Una fracción suele comparar una parte con el todo (12 mujeres de 30 personas: $\frac{12}{30}$). Una razón puede comparar dos partes entre sí ($12 : 18$).
+
+          **Razones con unidades.** Si se comparan magnitudes distintas, la razón lleva unidades: recorrer $150$ km en $2$ h da $\frac{150}{2} = 75$ km/h. Esa razón se llama a veces **tasa**.
+        definition: >-
+          La razón entre dos cantidades $a$ y $b$ (con $b \neq 0$) es el
+          cociente $\frac{a}{b}$, también escrito $a : b$.
+        rules:
+          - 'La razón $a : b$ es el cociente $a \div b$.'
+          - 'El orden de los términos importa: $a : b \neq b : a$ en general.'
+          - 'Se simplifica dividiendo ambos términos por el mismo número (su MCD da la forma irreducible).'
+          - 'Si las magnitudes son distintas, la razón lleva unidades (km/h, pesos/kg).'
+        examples:
+          - problem: 'En una clase hay 15 chicas y 10 chicos. Escribe la razón chicas : chicos simplificada e interprétala.'
+            solution: |-
+              **Paso 1.** Razón: $15 : 10$.
+              **Paso 2.** $\text{MCD}(15, 10) = 5$: $15 : 10 = 3 : 2$.
+              **Paso 3.** Interpretación: por cada 3 chicas hay 2 chicos.
+              Resultado: $3 : 2$.
+          - problem: 'Un auto recorre $240$ km en $3$ horas. ¿Cuál es la razón kilómetros por hora?'
+            solution: |-
+              **Paso 1.** Razón: $\frac{240 \text{ km}}{3 \text{ h}}$.
+              **Paso 2.** $240 \div 3 = 80$.
+              Resultado: $80$ km/h.
+        common_errors:
+          - 'Invertir el orden de la razón respecto a lo que se pide.'
+          - 'Confundir la razón con la diferencia: $12 : 18$ no es "6".'
+          - 'Simplificar sólo uno de los términos.'
+        summary: >-
+          Una razón compara dos cantidades por cociente, $a : b = \frac{a}{b}$;
+          se simplifica como una fracción y su orden importa.
+        check:
+          question: '¿Cuál es la razón $8 : 12$ simplificada?'
+          options: ['$4 : 3$', '$2 : 3$', '$4 : 6$', '$3 : 2$']
+          answer: 1
+          explanation: >-
+            $\text{MCD}(8, 12) = 4$: $8 \div 4 = 2$ y $12 \div 4 = 3$, así que
+            $2 : 3$. $4 : 6$ es equivalente pero no está simplificada, y
+            $3 : 2$ invierte el orden.
+    glossary:
+      - {term: Razón, definition: 'Comparación de dos cantidades mediante su cociente.'}
+      - {term: Tasa, definition: 'Razón entre magnitudes de distinto tipo, como kilómetros por hora.'}
+  t02:
+    intro:
+      what: >-
+        Una proporción es una igualdad entre dos razones, como
+        $\frac{2}{3} = \frac{6}{9}$. Se lee "2 es a 3 como 6 es a 9".
+      purpose: >-
+        Sirve para expresar que dos comparaciones son "la misma", aunque
+        usen números distintos, y para encontrar valores desconocidos.
+      importance: >-
+        Es la herramienta matemática de recetas, escalas, mezclas y cambios de
+        moneda, y la base de la regla de tres.
+      foundations: >-
+        Se basa en las fracciones equivalentes (b14): dos razones forman una
+        proporción si, como fracciones, son equivalentes.
+      prerequisites:
+        - 'Concepto de razón (b20)'
+        - 'Fracciones equivalentes y simplificación (b14)'
+      outcomes:
+        - 'Reconocer si dos razones forman una proporción'
+        - 'Leer y escribir proporciones'
+      everyday_example: >-
+        Si 2 kg de arroz cuestan 3 pesos y 6 kg cuestan 9 pesos, el precio
+        "es el mismo": $\frac{2}{3} = \frac{6}{9}$ es una proporción.
+    sections:
+      - title: Igualdad de razones
+        concept: Dos razones forman proporción si tienen el mismo valor.
+        explanation: |-
+          Las razones $2 : 3$ y $6 : 9$ parecen distintas, pero si simplificamos $6 : 9$ dividiendo entre $3$ obtenemos $2 : 3$. **Tienen el mismo valor**. Por eso podemos escribir la igualdad
+          $$\frac{2}{3} = \frac{6}{9},$$
+          que se llama **proporción** y se lee "2 es a 3 como 6 es a 9".
+
+          **¿Cómo comprobar si dos razones forman proporción?**
+
+          1. **Simplificando** ambas a su forma irreducible: si coinciden, hay proporción.
+          2. **Con productos cruzados** (como al comparar fracciones en b14): $2 \times 9 = 18$ y $3 \times 6 = 18$. Si los productos son iguales, hay proporción.
+
+          El segundo método es muy rápido y en el tema "Propiedad fundamental de las proporciones" verás por qué funciona y cómo usarlo para hallar valores desconocidos.
+
+          Si las razones no tienen el mismo valor, no hay proporción: $\frac{4}{5}$ y $\frac{8}{12}$ no forman proporción, porque $4 \times 12 = 48$ y $5 \times 8 = 40$.
+        definition: >-
+          Una proporción es una igualdad entre dos razones,
+          $\frac{a}{b} = \frac{c}{d}$ (con $b, d \neq 0$), también escrita
+          $a : b = c : d$.
+        rules:
+          - 'Hay proporción si las dos razones simplificadas son iguales.'
+          - 'Equivalentemente, si los productos cruzados son iguales: $a \times d = b \times c$.'
+          - 'Se lee "$a$ es a $b$ como $c$ es a $d$".'
+        examples:
+          - problem: '¿Forman proporción $\frac{3}{4}$ y $\frac{9}{12}$?'
+            solution: |-
+              **Paso 1.** Simplificamos $\frac{9}{12}$ dividiendo entre $3$: $\frac{3}{4}$.
+              **Paso 2.** Coincide con la primera razón.
+              **Paso 3.** Productos cruzados: $3 \times 12 = 36$ y $4 \times 9 = 36$ ✓.
+              Resultado: sí, $\frac{3}{4} = \frac{9}{12}$ es una proporción.
+          - problem: '¿Forman proporción $\frac{5}{6}$ y $\frac{15}{20}$?'
+            solution: |-
+              **Paso 1.** Productos cruzados: $5 \times 20 = 100$ y $6 \times 15 = 90$.
+              **Paso 2.** Son distintos.
+              Resultado: no forman proporción.
+        common_errors:
+          - 'Multiplicar "en línea" (numerador por numerador) en lugar de en cruz.'
+          - 'Pensar que hay proporción si los números "crecen igual" sumando: $\frac{2}{3}$ y $\frac{4}{5}$ (se sumó 2 a cada término) no forman proporción.'
+        summary: >-
+          Una proporción es una igualdad de razones. Se comprueba simplificando
+          o comparando los productos cruzados.
+        check:
+          question: '¿Cuál de estos pares de razones forma una proporción?'
+          options: ['$\frac{2}{5}$ y $\frac{4}{7}$', '$\frac{3}{4}$ y $\frac{9}{12}$', '$\frac{4}{5}$ y $\frac{8}{12}$', '$\frac{1}{3}$ y $\frac{3}{1}$']
+          answer: 1
+          explanation: >-
+            $3 \times 12 = 36 = 4 \times 9$. En los demás casos los productos
+            cruzados no coinciden ($14 \ne 20$, $48 \ne 40$, $1 \ne 9$).
+    glossary:
+      - {term: Proporción, definition: 'Igualdad entre dos razones.'}
+      - {term: Productos cruzados, definition: 'En $\frac{a}{b} = \frac{c}{d}$, los productos $a \times d$ y $b \times c$.'}
+  t03:
+    intro:
+      what: >-
+        En una razón $a : b$, el antecedente es el primer término ($a$) y el
+        consecuente el segundo ($b$). En una proporción se habla además de
+        extremos y medios.
+      purpose: >-
+        Sirve para nombrar con precisión cada término de razones y
+        proporciones y seguir las explicaciones y reglas.
+      importance: >-
+        La propiedad fundamental de las proporciones se enuncia con estos
+        nombres: "el producto de los extremos es igual al de los medios".
+      foundations: >-
+        Es la terminología de las razones, comparable a numerador y
+        denominador en las fracciones (b14).
+      prerequisites:
+        - 'Concepto de razón y de proporción (b20)'
+        - 'Numerador y denominador (b14)'
+      outcomes:
+        - 'Identificar antecedente y consecuente de una razón'
+        - 'Identificar extremos y medios de una proporción'
+      everyday_example: >-
+        En la razón "3 tazas de agua por 1 de arroz", $3 : 1$, el antecedente
+        es 3 (agua) y el consecuente 1 (arroz).
+    sections:
+      - title: Los términos de razones y proporciones
+        concept: Antecedente es el primer término de una razón y consecuente el segundo; en una proporción, los extremos son el primero y el último, y los medios, los de en medio.
+        explanation: |-
+          **En una razón** $a : b$ (o $\frac{a}{b}$):
+          * $a$ es el **antecedente** (va antes; hace de numerador).
+          * $b$ es el **consecuente** (va después; hace de denominador).
+
+          En la razón $7 : 4$, el antecedente es $7$ y el consecuente $4$. Si intercambiamos los términos, obtenemos la razón **inversa**, $4 : 7$, que tiene otro valor.
+
+          **En una proporción** $a : b = c : d$ hay cuatro términos:
+          * **Extremos:** $a$ y $d$ (el primero y el último, los de "los extremos" de la escritura).
+          * **Medios:** $b$ y $c$ (los que quedan en medio).
+
+          Por ejemplo, en $2 : 3 = 6 : 9$, los extremos son $2$ y $9$, y los medios $3$ y $6$. Fíjate: $2 \times 9 = 18$ y $3 \times 6 = 18$. El producto de extremos coincide con el de medios; esa es la propiedad fundamental que estudiarás pronto.
+
+          Cada razón de la proporción tiene su propio antecedente y consecuente: en $2 : 3 = 6 : 9$, los antecedentes son $2$ y $6$, y los consecuentes $3$ y $9$.
+        definition: >-
+          En la razón $a : b$, $a$ es el antecedente y $b$ el consecuente. En la
+          proporción $a : b = c : d$, $a$ y $d$ son los extremos, y $b$ y $c$
+          los medios.
+        rules:
+          - 'Antecedente: primer término de la razón. Consecuente: segundo.'
+          - 'Razón inversa de $a : b$: $b : a$.'
+          - 'En $a : b = c : d$: extremos $a$ y $d$; medios $b$ y $c$.'
+        examples:
+          - problem: 'En la razón $5 : 8$, ¿cuál es el antecedente y cuál el consecuente?'
+            solution: |-
+              **Paso 1.** El primer término es $5$: antecedente.
+              **Paso 2.** El segundo término es $8$: consecuente.
+              Resultado: antecedente $5$; consecuente $8$.
+          - problem: 'En la proporción $4 : 10 = 6 : 15$, identifica extremos y medios.'
+            solution: |-
+              **Paso 1.** Extremos (primero y último): $4$ y $15$.
+              **Paso 2.** Medios: $10$ y $6$.
+              **Paso 3.** Comprobamos: $4 \times 15 = 60$ y $10 \times 6 = 60$ ✓.
+              Resultado: extremos $4$ y $15$; medios $10$ y $6$.
+        common_errors:
+          - 'Confundir antecedente con el número mayor: el antecedente es el primero, sea mayor o menor.'
+          - 'Tomar como extremos los dos antecedentes.'
+        summary: >-
+          Antecedente y consecuente son el primer y segundo término de una
+          razón. En una proporción, extremos y medios.
+        check:
+          question: 'En la razón $7 : 4$, ¿cuál es el consecuente?'
+          options: ['$7$', '$4$', '$11$', '$\frac{7}{4}$']
+          answer: 1
+          explanation: >-
+            El consecuente es el segundo término, $4$. El $7$ es el antecedente
+            y $\frac{7}{4}$ es el valor de la razón.
+    glossary:
+      - {term: Antecedente, definition: 'Primer término de una razón.'}
+      - {term: Consecuente, definition: 'Segundo término de una razón.'}
+      - {term: Extremos y medios, definition: 'En $a : b = c : d$, los extremos son $a$ y $d$; los medios, $b$ y $c$.'}
+  t04:
+    intro:
+      what: >-
+        Son razones que tienen el mismo valor, como $3 : 5$, $6 : 10$ y
+        $9 : 15$; cualquier par de ellas forma una proporción.
+      purpose: >-
+        Sirven para construir proporciones, completar tablas y ampliar o
+        reducir recetas, mezclas y planos.
+      importance: >-
+        Saber generar razones equivalentes es el primer paso para resolver
+        problemas de proporcionalidad.
+      foundations: >-
+        Se basa en la amplificación y simplificación de fracciones (b14):
+        multiplicar o dividir ambos términos por el mismo número no cambia el
+        valor.
+      prerequisites:
+        - 'Amplificación y simplificación de fracciones (b14)'
+        - 'Concepto de proporción (b20)'
+      outcomes:
+        - 'Obtener razones equivalentes a una dada'
+        - 'Completar el término que falta en razones equivalentes'
+        - 'Reconocer la constante de proporcionalidad'
+      everyday_example: >-
+        Una pintura se mezcla con 3 partes de blanco por 5 de azul. Para el
+        doble de pintura: 6 de blanco por 10 de azul ($3 : 5 = 6 : 10$).
+    sections:
+      - title: Multiplicar o dividir ambos términos
+        concept: Se obtienen razones equivalentes multiplicando o dividiendo los dos términos por un mismo número distinto de cero.
+        explanation: |-
+          Partimos de $3 : 5$. Si multiplicamos **ambos** términos por $2$, $3$, $4$… obtenemos razones con el mismo valor:
+          $$3 : 5 = 6 : 10 = 9 : 15 = 12 : 20.$$
+          Es como amplificar una fracción (b14). Y dividiendo ambos términos por un divisor común se simplifica: $12 : 20 = 3 : 5$.
+
+          Todas estas razones tienen el **mismo cociente**: $\frac{3}{5} = 0{,}6$. Ese valor común se llama **constante de proporcionalidad** (o razón de la proporción) y lo usarás en los temas de magnitudes proporcionales.
+
+          **Completar una razón equivalente.** En $4 : 7 = \square : 28$, el consecuente pasó de $7$ a $28$, es decir, se multiplicó por $28 \div 7 = 4$. Hay que hacer lo mismo con el antecedente: $4 \times 4 = 16$. Así, $4 : 7 = 16 : 28$.
+
+          Sumar el mismo número a ambos términos **no** da razones equivalentes: $3 : 5$ y $5 : 7$ no tienen el mismo valor.
+        definition: >-
+          Dos razones $a : b$ y $c : d$ son equivalentes si
+          $\frac{a}{b} = \frac{c}{d}$; en particular, $a : b = (a \times k) : (b \times k)$
+          para todo $k \neq 0$.
+        rules:
+          - 'Multiplicar o dividir ambos términos por el mismo número ($\neq 0$) da una razón equivalente.'
+          - 'Todas las razones equivalentes tienen el mismo cociente (constante de proporcionalidad).'
+          - 'Para completar un término, averigua por cuánto se multiplicó el otro.'
+          - 'Sumar o restar lo mismo a ambos términos no conserva la razón.'
+        examples:
+          - problem: 'Completa: $5 : 8 = \square : 40$'
+            solution: |-
+              **Paso 1.** El consecuente pasa de $8$ a $40$: se multiplicó por $40 \div 8 = 5$.
+              **Paso 2.** Multiplicamos el antecedente por $5$: $5 \times 5 = 25$.
+              **Comprobación:** $\frac{25}{40} = \frac{5}{8}$ (dividiendo entre $5$) ✓.
+              Resultado: $25$.
+          - problem: 'Escribe tres razones equivalentes a $2 : 7$ y su constante de proporcionalidad.'
+            solution: |-
+              **Paso 1.** Multiplicamos por $2$, $3$ y $10$: $4 : 14$, $6 : 21$, $20 : 70$.
+              **Paso 2.** Constante: $\frac{2}{7}$ (todas tienen ese valor).
+              Resultado: $2 : 7 = 4 : 14 = 6 : 21 = 20 : 70$.
+        common_errors:
+          - 'Sumar en lugar de multiplicar: $5 : 8 = \square : 40$ no se resuelve con $5 + 32$.'
+          - 'Multiplicar sólo un término.'
+        summary: >-
+          Las razones equivalentes se obtienen multiplicando o dividiendo
+          ambos términos por el mismo número; todas tienen el mismo cociente.
+        check:
+          question: 'Completa: $3 : 4 = \square : 20$'
+          options: ['$19$', '$12$', '$15$', '$60$']
+          answer: 2
+          explanation: >-
+            $4 \times 5 = 20$, así que el antecedente también se multiplica por
+            $5$: $3 \times 5 = 15$. $19$ sale de sumar $16$, que no conserva la
+            razón.
+    glossary:
+      - {term: Razones equivalentes, definition: 'Razones con el mismo valor.'}
+      - {term: Constante de proporcionalidad, definition: 'Valor común del cociente de razones equivalentes.'}
+  t05:
+    intro:
+      what: >-
+        En toda proporción, el producto de los extremos es igual al producto
+        de los medios: si $\frac{a}{b} = \frac{c}{d}$, entonces
+        $a \times d = b \times c$.
+      purpose: >-
+        Sirve para comprobar proporciones y, sobre todo, para calcular un
+        término desconocido (el cuarto proporcional).
+      importance: >-
+        Es el cálculo que hay detrás de la regla de tres (b21) y de muchos
+        problemas de porcentajes.
+      foundations: >-
+        Se deduce multiplicando ambos lados de la igualdad
+        $\frac{a}{b} = \frac{c}{d}$ por $b \times d$: si dos números son
+        iguales, sus productos por el mismo número también lo son.
+      prerequisites:
+        - 'Antecedente, consecuente, extremos y medios (b20)'
+        - 'Multiplicación de fracciones (b15)'
+        - 'Relación entre multiplicación y división (b07)'
+      outcomes:
+        - 'Comprobar proporciones con la propiedad fundamental'
+        - 'Calcular el término desconocido de una proporción'
+      everyday_example: >-
+        Si 3 kg de fruta cuestan 12 pesos, ¿cuánto cuestan 5 kg?
+        $\frac{3}{12} = \frac{5}{x}$ da $3x = 60$, y $x = 20$ pesos.
+    sections:
+      - title: Extremos por medios y el cuarto proporcional
+        concept: Producto de extremos = producto de medios; con esa igualdad se despeja el término que falta.
+        explanation: |-
+          **¿Por qué funciona?** Partimos de $\frac{a}{b} = \frac{c}{d}$. Si multiplicamos ambos lados por $b \times d$, la igualdad se mantiene:
+          * izquierda: $\frac{a}{b} \times b \times d = a \times d$ (la $b$ se simplifica);
+          * derecha: $\frac{c}{d} \times b \times d = b \times c$ (la $d$ se simplifica).
+
+          Por tanto, $a \times d = b \times c$: **producto de extremos = producto de medios**. Por eso los productos cruzados sirven para comprobar proporciones.
+
+          **Calcular un término desconocido.** Si en una proporción falta un término, lo llamamos $x$. Por ejemplo, $\frac{3}{5} = \frac{12}{x}$.
+          1. Productos cruzados: $3 \times x = 5 \times 12 = 60$.
+          2. ¿Qué número multiplicado por $3$ da $60$? Se obtiene dividiendo (b07): $x = 60 \div 3 = 20$.
+
+          Ese término hallado se llama **cuarto proporcional**. Regla práctica: $x$ es igual al **producto de los dos términos que están en diagonal** (sin $x$) **dividido entre el término que está en diagonal con $x$**.
+
+          Comprueba siempre: $\frac{3}{5} = \frac{12}{20}$, porque $3 \times 20 = 60 = 5 \times 12$ ✓.
+        definition: >-
+          Si $\frac{a}{b} = \frac{c}{d}$ con $b, d \neq 0$, entonces
+          $a \times d = b \times c$, y recíprocamente. En particular,
+          $\frac{a}{b} = \frac{c}{x}$ implica $x = \frac{b \times c}{a}$ (con $a \neq 0$).
+        rules:
+          - 'En toda proporción: extremos × extremos = medios × medios.'
+          - 'Si los productos cruzados son iguales, hay proporción.'
+          - '$x$ = (producto de la otra diagonal) ÷ (número en diagonal con $x$).'
+          - 'Comprueba sustituyendo el valor hallado.'
+        examples:
+          - problem: 'Halla $x$: $\frac{3}{5} = \frac{12}{x}$'
+            solution: |-
+              **Paso 1.** Productos cruzados: $3 \times x = 5 \times 12$.
+              **Paso 2.** $3x = 60$.
+              **Paso 3.** $x = 60 \div 3 = 20$.
+              **Comprobación:** $3 \times 20 = 60 = 5 \times 12$ ✓.
+              Resultado: $x = 20$.
+          - problem: 'Halla $x$: $\frac{x}{4} = \frac{15}{6}$'
+            solution: |-
+              **Paso 1.** Productos cruzados: $x \times 6 = 4 \times 15 = 60$.
+              **Paso 2.** $x = 60 \div 6 = 10$.
+              **Comprobación:** $\frac{10}{4} = 2{,}5$ y $\frac{15}{6} = 2{,}5$ ✓.
+              Resultado: $x = 10$.
+        common_errors:
+          - 'Multiplicar en línea ($3 \times 12$) en lugar de en cruz.'
+          - 'Dividir entre un número equivocado: siempre entre el que está en diagonal con $x$.'
+          - 'No comprobar el resultado.'
+        summary: >-
+          En $\frac{a}{b} = \frac{c}{d}$ se cumple $a \times d = b \times c$.
+          Para hallar un término: multiplica en cruz y divide.
+        check:
+          question: 'Halla $x$: $\frac{2}{7} = \frac{6}{x}$'
+          options: ['$x = 21$', '$x = 11$', '$x = \frac{12}{7}$', '$x = 42$']
+          answer: 0
+          explanation: >-
+            $2x = 7 \times 6 = 42$, así que $x = 42 \div 2 = 21$. Comprobación:
+            $\frac{6}{21} = \frac{2}{7}$. $42$ es el producto antes de dividir.
+    glossary:
+      - {term: Propiedad fundamental, definition: 'En toda proporción, el producto de los extremos es igual al de los medios.'}
+      - {term: Cuarto proporcional, definition: 'Término desconocido de una proporción que se calcula a partir de los otros tres.'}
+  t06:
+    intro:
+      what: >-
+        Dos magnitudes son directamente proporcionales cuando, al multiplicar
+        una por un número, la otra queda multiplicada por el mismo número; su
+        cociente es constante.
+      purpose: >-
+        Sirve para reconocer situaciones en las que "a doble, doble" y
+        calcular valores con una constante.
+      importance: >-
+        La mayoría de los precios, recetas y conversiones son relaciones
+        directamente proporcionales; reconocerlas es el primer paso de la
+        regla de tres directa.
+      foundations: >-
+        Se basa en las razones equivalentes: los pares de valores
+        correspondientes forman razones con el mismo cociente (la constante de
+        proporcionalidad).
+      prerequisites:
+        - 'Razones equivalentes y constante de proporcionalidad (b20)'
+        - 'Propiedad fundamental de las proporciones (b20)'
+        - 'División de decimales (b17)'
+      outcomes:
+        - 'Reconocer magnitudes directamente proporcionales'
+        - 'Calcular la constante de proporcionalidad'
+        - 'Completar tablas de proporcionalidad directa'
+        - 'Detectar relaciones que crecen juntas pero no son proporcionales'
+      everyday_example: >-
+        Si 1 kg de papas cuesta 3 pesos, 2 kg cuestan 6 y 5 kg cuestan 15: el
+        precio es directamente proporcional al peso.
+    sections:
+      - title: A doble, doble; a mitad, mitad
+        concept: Dos magnitudes son directamente proporcionales si su cociente es constante.
+        explanation: |-
+          Una **magnitud** es algo que se puede medir o contar: peso, precio, tiempo, distancia, número de personas.
+
+          Observa esta tabla de kilos de papas y su precio:
+
+          | Kilos ($x$) | 1 | 2 | 3 | 5 |
+          |---|---|---|---|---|
+          | Precio ($y$) | 3 | 6 | 9 | 15 |
+
+          Si los kilos se **duplican**, el precio se duplica; si se triplican, se triplica. Además, el cociente $\frac{y}{x}$ es siempre el mismo: $\frac{3}{1} = \frac{6}{2} = \frac{9}{3} = \frac{15}{5} = 3$. Ese número es la **constante de proporcionalidad** $k$ (aquí, el precio por kilo). Por tanto $y = k \times x$.
+
+          **Cuidado:** que dos magnitudes aumenten juntas **no basta**. Un taxi que cobra $2$ pesos fijos más $1$ peso por km cobra $3$ por 1 km y $4$ por 2 km: el recorrido se duplicó pero el precio no. Los cocientes $\frac{3}{1}$ y $\frac{4}{2}$ son distintos, así que **no** es proporcional.
+
+          Una señal útil: en una proporcionalidad directa, a $0$ le corresponde $0$ (0 kg cuestan 0 pesos).
+        definition: >-
+          Dos magnitudes $x$ e $y$ son directamente proporcionales si existe un
+          número $k \neq 0$ (constante de proporcionalidad) tal que, para todo
+          par de valores correspondientes, $\frac{y}{x} = k$, es decir,
+          $y = k \times x$.
+        rules:
+          - 'Si una magnitud se multiplica por un número, la otra se multiplica por el mismo número.'
+          - 'El cociente $y \div x$ es constante.'
+          - '$y = k \times x$; a $x = 0$ le corresponde $y = 0$.'
+          - '"Crecen juntas" no basta: comprueba que el cociente sea constante.'
+        examples:
+          - problem: 'Una receta para 4 personas lleva $300$ g de harina. ¿Cuánta harina se necesita para 6 personas?'
+            solution: |-
+              **Paso 1.** Personas y harina son directamente proporcionales (el doble de personas necesita el doble de harina).
+              **Paso 2.** Constante: $k = 300 \div 4 = 75$ g por persona.
+              **Paso 3.** Para 6 personas: $75 \times 6 = 450$ g.
+              Resultado: $450$ g.
+          - problem: '¿Es proporcional la tabla $x$: 2, 4, 6; $y$: 5, 10, 16?'
+            solution: |-
+              **Paso 1.** Cocientes: $\frac{5}{2} = 2{,}5$; $\frac{10}{4} = 2{,}5$; $\frac{16}{6} \approx 2{,}67$.
+              **Paso 2.** No son todos iguales.
+              Resultado: no es una proporcionalidad directa.
+        common_errors:
+          - 'Creer que basta con que ambas magnitudes aumenten.'
+          - 'Calcular la constante al revés ($x \div y$) y mezclarla con $y \div x$.'
+          - 'Comprobar sólo un par de valores en una tabla.'
+        summary: >-
+          Magnitudes directamente proporcionales: cociente constante,
+          $y = k \times x$. A doble, doble.
+        check:
+          question: '¿Cuál de estas tablas muestra magnitudes directamente proporcionales?'
+          options: ['$x$: 1, 2, 3 — $y$: 5, 10, 15', '$x$: 1, 2, 3 — $y$: 5, 6, 7', '$x$: 1, 2, 3 — $y$: 12, 6, 4', '$x$: 1, 2, 3 — $y$: 1, 4, 9']
+          answer: 0
+          explanation: >-
+            En la primera, $y \div x = 5$ siempre. En la segunda se suma 1, en
+            la tercera el producto es constante (inversa) y en la cuarta
+            $y = x^2$, que no tiene cociente constante.
+    glossary:
+      - {term: Magnitud, definition: 'Propiedad que se puede medir o contar (peso, precio, tiempo…).'}
+      - {term: Proporcionalidad directa, definition: 'Relación entre dos magnitudes cuyo cociente es constante.'}
+  t07:
+    intro:
+      what: >-
+        Dos magnitudes son inversamente proporcionales cuando, al multiplicar
+        una por un número, la otra queda dividida por ese mismo número; su
+        producto es constante.
+      purpose: >-
+        Sirve para reconocer situaciones en las que "a doble, mitad", como
+        trabajadores y tiempo o velocidad y duración de un viaje.
+      importance: >-
+        Confundir una relación inversa con una directa es uno de los errores
+        más comunes en problemas; distinguirlas es clave para la regla de tres
+        inversa (b21).
+      foundations: >-
+        Se basa en la multiplicación y la división como operaciones inversas:
+        si $x \times y = k$, al multiplicar $x$ por un número, $y$ debe
+        dividirse por él para que el producto no cambie.
+      prerequisites:
+        - 'Magnitudes directamente proporcionales (b20)'
+        - 'Relación entre multiplicación y división (b07)'
+      outcomes:
+        - 'Reconocer magnitudes inversamente proporcionales'
+        - 'Calcular la constante (producto) de una proporcionalidad inversa'
+        - 'Completar tablas de proporcionalidad inversa'
+      everyday_example: >-
+        Si 4 personas pintan una casa en 12 días, 8 personas (al mismo ritmo)
+        la pintan en 6 días: el doble de personas, la mitad de tiempo.
+    sections:
+      - title: A doble, mitad; a triple, tercera parte
+        concept: Dos magnitudes son inversamente proporcionales si su producto es constante.
+        explanation: |-
+          Un viaje de $120$ km puede hacerse a distintas velocidades:
+
+          | Velocidad ($x$, km/h) | 20 | 40 | 60 | 120 |
+          |---|---|---|---|---|
+          | Tiempo ($y$, h) | 6 | 3 | 2 | 1 |
+
+          Al **duplicar** la velocidad, el tiempo se reduce a la **mitad**; al triplicarla, a la tercera parte. Aquí lo que se mantiene constante es el **producto**: $20 \times 6 = 40 \times 3 = 60 \times 2 = 120 \times 1 = 120$ (la distancia). Así, $x \times y = k$, o bien $y = \frac{k}{x}$.
+
+          **Cuidado:** que una magnitud aumente y la otra disminuya **no basta**. El valor de un auto baja con los años, pero no se reduce a la mitad cada vez que se duplica la edad del auto. Hay que comprobar que el producto sea constante.
+
+          En los problemas de trabajo se supone que todos trabajan **al mismo ritmo**; si no, la relación no es exactamente inversa.
+        definition: >-
+          Dos magnitudes $x$ e $y$ son inversamente proporcionales si existe un
+          número $k \neq 0$ tal que, para todo par de valores correspondientes,
+          $x \times y = k$, es decir, $y = \frac{k}{x}$.
+        rules:
+          - 'Si una magnitud se multiplica por un número, la otra se divide por el mismo número.'
+          - 'El producto $x \times y$ es constante.'
+          - '"Una sube y la otra baja" no basta: comprueba el producto.'
+        examples:
+          - problem: '4 trabajadores tardan 12 días en una obra. ¿Cuánto tardan 6 trabajadores al mismo ritmo?'
+            solution: |-
+              **Paso 1.** Más trabajadores → menos días, en la misma proporción: inversa.
+              **Paso 2.** Constante: $4 \times 12 = 48$ (días-trabajador que exige la obra).
+              **Paso 3.** Con 6: $48 \div 6 = 8$ días.
+              Resultado: $8$ días.
+          - problem: '¿Es inversa la tabla $x$: 2, 3, 5; $y$: 30, 20, 12?'
+            solution: |-
+              **Paso 1.** Productos: $2 \times 30 = 60$; $3 \times 20 = 60$; $5 \times 12 = 60$.
+              **Paso 2.** Son iguales.
+              Resultado: sí, son inversamente proporcionales con $k = 60$.
+        common_errors:
+          - 'Tratar una relación inversa como directa: más trabajadores no significa más días.'
+          - 'Calcular cocientes en lugar de productos para comprobar la proporcionalidad inversa.'
+          - 'Pensar que toda relación "una sube, otra baja" es inversamente proporcional.'
+        summary: >-
+          Magnitudes inversamente proporcionales: producto constante,
+          $x \times y = k$. A doble, mitad.
+        check:
+          question: 'Con 3 grifos iguales un tanque se llena en 8 horas. ¿Cuántas horas tardarán 6 grifos iguales?'
+          options: ['$16$ horas', '$4$ horas', '$2$ horas', '$11$ horas']
+          answer: 1
+          explanation: >-
+            Grifos y tiempo son inversamente proporcionales: $3 \times 8 = 24$,
+            y $24 \div 6 = 4$ horas. $16$ horas sería tratar la relación como
+            directa.
+    glossary:
+      - {term: Proporcionalidad inversa, definition: 'Relación entre dos magnitudes cuyo producto es constante.'}
+  t08:
+    intro:
+      what: >-
+        Son situaciones de la vida diaria que se resuelven con razones y
+        proporciones: recetas, escalas de mapas, mezclas y repartos.
+      purpose: >-
+        Sirven para aplicar las proporciones a decisiones prácticas: cocinar
+        para más personas, medir en un mapa o repartir de forma justa.
+      importance: >-
+        Pensar proporcionalmente es una de las habilidades matemáticas más
+        útiles fuera del aula.
+      foundations: >-
+        Se usan las proporciones directas, la propiedad fundamental y la
+        constante de proporcionalidad.
+      prerequisites:
+        - 'Propiedad fundamental de las proporciones (b20)'
+        - 'Magnitudes directa e inversamente proporcionales (b20)'
+        - 'Multiplicación por potencias de 10 (b17, b18)'
+      outcomes:
+        - 'Ajustar recetas y mezclas'
+        - 'Calcular distancias reales con una escala'
+        - 'Repartir una cantidad en una razón dada'
+      everyday_example: >-
+        En un mapa a escala $1 : 100\,000$, 3 cm representan 3 km en la
+        realidad.
+    sections:
+      - title: Recetas y escalas
+        concept: Una escala es una razón entre una medida en el dibujo y la medida real correspondiente.
+        explanation: |-
+          **Recetas y mezclas.** Las cantidades de una receta son directamente proporcionales al número de porciones. Basta plantear una proporción o calcular la cantidad por porción.
+
+          **Escalas.** Un mapa o plano a escala $1 : 50\,000$ significa que **1 cm en el mapa representa 50 000 cm en la realidad** (en la misma unidad). Para pasar del mapa a la realidad se multiplica por $50\,000$; para pasar de la realidad al mapa, se divide.
+
+          Las distancias reales suelen expresarse en metros o kilómetros. Recuerda que $1$ m $= 100$ cm y $1$ km $= 1000$ m $= 100\,000$ cm (estudiarás las conversiones con detalle en b27). Por ejemplo, $200\,000$ cm $= 2\,000$ m $= 2$ km.
+
+          Una escala con el primer número mayor, como $10 : 1$, indica una **ampliación** (por ejemplo, el dibujo de un insecto).
+        definition: >-
+          La escala de un mapa o plano es la razón
+          $\text{medida en el plano} : \text{medida real}$, expresadas en la
+          misma unidad. Una escala $1 : n$ indica que 1 unidad del plano
+          equivale a $n$ unidades reales.
+        rules:
+          - 'Escala $1 : n$: medida real = medida en el mapa × $n$.'
+          - 'Medida en el mapa = medida real ÷ $n$ (en la misma unidad).'
+          - '$1$ km $= 100\,000$ cm.'
+          - 'En recetas: cantidad por porción × número de porciones.'
+        examples:
+          - problem: 'En un mapa a escala $1 : 50\,000$, dos pueblos están a $4$ cm. ¿A qué distancia real están?'
+            solution: |-
+              **Paso 1.** Real $= 4 \times 50\,000 = 200\,000$ cm.
+              **Paso 2.** $200\,000$ cm $= 2\,000$ m $= 2$ km.
+              Resultado: $2$ km.
+          - problem: 'Para 6 tortillas se usan 9 huevos. ¿Cuántos huevos hacen falta para 10 tortillas?'
+            solution: |-
+              **Paso 1.** Proporción directa: $\frac{6}{9} = \frac{10}{x}$.
+              **Paso 2.** $6x = 9 \times 10 = 90$, así que $x = 15$.
+              **Comprobación:** $1{,}5$ huevos por tortilla; $1{,}5 \times 10 = 15$ ✓.
+              Resultado: $15$ huevos.
+        common_errors:
+          - 'Olvidar convertir unidades: $200\,000$ cm no son $200$ km.'
+          - 'Dividir por la escala al pasar del mapa a la realidad (hay que multiplicar).'
+        summary: >-
+          En escalas $1 : n$, lo real es $n$ veces lo del mapa. En recetas, las
+          cantidades son proporcionales a las porciones.
+        check:
+          question: 'En un mapa a escala $1 : 100\,000$, dos ciudades están a $3$ cm. ¿Cuál es la distancia real?'
+          options: ['$300$ m', '$3$ km', '$30$ km', '$300$ km']
+          answer: 1
+          explanation: >-
+            $3 \times 100\,000 = 300\,000$ cm $= 3\,000$ m $= 3$ km.
+      - title: Reparto proporcional
+        concept: 'Repartir una cantidad en una razón $a : b$ es dividirla en $a + b$ partes iguales y dar $a$ a uno y $b$ al otro.'
+        explanation: |-
+          Dos socios aportan dinero en la razón $3 : 2$ y quieren repartir una ganancia de $500$ pesos **en la misma razón**. ¿Cuánto recibe cada uno?
+
+          La razón $3 : 2$ indica que, de cada $3 + 2 = 5$ partes, el primero se lleva 3 y el segundo 2. Entonces:
+          1. Valor de una parte: $500 \div 5 = 100$.
+          2. Primer socio: $3 \times 100 = 300$ pesos.
+          3. Segundo socio: $2 \times 100 = 200$ pesos.
+
+          Comprobación: $300 + 200 = 500$ ✓ y $300 : 200 = 3 : 2$ ✓.
+
+          Esto es un **reparto directamente proporcional**: quien aporta más, recibe más, en la misma proporción. El método sirve también para tres o más partes: en la razón $1 : 2 : 3$ se divide entre $1 + 2 + 3 = 6$.
+        definition: >-
+          Repartir $N$ en la razón $a : b$ es encontrar dos partes cuya suma es
+          $N$ y que están en razón $a : b$: $\frac{a}{a+b} \times N$ y
+          $\frac{b}{a+b} \times N$.
+        rules:
+          - 'Suma los términos de la razón para obtener el número de partes.'
+          - 'Divide la cantidad entre el número de partes.'
+          - 'Multiplica por cada término.'
+          - 'Comprueba que las partes suman el total.'
+        examples:
+          - problem: 'Reparte $840$ pesos en la razón $1 : 2 : 4$.'
+            solution: |-
+              **Paso 1.** Partes: $1 + 2 + 4 = 7$.
+              **Paso 2.** Una parte: $840 \div 7 = 120$.
+              **Paso 3.** Repartos: $120$, $240$ y $480$ pesos.
+              **Comprobación:** $120 + 240 + 480 = 840$ ✓.
+              Resultado: $120$, $240$ y $480$ pesos.
+        common_errors:
+          - 'Dividir la cantidad entre uno de los términos (por ejemplo $500 \div 3$) en lugar de entre la suma de los términos.'
+          - 'Repartir a partes iguales ignorando la razón.'
+        summary: >-
+          Para repartir en la razón $a : b$: divide entre $a + b$ y multiplica
+          por cada término.
+        check:
+          question: 'Se reparten $60$ caramelos entre dos niños en la razón $2 : 3$. ¿Cuántos recibe el segundo?'
+          options: ['$20$', '$24$', '$36$', '$30$']
+          answer: 2
+          explanation: >-
+            $2 + 3 = 5$ partes; una parte son $60 \div 5 = 12$. El segundo recibe
+            $3 \times 12 = 36$ y el primero $24$ ($24 + 36 = 60$).
+    glossary:
+      - {term: Escala, definition: 'Razón entre una medida en un plano o mapa y la medida real.'}
+      - {term: Reparto proporcional, definition: 'División de una cantidad en partes que guardan una razón dada.'}

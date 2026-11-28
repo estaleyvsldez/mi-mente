@@ -1,0 +1,805 @@
+block: b30
+intro: >-
+  ¿Cuántos menús distintos se pueden pedir? ¿Cuántas contraseñas de 4 cifras
+  existen? Contar posibilidades una por una es lento y fácil de equivocar. En
+  este bloque aprenderás principios que permiten contar sin hacer listas
+  completas: el principio aditivo, el multiplicativo, los diagramas de árbol y
+  una introducción a las permutaciones y las combinaciones.
+topics:
+  t01:
+    intro:
+      what: >-
+        El principio aditivo dice que, si una elección se hace entre grupos de
+        opciones que no se solapan, el total de opciones es la suma de las
+        opciones de cada grupo.
+      purpose: >-
+        Sirve para contar posibilidades cuando se elige una cosa de un grupo o
+        de otro.
+      importance: >-
+        Es el principio de conteo más sencillo y la base para separar un
+        problema complicado en casos más fáciles.
+      foundations: >-
+        Se basa en la suma (bloque 4) y en la idea de reunir conjuntos sin
+        elementos repetidos.
+      prerequisites:
+        - 'Concepto de suma (bloque 4)'
+        - 'Resta (bloque 5)'
+      outcomes:
+        - 'Aplicar el principio aditivo a casos excluyentes'
+        - 'Reconocer cuándo los casos se solapan'
+        - 'Corregir el conteo restando los casos repetidos'
+      everyday_example: >-
+        Si en el menú hay 4 postres fríos y 3 calientes y sólo pides uno, tienes
+        $4 + 3 = 7$ opciones.
+    sections:
+      - title: Casos excluyentes
+        concept: >-
+          Si se elige una opción del grupo A o del grupo B, y no hay opciones
+          comunes, el total es la suma.
+        explanation: |-
+          Imagina que para ir al trabajo puedes tomar uno de **3** autobuses o uno de **2** trenes. Si eliges un solo medio, ¿cuántas formas tienes? Basta con reunir las opciones: $3 + 2 = 5$.
+
+          La clave está en la palabra **"o"**: eliges *una* opción de un grupo *o* del otro. Además, los grupos deben ser **excluyentes**: ninguna opción puede estar en los dos a la vez (un autobús no es un tren).
+
+          Si hay más grupos, se suman todos: con 3 autobuses, 2 trenes y 1 tranvía hay $3 + 2 + 1 = 6$ opciones.
+        definition: >-
+          Principio aditivo: si una tarea puede hacerse de $a$ maneras o de $b$
+          maneras, y ninguna manera es común a ambas, entonces puede hacerse de
+          $a + b$ maneras.
+        rules:
+          - 'Se aplica cuando se elige una sola opción entre varios grupos ("o").'
+          - 'Los grupos no deben tener opciones en común.'
+          - 'Se puede extender a tres o más grupos.'
+        examples:
+          - problem: 'Una librería ofrece 12 novelas, 7 libros de cocina y 5 de historia. Si sólo compras un libro, ¿cuántas opciones tienes?'
+            solution: |-
+              **Paso 1.** Se elige un solo libro de uno de los tres grupos, que no se solapan.
+
+              **Paso 2.** $12 + 7 + 5 = 24$.
+
+              Resultado: $24$ opciones.
+        common_errors:
+          - 'Multiplicar cuando se elige una sola cosa: $12 \times 7 \times 5$ contaría elegir un libro de cada tipo.'
+        summary: >-
+          Una elección entre grupos sin opciones comunes tiene tantas
+          posibilidades como la suma de las de cada grupo.
+        check:
+          question: 'Hay 5 sabores de helado de crema y 4 de fruta. Si pides un solo sabor, ¿cuántas opciones tienes?'
+          options:
+            - '$20$'
+            - '$9$'
+            - '$5$'
+          answer: 1
+          explanation: >-
+            Eliges un sabor de crema o uno de fruta: $5 + 4 = 9$. $20$ sería
+            elegir uno de cada grupo.
+      - title: Cuando los grupos se solapan
+        concept: >-
+          Si hay elementos en los dos grupos, se suman los grupos y se resta lo
+          que se ha contado dos veces.
+        explanation: |-
+          En una clase, $10$ personas juegan al fútbol, $8$ al baloncesto y $3$ juegan a los dos. ¿Cuántas practican al menos uno de los dos deportes?
+
+          Si sumamos $10 + 8 = 18$, las $3$ personas que juegan a ambos se han contado **dos veces**: una en el grupo de fútbol y otra en el de baloncesto. Hay que restarlas una vez:
+
+          $$10 + 8 - 3 = 15$$
+
+          Por eso el principio aditivo exige grupos excluyentes. Cuando no lo son, se corrige restando la parte común.
+        definition: >-
+          Si dos grupos tienen $a$ y $b$ elementos y $c$ de ellos están en ambos,
+          el número de elementos que están en al menos uno es $a + b - c$.
+        rules:
+          - 'Antes de sumar, pregúntate si algún elemento está en los dos grupos.'
+          - 'Los elementos comunes se restan una vez.'
+        examples:
+          - problem: 'De 30 clientes, 18 compraron pan, 15 compraron leche y 7 compraron ambas cosas. ¿Cuántos compraron pan o leche?'
+            solution: |-
+              **Paso 1.** $18 + 15 = 33$, pero los $7$ que compraron ambas están contados dos veces.
+
+              **Paso 2.** $33 - 7 = 26$.
+
+              Resultado: $26$ clientes compraron pan o leche (y $30 - 26 = 4$ no compraron ninguna de las dos cosas).
+        common_errors:
+          - 'Sumar sin restar los elementos comunes.'
+          - 'Restar los elementos comunes dos veces.'
+        summary: >-
+          Si los grupos se solapan, se suman y se resta una vez la parte común.
+        check:
+          question: '12 personas hablan inglés, 9 francés y 4 hablan ambos idiomas. ¿Cuántas hablan al menos uno?'
+          options:
+            - '$21$'
+            - '$17$'
+            - '$13$'
+          answer: 1
+          explanation: >-
+            $12 + 9 - 4 = 17$. $21$ cuenta dos veces a las 4 personas que hablan
+            los dos idiomas.
+    glossary:
+      - {term: Principio aditivo, definition: 'Si se elige entre grupos sin opciones comunes, el total es la suma.'}
+      - {term: Casos excluyentes, definition: 'Casos que no pueden darse a la vez; no tienen elementos comunes.'}
+  t02:
+    intro:
+      what: >-
+        El principio multiplicativo dice que, si una elección se hace en varias
+        etapas independientes, el total de posibilidades es el producto de las
+        opciones de cada etapa.
+      purpose: >-
+        Sirve para contar combinaciones de ropa, menús, códigos, matrículas o
+        contraseñas sin escribirlas todas.
+      importance: >-
+        Es el principio de conteo más potente: permite contar millones de
+        posibilidades con una multiplicación.
+      foundations: >-
+        Se basa en la multiplicación como suma repetida (bloque 6) y en las
+        potencias (bloque 18).
+      prerequisites:
+        - 'Multiplicación como suma repetida (bloque 6)'
+        - 'Potencias (bloque 18)'
+        - 'Principio aditivo (tema 1 de este bloque)'
+      outcomes:
+        - 'Aplicar el principio multiplicativo en elecciones por etapas'
+        - 'Contar códigos y contraseñas con y sin repetición'
+        - 'Distinguir cuándo se suma y cuándo se multiplica'
+      everyday_example: >-
+        Con 3 camisas y 4 pantalones puedes vestirte de $3 \times 4 = 12$ maneras
+        distintas.
+    sections:
+      - title: Elecciones por etapas
+        concept: >-
+          Si se elige una cosa de cada grupo ("y"), el total es el producto de
+          las opciones de cada grupo.
+        explanation: |-
+          Tienes $3$ camisas y $4$ pantalones. Para vestirte eliges una camisa **y** un pantalón. Con cada camisa puedes combinar los 4 pantalones, así que hay $4 + 4 + 4 = 3 \times 4 = 12$ conjuntos (multiplicación como suma repetida, bloque 6).
+
+          Con más etapas se sigue multiplicando: si además eliges entre $2$ pares de zapatos, hay $3 \times 4 \times 2 = 24$ conjuntos.
+
+          La clave es la palabra **"y"**: se hace una elección en cada etapa, y las opciones de una etapa no dependen de lo elegido en la anterior (o, si dependen, el **número** de opciones es siempre el mismo).
+
+          **Resumen práctico:** "o" (una cosa de un grupo u otro) → se **suma**; "y" (una cosa de cada grupo) → se **multiplica**.
+        definition: >-
+          Principio multiplicativo: si una tarea consta de dos etapas, la primera
+          puede hacerse de $a$ maneras y, para cada una, la segunda de $b$
+          maneras, entonces la tarea puede hacerse de $a \times b$ maneras.
+        rules:
+          - 'Se aplica cuando se elige una opción en cada etapa ("y").'
+          - 'Se multiplican las opciones de todas las etapas.'
+          - 'Si las elecciones son alternativas ("o"), se suma.'
+        examples:
+          - problem: 'Un menú ofrece 3 entradas, 5 platos principales y 2 postres. ¿Cuántos menús distintos (uno de cada) hay?'
+            solution: |-
+              **Paso 1.** Hay tres etapas: entrada, principal y postre.
+
+              **Paso 2.** $3 \times 5 \times 2 = 30$.
+
+              Resultado: $30$ menús.
+        common_errors:
+          - 'Sumar las opciones de las etapas: $3 + 5 + 2 = 10$ no cuenta los menús completos.'
+        summary: >-
+          En elecciones por etapas se multiplican las opciones de cada etapa.
+        check:
+          question: 'Para ir de A a B hay 3 caminos y de B a C hay 4. ¿Cuántas rutas distintas hay de A a C pasando por B?'
+          options:
+            - '$7$'
+            - '$12$'
+            - '$81$'
+          answer: 1
+          explanation: >-
+            Se elige un camino de A a B y uno de B a C: $3 \times 4 = 12$.
+      - title: Códigos y contraseñas
+        concept: >-
+          Cada posición de un código es una etapa; si se pueden repetir
+          símbolos, todas las posiciones tienen las mismas opciones.
+        explanation: |-
+          Una contraseña de $4$ cifras (del $0$ al $9$) tiene 4 posiciones, y cada posición puede ser cualquiera de las $10$ cifras:
+
+          $$10 \times 10 \times 10 \times 10 = 10^4 = 10\,000$$
+
+          Cuando se multiplican factores iguales aparece una **potencia** (bloque 18).
+
+          Si **no se pueden repetir** las cifras, cada posición tiene una opción menos que la anterior, porque ya se ha usado una cifra:
+
+          $$10 \times 9 \times 8 \times 7 = 5040$$
+
+          Con letras y cifras: un código de $2$ letras (26 posibles) seguidas de $3$ cifras tiene $26 \times 26 \times 10 \times 10 \times 10 = 676 \times 1000 = 676\,000$ posibilidades.
+        definition: >-
+          El número de códigos de $k$ posiciones con $n$ símbolos posibles en cada
+          una, pudiendo repetirse, es $n^k$.
+        rules:
+          - 'Con repetición: se multiplica el mismo número de opciones en cada posición ($n^k$).'
+          - 'Sin repetición: cada posición tiene una opción menos que la anterior.'
+        examples:
+          - problem: '¿Cuántos códigos de 3 letras distintas se pueden formar con las letras A, B, C, D y E?'
+            solution: |-
+              **Paso 1.** Primera letra: 5 opciones. Segunda: 4 (no se repite). Tercera: 3.
+
+              **Paso 2.** $5 \times 4 \times 3 = 60$.
+
+              Resultado: $60$ códigos.
+        common_errors:
+          - 'Usar $10 \times 4$ para 4 cifras: hay que multiplicar las opciones de cada posición, $10^4$.'
+          - 'No restar opciones cuando no se permite repetir.'
+        summary: >-
+          Con repetición, el número de códigos es una potencia; sin repetición,
+          los factores disminuyen de uno en uno.
+        check:
+          question: '¿Cuántos números de 3 cifras pueden formarse con las cifras 1, 2, 3, 4 si pueden repetirse?'
+          options:
+            - '$64$'
+            - '$24$'
+            - '$12$'
+          answer: 0
+          explanation: >-
+            Cada una de las 3 posiciones tiene 4 opciones: $4^3 = 64$. $24$ sería
+            sin repetición ($4 \times 3 \times 2$).
+    glossary:
+      - {term: Principio multiplicativo, definition: 'En elecciones por etapas, el total es el producto de las opciones de cada etapa.'}
+      - {term: Con repetición, definition: 'Situación en que un mismo elemento puede elegirse más de una vez.'}
+  t03:
+    intro:
+      what: >-
+        Un diagrama de árbol es un dibujo que representa todas las
+        posibilidades de una elección por etapas mediante ramas.
+      purpose: >-
+        Sirve para listar de forma ordenada todos los resultados posibles y
+        comprobar el principio multiplicativo.
+      importance: >-
+        Hace visible el conteo, evita olvidar casos y será muy útil en
+        probabilidad.
+      foundations: >-
+        Se basa en el principio multiplicativo (tema 2).
+      prerequisites:
+        - 'Principio multiplicativo (tema 2 de este bloque)'
+      outcomes:
+        - 'Construir un diagrama de árbol'
+        - 'Leer en el árbol todos los resultados posibles'
+        - 'Contar las ramas finales con el principio multiplicativo'
+      everyday_example: >-
+        Al lanzar una moneda dos veces, el árbol muestra los 4 resultados: CC,
+        CX, XC, XX (C = cara, X = cruz).
+    sections:
+      - title: Construir y leer un árbol
+        concept: >-
+          Cada nivel del árbol es una etapa y cada camino desde la raíz hasta una
+          rama final es un resultado.
+        explanation: |-
+          Para construir un diagrama de árbol:
+
+          1. Desde un punto inicial (la **raíz**) dibuja una rama por cada opción de la primera etapa.
+          2. Desde el final de **cada** rama, dibuja una rama por cada opción de la segunda etapa.
+          3. Repite para cada etapa.
+
+          Cada **camino** de la raíz al final es un resultado posible. Por ejemplo, un menú con 2 entradas (sopa S, ensalada E) y 3 platos (pollo P, carne C, verduras V):
+
+          ```
+                ┌─ P   → S-P
+            S ──┼─ C   → S-C
+                └─ V   → S-V
+                ┌─ P   → E-P
+            E ──┼─ C   → E-C
+                └─ V   → E-V
+          ```
+
+          Hay $6$ ramas finales, que coinciden con $2 \times 3 = 6$ del principio multiplicativo. El árbol, además, **muestra** cuáles son.
+        definition: >-
+          Un diagrama de árbol es una representación en la que cada etapa de una
+          elección corresponde a un nivel de ramas, y cada camino completo de la
+          raíz a una rama final corresponde a un resultado.
+        rules:
+          - 'De cada rama salen tantas ramas como opciones tiene la etapa siguiente.'
+          - 'El número de ramas finales es el producto de las opciones de cada nivel.'
+          - 'Cada resultado se lee recorriendo un camino desde la raíz.'
+        examples:
+          - problem: 'Se lanza una moneda tres veces. ¿Cuántos resultados hay? Escríbelos.'
+            solution: |-
+              **Paso 1.** Cada lanzamiento es un nivel con 2 ramas (C o X).
+
+              **Paso 2.** Ramas finales: $2 \times 2 \times 2 = 8$.
+
+              **Paso 3.** Leyendo los caminos: CCC, CCX, CXC, CXX, XCC, XCX, XXC, XXX.
+
+              Resultado: $8$ resultados.
+        common_errors:
+          - 'Dibujar las ramas de la segunda etapa sólo desde una de las ramas de la primera.'
+          - 'Contar todas las ramas del dibujo en lugar de sólo las finales.'
+        summary: >-
+          Un árbol muestra todos los resultados; su número de ramas finales es el
+          producto de las opciones de cada nivel.
+        check:
+          question: 'Se lanza un dado (6 caras) y después una moneda. ¿Cuántas ramas finales tiene el árbol?'
+          options:
+            - '$8$'
+            - '$12$'
+            - '$36$'
+          answer: 1
+          explanation: >-
+            Primer nivel: 6 ramas; de cada una salen 2: $6 \times 2 = 12$. $8$
+            suma las ramas en lugar de multiplicarlas.
+    glossary:
+      - {term: Diagrama de árbol, definition: 'Dibujo con ramas que representa todas las posibilidades de una elección por etapas.'}
+      - {term: Rama final, definition: 'Extremo de un camino completo; representa un resultado.'}
+  t04:
+    intro:
+      what: >-
+        Contar posibilidades es determinar cuántos casos cumplen una condición,
+        usando listas sistemáticas y los principios de conteo.
+      purpose: >-
+        Sirve para resolver problemas en los que hay restricciones (cifras que
+        no pueden ser cero, sumas concretas, elementos que no se repiten).
+      importance: >-
+        Los problemas reales casi siempre tienen condiciones; contar bien con
+        ellas es la habilidad central del bloque.
+      foundations: >-
+        Reúne los principios aditivo y multiplicativo (temas 1 y 2) y los
+        diagramas de árbol (tema 3).
+      prerequisites:
+        - 'Principios aditivo y multiplicativo (temas 1 y 2 de este bloque)'
+        - 'Diagramas de árbol (tema 3 de este bloque)'
+      outcomes:
+        - 'Hacer listados sistemáticos sin olvidar ni repetir casos'
+        - 'Contar casos con condiciones'
+        - 'Empezar por la etapa con más restricciones'
+      everyday_example: >-
+        Al lanzar dos dados, ¿de cuántas formas puede salir una suma de 7? Hay que
+        contar con orden para no olvidar ninguna.
+    sections:
+      - title: Listados sistemáticos
+        concept: >-
+          Para contar casos con una condición se listan en un orden fijo, de modo
+          que no se olvide ni se repita ninguno.
+        explanation: |-
+          Cuando hay pocas posibilidades o una condición especial, conviene **listar** los casos, pero siempre con un orden: por ejemplo, de menor a mayor según el primer elemento.
+
+          ¿De cuántas formas se obtiene suma $7$ al lanzar dos dados (uno rojo y uno azul)? Recorremos el dado rojo del 1 al 6 y vemos qué necesita el azul:
+
+          $(1,6),\ (2,5),\ (3,4),\ (4,3),\ (5,2),\ (6,1)$
+
+          Hay $6$ casos. Fíjate en que $(1,6)$ y $(6,1)$ son distintos: en el primero el rojo es 1, en el segundo es 6.
+
+          Ordenar el listado garantiza que, al llegar al final, se han revisado todos los casos.
+        definition: >-
+          Un listado sistemático es una enumeración de casos siguiendo un orden
+          establecido que asegura que aparecen todos y ninguno se repite.
+        rules:
+          - 'Fija un orden (por ejemplo, por el primer elemento de menor a mayor).'
+          - 'Comprueba la condición en cada caso.'
+          - 'Si el orden importa, $(a, b)$ y $(b, a)$ son casos distintos.'
+        examples:
+          - problem: '¿Cuántos números de dos cifras distintas se pueden formar con las cifras 1, 2 y 3?'
+            solution: |-
+              **Paso 1.** Empezando por 1: $12, 13$.
+
+              **Paso 2.** Empezando por 2: $21, 23$.
+
+              **Paso 3.** Empezando por 3: $31, 32$.
+
+              **Comprobación.** Principio multiplicativo: $3 \times 2 = 6$.
+
+              Resultado: $6$ números.
+        common_errors:
+          - 'Listar sin orden y olvidar casos.'
+          - 'Considerar iguales $(1, 6)$ y $(6, 1)$ cuando los dados se distinguen.'
+        summary: >-
+          Un listado ordenado permite contar casos con condiciones sin olvidar ni
+          repetir ninguno.
+        check:
+          question: 'Al lanzar dos dados, ¿en cuántos resultados la suma es $4$?'
+          options:
+            - '$2$'
+            - '$3$'
+            - '$4$'
+          answer: 1
+          explanation: >-
+            $(1,3), (2,2), (3,1)$: tres resultados.
+      - title: Empezar por la restricción
+        concept: >-
+          Cuando una etapa tiene condiciones especiales, se cuentan primero sus
+          opciones y luego las del resto.
+        explanation: |-
+          ¿Cuántos números de dos cifras distintas se pueden formar con $0, 1, 2$? Un número de dos cifras **no puede empezar por 0** (sería "05", que es 5).
+
+          * Primera cifra (con restricción): $1$ o $2$ → $2$ opciones.
+          * Segunda cifra: cualquiera menos la ya usada → $2$ opciones.
+
+          Total: $2 \times 2 = 4$: los números $10, 12, 20, 21$.
+
+          Si hubiéramos empezado por la segunda cifra, el número de opciones de la primera dependería de lo elegido y el cálculo sería más difícil. Por eso se empieza por la posición **más restringida**.
+
+          Cuando una condición divide el problema en casos distintos, se cuenta cada caso y se **suman** (principio aditivo).
+        definition: >-
+          Contar con restricciones consiste en aplicar el principio multiplicativo
+          comenzando por las etapas con condiciones y, si es necesario, separando
+          en casos que se suman.
+        rules:
+          - 'Empieza por la posición con más restricciones.'
+          - 'Si hay casos distintos, cuéntalos por separado y súmalos.'
+        examples:
+          - problem: '¿Cuántos números de 3 cifras (cifras del 0 al 9, pueden repetirse) hay que sean pares?'
+            solution: |-
+              **Paso 1.** Primera cifra: no puede ser 0 → $9$ opciones.
+
+              **Paso 2.** Última cifra: debe ser par (0, 2, 4, 6, 8) → $5$ opciones.
+
+              **Paso 3.** Cifra del medio: cualquiera → $10$ opciones.
+
+              **Paso 4.** $9 \times 10 \times 5 = 450$.
+
+              Resultado: $450$ números.
+        common_errors:
+          - 'Permitir que un número empiece por 0.'
+          - 'Ignorar la condición y contar todos los casos.'
+        summary: >-
+          Con restricciones, se empieza por la etapa más limitada y se separan los
+          casos cuando hace falta.
+        check:
+          question: '¿Cuántos números de dos cifras distintas se pueden formar con las cifras 0, 5, 7?'
+          options:
+            - '$6$'
+            - '$4$'
+            - '$9$'
+          answer: 1
+          explanation: >-
+            Primera cifra: 5 o 7 (2 opciones); segunda: las 2 restantes. $2
+            \times 2 = 4$: $50, 57, 70, 75$.
+    glossary:
+      - {term: Listado sistemático, definition: 'Enumeración ordenada de todos los casos.'}
+      - {term: Restricción, definition: 'Condición que limita las opciones de una etapa.'}
+  t05:
+    intro:
+      what: >-
+        Una permutación es cada una de las formas de ordenar un grupo de
+        elementos distintos; en ellas el orden importa.
+      purpose: >-
+        Sirve para contar ordenaciones: filas de personas, libros en una
+        estantería, puestos de una carrera.
+      importance: >-
+        Es el primer recuento clásico de la combinatoria y prepara las
+        combinaciones y la probabilidad.
+      foundations: >-
+        Se basa en el principio multiplicativo sin repetición (tema 2).
+      prerequisites:
+        - 'Principio multiplicativo (tema 2 de este bloque)'
+        - 'Multiplicación por varias cifras (bloque 6)'
+      outcomes:
+        - 'Calcular el factorial de un número'
+        - 'Contar las ordenaciones de $n$ elementos'
+        - 'Contar las formas de ordenar $k$ elementos elegidos entre $n$'
+      everyday_example: >-
+        Tres amigos pueden sentarse en tres sillas de $3 \times 2 \times 1 = 6$
+        maneras.
+    sections:
+      - title: Ordenar todos los elementos
+        concept: >-
+          Hay $n! = n \times (n-1) \times \cdots \times 1$ formas de ordenar $n$
+          elementos distintos.
+        explanation: |-
+          ¿De cuántas formas se pueden ordenar 4 libros distintos en una estantería? Aplicamos el principio multiplicativo, posición por posición:
+
+          * Primera posición: $4$ libros posibles.
+          * Segunda: quedan $3$.
+          * Tercera: quedan $2$.
+          * Cuarta: queda $1$.
+
+          $$4 \times 3 \times 2 \times 1 = 24$$
+
+          Este producto de todos los números naturales desde $n$ hasta $1$ aparece tanto que tiene nombre: **factorial** de $n$, y se escribe $n!$ (se lee "ene factorial").
+
+          | $n$ | 1 | 2 | 3 | 4 | 5 | 6 |
+          |---|---|---|---|---|---|---|
+          | $n!$ | 1 | 2 | 6 | 24 | 120 | 720 |
+
+          El factorial crece muy rápido: $10! = 3\,628\,800$. Por convenio, $0! = 1$.
+        definition: >-
+          Para un natural $n \ge 1$, $n! = n \times (n-1) \times \cdots \times 2
+          \times 1$, y $0! = 1$. El número de permutaciones de $n$ elementos
+          distintos es $P_n = n!$.
+        rules:
+          - 'En una permutación el orden importa y no se repiten elementos.'
+          - '$n! = n \times (n-1)!$; por ejemplo, $5! = 5 \times 24 = 120$.'
+          - '$0! = 1$.'
+        examples:
+          - problem: '¿De cuántas maneras pueden hacer fila 5 personas?'
+            solution: |-
+              **Paso 1.** Es ordenar 5 elementos distintos: $5!$.
+
+              **Paso 2.** $5 \times 4 \times 3 \times 2 \times 1 = 120$.
+
+              Resultado: $120$ maneras.
+        common_errors:
+          - 'Calcular $5!$ como $5 \times 5$ o $5 + 4 + 3 + 2 + 1$.'
+          - 'Confundir $n!$ con $n^n$ (que permitiría repetir).'
+        summary: >-
+          Ordenar $n$ elementos distintos se puede hacer de $n!$ maneras.
+        check:
+          question: '¿Cuánto vale $6!$?'
+          options:
+            - '$21$'
+            - '$36$'
+            - '$720$'
+          answer: 2
+          explanation: >-
+            $6! = 6 \times 5 \times 4 \times 3 \times 2 \times 1 = 720$. $21$ es la
+            suma $6 + 5 + \cdots + 1$ y $36$ es $6^2$.
+      - title: Ordenar sólo algunos
+        concept: >-
+          Para ordenar $k$ elementos elegidos entre $n$ se multiplican $k$
+          factores decrecientes desde $n$.
+        explanation: |-
+          En una carrera de 8 corredores, ¿de cuántas formas pueden repartirse oro, plata y bronce? Sólo ordenamos **3** de los 8:
+
+          * Oro: $8$ opciones. Plata: $7$. Bronce: $6$.
+
+          $$8 \times 7 \times 6 = 336$$
+
+          Se multiplican tantos factores como puestos, empezando por $n$ y bajando de uno en uno. A estos recuentos se les llama **variaciones** (o permutaciones de $n$ elementos tomados de $k$ en $k$) y se escriben $V(n, k)$.
+
+          Se pueden expresar con factoriales: $V(8, 3) = \frac{8!}{5!}$, porque al dividir se cancelan los factores $5 \times 4 \times 3 \times 2 \times 1$.
+        definition: >-
+          El número de formas de ordenar $k$ elementos elegidos entre $n$
+          distintos es $V(n, k) = n \times (n-1) \times \cdots \times (n-k+1) =
+          \frac{n!}{(n-k)!}$.
+        rules:
+          - 'Se multiplican $k$ factores: $n, n-1, \ldots$'
+          - 'Si $k = n$, se obtiene $n!$.'
+        examples:
+          - problem: 'Un club de 10 personas elige presidente, secretario y tesorero (tres personas distintas). ¿De cuántas formas?'
+            solution: |-
+              **Paso 1.** Los cargos son distintos: el orden importa.
+
+              **Paso 2.** $10 \times 9 \times 8 = 720$.
+
+              Resultado: $720$ formas.
+        common_errors:
+          - 'Calcular $10!$ cuando sólo se eligen 3 puestos.'
+          - 'Multiplicar $10 \times 3$.'
+        summary: >-
+          Ordenar $k$ elementos de $n$ se cuenta con $k$ factores decrecientes
+          desde $n$.
+        check:
+          question: '¿De cuántas formas pueden ocupar los 2 primeros puestos 6 corredores?'
+          options:
+            - '$30$'
+            - '$12$'
+            - '$36$'
+          answer: 0
+          explanation: >-
+            Primer puesto: 6 opciones; segundo: 5. $6 \times 5 = 30$. $36$
+            permitiría que el mismo corredor ocupara los dos puestos.
+    glossary:
+      - {term: Permutación, definition: 'Cada una de las ordenaciones de un conjunto de elementos distintos.'}
+      - {term: Factorial, definition: '$n! = n \times (n-1) \times \cdots \times 1$; además $0! = 1$.'}
+      - {term: Variación, definition: 'Ordenación de $k$ elementos elegidos entre $n$.'}
+  t06:
+    intro:
+      what: >-
+        Una combinación es una elección de varios elementos de un grupo en la
+        que el orden no importa.
+      purpose: >-
+        Sirve para contar grupos, equipos, comités, saludos o selecciones de
+        productos.
+      importance: >-
+        Distinguir si el orden importa o no es una de las decisiones más
+        importantes al contar; equivocarse multiplica o divide el resultado.
+      foundations: >-
+        Se basa en las variaciones y los factoriales (tema 5) y en la división
+        (bloque 7).
+      prerequisites:
+        - 'Introducción a permutaciones (tema 5 de este bloque)'
+        - 'División exacta (bloque 7)'
+      outcomes:
+        - 'Decidir si en una situación importa el orden'
+        - 'Calcular el número de combinaciones $C(n, k)$'
+        - 'Resolver problemas de grupos y saludos'
+      everyday_example: >-
+        Elegir 2 sabores de helado entre 5 para una copa: "fresa y limón" es la
+        misma copa que "limón y fresa".
+    sections:
+      - title: Cuándo importa el orden
+        concept: >-
+          Si cambiar el orden da un resultado distinto, se cuentan variaciones;
+          si da el mismo, combinaciones.
+        explanation: |-
+          Compara dos situaciones con las personas Ana, Beto y Carla:
+
+          * **Elegir presidente y secretario.** Ana presidenta y Beto secretario **no** es lo mismo que Beto presidente y Ana secretaria. El orden importa → variaciones: $3 \times 2 = 6$.
+          * **Elegir 2 personas para un equipo.** El equipo {Ana, Beto} es el mismo que {Beto, Ana}. El orden **no** importa → combinaciones. Los equipos son {Ana, Beto}, {Ana, Carla}, {Beto, Carla}: sólo $3$.
+
+          Cada equipo de 2 aparece **2 veces** entre las 6 variaciones (una por cada orden). Por eso $6 \div 2 = 3$.
+
+          Pregunta clave: si intercambio dos elementos elegidos, ¿cambia el resultado? Si cambia, importa el orden.
+        definition: >-
+          Una combinación de $k$ elementos elegidos entre $n$ es un subconjunto de
+          $k$ elementos, sin tener en cuenta el orden.
+        rules:
+          - 'Cargos, puestos, posiciones distintas: el orden importa.'
+          - 'Grupos, equipos, comités sin cargos, selecciones: el orden no importa.'
+        examples:
+          - problem: '¿Importa el orden al elegir 3 números para un billete de lotería en el que sólo cuenta qué números salen?'
+            solution: |-
+              **Paso 1.** Si salen 4, 7, 9, da igual el orden en que salgan.
+
+              Resultado: no importa el orden; es una combinación.
+        common_errors:
+          - 'Contar como distintos dos grupos que tienen las mismas personas.'
+        summary: >-
+          Si intercambiar elementos no cambia el resultado, el orden no importa y
+          se trata de combinaciones.
+        check:
+          question: '¿En cuál de estas situaciones NO importa el orden?'
+          options:
+            - 'Asignar oro, plata y bronce'
+            - 'Elegir 4 personas para un equipo sin cargos'
+            - 'Formar una contraseña de 4 cifras'
+          answer: 1
+          explanation: >-
+            Un equipo sin cargos es el mismo con cualquier orden. En las medallas y
+            en las contraseñas, cambiar el orden da otro resultado.
+      - title: Cálculo de combinaciones
+        concept: >-
+          $C(n, k)$ se calcula dividiendo las variaciones $V(n, k)$ entre $k!$,
+          las ordenaciones de cada grupo.
+        explanation: |-
+          Para contar grupos de $k$ elementos entre $n$:
+
+          1. Contamos como si el orden importara: $V(n, k)$.
+          2. Cada grupo aparece repetido $k!$ veces (todas sus ordenaciones, tema 5).
+          3. Dividimos: $C(n, k) = \frac{V(n, k)}{k!}$.
+
+          Grupos de 3 personas entre 7: $V(7, 3) = 7 \times 6 \times 5 = 210$; cada grupo aparece $3! = 6$ veces; $C(7, 3) = 210 \div 6 = 35$.
+
+          **Saludos.** Si 6 personas se saludan todas entre sí una vez, cada saludo es un grupo de 2: $C(6, 2) = \frac{6 \times 5}{2} = 15$ saludos.
+
+          También se escribe $C(n, k) = \frac{n!}{k!\,(n-k)!}$.
+        definition: >-
+          El número de combinaciones de $k$ elementos elegidos entre $n$ es
+          $C(n, k) = \frac{n!}{k!\,(n-k)!} = \frac{V(n,k)}{k!}$.
+        rules:
+          - '$C(n, k) = V(n, k) \div k!$.'
+          - '$C(n, 2) = \frac{n(n-1)}{2}$, útil para saludos o partidos entre todos.'
+          - '$C(n, k) = C(n, n - k)$: elegir los que entran es lo mismo que elegir los que quedan fuera.'
+        examples:
+          - problem: 'De 5 sabores de helado (A, B, C, D, E) se eligen 2. ¿Cuántas copas distintas hay?'
+            solution: |-
+              **Paso 1.** $V(5, 2) = 5 \times 4 = 20$.
+
+              **Paso 2.** Cada copa aparece $2! = 2$ veces: $20 \div 2 = 10$.
+
+              **Comprobación (listado).** AB, AC, AD, AE, BC, BD, BE, CD, CE, DE: $10$.
+
+              Resultado: $10$ copas.
+        common_errors:
+          - 'Olvidar dividir entre $k!$ y dar las variaciones.'
+          - 'Dividir entre $k$ en lugar de entre $k!$.'
+        summary: >-
+          Combinaciones = variaciones divididas entre $k!$.
+        check:
+          question: 'En un torneo de 8 equipos, cada equipo juega una vez contra cada uno de los otros. ¿Cuántos partidos hay?'
+          options:
+            - '$56$'
+            - '$28$'
+            - '$64$'
+          answer: 1
+          explanation: >-
+            Cada partido es un par de equipos sin orden: $C(8, 2) = \frac{8 \times
+            7}{2} = 28$. $56$ cuenta cada partido dos veces.
+    glossary:
+      - {term: Combinación, definition: 'Elección de elementos en la que no importa el orden.'}
+      - {term: 'C(n, k)', definition: 'Número de grupos de $k$ elementos que se pueden formar con $n$.'}
+  t07:
+    intro:
+      what: >-
+        Es el uso de los principios de conteo, las permutaciones y las
+        combinaciones para resolver problemas reales.
+      purpose: >-
+        Sirve para valorar la seguridad de una contraseña, planificar menús u
+        horarios y entender cuántas posibilidades hay en un juego o sorteo.
+      importance: >-
+        Saber cuántas posibilidades existen es el primer paso para calcular
+        probabilidades y tomar decisiones informadas.
+      foundations: >-
+        Reúne todo el bloque.
+      prerequisites:
+        - 'Principios aditivo y multiplicativo (temas 1 y 2 de este bloque)'
+        - 'Permutaciones y combinaciones (temas 5 y 6 de este bloque)'
+      outcomes:
+        - 'Elegir el método de conteo adecuado'
+        - 'Combinar los principios aditivo y multiplicativo'
+        - 'Interpretar resultados de conteo en contextos reales'
+      everyday_example: >-
+        Un candado de 4 ruedas con 10 cifras cada una tiene 10 000 combinaciones:
+        probarlas todas a una por segundo llevaría casi 3 horas.
+    sections:
+      - title: Elegir el método
+        concept: >-
+          Unas pocas preguntas guían el método: ¿se elige "o" o "y"?, ¿importa el
+          orden?, ¿se puede repetir?
+        explanation: |-
+          Ante un problema de conteo, hazte estas preguntas:
+
+          1. **¿Se elige una cosa de un grupo u otro, o una de cada etapa?** "O" → sumar; "y" → multiplicar.
+          2. **¿Importa el orden?** Sí → variaciones o permutaciones; no → combinaciones.
+          3. **¿Se pueden repetir los elementos?** Sí → potencia $n^k$; no → factores decrecientes.
+          4. **¿Hay restricciones?** Empieza por la etapa más limitada o separa en casos.
+
+          | Situación | Método | Ejemplo |
+          |---|---|---|
+          | Clave de 4 cifras | Con repetición: $10^4$ | $10\,000$ |
+          | Clave de 4 cifras distintas | Sin repetición | $10 \times 9 \times 8 \times 7 = 5040$ |
+          | Podio de 3 entre 10 | Variaciones | $10 \times 9 \times 8 = 720$ |
+          | Comité de 3 entre 10 | Combinaciones | $720 \div 6 = 120$ |
+        definition: >-
+          Resolver un problema de conteo es identificar su estructura (casos,
+          etapas, orden, repetición) y aplicar el principio o fórmula
+          correspondiente.
+        rules:
+          - '"O" se suma; "y" se multiplica.'
+          - 'Orden importa: variaciones; no importa: combinaciones.'
+          - 'Con repetición: potencias.'
+        examples:
+          - problem: 'Para viajar puedes ir en tren (3 horarios) o en autobús (2 líneas, cada una con 4 horarios). ¿Cuántas opciones hay?'
+            solution: |-
+              **Paso 1.** Autobús: se elige línea y horario → $2 \times 4 = 8$.
+
+              **Paso 2.** Tren o autobús son casos excluyentes → $3 + 8 = 11$.
+
+              Resultado: $11$ opciones.
+        common_errors:
+          - 'Usar una fórmula sin comprobar si importa el orden o si hay repetición.'
+        summary: >-
+          Antes de calcular, identifica: casos o etapas, orden y repetición.
+        check:
+          question: 'Una heladería ofrece 6 sabores. ¿Cuántas copas de 3 sabores distintos se pueden pedir (el orden no importa)?'
+          options:
+            - '$120$'
+            - '$20$'
+            - '$216$'
+          answer: 1
+          explanation: >-
+            Es una combinación: $C(6, 3) = \frac{6 \times 5 \times 4}{3!} =
+            \frac{120}{6} = 20$. $120$ tendría en cuenta el orden y $216 = 6^3$
+            permitiría repetir sabores y considerar el orden.
+      - title: Seguridad de contraseñas
+        concept: >-
+          Cuantos más símbolos posibles y más posiciones tiene una contraseña,
+          más posibilidades hay y más difícil es adivinarla.
+        explanation: |-
+          El número de contraseñas posibles mide lo difícil que es adivinar una por ensayo y error:
+
+          * 4 cifras: $10^4 = 10\,000$.
+          * 6 cifras: $10^6 = 1\,000\,000$.
+          * 6 letras minúsculas (26): $26^6 = 308\,915\,776$, unos $3 \times 10^8$.
+
+          Cada posición añadida **multiplica** el total por el número de símbolos. Por eso alargar una contraseña la hace mucho más segura que cambiar un símbolo por otro.
+
+          Este tipo de cálculo se relaciona con la notación científica (bloque 26): con números tan grandes conviene expresarlos como potencias de 10.
+        definition: >-
+          El número de contraseñas de longitud $k$ con un alfabeto de $n$
+          símbolos (pudiendo repetir) es $n^k$.
+        rules:
+          - 'Añadir una posición multiplica las posibilidades por $n$.'
+          - 'Ampliar el alfabeto aumenta la base de la potencia.'
+        examples:
+          - problem: '¿Cuántas veces más contraseñas hay con 5 cifras que con 4 cifras?'
+            solution: |-
+              **Paso 1.** 5 cifras: $10^5 = 100\,000$. 4 cifras: $10^4 = 10\,000$.
+
+              **Paso 2.** $10^5 \div 10^4 = 10$.
+
+              Resultado: $10$ veces más.
+        common_errors:
+          - 'Pensar que una posición más añade sólo 10 contraseñas: las multiplica por 10.'
+        summary: >-
+          El número de contraseñas es $n^k$: cada posición más multiplica las
+          posibilidades.
+        check:
+          question: '¿Cuántas contraseñas de 3 letras (26 letras, pueden repetirse) existen?'
+          options:
+            - '$78$'
+            - '$15\,600$'
+            - '$17\,576$'
+          answer: 2
+          explanation: >-
+            $26^3 = 26 \times 26 \times 26 = 17\,576$. $15\,600 = 26 \times 25
+            \times 24$ sería sin repetir letras, y $78 = 26 \times 3$.
+    glossary:
+      - {term: Combinatoria, definition: 'Parte de las matemáticas que estudia cómo contar posibilidades.'}
+      - {term: Fuerza de una contraseña, definition: 'Número de posibilidades que habría que probar para adivinarla.'}
