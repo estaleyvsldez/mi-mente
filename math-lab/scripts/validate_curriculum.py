@@ -4,8 +4,9 @@ Sale con código 1 si hay problemas (lo usa la puerta de calidad)."""
 
 import sys
 
-from app.curriculum.loader import load
 from pydantic import ValidationError
+
+from app.curriculum.loader import load
 
 try:
     cur = load()

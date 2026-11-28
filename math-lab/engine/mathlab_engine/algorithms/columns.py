@@ -12,8 +12,15 @@ PLACE = ["unidades", "decenas", "centenas", "unidades de millar", "decenas de mi
          "centenas de millar", "unidades de millón", "decenas de millón", "centenas de millón"]
 
 
-def place_name(i: int) -> str:
-    return PLACE[i] if i < len(PLACE) else f"posición {i + 1}"
+def place_name(i: int, count: int | None = None) -> str:
+    """Nombre del orden i (0 = unidades). Con count == 1 se usa el singular."""
+    name = PLACE[i] if i < len(PLACE) else f"posición {i + 1}"
+    if count == 1:
+        head, _, rest = name.partition(" ")
+        head = head[:-1] if head.endswith("s") else head
+        head = "unidad" if head == "unidade" else head
+        name = f"{head} {rest}".strip()
+    return name
 
 
 def digits_rev(n: int) -> list[int]:

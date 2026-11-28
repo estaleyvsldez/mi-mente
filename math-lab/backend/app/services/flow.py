@@ -18,9 +18,10 @@ import random
 from datetime import timedelta
 from typing import Any
 
-from mathlab_engine import REGISTRY
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
+
+from mathlab_engine import REGISTRY
 
 from ..config import (
     ASSESSMENT_SIZES,

@@ -56,7 +56,8 @@ def _explain_column_addition(c: Ctx, nums: list[int], interactive: bool = True) 
         if col.carry_out:
             txt = (f"${parts} = {col.total}$.{extra} Escribimos **{col.write}** y **llevamos {col.carry_out}** "
                    f"a la columna de las {place_name(col.index + 1)}.")
-            why = f"{col.total} {pname} = {col.carry_out} {place_name(col.index + 1)} y {col.write} {pname}: eso es **reagrupar**."
+            why = (f"{col.total} {place_name(col.index, col.total)} = {col.carry_out} {place_name(col.index + 1, col.carry_out)} "
+                   f"y {col.write} {place_name(col.index, col.write)}: eso es **reagrupar**.")
             proc = "Suma con reagrupación (llevada)"
         else:
             txt = f"${parts} = {col.total}$.{extra} Escribimos **{col.write}**."
@@ -318,7 +319,7 @@ def _explain_column_sub(c: Ctx, a: int, b: int, interactive: bool = True) -> int
             txt = (f"Arriba hay {col.top} y abajo {col.bottom}: como {col.top} < {col.bottom}, **desagrupamos**: tomamos 1 de "
                    f"las {place_name(col.index + 1)} (que valen 10 {pname}). Ahora tenemos {col.effective_top}. "
                    f"${col.effective_top} - {col.bottom} = {col.write}$.")
-            why = f"1 {place_name(col.index + 1)[:-1] if place_name(col.index + 1).endswith('s') else place_name(col.index + 1)} = 10 {pname}."
+            why = f"1 {place_name(col.index + 1, 1)} = 10 {pname}."
             proc = "Resta con desagrupación (préstamo)"
         else:
             txt = f"${col.top} - {col.bottom} = {col.write}$."

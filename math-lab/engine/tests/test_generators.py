@@ -14,6 +14,7 @@ from __future__ import annotations
 import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
+
 from mathlab_engine import REGISTRY, generate, validate_exercise
 from mathlab_engine.core.registry import _ensure_loaded
 from mathlab_engine.core.validate import canonical_input, validate, values_equal

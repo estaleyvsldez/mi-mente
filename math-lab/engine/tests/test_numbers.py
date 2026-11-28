@@ -6,6 +6,7 @@ from fractions import Fraction as F
 import pytest
 from hypothesis import given
 from hypothesis import strategies as st
+
 from mathlab_engine.algorithms.columns import (
     add_without_carry,
     column_add,

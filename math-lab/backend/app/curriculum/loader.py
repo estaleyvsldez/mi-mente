@@ -97,7 +97,12 @@ def load(root: Path = ROOT) -> Curriculum:
         lessons_dir = mod_dir / "lessons"
         for bi, b in enumerate(pensum.blocks, start=1):
             lf = lessons_dir / f"{b.id}.yaml"
-            bl = BlockLessons.model_validate(_load_yaml(lf)) if lf.exists() else None
+            bl = None
+            if lf.exists():
+                try:
+                    bl = BlockLessons.model_validate(_load_yaml(lf))
+                except Exception as e:  # noqa: BLE001 — se informa el archivo exacto y se sigue validando
+                    cur.problems.append(f"{mid}.{b.id}.lessons: {lf.name} inválido: {str(e)[:400]}")
             if bl and bl.block != b.id:
                 cur.problems.append(f"{lf.name}: block={bl.block} no coincide con {b.id}")
             topics = []

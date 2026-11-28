@@ -13,12 +13,13 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Any
 
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
 from mathlab_engine import REGISTRY, generate, is_help_request, validate_exercise, validate_step
 from mathlab_engine.core.bank import BANK_PREFIX, exercise_from_bank
 from mathlab_engine.core.types import AnswerSpec, Exercise, to_jsonable
 from mathlab_engine.core.validate import canonical_input, validate
-from sqlalchemy import select
-from sqlalchemy.orm import Session
 
 from ..curriculum.loader import GenRef, Topic, get_curriculum
 from ..db.models import Attempt, IssuedExercise, StepAttempt
@@ -199,6 +200,11 @@ def help_rung(rec: IssuedExercise) -> dict[str, Any]:
                 "exercise_name": ex.exercise_name, "procedure_name": ex.procedure_name,
                 "message": "Vamos por partes. Primero recordemos la idea clave."}
     k = lvl - 2  # índice del paso que se revela
+    # Se revelan también los pasos puramente explicativos que siguen, hasta el
+    # próximo paso que el estudiante pueda hacer por sí mismo.
+    while k + 1 < len(steps) - 1 and steps[k + 1].answer is None:
+        k += 1
+        rec.help_level += 1
     if k < len(steps):
         shown = [{"title": st.title, "explanation": st.explanation, "why": st.why, "procedure": st.procedure, "property": st.property}
                  for st in steps[: k + 1]]

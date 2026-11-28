@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from datetime import timedelta
 
-from mathlab_engine.core.validate import canonical_input
 from sqlalchemy import select
 
 from app.db import session as dbs
 from app.db.models import IssuedExercise, ReviewSchedule, now
 from app.services import exercises as exs
+from mathlab_engine.core.validate import canonical_input
 
 T1, T2 = "mat01.b01.t01", "mat01.b01.t02"
 

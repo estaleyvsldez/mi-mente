@@ -1,0 +1,29 @@
+name: MATH LAB · puerta de calidad
+
+on:
+  push:
+    paths: ["math-lab/**", ".github/workflows/math-lab.yml"]
+  pull_request:
+    paths: ["math-lab/**"]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: math-lab
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Instalar dependencias
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -q -e engine -e "backend[dev]"
+          cd frontend && npm ci && npx playwright install --with-deps chromium
+      - name: Puerta de calidad
+        run: scripts/quality_gate.sh

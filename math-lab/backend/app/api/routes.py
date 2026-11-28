@@ -6,10 +6,11 @@ import random
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException
-from mathlab_engine.core.bank import BANK_PREFIX
 from pydantic import BaseModel, Field
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
+
+from mathlab_engine.core.bank import BANK_PREFIX
 
 from ..curriculum.loader import Topic, get_curriculum
 from ..db.models import Assessment, ChallengeRun, IssuedExercise
@@ -173,7 +174,10 @@ def answer(ex_id: str, body: AnswerIn, s: Session = Depends(get_session)) -> dic
         followup_pending = bool(payload.get("followup"))
         result = flow.register_assessment_answer(s, a, rec, out.correct, followup_pending)
         payload["assessment"] = {"id": a.id, "answered": a.answered, "total": a.total, "result": result}
-        # en evaluación no se muestra la solución completa hasta terminar
+        # En evaluación no se revela la corrección hasta terminar (se revisa luego con /review).
+        for k in ("solution", "correct_answer", "diagnosis", "field_results", "format_issue"):
+            payload.pop(k, None)
+        payload["message"] = "Respuesta registrada."
     events.extend(gm.check_achievements(s, UID))
     payload["events"] = [e for e in events if e]
     payload["flow"] = flow.flow_state(s, UID, t)
