@@ -89,7 +89,7 @@ topics:
         - Agrupar unidades en decenas y centenas.
       everyday_example: >-
         Con monedas de 1, billetes de 10 y billetes de 100 puedes pagar cualquier
-        cantidad: '10 monedas equivalen a un billete de 10 y 10 billetes de 10, a uno de 100.'
+        cantidad. Diez monedas equivalen a un billete de 10, y diez billetes de 10, a uno de 100.
     sections:
       - title: 'Agrupar de diez en diez'
         concept: 'En el sistema decimal, cada diez unidades de un orden forman una unidad del orden siguiente.'
@@ -181,7 +181,7 @@ topics:
 
           Por ejemplo, $(101)_2$ tiene un 1 en la posición que vale 4 y otro en la que vale 1: $4 + 1 = 5$. Es decir, $(101)_2 = 5$.
 
-          En el bloque 6 verás que estos valores son **potencias de 2**: $2 \times 2 = 4$, $2 \times 2 \times 2 = 8$, etc. Por ahora basta con duplicar.
+          En el bloque 18 verás que estos valores son **potencias de 2**: $2 \times 2 = 4$, $2 \times 2 \times 2 = 8$, etc. Por ahora basta con duplicar.
         definition: >-
           En base 2 la posición $k$-ésima desde la derecha (empezando en la primera)
           vale el doble de la anterior: $1, 2, 4, 8, 16, 32, 64, 128, \dots$
@@ -422,7 +422,7 @@ topics:
         - Comparar el valor de una misma cifra en posiciones distintas.
       everyday_example: >-
         En un precio de 5 500 pesos, el primer 5 son cinco mil pesos y el segundo,
-        quinientos: 'misma cifra, distinto valor.'
+        quinientos. Misma cifra, distinto valor.
     sections:
       - title: 'La cifra y su lugar'
         concept: 'Cada cifra tiene un valor propio (la cifra misma) y un valor posicional, que es la cifra multiplicada por el valor de su lugar.'
@@ -445,8 +445,8 @@ topics:
 
           Mover una cifra un lugar a la izquierda multiplica su valor por 10.
         definition: >-
-          El valor posicional de una cifra $c$ situada en el lugar que vale $10^k$
-          (1, 10, 100, …) es $c$ veces ese valor. El número es la suma de los valores
+          El valor posicional de una cifra $c$ situada en un lugar que vale 1, 10,
+          100, 1000… es $c$ veces el valor de ese lugar. El número es la suma de los valores
           posicionales de sus cifras.
         rules:
           - 'Las posiciones se cuentan desde la derecha: unidades, decenas, centenas, unidades de millar…'
@@ -569,7 +569,7 @@ topics:
         - Convertir de decimal a cualquier base.
         - Convertir entre dos bases no decimales pasando por decimal o por binario.
       everyday_example: >-
-        Un programador que lee el color #1E en hexadecimal y quiere saber cuánto es en
+        Un programador que lee el valor 1E (en hexadecimal) de un color y quiere saber cuánto es en
         decimal hace una conversión: $16 + 14 = 30$.
     sections:
       - title: 'El método general'
@@ -736,7 +736,7 @@ topics:
 
           Al escribir números grandes se separan los grupos con un espacio: $3\,405\,027$.
         definition: >-
-          Un número decimal se lee por clases de tres cifras (unidades, miles, millones,
+          Un número escrito en el sistema decimal se lee por clases de tres cifras (unidades, miles, millones,
           miles de millones…), nombrando cada clase después de su grupo.
         rules:
           - 'Agrupa de tres en tres desde la derecha.'

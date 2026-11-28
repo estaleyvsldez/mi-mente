@@ -226,7 +226,7 @@ topics:
         - Distinguir neutro y absorbente.
       everyday_example: >-
         Sumar 0 pesos a tu cuenta no la cambia; comprar 1 paquete de 12 huevos te da 12
-        huevos: '$12 \times 1 = 12$.'
+        huevos, porque $12 \times 1 = 12$.
     sections:
       - title: 'El número que no cambia nada'
         concept: 'El 0 es el elemento neutro de la suma y el 1 es el elemento neutro de la multiplicación.'
@@ -494,7 +494,7 @@ topics:
         $(25 \times 4) \times 13 = 100 \times 13 = 1\,300$ pesos.
     sections:
       - title: 'Las propiedades de la multiplicación'
-        concept: 'La multiplicación es cerrada, conmutativa y asociativa, tiene neutro (1), absorbente (0), se distribuye sobre la suma y, fuera de los enteros, cada número distinto de 0 tiene inverso.'
+        concept: 'La multiplicación es cerrada, conmutativa y asociativa, tiene neutro (1), absorbente (0), se distribuye sobre la suma y, en los racionales y los reales, cada número distinto de 0 tiene inverso.'
         explanation: |-
           | Propiedad | Expresión | Ejemplo |
           |---|---|---|

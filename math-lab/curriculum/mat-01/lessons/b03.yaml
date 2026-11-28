@@ -236,7 +236,7 @@ topics:
           * $\pi = 3{,}14159265\ldots$: la longitud de una circunferencia dividida entre su diámetro.
           * $\sqrt{2} = 1{,}41421356\ldots$
 
-          **¿Qué es $\sqrt{2}$?** La **raíz cuadrada** de un número es el número positivo que, multiplicado por sí mismo, da ese número. (Las raíces se estudian más adelante; aquí basta esta idea.) Como $3 \times 3 = 9$, $\sqrt{9} = 3$. Pero ningún entero ni ninguna fracción multiplicado por sí mismo da exactamente 2: $1{,}4 \times 1{,}4 = 1{,}96$ y $1{,}5 \times 1{,}5 = 2{,}25$. Por eso $\sqrt{2}$ es irracional.
+          **¿Qué es $\sqrt{2}$?** La **raíz cuadrada** de un número es el número positivo (o cero) que, multiplicado por sí mismo, da ese número. (Las raíces se estudian más adelante; aquí basta esta idea.) Como $3 \times 3 = 9$, $\sqrt{9} = 3$. Pero ningún entero ni ninguna fracción multiplicado por sí mismo da exactamente 2: $1{,}4 \times 1{,}4 = 1{,}96$ y $1{,}5 \times 1{,}5 = 2{,}25$. Por eso $\sqrt{2}$ es irracional.
 
           **Cuidado:** no toda raíz es irracional. $\sqrt{4} = 2$, $\sqrt{25} = 5$ son **raíces exactas** y, por tanto, naturales. En general, la raíz cuadrada de un natural que no es el resultado de multiplicar un natural por sí mismo ($\sqrt{2}, \sqrt{3}, \sqrt{5}, \sqrt{7}$…) es irracional.
 
@@ -271,7 +271,7 @@ topics:
       - term: 'Número irracional'
         definition: 'Número cuyo desarrollo decimal es infinito y no periódico; no es una fracción.'
       - term: 'Raíz cuadrada'
-        definition: 'Número positivo que multiplicado por sí mismo da el número dado: $\sqrt{9} = 3$.'
+        definition: 'Número positivo (o cero) que multiplicado por sí mismo da el número dado: $\sqrt{9} = 3$.'
       - term: 'Pi'
         definition: 'Cociente entre la longitud de una circunferencia y su diámetro: $\pi \approx 3{,}1416$.'
     practice: []
@@ -590,7 +590,7 @@ topics:
           **Simplificar.** Una fracción no cambia de valor si se **dividen numerador y denominador por el mismo número**. (Este procedimiento se estudia a fondo en el bloque 14; aquí basta con buscar un número que «quepa exacto» en ambos.) Por ejemplo, 25 cabe exactamente 3 veces en 75 y 4 veces en 100:
           $$\frac{75}{100} = \frac{3}{4}$$
 
-          **Fracción → decimal.** Una fracción es una división indicada. Cuando el denominador es 2, 4, 5, 20, 25 o 50, un camino sencillo es **multiplicar numerador y denominador por el mismo número** para llegar a 10, 100 o 1000:
+          **Fracción → decimal.** Una fracción es una división indicada. Cuando el denominador es 2, 4, 5, 20, 25 o 50, un camino sencillo es **multiplicar numerador y denominador por el mismo número** para llegar a 10, 100 o 1000 (la multiplicación se estudia en el bloque 6; aquí $3 \times 25$ significa «3 veces 25»):
           $$\frac{3}{4} = \frac{3 \times 25}{4 \times 25} = \frac{75}{100} = 0{,}75 \qquad \frac{1}{2} = \frac{5}{10} = 0{,}5$$
 
           Equivalencias útiles para memorizar: $\frac{1}{2} = 0{,}5$, $\frac{1}{4} = 0{,}25$, $\frac{3}{4} = 0{,}75$, $\frac{1}{5} = 0{,}2$, $\frac{1}{10} = 0{,}1$.
@@ -671,7 +671,7 @@ topics:
 
           * «**Todo** A es B» es verdadera si A está dentro de B. Ejemplo: «todo entero es racional» (porque $n = \frac{n}{1}$).
           * Para demostrar que «todo A es B» es **falsa** basta un **contraejemplo**: un elemento de A que no esté en B. «Todo entero es natural» es falsa porque $-3$ es entero y no natural.
-          * Entre dos racionales siempre hay otro racional (por ejemplo, el punto medio entre ambos).
+          * Entre dos racionales distintos siempre hay otro racional (por ejemplo, el punto medio entre ambos).
         definition: >-
           Un conjunto $A$ está contenido en $B$ ($A \subset B$) si todo elemento de $A$ es
           también elemento de $B$. Un contraejemplo es un caso concreto que muestra que

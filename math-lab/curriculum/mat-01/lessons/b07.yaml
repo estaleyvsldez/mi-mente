@@ -722,7 +722,7 @@ topics:
         - Detectar errores en el cociente o en el residuo.
       everyday_example: >-
         Si repartiste 250 pesos entre 7 personas dando 35 a cada una y te sobraron 5,
-        compruebas: '$7 \times 35 + 5 = 250$. ✓'
+        lo compruebas así: $7 \times 35 + 5 = 250$ ✓
     sections:
       - title: 'La prueba de la división'
         concept: 'Una división es correcta si el divisor por el cociente más el residuo da el dividendo y, además, el residuo es menor que el divisor.'

@@ -815,7 +815,7 @@ topics:
 
               Resultado: $10$.
         common_errors:
-          - 'Operar de izquierda a derecha sin respetar la jerarquía: $3 \times 12 - 4$ no es $3 \times 8$.'
+          - 'Restar antes de multiplicar sin que haya paréntesis: $3 \times 12 - 4 = 36 - 4 = 32$, no $3 \times 8 = 24$.'
           - 'Sumar fracciones antes de multiplicar en una operación combinada.'
         summary: >-
           La jerarquía de operaciones es la regla común a todos los números del

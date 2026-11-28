@@ -778,8 +778,8 @@ topics:
         - 'Calcular restos de potencias'
         - 'Hallar la última cifra de una potencia grande'
       everyday_example: >-
-        Si hoy es lunes y una tarea se repite 4 veces cada 10 días, pasan
-        40 días: como $(4 \cdot 10) \bmod 7 = 5$, terminará en sábado.
+        Si hoy es lunes y una tarea se hace 4 veces seguidas, cada una de 10
+        días, pasan 40 días: como $(4 \cdot 10) \bmod 7 = 5$, terminará en sábado.
     sections:
       - title: Multiplicar y reducir
         concept: >-

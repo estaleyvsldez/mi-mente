@@ -203,7 +203,7 @@ topics:
 
               Resultado: $10^6$ y $10^{-4}$.
         common_errors:
-          - 'Contar los ceros de $0{,}001$ incluido el de la parte entera y decir $10^{-4}$: se cuenta la posición decimal del 1, que es la tercera: $10^{-3}$.'
+          - 'Contar sólo los ceros que hay tras la coma en $0{,}001$ y decir $10^{-2}$: se cuenta la posición decimal del 1, que es la tercera: $10^{-3}$.'
           - 'Confundir el billón español ($10^{12}$) con el *billion* inglés ($10^9$).'
         summary: >-
           Las potencias positivas de 10 son 1 seguido de ceros; las negativas son

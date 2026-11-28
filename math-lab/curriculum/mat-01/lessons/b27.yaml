@@ -526,7 +526,7 @@ topics:
 
           Respeta la jerarquía de operaciones (bloque 9): de Celsius a Fahrenheit primero se multiplica y luego se suma 32; de Fahrenheit a Celsius, **primero se resta 32** (por eso el paréntesis) y luego se multiplica.
 
-          Esta conversión **no es proporcional**: $20$ °C no son el doble de calientes que $10$ °C en Fahrenheit ($68$ °F frente a $50$ °F).
+          Esta conversión **no es proporcional**: $20$ °C es el doble de $10$ °C, pero en Fahrenheit $68$ °F no es el doble de $50$ °F.
         definition: >-
           Las temperaturas Celsius ($T_C$) y Fahrenheit ($T_F$) se relacionan por
           $T_F = \frac{9}{5}T_C + 32$.
@@ -658,7 +658,7 @@ topics:
         - 'Convertir entre unidades de superficie'
         - 'Usar la hectárea para medir terrenos'
       everyday_example: >-
-        Un piso de 80 m² cabe 80 veces un cuadrado de 1 m de lado; un campo de
+        En un piso de 80 m² caben 80 cuadrados de 1 m de lado; un campo de
         fútbol ocupa algo menos de una hectárea.
     sections:
       - title: El metro cuadrado y la escalera de 100
@@ -774,8 +774,8 @@ topics:
         - 'Convertir entre unidades de volumen'
         - 'Relacionar unidades de volumen con unidades de capacidad'
       everyday_example: >-
-        Un cartón de leche de 1 L ocupa exactamente 1 dm³, un cubo de 10 cm de
-        lado.
+        Un litro de leche ocupa 1 dm³, el mismo volumen que un cubo de 10 cm
+        de arista.
     sections:
       - title: El metro cúbico y la escalera de 1000
         concept: >-

@@ -183,7 +183,7 @@ topics:
               **Comprobación.** $3\,243 + 1\,632 = 4\,875$.
               Resultado: $3\,243$.
         common_errors:
-          - 'Restar la cifra de arriba a la de abajo cuando conviene: siempre es arriba menos abajo.'
+          - 'Restar en una columna «abajo menos arriba» porque parece más fácil: siempre es arriba menos abajo.'
           - 'Alinear por la izquierda números de distinta longitud.'
         summary: >-
           Se resta orden a orden, de derecha a izquierda, con el minuendo arriba.
@@ -510,7 +510,7 @@ topics:
           **Truco extra:** sumar o restar el mismo número a minuendo y sustraendo no cambia la diferencia: $83 - 47 = 86 - 50 = 36$.
         definition: >-
           Compensar en la resta es sustituir el sustraendo $b$ por un número cercano $c$ y
-          corregir: 'si $c > b$, $a - b = (a - c) + (c - b)$.'
+          corregir. Si $c > b$, $a - b = (a - c) + (c - b)$.
         rules:
           - 'Descomposición: resta primero las decenas y luego las unidades.'
           - 'Compensación: si restaste de más, suma la diferencia.'

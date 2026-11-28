@@ -664,7 +664,7 @@ topics:
       - term: 'Elemento absorbente'
         definition: 'Número que al multiplicar da siempre él mismo: el 0.'
       - term: 'Propiedad distributiva'
-        definition: 'Multiplicar por una suma es multiplicar por cada sumando y sumar: $a(b + c) = ab + ac$.'
+        definition: 'Multiplicar por una suma es multiplicar por cada sumando y sumar: $a \times (b + c) = a \times b + a \times c$.'
     practice: []
 
   t10:

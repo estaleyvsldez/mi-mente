@@ -881,7 +881,7 @@ topics:
           Dividir $1$ entre una fracción es multiplicar por su inversa (b15), así que el resultado es lo mismo que **invertir la fracción y cambiar el signo del exponente**:
           $\left(\frac{2}{3}\right)^{-2} = \left(\frac{3}{2}\right)^2 = \frac{9}{4}$.
 
-          Este atajo es muy útil. Un caso particular: $\left(\frac{1}{2}\right)^{-3} = 2^3 = 8$. Fíjate en que, con base menor que 1, el exponente negativo da un número **mayor**.
+          Este atajo es muy útil. Un caso particular: $\left(\frac{1}{2}\right)^{-3} = 2^3 = 8$. Fíjate en que, con base entre 0 y 1, el exponente negativo da un número **mayor**.
         definition: >-
           Para $a, b \neq 0$ y $n$ natural,
           $\left(\frac{a}{b}\right)^{-n} = \left(\frac{b}{a}\right)^{n} = \frac{b^n}{a^n}$.

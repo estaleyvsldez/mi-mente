@@ -354,8 +354,8 @@ topics:
   t05:
     intro:
       what: >-
-        Una raíz es exacta cuando su resultado es un número entero (o, en
-        general, se puede expresar exactamente), como $\sqrt{49} = 7$.
+        Una raíz de un número natural es exacta cuando su resultado es
+        también un número natural, como $\sqrt{49} = 7$.
       purpose: >-
         Sirve para reconocer rápidamente si una raíz tiene un resultado exacto
         o habrá que aproximarla.
