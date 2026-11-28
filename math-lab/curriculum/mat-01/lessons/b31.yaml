@@ -1,0 +1,756 @@
+block: b31
+intro: >-
+  Saber operar no basta: hay que saber qué operar. Este bloque enseña un método
+  para resolver problemas, inspirado en el matemático George Pólya, en cuatro
+  fases: comprender el problema, trazar un plan, ejecutarlo y comprobar el
+  resultado. Aprenderás a leer enunciados, separar datos e incógnitas, elegir
+  operaciones, diseñar estrategias y razonar con rigor.
+topics:
+  t01:
+    intro:
+      what: >-
+        Comprender el enunciado es entender completamente la situación que
+        describe un problema y lo que se pregunta, antes de hacer ningún
+        cálculo.
+      purpose: >-
+        Sirve para no resolver un problema distinto del planteado y para elegir
+        bien el camino.
+      importance: >-
+        La mayoría de errores en problemas no son de cálculo, sino de lectura:
+        se responde a otra pregunta o se usa mal un dato.
+      foundations: >-
+        Se basa en la lectura atenta y en el significado de las operaciones
+        estudiadas en los bloques 4 a 7.
+      prerequisites:
+        - 'Resolución de problemas con las cuatro operaciones (bloques 4 a 7)'
+      outcomes:
+        - 'Leer un enunciado de forma activa'
+        - 'Explicar el problema con palabras propias'
+        - 'Representar la situación con un esquema'
+      everyday_example: >-
+        Antes de calcular cuánta pintura comprar, hay que entender si se pintan
+        sólo las paredes o también el techo.
+    sections:
+      - title: Leer para entender
+        concept: >-
+          Comprender un problema es poder contarlo con tus palabras y saber qué
+          se pregunta.
+        explanation: |-
+          La primera fase del método de Pólya es **comprender el problema**. Algunas pautas:
+
+          1. **Lee el enunciado completo**, sin calcular todavía. Luego léelo otra vez, más despacio.
+          2. **Explica la situación con tus palabras**: ¿quién hace qué?, ¿qué cambia?
+          3. **Localiza la pregunta**: suele estar al final y dice qué hay que hallar.
+          4. **Haz un esquema o dibujo** si ayuda: una línea de tiempo, una tabla, unas barras.
+          5. **Atención a las palabras clave**, pero sin fiarse ciegamente de ellas: "más" no siempre significa sumar.
+
+          Si no puedes explicar el problema a otra persona, todavía no lo has comprendido.
+        definition: >-
+          Comprender el enunciado es identificar la situación descrita, la
+          pregunta planteada y las relaciones entre las cantidades.
+        rules:
+          - 'No se calcula nada hasta haber entendido la pregunta.'
+          - 'Reformular el problema con palabras propias ayuda a comprenderlo.'
+          - 'Un esquema o dibujo hace visibles las relaciones.'
+        examples:
+          - problem: '"Ana tiene 17 pesos, que son 5 pesos más de los que tiene Luis. ¿Cuánto tiene Luis?" Comprende el problema.'
+            solution: |-
+              **Paso 1.** Reformulamos: Ana tiene 17; Luis tiene menos que Ana, en concreto 5 menos.
+
+              **Paso 2.** La pregunta es cuánto tiene Luis.
+
+              **Paso 3.** Aunque aparece la palabra "más", hay que **restar**: $17 - 5 = 12$.
+
+              Resultado: Luis tiene $12$ pesos.
+        common_errors:
+          - 'Empezar a operar con los números antes de leer la pregunta.'
+          - 'Sumar porque aparece la palabra "más" sin entender la relación.'
+        summary: >-
+          Comprender es leer con calma, reformular, localizar la pregunta y, si
+          ayuda, dibujar la situación.
+        check:
+          question: '"Un libro cuesta 80 pesos, 15 pesos menos que un diccionario. ¿Cuánto cuesta el diccionario?" ¿Qué operación resuelve el problema?'
+          options:
+            - '$80 - 15$'
+            - '$80 + 15$'
+            - '$80 \times 15$'
+          answer: 1
+          explanation: >-
+            El libro cuesta 15 menos que el diccionario, así que el diccionario
+            cuesta 15 más: $80 + 15 = 95$ pesos, aunque aparezca la palabra
+            "menos".
+    glossary:
+      - {term: Enunciado, definition: 'Texto que describe la situación y plantea la pregunta de un problema.'}
+      - {term: Método de Pólya, definition: 'Método en cuatro fases: comprender, planificar, ejecutar y comprobar.'}
+  t02:
+    intro:
+      what: >-
+        Identificar los datos es reconocer qué información da el enunciado, con
+        sus unidades, y decidir cuál es necesaria.
+      purpose: >-
+        Sirve para usar sólo la información relevante y detectar si falta
+        alguna.
+      importance: >-
+        Los problemas reales mezclan datos útiles, datos que sobran y datos que
+        no se dicen pero se saben (como que una semana tiene 7 días).
+      foundations: >-
+        Se basa en la comprensión del enunciado (tema 1) y en las unidades de
+        medida (bloque 27).
+      prerequisites:
+        - 'Comprensión del enunciado (tema 1 de este bloque)'
+        - 'Unidades de medida (bloque 27)'
+      outcomes:
+        - 'Listar los datos de un problema con sus unidades'
+        - 'Distinguir datos necesarios e irrelevantes'
+        - 'Reconocer datos implícitos'
+      everyday_example: >-
+        Un anuncio dice "pantalón de 600 pesos, color azul, talla 40, con 20 % de
+        descuento". Para saber cuánto pagas sólo importan el precio y el
+        descuento.
+    sections:
+      - title: Datos útiles, irrelevantes e implícitos
+        concept: >-
+          Un dato es útil si hace falta para responder la pregunta; algunos datos
+          no se escriben porque se dan por sabidos.
+        explanation: |-
+          Después de comprender el problema, haz una **lista de datos** con su unidad. Luego clasifícalos:
+
+          * **Datos necesarios**: los que se usarán para calcular.
+          * **Datos irrelevantes**: información que no influye en la respuesta (colores, nombres, fechas que no se usan…).
+          * **Datos implícitos**: no aparecen escritos pero se conocen: una semana tiene 7 días, una hora 60 minutos, una docena son 12, un año 12 meses.
+
+          Escribir la unidad junto a cada dato evita mezclar, por ejemplo, metros con centímetros (bloque 27).
+
+          Si después de esto falta un dato imprescindible, el problema **no se puede resolver** con la información dada, y eso también es una respuesta válida.
+        definition: >-
+          Los datos de un problema son las informaciones conocidas que se usan
+          para hallar la respuesta; pueden ser explícitos (escritos) o implícitos
+          (conocimientos generales).
+        rules:
+          - 'Cada dato se anota con su unidad.'
+          - 'Los datos irrelevantes se descartan.'
+          - 'Los datos implícitos hay que añadirlos.'
+        examples:
+          - problem: '"Marta, de 34 años, camina 3 km cada día durante 2 semanas. ¿Cuántos km camina en total?" Identifica los datos.'
+            solution: |-
+              **Paso 1.** Datos escritos: 34 años; 3 km por día; 2 semanas.
+
+              **Paso 2.** La edad es irrelevante.
+
+              **Paso 3.** Dato implícito: 1 semana = 7 días, así que 2 semanas = 14 días.
+
+              **Paso 4.** $3 \times 14 = 42$.
+
+              Resultado: $42$ km.
+        common_errors:
+          - 'Usar todos los números del enunciado aunque no hagan falta.'
+          - 'Olvidar datos implícitos, como multiplicar 3 × 2 semanas en lugar de 3 × 14 días.'
+        summary: >-
+          Se anotan los datos con sus unidades, se descartan los irrelevantes y
+          se añaden los implícitos.
+        check:
+          question: '"Un autobús con 40 asientos sale a las 8:00 y recorre 150 km a 75 km/h. ¿Cuánto dura el viaje?" ¿Qué dato NO es necesario?'
+          options:
+            - 'Los 150 km'
+            - 'Los 75 km/h'
+            - 'Los 40 asientos'
+          answer: 2
+          explanation: >-
+            La duración es $150 \div 75 = 2$ horas; el número de asientos no
+            interviene.
+    glossary:
+      - {term: Dato, definition: 'Información conocida que se usa para resolver un problema.'}
+      - {term: Dato implícito, definition: 'Dato que no se escribe porque se conoce, como que una hora tiene 60 minutos.'}
+      - {term: Dato irrelevante, definition: 'Información que no influye en la respuesta.'}
+  t03:
+    intro:
+      what: >-
+        Identificar la incógnita es determinar con precisión qué cantidad se
+        quiere conocer, incluida su unidad.
+      purpose: >-
+        Sirve para orientar todo el plan de resolución hacia la respuesta
+        pedida.
+      importance: >-
+        Muchos errores consisten en calcular un resultado intermedio y darlo
+        como respuesta final.
+      foundations: >-
+        Se basa en la comprensión del enunciado (tema 1) y en los datos (tema 2).
+      prerequisites:
+        - 'Comprensión del enunciado (tema 1 de este bloque)'
+        - 'Identificación de datos (tema 2 de este bloque)'
+      outcomes:
+        - 'Formular la incógnita con precisión y con unidad'
+        - 'Distinguir incógnitas intermedias de la incógnita final'
+        - 'Estimar el tamaño esperado de la respuesta'
+      everyday_example: >-
+        Si preguntan "¿cuánto cambio recibes?", la incógnita no es el total de
+        la compra, sino lo que te devuelven.
+    sections:
+      - title: Qué se busca
+        concept: >-
+          La incógnita es lo que pide la pregunta; los resultados intermedios
+          son pasos para llegar a ella.
+        explanation: |-
+          Para identificar la incógnita:
+
+          1. **Lee la pregunta** y escribe la incógnita con una frase: "el dinero que me devuelven, en pesos".
+          2. **Indica su unidad**: pesos, metros, minutos, personas…
+          3. **Detecta incógnitas intermedias**: cantidades que hay que calcular por el camino aunque no se pregunten. En "compras 3 cuadernos a 45 pesos y pagas con 200, ¿cuánto te devuelven?", el total de la compra ($135$) es intermedio; la incógnita final es el cambio ($65$).
+          4. **Anticipa el tamaño**: ¿la respuesta será mayor o menor que los datos? El cambio debe ser menor que 200.
+
+          Al terminar, vuelve a leer la pregunta y comprueba que respondes a **esa** incógnita.
+        definition: >-
+          La incógnita de un problema es la cantidad desconocida que se pide
+          hallar; las incógnitas intermedias son cantidades desconocidas
+          necesarias para llegar a ella.
+        rules:
+          - 'Escribe la incógnita con palabras y con su unidad.'
+          - 'Un resultado intermedio no es la respuesta final.'
+        examples:
+          - problem: '"Un tren sale a las 9:40 y tarda 2 h 35 min. ¿A qué hora llega?" Identifica la incógnita.'
+            solution: |-
+              **Paso 1.** La incógnita es una hora del reloj (la hora de llegada), no una duración.
+
+              **Paso 2.** $9{:}40 + 2$ h $= 11{:}40$; $+ 35$ min $= 12{:}15$.
+
+              Resultado: incógnita = hora de llegada; llega a las $12{:}15$.
+        common_errors:
+          - 'Dar el resultado intermedio como respuesta.'
+          - 'Responder sin unidad o con una unidad que no corresponde.'
+        summary: >-
+          La incógnita es lo que pregunta el problema, con su unidad; los
+          resultados intermedios son sólo pasos.
+        check:
+          question: '"Compras 4 kg de manzanas a 30 pesos el kilo y pagas con un billete de 200. ¿Cuánto te devuelven?" ¿Cuál es la incógnita?'
+          options:
+            - 'El precio total de las manzanas'
+            - 'El dinero que te devuelven'
+            - 'El precio de un kilo'
+          answer: 1
+          explanation: >-
+            La pregunta es cuánto te devuelven. El total ($120$ pesos) es una
+            incógnita intermedia; la respuesta es $200 - 120 = 80$ pesos.
+    glossary:
+      - {term: Incógnita, definition: 'Cantidad desconocida que pide hallar un problema.'}
+      - {term: Incógnita intermedia, definition: 'Cantidad que hay que calcular por el camino para llegar a la respuesta.'}
+  t04:
+    intro:
+      what: >-
+        Seleccionar las operaciones es decidir qué cálculos (suma, resta,
+        multiplicación, división, porcentaje, proporción...) relacionan los
+        datos con la incógnita.
+      purpose: >-
+        Sirve para transformar la situación del enunciado en cálculos
+        concretos.
+      importance: >-
+        Es el puente entre entender un problema y resolverlo; elegir la
+        operación por su significado, y no por palabras sueltas, evita errores.
+      foundations: >-
+        Se basa en el significado de cada operación (bloques 4 a 7), en las
+        proporciones (bloques 20 y 21) y en los porcentajes (bloque 22).
+      prerequisites:
+        - 'Concepto de suma, resta, multiplicación y división (bloques 4 a 7)'
+        - 'Regla de tres (bloque 21)'
+        - 'Porcentajes (bloque 22)'
+      outcomes:
+        - 'Asociar cada operación a las situaciones que modela'
+        - 'Elegir la operación de cada paso de un problema'
+        - 'Evitar el uso mecánico de palabras clave'
+      everyday_example: >-
+        Repartir 120 pesos entre 4 personas es dividir; juntar los gastos de 4
+        personas es sumar.
+    sections:
+      - title: El significado de las operaciones
+        concept: >-
+          Cada operación corresponde a un tipo de situación: juntar, quitar o
+          comparar, repetir grupos iguales, repartir o agrupar.
+        explanation: |-
+          Elige la operación por lo que **ocurre** en la situación:
+
+          | Situación | Operación |
+          |---|---|
+          | Juntar o añadir cantidades | Suma |
+          | Quitar, comparar ("¿cuánto más?", "¿cuánto falta?") | Resta |
+          | Grupos iguales repetidos, precio por cantidad | Multiplicación |
+          | Repartir en partes iguales, "¿cuántos caben?" | División |
+          | Una parte de un total | Fracción o porcentaje |
+          | Cantidades que varían en la misma razón | Regla de tres |
+
+          Si el problema tiene varios pasos, decide la operación **de cada paso** pensando qué representa su resultado. Por ejemplo: "3 cajas de 12 huevos; se rompen 5; ¿cuántos quedan?" → primero multiplicación (huevos totales, $36$), después resta (quedan $31$).
+        definition: >-
+          Seleccionar una operación es elegir el cálculo cuyo significado
+          corresponde a la relación entre las cantidades del problema.
+        rules:
+          - 'Piensa qué representa el resultado de cada operación.'
+          - 'Las palabras clave orientan, pero la decisión se basa en la situación.'
+          - 'Puedes comprobar la elección con números pequeños.'
+        examples:
+          - problem: '"Un coche gasta 6 L cada 100 km. ¿Cuántos litros gasta en 350 km?" Elige las operaciones.'
+            solution: |-
+              **Paso 1.** Litros y kilómetros son magnitudes directamente proporcionales: regla de tres (bloque 21).
+
+              **Paso 2.** $350 \div 100 = 3{,}5$ tramos de 100 km.
+
+              **Paso 3.** $3{,}5 \times 6 = 21$ L.
+
+              Resultado: $21$ L, con una división y una multiplicación.
+        common_errors:
+          - 'Elegir la operación sólo por una palabra ("en total" no siempre es sumar: 4 cajas de 6 en total son $4 \times 6$).'
+          - 'Dividir en el orden equivocado, como $100 \div 350$.'
+        summary: >-
+          La operación se elige por la situación: juntar, quitar o comparar,
+          repetir, repartir, tomar una parte o mantener una proporción.
+        check:
+          question: '"Se guardan 150 libros en cajas de 25. ¿Cuántas cajas se llenan?" ¿Qué operación corresponde?'
+          options:
+            - '$150 - 25$'
+            - '$150 \times 25$'
+            - '$150 \div 25$'
+          answer: 2
+          explanation: >-
+            Se pregunta cuántos grupos de 25 caben en 150: división, $150 \div 25
+            = 6$ cajas.
+    glossary:
+      - {term: Selección de operaciones, definition: 'Elección de los cálculos que relacionan los datos con la incógnita.'}
+      - {term: Palabra clave, definition: 'Palabra que sugiere una operación, pero que no siempre la determina.'}
+  t05:
+    intro:
+      what: >-
+        Diseñar una estrategia es elegir un plan para resolver un problema
+        cuando el camino no es evidente.
+      purpose: >-
+        Sirve para afrontar problemas nuevos para los que no hay un
+        procedimiento conocido.
+      importance: >-
+        Las estrategias se pueden aprender y reutilizar: son herramientas para
+        pensar, no recetas para un solo tipo de problema.
+      foundations: >-
+        Se basa en las operaciones inversas (bloques 5 y 7), en los patrones
+        (bloque 28) y en las tablas y esquemas.
+      prerequisites:
+        - 'Relación entre suma y resta, y entre multiplicación y división (bloques 5 y 7)'
+        - 'Patrones numéricos (bloque 28)'
+        - 'Selección de operaciones (tema 4 de este bloque)'
+      outcomes:
+        - 'Conocer estrategias generales de resolución'
+        - 'Aplicar ensayo y error organizado'
+        - 'Trabajar hacia atrás deshaciendo operaciones'
+      everyday_example: >-
+        Para saber a qué hora salir de casa y llegar a las 9:00, se trabaja
+        hacia atrás desde la hora de llegada.
+    sections:
+      - title: Estrategias generales
+        concept: >-
+          Dibujar, hacer una tabla, buscar un patrón, simplificar, dividir en
+          partes, ensayo y error, y trabajar hacia atrás.
+        explanation: |-
+          La segunda fase de Pólya es **trazar un plan**. Estas estrategias ayudan:
+
+          * **Hacer un dibujo o esquema**: muestra relaciones ocultas.
+          * **Hacer una tabla**: organiza casos y revela patrones.
+          * **Buscar un patrón** (bloque 28): resolver casos pequeños y generalizar.
+          * **Simplificar**: probar con números más pequeños y luego aplicar la idea.
+          * **Dividir en subproblemas**: resolver por partes.
+          * **Ensayo y error organizado**: probar un valor, ver si cumple, y ajustar.
+          * **Trabajar hacia atrás**: si se conoce el final, deshacer los pasos.
+
+          **Ensayo y error.** "Dos números suman 50 y se diferencian en 12." Probamos: $30$ y $20$ se diferencian en $10$, poco; $31$ y $19$ se diferencian en $12$. ¡Lo tenemos! También se puede razonar: si al total le sumamos la diferencia, obtenemos el doble del mayor: $(50 + 12) \div 2 = 31$.
+        definition: >-
+          Una estrategia de resolución es un procedimiento general de búsqueda de
+          la solución, aplicable a muchos tipos de problemas.
+        rules:
+          - 'Si una estrategia no funciona, se prueba otra.'
+          - 'En el ensayo y error, cada intento debe acercar al siguiente.'
+        examples:
+          - problem: 'En un corral hay gallinas y conejos: 10 cabezas y 28 patas. ¿Cuántos conejos hay?'
+            solution: |-
+              **Paso 1.** Tabla de ensayos (cada gallina 2 patas, cada conejo 4):
+
+              * 5 conejos y 5 gallinas: $20 + 10 = 30$ patas. Demasiadas.
+              * 4 conejos y 6 gallinas: $16 + 12 = 28$ patas. ¡Correcto!
+
+              **Comprobación.** $4 + 6 = 10$ cabezas y $28$ patas.
+
+              Resultado: $4$ conejos.
+        common_errors:
+          - 'Probar valores al azar sin aprender de cada intento.'
+          - 'Rendirse cuando la primera estrategia no funciona.'
+        summary: >-
+          Ante un problema nuevo, elige una estrategia: dibujo, tabla, patrón,
+          simplificar, dividir, ensayo y error o hacia atrás.
+        check:
+          question: 'Dos números suman 40 y su diferencia es 8. ¿Cuál es el mayor?'
+          options:
+            - '$24$'
+            - '$16$'
+            - '$32$'
+          answer: 0
+          explanation: >-
+            $(40 + 8) \div 2 = 24$. Comprobación: $24 + 16 = 40$ y $24 - 16 = 8$.
+      - title: Trabajar hacia atrás
+        concept: >-
+          Si se conoce el resultado final, se deshacen las operaciones con sus
+          inversas y en orden contrario.
+        explanation: |-
+          "Pienso un número, lo multiplico por 3 y le sumo 7. Obtengo 34. ¿Qué número pensé?"
+
+          Conocemos el final ($34$) y las operaciones. Las deshacemos **en orden inverso** con la **operación inversa** (bloques 5 y 7):
+
+          * La última operación fue "sumar 7": la deshacemos restando 7. $34 - 7 = 27$.
+          * Antes se "multiplicó por 3": dividimos entre 3. $27 \div 3 = 9$.
+
+          El número pensado es $9$. Comprobación: $9 \times 3 + 7 = 34$.
+
+          Es como desvestirse: lo último que te pusiste (el abrigo) es lo primero que te quitas.
+        definition: >-
+          Trabajar hacia atrás es partir del resultado final y aplicar las
+          operaciones inversas en orden contrario hasta obtener el valor inicial.
+        rules:
+          - 'Se empieza por la última operación.'
+          - 'Suma ↔ resta; multiplicación ↔ división.'
+          - 'Se comprueba haciendo el camino hacia delante.'
+        examples:
+          - problem: 'Gasté la mitad de mi dinero y luego 20 pesos más. Me quedan 30 pesos. ¿Cuánto tenía?'
+            solution: |-
+              **Paso 1.** Deshacemos "gastar 20": $30 + 20 = 50$.
+
+              **Paso 2.** Deshacemos "gastar la mitad": si después de gastar la mitad tenía 50, antes tenía el doble: $50 \times 2 = 100$.
+
+              **Comprobación.** $100 \div 2 = 50$; $50 - 20 = 30$.
+
+              Resultado: tenía $100$ pesos.
+        common_errors:
+          - 'Deshacer las operaciones en el mismo orden en que se hicieron.'
+          - 'Aplicar la misma operación en lugar de la inversa.'
+        summary: >-
+          Hacia atrás: desde el final, operaciones inversas en orden contrario, y
+          comprobación hacia delante.
+        check:
+          question: 'Pienso un número, lo multiplico por 4 y le resto 6. Obtengo 30. ¿Qué número pensé?'
+          options:
+            - '$6$'
+            - '$9$'
+            - '$114$'
+          answer: 1
+          explanation: >-
+            $30 + 6 = 36$ y $36 \div 4 = 9$. Comprobación: $9 \times 4 - 6 = 30$.
+    glossary:
+      - {term: Estrategia, definition: 'Plan general para buscar la solución de un problema.'}
+      - {term: Ensayo y error, definition: 'Probar valores y ajustarlos según el resultado de cada intento.'}
+      - {term: Trabajar hacia atrás, definition: 'Partir del resultado y deshacer las operaciones en orden inverso.'}
+  t06:
+    intro:
+      what: >-
+        Resolver paso a paso es ejecutar el plan de forma ordenada, escribiendo
+        cada cálculo y lo que significa.
+      purpose: >-
+        Sirve para no perderse en problemas largos y para que la solución pueda
+        revisarse y entenderse.
+      importance: >-
+        Una solución bien organizada permite encontrar errores con facilidad y
+        comunicar el razonamiento a otras personas.
+      foundations: >-
+        Aplica las cuatro fases de Pólya y la jerarquía de operaciones
+        (bloque 9).
+      prerequisites:
+        - 'Temas 1 a 5 de este bloque'
+        - 'Jerarquía de operaciones (bloque 9)'
+      outcomes:
+        - 'Aplicar las cuatro fases del método de Pólya'
+        - 'Escribir una solución clara con pasos rotulados'
+        - 'Dar la respuesta con una frase completa y su unidad'
+      everyday_example: >-
+        Al revisar una factura conviene anotar cada concepto y su importe para
+        poder comprobar el total.
+    sections:
+      - title: Las cuatro fases en acción
+        concept: >-
+          Comprender, planificar, ejecutar y comprobar, dejando por escrito cada
+          paso.
+        explanation: |-
+          Veamos el método completo con un problema: *"Compras 3 cuadernos a 45 pesos y 2 bolígrafos a 12 pesos. Pagas con 200 pesos. ¿Cuánto cambio recibes?"*
+
+          1. **Comprender.** Datos: 3 cuadernos de 45; 2 bolígrafos de 12; pago 200. Incógnita: el cambio, en pesos.
+          2. **Planificar.** Calcular el gasto en cuadernos (multiplicar), en bolígrafos (multiplicar), el total (sumar) y el cambio (restar).
+          3. **Ejecutar**, escribiendo qué significa cada número:
+             * Cuadernos: $3 \times 45 = 135$ pesos.
+             * Bolígrafos: $2 \times 12 = 24$ pesos.
+             * Total: $135 + 24 = 159$ pesos.
+             * Cambio: $200 - 159 = 41$ pesos.
+          4. **Comprobar.** $159 + 41 = 200$. ✔ El cambio es menor que 200, razonable.
+
+          **Respuesta:** recibes $41$ pesos de cambio.
+
+          Escribir el significado de cada resultado ("total", "cambio") evita confundir resultados intermedios con la respuesta.
+        definition: >-
+          Resolver paso a paso es ejecutar un plan mediante una secuencia de
+          cálculos escritos, cada uno con su significado, hasta obtener la
+          incógnita.
+        rules:
+          - 'Cada paso: qué se calcula, el cálculo y el resultado con unidad.'
+          - 'Se puede escribir todo en una expresión, respetando la jerarquía: $200 - (3 \times 45 + 2 \times 12)$.'
+          - 'La respuesta final se da con una frase completa.'
+        examples:
+          - problem: 'Un grupo de 5 amigos paga 1200 pesos por la cena y 150 por el taxi, a partes iguales. ¿Cuánto paga cada uno?'
+            solution: |-
+              **Paso 1. Comprender.** Incógnita: lo que paga cada persona.
+
+              **Paso 2. Planificar.** Sumar los gastos y dividir entre 5.
+
+              **Paso 3. Ejecutar.** Total: $1200 + 150 = 1350$. Cada uno: $1350 \div 5 = 270$.
+
+              **Paso 4. Comprobar.** $270 \times 5 = 1350$.
+
+              Resultado: cada uno paga $270$ pesos.
+        common_errors:
+          - 'Escribir números sueltos sin indicar qué representan.'
+          - 'Escribir $1200 + 150 \div 5$ sin paréntesis: por la jerarquía daría $1230$.'
+        summary: >-
+          Una solución clara recorre las cuatro fases y explica qué significa cada
+          resultado.
+        check:
+          question: '¿Qué expresión calcula el cambio al pagar con 500 pesos 4 entradas de 85 pesos y 2 refrescos de 30?'
+          options:
+            - '$500 - 4 \times 85 + 2 \times 30$'
+            - '$500 - (4 \times 85 + 2 \times 30)$'
+            - '$(500 - 4) \times 85 + 2 \times 30$'
+          answer: 1
+          explanation: >-
+            Se resta el gasto total: $500 - (340 + 60) = 100$ pesos. Sin
+            paréntesis, la primera expresión sumaría los refrescos en lugar de
+            restarlos.
+    glossary:
+      - {term: Plan, definition: 'Secuencia de operaciones decidida antes de calcular.'}
+      - {term: Ejecutar, definition: 'Realizar los cálculos del plan en orden.'}
+  t07:
+    intro:
+      what: >-
+        Comprobar un resultado es verificar que es correcto y que responde a la
+        pregunta, antes de darlo por bueno.
+      purpose: >-
+        Sirve para detectar errores de cálculo, de planteamiento o de unidades.
+      importance: >-
+        Es la cuarta fase del método de Pólya y la que más a menudo se olvida;
+        en la vida real un error no comprobado puede salir caro.
+      foundations: >-
+        Se basa en las operaciones inversas (bloques 5 y 7), la estimación
+        (bloque 25) y las unidades (bloque 27).
+      prerequisites:
+        - 'Comprobación de la resta y de la división (bloques 5 y 7)'
+        - 'Estimación (bloque 25)'
+        - 'Resolución paso a paso (tema 6 de este bloque)'
+      outcomes:
+        - 'Comprobar con operaciones inversas'
+        - 'Comprobar con una estimación'
+        - 'Verificar que el resultado tiene sentido en el contexto'
+      everyday_example: >-
+        Si al dividir la cuenta de un restaurante entre 4 te sale que cada uno
+        paga más que el total, sabes que algo está mal.
+    sections:
+      - title: Formas de comprobar
+        concept: >-
+          Se comprueba con la operación inversa, con una estimación, sustituyendo
+          en el enunciado y revisando unidades y sentido.
+        explanation: |-
+          Hay varias formas complementarias de comprobar:
+
+          1. **Operación inversa**: si $1350 \div 5 = 270$, entonces $270 \times 5$ debe dar $1350$.
+          2. **Estimación** (bloque 25): $38 \times 52 \approx 40 \times 50 = 2000$; si obtuviste $19\,760$, hay un cero de más.
+          3. **Sustituir en el enunciado**: ¿cumple el resultado todas las condiciones? En el problema de gallinas y conejos, 4 conejos y 6 gallinas dan 10 cabezas y 28 patas.
+          4. **Sentido y unidades**: una persona no mide 17 m, un descuento no puede hacer el precio mayor, el número de autobuses es entero.
+          5. **Responder a la pregunta**: ¿has calculado la incógnita o un resultado intermedio?
+
+          Si una comprobación falla, revisa primero el planteamiento y después los cálculos.
+        definition: >-
+          Comprobar un resultado es verificar, por un camino distinto del usado
+          para obtenerlo, que es correcto y coherente con el enunciado.
+        rules:
+          - 'Comprueba por un camino distinto del que usaste para calcular.'
+          - 'El resultado debe tener la unidad adecuada y un tamaño razonable.'
+          - 'Debe cumplir todas las condiciones del enunciado.'
+        examples:
+          - problem: 'Un compañero dice que un artículo de 800 pesos con un 25 % de descuento cuesta 1000 pesos. Comprueba.'
+            solution: |-
+              **Paso 1. Sentido.** Un descuento debe bajar el precio; $1000 > 800$, así que es incorrecto.
+
+              **Paso 2. Cálculo correcto.** $25\,\%$ de $800 = 200$; $800 - 200 = 600$.
+
+              **Paso 3. Comprobación.** $600 + 200 = 800$. ✔
+
+              Resultado: el precio correcto es $600$ pesos (el compañero aplicó un aumento).
+        common_errors:
+          - 'Comprobar repitiendo exactamente el mismo cálculo (se repite el mismo error).'
+          - 'Aceptar un resultado sin pensar si tiene sentido.'
+        summary: >-
+          Comprobar con la inversa, estimando, sustituyendo y pensando en el
+          sentido evita dar por buenos resultados erróneos.
+        check:
+          question: 'Alguien calcula que $4{,}5 \times 18 = 810$. ¿Qué comprobación revela el error más rápido?'
+          options:
+            - 'Estimar: $4{,}5 \times 18 \approx 5 \times 18 = 90$, así que 810 es demasiado grande'
+            - 'Repetir el mismo cálculo de la misma forma'
+            - 'Ninguna: el resultado es correcto'
+          answer: 0
+          explanation: >-
+            La estimación muestra que el resultado debe rondar 90; el valor exacto
+            es $81$. El error fue olvidar la coma decimal.
+    glossary:
+      - {term: Comprobación, definition: 'Verificación de que un resultado es correcto y tiene sentido.'}
+      - {term: Operación inversa, definition: 'Operación que deshace otra: la resta deshace la suma y la división deshace la multiplicación.'}
+  t08:
+    intro:
+      what: >-
+        Los problemas de varios pasos son aquellos que necesitan encadenar dos o
+        más operaciones, con resultados intermedios, para llegar a la respuesta.
+      purpose: >-
+        Sirve para resolver situaciones reales, que casi nunca se resuelven con
+        una sola operación.
+      importance: >-
+        Exigen aplicar todo el método: comprender, planificar el orden de los
+        pasos, ejecutar con cuidado y comprobar.
+      foundations: >-
+        Integra las operaciones de los bloques anteriores con decimales,
+        porcentajes y proporciones.
+      prerequisites:
+        - 'Resolución paso a paso (tema 6 de este bloque)'
+        - 'Porcentajes (bloque 22)'
+        - 'Operaciones con decimales (bloque 17)'
+      outcomes:
+        - 'Descomponer un problema en subproblemas'
+        - 'Organizar los resultados intermedios'
+        - 'Resolver problemas con decimales, porcentajes y unidades'
+      everyday_example: >-
+        Calcular el gasto mensual en leche de una familia con descuento por
+        compra al por mayor requiere varios pasos.
+    sections:
+      - title: Encadenar pasos
+        concept: >-
+          Se descompone el problema en preguntas intermedias, cada una con su
+          operación, y se encadenan sus resultados.
+        explanation: |-
+          Para un problema de varios pasos, pregúntate: **¿qué necesito saber antes de poder responder?** Cada respuesta parcial es un paso.
+
+          *"Una familia consume 2,5 L de leche al día. El litro cuesta 18 pesos y, comprando para todo el mes (30 días), hacen un 10 % de descuento. ¿Cuánto pagan al mes?"*
+
+          * ¿Cuántos litros al mes? $2{,}5 \times 30 = 75$ L.
+          * ¿Cuánto costarían sin descuento? $75 \times 18 = 1350$ pesos.
+          * ¿Cuánto es el descuento? $10\,\%$ de $1350 = 135$ pesos.
+          * ¿Cuánto pagan? $1350 - 135 = 1215$ pesos.
+
+          Con lo aprendido en el bloque 22 también se puede hacer en un paso: $1350 \times 0{,}90 = 1215$.
+
+          Ordenar los pasos como preguntas evita usar un dato en el momento equivocado.
+        definition: >-
+          Un problema de varios pasos es aquel cuya incógnita sólo puede hallarse
+          calculando antes una o más incógnitas intermedias.
+        rules:
+          - 'Formula cada paso como una pregunta intermedia.'
+          - 'Anota cada resultado intermedio con su significado y unidad.'
+          - 'Comprueba el resultado final con una estimación.'
+        examples:
+          - problem: 'Una persona cobra 18 000 pesos al mes, paga 5400 de alquiler y destina un 20 % de lo que le queda a ahorrar. ¿Cuánto ahorra?'
+            solution: |-
+              **Paso 1.** Le queda tras el alquiler: $18\,000 - 5400 = 12\,600$ pesos.
+
+              **Paso 2.** Ahorro: $20\,\%$ de $12\,600 = 0{,}2 \times 12\,600 = 2520$ pesos.
+
+              **Comprobación.** $20\,\%$ de unos $12\,000$ son $2400$: el resultado es razonable.
+
+              Resultado: ahorra $2520$ pesos al mes.
+        common_errors:
+          - 'Aplicar el porcentaje al ingreso total en lugar de a lo que queda.'
+          - 'Detenerse en un resultado intermedio.'
+        summary: >-
+          Un problema de varios pasos se resuelve encadenando preguntas
+          intermedias, anotando cada resultado.
+        check:
+          question: 'Compras 3 camisetas de 250 pesos con un 20 % de descuento sobre el total. ¿Cuánto pagas?'
+          options:
+            - '$750$ pesos'
+            - '$600$ pesos'
+            - '$150$ pesos'
+          answer: 1
+          explanation: >-
+            Total: $3 \times 250 = 750$. Descuento: $20\,\%$ de $750 = 150$. Pagas
+            $750 - 150 = 600$ pesos. $150$ es el descuento, no el precio.
+    glossary:
+      - {term: Problema de varios pasos, definition: 'Problema que requiere calcular resultados intermedios.'}
+      - {term: Subproblema, definition: 'Parte de un problema que se resuelve por separado.'}
+  t09:
+    intro:
+      what: >-
+        El razonamiento matemático es la capacidad de justificar con argumentos
+        por qué una afirmación es verdadera o falsa, más allá de calcular.
+      purpose: >-
+        Sirve para estar seguro de una conclusión, generalizar lo observado y
+        detectar afirmaciones falsas.
+      importance: >-
+        Es lo que distingue comprender de memorizar; permite defender una
+        respuesta y no dejarse engañar por argumentos incorrectos.
+      foundations: >-
+        Se basa en las propiedades de las operaciones (bloque 8), en los números
+        pares e impares, en los múltiplos (bloque 10) y en los primos (bloque
+        11).
+      prerequisites:
+        - 'Propiedades de las operaciones (bloque 8)'
+        - 'Múltiplos y divisores (bloque 10)'
+        - 'Números primos y compuestos (bloque 11)'
+      outcomes:
+        - 'Distinguir un ejemplo de una justificación general'
+        - 'Refutar una afirmación con un contraejemplo'
+        - 'Construir argumentos sencillos sobre números'
+      everyday_example: >-
+        Si alguien dice "todos los productos rebajados son más baratos aquí",
+        basta encontrar uno más caro para demostrar que no es cierto.
+    sections:
+      - title: Ejemplos, justificaciones y contraejemplos
+        concept: >-
+          Unos ejemplos no prueban una regla general, pero un solo
+          contraejemplo basta para refutarla.
+        explanation: |-
+          Observa: $3 + 5 = 8$, $7 + 9 = 16$, $11 + 1 = 12$. Parece que **la suma de dos impares es par**. Pero muchos ejemplos no bastan: siempre podría haber uno que falle. Necesitamos una **justificación general**:
+
+          > Un número impar es un número par más 1. Al sumar dos impares sumamos (par + 1) + (par + 1) = par + par + 2. La suma de pares es par y 2 también lo es, así que el resultado es par.
+
+          Este argumento sirve para **todos** los impares, no sólo para los probados.
+
+          En cambio, para demostrar que una afirmación es **falsa** basta un **contraejemplo**. "Todos los números terminados en 3 son primos": $3$, $13$, $23$ lo son, pero $33 = 3 \times 11$ no. La afirmación es falsa.
+
+          Razonar bien también es reconocer lo que **no** sabemos: si un problema no da datos suficientes, la conclusión correcta es "no se puede saber".
+        definition: >-
+          Una justificación (o demostración) es un argumento que muestra que una
+          afirmación se cumple en todos los casos; un contraejemplo es un caso
+          concreto en que la afirmación no se cumple.
+        rules:
+          - 'Los ejemplos ilustran, pero no demuestran una regla general.'
+          - 'Un solo contraejemplo demuestra que una afirmación general es falsa.'
+          - 'Cada paso de un argumento debe apoyarse en algo ya sabido.'
+        examples:
+          - problem: '¿Es cierto que "al multiplicar dos números siempre se obtiene un resultado mayor que ambos"?'
+            solution: |-
+              **Paso 1.** Probamos casos: $3 \times 4 = 12$, mayor que ambos.
+
+              **Paso 2.** Buscamos un contraejemplo con números especiales: $5 \times 1 = 5$, que no es mayor que 5; o $8 \times 0{,}5 = 4$, menor que 8 (bloque 17).
+
+              Resultado: la afirmación es falsa; basta el contraejemplo $8 \times 0{,}5 = 4$.
+        common_errors:
+          - 'Dar por demostrada una regla porque se cumple en tres o cuatro ejemplos.'
+          - 'Creer que un contraejemplo "es una excepción" y que la regla sigue siendo válida.'
+        summary: >-
+          Para probar una afirmación general hace falta un argumento; para
+          refutarla basta un contraejemplo.
+        check:
+          question: 'Afirmación: "Todo número divisible entre 2 es divisible entre 4". ¿Qué la refuta?'
+          options:
+            - 'El número 8, que es divisible entre 2 y entre 4'
+            - 'El número 6, que es divisible entre 2 pero no entre 4'
+            - 'El número 7, que no es divisible entre 2'
+          answer: 1
+          explanation: >-
+            $6$ cumple la condición (divisible entre 2) pero no la conclusión
+            (no es divisible entre 4): es un contraejemplo. El 8 es un ejemplo
+            que la cumple y el 7 no cumple la condición, así que no dice nada.
+    glossary:
+      - {term: Justificación, definition: 'Argumento que muestra que algo se cumple siempre.'}
+      - {term: Contraejemplo, definition: 'Caso concreto que demuestra que una afirmación general es falsa.'}
+      - {term: Generalizar, definition: 'Pasar de casos particulares a una regla válida para todos.'}
