@@ -1,0 +1,887 @@
+block: b32
+intro: >-
+  Este último bloque reúne todo lo aprendido en el módulo y lo aplica a la vida
+  real: compras, presupuestos, finanzas personales, medidas, ciencia,
+  informática y problemas cotidianos. Cada tema señala qué bloques anteriores
+  intervienen, para que veas cómo la aritmética forma un todo y cómo el método
+  de resolución de problemas (bloque 31) organiza cualquier situación.
+topics:
+  t01:
+    intro:
+      what: >-
+        Es el uso de la aritmética en situaciones diarias: horarios, propinas,
+        recetas, repartos y cálculos mentales rápidos.
+      purpose: >-
+        Sirve para resolver con seguridad y rapidez los pequeños problemas
+        numéricos de cada día.
+      importance: >-
+        La mayoría de las personas usa la aritmética a diario sin darse cuenta;
+        hacerlo bien ahorra tiempo, dinero y errores.
+      foundations: >-
+        Combina el sistema sexagesimal (bloque 27), los porcentajes (bloque 22),
+        la proporcionalidad (bloques 20 y 21) y la estimación (bloque 25).
+      prerequisites:
+        - 'Unidades de tiempo (bloque 27)'
+        - 'Porcentaje de una cantidad (bloque 22)'
+        - 'Regla de tres simple directa (bloque 21)'
+        - 'Estimación (bloque 25)'
+      outcomes:
+        - 'Calcular horas de llegada y duraciones'
+        - 'Calcular propinas y repartos'
+        - 'Adaptar recetas a otro número de personas'
+      everyday_example: >-
+        Si el autobús sale a las 9:45 y tarda 50 minutos, llegarás a las 10:35.
+    sections:
+      - title: Tiempo, propinas y recetas
+        concept: >-
+          Cada situación cotidiana corresponde a una herramienta ya conocida:
+          sexagesimal, porcentaje o proporción.
+        explanation: |-
+          Tres situaciones típicas y la herramienta de cada una:
+
+          **Horarios (bloque 27).** Los minutos van de 60 en 60. Salida a las $9{:}45$ y viaje de $50$ min: $45 + 50 = 95$ min $= 1$ h $35$ min, así que se llega a las $10{:}35$.
+
+          **Propinas (bloque 22).** Una propina del $10\,\%$ de una cuenta de $380$ pesos: $380 \times 0{,}10 = 38$ pesos. Truco mental: el $10\,\%$ es mover la coma un lugar a la izquierda; el $5\,\%$ es la mitad del $10\,\%$.
+
+          **Recetas (bloques 20 y 21).** Ingredientes y comensales son magnitudes directamente proporcionales. Si $300$ g de arroz son para $4$ personas, para $6$ personas: $300 \div 4 \times 6 = 450$ g.
+
+          Antes de calcular, una estimación rápida (bloque 25) indica si el resultado es razonable.
+        definition: >-
+          Aplicar la aritmética a la vida cotidiana es reconocer el tipo de
+          relación entre cantidades (temporal, porcentual o proporcional) y usar
+          la operación adecuada.
+        rules:
+          - 'Con horas y minutos, cada 60 minutos forman una hora.'
+          - 'El 10 % de una cantidad se obtiene dividiendo entre 10.'
+          - 'En una receta, todas las cantidades se multiplican por el mismo factor.'
+        examples:
+          - problem: 'Una cuenta de 640 pesos se paga con un 15 % de propina y se reparte entre 4 personas. ¿Cuánto paga cada una?'
+            solution: |-
+              **Paso 1.** $10\,\%$ de $640 = 64$; $5\,\%$ = la mitad, $32$. Propina: $64 + 32 = 96$ pesos.
+
+              **Paso 2.** Total: $640 + 96 = 736$ pesos.
+
+              **Paso 3.** Cada persona: $736 \div 4 = 184$ pesos.
+
+              Resultado: $184$ pesos cada una.
+        common_errors:
+          - 'Sumar minutos como si fueran decimales: 9:45 + 50 min no es 9:95.'
+          - 'En una receta, sumar en lugar de multiplicar: para 6 personas no se añaden "2 personas" de cada ingrediente sin calcular cuánto es.'
+        summary: >-
+          Horarios, propinas y recetas se resuelven con el sistema sexagesimal,
+          los porcentajes y la proporcionalidad.
+        check:
+          question: 'Una película empieza a las 20:50 y dura 1 h 45 min. ¿A qué hora termina?'
+          options:
+            - '21:95'
+            - '22:35'
+            - '22:05'
+          answer: 1
+          explanation: >-
+            $20{:}50 + 1$ h $= 21{:}50$; $+ 45$ min: $50 + 45 = 95$ min $= 1$ h
+            $35$ min, así que termina a las $22{:}35$.
+    glossary:
+      - {term: Propina, definition: 'Cantidad extra, normalmente un porcentaje de la cuenta, que se da por un servicio.'}
+      - {term: Factor de escala, definition: 'Número por el que se multiplican todas las cantidades al adaptar una receta.'}
+  t02:
+    intro:
+      what: >-
+        Es la aplicación de la aritmética a la compra y la venta: tickets,
+        ofertas, precios por unidad, márgenes y ganancias.
+      purpose: >-
+        Sirve para comprar mejor, detectar ofertas engañosas y, si se vende,
+        fijar precios con beneficio.
+      importance: >-
+        Las decisiones de compra son diarias; comparar bien puede suponer un
+        ahorro importante a lo largo del año.
+      foundations: >-
+        Combina las operaciones con decimales (bloque 17), los porcentajes
+        (bloque 22), las ganancias y pérdidas (bloque 23) y la división entera
+        (bloque 7).
+      prerequisites:
+        - 'Operaciones con decimales (bloque 17)'
+        - 'Aumentos y descuentos porcentuales (bloque 22)'
+        - 'Ganancias y pérdidas (bloque 23)'
+      outcomes:
+        - 'Calcular el total de un ticket'
+        - 'Evaluar ofertas del tipo 3×2'
+        - 'Calcular un precio de venta con un margen dado'
+      everyday_example: >-
+        La oferta "lleva 3, paga 2" equivale a un descuento de un tercio en
+        cada grupo de 3 unidades.
+    sections:
+      - title: Tickets y ofertas
+        concept: >-
+          El total se obtiene multiplicando cantidad por precio de cada artículo y
+          sumando; las ofertas se analizan por grupos.
+        explanation: |-
+          **Ticket.** Para cada artículo: cantidad $\times$ precio unitario (subtotal). Luego se suman los subtotales. $3$ artículos de $12{,}50$ y $2$ de $8{,}75$: $37{,}50 + 17{,}50 = 55{,}00$ pesos.
+
+          **Oferta 3×2** ("lleva 3, paga 2"). Se hacen grupos de 3 con la división entera (bloque 7): por cada grupo completo se pagan 2, y las unidades sueltas se pagan enteras. Para $7$ yogures de $12$ pesos: $7 = 3 \cdot 2 + 1$, es decir, 2 grupos y 1 suelto. Se pagan $2 \cdot 2 + 1 = 5$ yogures: $5 \times 12 = 60$ pesos.
+
+          **Comparar ofertas.** Lo más fiable es calcular el **precio por unidad** (bloque 27) de cada opción. Una oferta sólo es ventajosa si realmente vas a usar lo que compras.
+        definition: >-
+          El total de una compra es la suma de los subtotales; el subtotal de un
+          artículo es su cantidad multiplicada por su precio unitario.
+        rules:
+          - 'Subtotal = cantidad × precio unitario; total = suma de subtotales.'
+          - 'En un 3×2, por cada grupo completo de 3 se pagan 2.'
+          - 'Para comparar ofertas se compara el precio por unidad.'
+        examples:
+          - problem: '¿Qué conviene más para 6 latas: la oferta 3×2 con latas de 15 pesos o un paquete de 6 latas por 65 pesos?'
+            solution: |-
+              **Paso 1.** Con el 3×2: 2 grupos de 3, se pagan 4 latas: $4 \times 15 = 60$ pesos.
+
+              **Paso 2.** Paquete: $65$ pesos.
+
+              Resultado: conviene la oferta 3×2 ($10$ pesos por lata frente a unos $10{,}83$).
+        common_errors:
+          - 'Aplicar el 3×2 a las unidades sueltas que no completan un grupo.'
+          - 'Sumar los precios unitarios sin multiplicar por la cantidad.'
+        summary: >-
+          Un ticket es una suma de productos; una oferta se evalúa por grupos y
+          por precio unitario.
+        check:
+          question: '¿Cuánto cuesta un ticket con 3 artículos de 12,50 pesos y 2 de 8,75 pesos?'
+          options:
+            - '$21{,}25$ pesos'
+            - '$55{,}00$ pesos'
+            - '$106{,}25$ pesos'
+          answer: 1
+          explanation: >-
+            $3 \times 12{,}50 = 37{,}50$ y $2 \times 8{,}75 = 17{,}50$; total
+            $55{,}00$ pesos. $21{,}25$ suma sólo un artículo de cada.
+      - title: Márgenes y precio de venta
+        concept: >-
+          El precio de venta con un margen del $m\,\%$ sobre el costo es
+          costo × (1 + m/100).
+        explanation: |-
+          Quien vende quiere **ganar** sobre lo que le costó el producto (bloque 23). Si el margen es un porcentaje **sobre el costo**, se aplica un aumento porcentual (bloque 22):
+
+          $$\text{precio de venta} = \text{costo} \times \left(1 + \frac{m}{100}\right)$$
+
+          Un artículo que cuesta $800$ pesos, con un margen del $25\,\%$: $800 \times 1{,}25 = 1000$ pesos. La ganancia es $1000 - 800 = 200$ pesos.
+
+          Atención: si después se hace un descuento del $25\,\%$ sobre el precio de venta, **no** se vuelve al costo: $1000 \times 0{,}75 = 750$, menos que $800$. Los porcentajes se calculan sobre cantidades distintas.
+        definition: >-
+          El margen sobre el costo es la ganancia expresada como porcentaje del
+          costo: $\frac{\text{venta} - \text{costo}}{\text{costo}} \times 100$.
+        rules:
+          - 'Precio de venta = costo × (1 + margen/100).'
+          - 'Ganancia = precio de venta − costo.'
+          - 'Un aumento y un descuento del mismo porcentaje no se anulan.'
+        examples:
+          - problem: 'Un comercio compra una mochila a 360 pesos y quiere ganar un 40 % sobre el costo. ¿A qué precio debe venderla?'
+            solution: |-
+              **Paso 1.** $1 + \frac{40}{100} = 1{,}40$.
+
+              **Paso 2.** $360 \times 1{,}40 = 504$ pesos.
+
+              **Comprobación.** Ganancia $504 - 360 = 144$, y $144 \div 360 = 0{,}4 = 40\,\%$.
+
+              Resultado: $504$ pesos.
+        common_errors:
+          - 'Calcular el margen sobre el precio de venta cuando se pide sobre el costo.'
+          - 'Creer que subir un 25 % y bajar un 25 % deja el precio igual.'
+        summary: >-
+          Con un margen sobre el costo se multiplica el costo por $1 + m/100$.
+        check:
+          question: 'Un artículo cuesta 500 pesos y se vende con un margen del 30 % sobre el costo. ¿Cuál es la ganancia?'
+          options:
+            - '$150$ pesos'
+            - '$650$ pesos'
+            - '$530$ pesos'
+          answer: 0
+          explanation: >-
+            Precio de venta: $500 \times 1{,}30 = 650$; ganancia: $650 - 500 =
+            150$ pesos. $650$ es el precio, no la ganancia.
+    glossary:
+      - {term: Subtotal, definition: 'Cantidad por precio unitario de un artículo.'}
+      - {term: Margen, definition: 'Ganancia expresada como porcentaje del costo (o del precio de venta, si se indica).'}
+  t03:
+    intro:
+      what: >-
+        Un presupuesto es un plan que compara los ingresos previstos con los
+        gastos previstos durante un periodo, normalmente un mes.
+      purpose: >-
+        Sirve para saber cuánto dinero queda, decidir cuánto ahorrar y evitar
+        gastar más de lo que se tiene.
+      importance: >-
+        Es la herramienta básica de unas finanzas sanas, personales o de un
+        negocio.
+      foundations: >-
+        Combina suma y resta (bloques 4 y 5), porcentajes (bloque 22) y división
+        con redondeo por exceso (bloque 25).
+      prerequisites:
+        - 'Suma y resta de varios números (bloques 4 y 5)'
+        - 'Porcentaje de una cantidad (bloque 22)'
+        - 'Aproximación por exceso (bloque 25)'
+      outcomes:
+        - 'Calcular el saldo de un presupuesto'
+        - 'Repartir un ingreso por porcentajes'
+        - 'Calcular cuánto tiempo se tarda en alcanzar una meta de ahorro'
+      everyday_example: >-
+        Con un ingreso de 12 000 pesos y gastos fijos de 9600, quedan 2400 pesos
+        para ahorrar o para imprevistos.
+    sections:
+      - title: Ingresos, gastos y saldo
+        concept: >-
+          Saldo = ingresos − gastos; si es negativo, el presupuesto no alcanza.
+        explanation: |-
+          Para hacer un presupuesto mensual:
+
+          1. **Suma los ingresos** (sueldo, otros cobros).
+          2. **Suma los gastos**: fijos (alquiler, servicios) y variables (comida, transporte, ocio).
+          3. **Calcula el saldo**: ingresos menos gastos. Si sale **negativo** (bloque 24) hay **déficit**: se gasta más de lo que entra.
+
+          Ejemplo: ingreso $12\,000$; gastos: alquiler $4500$, comida $3000$, transporte $1200$, servicios $900$. Gastos: $9600$. Saldo: $12\,000 - 9600 = 2400$ pesos.
+
+          **Regla 50/30/20.** Una pauta popular reparte el ingreso así: $50\,\%$ a necesidades, $30\,\%$ a deseos y $20\,\%$ a ahorro. Con $12\,000$: $6000$, $3600$ y $2400$ pesos. Es una orientación, no una ley.
+        definition: >-
+          El saldo de un presupuesto es la diferencia entre los ingresos y los
+          gastos de un periodo.
+        rules:
+          - 'Saldo positivo: superávit; saldo negativo: déficit.'
+          - 'Los porcentajes de un reparto deben sumar 100 %.'
+        examples:
+          - problem: 'Quieres ahorrar 5000 pesos guardando 450 al mes. ¿Cuántos meses necesitas como mínimo?'
+            solution: |-
+              **Paso 1.** $5000 \div 450 \approx 11{,}1$.
+
+              **Paso 2.** En $11$ meses ahorras $4950$: no llegas. Hay que aproximar por exceso (bloque 25).
+
+              **Paso 3.** En $12$ meses ahorras $5400 \ge 5000$.
+
+              Resultado: $12$ meses.
+        common_errors:
+          - 'Redondear 11,1 a 11 meses: no se alcanzaría la meta.'
+          - 'Olvidar gastos variables pequeños que, sumados, son importantes.'
+        summary: >-
+          El saldo es ingresos menos gastos; los repartos porcentuales y las metas
+          de ahorro se calculan con porcentajes y divisiones por exceso.
+        check:
+          question: 'Con la regla 50/30/20 y un ingreso de 8000 pesos, ¿cuánto se destina a deseos (30 %)?'
+          options:
+            - '$2400$ pesos'
+            - '$1600$ pesos'
+            - '$4000$ pesos'
+          answer: 0
+          explanation: >-
+            $30\,\%$ de $8000 = 0{,}30 \times 8000 = 2400$ pesos. $1600$ es el
+            ahorro ($20\,\%$) y $4000$ las necesidades ($50\,\%$).
+    glossary:
+      - {term: Presupuesto, definition: 'Plan que compara ingresos y gastos previstos.'}
+      - {term: Saldo, definition: 'Diferencia entre ingresos y gastos.'}
+      - {term: Déficit, definition: 'Situación en que los gastos superan a los ingresos.'}
+  t04:
+    intro:
+      what: >-
+        Las finanzas personales son la gestión del propio dinero: ahorrar,
+        invertir, pedir prestado y entender el costo de las deudas.
+      purpose: >-
+        Sirven para tomar decisiones informadas sobre ahorros, préstamos y
+        tarjetas de crédito.
+      importance: >-
+        Entender el interés compuesto permite ver cómo crece el ahorro a largo
+        plazo y cómo crece, también, una deuda impagada.
+      foundations: >-
+        Aplica el interés simple y compuesto (bloque 23), las potencias
+        (bloque 18) y los porcentajes (bloque 22).
+      prerequisites:
+        - 'Interés simple e interés compuesto (bloque 23)'
+        - 'Potencias (bloque 18)'
+        - 'Aumentos porcentuales (bloque 22)'
+      outcomes:
+        - 'Calcular ahorros periódicos'
+        - 'Calcular el crecimiento de una inversión con interés compuesto'
+        - 'Calcular el costo de una deuda que no se paga'
+      everyday_example: >-
+        10 000 pesos al 5 % anual compuesto se convierten en 11 025 pesos en dos
+        años.
+    sections:
+      - title: Ahorrar e invertir
+        concept: >-
+          Con interés compuesto, el capital se multiplica cada periodo por
+          $1 + \frac{r}{100}$.
+        explanation: |-
+          Recuerda del bloque 23: con **interés compuesto** los intereses de cada periodo se suman al capital y, a su vez, generan intereses. Por eso se multiplica una y otra vez por el mismo factor (potencias, bloque 18):
+
+          $$C_n = C_0 \times \left(1 + \frac{r}{100}\right)^n$$
+
+          $10\,000$ pesos al $5\,\%$ anual durante 2 años:
+
+          $$10\,000 \times 1{,}05^2 = 10\,000 \times 1{,}1025 = 11\,025 \text{ pesos}$$
+
+          Con interés **simple** serían $10\,000 + 2 \times 500 = 11\,000$ pesos. La diferencia ($25$ pesos) son los "intereses de los intereses", y crece mucho con los años.
+        definition: >-
+          El capital final con interés compuesto, con un capital inicial $C_0$,
+          una tasa $r\,\%$ por periodo y $n$ periodos, es $C_n = C_0(1 +
+          \frac{r}{100})^n$.
+        rules:
+          - 'Interés compuesto: multiplicar por $(1 + r/100)$ cada periodo.'
+          - 'La tasa y el tiempo deben referirse al mismo periodo (anual, mensual...).'
+        examples:
+          - problem: 'Ahorras 350 pesos cada mes, sin intereses. ¿Cuánto tendrás en un año?'
+            solution: |-
+              **Paso 1.** Un año tiene 12 meses.
+
+              **Paso 2.** $350 \times 12 = 4200$.
+
+              Resultado: $4200$ pesos.
+        common_errors:
+          - 'Calcular el interés compuesto como si fuera simple.'
+          - 'Mezclar tasa anual con periodos mensuales.'
+        summary: >-
+          El interés compuesto multiplica el capital por el mismo factor cada
+          periodo; a largo plazo supera claramente al simple.
+        check:
+          question: 'Inviertes 20 000 pesos al 10 % anual compuesto. ¿Cuánto tendrás a los 2 años?'
+          options:
+            - '$24\,000$ pesos'
+            - '$24\,200$ pesos'
+            - '$22\,000$ pesos'
+          answer: 1
+          explanation: >-
+            $20\,000 \times 1{,}1^2 = 20\,000 \times 1{,}21 = 24\,200$ pesos.
+            $24\,000$ sería con interés simple y $22\,000$, sólo un año.
+      - title: El costo de las deudas
+        concept: >-
+          Una deuda impagada con interés compuesto crece igual que una inversión,
+          pero en contra de quien la debe.
+        explanation: |-
+          Las tarjetas de crédito y muchos préstamos cobran intereses **mensuales**. Si no se paga, la deuda crece con interés compuesto.
+
+          Una deuda de $5000$ pesos al $3\,\%$ mensual:
+
+          * Tras 1 mes: $5000 \times 1{,}03 = 5150$.
+          * Tras 2 meses: $5150 \times 1{,}03 = 5304{,}50$.
+
+          Un $3\,\%$ mensual parece poco, pero en un año multiplica la deuda por $1{,}03^{12} \approx 1{,}43$: crece más de un $40\,\%$.
+
+          **Consejo práctico:** compara siempre la tasa por el mismo periodo y calcula cuánto pagarás en total, no sólo la cuota.
+        definition: >-
+          El saldo de una deuda $D$ con interés compuesto del $r\,\%$ por periodo
+          tras $n$ periodos sin pagos es $D(1 + \frac{r}{100})^n$.
+        rules:
+          - 'Una tasa mensual pequeña se convierte en una tasa anual mucho mayor.'
+          - 'Pagar antes reduce los intereses totales.'
+        examples:
+          - problem: 'Debes 2000 pesos a un 4 % mensual. ¿Cuánto deberás tras 2 meses sin pagar?'
+            solution: |-
+              **Paso 1.** Mes 1: $2000 \times 1{,}04 = 2080$.
+
+              **Paso 2.** Mes 2: $2080 \times 1{,}04 = 2163{,}20$.
+
+              Resultado: $2163{,}20$ pesos.
+        common_errors:
+          - 'Calcular $4\,\% \times 2 = 8\,\%$ (interés simple) para una deuda con interés compuesto.'
+          - 'Pensar que una tasa del 3 % mensual equivale a un 3 % anual.'
+        summary: >-
+          Las deudas con interés compuesto crecen mes a mes; una tasa mensual
+          pequeña es una tasa anual grande.
+        check:
+          question: 'Una deuda de 1000 pesos tiene un interés del 5 % mensual. ¿Cuánto se debe al mes siguiente sin pagar?'
+          options:
+            - '$1005$ pesos'
+            - '$1050$ pesos'
+            - '$1500$ pesos'
+          answer: 1
+          explanation: >-
+            $1000 \times 1{,}05 = 1050$ pesos. $1005$ confunde $5\,\%$ con $0{,}5\,\%$.
+    glossary:
+      - {term: Interés compuesto, definition: 'Interés que se suma al capital y genera, a su vez, nuevos intereses.'}
+      - {term: Deuda, definition: 'Dinero que se debe y que suele generar intereses.'}
+  t05:
+    intro:
+      what: >-
+        Es la aplicación de las medidas y sus conversiones a situaciones
+        prácticas: pintar, embaldosar, llenar depósitos o calcular materiales.
+      purpose: >-
+        Sirve para comprar la cantidad justa de material y planificar trabajos
+        en casa.
+      importance: >-
+        Un error de unidades o de redondeo puede dejarte sin material a mitad de
+        trabajo o hacerte gastar de más.
+      foundations: >-
+        Combina superficie y volumen (bloque 27), la multiplicación de decimales
+        (bloque 17) y la aproximación por exceso (bloque 25).
+      prerequisites:
+        - 'Superficie, volumen y conversión de unidades (bloque 27)'
+        - 'Multiplicación y división de decimales (bloque 17)'
+        - 'Aproximación por exceso (bloque 25)'
+      outcomes:
+        - 'Calcular superficies a pintar o cubrir'
+        - 'Calcular cuántas piezas caben en una superficie'
+        - 'Calcular la capacidad en litros de un depósito'
+      everyday_example: >-
+        Para embaldosar un suelo de 3 m × 2 m con baldosas de 25 cm hay que
+        pasar todo a la misma unidad: 300 cm × 200 cm.
+    sections:
+      - title: Superficies y volúmenes prácticos
+        concept: >-
+          Se calcula la superficie o el volumen, se homogeneizan unidades y se
+          redondea por exceso el material.
+        explanation: |-
+          **Pintar.** Una habitación cuadrada de $4$ m de lado y $2{,}5$ m de alto tiene 4 paredes. Su superficie es perímetro × alto: $16 \times 2{,}5 = 40$ m². Si $1$ L de pintura cubre $10$ m², hacen falta $40 \div 10 = 4$ L. Si el resultado no es entero, se redondea **por exceso**.
+
+          **Embaldosar.** Suelo de $3$ m × $2$ m con baldosas cuadradas de $25$ cm. Pasamos a cm: $300$ cm × $200$ cm. Caben $300 \div 25 = 12$ baldosas a lo largo y $200 \div 25 = 8$ a lo ancho: $12 \times 8 = 96$ baldosas.
+
+          **Depósitos.** Un tanque de $2$ m × $1{,}5$ m × $1$ m tiene un volumen de $3$ m³, que son $3 \times 1000 = 3000$ L (bloque 27).
+
+          En la práctica se compra un poco más de material (por cortes o roturas), pero el cálculo indica el mínimo.
+        definition: >-
+          Calcular material es hallar la medida (superficie o volumen) que hay que
+          cubrir o llenar y dividirla entre lo que cubre o contiene cada unidad de
+          material.
+        rules:
+          - 'Todas las medidas en la misma unidad antes de operar.'
+          - 'El material se redondea por exceso.'
+          - '1 m³ = 1000 L.'
+        examples:
+          - problem: 'Una pared de 5 m de largo y 2,8 m de alto se pinta con pintura que cubre 6 m² por litro. ¿Cuántos litros enteros hay que comprar?'
+            solution: |-
+              **Paso 1.** Superficie: $5 \times 2{,}8 = 14$ m².
+
+              **Paso 2.** $14 \div 6 \approx 2{,}33$ L.
+
+              **Paso 3.** Por exceso: $3$ L.
+
+              Resultado: $3$ litros.
+        common_errors:
+          - 'Dividir 3 m entre 25 cm sin convertir: daría 0,12.'
+          - 'Redondear por defecto la cantidad de material.'
+        summary: >-
+          Medir, homogeneizar unidades, dividir entre el rendimiento y redondear
+          por exceso.
+        check:
+          question: '¿Cuántos litros caben en un acuario de 80 cm × 40 cm × 50 cm?'
+          options:
+            - '$160$ L'
+            - '$1600$ L'
+            - '$16$ L'
+          answer: 0
+          explanation: >-
+            $80 \times 40 \times 50 = 160\,000$ cm³ y $1$ cm³ $= 1$ mL, así que
+            son $160\,000$ mL $= 160$ L.
+    glossary:
+      - {term: Rendimiento, definition: 'Superficie que cubre una unidad de material, como m² por litro de pintura.'}
+      - {term: Perímetro, definition: 'Suma de las longitudes de los lados de una figura.'}
+  t06:
+    intro:
+      what: >-
+        Es el uso de la aritmética en ciencia y tecnología: notación científica,
+        unidades, velocidades, tiempos de transmisión y datos.
+      purpose: >-
+        Sirve para entender noticias científicas, especificaciones técnicas y
+        cálculos de la vida digital.
+      importance: >-
+        La cultura científica básica exige interpretar cantidades muy grandes o
+        muy pequeñas y relacionarlas con unidades.
+      foundations: >-
+        Combina la notación científica (bloque 26), las unidades y prefijos
+        (bloque 27) y la proporcionalidad (bloque 20).
+      prerequisites:
+        - 'Notación científica (bloque 26)'
+        - 'Prefijos del sistema métrico y conversión de unidades (bloque 27)'
+      outcomes:
+        - 'Calcular distancias y tiempos con notación científica'
+        - 'Calcular tiempos de descarga'
+        - 'Interpretar prefijos en datos técnicos'
+      everyday_example: >-
+        Un archivo de 50 MB a 20 megabits por segundo tarda 20 segundos en
+        descargarse.
+    sections:
+      - title: Velocidades, distancias y descargas
+        concept: >-
+          Tiempo = cantidad ÷ velocidad, con las cantidades en las mismas
+          unidades.
+        explanation: |-
+          Muchos cálculos científicos y técnicos se basan en la misma relación: **tiempo = distancia (o cantidad) ÷ velocidad**.
+
+          **Luz (bloque 26).** La luz recorre unos $3 \times 10^8$ m/s. En un año ($\approx 3{,}15 \times 10^7$ s) recorre $3 \times 3{,}15 \times 10^{8+7} = 9{,}45 \times 10^{15}$ m: un **año luz**.
+
+          **Descargas.** Los archivos se miden en **bytes** (MB = megabytes) y las conexiones en **bits** por segundo (Mb/s = megabits por segundo). Como $1$ byte $= 8$ bits, hay que convertir antes:
+
+          Un archivo de $50$ MB $= 50 \times 8 = 400$ Mb. A $20$ Mb/s: $400 \div 20 = 20$ s.
+
+          Fíjate en la diferencia entre **B** (byte) y **b** (bit): confundirlos da un resultado 8 veces menor.
+        definition: >-
+          La velocidad es la cantidad recorrida o transmitida por unidad de
+          tiempo; por tanto, tiempo = cantidad ÷ velocidad.
+        rules:
+          - '1 byte (B) = 8 bits (b).'
+          - 'Antes de dividir, cantidad y velocidad deben estar en unidades compatibles.'
+          - 'Con números muy grandes o pequeños, usar notación científica.'
+        examples:
+          - problem: 'La Luna está a unos $3{,}84 \times 10^8$ m. ¿Cuánto tarda la luz en llegar desde la Luna?'
+            solution: |-
+              **Paso 1.** Tiempo $= \frac{3{,}84 \times 10^8}{3 \times 10^8}$.
+
+              **Paso 2.** $3{,}84 \div 3 = 1{,}28$ y $10^{8-8} = 10^0 = 1$.
+
+              Resultado: unos $1{,}28$ segundos.
+        common_errors:
+          - 'Dividir megabytes entre megabits por segundo sin convertir.'
+          - 'Multiplicar en lugar de dividir al calcular un tiempo.'
+        summary: >-
+          Tiempo = cantidad ÷ velocidad, con unidades compatibles; en
+          informática, 1 byte son 8 bits.
+        check:
+          question: '¿Cuánto tarda en descargarse un archivo de 100 MB con una conexión de 50 Mb/s?'
+          options:
+            - '$2$ s'
+            - '$16$ s'
+            - '$5000$ s'
+          answer: 1
+          explanation: >-
+            $100$ MB $= 800$ Mb y $800 \div 50 = 16$ s. $2$ s sale de no convertir
+            bytes a bits.
+    glossary:
+      - {term: Bit, definition: 'Unidad mínima de información (b): un 0 o un 1.'}
+      - {term: Byte, definition: 'Grupo de 8 bits (B).'}
+      - {term: Año luz, definition: 'Distancia que recorre la luz en un año, unos $9{,}45 \times 10^{15}$ m.'}
+  t07:
+    intro:
+      what: >-
+        Es la aritmética que está detrás de los ordenadores: el sistema binario,
+        las potencias de 2, las unidades de información y la aritmética modular.
+      purpose: >-
+        Sirve para entender cómo representan los ordenadores la información y
+        para interpretar capacidades de memoria.
+      importance: >-
+        Toda la tecnología digital se basa en estas ideas; conocerlas ayuda a
+        comprender el mundo actual.
+      foundations: >-
+        Combina el sistema binario y la conversión entre bases (bloque 2), las
+        potencias (bloque 18) y la aritmética modular (bloque 29).
+      prerequisites:
+        - 'Sistema binario y conversión entre sistemas de numeración (bloque 2)'
+        - 'Potencias (bloque 18)'
+        - 'Aplicaciones de la aritmética modular (bloque 29)'
+      outcomes:
+        - 'Convertir números entre decimal y binario'
+        - 'Calcular cuántos valores se representan con $n$ bits'
+        - 'Relacionar la operación módulo con tareas informáticas'
+      everyday_example: >-
+        Un byte (8 bits) puede representar $2^8 = 256$ valores distintos, por
+        ejemplo, de 0 a 255.
+    sections:
+      - title: Binario y potencias de 2
+        concept: >-
+          Los ordenadores trabajan en base 2; con $n$ bits se representan $2^n$
+          valores distintos.
+        explanation: |-
+          **Binario (bloque 2).** Los ordenadores usan sólo dos cifras, $0$ y $1$. El valor de cada posición es una potencia de 2: $1, 2, 4, 8, 16, \ldots$ (de derecha a izquierda).
+
+          * De binario a decimal: $1011_2 = 1 \cdot 8 + 0 \cdot 4 + 1 \cdot 2 + 1 \cdot 1 = 11$.
+          * De decimal a binario, por divisiones sucesivas entre 2: $13 \div 2 = 6$ resto $1$; $6 \div 2 = 3$ resto $0$; $3 \div 2 = 1$ resto $1$; $1 \div 2 = 0$ resto $1$. Leyendo los restos de abajo arriba: $13 = 1101_2$.
+
+          Fíjate en que cada resto es una operación módulo 2 (bloque 29).
+
+          **Potencias de 2 (bloque 18 y principio multiplicativo, bloque 30).** Cada bit tiene 2 opciones, así que $n$ bits dan $2^n$ combinaciones: con $8$ bits, $2^8 = 256$; con $10$ bits, $2^{10} = 1024$.
+        definition: >-
+          En el sistema binario, el número $b_k \ldots b_1 b_0$ vale $b_k 2^k +
+          \cdots + b_1 2 + b_0$, con cada $b_i \in \{0, 1\}$; $n$ bits permiten
+          representar $2^n$ valores.
+        rules:
+          - 'Valores de posición en binario: 1, 2, 4, 8, 16, 32...'
+          - 'Para pasar a binario se divide entre 2 y se leen los restos de abajo arriba.'
+          - '$n$ bits representan $2^n$ valores.'
+        examples:
+          - problem: 'Convierte $25$ a binario'
+            solution: |-
+              **Paso 1.** $25 \div 2 = 12$ resto $1$.
+
+              **Paso 2.** $12 \div 2 = 6$ resto $0$; $6 \div 2 = 3$ resto $0$; $3 \div 2 = 1$ resto $1$; $1 \div 2 = 0$ resto $1$.
+
+              **Paso 3.** Restos de abajo arriba: $11001$.
+
+              **Comprobación.** $16 + 8 + 1 = 25$.
+
+              Resultado: $25 = 11001_2$.
+        common_errors:
+          - 'Leer los restos de arriba abajo.'
+          - 'Pensar que con 8 bits se representan 8 × 2 = 16 valores: son $2^8 = 256$.'
+        summary: >-
+          El binario usa potencias de 2; con $n$ bits hay $2^n$ valores.
+        check:
+          question: '¿Cuánto vale en decimal el número binario $10110_2$?'
+          options:
+            - '$22$'
+            - '$13$'
+            - '$10\,110$'
+          answer: 0
+          explanation: >-
+            $1 \cdot 16 + 0 \cdot 8 + 1 \cdot 4 + 1 \cdot 2 + 0 \cdot 1 = 16 + 4 +
+            2 = 22$.
+      - title: Unidades de información y módulo
+        concept: >-
+          Kilo, mega y giga multiplican por $10^3$, $10^6$ y $10^9$ bytes; el
+          módulo aparece en paridad, ciclos y verificación.
+        explanation: |-
+          **Unidades.** Con los prefijos del SI (bloque 27): $1$ kB $= 1000$ bytes, $1$ MB $= 10^6$ bytes, $1$ GB $= 10^9$ bytes, $1$ TB $= 10^{12}$ bytes. En informática también se usan unidades basadas en $2^{10} = 1024$ (el kibibyte, KiB), por eso a veces un disco "de 500 GB" muestra algo menos de capacidad.
+
+          **Aritmética modular (bloque 29).** Los programas usan el resto continuamente:
+
+          * `n % 2` dice si un número es par o impar.
+          * `(p + 1) % n` hace que una posición avance en círculo.
+          * Los dígitos de control detectan errores en códigos.
+
+          Así, el binario, las potencias y el módulo, que estudiaste por separado, trabajan juntos en cada aparato digital.
+        definition: >-
+          Las unidades de información con prefijos del SI son múltiplos del byte
+          por potencias de 10: kB ($10^3$ B), MB ($10^6$ B), GB ($10^9$ B), TB
+          ($10^{12}$ B).
+        rules:
+          - '1 kB = 1000 B; 1 KiB = 1024 B.'
+          - '1 byte = 8 bits.'
+        examples:
+          - problem: '¿Cuántas fotos de 4 MB caben en una memoria de 32 GB (con prefijos del SI)?'
+            solution: |-
+              **Paso 1.** $32$ GB $= 32\,000$ MB.
+
+              **Paso 2.** $32\,000 \div 4 = 8000$.
+
+              Resultado: unas $8000$ fotos.
+        common_errors:
+          - 'Olvidar convertir GB a MB antes de dividir.'
+          - 'Confundir bits y bytes.'
+        summary: >-
+          La información se mide en bytes con prefijos de potencias de 10 (o de
+          1024), y el módulo es una herramienta habitual de programación.
+        check:
+          question: '¿Cuántos bits son 3 bytes?'
+          options:
+            - '$24$'
+            - '$11$'
+            - '$3000$'
+          answer: 0
+          explanation: >-
+            $1$ byte $= 8$ bits, así que $3 \times 8 = 24$ bits.
+    glossary:
+      - {term: Sistema binario, definition: 'Sistema de numeración en base 2, con las cifras 0 y 1.'}
+      - {term: Kibibyte, definition: 'Unidad de 1024 bytes (KiB).'}
+  t08:
+    intro:
+      what: >-
+        Es la resolución de problemas reales completos, con datos del mundo
+        cotidiano, aplicando el método de Pólya (bloque 31).
+      purpose: >-
+        Sirve para afrontar situaciones como planificar un viaje, organizar una
+        celebración o repartir gastos.
+      importance: >-
+        En los problemas reales hay que decidir qué datos usar, cómo redondear y
+        qué respuesta tiene sentido; es la prueba de que se sabe aplicar la
+        aritmética.
+      foundations: >-
+        Aplica el método de resolución de problemas (bloque 31) junto con
+        proporciones, decimales, porcentajes y redondeo.
+      prerequisites:
+        - 'Resolución de problemas (bloque 31)'
+        - 'Regla de tres (bloque 21)'
+        - 'Aproximaciones y redondeo (bloque 25)'
+      outcomes:
+        - 'Resolver problemas reales con el método de Pólya'
+        - 'Elegir el redondeo adecuado al contexto'
+        - 'Interpretar el resultado y comunicarlo'
+      everyday_example: >-
+        Para un viaje en coche de 350 km hay que calcular el combustible y su
+        costo antes de salir.
+    sections:
+      - title: Problemas reales con decisiones
+        concept: >-
+          Un problema real combina varias herramientas y exige decidir cómo
+          redondear y cómo comunicar la respuesta.
+        explanation: |-
+          **Viaje.** Un coche consume $7$ L cada $100$ km y la gasolina cuesta $22$ pesos el litro. ¿Cuánto cuesta un viaje de $350$ km?
+
+          * Comprender: incógnita = costo en pesos.
+          * Plan: litros (proporción, bloque 21) y después costo.
+          * Ejecutar: $350 \div 100 \times 7 = 24{,}5$ L; $24{,}5 \times 22 = 539$ pesos.
+          * Comprobar: unos $25$ L a unos $20$ pesos son unos $500$ pesos. ✔
+
+          **Fiesta.** $18$ personas, $3$ porciones por persona, pizzas de $8$ porciones a $150$ pesos. ¿Cuánto paga cada uno?
+
+          * Porciones: $18 \times 3 = 54$. Pizzas: $54 \div 8 = 6{,}75$ → **por exceso**, $7$ pizzas (bloque 25).
+          * Costo: $7 \times 150 = 1050$ pesos. Por persona: $1050 \div 18 = 58{,}333\ldots \approx 58{,}33$ pesos.
+          * Decisión real: si cada uno paga $58{,}33$, se reúnen $1049{,}94$ y faltan $6$ centavos. En la práctica se redondea por exceso: $58{,}34$ pesos (o cada uno paga $60$ y sobra algo).
+
+          Los problemas reales piden **pensar** el redondeo, no aplicarlo mecánicamente.
+        definition: >-
+          Un problema real es una situación del mundo cotidiano cuya solución
+          exige seleccionar datos, combinar operaciones y tomar decisiones de
+          aproximación coherentes con el contexto.
+        rules:
+          - 'Sigue las cuatro fases: comprender, planificar, ejecutar, comprobar.'
+          - 'Redondea según el contexto: por exceso si no puede faltar.'
+          - 'Comunica la respuesta con una frase, una unidad y, si hace falta, una recomendación.'
+        examples:
+          - problem: 'Un coche consume 6 L cada 100 km. La gasolina cuesta 20 pesos el litro. ¿Cuánto cuesta en gasolina un viaje de 240 km?'
+            solution: |-
+              **Paso 1.** Litros: $240 \div 100 \times 6 = 14{,}4$ L.
+
+              **Paso 2.** Costo: $14{,}4 \times 20 = 288$ pesos.
+
+              **Paso 3.** Comprobación: unos $15$ L a $20$ pesos son $300$. ✔
+
+              Resultado: $288$ pesos.
+        common_errors:
+          - 'Redondear por defecto el número de pizzas o de autobuses.'
+          - 'No comprobar si el resultado es razonable.'
+        summary: >-
+          Los problemas reales se resuelven con el método de Pólya y con
+          decisiones de redondeo pensadas para la situación.
+        check:
+          question: 'Para una reunión de 25 personas se calculan 2 refrescos por persona, en packs de 6. ¿Cuántos packs hay que comprar?'
+          options:
+            - '$8$ packs'
+            - '$9$ packs'
+            - '$8{,}33$ packs'
+          answer: 1
+          explanation: >-
+            $25 \times 2 = 50$ refrescos; $50 \div 6 \approx 8{,}33$. Con 8 packs
+            sólo hay 48: hay que redondear por exceso, $9$ packs.
+    glossary:
+      - {term: Problema real, definition: 'Situación cotidiana que se resuelve con herramientas matemáticas y decisiones razonadas.'}
+      - {term: Consumo, definition: 'Cantidad de combustible que gasta un vehículo por distancia recorrida.'}
+  t09:
+    intro:
+      what: >-
+        Es la integración de todos los conocimientos del módulo en problemas que
+        combinan operaciones, jerarquía, fracciones, decimales, porcentajes,
+        proporciones y el método de resolución.
+      purpose: >-
+        Sirve para consolidar lo aprendido y comprobar que se sabe elegir y
+        combinar las herramientas adecuadas.
+      importance: >-
+        Cierra el módulo mostrando que la aritmética no es una lista de temas
+        aislados, sino un sistema coherente de ideas.
+      foundations: >-
+        Reúne la jerarquía de operaciones (bloque 9), las fracciones (bloques 14
+        y 15), los decimales (bloques 16 y 17), los porcentajes (bloque 22) y el
+        método de resolución de problemas (bloque 31).
+      prerequisites:
+        - 'Jerarquía de operaciones y operaciones combinadas (bloque 9)'
+        - 'Problemas con fracciones (bloque 15)'
+        - 'Descuentos porcentuales (bloque 22)'
+        - 'Problemas de varios pasos (bloque 31)'
+      outcomes:
+        - 'Resolver operaciones combinadas con todo tipo de números'
+        - 'Resolver problemas que combinan fracciones, porcentajes y decimales'
+        - 'Elegir con criterio las herramientas de cada paso'
+      everyday_example: >-
+        Comprar un electrodoméstico con descuento, pagar una parte al contado y
+        el resto en cuotas combina porcentajes, fracciones y división.
+    sections:
+      - title: Operaciones combinadas
+        concept: >-
+          La jerarquía de operaciones del bloque 9 se aplica igual con
+          naturales, enteros, fracciones, decimales y potencias.
+        explanation: |-
+          Recuerda el orden del bloque 9:
+
+          1. Paréntesis, corchetes y llaves (de dentro hacia fuera).
+          2. Potencias y raíces.
+          3. Multiplicaciones y divisiones, de izquierda a derecha.
+          4. Sumas y restas, de izquierda a derecha.
+
+          Este orden vale para **cualquier** tipo de número del módulo:
+
+          $$3 \times (12 - 4) + 2^3 \div 4 = 3 \times 8 + 8 \div 4 = 24 + 2 = 26$$
+
+          Con fracciones (bloque 15):
+
+          $$\frac{1}{2} + \frac{3}{4} \times \frac{2}{3} = \frac{1}{2} + \frac{1}{2} = 1$$
+
+          Primero el producto ($\frac{3}{4} \times \frac{2}{3} = \frac{6}{12} = \frac{1}{2}$) y después la suma.
+        definition: >-
+          Una operación combinada es una expresión con varias operaciones que se
+          resuelve siguiendo la jerarquía: agrupaciones, potencias y raíces,
+          multiplicaciones y divisiones, y sumas y restas.
+        rules:
+          - 'Primero los paréntesis; después potencias; después × y ÷; al final + y −.'
+          - 'Operaciones del mismo nivel, de izquierda a derecha.'
+          - 'La jerarquía es la misma para fracciones, decimales y enteros.'
+        examples:
+          - problem: 'Calcula $20 - 2 \times (1{,}5 + 3{,}5)^2 \div 5$'
+            solution: |-
+              **Paso 1.** Paréntesis: $1{,}5 + 3{,}5 = 5$.
+
+              **Paso 2.** Potencia: $5^2 = 25$.
+
+              **Paso 3.** Multiplicación y división, de izquierda a derecha: $2 \times 25 = 50$; $50 \div 5 = 10$.
+
+              **Paso 4.** Resta: $20 - 10 = 10$.
+
+              Resultado: $10$.
+        common_errors:
+          - 'Operar de izquierda a derecha sin respetar la jerarquía: $3 \times 12 - 4$ no es $3 \times 8$.'
+          - 'Sumar fracciones antes de multiplicar en una operación combinada.'
+        summary: >-
+          La jerarquía de operaciones es la regla común a todos los números del
+          módulo.
+        check:
+          question: '¿Cuánto vale $10 - 6 \div 2 + 4 \times 0{,}5$?'
+          options:
+            - '$9$'
+            - '$4$'
+            - '$7$'
+          answer: 0
+          explanation: >-
+            $6 \div 2 = 3$ y $4 \times 0{,}5 = 2$; después $10 - 3 + 2 = 9$.
+      - title: Un problema integrador
+        concept: >-
+          Los problemas integradores se resuelven con el método de Pólya,
+          eligiendo en cada paso la herramienta del bloque adecuado.
+        explanation: |-
+          *"Un electrodoméstico cuesta 4800 pesos. Tiene un 15 % de descuento. Pagas 1/4 del precio rebajado al contado y el resto en 6 cuotas iguales sin intereses. ¿Cuánto es cada cuota?"*
+
+          * **Comprender (bloque 31).** Incógnita: el valor de una cuota, en pesos.
+          * **Plan.** Precio rebajado (porcentaje) → parte al contado (fracción) → resto (resta) → cuota (división).
+          * **Ejecutar.**
+            * Precio rebajado (bloque 22): $4800 \times 0{,}85 = 4080$ pesos.
+            * Contado (bloque 15): $\frac{1}{4} \times 4080 = 1020$ pesos.
+            * Resto: $4080 - 1020 = 3060$ pesos.
+            * Cuota (bloque 7): $3060 \div 6 = 510$ pesos.
+          * **Comprobar.** $1020 + 6 \times 510 = 1020 + 3060 = 4080$. ✔
+
+          **Respuesta:** cada cuota es de $510$ pesos.
+
+          Cada paso usa un bloque distinto, pero todos encajan gracias a un plan ordenado.
+        definition: >-
+          Un problema integrador es aquel cuya solución requiere combinar
+          herramientas de varios bloques del módulo en un plan de varios pasos.
+        rules:
+          - 'Identifica qué herramienta (y de qué bloque) necesita cada paso.'
+          - 'Cada porcentaje o fracción se aplica a la cantidad que indica el enunciado.'
+          - 'Comprueba reconstruyendo el total.'
+        examples:
+          - problem: 'Ganas 2400 pesos. Gastas 1/3 en alquiler y el 25 % de lo que queda en comida. ¿Cuánto te queda?'
+            solution: |-
+              **Paso 1.** Alquiler: $\frac{1}{3} \times 2400 = 800$; quedan $1600$.
+
+              **Paso 2.** Comida: $25\,\%$ de $1600 = 400$; quedan $1600 - 400 = 1200$.
+
+              **Comprobación.** $800 + 400 + 1200 = 2400$. ✔
+
+              Resultado: te quedan $1200$ pesos.
+        common_errors:
+          - 'Aplicar el segundo porcentaje al total inicial en lugar de a lo que queda.'
+          - 'Detenerse en un resultado intermedio (el precio rebajado) sin llegar a la cuota.'
+        summary: >-
+          Un plan ordenado y la herramienta adecuada en cada paso permiten
+          resolver problemas que integran todo el módulo.
+        check:
+          question: 'Un abrigo de 1200 pesos tiene un 20 % de descuento y se paga en 4 cuotas iguales. ¿Cuánto es cada cuota?'
+          options:
+            - '$240$ pesos'
+            - '$300$ pesos'
+            - '$960$ pesos'
+          answer: 0
+          explanation: >-
+            Precio rebajado: $1200 \times 0{,}80 = 960$; cuota: $960 \div 4 = 240$
+            pesos. $300$ olvida el descuento y $960$ es el precio total, no la
+            cuota.
+    glossary:
+      - {term: Problema integrador, definition: 'Problema que combina herramientas de varios bloques.'}
+      - {term: Jerarquía de operaciones, definition: 'Orden en que se resuelven las operaciones de una expresión.'}
