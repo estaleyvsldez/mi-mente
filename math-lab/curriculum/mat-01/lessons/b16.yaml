@@ -1,0 +1,641 @@
+block: b16
+intro: |-
+  Los números decimales son otra forma de escribir fracciones cuyo denominador es 10, 100, 1000…, usando una coma. En este bloque aprenderás qué son, sus partes, las décimas, centésimas y milésimas, el valor posicional decimal, cómo leerlos y escribirlos, cómo compararlos y cómo convertir entre fracciones y decimales. Es la base de las operaciones con decimales (bloque 17), del dinero y de las medidas.
+
+topics:
+  t01:
+    intro:
+      what: |-
+        Un número decimal es un número escrito con una coma que separa la parte entera de la parte que es menor que una unidad, como $3{,}25$ o $0{,}7$.
+      purpose: |-
+        Sirve para expresar cantidades que no son enteras de forma cómoda: precios, medidas, temperaturas, tiempos deportivos.
+      importance: |-
+        Los decimales están por todas partes (dinero, básculas, metros, calculadoras). Además, permiten comparar y operar cantidades no enteras de forma muy parecida a como se hace con los enteros.
+      foundations: |-
+        Amplía el sistema decimal y el valor posicional (bloque 02) hacia la derecha: cada posición vale 10 veces menos que la anterior. Un decimal es una fracción con denominador 10, 100, 1000… (bloque 14).
+      prerequisites:
+        - 'Sistema decimal y valor posicional (bloque 02)'
+        - 'Qué es una fracción (bloque 14, tema 1)'
+        - 'Recta numérica (bloque 03)'
+      outcomes:
+        - 'Reconocer números decimales'
+        - 'Escribir fracciones decimales como números decimales'
+        - 'Relacionar decimales con dinero y medidas'
+      everyday_example: |-
+        Un precio de 3 pesos con 25 centavos se escribe $3{,}25$ pesos: 3 pesos enteros y 25 centésimas de peso.
+    sections:
+      - title: Más allá de las unidades
+        concept: Los decimales prolongan el valor posicional a la derecha de las unidades, separando con una coma.
+        explanation: |-
+          En el sistema decimal (bloque 02), cada posición vale 10 veces más que la de su derecha: unidades, decenas, centenas… ¿Y si seguimos hacia la derecha de las unidades? Cada nueva posición vale **10 veces menos**:
+
+          - La primera posición tras la coma son las **décimas**: $\frac{1}{10}$.
+          - La segunda, las **centésimas**: $\frac{1}{100}$.
+          - La tercera, las **milésimas**: $\frac{1}{1000}$.
+
+          Para saber dónde terminan las unidades se usa la **coma decimal**. Así:
+
+          $$\frac{7}{10} = 0{,}7 \qquad \frac{23}{100} = 0{,}23 \qquad \frac{5}{1000} = 0{,}005$$
+
+          Las fracciones con denominador 10, 100, 1000… se llaman **fracciones decimales**, y todas se pueden escribir directamente como número decimal.
+
+          Nota: en muchos países se usa un **punto** en lugar de la coma (por ejemplo, en las calculadoras: 3.25). En este curso usamos la coma.
+
+          En la recta numérica, los decimales llenan los huecos entre los enteros: $0{,}5$ está justo a mitad de camino entre 0 y 1.
+        definition: |-
+          Un **número decimal** es la escritura de un número mediante cifras a la izquierda y a la derecha de una coma; cada cifra a la derecha de la coma vale $\frac{1}{10}$ de lo que valdría en la posición anterior. Toda fracción decimal $\frac{a}{10^n}$ se escribe como decimal con $n$ cifras tras la coma.
+        rules:
+          - 'La coma separa las unidades de las décimas.'
+          - 'Cada posición hacia la derecha vale 10 veces menos.'
+          - 'Una fracción con denominador 10, 100 o 1000 tiene 1, 2 o 3 cifras decimales.'
+        examples:
+          - problem: 'Escribe como decimal $\frac{45}{100}$, $\frac{3}{10}$ y $\frac{8}{1000}$.'
+            solution: |-
+              **Paso 1.** $\frac{45}{100}$: dos cifras tras la coma: $0{,}45$.
+
+              **Paso 2.** $\frac{3}{10}$: una cifra: $0{,}3$.
+
+              **Paso 3.** $\frac{8}{1000}$: tres cifras, rellenando con ceros: $0{,}008$.
+
+              Resultado: $0{,}45$; $0{,}3$; $0{,}008$.
+          - problem: 'Escribe como decimal 12 pesos y 5 centavos.'
+            solution: |-
+              **Paso 1.** 5 centavos son $\frac{5}{100}$ de peso $= 0{,}05$.
+
+              **Paso 2.** $12 + 0{,}05 = 12{,}05$.
+
+              Resultado: $12{,}05$ pesos.
+        common_errors:
+          - 'Escribir $\frac{8}{1000}$ como $0{,}8$: hacen falta tres cifras decimales, $0{,}008$.'
+          - 'Escribir 5 centavos como $0{,}5$ pesos (eso serían 50 centavos).'
+        summary: |-
+          Los decimales extienden el valor posicional a la derecha de la coma: décimas, centésimas, milésimas. Son fracciones con denominador 10, 100, 1000…
+        check:
+          question: '¿Cómo se escribe $\frac{45}{100}$ como número decimal?'
+          options: ['$0{,}45$', '$4{,}5$', '$0{,}045$']
+          answer: 0
+          explanation: |-
+            Denominador 100: dos cifras tras la coma, $0{,}45$. $4{,}5$ es $\frac{45}{10}$ y $0{,}045$ es $\frac{45}{1000}$.
+    glossary:
+      - {term: Número decimal, definition: 'Número escrito con coma, con cifras que valen décimas, centésimas, milésimas…'}
+      - {term: Coma decimal, definition: 'Signo que separa la parte entera de la parte decimal.'}
+      - {term: Fracción decimal, definition: 'Fracción cuyo denominador es 10, 100, 1000…'}
+
+  t02:
+    intro:
+      what: |-
+        Todo número decimal tiene dos partes: la parte entera (a la izquierda de la coma) y la parte decimal (a la derecha).
+      purpose: |-
+        Sirve para leer, comparar y operar decimales sabiendo qué parte representa unidades completas y qué parte es menor que una unidad.
+      importance: |-
+        Identificar las partes es el primer paso para leer bien un decimal, compararlo y redondearlo.
+      foundations: |-
+        La coma decimal (tema 1) y el valor posicional (bloque 02).
+      prerequisites:
+        - 'Qué son los números decimales (bloque 16, tema 1)'
+      outcomes:
+        - 'Identificar la parte entera y la parte decimal'
+        - 'Escribir un entero como decimal'
+      everyday_example: |-
+        En una báscula que marca $2{,}350$ kg, la parte entera (2) son los kilos completos y la parte decimal (350) son los gramos: 350 milésimas de kilo.
+    sections:
+      - title: A cada lado de la coma
+        concept: Lo que está a la izquierda de la coma es la parte entera; lo que está a la derecha, la parte decimal.
+        explanation: |-
+          En $12{,}375$:
+
+          - **Parte entera**: $12$. Son las unidades completas.
+          - **Parte decimal**: $375$, que significa $375$ milésimas, es decir, $\frac{375}{1000}$: una cantidad menor que 1.
+
+          El número completo es la suma de ambas partes: $12{,}375 = 12 + 0{,}375$.
+
+          **Casos especiales**
+
+          - Si el número es menor que 1, su parte entera es $0$: en $0{,}6$ la parte entera es 0 y la decimal, 6.
+          - Un número entero tiene parte decimal nula: $8 = 8{,}0 = 8{,}00$.
+          - La parte decimal se lee con todas sus cifras, incluidos los ceros iniciales: en $305{,}08$ la parte decimal es $08$ (8 centésimas), no $8$ décimas.
+        definition: |-
+          En un número decimal, la **parte entera** está formada por las cifras a la izquierda de la coma y la **parte decimal** por las cifras a la derecha; el número es la suma de ambas.
+        rules:
+          - 'Izquierda de la coma: parte entera. Derecha: parte decimal.'
+          - 'Si no hay cifras a la izquierda de la coma, se escribe 0: $0{,}5$.'
+          - 'Un entero es un decimal con parte decimal 0.'
+        examples:
+          - problem: 'Indica la parte entera y la parte decimal de $305{,}08$ y de $0{,}9$.'
+            solution: |-
+              **Paso 1.** $305{,}08$: parte entera 305; parte decimal 08 (8 centésimas).
+
+              **Paso 2.** $0{,}9$: parte entera 0; parte decimal 9 (9 décimas).
+        common_errors:
+          - 'Omitir el cero inicial: escribir $,5$ en lugar de $0{,}5$.'
+          - 'Ignorar los ceros de la parte decimal: $305{,}08 \neq 305{,}8$.'
+        summary: |-
+          La coma separa la parte entera (unidades completas) de la parte decimal (lo que es menor que una unidad).
+        check:
+          question: '¿Cuál es la parte entera de $47{,}309$?'
+          options: ['$47$', '$309$', '$47309$']
+          answer: 0
+          explanation: |-
+            La parte entera son las cifras a la izquierda de la coma: 47. El 309 es la parte decimal.
+    glossary:
+      - {term: Parte entera, definition: 'Cifras a la izquierda de la coma decimal.'}
+      - {term: Parte decimal, definition: 'Cifras a la derecha de la coma decimal; valen menos que una unidad.'}
+
+  t03:
+    intro:
+      what: |-
+        Una décima es cada una de las 10 partes iguales en que se divide una unidad: $\frac{1}{10} = 0{,}1$. Ocupa la primera posición tras la coma.
+      purpose: |-
+        Sirve para medir con más precisión que la unidad: temperaturas ($36{,}5$ °C), tiempos ($9{,}8$ s), distancias.
+      importance: |-
+        Es el primer orden decimal; entenderlo bien hace que centésimas y milésimas resulten naturales, porque siguen la misma lógica.
+      foundations: |-
+        La fracción $\frac{1}{10}$ (bloque 14) y la regla de que cada posición vale 10 veces menos que la de su izquierda.
+      prerequisites:
+        - 'Qué son los números decimales (bloque 16, tema 1)'
+        - 'Parte entera y parte decimal (bloque 16, tema 2)'
+      outcomes:
+        - 'Reconocer y escribir décimas'
+        - 'Convertir entre unidades y décimas'
+      everyday_example: |-
+        Un termómetro que marca $37{,}4$ °C indica 37 grados y 4 décimas de grado.
+    sections:
+      - title: La unidad dividida en 10
+        concept: Una décima es $\frac{1}{10}$ de la unidad; 10 décimas forman una unidad.
+        explanation: |-
+          Divide una unidad en **10 partes iguales**: cada parte es **una décima**, $\frac{1}{10} = 0{,}1$.
+
+          - $0{,}7$ son 7 décimas: $\frac{7}{10}$.
+          - **10 décimas = 1 unidad**: $\frac{10}{10} = 1$.
+          - $2{,}4$ son 2 unidades y 4 décimas, o bien **24 décimas** en total (porque 2 unidades son 20 décimas).
+
+          En la recta numérica, entre 0 y 1 hay 9 marcas que dividen el segmento en 10 trozos: $0{,}1$, $0{,}2$, …, $0{,}9$. Después de $0{,}9$ viene $1{,}0$.
+
+          Así como 10 unidades forman una decena, **10 décimas forman una unidad**: es la misma regla del sistema decimal, aplicada a la derecha de la coma.
+        definition: |-
+          Una **décima** es la unidad decimal de primer orden: $0{,}1 = \frac{1}{10}$. La cifra situada inmediatamente a la derecha de la coma indica el número de décimas.
+        rules:
+          - '$1$ décima $= 0{,}1 = \frac{1}{10}$.'
+          - '$10$ décimas $= 1$ unidad.'
+          - 'La primera cifra tras la coma son las décimas.'
+        examples:
+          - problem: '¿Cuántas décimas hay en $3{,}6$?'
+            solution: |-
+              **Paso 1.** 3 unidades son $3 \times 10 = 30$ décimas.
+
+              **Paso 2.** Más 6 décimas: $30 + 6 = 36$.
+
+              Resultado: 36 décimas (es decir, $3{,}6 = \frac{36}{10}$).
+        common_errors:
+          - 'Contar sólo la cifra de las décimas: en $3{,}6$ hay 36 décimas en total, no 6.'
+          - 'Creer que después de $0{,}9$ viene $0{,}10$: viene $1{,}0$.'
+        summary: |-
+          Una décima es la décima parte de la unidad, $0{,}1$. Diez décimas forman una unidad.
+        check:
+          question: '¿Cuántas décimas hay en $3{,}6$?'
+          options: ['$36$', '$6$', '$360$']
+          answer: 0
+          explanation: |-
+            $3{,}6 = \frac{36}{10}$: 36 décimas. El 6 son sólo las décimas que no forman unidad completa; 360 serían centésimas.
+    glossary:
+      - {term: Décima, definition: 'Cada una de las 10 partes iguales de una unidad: $0{,}1$.'}
+
+  t04:
+    intro:
+      what: |-
+        Una centésima es cada una de las 100 partes iguales de una unidad: $\frac{1}{100} = 0{,}01$. Ocupa la segunda posición tras la coma.
+      purpose: |-
+        Sirve para expresar con precisión cantidades como el dinero (los centavos son centésimas de peso) o las medidas en centímetros.
+      importance: |-
+        Es la precisión más habitual en la vida diaria, sobre todo en los precios. También es la base de los porcentajes.
+      foundations: |-
+        Una décima dividida en 10 partes iguales da centésimas: cada posición vale 10 veces menos que la anterior.
+      prerequisites:
+        - 'Décimas (bloque 16, tema 3)'
+      outcomes:
+        - 'Reconocer y escribir centésimas'
+        - 'Convertir entre unidades, décimas y centésimas'
+      everyday_example: |-
+        Un peso tiene 100 centavos, así que 1 centavo es una centésima de peso: 25 centavos son $0{,}25$ pesos.
+    sections:
+      - title: La unidad dividida en 100
+        concept: Una centésima es $\frac{1}{100}$; 10 centésimas forman una décima y 100 centésimas forman una unidad.
+        explanation: |-
+          Si cada décima se divide en 10 partes iguales, la unidad queda dividida en $10 \times 10 = 100$ partes: cada una es **una centésima**, $\frac{1}{100} = 0{,}01$.
+
+          Equivalencias:
+
+          - **10 centésimas = 1 décima**: $0{,}10 = 0{,}1$.
+          - **100 centésimas = 1 unidad**.
+
+          Lectura de las posiciones en $0{,}25$:
+
+          - 2 décimas y 5 centésimas,
+          - o bien **25 centésimas** en total ($\frac{25}{100}$), porque 2 décimas son 20 centésimas.
+
+          Con parte entera: $1{,}08$ son 1 unidad, 0 décimas y 8 centésimas, es decir, $100 + 8 = 108$ centésimas.
+
+          **Valor de una cifra**: en $4{,}27$, el 7 está en las centésimas, así que vale $7 \times 0{,}01 = 0{,}07$.
+        definition: |-
+          Una **centésima** es la unidad decimal de segundo orden: $0{,}01 = \frac{1}{100}$. La segunda cifra a la derecha de la coma indica el número de centésimas.
+        rules:
+          - '$1$ centésima $= 0{,}01 = \frac{1}{100}$.'
+          - '$10$ centésimas $= 1$ décima; $100$ centésimas $= 1$ unidad.'
+          - 'La segunda cifra tras la coma son las centésimas.'
+        examples:
+          - problem: '¿Cuántas centésimas hay en $2{,}35$? ¿Cuánto vale la cifra 3?'
+            solution: |-
+              **Paso 1.** 2 unidades son 200 centésimas; 3 décimas son 30 centésimas; más 5 centésimas: $200 + 30 + 5 = 235$.
+
+              **Paso 2.** El 3 está en las décimas: vale $0{,}3$.
+
+              Resultado: 235 centésimas; la cifra 3 vale $0{,}3$.
+        common_errors:
+          - 'Confundir décimas y centésimas: en $4{,}27$ el 7 vale $0{,}07$, no $0{,}7$.'
+          - 'Escribir 8 centésimas como $0{,}8$: es $0{,}08$.'
+        summary: |-
+          Una centésima es $0{,}01$. Diez centésimas forman una décima y cien, una unidad.
+        check:
+          question: '¿Cuánto vale la cifra 7 en el número $4{,}27$?'
+          options: ['$0{,}07$', '$0{,}7$', '$7$']
+          answer: 0
+          explanation: |-
+            El 7 ocupa la segunda posición tras la coma (centésimas): vale 7 centésimas, $0{,}07$.
+    glossary:
+      - {term: Centésima, definition: 'Cada una de las 100 partes iguales de una unidad: $0{,}01$.'}
+
+  t05:
+    intro:
+      what: |-
+        Una milésima es cada una de las 1000 partes iguales de una unidad: $\frac{1}{1000} = 0{,}001$. Ocupa la tercera posición tras la coma.
+      purpose: |-
+        Sirve para medidas muy precisas: kilos con gramos, metros con milímetros, litros con mililitros, tiempos de competición.
+      importance: |-
+        Muchas unidades de medida se relacionan entre sí por 1000 (1 kg = 1000 g; 1 m = 1000 mm), así que las milésimas son esenciales para convertir medidas.
+      foundations: |-
+        Una centésima dividida en 10 da milésimas: sigue la regla de "10 veces menos" en cada posición.
+      prerequisites:
+        - 'Centésimas (bloque 16, tema 4)'
+      outcomes:
+        - 'Reconocer y escribir milésimas'
+        - 'Convertir entre unidades, décimas, centésimas y milésimas'
+      everyday_example: |-
+        Un paquete de $1{,}250$ kg pesa 1 kilo y 250 gramos, porque cada gramo es una milésima de kilo.
+    sections:
+      - title: La unidad dividida en 1000
+        concept: Una milésima es $\frac{1}{1000}$; 10 milésimas forman una centésima y 1000 forman una unidad.
+        explanation: |-
+          Si cada centésima se divide en 10 partes iguales, la unidad queda dividida en 1000 partes: cada una es **una milésima**, $\frac{1}{1000} = 0{,}001$.
+
+          Equivalencias:
+
+          - **10 milésimas = 1 centésima**.
+          - **100 milésimas = 1 décima**.
+          - **1000 milésimas = 1 unidad**.
+
+          En $2{,}345$ hay 2 unidades, 3 décimas, 4 centésimas y 5 milésimas, es decir, $2345$ milésimas en total ($\frac{2345}{1000}$).
+
+          **Relación con las medidas**: como $1 \text{ kg} = 1000 \text{ g}$, un gramo es $0{,}001$ kg. Por eso $1{,}250$ kg son $1250$ g. Del mismo modo, $1 \text{ m} = 1000 \text{ mm}$, y $0{,}005$ m son 5 mm.
+        definition: |-
+          Una **milésima** es la unidad decimal de tercer orden: $0{,}001 = \frac{1}{1000}$. La tercera cifra a la derecha de la coma indica el número de milésimas.
+        rules:
+          - '$1$ milésima $= 0{,}001 = \frac{1}{1000}$.'
+          - '$10$ milésimas $= 1$ centésima; $1000$ milésimas $= 1$ unidad.'
+          - 'La tercera cifra tras la coma son las milésimas.'
+        examples:
+          - problem: 'Escribe en kilos 3 kg y 75 g.'
+            solution: |-
+              **Paso 1.** 75 g son 75 milésimas de kilo: $0{,}075$ kg (tres cifras decimales).
+
+              **Paso 2.** $3 + 0{,}075 = 3{,}075$.
+
+              Resultado: $3{,}075$ kg.
+        common_errors:
+          - 'Escribir 75 milésimas como $0{,}75$ (eso son 75 centésimas): son $0{,}075$.'
+          - 'Pensar que hay 100 milésimas en una unidad.'
+        summary: |-
+          Una milésima es $0{,}001$. Diez milésimas forman una centésima y mil, una unidad.
+        check:
+          question: '¿Cuántas milésimas hay en 1 centésima?'
+          options: ['$10$', '$100$', '$1000$']
+          answer: 0
+          explanation: |-
+            Cada posición vale 10 veces la siguiente: $0{,}01 = 0{,}010$, es decir, 10 milésimas. 1000 milésimas forman una unidad, no una centésima.
+    glossary:
+      - {term: Milésima, definition: 'Cada una de las 1000 partes iguales de una unidad: $0{,}001$.'}
+
+  t06:
+    intro:
+      what: |-
+        El valor posicional decimal es el valor que toma cada cifra de un número decimal según la posición que ocupa respecto a la coma.
+      purpose: |-
+        Sirve para entender exactamente qué cantidad representa cada cifra, descomponer decimales y saber qué ceros se pueden quitar.
+      importance: |-
+        Es la base para comparar, redondear y operar con decimales. Errores de valor posicional producen fallos de un factor 10, 100 o 1000.
+      foundations: |-
+        El valor posicional de los enteros (bloque 02) prolongado a la derecha: unidades, décimas, centésimas, milésimas; cada posición vale 10 veces menos que la anterior.
+      prerequisites:
+        - 'Valor posicional y descomposición de números (bloque 02)'
+        - 'Décimas, centésimas y milésimas (bloque 16, temas 3 a 5)'
+      outcomes:
+        - 'Indicar el valor de cada cifra de un decimal'
+        - 'Descomponer un número decimal'
+        - 'Saber qué ceros cambian el valor y cuáles no'
+      everyday_example: |-
+        En $52{,}75$ pesos, el 5 vale 50 pesos, el 2 vale 2 pesos, el 7 vale 70 centavos y el último 5 vale 5 centavos.
+    sections:
+      - title: La tabla de posiciones
+        concept: Cada cifra vale su número multiplicado por el valor de su posición; cada posición vale 10 veces menos que la de su izquierda.
+        explanation: |-
+          Tabla de posiciones alrededor de la coma:
+
+          | Centenas | Decenas | Unidades | , | Décimas | Centésimas | Milésimas |
+          |---|---|---|---|---|---|---|
+          | 100 | 10 | 1 | , | 0,1 | 0,01 | 0,001 |
+
+          **Descomposición** de $52{,}746$:
+
+          $$52{,}746 = 5 \times 10 + 2 \times 1 + 7 \times 0{,}1 + 4 \times 0{,}01 + 6 \times 0{,}001$$
+          $$= 50 + 2 + 0{,}7 + 0{,}04 + 0{,}006$$
+
+          **Los ceros**
+
+          - Los ceros **al final de la parte decimal** no cambian el valor: $0{,}5 = 0{,}50 = 0{,}500$ (5 décimas son 50 centésimas).
+          - Los ceros **en medio** sí lo cambian, porque mueven las demás cifras de posición: $0{,}05 \neq 0{,}5$.
+          - Los ceros a la izquierda de la parte entera tampoco cambian nada: $07{,}3 = 7{,}3$.
+        definition: |-
+          En un número decimal, la cifra en la posición $k$-ésima a la derecha de la coma vale esa cifra multiplicada por $\frac{1}{10^k}$; las cifras a la izquierda de la coma conservan su valor posicional habitual.
+        rules:
+          - 'Valor de una cifra = cifra × valor de su posición.'
+          - 'Cada posición vale 10 veces menos que la de su izquierda.'
+          - 'Los ceros al final de la parte decimal se pueden añadir o quitar; los del medio, no.'
+        examples:
+          - problem: 'En $18{,}035$, ¿cuánto vale cada cifra?'
+            solution: |-
+              **Paso 1.** 1: decenas, vale 10. 8: unidades, vale 8.
+
+              **Paso 2.** 0: décimas, vale 0. 3: centésimas, vale $0{,}03$. 5: milésimas, vale $0{,}005$.
+
+              Resultado: $18{,}035 = 10 + 8 + 0{,}03 + 0{,}005$.
+        common_errors:
+          - 'Pensar que la primera cifra no nula tras la coma siempre son décimas: en $18{,}035$ el 3 son centésimas.'
+          - 'Quitar un cero intermedio: $2{,}05 \neq 2{,}5$.'
+        summary: |-
+          Cada cifra vale según su posición: décimas, centésimas, milésimas. Los ceros finales de la parte decimal no cambian el valor; los intermedios sí.
+        check:
+          question: '¿Cuánto vale la cifra 3 en $18{,}035$?'
+          options: ['$0{,}03$', '$0{,}3$', '$3$']
+          answer: 0
+          explanation: |-
+            El 3 está en la segunda posición tras la coma (centésimas): vale $0{,}03$. El 0 ocupa las décimas.
+    glossary:
+      - {term: Valor posicional, definition: 'Valor de una cifra según la posición que ocupa.'}
+      - {term: Descomposición decimal, definition: 'Escritura de un decimal como suma de los valores de sus cifras.'}
+
+  t07:
+    intro:
+      what: |-
+        Leer un decimal es expresarlo con palabras; escribirlo es pasar de las palabras a cifras, colocando bien la coma y los ceros.
+      purpose: |-
+        Sirve para comunicar cantidades con precisión, por ejemplo al dictar una medida, rellenar un cheque o entender una receta.
+      importance: |-
+        Una lectura o escritura incorrecta cambia la cantidad (no es lo mismo $2{,}45$ que $2{,}045$). Leer con el nombre de la última posición ayuda además a pasar a fracción.
+      foundations: |-
+        La lectura de números enteros (bloque 02) y el nombre de las posiciones decimales (temas 3 a 6).
+      prerequisites:
+        - 'Lectura y escritura de números (bloque 02)'
+        - 'Valor posicional decimal (bloque 16, tema 6)'
+      outcomes:
+        - 'Leer decimales con la forma "enteros" y nombre de la última posición'
+        - 'Escribir con cifras un decimal dado con palabras'
+      everyday_example: |-
+        Un médico anota "treinta y seis enteros ocho décimas" de temperatura: $36{,}8$ °C.
+    sections:
+      - title: Enteros y nombre de la última posición
+        concept: Se lee la parte entera seguida de "enteros", y la parte decimal como un número seguido del nombre de su última posición.
+        explanation: |-
+          **Para leer** $3{,}25$:
+
+          1. Lee la parte entera y añade "enteros": "tres enteros".
+          2. Lee la parte decimal como un número normal: "veinticinco".
+          3. Añade el nombre de la **última** posición: la última cifra está en las centésimas, así que "centésimas".
+
+          Resultado: **tres enteros veinticinco centésimas**. Esto equivale a $3 + \frac{25}{100}$.
+
+          Más ejemplos:
+
+          - $12{,}5$: doce enteros cinco décimas.
+          - $0{,}007$: cero enteros siete milésimas.
+          - $1{,}01$: un entero una centésima (en singular).
+
+          En el habla cotidiana también se dice "tres coma veinticinco"; es correcto, pero la lectura con "enteros" muestra mejor el valor.
+
+          **Para escribir** "cuatro enteros treinta y ocho milésimas": la parte entera es 4; "milésimas" exige **tres** cifras decimales, así que 38 se escribe $038$. Resultado: $4{,}038$.
+        definition: |-
+          Un decimal se lee como "[parte entera] enteros [parte decimal leída como número] [nombre de la posición de la última cifra decimal]".
+        rules:
+          - 'Décimas: 1 cifra decimal. Centésimas: 2. Milésimas: 3.'
+          - 'Al escribir, rellena con ceros a la izquierda de la parte decimal hasta tener las cifras que pide el nombre.'
+          - 'Con 1 se usa el singular: "un entero", "una décima".'
+        examples:
+          - problem: 'Lee $15{,}06$ y escribe con cifras "dos enteros cuarenta y cinco milésimas".'
+            solution: |-
+              **Paso 1.** $15{,}06$: parte entera 15; parte decimal 06 = 6; última posición, centésimas: "quince enteros seis centésimas".
+
+              **Paso 2.** Milésimas: tres cifras decimales; 45 se escribe 045. Resultado: $2{,}045$.
+        common_errors:
+          - 'Escribir "cuarenta y cinco milésimas" como $0{,}45$ (son centésimas): es $0{,}045$.'
+          - 'Leer $15{,}06$ como "quince enteros seis décimas".'
+        summary: |-
+          Parte entera + "enteros" + parte decimal + nombre de la última posición. Al escribir, completa con ceros hasta el número de cifras que exige ese nombre.
+        check:
+          question: '¿Cómo se escribe con cifras "dos enteros cuarenta y cinco milésimas"?'
+          options: ['$2{,}045$', '$2{,}45$', '$2{,}0045$']
+          answer: 0
+          explanation: |-
+            Las milésimas ocupan tres cifras decimales: 045. $2{,}45$ son 45 centésimas y $2{,}0045$ serían diezmilésimas.
+    glossary:
+      - {term: Lectura decimal, definition: 'Expresión de un decimal con palabras: enteros y nombre de la última posición.'}
+
+  t08:
+    intro:
+      what: |-
+        Comparar decimales es decidir cuál es mayor o menor; ordenarlos es colocarlos de menor a mayor o al revés.
+      purpose: |-
+        Sirve para elegir el precio más bajo, la medida mayor o el mejor tiempo en una competición.
+      importance: |-
+        Es una habilidad diaria y un lugar donde se cometen errores típicos, como pensar que un decimal con más cifras es mayor.
+      foundations: |-
+        El valor posicional (tema 6): se compara posición por posición, de izquierda a derecha, como con los enteros (bloque 03). Añadir ceros al final de la parte decimal no cambia el valor.
+      prerequisites:
+        - 'Valor posicional decimal (bloque 16, tema 6)'
+        - 'Comparación y orden de números (bloque 03)'
+      outcomes:
+        - 'Comparar dos decimales'
+        - 'Ordenar varios decimales'
+      everyday_example: |-
+        Un corredor hace $10{,}8$ s y otro $10{,}75$ s. ¿Quién fue más rápido? $10{,}75 < 10{,}80$: el segundo.
+    sections:
+      - title: Comparar cifra a cifra
+        concept: Se compara primero la parte entera y, si es igual, las cifras decimales una a una de izquierda a derecha, igualando antes el número de cifras.
+        explanation: |-
+          **Procedimiento**
+
+          1. Compara las **partes enteras**. Si son distintas, es mayor el que tiene mayor parte entera: $5{,}1 > 4{,}99$.
+          2. Si son iguales, **iguala el número de cifras decimales** añadiendo ceros al final (no cambia el valor).
+          3. Compara cifra a cifra, de izquierda a derecha: décimas, luego centésimas, luego milésimas. La primera cifra distinta decide.
+
+          Ejemplo: $3{,}5$ y $3{,}45$.
+
+          - Partes enteras iguales (3).
+          - Igualamos: $3{,}50$ y $3{,}45$.
+          - Décimas: $5 > 4$. Por tanto, $3{,}5 > 3{,}45$.
+
+          **Error típico**: pensar que $3{,}45$ es mayor "porque tiene más cifras" o porque "45 es mayor que 5". Pero 5 décimas (50 centésimas) son más que 45 centésimas.
+
+          **Con negativos** (bloque 03): el orden se invierte; $-1{,}5 < -1{,}2$ porque $-1{,}5$ está más a la izquierda en la recta.
+        definition: |-
+          Dados dos decimales positivos, es mayor el de mayor parte entera; si coinciden, es mayor el que tiene mayor la primera cifra decimal en que difieren (tras igualar el número de cifras con ceros).
+        rules:
+          - 'Primero la parte entera.'
+          - 'Igualar cifras decimales con ceros a la derecha.'
+          - 'Comparar de izquierda a derecha: la primera diferencia decide.'
+        examples:
+          - problem: 'Ordena de menor a mayor: $0{,}7$; $0{,}07$; $0{,}707$; $0{,}77$.'
+            solution: |-
+              **Paso 1.** Igualamos a tres cifras: $0{,}700$; $0{,}070$; $0{,}707$; $0{,}770$.
+
+              **Paso 2.** Comparamos como números de tres cifras: $070 < 700 < 707 < 770$.
+
+              Resultado: $0{,}07 < 0{,}7 < 0{,}707 < 0{,}77$.
+        common_errors:
+          - 'Creer que un decimal con más cifras es mayor: $0{,}9 > 0{,}899$.'
+          - 'Comparar las partes decimales como enteros sin igualar cifras: $0{,}5$ no es menor que $0{,}45$.'
+        summary: |-
+          Compara la parte entera; si coincide, iguala las cifras decimales con ceros y compara de izquierda a derecha.
+        check:
+          question: '¿Cuál es el mayor de estos números?'
+          options: ['$0{,}89$', '$0{,}9$', '$0{,}899$']
+          answer: 1
+          explanation: |-
+            Igualando: $0{,}890$, $0{,}900$ y $0{,}899$. El mayor es $0{,}900 = 0{,}9$; tener más cifras no lo hace mayor.
+    glossary:
+      - {term: Igualar cifras decimales, definition: 'Añadir ceros a la derecha de la parte decimal para que los números tengan las mismas cifras.'}
+
+  t09:
+    intro:
+      what: |-
+        Convertir entre fracciones y decimales es pasar de una escritura a otra del mismo número: $0{,}75 = \frac{3}{4}$ y $\frac{3}{4} = 0{,}75$.
+      purpose: |-
+        Sirve para elegir la forma más cómoda en cada situación: fracciones para razonar partes, decimales para medir, comparar y usar la calculadora.
+      importance: |-
+        Une los dos grandes modos de escribir números racionales (bloque 03) y prepara las operaciones con decimales (bloque 17), los porcentajes y las proporciones.
+      foundations: |-
+        Un decimal es una fracción decimal (tema 1); una fracción es una división (bloque 14). La simplificación (bloque 14) y la factorización en primos (bloque 11) explican qué fracciones dan decimales exactos.
+      prerequisites:
+        - 'Qué son los números decimales (bloque 16, tema 1)'
+        - 'Simplificación y amplificación de fracciones (bloque 14, temas 9 y 10)'
+        - 'División larga (bloque 07)'
+      outcomes:
+        - 'Convertir un decimal en fracción irreducible'
+        - 'Convertir una fracción en decimal por amplificación o por división'
+        - 'Reconocer decimales periódicos'
+      everyday_example: |-
+        "Tres cuartos de kilo" es lo mismo que $0{,}75$ kg, que es lo que marca la báscula de la tienda.
+    sections:
+      - title: De decimal a fracción
+        concept: Se escribe la parte decimal sobre 10, 100 o 1000 según el número de cifras decimales, y se simplifica.
+        explanation: |-
+          **Procedimiento**
+
+          1. Escribe el número sin coma como numerador.
+          2. Como denominador, pon un 1 seguido de tantos ceros como cifras decimales haya: 1 cifra → 10; 2 cifras → 100; 3 cifras → 1000.
+          3. Simplifica (dividiendo entre el MCD, bloque 12).
+
+          Ejemplos:
+
+          - $0{,}75 = \frac{75}{100}$. $\text{MCD}(75, 100) = 25$: $\frac{3}{4}$.
+          - $2{,}4 = \frac{24}{10} = \frac{12}{5}$.
+          - $0{,}125 = \frac{125}{1000} = \frac{1}{8}$ (dividiendo entre 125).
+
+          Esto funciona porque, por ejemplo, $0{,}75$ son 75 centésimas, es decir, $\frac{75}{100}$.
+        definition: |-
+          Un decimal con $n$ cifras decimales es igual a la fracción cuyo numerador es el número escrito sin coma y cuyo denominador es $10^n$ (un 1 seguido de $n$ ceros).
+        rules:
+          - 'Numerador: el número sin coma.'
+          - 'Denominador: 10, 100, 1000… según las cifras decimales.'
+          - 'Simplificar hasta la fracción irreducible.'
+        examples:
+          - problem: 'Convierte $0{,}6$ y $1{,}25$ en fracciones irreducibles.'
+            solution: |-
+              **Paso 1.** $0{,}6 = \frac{6}{10}$; simplificando entre 2: $\frac{3}{5}$.
+
+              **Paso 2.** $1{,}25 = \frac{125}{100}$; $\text{MCD} = 25$: $\frac{5}{4}$.
+
+              Resultado: $\frac{3}{5}$ y $\frac{5}{4}$.
+        common_errors:
+          - 'Usar un denominador con un número de ceros distinto al de cifras decimales: $0{,}6 \neq \frac{6}{100}$.'
+          - 'No simplificar el resultado.'
+        summary: |-
+          Número sin coma sobre 10, 100 o 1000 (según las cifras decimales) y simplificar.
+        check:
+          question: '¿Cuál es la fracción irreducible igual a $0{,}6$?'
+          options: ['$\frac{3}{5}$', '$\frac{6}{100}$', '$\frac{1}{6}$']
+          answer: 0
+          explanation: |-
+            $0{,}6 = \frac{6}{10} = \frac{3}{5}$. $\frac{6}{100}$ sería $0{,}06$.
+      - title: De fracción a decimal
+        concept: Se divide el numerador entre el denominador (o se amplifica a denominador 10, 100, 1000…).
+        explanation: |-
+          **Por amplificación.** Si el denominador se puede convertir en 10, 100 o 1000 multiplicando, es lo más rápido:
+
+          - $\frac{3}{4} = \frac{75}{100} = 0{,}75$ (multiplicando por 25).
+          - $\frac{7}{20} = \frac{35}{100} = 0{,}35$ (por 5).
+          - $\frac{3}{8} = \frac{375}{1000} = 0{,}375$ (por 125).
+
+          **Por división.** Siempre funciona, porque $\frac{a}{b} = a \div b$. Se divide como en el bloque 07 y, cuando el residuo no es 0, se coloca la coma en el cociente y se sigue dividiendo añadiendo un cero al residuo:
+
+          $3 \div 4$: 3 entre 4 cabe 0 veces → $0,$; bajamos un cero: $30 \div 4 = 7$, residuo 2; otro cero: $20 \div 4 = 5$, residuo 0. Resultado: $0{,}75$.
+
+          **Decimales periódicos.** A veces la división no termina nunca: $1 \div 3 = 0{,}333\ldots$, porque el residuo 1 se repite sin fin. Se dice que es un **decimal periódico** y la cifra que se repite es el **periodo**. Otros ejemplos: $\frac{2}{11} = 0{,}1818\ldots$, $\frac{5}{6} = 0{,}8333\ldots$
+
+          ¿Cuándo ocurre? Si la fracción irreducible tiene un denominador con algún factor primo **distinto de 2 y de 5** (bloque 11), el decimal es periódico. Si sólo tiene doses y cincos, el decimal es exacto, porque se puede amplificar hasta 10, 100, 1000…
+
+          En la práctica, un periódico se suele **redondear**: para las centésimas, se mira la tercera cifra decimal; si es 5 o más se sube una centésima, y si no, se deja igual: $\frac{1}{3} \approx 0{,}33$ y $\frac{5}{6} \approx 0{,}83$; en cambio, $\frac{2}{3} = 0{,}666\ldots \approx 0{,}67$. El redondeo se estudia a fondo en el bloque 17.
+        definition: |-
+          La expresión decimal de $\frac{a}{b}$ es el cociente $a \div b$. Si la fracción irreducible tiene un denominador cuyos únicos factores primos son 2 y 5, el decimal es **exacto**; en otro caso es **periódico** (un grupo de cifras se repite indefinidamente).
+        rules:
+          - 'Fracción a decimal: dividir numerador entre denominador.'
+          - 'Atajo: amplificar a denominador 10, 100 o 1000 cuando sea posible.'
+          - 'Denominador irreducible con primos distintos de 2 y 5: decimal periódico.'
+        examples:
+          - problem: 'Convierte $\frac{7}{8}$ en decimal.'
+            solution: |-
+              **Paso 1.** $8 = 2^3$: el decimal es exacto. Amplificamos por 125: $\frac{7 \times 125}{8 \times 125} = \frac{875}{1000}$.
+
+              **Paso 2.** $\frac{875}{1000} = 0{,}875$.
+
+              Resultado: $0{,}875$.
+          - problem: 'Convierte $\frac{2}{3}$ en decimal y redondéalo a las centésimas.'
+            solution: |-
+              **Paso 1.** $2 \div 3$: $20 \div 3 = 6$, residuo 2; el residuo 2 se repite siempre. $\frac{2}{3} = 0{,}666\ldots$
+
+              **Paso 2.** Para las centésimas miramos la tercera cifra decimal (6): como es 5 o más, subimos una centésima.
+
+              Resultado: $0{,}666\ldots \approx 0{,}67$.
+        common_errors:
+          - 'Dividir el denominador entre el numerador: $\frac{3}{4} \neq 4 \div 3$.'
+          - 'Escribir $\frac{1}{3} = 0{,}3$: es $0{,}333\ldots$ (y $0{,}3$ sólo es una aproximación).'
+          - 'Pensar que $\frac{3}{8} = 0{,}38$ por "juntar" las cifras.'
+        summary: |-
+          Para pasar de fracción a decimal se divide (o se amplifica a 10, 100, 1000). Si el denominador irreducible tiene primos distintos de 2 y 5, el decimal es periódico.
+        check:
+          question: '¿Cuál de estas fracciones da un decimal periódico?'
+          options: ['$\frac{1}{4}$', '$\frac{2}{5}$', '$\frac{5}{6}$']
+          answer: 2
+          explanation: |-
+            $6 = 2 \times 3$ contiene el primo 3, así que $\frac{5}{6} = 0{,}8333\ldots$ es periódico. $\frac{1}{4} = 0{,}25$ y $\frac{2}{5} = 0{,}4$ son exactos.
+    glossary:
+      - {term: Decimal exacto, definition: 'Decimal con un número finito de cifras decimales.'}
+      - {term: Decimal periódico, definition: 'Decimal en el que un grupo de cifras (el periodo) se repite indefinidamente.'}
+      - {term: Redondear, definition: 'Sustituir un número por otro cercano con menos cifras; se estudia en el bloque 17.'}

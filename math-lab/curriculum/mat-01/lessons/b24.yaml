@@ -1,0 +1,537 @@
+block: b24
+intro: >-
+  Muchas situaciones se miden respecto a un punto de referencia: temperaturas
+  sobre o bajo cero, alturas sobre o bajo el nivel del mar, saldos a favor o en
+  contra. Los números con signo que las describen se llaman números relativos.
+  En este bloque profundizarás en ellos: el valor absoluto como distancia al
+  cero, la distancia entre dos números, la recta numérica, las operaciones con
+  signos y sus aplicaciones. Retomamos y ampliamos lo visto sobre números
+  enteros en los bloques b03, b05, b06 y b07.
+topics:
+  t01:
+    intro:
+      what: >-
+        El valor absoluto de un número es su "tamaño" sin tener en cuenta el
+        signo: $|-7| = 7$ y $|7| = 7$.
+      purpose: >-
+        Sirve para medir distancias, comparar magnitudes de números con signo
+        y formular las reglas de las operaciones con enteros.
+      importance: >-
+        Aparece en las reglas de los signos, en el cálculo de distancias y
+        errores (b25) y en todo el álgebra.
+      foundations: >-
+        Se basa en la recta numérica (b03): el valor absoluto es la distancia
+        de un número al cero, y una distancia nunca es negativa.
+      prerequisites:
+        - 'Números enteros y recta numérica (b03)'
+        - 'Opuesto de un número (b03, b08)'
+      outcomes:
+        - 'Calcular el valor absoluto de un número'
+        - 'Calcular expresiones con valores absolutos'
+        - 'Distinguir $|a + b|$ de $|a| + |b|$'
+      everyday_example: >-
+        Una deuda de 500 pesos ($-500$) y un ahorro de 500 pesos ($+500$)
+        tienen el mismo valor absoluto: $500$ pesos.
+    sections:
+      - title: El número sin su signo
+        concept: El valor absoluto de un número es ese número sin signo; nunca es negativo.
+        explanation: |-
+          El **valor absoluto** de un número $a$ se escribe entre dos barras verticales: $|a|$.
+
+          * Si $a$ es positivo o cero, se queda igual: $|7| = 7$, $|0| = 0$.
+          * Si $a$ es negativo, se cambia de signo: $|-7| = 7$.
+
+          Dicho de forma más precisa: el valor absoluto de un número negativo es su **opuesto**. Como el opuesto de un negativo es positivo, **el valor absoluto nunca es negativo**.
+
+          **Expresiones con valor absoluto.** Las barras funcionan como un paréntesis: primero se opera **dentro** y después se toma el valor absoluto.
+          * $|-3 + 8| = |5| = 5$.
+          * En cambio, $|-3| + |8| = 3 + 8 = 11$.
+
+          Por eso, en general, $|a + b| \neq |a| + |b|$. Sólo coinciden cuando $a$ y $b$ tienen el mismo signo (o alguno es cero).
+
+          Cuidado con el signo **fuera** de las barras: $-|-4| = -(4) = -4$.
+        definition: >-
+          El valor absoluto de un número real $a$ es $|a| = a$ si $a \ge 0$ y
+          $|a| = -a$ si $a < 0$.
+        rules:
+          - '$|a| \ge 0$ para todo $a$; $|a| = 0$ sólo si $a = 0$.'
+          - 'Un número y su opuesto tienen el mismo valor absoluto: $|a| = |-a|$.'
+          - 'Las barras agrupan: se opera dentro primero.'
+          - 'En general, $|a + b| \neq |a| + |b|$.'
+        examples:
+          - problem: 'Calcula $|-12|$, $|9|$ y $|0|$.'
+            solution: |-
+              **Paso 1.** $-12$ es negativo: su valor absoluto es su opuesto, $12$.
+              **Paso 2.** $9$ es positivo: $|9| = 9$.
+              **Paso 3.** $|0| = 0$.
+              Resultado: $12$, $9$ y $0$.
+          - problem: 'Calcula $|-3 + 8|$ y $|-3| + |8|$.'
+            solution: |-
+              **Paso 1.** Dentro: $-3 + 8 = 5$; $|5| = 5$.
+              **Paso 2.** $|-3| + |8| = 3 + 8 = 11$.
+              Resultado: $5$ y $11$ (son distintos).
+        common_errors:
+          - 'Dar un valor absoluto negativo: $|-12| \neq -12$.'
+          - 'Tomar el valor absoluto de cada término antes de operar dentro de las barras.'
+          - 'Olvidar el signo que está fuera de las barras: $-|-4| = -4$.'
+        summary: >-
+          $|a|$ es el número sin signo: nunca es negativo. Dentro de las barras
+          se opera primero.
+        check:
+          question: '¿Cuánto vale $|-15|$?'
+          options: ['$-15$', '$15$', '$0$', '$\frac{1}{15}$']
+          answer: 1
+          explanation: >-
+            El valor absoluto de un negativo es su opuesto: $|-15| = 15$. Nunca
+            puede ser negativo.
+    glossary:
+      - {term: Valor absoluto, definition: 'Número sin su signo; distancia del número al cero.'}
+      - {term: Opuesto, definition: 'Número con el mismo valor absoluto y signo contrario: el opuesto de $5$ es $-5$.'}
+  t02:
+    intro:
+      what: >-
+        La distancia de un número al cero es el número de unidades que lo
+        separan del cero en la recta numérica, y coincide con su valor
+        absoluto. Más en general, la distancia entre dos números $a$ y $b$ es
+        $|a - b|$.
+      purpose: >-
+        Sirve para medir separaciones entre temperaturas, altitudes, fechas o
+        posiciones, sin importar cuál es mayor.
+      importance: >-
+        Da un significado geométrico al valor absoluto y permite resolver
+        problemas de "cuánto separa" con números negativos.
+      foundations: >-
+        Se basa en la recta numérica (b03) y en la resta de enteros (b05):
+        $a - b$ indica cuánto hay que moverse de $b$ a $a$, y su valor
+        absoluto, cuánto mide ese movimiento.
+      prerequisites:
+        - 'Concepto de valor absoluto (b24)'
+        - 'Resta de números enteros (b05)'
+      outcomes:
+        - 'Calcular la distancia de un número al cero'
+        - 'Calcular la distancia entre dos números con $|a - b|$'
+      everyday_example: >-
+        Entre $-4$ °C por la noche y $6$ °C al mediodía hay
+        $|6 - (-4)| = 10$ grados de diferencia.
+    sections:
+      - title: Distancia al cero y entre dos números
+        concept: La distancia al cero es $|a|$; la distancia entre $a$ y $b$ es $|a - b|$.
+        explanation: |-
+          **Distancia al cero.** En la recta numérica, $-5$ está a $5$ unidades del cero, igual que $5$. Esa distancia es el **valor absoluto**: $|-5| = |5| = 5$. Por eso se suele **definir** el valor absoluto como la distancia al cero.
+
+          **Distancia entre dos números.** Para saber cuántas unidades separan $-4$ de $6$:
+          * Contando en la recta: de $-4$ a $0$ hay $4$ unidades, y de $0$ a $6$, otras $6$: en total, $10$.
+          * Con la fórmula: $|6 - (-4)| = |6 + 4| = 10$. O al revés: $|-4 - 6| = |-10| = 10$. **El orden no importa**, gracias al valor absoluto.
+
+          **Regla práctica:**
+          * Números a **distinto lado** del cero: se **suman** sus valores absolutos ($4 + 6 = 10$).
+          * Números al **mismo lado**: se **restan** sus valores absolutos. Entre $-8$ y $-3$: $8 - 3 = 5$, y en efecto $|-8 - (-3)| = |-5| = 5$.
+        definition: >-
+          La distancia de $a$ al cero es $|a|$. La distancia entre $a$ y $b$ es
+          $d(a, b) = |a - b| = |b - a|$.
+        rules:
+          - 'Distancia al cero = valor absoluto.'
+          - 'Distancia entre $a$ y $b$: $|a - b|$; el orden no importa.'
+          - 'Distinto lado del cero: se suman los valores absolutos; mismo lado: se restan.'
+          - 'Una distancia nunca es negativa.'
+        examples:
+          - problem: '¿Cuál es la distancia entre $-4$ y $6$?'
+            solution: |-
+              **Paso 1.** $|6 - (-4)| = |6 + 4| = |10|$.
+              **Paso 2.** $|10| = 10$.
+              Resultado: $10$ unidades.
+          - problem: '¿Cuál es la distancia entre $-8$ y $-3$?'
+            solution: |-
+              **Paso 1.** $|-8 - (-3)| = |-8 + 3| = |-5|$.
+              **Paso 2.** $|-5| = 5$.
+              Resultado: $5$ unidades.
+        common_errors:
+          - 'Restar los valores absolutos cuando los números están a distinto lado del cero: entre $-4$ y $6$ no hay $2$ unidades.'
+          - 'Dar una distancia negativa.'
+          - 'Olvidar que restar un negativo es sumar: $6 - (-4) = 10$.'
+        summary: >-
+          La distancia al cero es $|a|$ y la distancia entre dos números es
+          $|a - b|$.
+        check:
+          question: '¿Cuál es la distancia entre $-5$ y $7$?'
+          options: ['$2$', '$12$', '$-12$', '$35$']
+          answer: 1
+          explanation: >-
+            $|7 - (-5)| = |12| = 12$. Están a distinto lado del cero, así que se
+            suman: $5 + 7 = 12$. $2$ sale de restar los valores absolutos.
+    glossary:
+      - {term: Distancia, definition: 'Número de unidades que separan dos puntos de la recta; nunca es negativa.'}
+  t03:
+    intro:
+      what: >-
+        En la recta numérica, el valor absoluto indica a qué distancia del
+        cero está un número; los números opuestos están a la misma distancia,
+        uno a cada lado.
+      purpose: >-
+        Sirve para visualizar el valor absoluto, encontrar los números con un
+        valor absoluto dado y comparar números negativos.
+      importance: >-
+        La imagen de la recta ayuda a razonar con signos y evita errores al
+        ordenar negativos.
+      foundations: >-
+        Se basa en la recta numérica (b03): el cero en el centro, los
+        positivos a la derecha y los negativos a la izquierda, simétricos.
+      prerequisites:
+        - 'Recta numérica y comparación de números (b03)'
+        - 'Distancia al cero (b24)'
+      outcomes:
+        - 'Representar números y su valor absoluto en la recta'
+        - 'Encontrar los números cuyo valor absoluto es un número dado'
+        - 'Comparar números negativos usando el valor absoluto'
+      everyday_example: >-
+        En un edificio, el piso 3 y el sótano 3 ($-3$) están a la misma
+        distancia de la planta baja (0), uno arriba y otro abajo.
+    sections:
+      - title: Simetría respecto al cero
+        concept: Un número positivo $k$ es el valor absoluto de exactamente dos números, $k$ y $-k$, situados simétricamente respecto al cero.
+        explanation: |-
+          Imagina la recta numérica con el $0$ en el centro. Los números $5$ y $-5$ están a la misma distancia del cero, uno a la derecha y otro a la izquierda: son **opuestos** y son **simétricos** respecto al cero. Ambos tienen valor absoluto $5$.
+
+          **¿Qué números tienen valor absoluto 5?** Los que están a $5$ unidades del cero: $5$ y $-5$. En general:
+          * Si $k > 0$, los números con $|x| = k$ son $x = k$ y $x = -k$.
+          * Si $k = 0$, sólo $x = 0$.
+          * Si $k < 0$, **ninguno**: una distancia no puede ser negativa.
+
+          **Comparar negativos.** En la recta, un número es mayor cuanto más a la derecha está. Entre dos negativos, el que tiene **mayor valor absoluto está más lejos del cero, a la izquierda**, y por tanto es **menor**: $-8 < -3$ porque $|-8| = 8 > 3 = |-3|$.
+
+          **Números a menos de cierta distancia.** Los enteros con $|x| < 3$ son los que están a menos de 3 unidades del cero: $-2, -1, 0, 1, 2$.
+        definition: >-
+          Para $k > 0$, la igualdad $|x| = k$ se cumple exactamente para
+          $x = k$ y $x = -k$, los dos puntos de la recta situados a distancia
+          $k$ del cero.
+        rules:
+          - '$|x| = k$ con $k > 0$: $x = k$ o $x = -k$.'
+          - '$|x| = 0$: sólo $x = 0$. $|x| = k$ con $k < 0$: no hay solución.'
+          - 'Entre negativos, el de mayor valor absoluto es el menor.'
+        examples:
+          - problem: '¿Qué números tienen valor absoluto 9?'
+            solution: |-
+              **Paso 1.** Buscamos los números a 9 unidades del cero.
+              **Paso 2.** A la derecha, $9$; a la izquierda, $-9$.
+              Resultado: $9$ y $-9$.
+          - problem: 'Ordena de menor a mayor: $-2$, $-7$, $3$, $0$.'
+            solution: |-
+              **Paso 1.** Los negativos van primero; entre ellos, $-7$ es menor porque $|-7| > |-2|$.
+              **Paso 2.** Luego el $0$ y después el positivo.
+              Resultado: $-7 < -2 < 0 < 3$.
+        common_errors:
+          - 'Dar sólo una solución de $|x| = 9$ (olvidar $-9$).'
+          - 'Creer que $-7 > -2$ porque $7 > 2$.'
+          - 'Buscar números con valor absoluto negativo.'
+        summary: >-
+          Números opuestos son simétricos respecto al cero y tienen el mismo
+          valor absoluto. Entre negativos, mayor valor absoluto significa menor
+          número.
+        check:
+          question: '¿Qué números tienen valor absoluto 9?'
+          options: ['Sólo $9$', 'Sólo $-9$', '$9$ y $-9$', 'Ninguno']
+          answer: 2
+          explanation: >-
+            Tanto $9$ como $-9$ están a 9 unidades del cero, así que
+            $|9| = |-9| = 9$.
+    glossary:
+      - {term: Números simétricos, definition: 'Números opuestos, situados a la misma distancia del cero en lados distintos.'}
+  t04:
+    intro:
+      what: >-
+        Los números relativos son números con signo que indican una cantidad
+        respecto a un punto de referencia (el cero): positivos por encima o a
+        favor, negativos por debajo o en contra.
+      purpose: >-
+        Sirven para representar con un solo número situaciones con dos
+        sentidos: subir o bajar, ganar o perder, sobre o bajo cero.
+      importance: >-
+        Permiten operar con temperaturas, altitudes, saldos o movimientos sin
+        tener que describir con palabras el sentido de cada cantidad.
+      foundations: >-
+        Son los números enteros (y, en general, los racionales con signo) del
+        bloque b03, interpretados en contexto: el signo indica el sentido y el
+        valor absoluto, la cantidad.
+      prerequisites:
+        - 'Números enteros y recta numérica (b03)'
+        - 'Concepto de valor absoluto (b24)'
+      outcomes:
+        - 'Representar situaciones con números positivos y negativos'
+        - 'Interpretar el signo y el valor absoluto en contexto'
+        - 'Ordenar cantidades con signo'
+      everyday_example: >-
+        Un buceador a 15 metros bajo el nivel del mar está a $-15$ m; un
+        avión a 2000 metros de altura, a $+2000$ m.
+    sections:
+      - title: Signo y referencia
+        concept: El signo indica el sentido respecto a una referencia y el valor absoluto, la cantidad.
+        explanation: |-
+          Un número **relativo** sólo tiene sentido **respecto a una referencia**, que se representa con el $0$:
+
+          | Situación | Referencia (0) | Positivo | Negativo |
+          |---|---|---|---|
+          | Temperatura | 0 °C | Sobre cero | Bajo cero |
+          | Altitud | Nivel del mar | Por encima | Por debajo |
+          | Dinero | Saldo cero | A favor, ingreso | Deuda, gasto |
+          | Pisos | Planta baja | Pisos superiores | Sótanos |
+          | Movimiento | Posición inicial | Subir, avanzar | Bajar, retroceder |
+
+          En cada número, el **signo** indica el **sentido** y el **valor absoluto**, la **cantidad**. Así, $-15$ m significa "15 metros por debajo del nivel del mar".
+
+          El **cero** no es ni positivo ni negativo: es la referencia misma.
+
+          El signo $+$ de los positivos suele omitirse: $+2000 = 2000$. El de los negativos, nunca.
+
+          Para **ordenar** cantidades con signo se usa la recta numérica: $-10$ °C es más frío (menor) que $-2$ °C.
+        definition: >-
+          Un número relativo es un número con signo que expresa una cantidad
+          respecto a un origen: positivo si está en un sentido, negativo si está
+          en el contrario, y cero si coincide con el origen.
+        rules:
+          - 'El cero es la referencia; no es positivo ni negativo.'
+          - 'Signo = sentido; valor absoluto = cantidad.'
+          - 'Debajo, en contra, deuda, bajar: negativo. Encima, a favor, ganancia, subir: positivo.'
+        examples:
+          - problem: 'Representa con números relativos: una temperatura de 6 grados bajo cero, una deuda de 300 pesos y ganar 25 puntos.'
+            solution: |-
+              **Paso 1.** Bajo cero: negativo → $-6$ °C.
+              **Paso 2.** Deuda: negativo → $-300$ pesos.
+              **Paso 3.** Ganancia: positivo → $+25$ puntos.
+              Resultado: $-6$, $-300$ y $+25$.
+          - problem: '¿Qué está más bajo: un sótano en el piso $-3$ o uno en el piso $-1$?'
+            solution: |-
+              **Paso 1.** En la recta, $-3$ está a la izquierda de $-1$: $-3 < -1$.
+              Resultado: el piso $-3$ está más bajo.
+        common_errors:
+          - 'Usar signo positivo para cantidades por debajo de la referencia.'
+          - 'Considerar el cero como positivo.'
+          - 'Pensar que $-10$ °C es "más temperatura" que $-2$ °C porque $10 > 2$.'
+        summary: >-
+          Los números relativos expresan cantidades respecto a una referencia:
+          el signo da el sentido y el valor absoluto la cantidad.
+        check:
+          question: '¿Cómo se representa "15 metros bajo el nivel del mar"?'
+          options: ['$15$ m', '$-15$ m', '$|15|$ m', '$0{,}15$ m']
+          answer: 1
+          explanation: >-
+            Por debajo de la referencia (el nivel del mar) se usa el signo
+            negativo: $-15$ m.
+    glossary:
+      - {term: Número relativo, definition: 'Número con signo que expresa una cantidad respecto a un punto de referencia.'}
+      - {term: Origen, definition: 'Punto de referencia, representado por el cero.'}
+  t05:
+    intro:
+      what: >-
+        Son las cuatro operaciones (suma, resta, multiplicación y división)
+        con números con signo, y sus combinaciones.
+      purpose: >-
+        Sirven para calcular con temperaturas, saldos, altitudes y cualquier
+        cantidad que puede ser positiva o negativa.
+      importance: >-
+        Operar con signos sin errores es imprescindible para el álgebra y las
+        ciencias; aquí se reúnen y justifican todas las reglas.
+      foundations: >-
+        Se basan en el valor absoluto (b24), en el opuesto de un número y en
+        las reglas de los signos de la multiplicación y división de enteros
+        (b06, b07), junto con la jerarquía de operaciones (b09).
+      prerequisites:
+        - 'Valor absoluto (b24)'
+        - 'Resta, multiplicación y división de enteros (b05, b06, b07)'
+        - 'Jerarquía de operaciones (b09)'
+      outcomes:
+        - 'Sumar y restar números relativos'
+        - 'Multiplicar y dividir números relativos'
+        - 'Resolver operaciones combinadas con signos'
+      everyday_example: >-
+        Si tienes $-50$ pesos de saldo y depositas $80$, quedas con
+        $-50 + 80 = 30$ pesos.
+    sections:
+      - title: Suma y resta con signos
+        concept: Mismo signo, se suman los valores absolutos; signos distintos, se restan y se pone el signo del de mayor valor absoluto. Restar es sumar el opuesto.
+        explanation: |-
+          **Suma de dos números del mismo signo:** se suman los valores absolutos y se conserva el signo.
+          $-5 + (-3) = -8$ (deber 5 y deber 3 más es deber 8).
+
+          **Suma de dos números de distinto signo:** se **restan** los valores absolutos (el mayor menos el menor) y se pone el **signo del que tiene mayor valor absoluto**.
+          $-7 + 4$: $7 - 4 = 3$, y gana el signo de $-7$: resultado $-3$.
+          $-2 + 9$: $9 - 2 = 7$, signo de $9$: resultado $7$.
+
+          **Resta:** restar un número es **sumar su opuesto**.
+          * $5 - 8 = 5 + (-8) = -3$.
+          * $-5 - (-8) = -5 + 8 = 3$ (quitar una deuda es como ganar).
+
+          **Varias sumas y restas seguidas:** se convierten las restas en sumas de opuestos y se operan de izquierda a derecha, o se agrupan los positivos y los negativos:
+          $6 - 9 + (-2) = 6 + (-9) + (-2)$; positivos: $6$; negativos: $-11$; total: $6 - 11 = -5$.
+        definition: >-
+          Para números relativos $a$ y $b$: si tienen igual signo,
+          $a + b$ tiene ese signo y valor absoluto $|a| + |b|$; si tienen signo
+          distinto, $a + b$ tiene el signo del de mayor valor absoluto y valor
+          absoluto $\big||a| - |b|\big|$. Además, $a - b = a + (-b)$.
+        rules:
+          - 'Igual signo: sumar valores absolutos y conservar el signo.'
+          - 'Distinto signo: restar valores absolutos y poner el signo del mayor en valor absoluto.'
+          - 'Restar es sumar el opuesto: $a - (-b) = a + b$.'
+          - 'Se pueden agrupar positivos y negativos por separado.'
+        examples:
+          - problem: 'Calcula $-7 + 4$ y $-5 - (-8)$.'
+            solution: |-
+              **Paso 1.** $-7 + 4$: signos distintos; $7 - 4 = 3$; signo de $-7$: $-3$.
+              **Paso 2.** $-5 - (-8) = -5 + 8$: signos distintos; $8 - 5 = 3$; signo de $8$: $3$.
+              Resultado: $-3$ y $3$.
+          - problem: 'Calcula $6 - 9 + (-2) - (-4)$.'
+            solution: |-
+              **Paso 1.** Restas como sumas de opuestos: $6 + (-9) + (-2) + 4$.
+              **Paso 2.** Positivos: $6 + 4 = 10$. Negativos: $-9 + (-2) = -11$.
+              **Paso 3.** $10 + (-11) = -1$.
+              Resultado: $-1$.
+        common_errors:
+          - 'Sumar los valores absolutos cuando los signos son distintos: $-7 + 4 \neq -11$.'
+          - 'No cambiar el signo al restar un negativo: $-5 - (-8) \neq -13$.'
+          - 'Poner el signo del primer número en lugar del de mayor valor absoluto.'
+        summary: >-
+          Igual signo: se suman y se conserva el signo. Distinto signo: se
+          restan y gana el de mayor valor absoluto. Restar es sumar el opuesto.
+        check:
+          question: '¿Cuánto es $-8 - (-3)$?'
+          options: ['$-11$', '$-5$', '$5$', '$11$']
+          answer: 1
+          explanation: >-
+            $-8 - (-3) = -8 + 3$; signos distintos: $8 - 3 = 5$ con el signo de
+            $-8$: $-5$. $-11$ sale de no cambiar el signo al restar.
+      - title: Multiplicación, división y operaciones combinadas
+        concept: En productos y cocientes, signos iguales dan positivo y signos distintos dan negativo; se respeta la jerarquía de operaciones.
+        explanation: |-
+          **Multiplicación y división:** se operan los valores absolutos y el signo se decide con la **regla de los signos** (b06, b07):
+
+          | Signos | Resultado |
+          |---|---|
+          | $(+)$ y $(+)$ | $+$ |
+          | $(-)$ y $(-)$ | $+$ |
+          | $(+)$ y $(-)$ | $-$ |
+          | $(-)$ y $(+)$ | $-$ |
+
+          Es decir: **signos iguales, positivo; signos distintos, negativo.**
+          * $(-6) \times (-4) = 24$.
+          * $(-36) \div 9 = -4$.
+          * $(-42) \div (-6) = 7$.
+
+          Con varios factores, cuenta los negativos: si hay un número **par**, el resultado es positivo; si es **impar**, negativo. $(-2) \times (-3) \times (-1) = -6$ (tres negativos).
+
+          **Operaciones combinadas:** se aplica la jerarquía (b09): paréntesis, potencias, multiplicaciones y divisiones, sumas y restas.
+          $-3 + (-2) \times 5 = -3 + (-10) = -13$.
+        definition: >-
+          Para números relativos $a$ y $b$, $|a \times b| = |a| \times |b|$ y
+          $|a \div b| = |a| \div |b|$ ($b \neq 0$); el signo es positivo si $a$
+          y $b$ tienen el mismo signo y negativo si tienen signos distintos.
+        rules:
+          - 'Signos iguales: resultado positivo.'
+          - 'Signos distintos: resultado negativo.'
+          - 'Con varios factores: número par de negativos → positivo; impar → negativo.'
+          - 'En operaciones combinadas, se respeta la jerarquía.'
+        examples:
+          - problem: 'Calcula $(-6) \times (-4)$ y $(-36) \div 9$.'
+            solution: |-
+              **Paso 1.** $6 \times 4 = 24$; signos iguales → $+24$.
+              **Paso 2.** $36 \div 9 = 4$; signos distintos → $-4$.
+              Resultado: $24$ y $-4$.
+          - problem: 'Calcula $-3 + (-2) \times 5 - (-12) \div 4$.'
+            solution: |-
+              **Paso 1.** Multiplicación: $(-2) \times 5 = -10$.
+              **Paso 2.** División: $(-12) \div 4 = -3$.
+              **Paso 3.** Queda $-3 + (-10) - (-3) = -3 - 10 + 3 = -10$.
+              Resultado: $-10$.
+        common_errors:
+          - 'Aplicar la regla de los signos de la multiplicación a la suma: $-3 + (-2) \neq +5$.'
+          - 'Sumar antes de multiplicar.'
+          - 'Olvidar contar todos los signos negativos en un producto de varios factores.'
+        summary: >-
+          Producto y cociente: signos iguales dan $+$, distintos dan $-$.
+          Respeta siempre la jerarquía.
+        check:
+          question: '¿Cuánto es $(-42) \div (-6)$?'
+          options: ['$-7$', '$7$', '$-36$', '$48$']
+          answer: 1
+          explanation: >-
+            $42 \div 6 = 7$ y los signos son iguales, así que el resultado es
+            positivo: $7$.
+    glossary:
+      - {term: Regla de los signos, definition: 'En productos y cocientes, signos iguales dan positivo y signos distintos dan negativo.'}
+      - {term: Suma algebraica, definition: 'Expresión con sumas y restas de números con signo, que se resuelve sumando opuestos.'}
+  t06:
+    intro:
+      what: >-
+        Son problemas reales que se resuelven con números relativos y valor
+        absoluto: temperaturas, altitudes, saldos bancarios, pisos, fechas.
+      purpose: >-
+        Sirven para traducir situaciones con dos sentidos a operaciones con
+        signo y resolverlas con seguridad.
+      importance: >-
+        Es la prueba de que los números negativos no son una abstracción:
+        describen el mundo real.
+      foundations: >-
+        Se combinan la representación con signo, las operaciones con números
+        relativos y la distancia $|a - b|$.
+      prerequisites:
+        - 'Números positivos y negativos (b24)'
+        - 'Operaciones con números relativos (b24)'
+        - 'Distancia entre dos números (b24)'
+      outcomes:
+        - 'Calcular variaciones de temperatura'
+        - 'Calcular diferencias de altitud'
+        - 'Calcular saldos tras varios movimientos'
+      everyday_example: >-
+        Si la temperatura es de $-3$ °C y baja 7 grados, pasa a
+        $-3 - 7 = -10$ °C.
+    sections:
+      - title: Traducir la situación a números con signo
+        concept: Cada dato se escribe con su signo, se opera, y el resultado se interpreta en el contexto.
+        explanation: |-
+          **Pasos:**
+          1. Elige la referencia (el cero) y el sentido positivo.
+          2. Escribe cada dato con su signo.
+          3. Opera.
+          4. Interpreta el signo del resultado.
+
+          **Temperaturas.** "Bajar" es restar y "subir" es sumar. De $-3$ °C, si baja 7 grados: $-3 - 7 = -10$ °C. La **variación** entre una temperatura inicial y una final es $\text{final} - \text{inicial}$: de $-4$ °C a $9$ °C, $9 - (-4) = +13$ grados (subió 13).
+
+          **Altitudes.** La separación vertical entre un avión a $2500$ m y un submarino a $-300$ m es la distancia $|2500 - (-300)| = 2800$ m.
+
+          **Saldos.** Los ingresos son positivos y los gastos o cargos, negativos. Se suman todos los movimientos al saldo inicial; un saldo final negativo significa que se debe dinero.
+        definition: >-
+          Resolver un problema con números relativos es representar las
+          cantidades con signo respecto a una referencia, operar con ellas y
+          dar al signo del resultado su significado en el contexto.
+        rules:
+          - 'Subir, ganar, ingresar: sumar. Bajar, perder, gastar: restar.'
+          - 'Variación = valor final − valor inicial.'
+          - 'Separación entre dos posiciones: $|a - b|$.'
+          - 'Interpreta el signo del resultado (bajo cero, deuda, etc.).'
+        examples:
+          - problem: 'Un avión vuela a 2500 m y un submarino está a $-300$ m. ¿Cuántos metros los separan verticalmente?'
+            solution: |-
+              **Paso 1.** Separación: $|2500 - (-300)| = |2500 + 300|$.
+              **Paso 2.** $= 2800$.
+              Resultado: $2800$ m.
+          - problem: 'Una cuenta tiene 150 pesos. Se hacen los movimientos $-200$, $+80$ y $-50$. ¿Cuál es el saldo final?'
+            solution: |-
+              **Paso 1.** $150 - 200 = -50$.
+              **Paso 2.** $-50 + 80 = 30$.
+              **Paso 3.** $30 - 50 = -20$.
+              Resultado: $-20$ pesos (la cuenta queda en descubierto: se deben 20 pesos).
+        common_errors:
+          - 'Restar las altitudes sin tener en cuenta el signo: $2500 - 300 = 2200$ es incorrecto.'
+          - 'Calcular la variación como inicial − final.'
+          - 'Interpretar un saldo negativo como dinero disponible.'
+        summary: >-
+          Escribe cada dato con su signo, opera y explica qué significa el signo
+          del resultado.
+        check:
+          question: 'La temperatura pasa de $-4$ °C a $9$ °C. ¿Cuál fue la variación?'
+          options: ['$+5$ grados', '$+13$ grados', '$-13$ grados', '$-5$ grados']
+          answer: 1
+          explanation: >-
+            Variación = final − inicial $= 9 - (-4) = 13$: subió 13 grados.
+            $+5$ sale de restar $9 - 4$ sin el signo.
+    glossary:
+      - {term: Saldo, definition: 'Dinero disponible en una cuenta; si es negativo, indica una deuda.'}
+      - {term: Variación, definition: 'Diferencia entre el valor final y el inicial.'}
