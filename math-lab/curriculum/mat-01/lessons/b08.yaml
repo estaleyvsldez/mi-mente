@@ -1,0 +1,690 @@
+block: b08
+intro: >-
+  En este bloque reunimos las leyes que rigen las cuatro operaciones: las
+  propiedades conmutativa, asociativa y distributiva, los elementos neutro e
+  inverso, y qué propiedades cumple (y cuáles no) cada operación. Terminamos
+  usándolas para calcular de forma más inteligente.
+
+topics:
+  t01:
+    intro:
+      what: 'La propiedad conmutativa dice que el orden de los términos no altera el resultado.'
+      purpose: 'Permite reordenar sumandos o factores para calcular con más comodidad.'
+      importance: 'Saber qué operaciones son conmutativas (y cuáles no) evita errores graves, sobre todo con la resta y la división.'
+      foundations: 'Los significados de las operaciones: juntar no depende del orden; un arreglo girado tiene los mismos elementos.'
+      prerequisites:
+        - 'Propiedades de la suma (bloque 4, tema 6).'
+        - 'Propiedades de la multiplicación (bloque 6, tema 9).'
+      outcomes:
+        - Reconocer la propiedad conmutativa en una igualdad.
+        - Saber que la suma y la multiplicación son conmutativas y la resta y la división no.
+        - Refutar una propiedad con un contraejemplo.
+      everyday_example: >-
+        Ponerse primero el calcetín izquierdo o el derecho da el mismo resultado
+        (conmutativo); ponerse primero el zapato y después el calcetín, no.
+    sections:
+      - title: 'El orden no importa… a veces'
+        concept: 'Una operación es conmutativa si $a \ast b = b \ast a$ para todos los números; la suma y la multiplicación lo son, la resta y la división no.'
+        explanation: |-
+          **Suma:** $a + b = b + a$. Ejemplo: $7 + 12 = 12 + 7 = 19$.
+
+          **Multiplicación:** $a \times b = b \times a$. Ejemplo: $6 \times 9 = 9 \times 6 = 54$.
+
+          **Resta: NO es conmutativa.** $10 - 4 = 6$, pero $4 - 10 = -6$. Los resultados son opuestos, no iguales.
+
+          **División: NO es conmutativa.** $12 \div 3 = 4$, pero $3 \div 12$ no es 4 (es un número menor que 1, $\frac{1}{4}$).
+
+          **Cómo se demuestra que una propiedad NO se cumple:** basta con **un solo contraejemplo**, un caso concreto donde falle. En cambio, para afirmar que se cumple **siempre**, no basta con probar algunos casos: hay que razonar por qué (como hicimos con los arreglos rectangulares en el bloque 6).
+
+          Observa que hay casos particulares donde la resta o la división dan lo mismo al cambiar el orden (por ejemplo, $5 - 5 = 5 - 5$), pero una propiedad tiene que cumplirse **para todos** los números.
+        definition: >-
+          Una operación $\ast$ es conmutativa si $a \ast b = b \ast a$ para todos los números
+          $a$ y $b$. La suma y la multiplicación son conmutativas; la resta y la división no.
+        rules:
+          - '$a + b = b + a$ y $a \times b = b \times a$.'
+          - 'En general, $a - b \neq b - a$ y $a \div b \neq b \div a$.'
+          - 'Un contraejemplo basta para refutar una propiedad.'
+        examples:
+          - problem: 'Demuestra con un contraejemplo que la resta no es conmutativa.'
+            solution: |-
+              **Paso 1.** Elegimos $a = 9$ y $b = 2$.
+              **Paso 2.** $9 - 2 = 7$ y $2 - 9 = -7$.
+              **Paso 3.** $7 \neq -7$.
+              Resultado: la resta no es conmutativa.
+        common_errors:
+          - 'Reordenar una resta como si fuera una suma: $15 - 8$ no es igual a $8 - 15$.'
+          - 'Creer que un ejemplo favorable demuestra que la propiedad se cumple siempre.'
+        summary: >-
+          Suma y multiplicación son conmutativas; resta y división no, como muestra un
+          contraejemplo.
+        check:
+          question: '¿Cuál de estas igualdades es correcta para todos los números?'
+          options: ['$a \times b = b \times a$', '$a - b = b - a$', '$a \div b = b \div a$']
+          answer: 0
+          explanation: 'Sólo la multiplicación es conmutativa entre las tres. Contraejemplos: $5 - 2 \neq 2 - 5$ y $8 \div 2 \neq 2 \div 8$.'
+    glossary:
+      - term: 'Propiedad conmutativa'
+        definition: 'El orden de los términos no altera el resultado.'
+      - term: 'Contraejemplo'
+        definition: 'Caso concreto que demuestra que una afirmación general es falsa.'
+    practice: []
+
+  t02:
+    intro:
+      what: 'La propiedad asociativa dice que, con tres o más términos, la forma de agruparlos no altera el resultado.'
+      purpose: 'Permite agrupar sumandos o factores para que el cálculo sea más sencillo.'
+      importance: 'Justifica el cálculo mental por agrupaciones y la suma o multiplicación de varios números sin paréntesis.'
+      foundations: 'El uso de paréntesis para indicar qué se calcula primero.'
+      prerequisites:
+        - 'Propiedad conmutativa (bloque 8, tema 1).'
+      outcomes:
+        - Reconocer la propiedad asociativa.
+        - Saber qué operaciones son asociativas.
+        - Agrupar términos para calcular más fácilmente.
+      everyday_example: >-
+        Para pagar 3 productos de 25, 75 y 40 pesos, es cómodo agrupar
+        $(25 + 75) + 40 = 100 + 40 = 140$.
+    sections:
+      - title: 'Cambiar los paréntesis'
+        concept: 'Una operación es asociativa si $(a \ast b) \ast c = a \ast (b \ast c)$; la suma y la multiplicación lo son, la resta y la división no.'
+        explanation: |-
+          Los **paréntesis** indican qué se calcula primero. La propiedad asociativa dice que, para ciertas operaciones, mover los paréntesis no cambia nada.
+
+          **Suma:**
+          $$(8 + 5) + 5 = 13 + 5 = 18 \qquad 8 + (5 + 5) = 8 + 10 = 18$$
+
+          **Multiplicación:**
+          $$(3 \times 4) \times 5 = 12 \times 5 = 60 \qquad 3 \times (4 \times 5) = 3 \times 20 = 60$$
+
+          Gracias a esta propiedad podemos escribir $8 + 5 + 5$ o $3 \times 4 \times 5$ **sin paréntesis**.
+
+          **Resta: NO es asociativa.**
+          $$(10 - 4) - 3 = 6 - 3 = 3 \qquad 10 - (4 - 3) = 10 - 1 = 9$$
+
+          **División: NO es asociativa.**
+          $$(16 \div 4) \div 2 = 4 \div 2 = 2 \qquad 16 \div (4 \div 2) = 16 \div 2 = 8$$
+
+          Por eso en una resta o división encadenada **sin paréntesis** se calcula de izquierda a derecha: $10 - 4 - 3 = 3$ (lo verás en el bloque 9).
+
+          **Asociativa ≠ conmutativa.** En la asociativa el orden de los números se mantiene y sólo cambian los paréntesis.
+        definition: >-
+          Una operación $\ast$ es asociativa si $(a \ast b) \ast c = a \ast (b \ast c)$ para todos
+          los números $a$, $b$, $c$. La suma y la multiplicación son asociativas; la resta y la
+          división no.
+        rules:
+          - '$(a + b) + c = a + (b + c)$.'
+          - '$(a \times b) \times c = a \times (b \times c)$.'
+          - 'En la resta y la división los paréntesis sí cambian el resultado.'
+        examples:
+          - problem: 'Calcula de la forma más cómoda $(37 \times 5) \times 2$.'
+            solution: |-
+              **Paso 1.** Por la asociativa: $37 \times (5 \times 2)$.
+              **Paso 2.** $5 \times 2 = 10$.
+              **Paso 3.** $37 \times 10 = 370$.
+              Resultado: $370$.
+        common_errors:
+          - 'Mover paréntesis en una resta: $20 - (8 - 3) \neq (20 - 8) - 3$.'
+          - 'Confundir asociativa (agrupación) con conmutativa (orden).'
+        summary: >-
+          En suma y multiplicación la agrupación no importa; en resta y división, sí.
+        check:
+          question: '¿Qué propiedad expresa $(2 + 9) + 1 = 2 + (9 + 1)$?'
+          options: ['Asociativa', 'Conmutativa', 'Distributiva']
+          answer: 0
+          explanation: 'El orden de los números es el mismo; sólo cambia cómo se agrupan.'
+    glossary:
+      - term: 'Propiedad asociativa'
+        definition: 'La forma de agrupar los términos no altera el resultado.'
+      - term: 'Paréntesis'
+        definition: 'Signos que indican la operación que se realiza primero.'
+    practice: []
+
+  t03:
+    intro:
+      what: 'La propiedad distributiva relaciona la multiplicación con la suma y la resta: multiplicar por una suma es multiplicar por cada sumando y sumar.'
+      purpose: 'Permite descomponer productos difíciles y, al revés, sacar factor común para simplificar.'
+      importance: 'Es la base del algoritmo de la multiplicación, del cálculo mental y de gran parte del álgebra.'
+      foundations: 'El arreglo rectangular partido en dos bloques.'
+      prerequisites:
+        - 'Propiedad distributiva (bloque 6, tema 9).'
+      outcomes:
+        - Aplicar la distributiva respecto de la suma y de la resta.
+        - Sacar factor común.
+        - Usar la distributiva para calcular mentalmente.
+      everyday_example: >-
+        Compras 4 camisetas de 15 pesos y 4 gorras de 10: pagas
+        $4 \times 15 + 4 \times 10 = 4 \times (15 + 10) = 4 \times 25 = 100$ pesos.
+    sections:
+      - title: 'Distribuir y sacar factor común'
+        concept: '$a \times (b + c) = a \times b + a \times c$, y leída al revés, $a \times b + a \times c = a \times (b + c)$ (sacar factor común).'
+        explanation: |-
+          **Distribuir (de izquierda a derecha).** El factor de fuera multiplica a **cada** término del paréntesis:
+          $$6 \times (10 + 3) = 6 \times 10 + 6 \times 3 = 60 + 18 = 78$$
+          $$6 \times (10 - 3) = 6 \times 10 - 6 \times 3 = 60 - 18 = 42$$
+
+          Recuerda: en $6 \times 10 + 6 \times 3$ se hacen primero las multiplicaciones y después la suma.
+
+          **Sacar factor común (de derecha a izquierda).** Si dos productos comparten un factor, se puede «sacar»:
+          $$7 \times 36 + 7 \times 64 = 7 \times (36 + 64) = 7 \times 100 = 700$$
+          ¡Mucho más fácil que calcular $252 + 448$!
+
+          **Por qué funciona.** Un rectángulo de $a$ filas y $b + c$ columnas puede contarse entero o partido en dos rectángulos de $a \times b$ y $a \times c$: el total es el mismo.
+
+          **Por la conmutativa**, también vale con el factor a la derecha: $(b + c) \times a = b \times a + c \times a$.
+
+          **Cuidado:** la distributiva es de la multiplicación **sobre** la suma. La suma no se distribuye sobre la multiplicación: $2 + (3 \times 4) \neq (2 + 3) \times (2 + 4)$.
+        definition: >-
+          Para todos los números $a$, $b$, $c$: $a \times (b + c) = a \times b + a \times c$ y
+          $a \times (b - c) = a \times b - a \times c$.
+        rules:
+          - 'El factor multiplica a todos los términos del paréntesis.'
+          - 'Factor común: $a \times b + a \times c = a \times (b + c)$.'
+          - 'Funciona igual con la resta.'
+        examples:
+          - problem: 'Calcula sacando factor común: $15 \times 23 + 15 \times 77$.'
+            solution: |-
+              **Paso 1.** El factor común es 15: $15 \times (23 + 77)$.
+              **Paso 2.** $23 + 77 = 100$.
+              **Paso 3.** $15 \times 100 = 1\,500$.
+              Resultado: $1\,500$.
+          - problem: 'Calcula $9 \times 98$ con la distributiva.'
+            solution: |-
+              **Paso 1.** $98 = 100 - 2$.
+              **Paso 2.** $9 \times 100 - 9 \times 2 = 900 - 18$.
+              **Paso 3.** $900 - 18 = 882$.
+              Resultado: $882$.
+        common_errors:
+          - 'Multiplicar sólo el primer término: $6 \times (10 + 3) \neq 60 + 3$.'
+          - 'Sacar factor común de términos que no lo comparten.'
+        summary: >-
+          Distribuir: el factor multiplica cada término. Factor común: el camino inverso,
+          muy útil para simplificar.
+        check:
+          question: '¿Cuánto es $12 \times 45 + 12 \times 55$?'
+          options: ['1 200', '600', '1 100']
+          answer: 0
+          explanation: 'Factor común: $12 \times (45 + 55) = 12 \times 100 = 1\,200$.'
+    glossary:
+      - term: 'Propiedad distributiva'
+        definition: 'Multiplicar por una suma o resta es multiplicar cada término y sumar o restar los resultados.'
+      - term: 'Factor común'
+        definition: 'Factor que aparece en todos los términos de una suma y puede sacarse fuera de un paréntesis.'
+    practice: []
+
+  t04:
+    intro:
+      what: 'El elemento neutro de una operación es el número que, al operar con cualquier otro, lo deja igual.'
+      purpose: 'Reconocerlo permite simplificar expresiones y entender el elemento inverso.'
+      importance: 'Neutro e inverso son conceptos centrales del álgebra; además evitan errores comunes con el 0 y el 1.'
+      foundations: 'Las operaciones con 0 y con 1.'
+      prerequisites:
+        - 'Propiedades de la suma (bloque 4, tema 6).'
+        - 'Propiedades de la multiplicación (bloque 6, tema 9).'
+      outcomes:
+        - Identificar el neutro de la suma (0) y de la multiplicación (1).
+        - Entender por qué la resta y la división sólo tienen neutro «por la derecha».
+        - Distinguir neutro y absorbente.
+      everyday_example: >-
+        Sumar 0 pesos a tu cuenta no la cambia; comprar 1 paquete de 12 huevos te da 12
+        huevos: '$12 \times 1 = 12$.'
+    sections:
+      - title: 'El número que no cambia nada'
+        concept: 'El 0 es el elemento neutro de la suma y el 1 es el elemento neutro de la multiplicación.'
+        explanation: |-
+          **Suma:** $a + 0 = 0 + a = a$. Ejemplo: $47 + 0 = 47$.
+
+          **Multiplicación:** $a \times 1 = 1 \times a = a$. Ejemplo: $1 \times 83 = 83$.
+
+          Un elemento neutro de verdad funciona **por ambos lados**.
+
+          **Resta:** $a - 0 = a$ ✓, pero $0 - a = -a$, que no es $a$ (salvo si $a = 0$). El 0 sólo es neutro **por la derecha**; por eso decimos que la resta **no tiene** elemento neutro en sentido estricto.
+
+          **División:** $a \div 1 = a$ ✓, pero $1 \div a$ no es $a$ (por ejemplo, $1 \div 4$ no es 4). El 1 sólo es neutro **por la derecha**.
+
+          **No confundas neutro y absorbente.** En la multiplicación, el 0 no es neutro sino **absorbente**: $a \times 0 = 0$. Resumen:
+
+          | | Neutro | Efecto del 0 |
+          |---|---|---|
+          | Suma | 0 | no cambia nada |
+          | Multiplicación | 1 | lo convierte todo en 0 |
+        definition: >-
+          Un número $e$ es elemento neutro de la operación $\ast$ si $a \ast e = e \ast a = a$
+          para todo número $a$. El neutro de la suma es 0 y el de la multiplicación es 1.
+        rules:
+          - 'Neutro de la suma: 0. Neutro de la multiplicación: 1.'
+          - '$a - 0 = a$ y $a \div 1 = a$, pero sólo por la derecha.'
+          - 'En la multiplicación, el 0 es absorbente: $a \times 0 = 0$.'
+        examples:
+          - problem: 'Completa: $(-15) \times \square = -15$ y $(-15) + \square = -15$.'
+            solution: |-
+              **Paso 1.** En la multiplicación, el número que no cambia a otro es el 1: $(-15) \times 1 = -15$.
+              **Paso 2.** En la suma, es el 0: $(-15) + 0 = -15$.
+              Resultado: $1$ y $0$.
+        common_errors:
+          - 'Creer que el neutro de la multiplicación es 0: $5 \times 0 = 0$, no 5.'
+          - 'Pensar que $0 - 7 = 7$.'
+        summary: >-
+          0 es neutro de la suma y 1 de la multiplicación; en resta y división sólo funcionan
+          por la derecha.
+        check:
+          question: '¿Cuál es el elemento neutro de la multiplicación?'
+          options: ['1', '0', 'No tiene']
+          answer: 0
+          explanation: '$a \times 1 = a$ para todo $a$. El 0 es el absorbente de la multiplicación y el neutro de la suma.'
+    glossary:
+      - term: 'Elemento neutro'
+        definition: 'Número que, al operar con otro, no lo cambia: 0 en la suma, 1 en la multiplicación.'
+      - term: 'Elemento absorbente'
+        definition: 'Número que al multiplicarse da siempre él mismo: el 0.'
+    practice: []
+
+  t05:
+    intro:
+      what: 'El elemento inverso de un número, para una operación, es el número que al operar con él da el elemento neutro.'
+      purpose: 'Permite «deshacer» una operación: es la base de la resta como suma del opuesto y de la división como multiplicación por el recíproco.'
+      importance: 'Es la herramienta principal para resolver ecuaciones en álgebra.'
+      foundations: 'El elemento neutro y el opuesto de un entero.'
+      prerequisites:
+        - 'Elemento neutro (bloque 8, tema 4).'
+        - 'Números enteros: opuesto (bloque 3, tema 2).'
+      outcomes:
+        - Hallar el inverso aditivo (opuesto) de un número.
+        - Hallar el inverso multiplicativo (recíproco) de un número distinto de 0.
+        - Saber que el 0 no tiene recíproco.
+      everyday_example: >-
+        Un depósito de 200 pesos y un retiro de 200 pesos se anulan: $200 + (-200) = 0$.
+    sections:
+      - title: 'Opuesto y recíproco'
+        concept: 'El inverso aditivo de $a$ es $-a$, porque $a + (-a) = 0$; el inverso multiplicativo de $a \neq 0$ es $\frac{1}{a}$, porque $a \times \frac{1}{a} = 1$.'
+        explanation: |-
+          **Inverso aditivo u opuesto.** Para la suma, el neutro es 0. El inverso de $a$ es el número que sumado a $a$ da 0: su **opuesto**.
+          $$7 + (-7) = 0 \qquad (-12) + 12 = 0$$
+          El opuesto de 0 es 0. Todo entero tiene opuesto, pero ningún natural lo tiene dentro de los naturales (los negativos no son naturales).
+
+          **Inverso multiplicativo o recíproco.** Para la multiplicación, el neutro es 1. El inverso de $a$ es el número que multiplicado por $a$ da 1. Se escribe $\frac{1}{a}$ («uno entre $a$»), una **fracción**: la unidad dividida en $a$ partes iguales. (Las fracciones se estudian a fondo en el bloque 14; aquí basta esta idea.)
+
+          Por ejemplo, el recíproco de 4 es $\frac{1}{4}$: cuatro cuartos forman una unidad, $4 \times \frac{1}{4} = 1$. En decimal, $\frac{1}{4} = 0{,}25$ y $0{,}25 + 0{,}25 + 0{,}25 + 0{,}25 = 1$. ✓
+
+          El recíproco de un número negativo es negativo: el de $-5$ es $-\frac{1}{5}$, porque $(-5) \times (-\frac{1}{5}) = 1$ (signos iguales, positivo).
+
+          **El 0 no tiene recíproco:** $0 \times \text{cualquier número} = 0$, nunca 1. Es otra forma de ver que no se puede dividir entre 0.
+
+          **No confundas** opuesto (cambia el signo) y recíproco (le da la vuelta a la fracción).
+        definition: >-
+          Para la suma, el inverso de $a$ es $-a$ ($a + (-a) = 0$). Para la multiplicación, el
+          inverso de $a \neq 0$ es $\frac{1}{a}$ ($a \times \frac{1}{a} = 1$).
+        rules:
+          - 'Opuesto: cambia el signo; la suma da 0.'
+          - 'Recíproco de $a$: $\frac{1}{a}$; el producto da 1.'
+          - 'El 0 tiene opuesto (él mismo) pero no recíproco.'
+        examples:
+          - problem: 'Halla el opuesto y el recíproco de $8$.'
+            solution: |-
+              **Paso 1.** Opuesto: $-8$, porque $8 + (-8) = 0$.
+              **Paso 2.** Recíproco: $\frac{1}{8}$, porque ocho octavos forman la unidad: $8 \times \frac{1}{8} = 1$.
+              Resultado: opuesto $-8$; recíproco $\frac{1}{8}$.
+        common_errors:
+          - 'Dar el opuesto cuando se pide el recíproco: el recíproco de 8 no es $-8$.'
+          - 'Creer que el recíproco de un negativo es positivo.'
+        summary: >-
+          Opuesto: suma 0. Recíproco: producto 1. El 0 no tiene recíproco.
+        check:
+          question: '¿Qué número sumado a $-23$ da 0?'
+          options: ['$23$', '$-23$', '$\frac{1}{23}$']
+          answer: 0
+          explanation: 'El inverso aditivo de $-23$ es su opuesto, $23$: $(-23) + 23 = 0$. $\frac{1}{23}$ es el recíproco de 23.'
+    glossary:
+      - term: 'Inverso aditivo u opuesto'
+        definition: 'Número que sumado a otro da 0.'
+      - term: 'Inverso multiplicativo o recíproco'
+        definition: 'Número que multiplicado por otro da 1: el recíproco de $a$ es $\frac{1}{a}$.'
+    practice: []
+
+  t06:
+    intro:
+      what: 'Es el resumen de todas las propiedades que cumple la suma.'
+      purpose: 'Tener en un solo lugar las leyes que permiten operar con sumas de forma flexible.'
+      importance: 'Repasar las propiedades con la visión de todo el bloque prepara para el álgebra, donde se usan constantemente.'
+      foundations: 'Las propiedades conmutativa, asociativa, neutro e inverso.'
+      prerequisites:
+        - 'Propiedades de la suma (bloque 4, tema 6).'
+        - 'Elemento inverso (bloque 8, tema 5).'
+      outcomes:
+        - Enumerar las propiedades de la suma.
+        - Identificar qué propiedad se usa en cada paso de un cálculo.
+        - Saber en qué conjuntos se cumple cada propiedad.
+      everyday_example: >-
+        Al cuadrar una lista de ingresos y gastos puedes sumarlos en cualquier orden y
+        agruparlos como quieras: el saldo final no cambia.
+    sections:
+      - title: 'Las cinco propiedades de la suma'
+        concept: 'La suma es cerrada, conmutativa y asociativa, tiene neutro (0) y, en los enteros, cada número tiene inverso (su opuesto).'
+        explanation: |-
+          Ya viste en el bloque 4 tres propiedades de la suma. Con lo aprendido en este bloque, la lista completa es:
+
+          | Propiedad | Expresión | Ejemplo |
+          |---|---|---|
+          | Clausura (o cierre) | $a + b$ es del mismo conjunto | $3 + 5 = 8$ es natural |
+          | Conmutativa | $a + b = b + a$ | $4 + 9 = 9 + 4$ |
+          | Asociativa | $(a + b) + c = a + (b + c)$ | $(2 + 8) + 5 = 2 + (8 + 5)$ |
+          | Elemento neutro | $a + 0 = a$ | $17 + 0 = 17$ |
+          | Elemento inverso | $a + (-a) = 0$ | $6 + (-6) = 0$ |
+
+          **¿En qué conjunto se cumple cada una?**
+
+          * Clausura, conmutativa y asociativa: en los naturales, enteros, racionales y reales.
+          * Neutro: el 0 no es natural con la convención de este curso, pero está en los enteros y en los demás conjuntos.
+          * Inverso: **no** en los naturales (el opuesto de 5 es $-5$, que no es natural); **sí** en los enteros, racionales y reales.
+
+          Este es uno de los motivos por los que se crearon los enteros: con ellos, toda suma se puede «deshacer» sumando el opuesto.
+
+          **Uso combinado.** Las propiedades conmutativa y asociativa juntas permiten **sumar en el orden y con la agrupación que queramos**, y el inverso permite cancelar términos: $57 + 18 + (-57) = 18$.
+        definition: >-
+          En $\mathbb{Z}$ la suma cumple: clausura, conmutatividad, asociatividad, existencia
+          del neutro 0 y existencia del inverso $-a$ para cada $a$.
+        rules:
+          - 'Clausura, conmutativa, asociativa, neutro (0) e inverso (opuesto).'
+          - 'El inverso aditivo existe en $\mathbb{Z}$, $\mathbb{Q}$ y $\mathbb{R}$, no en $\mathbb{N}$.'
+        examples:
+          - problem: 'Calcula $46 + (-19) + (-46) + 25$ indicando las propiedades usadas.'
+            solution: |-
+              **Paso 1.** Conmutativa: $46 + (-46) + (-19) + 25$.
+              **Paso 2.** Asociativa e inverso: $[46 + (-46)] + [(-19) + 25] = 0 + 6$.
+              **Paso 3.** Neutro: $0 + 6 = 6$.
+              Resultado: $6$.
+        common_errors:
+          - 'Pensar que todo natural tiene opuesto dentro de los naturales.'
+          - 'Confundir el inverso aditivo ($-a$) con el neutro (0).'
+        summary: >-
+          La suma es cerrada, conmutativa, asociativa, tiene neutro 0 y, en los enteros,
+          inverso (el opuesto).
+        check:
+          question: '¿Qué propiedad de la suma se usa en $(-31) + 31 = 0$?'
+          options: ['Elemento inverso', 'Elemento neutro', 'Conmutativa']
+          answer: 0
+          explanation: 'Sumar un número y su opuesto da el neutro, 0: es el elemento inverso. El neutro sería $a + 0 = a$.'
+    glossary:
+      - term: 'Clausura'
+        definition: 'Propiedad por la cual operar dos números de un conjunto da otro número del mismo conjunto.'
+    practice: []
+
+  t07:
+    intro:
+      what: 'Es el estudio de qué propiedades cumple la resta y cuáles no.'
+      purpose: 'Evitar errores al reordenar o reagrupar restas y conocer las reglas que sí se pueden usar.'
+      importance: 'Muchos errores de cálculo vienen de tratar la resta como si fuera una suma.'
+      foundations: 'La relación entre suma y resta y la resta como suma del opuesto.'
+      prerequisites:
+        - 'Resta de números enteros (bloque 5, tema 4).'
+        - 'Propiedades conmutativa y asociativa (bloque 8, temas 1 y 2).'
+      outcomes:
+        - Saber que la resta no es conmutativa ni asociativa.
+        - Conocer la clausura de la resta en $\mathbb{Z}$ y no en $\mathbb{N}$.
+        - Usar propiedades válidas, como restar una suma o compensar.
+      everyday_example: >-
+        Gastar 30 y luego 20 equivale a gastar 50 de una vez: $100 - 30 - 20 = 100 - (30 + 20)$.
+    sections:
+      - title: 'Lo que la resta cumple y lo que no'
+        concept: 'La resta no es conmutativa ni asociativa y su neutro sólo funciona por la derecha, pero tiene reglas útiles propias.'
+        explanation: |-
+          **Lo que NO cumple:**
+
+          * **Conmutativa:** $9 - 4 = 5$ pero $4 - 9 = -5$.
+          * **Asociativa:** $(12 - 5) - 2 = 5$ pero $12 - (5 - 2) = 9$.
+          * **Neutro por ambos lados:** $a - 0 = a$, pero $0 - a = -a$.
+          * **Clausura en los naturales:** $3 - 8$ no es natural. En los **enteros sí** es cerrada.
+
+          **Lo que SÍ se puede usar:**
+
+          1. **Restar es sumar el opuesto:** $a - b = a + (-b)$. Convertida en suma, ya se puede reordenar y agrupar: $15 - 7 + 5 = 15 + (-7) + 5 = 20 + (-7) = 13$.
+          2. **Restar una suma es restar cada sumando:** $a - (b + c) = a - b - c$. Ejemplo: $100 - (30 + 20) = 100 - 30 - 20 = 50$.
+          3. **Cambiar el orden cambia el signo:** $b - a = -(a - b)$. Ejemplo: $4 - 9 = -(9 - 4) = -5$.
+          4. **Compensación:** si se suma (o resta) el mismo número al minuendo y al sustraendo, la diferencia no cambia: $83 - 47 = 86 - 50 = 36$.
+          5. **Distributiva:** la multiplicación se distribuye sobre la resta: $a \times (b - c) = a \times b - a \times c$.
+        definition: >-
+          La resta en $\mathbb{Z}$ es cerrada pero no conmutativa ni asociativa; cumple
+          $a - b = a + (-b)$, $a - (b + c) = a - b - c$ y $(a + k) - (b + k) = a - b$.
+        rules:
+          - 'No conmutativa, no asociativa; 0 sólo es neutro por la derecha.'
+          - 'Cerrada en $\mathbb{Z}$, no en $\mathbb{N}$.'
+          - '$a - (b + c) = a - b - c$.'
+          - 'Sumar el mismo número a minuendo y sustraendo no cambia la diferencia.'
+        examples:
+          - problem: 'Calcula $500 - (180 + 120)$ de dos formas.'
+            solution: |-
+              **Forma 1.** Paréntesis primero: $180 + 120 = 300$; $500 - 300 = 200$.
+              **Forma 2.** Restar cada sumando: $500 - 180 - 120 = 320 - 120 = 200$.
+              Resultado: $200$ en ambos casos.
+          - problem: 'Calcula $204 - 98$ por compensación.'
+            solution: |-
+              **Paso 1.** Sumamos 2 a ambos: $206 - 100$.
+              **Paso 2.** $206 - 100 = 106$.
+              Resultado: $106$.
+        common_errors:
+          - 'Escribir $a - (b + c) = a - b + c$: hay que restar ambos sumandos.'
+          - 'Reordenar una resta sin convertirla antes en suma del opuesto.'
+        summary: >-
+          La resta no es conmutativa ni asociativa, pero se puede convertir en suma del
+          opuesto; restar una suma es restar cada sumando.
+        check:
+          question: '¿Cuál de estas igualdades es correcta?'
+          options: ['$50 - (20 + 5) = 50 - 20 - 5$', '$50 - (20 + 5) = 50 - 20 + 5$', '$50 - 20 = 20 - 50$']
+          answer: 0
+          explanation: 'Restar una suma es restar cada sumando: ambos lados valen 25. La segunda da 35 y la tercera compara 30 con $-30$.'
+    glossary:
+      - term: 'Compensación'
+        definition: 'Sumar o restar el mismo número al minuendo y al sustraendo sin cambiar la diferencia.'
+    practice: []
+
+  t08:
+    intro:
+      what: 'Es el resumen de todas las propiedades que cumple la multiplicación.'
+      purpose: 'Reunir las leyes que permiten operar con productos de forma flexible.'
+      importance: 'Se usan en cálculo mental, en la factorización y en todo el álgebra.'
+      foundations: 'Las propiedades estudiadas en el bloque 6 y los conceptos de neutro e inverso.'
+      prerequisites:
+        - 'Propiedades de la multiplicación (bloque 6, tema 9).'
+        - 'Elemento inverso (bloque 8, tema 5).'
+      outcomes:
+        - Enumerar las propiedades de la multiplicación.
+        - Identificar la propiedad usada en cada paso.
+        - Saber en qué conjuntos existe el inverso multiplicativo.
+      everyday_example: >-
+        Para calcular el precio de 25 cajas de 4 paquetes a 13 pesos, se agrupa
+        $(25 \times 4) \times 13 = 100 \times 13 = 1\,300$ pesos.
+    sections:
+      - title: 'Las propiedades de la multiplicación'
+        concept: 'La multiplicación es cerrada, conmutativa y asociativa, tiene neutro (1), absorbente (0), se distribuye sobre la suma y, fuera de los enteros, cada número distinto de 0 tiene inverso.'
+        explanation: |-
+          | Propiedad | Expresión | Ejemplo |
+          |---|---|---|
+          | Clausura | $a \times b$ es del mismo conjunto | $4 \times 6 = 24$ es natural |
+          | Conmutativa | $a \times b = b \times a$ | $3 \times 8 = 8 \times 3$ |
+          | Asociativa | $(a \times b) \times c = a \times (b \times c)$ | $(2 \times 5) \times 9 = 2 \times (5 \times 9)$ |
+          | Elemento neutro | $a \times 1 = a$ | $14 \times 1 = 14$ |
+          | Elemento absorbente | $a \times 0 = 0$ | $97 \times 0 = 0$ |
+          | Distributiva | $a \times (b + c) = a \times b + a \times c$ | $5 \times (10 + 2) = 50 + 10$ |
+          | Elemento inverso | $a \times \frac{1}{a} = 1$ ($a \neq 0$) | $5 \times \frac{1}{5} = 1$ |
+
+          **¿Dónde se cumple el inverso?** En los naturales y los enteros **no**: el recíproco de 5 es $\frac{1}{5}$, que no es entero. Sí existe en los **racionales** y los **reales** (para todo número salvo el 0). Este es el motivo por el que se necesitan las fracciones: para poder «deshacer» siempre una multiplicación.
+
+          **Uso combinado.** Con conmutativa y asociativa se reordenan los factores para formar productos cómodos (10, 100, 1000):
+          $$5 \times 13 \times 2 = (5 \times 2) \times 13 = 10 \times 13 = 130$$
+
+          Y si en un producto aparece un factor 0, el resultado es 0 sin necesidad de calcular nada más.
+        definition: >-
+          La multiplicación en $\mathbb{Q}$ es cerrada, conmutativa, asociativa, tiene neutro
+          1, absorbente 0, es distributiva respecto de la suma y todo $a \neq 0$ tiene inverso
+          $\frac{1}{a}$.
+        rules:
+          - 'Clausura, conmutativa, asociativa, neutro (1), absorbente (0), distributiva.'
+          - 'El inverso multiplicativo existe en $\mathbb{Q}$ y $\mathbb{R}$ (salvo para 0), no en $\mathbb{N}$ ni $\mathbb{Z}$.'
+        examples:
+          - problem: 'Calcula $25 \times 7 \times 4$ e indica las propiedades usadas.'
+            solution: |-
+              **Paso 1.** Conmutativa: $25 \times 4 \times 7$.
+              **Paso 2.** Asociativa: $(25 \times 4) \times 7 = 100 \times 7$.
+              **Paso 3.** $100 \times 7 = 700$.
+              Resultado: $700$.
+        common_errors:
+          - 'Pensar que todo entero tiene inverso multiplicativo entero.'
+          - 'Confundir el neutro (1) con el absorbente (0).'
+        summary: >-
+          Clausura, conmutativa, asociativa, neutro 1, absorbente 0, distributiva e inverso
+          $\frac{1}{a}$ (en los racionales).
+        check:
+          question: '¿Cuánto vale $38 \times 0 \times 125$?'
+          options: ['0', '4 750', '163']
+          answer: 0
+          explanation: 'El 0 es absorbente: cualquier producto con un factor 0 vale 0.'
+    glossary:
+      - term: 'Clausura'
+        definition: 'Propiedad por la cual el producto de dos números de un conjunto pertenece al mismo conjunto.'
+    practice: []
+
+  t09:
+    intro:
+      what: 'Es el estudio de qué propiedades cumple la división y cuáles no.'
+      purpose: 'Evitar errores al reordenar divisiones y conocer las reglas válidas, como la propiedad fundamental de la división.'
+      importance: 'Prepara el trabajo con fracciones, que son divisiones indicadas.'
+      foundations: 'La relación entre multiplicación y división y la imposibilidad de dividir entre 0.'
+      prerequisites:
+        - 'Relación entre multiplicación y división (bloque 7, tema 10).'
+        - 'Propiedades conmutativa y asociativa (bloque 8, temas 1 y 2).'
+      outcomes:
+        - Saber que la división no es conmutativa ni asociativa.
+        - Aplicar la distributiva por la derecha.
+        - Aplicar la propiedad fundamental de la división exacta.
+      everyday_example: >-
+        Repartir 90 pesos en billetes y 30 en monedas entre 3 personas es lo mismo que
+        repartir 120: $(90 + 30) \div 3 = 90 \div 3 + 30 \div 3 = 40$.
+    sections:
+      - title: 'Lo que la división cumple y lo que no'
+        concept: 'La división no es conmutativa ni asociativa y su neutro (1) sólo actúa por la derecha; sí se distribuye por la derecha y conserva el cociente al multiplicar dividendo y divisor por el mismo número.'
+        explanation: |-
+          **Lo que NO cumple:**
+
+          * **Conmutativa:** $20 \div 5 = 4$, pero $5 \div 20$ no es 4.
+          * **Asociativa:** $(24 \div 4) \div 2 = 3$, pero $24 \div (4 \div 2) = 12$.
+          * **Neutro por ambos lados:** $a \div 1 = a$, pero $1 \div a \neq a$ en general.
+          * **Clausura en los enteros:** $7 \div 2$ no es entero.
+          * **Dividir entre 0** no está definido nunca.
+
+          **Lo que SÍ cumple:**
+
+          1. **$0 \div a = 0$** para $a \neq 0$.
+          2. **Distributiva por la derecha:** $(a + b) \div c = a \div c + b \div c$. Ejemplo: $(60 + 12) \div 6 = 10 + 2 = 12$. Pero **no por la izquierda**: $12 \div (2 + 4) = 12 \div 6 = 2$, mientras que $12 \div 2 + 12 \div 4 = 6 + 3 = 9$.
+          3. **Propiedad fundamental** (división exacta): si se multiplican (o dividen exactamente) el dividendo y el divisor por el mismo número distinto de 0, el cociente no cambia:
+          $$40 \div 8 = 5 \qquad 80 \div 16 = 5 \qquad 20 \div 4 = 5$$
+          Es la idea que hay detrás de las fracciones equivalentes (bloque 14) y es útil para simplificar: $450 \div 50 = 45 \div 5 = 9$.
+        definition: >-
+          La división no es conmutativa ni asociativa; para $c \neq 0$ cumple
+          $(a + b) \div c = a \div c + b \div c$ y, para $k \neq 0$,
+          $(a \times k) \div (b \times k) = a \div b$.
+        rules:
+          - 'No conmutativa, no asociativa; 1 sólo es neutro por la derecha.'
+          - 'Nunca se divide entre 0; $0 \div a = 0$ si $a \neq 0$.'
+          - 'Distributiva sólo por la derecha: $(a + b) \div c = a \div c + b \div c$.'
+          - 'Multiplicar dividendo y divisor por el mismo número no cambia el cociente.'
+        examples:
+          - problem: 'Calcula $(84 + 21) \div 7$ usando la distributiva por la derecha.'
+            solution: |-
+              **Paso 1.** $84 \div 7 = 12$ y $21 \div 7 = 3$.
+              **Paso 2.** $12 + 3 = 15$.
+              **Comprobación.** $84 + 21 = 105$ y $105 \div 7 = 15$. ✓
+              Resultado: $15$.
+          - problem: 'Simplifica $3\,600 \div 400$ con la propiedad fundamental.'
+            solution: |-
+              **Paso 1.** Dividimos dividendo y divisor entre 100: $36 \div 4$.
+              **Paso 2.** $36 \div 4 = 9$.
+              Resultado: $9$.
+        common_errors:
+          - 'Distribuir por la izquierda: $12 \div (2 + 4) \neq 12 \div 2 + 12 \div 4$.'
+          - 'Quitar ceros sólo al dividendo: $3\,600 \div 400$ no es $36 \div 400$.'
+        summary: >-
+          La división no es conmutativa ni asociativa; se distribuye sólo por la derecha y el
+          cociente no cambia si dividendo y divisor se multiplican por el mismo número.
+        check:
+          question: '¿Cuál de estas igualdades es correcta?'
+          options:
+            - '$(30 + 18) \div 6 = 30 \div 6 + 18 \div 6$'
+            - '$36 \div (2 + 4) = 36 \div 2 + 36 \div 4$'
+            - '$16 \div 4 = 4 \div 16$'
+          answer: 0
+          explanation: 'Distributiva por la derecha: ambos lados valen 8. La segunda da $6 \neq 27$ y la tercera no se cumple porque la división no es conmutativa.'
+    glossary:
+      - term: 'Propiedad fundamental de la división'
+        definition: 'Si se multiplican dividendo y divisor por el mismo número distinto de 0, el cociente no cambia.'
+    practice: []
+
+  t10:
+    intro:
+      what: 'Es el uso de las propiedades de las operaciones para calcular de forma más rápida y segura.'
+      purpose: 'Convertir cálculos largos en otros cortos, sobre todo en cálculo mental y estimaciones.'
+      importance: 'Usar las propiedades con intención es la diferencia entre calcular mecánicamente y razonar con números.'
+      foundations: 'Todas las propiedades del bloque.'
+      prerequisites:
+        - 'Propiedades conmutativa, asociativa y distributiva (bloque 8, temas 1–3).'
+      outcomes:
+        - Reagrupar sumandos para formar decenas o centenas.
+        - Sacar factor común para simplificar.
+        - Justificar con propiedades cada paso de un cálculo.
+      everyday_example: >-
+        Para sumar mentalmente una compra de 38 + 27 + 62 pesos, se agrupa
+        $(38 + 62) + 27 = 100 + 27 = 127$.
+    sections:
+      - title: 'Calcular con inteligencia'
+        concept: 'Las propiedades permiten reordenar, reagrupar y descomponer los números para que el cálculo sea más sencillo, sin cambiar el resultado.'
+        explanation: |-
+          **1. Formar números redondos (conmutativa + asociativa).** Busca sumandos que juntos den 10, 100, 1000:
+          $$47 + 85 + 53 = (47 + 53) + 85 = 100 + 85 = 185$$
+          Lo mismo con factores: busca $2 \times 5 = 10$, $4 \times 25 = 100$, $8 \times 125 = 1000$.
+
+          **2. Sacar factor común (distributiva al revés).**
+          $$13 \times 27 + 13 \times 73 = 13 \times (27 + 73) = 13 \times 100 = 1\,300$$
+
+          **3. Descomponer (distributiva).**
+          $$16 \times 105 = 16 \times 100 + 16 \times 5 = 1\,600 + 80 = 1\,680$$
+
+          **4. Cancelar opuestos (inverso).** $238 + 59 - 238 = 59$.
+
+          **5. Simplificar divisiones (propiedad fundamental).** $7\,200 \div 900 = 72 \div 9 = 8$.
+
+          **Cómo decidir:** antes de calcular, mira los números. ¿Hay parejas que sumen un número redondo? ¿Hay un factor repetido? ¿Algún número está cerca de uno redondo? Ese breve vistazo ahorra mucho trabajo.
+
+          Justificar cada paso con su propiedad te asegura de que la transformación es válida y no cambia el resultado.
+        definition: >-
+          Aplicar las propiedades es sustituir una expresión por otra equivalente (con el
+          mismo valor) que resulta más fácil de calcular.
+        rules:
+          - 'Reordena y agrupa sumandos o factores para formar números redondos.'
+          - 'Saca factor común cuando un factor se repite.'
+          - 'Descompón un factor cercano a un número redondo.'
+          - 'Cada transformación debe estar justificada por una propiedad.'
+        examples:
+          - problem: 'Calcula de forma inteligente $36 + 78 + 64 + 22$.'
+            solution: |-
+              **Paso 1.** Conmutativa y asociativa: $(36 + 64) + (78 + 22)$.
+              **Paso 2.** $100 + 100 = 200$.
+              Resultado: $200$.
+          - problem: 'Calcula $8 \times 37 \times 125$.'
+            solution: |-
+              **Paso 1.** Conmutativa: $8 \times 125 \times 37$.
+              **Paso 2.** Asociativa: $(8 \times 125) \times 37 = 1\,000 \times 37$.
+              **Paso 3.** $1\,000 \times 37 = 37\,000$.
+              Resultado: $37\,000$.
+        common_errors:
+          - 'Reordenar restas o divisiones como si fueran sumas o multiplicaciones.'
+          - 'Sacar factor común cuando los productos no comparten ningún factor.'
+        summary: >-
+          Mira los números antes de calcular: agrupa redondos, saca factor común, descompón
+          y cancela opuestos.
+        check:
+          question: '¿Cuánto es $9 \times 64 + 9 \times 36$?'
+          options: ['900', '576', '1 000']
+          answer: 0
+          explanation: 'Factor común: $9 \times (64 + 36) = 9 \times 100 = 900$.'
+    glossary:
+      - term: 'Expresión equivalente'
+        definition: 'Expresión distinta que tiene el mismo valor que otra.'
+    practice: []

@@ -733,7 +733,7 @@ def elementos_mult(c: Ctx):
 def concepto_mult(c: Ctx):
     g, k = c.randint(2, 9), c.randint(2, 9)
     if c.variant == "grupos":
-        c.step("Grupos iguales", f"{g} grupos de {k} → ${g} \\times {k} = {g * k}$", procedure="Multiplicación como grupos iguales")
+        c.step("Grupos iguales", f"{g} grupos de {k}: el {k} se repite {g} veces → ${k} \\times {g} = {g * k}$", procedure="Multiplicación como grupos iguales")
         return c.build(name="Concepto de multiplicación", procedure="Grupos iguales", prompt=f"Hay {g} cajas con {k} huevos cada una. ¿Cuántos huevos hay?",
                        answer=A_int(g * k), final=str(g * k))
     c.step("Filas por columnas", f"${g} \\times {k} = {g * k}$", procedure="Multiplicación como arreglo rectangular")
