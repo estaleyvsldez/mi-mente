@@ -8,8 +8,8 @@ from math import gcd, isqrt
 
 from ..core.registry import Ctx, generator, mc
 from ..core.types import AnswerSpec
-from ..numbers.fmt import decimal_str, fixed_str, num, round_half_up, signed_tex, tex, tex_frac
-from ._common import NAMES, A_choice_fixed, A_fields, A_int, A_num
+from ..numbers.fmt import decimal_str, num, round_half_up, signed_tex, tex, tex_frac
+from ._common import A_choice_fixed, A_fields, A_int, A_num
 
 F = Fraction
 
@@ -144,7 +144,7 @@ def exponente_cero_uno(c: Ctx):
     val = a if e == 1 else 1
     if e == 0:
         c.step("Regla", "Todo número distinto de 0 elevado a 0 da 1.", procedure="Exponente cero",
-               why=f"Por ejemplo, $\\frac{{a^{{3}}}}{{a^{{3}}}} = a^{{3-3}} = a^0$ y también vale 1.")
+               why="Por ejemplo, $\\frac{a^{3}}{a^{3}} = a^{3-3} = a^0$ y también vale 1.")
         c.mistake("cero", "Creíste que da 0", "a⁰ = 1, no 0.", 0, 0)
         c.mistake("base", "Dejaste la base", "a⁰ = 1.", a, 0)
     else:
@@ -195,7 +195,7 @@ def concepto_potencia(c: Ctx):
     b, e = c.randint(2, 5), c.randint(2, 4)
     opts = [f"{' × '.join([str(b)] * e)}", f"{b} × {e}", f"{' + '.join([str(b)] * e)}", f"{' × '.join([str(e)] * b)}"]
     ans = mc(c, opts[0], opts[1:])
-    c.step("Definición", f"$b^n$ es el producto de n factores iguales a b.", procedure="Definición de potencia")
+    c.step("Definición", "$b^n$ es el producto de n factores iguales a b.", procedure="Definición de potencia")
     return c.build(name="Concepto de potencia", procedure="Definición de potencia", prompt=f"¿Qué significa ${b}^{{{e}}}$?", answer=ans, final=opts[0])
 
 
@@ -344,7 +344,7 @@ def concepto_raiz(c: Ctx):
     r = c.randint(2, 12)
     opts = [f"El número que multiplicado por sí mismo da {r * r}", f"La mitad de {r * r}", f"{r * r} multiplicado por 2", f"{r * r} dividido entre 10"]
     ans = mc(c, opts[0], opts[1:])
-    c.step("Definición", f"$\\sqrt{{n}} = r$ significa $r^2 = n$ (con r ≥ 0).", procedure="Definición de raíz")
+    c.step("Definición", "$\\sqrt{n} = r$ significa $r^2 = n$ (con r ≥ 0).", procedure="Definición de raíz")
     return c.build(name="Concepto de raíz", procedure="Definición de raíz cuadrada", prompt=f"¿Qué significa $\\sqrt{{{r * r}}}$?", answer=ans, final=opts[0])
 
 

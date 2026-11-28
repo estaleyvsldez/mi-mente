@@ -1,0 +1,117 @@
+block: b01
+intro: Bloque de prueba
+topics:
+  t01:
+    glossary:
+    - definition: D
+      term: T
+    intro: &id001
+      everyday_example: e
+      foundations: f
+      importance: i
+      outcomes:
+      - o
+      prerequisites: []
+      purpose: p
+      what: w
+    practice:
+    - answer: 0
+      explanation: Porque sí.
+      level: 1
+      options:
+      - Correcta
+      - Incorrecta A
+      - Incorrecta B
+      question: Pregunta 0
+    - answer: 0
+      explanation: Porque sí.
+      level: 1
+      options:
+      - Correcta
+      - Incorrecta A
+      - Incorrecta B
+      question: Pregunta 1
+    - answer: 0
+      explanation: Porque sí.
+      level: 1
+      options:
+      - Correcta
+      - Incorrecta A
+      - Incorrecta B
+      question: Pregunta 2
+    - answer: 0
+      explanation: Porque sí.
+      level: 2
+      options:
+      - Correcta
+      - Incorrecta A
+      - Incorrecta B
+      question: Pregunta 3
+    - answer: 0
+      explanation: Porque sí.
+      level: 2
+      options:
+      - Correcta
+      - Incorrecta A
+      - Incorrecta B
+      question: Pregunta 4
+    - answer: 0
+      explanation: Porque sí.
+      level: 2
+      options:
+      - Correcta
+      - Incorrecta A
+      - Incorrecta B
+      question: Pregunta 5
+    - answer: 0
+      explanation: Porque sí.
+      level: 3
+      options:
+      - Correcta
+      - Incorrecta A
+      - Incorrecta B
+      question: Pregunta 6
+    - answer: 0
+      explanation: Porque sí.
+      level: 3
+      options:
+      - Correcta
+      - Incorrecta A
+      - Incorrecta B
+      question: Pregunta 7
+    - answer: 0
+      explanation: Porque sí.
+      level: 3
+      options:
+      - Correcta
+      - Incorrecta A
+      - Incorrecta B
+      question: Pregunta 8
+    sections:
+    - &id002
+      check:
+        answer: 0
+        explanation: e
+        options:
+        - Sí
+        - 'No'
+        question: ¿?
+      common_errors:
+      - x
+      concept: c
+      definition: d
+      examples:
+      - problem: p
+        solution: s
+      explanation: e
+      rules:
+      - r
+      summary: r
+      title: S
+  t02:
+    glossary: []
+    intro: *id001
+    practice: []
+    sections:
+    - *id002
+    - *id002

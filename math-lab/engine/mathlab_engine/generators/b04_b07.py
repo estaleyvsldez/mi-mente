@@ -277,9 +277,9 @@ def problemas_suma(c: Ctx):
         total = a + b + d
         c.step("Comprender el enunciado", "Se pregunta por el total reunido en tres días.", procedure="Resolución de problemas")
         c.step("Identificar los datos", f"Día 1: {a}; día 2: {b}; día 3: {d}.")
-        c.step("Elegir la operación", "Reunir cantidades → **suma**.", prompt=f"¿Cuánto suman los dos primeros días?", answer=A_int(a + b))
+        c.step("Elegir la operación", "Reunir cantidades → **suma**.", prompt="¿Cuánto suman los dos primeros días?", answer=A_int(a + b))
         c.step("Resolver", f"${a} + {b} + {d} = {total}$", prompt="¿Cuál es el total?", answer=A_int(total))
-        c.step("Comprobar", f"El total es mayor que cada cantidad por separado: tiene sentido.")
+        c.step("Comprobar", "El total es mayor que cada cantidad por separado: tiene sentido.")
         return c.build(name="Problema de suma de varios pasos", procedure="Suma de varios sumandos",
                        prompt=f"Una biblioteca recibió {a} {item} el lunes, {b} el martes y {d} el miércoles. ¿Cuántos {item} recibió en total?",
                        answer=A_int(total, item), final=f"{total} {item}")

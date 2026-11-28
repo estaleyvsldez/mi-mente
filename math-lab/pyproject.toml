@@ -1,0 +1,12 @@
+# Configuración compartida de herramientas de calidad (no es un paquete).
+[tool.ruff]
+line-length = 160
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501", "B008", "UP038", "E741", "B023", "B905"]
+
+[tool.pytest.ini_options]
+testpaths = ["engine/tests", "backend/tests"]
+addopts = "-q"

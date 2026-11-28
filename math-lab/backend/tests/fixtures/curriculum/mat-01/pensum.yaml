@@ -1,0 +1,8 @@
+# Currículo mínimo para pruebas del flujo de enseñanza.
+module: {id: mat01, code: MAT-01, title: Prueba}
+blocks:
+  - id: b01
+    title: Bloque de prueba
+    topics:
+      - {id: t01, title: "Tema conceptual", gens: []}
+      - {id: t02, title: "Suma con reagrupación", gens: [b04.suma_reagrupacion]}

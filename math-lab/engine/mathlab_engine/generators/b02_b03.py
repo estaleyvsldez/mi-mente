@@ -5,7 +5,7 @@ from __future__ import annotations
 from fractions import Fraction
 
 from ..algorithms.columns import digits_rev, place_name
-from ..algorithms.numtheory import from_base, to_base, to_base_trace
+from ..algorithms.numtheory import to_base, to_base_trace
 from ..core.registry import Ctx, generator, mc
 from ..core.types import AnswerSpec
 from ..numbers.fmt import decimal_str, num, tex
@@ -269,7 +269,7 @@ def _rand_rational(c: Ctx, level: int) -> Fraction:
 
 
 def _show(q: Fraction) -> str:
-    return tex(q, as_fraction=not (q.denominator in (1, 2, 4, 5, 8, 10, 20, 25, 50, 100)))
+    return tex(q, as_fraction=q.denominator not in (1, 2, 4, 5, 8, 10, 20, 25, 50, 100))
 
 
 @generator("b03.comparacion", "Comparación y orden de números", {1: ["comparar"], 2: ["comparar", "ordenar"], 3: ["comparar", "ordenar"]})

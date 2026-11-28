@@ -6,11 +6,11 @@ from fractions import Fraction
 from math import gcd
 
 from ..algorithms.numtheory import lcm
-from ..core.registry import Ctx, generator, mc
+from ..core.registry import Ctx, generator
 from ..core.types import AnswerSpec
-from ..numbers.fmt import decimal_str, fixed_str, is_terminating, num, round_half_up, tex, tex_frac
+from ..numbers.fmt import decimal_str, fixed_str, round_half_up, tex, tex_frac
 from ..numbers.words import decimal_to_words
-from ._common import NAMES, A_choice_fixed, A_fields, A_int, A_list
+from ._common import NAMES, A_choice_fixed, A_fields, A_int
 
 F = Fraction
 
@@ -511,7 +511,6 @@ def lectura_decimales(c: Ctx):
     c.step("Leer la parte entera", f"Se lee la parte entera ({w}) seguida de «entero(s)».", procedure="Lectura de decimales")
     c.step("Leer la parte decimal", f"Se lee {f} como número y se añade el nombre de la última posición ({_DEC_PLACES[len(f)]}): «{words}».",
            why="La última cifra decimal indica en qué unidades se cuenta la parte decimal.")
-    alt = f"{w} coma {f}"
     if c.variant == "escribir":
         return c.build(name="Escritura de decimales", procedure="Escritura de decimales", prompt=f"Escribe con cifras: **{words}**",
                        answer=AnswerSpec(kind="number", value=v, form="decimal"), final=s)

@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: mathlab-engine
+Version: 0.1.0
+Summary: MATH LAB — motor matemático determinista (generación, solución y validación de ejercicios)
+Requires-Python: >=3.11

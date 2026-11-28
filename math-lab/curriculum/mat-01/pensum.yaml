@@ -1,0 +1,422 @@
+# PENSUM OFICIAL MAT-01 — ARITMÉTICA COMPLETA
+# Fuente única de verdad del currículo. NO eliminar, resumir, combinar ni
+# reordenar temas sin autorización del propietario (ver PROJECT_CONTEXT.md).
+# Los títulos se conservan literalmente (sólo se omite el punto final).
+#
+# gens: generadores del motor que producen ejercicios para el tema.
+#       Si está vacío, el tema es conceptual y usa el banco de preguntas de
+#       su lección (curriculum/mat-01/lessons/bXX.yaml → practice).
+
+module:
+  id: mat01
+  code: MAT-01
+  title: Aritmética completa
+
+blocks:
+  - id: b01
+    title: Introducción a la aritmética
+    topics:
+      - {id: t01, title: "Qué es la aritmética", gens: []}
+      - {id: t02, title: "Historia y evolución de la aritmética", gens: []}
+      - {id: t03, title: "Importancia de la aritmética", gens: []}
+      - {id: t04, title: "Aplicaciones en la vida cotidiana", gens: [b04.problemas_suma, b05.problemas_resta]}
+      - {id: t05, title: "Diferencia entre aritmética, álgebra, geometría y otras ramas", gens: []}
+      - {id: t06, title: "Conceptos básicos: número, cantidad, magnitud y operación", gens: []}
+
+  - id: b02
+    title: Sistemas de numeración
+    topics:
+      - {id: t01, title: "Qué es un sistema de numeración", gens: [b02.sistemas_concepto]}
+      - {id: t02, title: "Sistema decimal", gens: [b02.valor_posicional, b02.descomposicion]}
+      - {id: t03, title: "Sistema binario", gens: [b02.conversion_bases]}
+      - {id: t04, title: "Sistema octal", gens: [b02.conversion_bases]}
+      - {id: t05, title: "Sistema hexadecimal", gens: [b02.conversion_bases]}
+      - {id: t06, title: "Valor posicional", gens: [b02.valor_posicional]}
+      - {id: t07, title: "Unidades, decenas, centenas, unidades de millar, etc", gens: [b02.valor_posicional]}
+      - {id: t08, title: "Conversión entre sistemas de numeración", gens: [b02.conversion_bases]}
+      - {id: t09, title: "Descomposición de números", gens: [b02.descomposicion]}
+      - {id: t10, title: "Lectura y escritura de números", gens: [b02.lectura]}
+
+  - id: b03
+    title: Conjuntos numéricos
+    topics:
+      - {id: t01, title: "Números naturales", gens: [b03.clasificacion]}
+      - {id: t02, title: "Números enteros", gens: [b03.clasificacion, b03.comparacion]}
+      - {id: t03, title: "Números racionales", gens: [b03.clasificacion, b03.representacion]}
+      - {id: t04, title: "Números irracionales", gens: [b03.clasificacion]}
+      - {id: t05, title: "Números reales", gens: [b03.clasificacion]}
+      - {id: t06, title: "Clasificación de los números", gens: [b03.clasificacion]}
+      - {id: t07, title: "Recta numérica", gens: [b03.recta_numerica]}
+      - {id: t08, title: "Comparación y orden de números", gens: [b03.comparacion]}
+      - {id: t09, title: "Representación de números", gens: [b03.representacion, b03.recta_numerica]}
+      - {id: t10, title: "Relación entre los conjuntos numéricos", gens: [b03.relacion_conjuntos]}
+
+  - id: b04
+    title: Suma
+    topics:
+      - {id: t01, title: "Concepto de suma", gens: [b04.concepto_suma]}
+      - {id: t02, title: "Elementos de la suma", gens: [b04.elementos_suma]}
+      - {id: t03, title: "Suma de números naturales", gens: [b04.suma_naturales]}
+      - {id: t04, title: "Suma de números enteros", gens: [b04.suma_enteros]}
+      - {id: t05, title: "Suma con reagrupación", gens: [b04.suma_reagrupacion]}
+      - {id: t06, title: "Propiedades de la suma", gens: [b04.propiedades_suma]}
+      - {id: t07, title: "Suma mental", gens: [b04.suma_mental]}
+      - {id: t08, title: "Suma vertical", gens: [b04.suma_vertical]}
+      - {id: t09, title: "Suma de varios números", gens: [b04.suma_varios]}
+      - {id: t10, title: "Resolución de problemas mediante suma", gens: [b04.problemas_suma]}
+
+  - id: b05
+    title: Resta
+    topics:
+      - {id: t01, title: "Concepto de resta", gens: [b05.concepto_resta]}
+      - {id: t02, title: "Elementos de la resta", gens: [b05.elementos_resta]}
+      - {id: t03, title: "Resta de números naturales", gens: [b05.resta_naturales]}
+      - {id: t04, title: "Resta de números enteros", gens: [b05.resta_enteros]}
+      - {id: t05, title: "Resta con desagrupación", gens: [b05.resta_desagrupacion]}
+      - {id: t06, title: "Relación entre suma y resta", gens: [b05.relacion_suma_resta]}
+      - {id: t07, title: "Comprobación de la resta", gens: [b05.comprobacion_resta]}
+      - {id: t08, title: "Resta mental", gens: [b05.resta_mental]}
+      - {id: t09, title: "Resta vertical", gens: [b05.resta_vertical]}
+      - {id: t10, title: "Resolución de problemas mediante resta", gens: [b05.problemas_resta]}
+
+  - id: b06
+    title: Multiplicación
+    topics:
+      - {id: t01, title: "Concepto de multiplicación", gens: [b06.concepto_mult]}
+      - {id: t02, title: "Elementos de la multiplicación", gens: [b06.elementos_mult]}
+      - {id: t03, title: "Multiplicación como suma repetida", gens: [b06.suma_repetida]}
+      - {id: t04, title: "Tablas de multiplicar", gens: [b06.tablas]}
+      - {id: t05, title: "Multiplicación por una cifra", gens: [b06.mult_una_cifra]}
+      - {id: t06, title: "Multiplicación por varias cifras", gens: [b06.mult_varias_cifras]}
+      - {id: t07, title: "Multiplicación por múltiplos de 10, 100 y 1000", gens: [b06.mult_potencias_10]}
+      - {id: t08, title: "Multiplicación de números enteros", gens: [b06.mult_enteros]}
+      - {id: t09, title: "Propiedades de la multiplicación", gens: [b06.propiedades_mult]}
+      - {id: t10, title: "Multiplicación mental", gens: [b06.mult_mental]}
+      - {id: t11, title: "Resolución de problemas mediante multiplicación", gens: [b06.problemas_mult]}
+
+  - id: b07
+    title: División
+    topics:
+      - {id: t01, title: "Concepto de división", gens: [b07.concepto_division]}
+      - {id: t02, title: "Elementos de la división", gens: [b07.elementos_division]}
+      - {id: t03, title: "División exacta", gens: [b07.exacta_inexacta, b07.division_una_cifra]}
+      - {id: t04, title: "División inexacta", gens: [b07.exacta_inexacta, b07.division_residuo]}
+      - {id: t05, title: "División con residuo", gens: [b07.division_residuo]}
+      - {id: t06, title: "División por una cifra", gens: [b07.division_una_cifra]}
+      - {id: t07, title: "División por varias cifras", gens: [b07.division_varias_cifras]}
+      - {id: t08, title: "División larga", gens: [b07.division_larga]}
+      - {id: t09, title: "División de números enteros", gens: [b07.division_enteros]}
+      - {id: t10, title: "Relación entre multiplicación y división", gens: [b07.relacion_mult_div]}
+      - {id: t11, title: "Comprobación de la división", gens: [b07.comprobacion_division]}
+      - {id: t12, title: "Resolución de problemas mediante división", gens: [b07.problemas_division]}
+
+  - id: b08
+    title: Propiedades y leyes de las operaciones
+    topics:
+      - {id: t01, title: "Propiedad conmutativa", gens: [b08.identificar_propiedad, b04.propiedades_suma]}
+      - {id: t02, title: "Propiedad asociativa", gens: [b08.identificar_propiedad, b08.aplicar_propiedades]}
+      - {id: t03, title: "Propiedad distributiva", gens: [b06.propiedades_mult, b08.aplicar_propiedades]}
+      - {id: t04, title: "Elemento neutro", gens: [b08.neutro_inverso]}
+      - {id: t05, title: "Elemento inverso", gens: [b08.neutro_inverso]}
+      - {id: t06, title: "Propiedades de la suma", gens: [b04.propiedades_suma, b08.propiedades_operaciones]}
+      - {id: t07, title: "Propiedades de la resta", gens: [b08.propiedades_operaciones]}
+      - {id: t08, title: "Propiedades de la multiplicación", gens: [b06.propiedades_mult, b08.propiedades_operaciones]}
+      - {id: t09, title: "Propiedades de la división", gens: [b08.propiedades_operaciones]}
+      - {id: t10, title: "Aplicaciones de las propiedades", gens: [b08.aplicar_propiedades]}
+
+  - id: b09
+    title: Jerarquía de operaciones
+    topics:
+      - {id: t01, title: "Orden de las operaciones", gens: [b09.orden_operaciones]}
+      - {id: t02, title: "Uso de paréntesis", gens: [b09.operaciones_combinadas@parentesis]}
+      - {id: t03, title: "Uso de corchetes", gens: [b09.operaciones_combinadas@corchetes]}
+      - {id: t04, title: "Uso de llaves", gens: [b09.operaciones_combinadas@llaves]}
+      - {id: t05, title: "Potencias en operaciones combinadas", gens: [b09.operaciones_combinadas@potencias]}
+      - {id: t06, title: "Raíces en operaciones combinadas", gens: [b09.operaciones_combinadas@raices]}
+      - {id: t07, title: "Operaciones combinadas", gens: [b09.operaciones_combinadas]}
+      - {id: t08, title: "Resolución paso a paso", gens: [b09.operaciones_combinadas]}
+      - {id: t09, title: "Errores frecuentes", gens: [b09.orden_operaciones, b09.operaciones_combinadas]}
+
+  - id: b10
+    title: Múltiplos y divisores
+    topics:
+      - {id: t01, title: "Concepto de múltiplo", gens: [b10.es_multiplo@multiplo]}
+      - {id: t02, title: "Concepto de divisor", gens: [b10.es_multiplo@divisor]}
+      - {id: t03, title: "Múltiplos de un número", gens: [b10.listar_multiplos]}
+      - {id: t04, title: "Divisores de un número", gens: [b10.listar_divisores]}
+      - {id: t05, title: "Criterios de divisibilidad", gens: [b10.criterios_divisibilidad]}
+      - {id: t06, title: "Divisibilidad entre 2, 3, 4, 5, 6, 8, 9, 10 y otros números", gens: [b10.criterios_divisibilidad]}
+      - {id: t07, title: "Relación entre múltiplos y divisores", gens: [b10.relacion_multiplos_divisores]}
+      - {id: t08, title: "Aplicaciones", gens: [b10.problemas_divisibilidad]}
+
+  - id: b11
+    title: Números primos y compuestos
+    topics:
+      - {id: t01, title: "Números primos", gens: [b11.primo_compuesto]}
+      - {id: t02, title: "Números compuestos", gens: [b11.primo_compuesto]}
+      - {id: t03, title: "Número 1", gens: [b11.cero_uno]}
+      - {id: t04, title: "Número 0", gens: [b11.cero_uno]}
+      - {id: t05, title: "Identificación de números primos", gens: [b11.primo_compuesto]}
+      - {id: t06, title: "Criba de Eratóstenes", gens: [b11.criba]}
+      - {id: t07, title: "Descomposición en factores primos", gens: [b11.factorizacion]}
+      - {id: t08, title: "Aplicaciones de la factorización", gens: [b11.aplicaciones_factorizacion]}
+
+  - id: b12
+    title: Máximo común divisor (MCD)
+    topics:
+      - {id: t01, title: "Concepto de MCD", gens: [b12.mcd_listado]}
+      - {id: t02, title: "Divisores comunes", gens: [b12.divisores_comunes]}
+      - {id: t03, title: "Cálculo mediante listado de divisores", gens: [b12.mcd_listado]}
+      - {id: t04, title: "Cálculo mediante factorización prima", gens: [b12.mcd_factorizacion]}
+      - {id: t05, title: "Algoritmo de Euclides", gens: [b12.euclides]}
+      - {id: t06, title: "Aplicaciones del MCD", gens: [b12.problemas_mcd]}
+      - {id: t07, title: "Problemas de reparto y agrupación", gens: [b12.problemas_mcd]}
+
+  - id: b13
+    title: Mínimo común múltiplo (MCM)
+    topics:
+      - {id: t01, title: "Concepto de MCM", gens: [b13.mcm_listado]}
+      - {id: t02, title: "Múltiplos comunes", gens: [b13.multiplos_comunes]}
+      - {id: t03, title: "Cálculo mediante listado de múltiplos", gens: [b13.mcm_listado]}
+      - {id: t04, title: "Cálculo mediante factorización prima", gens: [b13.mcm_factorizacion]}
+      - {id: t05, title: "Relación entre MCD y MCM", gens: [b13.relacion_mcd_mcm]}
+      - {id: t06, title: "Aplicaciones del MCM", gens: [b13.problemas_mcm]}
+      - {id: t07, title: "Problemas de coincidencia y periodicidad", gens: [b13.problemas_mcm]}
+
+  - id: b14
+    title: Fundamentos de fracciones
+    topics:
+      - {id: t01, title: "Qué es una fracción", gens: [b14.concepto_fraccion]}
+      - {id: t02, title: "Numerador y denominador", gens: [b14.numerador_denominador]}
+      - {id: t03, title: "Representación gráfica", gens: [b14.representacion_grafica]}
+      - {id: t04, title: "Fracciones propias", gens: [b14.clasificar_fracciones]}
+      - {id: t05, title: "Fracciones impropias", gens: [b14.clasificar_fracciones]}
+      - {id: t06, title: "Fracciones aparentes", gens: [b14.clasificar_fracciones]}
+      - {id: t07, title: "Números mixtos", gens: [b14.mixtos]}
+      - {id: t08, title: "Fracciones equivalentes", gens: [b14.equivalentes]}
+      - {id: t09, title: "Simplificación de fracciones", gens: [b14.simplificar]}
+      - {id: t10, title: "Amplificación de fracciones", gens: [b14.amplificar]}
+      - {id: t11, title: "Comparación y orden de fracciones", gens: [b14.comparar_fracciones]}
+
+  - id: b15
+    title: Operaciones con fracciones
+    topics:
+      - {id: t01, title: "Suma de fracciones con igual denominador", gens: [b15.suma_igual_den]}
+      - {id: t02, title: "Suma de fracciones con distinto denominador", gens: [b15.suma_distinto_den]}
+      - {id: t03, title: "Resta de fracciones", gens: [b15.resta_fracciones]}
+      - {id: t04, title: "Multiplicación de fracciones", gens: [b15.multiplicacion_fracciones]}
+      - {id: t05, title: "División de fracciones", gens: [b15.division_fracciones]}
+      - {id: t06, title: "Operaciones combinadas con fracciones", gens: [b15.combinadas_fracciones]}
+      - {id: t07, title: "Conversión entre números mixtos y fracciones impropias", gens: [b14.mixtos]}
+      - {id: t08, title: "Problemas con fracciones", gens: [b15.problemas_fracciones]}
+
+  - id: b16
+    title: Fundamentos de números decimales
+    topics:
+      - {id: t01, title: "Qué son los números decimales", gens: [b16.concepto_decimal]}
+      - {id: t02, title: "Parte entera y parte decimal", gens: [b16.partes_decimal]}
+      - {id: t03, title: "Décimas", gens: [b16.unidades_decimales, b16.valor_posicional_decimal@decimas]}
+      - {id: t04, title: "Centésimas", gens: [b16.unidades_decimales, b16.valor_posicional_decimal@centesimas]}
+      - {id: t05, title: "Milésimas", gens: [b16.unidades_decimales, b16.valor_posicional_decimal@milesimas]}
+      - {id: t06, title: "Valor posicional decimal", gens: [b16.valor_posicional_decimal]}
+      - {id: t07, title: "Lectura y escritura de decimales", gens: [b16.lectura_decimales]}
+      - {id: t08, title: "Comparación y orden", gens: [b16.comparar_decimales]}
+      - {id: t09, title: "Conversión entre fracciones y decimales", gens: [b16.fraccion_decimal]}
+
+  - id: b17
+    title: Operaciones con decimales
+    topics:
+      - {id: t01, title: "Suma de decimales", gens: [b17.suma_resta_decimales@suma]}
+      - {id: t02, title: "Resta de decimales", gens: [b17.suma_resta_decimales@resta, b17.suma_resta_decimales@resta_rellenar]}
+      - {id: t03, title: "Multiplicación de decimales", gens: [b17.multiplicacion_decimales]}
+      - {id: t04, title: "División de decimales", gens: [b17.division_decimales]}
+      - {id: t05, title: "Redondeo", gens: [b17.redondeo]}
+      - {id: t06, title: "Aproximación", gens: [b17.aproximacion_decimales]}
+      - {id: t07, title: "Operaciones combinadas", gens: [b17.combinadas_decimales]}
+      - {id: t08, title: "Problemas con decimales", gens: [b17.problemas_decimales]}
+
+  - id: b18
+    title: Potenciación
+    topics:
+      - {id: t01, title: "Concepto de potencia", gens: [b18.concepto_potencia]}
+      - {id: t02, title: "Base y exponente", gens: [b18.base_exponente]}
+      - {id: t03, title: "Potencias de números naturales", gens: [b18.calcular_potencia]}
+      - {id: t04, title: "Potencias de números enteros", gens: [b18.potencia_enteros]}
+      - {id: t05, title: "Potencias de base 10", gens: [b18.potencias_10]}
+      - {id: t06, title: "Cuadrados y cubos", gens: [b18.cuadrados_cubos]}
+      - {id: t07, title: "Propiedades de las potencias", gens: [b18.propiedades_potencias]}
+      - {id: t08, title: "Exponente cero", gens: [b18.exponente_cero_uno@cero]}
+      - {id: t09, title: "Exponente uno", gens: [b18.exponente_cero_uno@uno]}
+      - {id: t10, title: "Exponentes negativos", gens: [b18.exponentes_negativos]}
+      - {id: t11, title: "Aplicaciones", gens: [b18.aplicaciones_potencias]}
+
+  - id: b19
+    title: Radicación
+    topics:
+      - {id: t01, title: "Concepto de raíz", gens: [b19.concepto_raiz]}
+      - {id: t02, title: "Raíz cuadrada", gens: [b19.raiz_cuadrada]}
+      - {id: t03, title: "Raíz cúbica", gens: [b19.raiz_cubica]}
+      - {id: t04, title: "Índice y radicando", gens: [b19.indice_radicando]}
+      - {id: t05, title: "Raíces exactas", gens: [b19.exactas_aproximadas, b19.raiz_cuadrada]}
+      - {id: t06, title: "Raíces aproximadas", gens: [b19.raiz_aproximada]}
+      - {id: t07, title: "Relación entre potencias y raíces", gens: [b19.relacion_potencias_raices]}
+      - {id: t08, title: "Propiedades de los radicales", gens: [b19.propiedades_radicales]}
+      - {id: t09, title: "Simplificación de raíces", gens: [b19.simplificar_raices]}
+      - {id: t10, title: "Aplicaciones", gens: [b19.aplicaciones_raices]}
+
+  - id: b20
+    title: Razones y proporciones
+    topics:
+      - {id: t01, title: "Concepto de razón", gens: [b20.razon]}
+      - {id: t02, title: "Concepto de proporción", gens: [b20.proporcion]}
+      - {id: t03, title: "Antecedente y consecuente", gens: [b20.antecedente_consecuente]}
+      - {id: t04, title: "Proporciones equivalentes", gens: [b20.proporciones_equivalentes]}
+      - {id: t05, title: "Propiedad fundamental de las proporciones", gens: [b20.cuarto_proporcional]}
+      - {id: t06, title: "Magnitudes directamente proporcionales", gens: [b20.tipo_proporcionalidad, b20.aplicaciones_proporciones]}
+      - {id: t07, title: "Magnitudes inversamente proporcionales", gens: [b20.tipo_proporcionalidad]}
+      - {id: t08, title: "Aplicaciones cotidianas", gens: [b20.aplicaciones_proporciones]}
+
+  - id: b21
+    title: Regla de tres
+    topics:
+      - {id: t01, title: "Concepto de regla de tres", gens: [b21.concepto_regla_tres]}
+      - {id: t02, title: "Regla de tres simple directa", gens: [b21.regla_tres_directa]}
+      - {id: t03, title: "Regla de tres simple inversa", gens: [b21.regla_tres_inversa]}
+      - {id: t04, title: "Regla de tres compuesta", gens: [b21.regla_tres_compuesta]}
+      - {id: t05, title: "Identificación de magnitudes", gens: [b21.identificar_magnitudes]}
+      - {id: t06, title: "Resolución paso a paso", gens: [b21.regla_tres_directa, b21.regla_tres_inversa]}
+      - {id: t07, title: "Aplicaciones prácticas", gens: [b21.regla_tres_directa, b21.regla_tres_inversa, b21.regla_tres_compuesta]}
+
+  - id: b22
+    title: Porcentajes
+    topics:
+      - {id: t01, title: "Concepto de porcentaje", gens: [b22.concepto_porcentaje]}
+      - {id: t02, title: "Relación entre porcentaje, fracción y decimal", gens: [b22.conversion_porcentaje]}
+      - {id: t03, title: "Cálculo de porcentajes", gens: [b22.que_porcentaje]}
+      - {id: t04, title: "Aumentos porcentuales", gens: [b22.aumento]}
+      - {id: t05, title: "Descuentos porcentuales", gens: [b22.descuento]}
+      - {id: t06, title: "Porcentaje de una cantidad", gens: [b22.porcentaje_cantidad]}
+      - {id: t07, title: "Variación porcentual", gens: [b22.variacion]}
+      - {id: t08, title: "Aplicaciones comerciales y cotidianas", gens: [b22.aplicaciones_porcentaje]}
+
+  - id: b23
+    title: Matemáticas financieras básicas
+    topics:
+      - {id: t01, title: "Concepto de interés", gens: [b23.concepto_interes]}
+      - {id: t02, title: "Capital", gens: [b23.elementos_financieros@identificar, b23.elementos_financieros@despejar_capital]}
+      - {id: t03, title: "Tasa de interés", gens: [b23.elementos_financieros@identificar, b23.elementos_financieros@despejar_tasa]}
+      - {id: t04, title: "Tiempo", gens: [b23.elementos_financieros@identificar, b23.elementos_financieros@despejar_tiempo]}
+      - {id: t05, title: "Interés simple", gens: [b23.interes_simple]}
+      - {id: t06, title: "Interés compuesto", gens: [b23.interes_compuesto]}
+      - {id: t07, title: "Descuentos", gens: [b23.descuentos_financieros]}
+      - {id: t08, title: "Ganancias y pérdidas", gens: [b23.ganancias_perdidas]}
+      - {id: t09, title: "Aplicaciones financieras cotidianas", gens: [b23.aplicaciones_financieras]}
+
+  - id: b24
+    title: Valor absoluto y números relativos
+    topics:
+      - {id: t01, title: "Concepto de valor absoluto", gens: [b24.valor_absoluto]}
+      - {id: t02, title: "Distancia al cero", gens: [b24.distancia@al_cero, b24.distancia@entre]}
+      - {id: t03, title: "Valor absoluto en la recta numérica", gens: [b24.valor_absoluto_recta]}
+      - {id: t04, title: "Números positivos y negativos", gens: [b24.positivos_negativos]}
+      - {id: t05, title: "Operaciones con números relativos", gens: [b24.operaciones_relativos]}
+      - {id: t06, title: "Aplicaciones", gens: [b24.aplicaciones_relativos]}
+
+  - id: b25
+    title: Aproximaciones y estimaciones
+    topics:
+      - {id: t01, title: "Aproximación", gens: [b25.aproximacion_concepto]}
+      - {id: t02, title: "Estimación", gens: [b25.estimacion]}
+      - {id: t03, title: "Redondeo", gens: [b25.redondeo_naturales]}
+      - {id: t04, title: "Truncamiento", gens: [b25.truncamiento]}
+      - {id: t05, title: "Cifras significativas", gens: [b25.cifras_significativas]}
+      - {id: t06, title: "Error absoluto", gens: [b25.errores@absoluto]}
+      - {id: t07, title: "Error relativo", gens: [b25.errores@relativo, b25.errores@relativo_porcentual]}
+      - {id: t08, title: "Aplicaciones prácticas", gens: [b25.aplicaciones_aproximacion]}
+
+  - id: b26
+    title: Notación científica
+    topics:
+      - {id: t01, title: "Concepto de notación científica", gens: [b26.concepto_cientifica]}
+      - {id: t02, title: "Potencias de 10", gens: [b26.potencias_10_cientifica, b18.potencias_10]}
+      - {id: t03, title: "Conversión a notación científica", gens: [b26.a_cientifica]}
+      - {id: t04, title: "Conversión a notación decimal", gens: [b26.a_decimal]}
+      - {id: t05, title: "Operaciones en notación científica", gens: [b26.operaciones_cientifica]}
+      - {id: t06, title: "Aplicaciones en ciencia y tecnología", gens: [b26.aplicaciones_cientifica]}
+
+  - id: b27
+    title: Sistemas de unidades y conversiones
+    topics:
+      - {id: t01, title: "Sistema Internacional de Unidades", gens: [b27.si_unidades]}
+      - {id: t02, title: "Longitud", gens: [b27.longitud]}
+      - {id: t03, title: "Masa", gens: [b27.masa]}
+      - {id: t04, title: "Tiempo", gens: [b27.tiempo]}
+      - {id: t05, title: "Temperatura", gens: [b27.temperatura]}
+      - {id: t06, title: "Capacidad", gens: [b27.capacidad]}
+      - {id: t07, title: "Superficie", gens: [b27.superficie]}
+      - {id: t08, title: "Volumen", gens: [b27.volumen]}
+      - {id: t09, title: "Conversión de unidades", gens: [b27.longitud, b27.masa, b27.capacidad, b27.superficie, b27.volumen]}
+      - {id: t10, title: "Prefijos del sistema métrico", gens: [b27.prefijos]}
+      - {id: t11, title: "Aplicaciones prácticas", gens: [b27.aplicaciones_unidades]}
+
+  - id: b28
+    title: Sucesiones y patrones
+    topics:
+      - {id: t01, title: "Concepto de sucesión", gens: [b28.concepto_sucesion]}
+      - {id: t02, title: "Patrones numéricos", gens: [b28.siguiente_termino]}
+      - {id: t03, title: "Sucesiones crecientes", gens: [b28.creciente_decreciente]}
+      - {id: t04, title: "Sucesiones decrecientes", gens: [b28.creciente_decreciente]}
+      - {id: t05, title: "Sucesiones aritméticas", gens: [b28.termino_general]}
+      - {id: t06, title: "Diferencia común", gens: [b28.diferencia_comun]}
+      - {id: t07, title: "Identificación de patrones", gens: [b28.siguiente_termino]}
+      - {id: t08, title: "Resolución de problemas", gens: [b28.problemas_sucesiones]}
+
+  - id: b29
+    title: Aritmética modular
+    topics:
+      - {id: t01, title: "Concepto de congruencia", gens: [b29.congruencia@verificar]}
+      - {id: t02, title: "Módulo", gens: [b29.concepto_modulo]}
+      - {id: t03, title: "Operación módulo", gens: [b29.operacion_mod]}
+      - {id: t04, title: "Congruencias", gens: [b29.congruencia]}
+      - {id: t05, title: "Aritmética del reloj", gens: [b29.reloj]}
+      - {id: t06, title: "Suma modular", gens: [b29.operaciones_modulares@suma]}
+      - {id: t07, title: "Resta modular", gens: [b29.operaciones_modulares@resta]}
+      - {id: t08, title: "Multiplicación modular", gens: [b29.operaciones_modulares@multiplicacion]}
+      - {id: t09, title: "Aplicaciones en informática y criptografía", gens: [b29.aplicaciones_modular]}
+
+  - id: b30
+    title: Principios de conteo
+    topics:
+      - {id: t01, title: "Principio aditivo", gens: [b30.principio_aditivo]}
+      - {id: t02, title: "Principio multiplicativo", gens: [b30.principio_multiplicativo]}
+      - {id: t03, title: "Diagramas de árbol", gens: [b30.diagrama_arbol]}
+      - {id: t04, title: "Conteo de posibilidades", gens: [b30.conteo_posibilidades]}
+      - {id: t05, title: "Introducción a permutaciones", gens: [b30.permutaciones]}
+      - {id: t06, title: "Introducción a combinaciones", gens: [b30.combinaciones]}
+      - {id: t07, title: "Aplicaciones", gens: [b30.aplicaciones_conteo]}
+
+  - id: b31
+    title: Resolución de problemas
+    topics:
+      - {id: t01, title: "Comprensión del enunciado", gens: [b31.comprension]}
+      - {id: t02, title: "Identificación de datos", gens: [b31.identificar_datos]}
+      - {id: t03, title: "Identificación de incógnitas", gens: [b31.comprension]}
+      - {id: t04, title: "Selección de operaciones", gens: [b31.seleccion_operaciones]}
+      - {id: t05, title: "Diseño de estrategias", gens: [b31.estrategias]}
+      - {id: t06, title: "Resolución paso a paso", gens: [b31.varios_pasos]}
+      - {id: t07, title: "Comprobación de resultados", gens: [b31.comprobacion]}
+      - {id: t08, title: "Problemas de varios pasos", gens: [b31.varios_pasos]}
+      - {id: t09, title: "Razonamiento matemático", gens: [b31.estrategias]}
+
+  - id: b32
+    title: Aplicaciones de la aritmética
+    topics:
+      - {id: t01, title: "Aritmética en la vida cotidiana", gens: [b32.vida_cotidiana]}
+      - {id: t02, title: "Compras y ventas", gens: [b32.compras_ventas]}
+      - {id: t03, title: "Presupuestos", gens: [b32.presupuestos]}
+      - {id: t04, title: "Finanzas personales", gens: [b32.finanzas_personales]}
+      - {id: t05, title: "Medidas y conversiones", gens: [b32.medidas, b27.aplicaciones_unidades]}
+      - {id: t06, title: "Ciencia y tecnología", gens: [b32.ciencia_tecnologia, b26.aplicaciones_cientifica]}
+      - {id: t07, title: "Informática", gens: [b32.ciencia_tecnologia, b29.aplicaciones_modular, b02.conversion_bases]}
+      - {id: t08, title: "Resolución de problemas reales", gens: [b32.problemas_reales]}
+      - {id: t09, title: "Integración de todos los conocimientos del módulo", gens: [b32.problemas_reales, b31.varios_pasos, b22.descuento, b15.problemas_fracciones, b09.operaciones_combinadas]}

@@ -416,7 +416,7 @@ def aplicaciones_factorizacion(c: Ctx):
     count = 1
     for e in f.values():
         count *= e + 1
-    c.step("Usar los exponentes", f"Nº de divisores = producto de (exponente + 1): " + " × ".join(f"({e}+1)" for e in f.values()) + f" = {count}",
+    c.step("Usar los exponentes", "Nº de divisores = producto de (exponente + 1): " + " × ".join(f"({e}+1)" for e in f.values()) + f" = {count}",
            procedure="Conteo de divisores por factorización", why="Cada divisor elige un exponente de 0 a e para cada primo.")
     return c.build(name="Número de divisores", procedure="Conteo de divisores mediante factorización", prompt=f"¿Cuántos divisores tiene ${n} = {fact_tex(f)}$?",
                    answer=A_int(count), final=str(count))
@@ -562,7 +562,7 @@ def mcm_factorizacion(c: Ctx):
 def relacion_mcd_mcm(c: Ctx):
     a, b = _pair_with_gcd(c, 6, c.by_level(40, 90, 200))
     G, L = gcd(a, b), lcm(a, b)
-    c.step("Usar la propiedad", f"MCD(a, b) × MCM(a, b) = a × b", procedure="Relación MCD–MCM",
+    c.step("Usar la propiedad", "MCD(a, b) × MCM(a, b) = a × b", procedure="Relación MCD–MCM",
            why="Cada primo aparece con su menor exponente en el MCD y con el mayor en el MCM: juntos suman los exponentes de a y b.")
     c.step("Despejar", f"MCM = ${a} \\times {b} \\div {G} = {a * b} \\div {G} = {L}$", prompt="¿MCM?", answer=A_int(L))
     return c.build(name="Relación MCD–MCM", procedure="MCM = a·b ÷ MCD", prompt=f"Sabiendo que MCD({a}, {b}) = {G}, calcula MCM({a}, {b}) sin listar múltiplos.",

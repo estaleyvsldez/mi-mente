@@ -1,0 +1,13 @@
+[project]
+name = "mathlab-engine"
+version = "0.1.0"
+description = "MATH LAB — motor matemático determinista (generación, solución y validación de ejercicios)"
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["mathlab_engine*"]
